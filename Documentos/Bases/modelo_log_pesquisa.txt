@@ -1,0 +1,168 @@
+{  
+    "content":[  
+        {  
+            "field":{  
+                "name":"ch_consulta",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Chave Unica",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual",
+                    "Unico"
+                ],
+                "description":"Identificador único para impedir duplicação."
+            }
+        },
+        {  
+            "field":{  
+                "name":"ch_usuario",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Chave Usuario",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Identificador do usuário auxilia a localizar as pesquisas do usuário com base na chave armazenada em cookie."
+            }
+        },
+        {  
+            "field":{  
+                "name":"usuario",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Chave",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Identificador do usuário auxilia a localizar as pesquisas do usuário com base na chave armazenada em cookie."
+            }
+        },
+        {  
+            "field":{  
+                "name":"dt_historico",
+                "datatype":"DateTime",
+                "required":true,
+                "alias":"Data e Hora",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Data e hora na qual a pesquisa foi realizada."
+            }
+        },
+        {  
+            "field":{  
+                "name":"ds_historico",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Descrição",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Descrição da pesquisa realizada."
+            }
+        },
+        {  
+            "field":{  
+                "name":"consulta",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Consulta",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Contém os parametros encodados utilizados na consulta."
+            }
+        },
+        {
+            "group": {
+                "content":[
+                    {
+                        "field": {
+                            "name": "campo",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Campo",
+                            "multivalued": false,
+                            "indices": [
+                                "Ordenado",
+                                "Textual"
+                            ],
+                            "description": "Campo da pesquisa"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "operador",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Operador",
+                            "multivalued": false,
+                            "indices": [
+                                "Ordenado",
+                                "Textual"
+                            ],
+                            "description": "Operador da pesquisa"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "valor",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Valor",
+                            "multivalued": false,
+                            "indices": [
+                                "Ordenado",
+                                "Textual"
+                            ],
+                            "description": "Valor da pesquisa"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "conector",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Conector",
+                            "multivalued": false,
+                            "indices": [
+                                "Ordenado",
+                                "Textual"
+                            ],
+                            "description": "Conector da pesquisa"
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "argumentos",
+                    "description": "Grupo multivalorado com os argumentos de pesquisa (campo, operador e valor)",
+                    "name": "Argumentos",
+                    "multivalued": true
+                }
+            }
+        }
+    ],
+    "metadata":{  
+        "idx_exp_time":2,
+        "idx_exp":true,
+        "description":"Um histórico das pesquisas realizadas.",
+        "color":"#3f7f7f",
+        "file_ext_time":0,
+        "idx_exp_url":"http://127.0.0.1:9200/sinj_log_pesquisa/historico_de_pesquisa",
+        "file_ext":false,
+        "password":"BRLight@)!$",
+        "name":"sinj_log_pesquisa"
+    }
+}

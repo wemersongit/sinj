@@ -1,0 +1,15 @@
+{ 
+	"settings":{
+		"analysis":{ 
+			"analyzer":{ 
+				"default":{  
+					"filter":[  
+						"lowercase",
+						"asciifolding"
+					],
+					"tokenizer":"standard"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,35 @@
+AMBITOS
+[{
+	"id_ambito":1,
+	"nm_ambito": "Distrito Federal"
+},
+{
+	"id_ambito":2,
+	"nm_ambito": "Federal"
+},
+{
+	"id_ambito":3,
+	"nm_ambito": "Estadual"
+},
+{
+	"id_ambito":4,
+	"nm_ambito": "Municipal"
+}]
+
+ORGAOS CADASTRADORES
+[{
+	"id_orgao_cadastrador":1,
+	"nm_orgao_cadastrador": "TCDF"
+},
+{
+	"id_orgao_cadastrador":2,
+	"nm_orgao_cadastrador": "SEPLAG"
+},
+{
+	"id_orgao_cadastrador":3,
+	"nm_orgao_cadastrador": "PGDF"
+},
+{
+	"id_orgao_cadastrador":4,
+	"nm_orgao_cadastrador": "CLDF"
+}]

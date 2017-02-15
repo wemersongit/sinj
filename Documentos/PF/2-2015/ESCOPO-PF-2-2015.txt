@@ -1,0 +1,241 @@
+Detalhe Resumido
+	nm_tipo_norma
+	nr_norma
+	dt_assinatura
+	st_norma
+	ds_ementa
+	sg_orgao_hierarquia
+	ds_orgao_hierarquia
+	fontes (9 campos)
+	ar_atualizado
+	
+Diretorios Normas (na tela de resultado de pesquisa)
+	Tabela Tipos de Norma
+		nm_tipo
+		total
+	
+	Filtrar
+		nm_tipo
+
+Diretórios Diários (uma nova tela)
+	Tabela Tipos de Fonte
+		nm_tipo
+		ano
+		mes
+		dia
+		arquivo
+		tamanho
+
+Alteração Resultado de Pesquisa de Normas
+	texto de arquivos brilhado
+	tamanho do arquivo no icone de download
+	não exibir o link texto do arquivo
+	
+Alteração Resultado de Pesquisa de Diários
+	texto de arquivo brilhado
+	tamanho do arquivo no icone de download
+	não exibir o link texto do arquivo
+	não exibir o campo pendente
+	
+Auditoria
+	ERROS
+		Pesquisa
+			tipo de erro
+			usuario
+			data
+			aplicação (cad ou portal)
+			texto livre
+			
+		Resultado
+			tipo
+			usuario
+			data
+			aplicação (cad ou portal)
+			
+		Detalhe
+			tipo
+			data
+			erro
+			ip usuario
+			navegador
+			nome usuario
+			login usuario
+			aplicação (cad ou portal)
+			
+	ACESSOS SINJ
+		Pesquisa
+			usuario
+			data
+			texto livre
+			
+		Resultado
+			login usuario
+			nome usuario
+			data
+			
+		Detalhe
+			sucesso (sim ou não)
+			data
+			observação
+			ip usuario
+			ip servidor
+			navegador
+			nome usuario
+			login usuario
+			
+	ACESSOS NOTIFIQUE-ME
+		Pesquisa
+			aplicação (cad ou portal)
+			usuario
+			data
+			texto livre
+			
+		Resultado
+			aplicação (cad ou portal)
+			login usuario
+			nome usuario
+			data
+			
+		Detalhe
+			sucesso (sim ou não)
+			data
+			aplicação (cad ou portal)
+			observação
+			ip usuario
+			ip servidor
+			navegador
+			nome usuario
+			login usuario
+			
+	OPERAÇÕES
+		Pesquisa
+			tipo de operação
+			aplicação (cad ou portal)
+			usuario
+			data
+			texto livre
+			
+		Resultado
+			tipo de operação
+			aplicação (cad ou portal)
+			login usuario
+			nome usuario
+			data
+			
+		Detalhe
+			tipo de operação
+			operação (mensagem, json doc, erro, sucesso)
+			data
+			aplicação (cad ou portal)
+			ip usuario
+			nome usuario
+			login usuario
+			
+	LIXEIRA
+		Pesquisa
+			base
+			usuario
+			data
+			texto livre
+			
+		Resultado
+			base
+			justificativa
+			login usuario
+			nome usuario
+			data
+			
+		Detalhe
+			base
+			justificativa
+			tipo de operação
+			documento
+			data
+			nome usuario
+			login usuario
+			
+		Salvar na Lixeira
+			(contar os campos para fazer uma EE no excluidos)
+			
+		Restaurar
+			(contar os campos para fazer uma EE no excluidos e uma EE na base de origem)
+		
+	ERROS DE INDEXAÇÃO
+		Pesquisa
+			base
+			data
+			texto livre
+			
+		Resultado
+			id_doc
+			base
+			erro
+			data
+		
+	ERROS DE EXTRAÇÃO DE TEXTO
+		Pesquisa
+			base
+			data
+			texto livre
+			
+		Resultado
+			id_doc
+			base
+			erro
+			link
+			data
+			
+		Excluir
+			(contar os campos para fazer uma EE)
+			
+	SESSÕES SINJ
+		Pesquisa
+			usuario
+			criacao
+			expira
+			
+		Resultado
+			id_doc
+			login usuario
+			nome usuario
+			tipo de acesso
+			criação
+			expira
+			
+		Excluir (Encerrar a sessão)
+			(contar os campos para fazer uma EE)
+			
+		Excluir Todos (Encerrar todas as sessões)
+			(contar os campos para fazer uma EE)
+			
+	SESSÕES NOTIFIQUE-ME
+		Pesquisa
+			usuario
+			criacao
+			expira
+			
+		Resultado
+			id_doc
+			login usuario
+			nome usuario
+			tipo de acesso
+			criação
+			expira
+			
+		Excluir (Encerrar a sessão)
+			(contar os campos para fazer uma EE)
+			
+		Excluir Todos (Encerrar todas as sessões)
+			(contar os campos para fazer uma EE)
+			
+	EMAILS DO NOTIFIQUE-ME
+		Pesquisa
+			usuario
+			data
+			texto livre
+			
+		Resultado
+			usuario
+			data
+			assunto
+			mensagem

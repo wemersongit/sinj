@@ -1,0 +1,6 @@
+Caso aconteça um erro na autenticação SSL, uma possível solução é executar os comandos abaixo:
+
+mozroots --import --ask-remove --machine
+certmgr -ssl smtps://smtp.gmail.com:465
+
+Isso instala o certificado do smtp gmail e permite que o Mono o utilize.

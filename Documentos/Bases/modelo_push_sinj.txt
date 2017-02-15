@@ -1,0 +1,376 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "email_usuario_push",
+                "datatype": "Email",
+                "required": true,
+                "alias": "E-mail",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+                    "Unico"
+                ],
+                "description": "E-mail do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_usuario_push",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Nome",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "senha_usuario_push",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Senha",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Senha do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "st_push",
+                "datatype": "Boolean",
+                "required": true,
+                "alias": "Ativo",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Indica se o usuário éstá ativo ou não."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_cadastro",
+                "datatype": "DateTime",
+                "required": false,
+                "alias": "Data do Cadastro",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data em que o usuário foi cadastrado no push."
+            }
+        },
+        {
+            "field": {
+                "name": "favoritos",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Favoritos",
+                "multivalued": true,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Contém chaves que identificam os favoritos. É composto por um identificador de base (norma ou diario) e a chave do documento, ex.: norma_79973."
+            }
+        },
+        {
+            "group": {
+                "content": [
+                    {
+                        "field": {
+                            "name": "ch_norma_monitorada",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Chave da Norma",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Chave da Norma monitorada."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ch_tipo_norma_monitorada",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Chave Tipo de Norma",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o tipo de norma."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nm_tipo_norma_monitorada",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Nome Tipo de Norma",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o tipo de norma."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nr_norma_monitorada",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Número da Norma",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o número da norma monitorada."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "dt_assinatura_norma_monitorada",
+                            "datatype": "Date",
+                            "required": false,
+                            "alias": "Assinatura da Norma",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica a data de assinatura da norma monitorada."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "dt_cadastro_norma_monitorada",
+                            "datatype": "Date",
+                            "required": false,
+                            "alias": "Cadastro da monitoração da Norma",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica a data em que a norma foi selecionada para ser monitorada."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "st_norma_monitorada",
+                            "datatype": "Boolean",
+                            "required": false,
+                            "alias": "Ativo",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica se o monitoramento da norma em questão está ativo."
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Normas monitoradas",
+                    "description": "Uma lista de todas as Norma monitoradas pelo usuário.",
+                    "multivalued": true,
+                    "name": "normas_monitoradas"
+                }
+            }
+        },
+        {
+            "group": {
+                "content": [
+                    {
+                        "field": {
+                            "name": "ch_criacao_norma_monitorada",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Chave",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o item monitorado. Para ser usado na deleção e edição pela aplicação."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ch_tipo_norma_criacao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Chave Tipo de Norma",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o Tipo de Norma."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nm_tipo_norma_criacao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Nome Tipo de Norma",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o Tipo de Norma."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "primeiro_conector_criacao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Primeiro Conector",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o Primeiro Conector. Ele é usado para conectar a primeira condição com as outras duas."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ch_orgao_criacao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Chave do Órgão",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o Órgão de Origem da Norma."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nm_orgao_criacao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Nome do Órgão",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o Órgão de Origem da Norma."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "segundo_conector_criacao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Segundo Conector",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o Segundo Conector. Ele é usado para conectar a primeira condição com as outras duas."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ch_termo_criacao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Chave do Termo",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o Termo do Vocabulário Controlado usado na indexação da Norma."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ch_tipo_termo_criacao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Chave Tipo de Termo",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o Tipo de Termo."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nm_termo_criacao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Nome do Termo",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica o Termo do Vocabulário Controlado usado na indexação da Norma."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "st_criacao",
+                            "datatype": "Boolean",
+                            "required": false,
+                            "alias": "Ativo",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Identifica se o monitoramento em questão está ativo."
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Criação de Norma Monitorada",
+                    "description": "Identifica os tipos de normas, órgão, e termo de vocabulário monitorados durante a criação de uma norma.",
+                    "multivalued": true,
+                    "name": "criacao_normas_monitoradas"
+                }
+            }
+        }
+    ],
+    "metadata": {
+        "idx_exp_time": 300,
+        "idx_exp": false,
+        "description": "Base de Push do SINJ",
+        "color": "#003300",
+        "file_ext_time": 300,
+        "idx_exp_url": "",
+        "file_ext": false,
+        "password": "BRLight@)!$",
+        "name": "push"
+    }
+}

@@ -1,0 +1,19 @@
+{  
+    "historico_de_pesquisa":{
+        "properties":{
+            "chave":{  
+                "type":"string"
+            },
+			"dt_historico":{
+				"type":"date",
+				"format":"dd/MM/yyyy HH:mm:ss"
+			},
+            "ds_historico":{  
+                "type":"string"
+            },
+            "consulta":{  
+                "type":"string"
+            }
+		}
+    }
+}

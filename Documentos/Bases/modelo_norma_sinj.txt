@@ -1,0 +1,1621 @@
+{
+    "content":[
+        {
+            "field":{
+                "name":"ch_norma",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Chave da norma.",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado",
+                    "Unico"
+                ],
+                "description":"Combinacao de informacoes para evitar o cadastro duplificado."
+            }
+        },
+        {
+            "field":{
+                "name":"ch_para_nao_duplicacao",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Chave para não duplicacao",
+                "multivalued":true,
+                "indices":[
+                    "Textual",
+                    "Ordenado",
+                    "Unico"
+                ],
+                "description":"Combinacao de informacoes para evitar o cadastro duplificado. As normas conjuntas poderão possuir mais de uma chave, para poder ter uma chave por cada origem."
+            }
+        },
+        {
+            "field":{
+                "name":"ds_comentario",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Comentário",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Contém comentário referente ao ato cadastrado."
+            }
+        },
+        {
+            "field":{
+                "name":"nr_norma",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Número",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Número sequencial que qualifica a norma no ordenamento jurídico. Alguns tipos recomeçam a numeração no inicio de cada ano. "
+            }
+        },
+        {
+            "field":{
+                "name":"dt_assinatura",
+                "datatype":"Date",
+                "required":true,
+                "alias":"Data da Assinatura",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Data na qual a norma foi assinada."
+            }
+        },
+        {
+            "field":{
+                "name":"cr_norma",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Letra",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Identifica norma publicada com uma letra compondo a sua numeração."
+            }
+        },
+        {
+            "field":{
+                "name":"nr_sequencial",
+                "datatype":"Integer",
+                "required":true,
+                "alias":"Sequencial",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Identificação adicional utilizada pelo legado como contorno para permitir a inclusão de normas de mesmo numero e data(data da assinatura)"
+            }
+        },
+        {
+            "field":{
+                "name":"id_ambito",
+                "datatype":"Integer",
+                "required":true,
+                "alias":"Id Âmbito",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Identifica a esfera da norma."
+            }
+        },
+        {
+            "field":{
+                "name":"nm_ambito",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Âmbito",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Identifica a esfera da norma."
+            }
+        },
+        {
+            "field":{
+                "name":"nm_apelido",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Apelido",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Identifica o nome da norma pelo qual ela é popularmente conhecida."
+            }
+        },
+        {
+            "field":{
+                "name":"dt_autuacao",
+                "datatype":"Date",
+                "required":false,
+                "alias":"Data da Autuação",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Contem a data que a Ação foi autuada no Tribunal de origem."
+            }
+        },
+        {
+            "field":{
+                "name":"ds_procedencia",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Procedência",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Contem informação se a Ação teve sua procedência na esfera federal ou em algum dos estados."
+            }
+        },
+        {
+            "field":{
+                "name":"ds_parametro_constitucional",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Parâmetro Constitucional",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Contem informação de qual parâmetro constitucional que a norma questionada esta infringindo."
+            }
+        },
+        {
+            "field":{
+                "name":"ds_acao",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Descrição da Ação",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Descrição da Ação."
+            }
+        },
+        {
+            "field":{
+                "name":"ds_efeito_decisao",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Efeito da decisão",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Campo que permite o acompanhamento da Ação."
+            }
+        },
+        {
+            "field":{
+                "name":"id_orgao_cadastrador",
+                "datatype":"Integer",
+                "required":true,
+                "alias":"Id Órgão Cadastrador",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Informa a sigla do órgão do usuário que cadastrou a norma."
+            }
+        },
+        {
+            "field":{
+                "name":"nm_orgao_cadastrador",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Nome Órgão Cadastrador",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Informa a sigla do órgão do usuário que cadastrou a norma."
+            }
+        },
+        {
+            "field":{
+                "name":"st_pendencia",
+                "datatype":"Boolean",
+                "required":false,
+                "alias":"Existência de Pendências",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Possibilita marcar como pendente o normativo quando identificada a necessidade de complemento do cadastro."
+            }
+        },
+        {
+            "field":{
+                "name":"ds_pendencia",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Descrição sobre as Pendências",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Contém comentário que ajudam a identificar as pendências do cadastro."
+            }
+        },
+        {
+            "field":{
+                "name":"st_destaque",
+                "datatype":"Boolean",
+                "required":false,
+                "alias":"Norma em Destaque",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Possibilita marcar como destacada a norma."
+            }
+        },
+        {
+            "field":{
+                "name":"ds_observacao",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Informações complementares",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Registra informações complementares."
+            }
+        },
+        {
+            "field":{
+                "name":"ds_ementa",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Ementa",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Transcrição da ementa do normativo."
+            }
+        },
+        {
+            "field":{
+                "name":"nm_pessoa_fisica_e_juridica",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Nomes",
+                "multivalued":true,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Contém referência a pessoas físicas e jurídicas."
+            }
+        },
+        {
+            "field":{
+                "name":"ar_atualizado",
+                "datatype":"File",
+                "required":false,
+                "alias":"Arquivo Atualizado",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Guarda o arquivo digital do texto da norma com as modificações incorporadas ao texto."
+            }
+        },
+        {
+            "field":{
+                "name":"ar_acao",
+                "datatype":"File",
+                "required":false,
+                "alias":"Texto da Ação",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Guarda o arquivo digital da petição inicial da ação, quando proposta pelo GDF ou pelo MPDFT. Formato padrão é PDF."
+            }
+        },
+        {
+            "field":{
+                "name":"st_atualizada",
+                "datatype":"Boolean",
+                "required":false,
+                "alias":"Norma atualizada",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Indica se a norma foi editada recentemente. Informação essencial para a notificação de usuários."
+            }
+        },
+        {
+            "field":{
+                "name":"st_nova",
+                "datatype":"Boolean",
+                "required":false,
+                "alias":"Norma nova",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Indica se a norma foi inserida recentemente. Informação essencial para a notificação de usuários."
+            }
+        },
+        {
+            "field":{
+                "name":"rankeamentos",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Rankeamento",
+                "multivalued":true,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Lista de valores que auxiliam no rankeamento da busca textual."
+            }
+        },
+        {
+            "field":{
+                "name":"ch_tipo_norma",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Chave do Tipo",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Identifica a denominação da norma. Chave usada como relacionamento. Oriundo da tabela tipo_de_norma"
+            }
+        },
+        {
+            "field":{
+                "name":"nm_tipo_norma",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Tipo",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Identifica a denominação da norma. Oriundo da tabela tipo_de_norma"
+            }
+        },
+        {
+            "field":{
+                "name":"ch_situacao",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Situação",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Apresenta as alterações ou mudanças no normativo por normas posteriormente cadastradas."
+            }
+        },
+        {
+            "field":{
+                "name":"nm_situacao",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Situação",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Apresenta as alterações ou mudanças no normativo por normas posteriormente cadastradas."
+            }
+        },
+        {
+            "field":{
+                "name":"nm_login_usuario_cadastro",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Usuário Cadastro",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Login do usuário cadastrador."
+            }
+        },
+        {
+            "field":{
+                "name":"dt_cadastro",
+                "datatype":"DateTime",
+                "required":true,
+                "alias":"Data do Cadastro",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Data do cadastro da norma."
+            }
+        },
+        {
+            "field":{
+                "name":"st_acao",
+                "datatype":"Boolean",
+                "required":true,
+                "alias":"Ação",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Indica se a norma é uma ação."
+            }
+        },
+        {
+            "field":{
+                "name":"in_vides",
+                "datatype":"Integer",
+                "required":true,
+                "alias":"Quantide de Vides",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Indica a qauntidade de Vides que a norma possui."
+            }
+        },
+        {
+            "field":{
+                "name":"st_vigor_vide",
+                "datatype":"Boolean",
+                "required":false,
+                "alias":"Vides Aguardando Vigor",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Indica que a norma possui uma ou mais vides aguardando a entrada de vigor da publicação da norma alteradora."
+            }
+        },
+        {
+            "field":{
+                "name":"url_referencia",
+                "datatype":"Url",
+                "required":false,
+                "alias":"URL da Referência",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Contém um link para navegar até uma fonte publicadora da decisão. É externo ao sistema."
+            }
+        },
+        {
+            "field":{
+                "name":"ax_ajuste",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Campo para ajustes",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Campo auxiliar para facilitar atualização das normas."
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"ch_requerente",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Requerente",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) Requerente(s) dessa ação. É quem se sentiu prejudicado ou lesado pela norma e entrou com o recurso."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_requerente",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Requerente",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) Requerente(s) dessa ação. É quem se sentiu prejudicado ou lesado pela norma e entrou com o recurso."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Requerentes",
+                    "description":"Identifica o(s) Requerente(s) dessa ação. É quem se sentiu prejudicado ou lesado pela norma e entrou com o recurso.",
+                    "multivalued":true,
+                    "name":"requerentes"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"ch_requerido",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Requerido",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) Requerido(s) dessa ação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_requerido",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Requerido",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) Requerido(s) dessa ação."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Requeridos",
+                    "description":"Identifica o(s) Requerido(s) dessa ação.",
+                    "multivalued":true,
+                    "name":"requeridos"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"ch_relator",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Relator",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Contem o nome do relator dessa ação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_relator",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Relator",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Contem o nome do relator dessa ação."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Relatores",
+                    "description":"Contem o nome do relator dessa ação.",
+                    "multivalued":true,
+                    "name":"relatores"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"ch_procurador_responsavel",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Procurador Responsável",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) procurador(es) responsável(eis) por esta ação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_procurador_responsavel",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Procurador Responsável",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) procurador(es) responsável(eis) por esta ação."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Procuradores Responsáveis",
+                    "description":"Identifica o(s) procurador(es) responsável(eis) por esta ação.",
+                    "multivalued":true,
+                    "name":"procuradores_responsaveis"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"ch_interessado",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Interessado da Ação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) interessado(s) pelo resultado da ação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_interessado",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Interessado da Ação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) interessado(s) pelo resultado da ação."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Interessados",
+                    "description":"Identifica o(s) interessado(s) pelo resultado da ação.",
+                    "multivalued":true,
+                    "name":"interessados"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"ch_orgao",
+                            "datatype":"Text",
+                            "required":true,
+                            "alias":"Chave da Origem",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Orgão signatário da norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_orgao",
+                            "datatype":"Text",
+                            "required":true,
+                            "alias":"Nome da Origem",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Nome do Orgão signatário da norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"sg_orgao",
+                            "datatype":"Text",
+                            "required":true,
+                            "alias":"Sigla da Origem",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Sigla do Orgão signatário da norma."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Origem",
+                    "description":"Orgão signatário da norma.",
+                    "multivalued":true,
+                    "name":"origens"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"ch_autoria",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Chave da Autoria",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) autor(es) das normas."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_autoria",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Nome da Autoria",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica o(s) nome(s) do(s) autor(es) das normas."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Autoria",
+                    "description":"Identifica o(s) nome(s) do(s) autor(es) das normas.",
+                    "multivalued":true,
+                    "name":"autorias"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"ch_fonte",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Id da Fonte",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Identificação única da fonte."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"dt_publicacao",
+                            "datatype":"Date",
+                            "required":false,
+                            "alias":"Data de Publicação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Informa a data de publicação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ds_diario",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Dados da Fonte",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Informa a fonte da norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ch_tipo_fonte",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Id Tipo de Fonte",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Indica o id do tipo de fonte."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_tipo_fonte",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Nome Tipo de Fonte",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Apresenta o título da publicação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ar_diario",
+                            "datatype":"Json",
+                            "required":false,
+                            "alias":"Arquivo do Diário",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Contém o json do arquivo do diário com os campos que auxiliam na criação do link para download do arquivo."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nr_pagina",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Página",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Informa a página inicial em que se encontra o ato."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nr_coluna",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Coluna",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Informa a coluna em que se inicia o ato."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ds_observacao_fonte",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Observação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Registra informações complementares."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ds_republicacao",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Motivo da Republicação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Informa o motivo da republicação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ar_fonte",
+                            "datatype":"File",
+                            "required":false,
+                            "alias":"Arquivo do texto da norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Guarda o arquivo digital da norma, com o texto que foi utilizado na publicação. Formato preferencial é HTML."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ch_tipo_publicacao",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Id Tipo de Publicação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Indica o id do tipo de publicação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_tipo_publicacao",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Tipo de Publicação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Informa o tipo de publicação."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Fonte",
+                    "description":"Identifica os campos das Fontes da Norma",
+                    "multivalued":true,
+                    "name":"fontes"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"in_decisao",
+                            "datatype":"Integer",
+                            "required":false,
+                            "alias":"Decisão",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identificação única da decisão. Oriundo da tabela de Decisões"
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_decisao",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Nome da Decisao",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Contem o nome da decisão."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"dt_decisao",
+                            "datatype":"Date",
+                            "required":false,
+                            "alias":"Data",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Data que a decisão foi publicada."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ds_complemento",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Complemento",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Registrar quorum da decisão e outros."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Decisão da Ação",
+                    "description":"Histórico das decisões para Ações da PGDF.",
+                    "multivalued":true,
+                    "name":"decisoes"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "group":{
+                            "content":[
+                                {
+                                    "field":{
+                                        "name":"ch_termo",
+                                        "datatype":"Text",
+                                        "required":false,
+                                        "alias":"Chave do Termo",
+                                        "multivalued":false,
+                                        "indices":[
+                                            "Textual",
+                                            "Ordenado"
+                                        ],
+                                        "description":"Indica a chave do termo. Esta chave é usada para identificar o termo na tabela de termos."
+                                    }
+                                },
+                                {
+                                    "field":{
+                                        "name":"ch_tipo_termo",
+                                        "datatype":"Text",
+                                        "required":false,
+                                        "alias":"Tipo do Termo",
+                                        "multivalued":false,
+                                        "indices":[
+                                            "Textual",
+                                            "Ordenado"
+                                        ],
+                                        "description":"Indica o Tipo de termo. Tipos: DE - Descritor; ES - Especificador; AU - Autoridade; LA - Lista Auxiliar;"
+                                    }
+                                },
+                                {
+                                    "field":{
+                                        "name":"nm_termo",
+                                        "datatype":"Text",
+                                        "required":false,
+                                        "alias":"Nome do Termo",
+                                        "multivalued":false,
+                                        "indices":[
+                                            "Textual",
+                                            "Ordenado"
+                                        ],
+                                        "description":"Identifica o nome do termo usado na indexação da norma."
+                                    }
+                                }
+                            ],
+                            "metadata":{
+                                "alias":"Vocabulario",
+                                "description":"Lista de termos e especificadores usados na indexação da norma.",
+                                "multivalued":true,
+                                "name":"vocabulario"
+                            }
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Indexacao",
+                    "description":"Lista as indexações de vocabulário usadas na norma.",
+                    "multivalued":true,
+                    "name":"indexacoes"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"ch_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Chave",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Indicador único do vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ds_comentario_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Comentário",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Informação adicional sobre a relação de vinculo entre as normas."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"in_norma_afetada",
+                            "datatype":"Boolean",
+                            "required":false,
+                            "alias":"Esta Norma é afetada?",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica se a norma corrente é afetada pelo vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ch_tipo_relacao",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Id Relação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"chave do tipo de relação. Identica o tipo de relacao na tabela de tipos de relação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_tipo_relacao",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Relação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nome da Relação que existe entre a norma afetadora e afetada."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ds_texto_relacao",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Texto da Relação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Se a norma corrente for a afetada use o texto ds_texto_para_alterado, se não, use ds_texto_para_alterador, oriundos de de TipoDeRelacao."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"dt_publicacao_fonte_norma_vide",
+                            "datatype":"Date",
+                            "required":false,
+                            "alias":"Data de publicação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Indica a data de publicação da fonte da outa norma norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ch_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Id da outra Norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Identifica qual a norma que tem relação de vinculo este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ch_tipo_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Chave",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Chave do tipo de norma. Identifica o tipo de norma na tabela de tipos de norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_tipo_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Chave",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nome do tipo de norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nr_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Número",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Indica o número da norma afetada. Pode conter a letra também."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"dt_assinatura_norma_vide",
+                            "datatype":"Date",
+                            "required":false,
+                            "alias":"Data da assinatura",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Data da assinatura da outra norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"pagina_publicacao_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Página",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Página da publicação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"coluna_publicacao_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Coluna",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Coluna da publicação."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"ch_tipo_fonte_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Chave",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Chave do tipo de fonte. Indentifica o tipo de fonte na tabela de tipos de fonte."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"nm_tipo_fonte_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Tipo de Fonte",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Indica o tipo de fonte da norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"artigo_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Artigo norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº do artigo que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"paragrafo_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Parágrafo norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº do parágrafo que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"inciso_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Inciso norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº do Inciso que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"alinea_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"alinea norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº da Alínea que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"item_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Item norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº do Item que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"caput_norma_vide",
+                            "datatype":"Json",
+                            "required":false,
+                            "alias":"Caput norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"CAPUT que tem uma relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"anexo_norma_vide",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Anexo norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Anexo que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"artigo_norma_vide_outra",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Artigo da outra norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº do artigo da outra norma que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"paragrafo_norma_vide_outra",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Parágrafo da outra norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº do parágrafo da outra norma que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"inciso_norma_vide_outra",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Inciso da outra norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº do Inciso da outra norma que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"alinea_norma_vide_outra",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"alinea da outra norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº da Alínea da outra norma que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"item_norma_vide_outra",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Item da outra norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Nº do Item da outra norma que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"caput_norma_vide_outra",
+                            "datatype":"Json",
+                            "required":false,
+                            "alias":"Caput da outra norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"CAPUT da outra norma que tem uma relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"anexo_norma_vide_outra",
+                            "datatype":"Text",
+                            "required":false,
+                            "alias":"Anexo da outra norma",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Anexo da outra norma que tem relação de vinculo com este vide."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"in_relacao_de_acao",
+                            "datatype":"Boolean",
+                            "required":false,
+                            "alias":"Relação de ação",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Indica se é uma relação de ação."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Vide",
+                    "description":"Lista de vides da norma. É replicado em ambas as normas, diferenciando-se nos campos que contém o texto a ser exibido em cada uma.",
+                    "multivalued":true,
+                    "name":"vides"
+                }
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field":{
+                            "name":"nm_login_usuario_alteracao",
+                            "datatype":"Text",
+                            "required":true,
+                            "alias":"Usuário Alteração",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Login do usuário que alterou a norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"dt_alteracao",
+                            "datatype":"DateTime",
+                            "required":true,
+                            "alias":"Data do Cadastro",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description":"Data na qual ocorreu a alterção da norma."
+                        }
+                    }
+                ],
+                "metadata":{
+                    "alias":"Alterações",
+                    "description":"Lista de alterações sofridas pela norma.",
+                    "multivalued":true,
+                    "name":"alteracoes"
+                }
+            }
+        }
+    ],
+    "metadata":{
+        "idx_exp_time":2,
+        "idx_exp":true,
+        "description":"Base de normas do SINJ",
+        "color":"#003300",
+        "file_ext_time":2,
+        "dt_base":"15/07/2015 18:02:38",
+        "idx_exp_url":"http://127.0.0.1:9200/sinj_norma/norma",
+        "file_ext":true,
+        "password":"BRLight@)!$",
+        "name":"sinj_norma"
+    }
+}

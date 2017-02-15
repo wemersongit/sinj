@@ -1,0 +1,52 @@
+{  
+    "content":[  
+        {  
+            "field":{  
+                "name":"ch_aplicacao",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Chave da aplicação",
+                "multivalued":false,
+                "indices":[  
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Contém uma chave que ideintifica a aplicação à qual o token pertence. Essa chave é usada para que cada aplicação possa gerenciar distintamente os seus tokens, como por exemplo o tempo de validade."
+            }
+        },
+        {  
+            "field":{  
+                "name":"ch_origem",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Chave da Origem",
+                "multivalued":false,
+                "indices":[  
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Contém uma chave que ideintifica a origem da criação do token. Assim como a chave da aplicação essa chave é usada para que a aplicação possa gerenciar distintamente os tokens com base nas suas finalidades, como por exemplo o tempo de validade, a recuperação de senha de usuários pode ter 5 minutos e a parar de receber notificação pode ter 1 semana."
+            }
+        },
+        {  
+            "field":{  
+                "name":"token",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Token",
+                "multivalued":false,
+                "indices":[  
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Chave única usada como medida de segurança para validar requisições."
+            }
+        }
+	],
+    "metadata":{
+        "description":"Base de Tokens",
+        "color":"#000000",
+        "password":"BRLight@)!$",
+        "name":"token"
+    }
+}

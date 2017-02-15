@@ -1,0 +1,179 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "ch_arquivo",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Chave",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+                    "Unico"
+                ],
+                "description": "Chave do diretório ou arquivo. Contém todos nomes em sequência que indica a hierarquia."
+            }
+        },
+        {
+            "field": {
+                "name": "nr_tipo_arquivo",
+                "datatype": "Integer",
+                "required": true,
+                "alias": "Tipo",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Número inteiro 0 ou 1 que indica o tipo do documento. 0 é diretório e 1 é arquivo."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_arquivo",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Nome",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do diretório ou arquivo."
+            }
+        },
+        {
+            "field": {
+                "name": "ds_arquivo",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Descrição",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Descrição do diretório ou arquivo. É um texto que pode ser exibido ao usuário como explicação, prévia ou resumo."
+            }
+        },
+        {
+            "field": {
+                "name": "nr_nivel_arquivo",
+                "datatype": "Integer",
+                "required": true,
+                "alias": "Nível",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nível do documento para definir em que nível se encontra o mesmo, ou seja, 0 está na raiz e 1 está um nível abaixo da riaz e assim sucessivamente."
+            }
+        },
+        {
+            "field": {
+                "name": "ch_arquivo_superior",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Chave Superior",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Chave do diretório do acima ao documento. Auxilia a definir dentro do qual diretório um arquivo está salvo."
+            }
+        },
+        {
+            "field": {
+                "name": "ar_arquivo",
+                "datatype": "File",
+                "required": false,
+                "alias": "Arquivo",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Arquivo digitalizado."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_login_usuario_cadastro",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Cadastrador por",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Login do usuário que cadastrou."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_cadastro",
+                "datatype": "DateTime",
+                "required": true,
+                "alias": "Cadastrado dia",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data na qual o registro foi cadastrado."
+            }
+        },
+        {
+            "group": {
+                "content":[
+                    {
+                        "field": {
+                            "name": "nm_login_usuario_alteracao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Alterado por",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": " Login do usuário que fez a alteração."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "dt_alteracao",
+                            "datatype": "DateTime",
+                            "required": false,
+                            "alias": "Alterado dia",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Data na qual o registro foi alterado."
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Alterações",
+                    "description": "Identifica as alterações do Registro.",
+                    "name": "alteracoes",
+                    "multivalued": true
+                }
+            }
+        }
+    ],
+    "metadata": {
+        "idx_exp_time": 5,
+        "idx_exp": true,
+        "description": "Base de documentos. Base usada para armazenar documentos.",
+        "color": "#005408",
+        "file_ext_time": 5,
+        "idx_exp_url": "http://127.0.0.1:9200/sinj_arquivo/arquivo",
+        "file_ext": true,
+        "password": "BRLight#@!",
+        "name": "sinj_arquivo"
+    }
+}

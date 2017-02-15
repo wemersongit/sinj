@@ -1,0 +1,555 @@
+{  
+   "metadata":{  
+      "file_ext":false,
+      "idx_exp":false,
+      "idx_exp_url":"",
+      "idx_exp_time":0,
+      "file_ext_time":0,
+      "name":"sinj_portal",
+      "description":"Base _portal usada pelo SINJ.",
+      "password":"BRLight@)!$",
+      "color":""
+   },
+   "content":[  
+      {  
+         "field":{  
+            "name":"nm_base",
+            "alias":"Nome da Base",
+            "description":"Contém o nome da base, deve ser o mesmo nome com o qual a base está salva no lightbase. Será usado para auxiliar nas pesquisas feitas pelo portal.",
+            "datatype":"Text",
+            "required":true,
+            "multivalued":false,
+            "indices":[  
+               "Textual"
+            ]
+         }
+      },
+      {  
+         "field":{  
+            "name":"ds_base",
+            "alias":"Apelido da Base",
+            "description":"Este campo informa um apelido, possibilitando exibir um nome amigável no Portal de Pesquisas.",
+            "datatype":"Text",
+            "required":true,
+            "multivalued":false,
+            "indices":[  
+               "Textual"
+            ]
+         }
+      },
+      {  
+         "field":{  
+            "name":"url_index",
+            "alias":"Url do Indexador",
+            "description":"Uma URL que indica o host onde será feita a pesquisa via REST. Pode ser, por exemplo, a URL de um host com o ELastic Search instalado e com os dados indexados.",
+            "datatype":"Url",
+            "required":false,
+            "multivalued":false,
+            "indices":[  
+               "Textual"
+            ]
+         }
+      },
+      {  
+         "field":{  
+            "name":"url_detail",
+            "alias":"URL de Detalhe",
+            "description":"Representa a URL da página de detalhes. O valor é oriundo da aplicação em questão, ou seja, de acordo a aplicação referenciada o nome da página pode ser DetalhesRecebidos.aspx ou DetalhesExpedido.aspx",
+            "datatype":"Url",
+            "required":false,
+            "multivalued":false,
+            "indices":[  
+               "Textual"
+            ]
+         }
+      },
+      {  
+         "field":{  
+            "name":"url_app",
+            "alias":"Url da aplicação",
+            "description":"Este campo é usado para possibilitar links entre o portal e a aplicação que utiliza esta base, como, por exemplo, abrir os detalhes de um registro pesquisado para abrir na página da aplicação.",
+            "datatype":"Url",
+            "required":false,
+            "multivalued":false,
+            "indices":[  
+               "Textual"
+            ]
+         }
+      },
+      {  
+         "field":{  
+            "name":"nr_order",
+            "alias":"Ordem",
+            "description":"Auxilia a ordenar as abas no portal de pesquisa.",
+            "datatype":"Integer",
+            "required":false,
+            "multivalued":false,
+            "indices":[  
+               "Textual"
+            ]
+         }
+      },
+      {  
+         "group":{  
+            "metadata":{  
+               "name":"field",
+               "alias":"Campo",
+               "description":"Representa os campos da base. Informa onde e como serão usados pelo portal.",
+               "multivalued":true
+            },
+            "content":[  
+               {  
+                  "group":{  
+                     "metadata":{  
+                        "name":"inf_direct_search",
+                        "alias":"Informações busca direta",
+                        "description":"Contém informações de como o campo se comporta na tela de busca direta.",
+                        "multivalued":false
+                     },
+                     "content":[  
+                        {  
+                           "field":{  
+                              "name":"nm_display_direct",
+                              "alias":"Nome exibido",
+                              "description":"Contém o nome com o qual o campo deve ser exibido na tela de pesquisa direta.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"in_display_direct",
+                              "alias":"Exibir?",
+                              "description":"Contém uma flag informando se o campo deve ser exibido na tela de pesquisa direta.",
+                              "datatype":"Boolean",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"nm_type_control_direct",
+                              "alias":"Tipo de controle",
+                              "description":"Define o controle que deve ser carregado para o campo na tela de pesquisa direta.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"nr_position_direct",
+                              "alias":"Posição",
+                              "description":"Contém um inteiro informando a posição do campo na tela de pesquisa direta.",
+                              "datatype":"Integer",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"script_direct",
+                              "alias":"script",
+                              "description":"Contém um script que será executado no momento que o campo for exibido na tela de pesquisa direta.",
+                              "datatype":"TextArea",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        }
+                     ]
+                  }
+               },
+               {  
+                  "group":{  
+                     "metadata":{  
+                        "name":"inf_advanced_search",
+                        "alias":"Informações pesquisa avançada",
+                        "description":"Contém informações que definem como o campo se comporta na tela de pesquisa avançada.",
+                        "multivalued":false
+                     },
+                     "content":[  
+                        {  
+                           "field":{  
+                              "name":"nm_display_advanced",
+                              "alias":"Nome exibido",
+                              "description":"Contém o nome com o qual o campo deve ser exibido na tela de pesquisa avançada.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"in_display_advanced",
+                              "alias":"Exibir?",
+                              "description":"Contém uma flag informando se o campo deve ser exibido na tela de pesquisa avançada.",
+                              "datatype":"Boolean",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"in_fixed_advanced",
+                              "alias":"Campo fixo?",
+                              "description":"Contém uma flag informando se o campo é fixo na tela de pesquisa avançada. Nesta tela os campo são escolhidos dinamicamente e inseridos como argumento de pesquisa, mas se o campo for fixo ela já fica fixado na tela.",
+                              "datatype":"Boolean",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"nm_type_control_advanced",
+                              "alias":"Tipo de Controle",
+                              "description":"Define o controle que deve ser carregado na pesquisa avançada para exibir este campo.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"script_advanced",
+                              "alias":"script",
+                              "description":"Contém um script para ser executado na página nome momento em que o campo é exibido.",
+                              "datatype":"TextArea",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        }
+                     ]
+                  }
+               },
+               {  
+                  "group":{  
+                     "metadata":{  
+                        "name":"inf_listed_search",
+                        "alias":"Informações resultado de pesquisa",
+                        "description":"Contém as informações do campo de como se comportar na pesquisa listada.",
+                        "multivalued":false
+                     },
+                     "content":[  
+                        {  
+                           "field":{  
+                              "name":"nm_display_listed",
+                              "alias":"Nome exibido",
+                              "description":"Contém o nome que deve exibido na coluna da tabela resultado de pesquisa.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"in_display_listed",
+                              "alias":"Exibir?",
+                              "description":"Contém uma flag informando se o campo deve ser exibido no resultado de pesquisa",
+                              "datatype":"Boolean",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"in_search_listed",
+                              "alias":"Pesquisar?",
+                              "description":"Contém uma flag informando se o campo é usado na pesquisa. Essa informação é relevante para a pesquisa direta, que realiza a busca nos campos que contém essa flag marcada com true.",
+                              "datatype":"Boolean",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"nr_position_listed",
+                              "alias":"Posição",
+                              "description":"Defina a posição da coluna na tabela de resultado de pesquisa.",
+                              "datatype":"Integer",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"script_listed",
+                              "alias":"script",
+                              "description":"Contém um script que será executado na exibição do campo na tabela de resultado de pesquisa. É útil para criar botões, links, etc.",
+                              "datatype":"TextArea",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"in_sortable_listed",
+                              "alias":"Ordenar?",
+                              "description":"Indica se a coluna é ordenável na tabela do resultado de pesquisa.",
+                              "datatype":"Boolean",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        }
+                     ]
+                  }
+               },
+               {  
+                  "group":{  
+                     "metadata":{  
+                        "name":"inf_detailed_search",
+                        "alias":"Informações da tela de detalhes",
+                        "description":"Contém as informações de como o campo se comporta na tela de detalhes. Caso esta tela seja tratada no portal, pois ela pode ser de outra aplicação e neste caso usasse o campo url_detail.",
+                        "multivalued":false
+                     },
+                     "content":[  
+                        {  
+                           "field":{  
+                              "name":"nm_display_detailed",
+                              "alias":"Nome exibido",
+                              "description":"contém o nome com o qual o campo deve ser exibido na tela de detalhes.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"in_display_detailed",
+                              "alias":"Exibir?",
+                              "description":"Contém uma flag dizendo se o campo é exibido ou não tela de detalhes.",
+                              "datatype":"Boolean",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"in_search_detailed",
+                              "alias":"Pesquisar?",
+                              "description":"Contém uma flag informando se o campo é pesquisado para chamar a página de detalhes.",
+                              "datatype":"Boolean",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"nr_position_detailed",
+                              "alias":"Posição",
+                              "description":"Contém um inteiro informando a posição do campo na tela de detalhes.",
+                              "datatype":"Integer",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"script_detailed",
+                              "alias":"Script",
+                              "description":"Contém um script que deve ser executado na exibição do campo na página de detalhes. Por exemplo, criar um link dentro campo.",
+                              "datatype":"TextArea",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        }
+                     ]
+                  }
+               },
+               {  
+                  "group":{  
+                     "metadata":{  
+                        "name":"inf_field_tabulated",
+                        "alias":"Informações Campo Tabelado",
+                        "description":"Define as informações de campos tabelados. Só precisa ser preenchido se o tipo de campo for igual a tabulated.",
+                        "multivalued":false
+                     },
+                     "content":[  
+                        {  
+                           "field":{  
+                              "name":"data_tabulated",
+                              "alias":"Lista de dados",
+                              "description":"Contém uma lista de objetos json. Serve para criar uma tabela estática com os campo tabelados. Por exemplo, uma tabela de siglas e nomes de estados.",
+                              "datatype":"Json",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"nm_field_value_tabulated",
+                              "alias":"Nome do campo valor",
+                              "description":"Contém o nome do campo da base referenciada que contém o valor.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"nm_field_key_tabulated",
+                              "alias":"Nome Campo Chave",
+                              "description":"Contém o nome do campo da base referenciada que contém a chave do valor.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"relational_key_tabulated",
+                              "alias":"Chave relacional",
+                              "description":"Contém o nome da coluna que contém a chave da relação. É o campo referenciado na base.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        },
+                        {  
+                           "field":{  
+                              "name":"nm_table_tabulated",
+                              "alias":"Nome da tabela referenciada",
+                              "description":"Contém o nome da tabela que está sendo usada para tabelar o campo.",
+                              "datatype":"Text",
+                              "required":false,
+                              "multivalued":false,
+                              "indices":[  
+                                 "Textual"
+                              ]
+                           }
+                        }
+                     ]
+                  }
+               },
+               {  
+                  "field":{  
+                     "name":"groups_can_view",
+                     "alias":"Grupos",
+                     "description":"Define os grupos que podem visualizar o campo.",
+                     "datatype":"Text",
+                     "required":false,
+                     "multivalued":true,
+                     "indices":[  
+                        "Textual"
+                     ]
+                  }
+               },
+               {  
+                  "field":{  
+                     "name":"ds_field",
+                     "alias":"Apelido do campo",
+                     "description":"Define o apelido do campo. É um nome mais amigável para ser exibido no portal.",
+                     "datatype":"Text",
+                     "required":false,
+                     "multivalued":false,
+                     "indices":[  
+                        "Textual"
+                     ]
+                  }
+               },
+               {  
+                  "field":{  
+                     "name":"nm_field",
+                     "alias":"Nome do campo",
+                     "description":"Nome do campo da base. Deve coincidir com o nome do campo que está salvo no lightbase.",
+                     "datatype":"Text",
+                     "required":true,
+                     "multivalued":false,
+                     "indices":[  
+                        "Textual"
+                     ]
+                  }
+               },
+               {  
+                  "field":{  
+                     "name":"nm_type_field",
+                     "alias":"Tipo de campo",
+                     "description":"Indica qual o tipo de campo. É utilizado pelo portal para saber como exibir o campo. É oriundo dos tipos de campo que o lightbase usa para criar campos.",
+                     "datatype":"Text",
+                     "required":true,
+                     "multivalued":false,
+                     "indices":[  
+                        "Textual"
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ]
+}

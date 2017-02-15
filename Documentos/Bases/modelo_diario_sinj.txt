@@ -1,0 +1,357 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "ch_diario",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Chave",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+                    "Unico"
+                ],
+                "description": "Chave do diário. Os dodfs migrados do SINJ 2.0 possuirão nesse campo um numero que representa seu id no sistema antigo."
+            }
+        },
+        {
+            "field": {
+                "name": "ch_para_nao_duplicacao",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Chave",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+                    "Unico"
+                ],
+                "description": "Chave para evitar a duplicação. Resultado da concatenação entre ano_assinatura+numero_com_8_digitos+letra+secao"
+            }
+        },
+        {
+            "field": {
+                "name": "nr_diario",
+                "datatype": "Integer",
+                "required": true,
+                "alias": "Número",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Número do diário."
+            }
+        },
+        {
+            "field": {
+                "name": "cr_diario",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Letra",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Letra para conseguir cadastrar diário com o mesmo número. Na hora de gerar ch_diario não vai duplicar"
+            }
+        },
+        {
+            "field": {
+                "name": "secao_diario",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Seção",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Seção do diário."
+            }
+        },
+        {
+            "field": {
+                "name": "ch_tipo_fonte",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Chave",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Chave do tipo de fonte."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_tipo_fonte",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Nome",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": " Nome do tipo de fonte."
+            }
+        },
+        {
+            "field": {
+                "name": "ch_tipo_edicao",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Chave Edição",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Chave do tipo de Edição."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_tipo_edicao",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Nome Edição",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": " Nome do tipo de Edição."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_diferencial_edicao",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Diferencial Edição",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Indica um diferencial para o campo Edição."
+            }
+        },
+        {
+            "field": {
+                "name": "st_suplemento",
+                "datatype": "Boolean",
+                "required": true,
+                "alias": "Suplemento",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Indica se o documento é um suplemento."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_diferencial_suplemento",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Diferencial Suplemento",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Indica um diferencial para o campo Suplemento, caso seja publicado mais de um no mesmo dia."
+            }
+        },
+        {
+            "field": {
+                "name": "st_pendente",
+                "datatype": "Boolean",
+                "required": true,
+                "alias": "Pendente",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": " Indica se o documento está pendente de revisão."
+            }
+        },
+        {
+            "field": {
+                "name": "ds_pendencia",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Descrição da Pendência",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Indica algo sobre o documento estar pendente de revisão."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_assinatura",
+                "datatype": "Date",
+                "required": true,
+                "alias": "Data da Assinatura",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data da assinatura do diário."
+            }
+        },
+        {
+            "field": {
+                "name": "nr_ano",
+                "datatype": "Integer",
+                "required": true,
+                "alias": "Ano da Assinatura",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Ano da assinatura do diário."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_login_usuario_cadastro",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Cadastrado por",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Login do usuário que cadastrou."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_cadastro",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Data do cadastro",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Date em que o diário foi cadastrado."
+            }
+        },
+        {
+            "field": {
+                "name": "ar_diario",
+                "datatype": "File",
+                "required": false,
+                "alias": "Arquivo do diário",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Guarda o arquivo digital do diário."
+            }
+        },
+        {
+            "group":{
+                "content":[
+                    {
+                        "field": {
+                            "name": "ds_arquivo",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Descrição do Arquivo",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Descrição para o caso de serem mais de um arquivo."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "arquivo_diario",
+                            "datatype": "File",
+                            "required": true,
+                            "alias": "Arquivo do diário",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Guarda o arquivo digital do diário."
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Arquivos",
+                    "description": "Lista de alterações sofridas pelo diário.",
+                    "multivalued": true,
+                    "name": "arquivos"
+                }
+            }
+        },
+        {
+            "group": {
+                "content": [
+                    {
+                        "field": {
+                            "name": "nm_login_usuario_alteracao",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Usuário Alteração",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Login do usuário que alterou o diário."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "dt_alteracao",
+                            "datatype": "DateTime",
+                            "required": false,
+                            "alias": "Data do Cadastro",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual",
+                                "Ordenado"
+                            ],
+                            "description": "Data na qual ocorreu a alteração do diário."
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Alterações",
+                    "description": "Lista de alterações sofridas pelo diário.",
+                    "multivalued": true,
+                    "name": "alteracoes"
+                }
+            }
+        }
+    ],
+    "metadata": {
+        "idx_exp_time": 2,
+        "idx_exp": true,
+        "description": "Base de Diários do SINJ",
+        "color": "#003300",
+        "file_ext_time": 2,
+        "idx_exp_url": "http://127.0.0.1:9200/sinj_diario/diario",
+        "file_ext": true,
+        "password": "BRLight@)!$",
+        "name": "sinj_diario"
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "id_ambito",
+                "datatype": "Integer",
+                "required": true,
+                "alias": "Id",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+					"Unico"
+                ],
+                "description": "Id do âmbito. Identifica o âmbito."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_ambito",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Nome",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do âmbito."
+            }
+        }
+	],
+    "metadata": {
+        "description": "Base de Âmbitos do SINJ",
+        "color": "#003300",
+        "password": "BRLight@)!$",
+        "name": "sinj_ambito"
+    }
+}

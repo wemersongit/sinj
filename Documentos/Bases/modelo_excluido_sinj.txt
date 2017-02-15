@@ -1,0 +1,79 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "id_doc_excluido",
+                "datatype": "Integer",
+                "required": true,
+                "alias": "Id",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Id do documento. Campo id_doc da base da qual o doc foi excluído."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_base_excluido",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Base",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome da base da qual o documento foi excluído."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_exclusao",
+                "datatype": "DateTime",
+                "required": true,
+                "alias": "Data da Exclusão",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data na qual o documento foi excluído."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_login_usuario_exclusao",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Excluído por",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Usuário responsável pela exclusão do documento."
+            }
+        },
+        {
+            "field": {
+                "name": "json_doc_excluido",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Json",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Json do documento excluído."
+            }
+        }
+	],
+    "metadata": {
+        "description": "Base de excluídos do SINJ",
+        "color": "#003300",
+        "password": "BRLight@)!$",
+        "name": "sinj_excluido"
+    }
+}
