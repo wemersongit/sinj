@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3B23C9D4-4624-473E-8976-7CD48EF5559C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TCDF.Sinj</RootNamespace>
+    <AssemblyName>TCDF.Sinj</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="neo.BRLightES">
+      <HintPath>..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
+    </Reference>
+    <Reference Include="neo.BRLightSession">
+      <HintPath>..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="neo.BRLightREST">
+      <HintPath>..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="util.BRLight">
+      <HintPath>..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AD\AmbitoAD.cs" />
+    <Compile Include="AD\SINJ_ArquivoAD.cs" />
+    <Compile Include="AD\AutoriaAD.cs" />
+    <Compile Include="AD\CestaAD.cs" />
+    <Compile Include="AD\FavoritoAD.cs" />
+    <Compile Include="AD\HistoricoDePesquisaAD.cs" />
+    <Compile Include="AD\PerfilAD.cs" />
+    <Compile Include="AD\ProcuradorAD.cs" />
+    <Compile Include="AD\NotifiquemeAD.cs" />
+    <Compile Include="AD\RelatorAD.cs" />
+    <Compile Include="AD\RequeridoAD.cs" />
+    <Compile Include="AD\ExcluidoAD.cs" />
+    <Compile Include="AD\InteressadoAD.cs" />
+    <Compile Include="AD\NormaAD.cs" />
+    <Compile Include="AD\OrgaoAD.cs" />
+    <Compile Include="AD\OrgaoCadastradorAD.cs" />
+    <Compile Include="AD\RequerenteAD.cs" />
+    <Compile Include="AD\SituacaoAD.cs" />
+    <Compile Include="AD\TipoDeEdicaoAD.cs" />
+    <Compile Include="AD\TipoDeFonteAD.cs" />
+    <Compile Include="AD\TipoDeNormaAD.cs" />
+    <Compile Include="AD\TipoDePublicacaoAD.cs" />
+    <Compile Include="AD\TipoDeRelacaoAD.cs" />
+    <Compile Include="AD\UsuarioAD.cs" />
+    <Compile Include="AD\VocabularioAD.cs" />
+    <Compile Include="Excecoes.cs" />
+    <Compile Include="LB.cs" />
+    <Compile Include="Log\AD\log_acessoAD.cs" />
+    <Compile Include="Log\AD\log_erroAD.cs" />
+    <Compile Include="Log\AD\log_lbconverterAD.cs" />
+    <Compile Include="Log\AD\log_lbindexAD.cs" />
+    <Compile Include="Log\AD\log_operacaoAD.cs" />
+    <Compile Include="Log\LogAcesso.cs" />
+    <Compile Include="Log\LogErro.cs" />
+    <Compile Include="Log\LogModelo.cs" />
+    <Compile Include="Log\LogOperacao.cs" />
+    <Compile Include="Log\OV\log_acessoOV.cs" />
+    <Compile Include="Log\OV\log_erroOV.cs" />
+    <Compile Include="Log\OV\log_lbconverterOV.cs" />
+    <Compile Include="Log\OV\log_lbindexOV.cs" />
+    <Compile Include="Log\OV\log_operacaoOV.cs" />
+    <Compile Include="Log\RN\log_acessoRN.cs" />
+    <Compile Include="Log\RN\log_erroRN.cs" />
+    <Compile Include="Log\RN\log_lbconverterRN.cs" />
+    <Compile Include="Log\RN\log_lbindexRN.cs" />
+    <Compile Include="Log\RN\log_operacaoRN.cs" />
+    <Compile Include="OV\AlteracaoOV.cs" />
+    <Compile Include="OV\AmbitoOV.cs" />
+    <Compile Include="OV\ArquivoFullOV.cs" />
+    <Compile Include="OV\AutoriaOV.cs" />
+    <Compile Include="OV\DiarioOV.cs" />
+    <Compile Include="OV\EmailOV.cs" />
+    <Compile Include="OV\ExcluidoOV.cs" />
+    <Compile Include="OV\GrupoTipoDeNormaEnum.cs" />
+    <Compile Include="OV\HistoricoDePesquisaOV.cs" />
+    <Compile Include="OV\OrgaoCadastradorOV.cs" />
+    <Compile Include="OV\PerfilOV.cs" />
+    <Compile Include="OV\NotifiquemeOV.cs" />
+    <Compile Include="OV\DecisaoOV.cs" />
+    <Compile Include="OV\FonteOV.cs" />
+    <Compile Include="OV\InformacoesSobreVersaoOV.cs" />
+    <Compile Include="OV\InteressadoOV.cs" />
+    <Compile Include="OV\NormaOV.cs" />
+    <Compile Include="OV\OrgaoOV.cs" />
+    <Compile Include="OV\PesquisaSinjOV.cs" />
+    <Compile Include="OV\ProcuradorOV.cs" />
+    <Compile Include="OV\RelatorOV.cs" />
+    <Compile Include="OV\RequerenteOV.cs" />
+    <Compile Include="OV\RequeridoOV.cs" />
+    <Compile Include="OV\SessaoNotifiquemeOV.cs" />
+    <Compile Include="OV\SessaoUsuarioOV.cs" />
+    <Compile Include="OV\SINJ_ArquivoOV.cs" />
+    <Compile Include="OV\SituacaoOV.cs" />
+    <Compile Include="OV\TipoDeDecisaoEnum.cs" />
+    <Compile Include="OV\TipoDeEdicaoEnum.cs" />
+    <Compile Include="OV\TipoDeEdicaoOV.cs" />
+    <Compile Include="OV\TipoDeFonteOV.cs" />
+    <Compile Include="OV\TipoDeNormaOV.cs" />
+    <Compile Include="OV\TipoDePublicacaoOV.cs" />
+    <Compile Include="OV\TipoDeRelacaoOV.cs" />
+    <Compile Include="OV\UsuarioOV.cs" />
+    <Compile Include="OV\VideOV.cs" />
+    <Compile Include="OV\VocabularioOV.cs" />
+    <Compile Include="ES.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RN\AmbitoRN.cs" />
+    <Compile Include="RN\SINJ_ArquivoRN.cs" />
+    <Compile Include="RN\AutoriaRN.cs" />
+    <Compile Include="RN\CestaRN.cs" />
+    <Compile Include="RN\FavoritoRN.cs" />
+    <Compile Include="RN\HistoricoDePesquisaRN.cs" />
+    <Compile Include="RN\PerfilRN.cs" />
+    <Compile Include="RN\ProcuradorRN.cs" />
+    <Compile Include="RN\NotifiquemeRN.cs" />
+    <Compile Include="RN\RelatorRN.cs" />
+    <Compile Include="RN\RequeridoRN.cs" />
+    <Compile Include="RN\ExcluidoRN.cs" />
+    <Compile Include="RN\InteressadoRN.cs" />
+    <Compile Include="RN\OrgaoCadastradorRN.cs" />
+    <Compile Include="RN\NormaRN.cs" />
+    <Compile Include="RN\OrgaoRN.cs" />
+    <Compile Include="RN\RequerenteRN.cs" />
+    <Compile Include="RN\SessaoRN.cs" />
+    <Compile Include="RN\SituacaoRN.cs" />
+    <Compile Include="RN\TipoDeEdicaoRN.cs" />
+    <Compile Include="RN\TipoDeFonteRN.cs" />
+    <Compile Include="RN\TipoDeNormaRN.cs" />
+    <Compile Include="RN\TipoDePublicacaoRN.cs" />
+    <Compile Include="RN\TipoDeRelacaoRN.cs" />
+    <Compile Include="RN\UsuarioRN.cs" />
+    <Compile Include="RN\VocabularioRN.cs" />
+    <Compile Include="RN\DiarioRN.cs" />
+    <Compile Include="AD\DiarioAD.cs" />
+    <Compile Include="RN\EmailRN.cs" />
+    <Compile Include="Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
