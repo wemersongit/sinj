@@ -1,0 +1,1810 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8979BDCF-CC5A-4EA5-87A4-F6273E382989}</ProjectGuid>
+    <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TCDF.Sinj.Web</RootNamespace>
+    <AssemblyName>TCDF.Sinj.Web</AssemblyName>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="neo.BRLightES">
+      <HintPath>..\..\..\..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
+    </Reference>
+    <Reference Include="neo.BRLightSession">
+      <HintPath>..\..\..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="neo.BRLightREST">
+      <HintPath>..\..\..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
+    </Reference>
+    <Reference Include="TCDF.Sinj">
+      <HintPath>..\..\..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
+    </Reference>
+    <Reference Include="util.BRLight">
+      <HintPath>..\..\..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BaixarArquivoDiario.aspx" />
+    <Content Include="BaixarArquivoNorma.aspx" />
+    <Content Include="CadastrarAutoria.aspx" />
+    <Content Include="CadastrarInteressado.aspx" />
+    <Content Include="CadastrarProcurador.aspx" />
+    <Content Include="CadastrarNotifiqueme.aspx" />
+    <Content Include="CadastrarRelator.aspx" />
+    <Content Include="CadastrarRequerente.aspx" />
+    <Content Include="CadastrarRequerido.aspx" />
+    <Content Include="CadastrarSituacao.aspx" />
+    <Content Include="CadastrarTipoDeEdicao.aspx" />
+    <Content Include="CadastrarTipoDeFonte.aspx" />
+    <Content Include="CadastrarNorma.aspx" />
+    <Content Include="CadastrarOrgao.aspx" />
+    <Content Include="CadastrarTipoDeNorma.aspx" />
+    <Content Include="CadastrarTipoDePublicacao.aspx" />
+    <Content Include="CadastrarTipoDeRelacao.aspx" />
+    <Content Include="CadastrarUsuario.aspx" />
+    <Content Include="CadastrarVide.aspx" />
+    <Content Include="CadastrarVocabulario.aspx" />
+    <Content Include="CamposTabelados.aspx" />
+    <Content Include="Configuracao.aspx" />
+    <Content Include="DetalhesDeAcesso.aspx" />
+    <Content Include="DetalhesDeAutoria.aspx" />
+    <Content Include="DetalhesDeErroExtracao.aspx" />
+    <Content Include="DetalhesDeErroIndexacao.aspx" />
+    <Content Include="DetalhesDeErroSistema.aspx" />
+    <Content Include="DetalhesDeInteressado.aspx" />
+    <Content Include="DetalhesDeLixeira.aspx" />
+    <Content Include="DetalhesDeNorma.aspx" />
+    <Content Include="DetalhesDeNotificacao.aspx" />
+    <Content Include="DetalhesDeNotifiqueme.aspx" />
+    <Content Include="DetalhesDeOperacao.aspx" />
+    <Content Include="DetalhesDeProcurador.aspx" />
+    <Content Include="DetalhesDeRelator.aspx" />
+    <Content Include="DetalhesDeRequerente.aspx" />
+    <Content Include="DetalhesDeRequerido.aspx" />
+    <Content Include="DetalhesDeSituacao.aspx" />
+    <Content Include="DetalhesDeTipoDeEdicao.aspx" />
+    <Content Include="DetalhesDeTipoDeFonte.aspx" />
+    <Content Include="DetalhesDeOrgao.aspx" />
+    <Content Include="DetalhesDeTipoDeNorma.aspx" />
+    <Content Include="DetalhesDeTipoDePublicacao.aspx" />
+    <Content Include="DetalhesDeTipoDeRelacao.aspx" />
+    <Content Include="DetalhesDeUsuario.aspx" />
+    <Content Include="DetalhesDeVocabulario.aspx" />
+    <Content Include="Arquivos.aspx" />
+    <Content Include="Diario.aspx" />
+    <Content Include="Download.aspx" />
+    <Content Include="EditarArquivo.aspx" />
+    <Content Include="EditarAutoria.aspx" />
+    <Content Include="EditarInteressado.aspx" />
+    <Content Include="EditarLinks.aspx" />
+    <Content Include="EditarProcurador.aspx" />
+    <Content Include="EditarRelator.aspx" />
+    <Content Include="EditarRequerente.aspx" />
+    <Content Include="EditarRequerido.aspx" />
+    <Content Include="EditarSituacao.aspx" />
+    <Content Include="EditarTipoDeEdicao.aspx" />
+    <Content Include="EditarTipoDeFonte.aspx" />
+    <Content Include="EditarNorma.aspx" />
+    <Content Include="EditarOrgao.aspx" />
+    <Content Include="EditarTipoDeNorma.aspx" />
+    <Content Include="EditarTipoDePublicacao.aspx" />
+    <Content Include="EditarTipoDeRelacao.aspx" />
+    <Content Include="EditarUsuario.aspx" />
+    <Content Include="EditarVide.aspx" />
+    <Content Include="EditarVocabulario.aspx" />
+    <Content Include="Erro.aspx" />
+    <Content Include="EstatisticasDePesquisas.aspx" />
+    <Content Include="Favoritos.aspx" />
+    <Content Include="GerenciarVocabulario.aspx" />
+    <Content Include="HistoricoDePesquisa.aspx" />
+    <Content Include="ListasVocabulario.aspx" />
+    <Content Include="LoginNotifiqueme.aspx" />
+    <Content Include="Norma.aspx" />
+    <Content Include="Notifiqueme.aspx" />
+    <Content Include="PesquisarAcesso.aspx" />
+    <Content Include="PesquisarErroExtracao.aspx" />
+    <Content Include="PesquisarErroIndexacao.aspx" />
+    <Content Include="PesquisarErroSistema.aspx" />
+    <Content Include="PesquisarInteressado.aspx" />
+    <Content Include="PesquisarLixeira.aspx" />
+    <Content Include="PesquisarNorma.aspx" />
+    <Content Include="PesquisarNotificacao.aspx" />
+    <Content Include="PesquisarOperacao.aspx" />
+    <Content Include="PesquisarPesquisas.aspx" />
+    <Content Include="PesquisarProcurador.aspx" />
+    <Content Include="PesquisarPush.aspx" />
+    <Content Include="PesquisarRelator.aspx" />
+    <Content Include="PesquisarRequerente.aspx" />
+    <Content Include="PesquisarRequerido.aspx" />
+    <Content Include="PesquisarSituacao.aspx" />
+    <Content Include="PesquisarTipoDeEdicao.aspx" />
+    <Content Include="PesquisarTipoDeFonte.aspx" />
+    <Content Include="PesquisarTipoDeNorma.aspx" />
+    <Content Include="PesquisarTipoDePublicacao.aspx" />
+    <Content Include="PesquisarTipoDeRelacao.aspx" />
+    <Content Include="PesquisarUsuario.aspx" />
+    <Content Include="PesquisarVocabulario.aspx" />
+    <Content Include="RecriarSenhaNotifiqueme.aspx" />
+    <Content Include="Reindexacao.aspx" />
+    <Content Include="Relatorio.aspx" />
+    <Content Include="RelatorioDePesquisa.aspx" />
+    <Content Include="RelatorioDePesquisaDeNorma.aspx" />
+    <Content Include="RelatorioDeVocabulario.aspx" />
+    <Content Include="ResultadoDePesquisaAcesso.aspx" />
+    <Content Include="ResultadoDePesquisaErroIndexacao.aspx" />
+    <Content Include="ResultadoDePesquisaErroSistema.aspx" />
+    <Content Include="ResultadoDePesquisaLixeira.aspx" />
+    <Content Include="ResultadoDePesquisaNorma.aspx" />
+    <Content Include="ResultadoDePesquisaNotificacao.aspx" />
+    <Content Include="ResultadoDePesquisaOperacao.aspx" />
+    <Content Include="ResultadoDePesquisaOrgao.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Logout.aspx" />
+    <Content Include="PesquisarOrgao.aspx" />
+    <Content Include="PesquisarAutoria.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="ashx\Login\Login.ashx" />
+    <Content Include="ashx\Login\checkLogin.ashx" />
+    <Content Include="ashx\Login\SessaoEnd.ashx" />
+    <Content Include="ashx\Autocomplete\OrgaoPaiAutocomplete.ashx" />
+    <Content Include="ashx\Datatable\OrgaoDatatable.ashx" />
+    <Content Include="ashx\Visualizacao\OrgaoDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\OrgaoExcluir.ashx" />
+    <Content Include="ashx\Datatable\AutoriaDatatable.ashx" />
+    <Content Include="ashx\Cadastro\AutoriaEditar.ashx" />
+    <Content Include="ashx\Cadastro\AutoriaIncluir.ashx" />
+    <Content Include="ashx\Cadastro\OrgaoIncluir.ashx" />
+    <Content Include="ashx\Cadastro\OrgaoEditar.ashx" />
+    <Content Include="ashx\Visualizacao\AutoriaDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\AutoriaExcluir.ashx" />
+    <Content Include="ashx\Cadastro\TipoDeFonteIncluir.ashx" />
+    <Content Include="ashx\Cadastro\TipoDeFonteEditar.ashx" />
+    <Content Include="ashx\Exclusao\TipoDeFonteExcluir.ashx" />
+    <Content Include="ashx\Datatable\TipoDeFonteDatatable.ashx" />
+    <Content Include="ashx\Visualizacao\TipoDeFonteDetalhes.ashx" />
+    <Content Include="ashx\Visualizacao\TipoDeNormaDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\TipoDeNormaExcluir.ashx" />
+    <Content Include="ashx\Datatable\TipoDeNormaDatatable.ashx" />
+    <Content Include="ashx\Datatable\NormaDatatable.ashx" />
+    <Content Include="ashx\Cadastro\TipoDeNormaIncluir.ashx" />
+    <Content Include="ashx\Cadastro\TipoDeNormaEditar.ashx" />
+    <Content Include="ashx\Exclusao\TipoDePublicacaoExcluir.ashx" />
+    <Content Include="ashx\Visualizacao\TipoDePublicacaoDetalhes.ashx" />
+    <Content Include="ashx\Datatable\TipoDePublicacaoDatatable.ashx" />
+    <Content Include="ashx\Cadastro\TipoDePublicacaoIncluir.ashx" />
+    <Content Include="ashx\Cadastro\TipoDePublicacaoEditar.ashx" />
+    <Content Include="ashx\Visualizacao\InteressadoDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\InteressadoExcluir.ashx" />
+    <Content Include="ashx\Datatable\InteressadoDatatable.ashx" />
+    <Content Include="ashx\Cadastro\InteressadoIncluir.ashx" />
+    <Content Include="ashx\Cadastro\InteressadoEditar.ashx" />
+    <Content Include="ashx\Visualizacao\SituacaoDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\SituacaoExcluir.ashx" />
+    <Content Include="ashx\Datatable\SituacaoDatatable.ashx" />
+    <Content Include="ashx\Cadastro\SituacaoIncluir.ashx" />
+    <Content Include="ashx\Cadastro\SituacaoEditar.ashx" />
+    <Content Include="ashx\Visualizacao\TipoDeRelacaoDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\TipoDeRelacaoExcluir.ashx" />
+    <Content Include="ashx\Datatable\TipoDeRelacaoDatatable.ashx" />
+    <Content Include="ashx\Cadastro\TipoDeRelacaoIncluir.ashx" />
+    <Content Include="ashx\Cadastro\TipoDeRelacaoEditar.ashx" />
+    <Content Include="ashx\Visualizacao\RequerenteDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\RequerenteExcluir.ashx" />
+    <Content Include="ashx\Datatable\RequerenteDatatable.ashx" />
+    <Content Include="ashx\Cadastro\RequerenteIncluir.ashx" />
+    <Content Include="ashx\Cadastro\RequerenteEditar.ashx" />
+    <Content Include="ashx\Visualizacao\RequeridoDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\RequeridoExcluir.ashx" />
+    <Content Include="ashx\Datatable\RequeridoDatatable.ashx" />
+    <Content Include="ashx\Cadastro\RequeridoIncluir.ashx" />
+    <Content Include="ashx\Cadastro\RequeridoEditar.ashx" />
+    <Content Include="ashx\Visualizacao\RelatorDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\RelatorExcluir.ashx" />
+    <Content Include="ashx\Datatable\RelatorDatatable.ashx" />
+    <Content Include="ashx\Cadastro\RelatorIncluir.ashx" />
+    <Content Include="ashx\Cadastro\RelatorEditar.ashx" />
+    <Content Include="ashx\Visualizacao\ProcuradorDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\ProcuradorExcluir.ashx" />
+    <Content Include="ashx\Datatable\ProcuradorDatatable.ashx" />
+    <Content Include="ashx\Cadastro\ProcuradorIncluir.ashx" />
+    <Content Include="ashx\Cadastro\ProcuradorEditar.ashx" />
+    <Content Include="ashx\Visualizacao\UsuarioDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\UsuarioExcluir.ashx" />
+    <Content Include="ashx\Datatable\UsuarioDatatable.ashx" />
+    <Content Include="ashx\Cadastro\UsuarioIncluir.ashx" />
+    <Content Include="ashx\Cadastro\UsuarioEditar.ashx" />
+    <Content Include="ashx\Autocomplete\PerfilAutocomplete.ashx" />
+    <Content Include="ashx\Path\ConfiguracaoPath.ashx" />
+    <Content Include="ashx\Visualizacao\ConfiguracaoDetalhes.ashx" />
+    <Content Include="ResultadoDePesquisa.aspx" />
+    <Content Include="ResultadoDePesquisaErroExtracao.aspx" />
+    <Content Include="ResultadoDePesquisaPesquisas.aspx" />
+    <Content Include="ResultadoDePesquisaPush.aspx" />
+    <Content Include="ResultadoDePesquisaSessao.aspx" />
+    <Content Include="Rotinas\AjustarChaveCronologia.aspx" />
+    <Content Include="Rotinas\AjustarChaveDiarios.aspx" />
+    <Content Include="Rotinas\AjustarNotifiqueme.aspx" />
+    <Content Include="Rotinas\AjustarOrgaos.aspx" />
+    <Content Include="Rotinas\AtualizarAutorias.aspx" />
+    <Content Include="Rotinas\AjustarOrgaoNormaAssociada.aspx" />
+    <Content Include="Rotinas\AtualizarFontes.aspx" />
+    <Content Include="Rotinas\AtualizarNormas.aspx" />
+    <Content Include="Rotinas\AtualizarTiposDeNorma.aspx" />
+    <Content Include="Rotinas\DeletarDtIdxNormas.aspx" />
+    <Content Include="Rotinas\Reindexar.aspx" />
+    <Content Include="TextoArquivoDiario.aspx" />
+    <Content Include="TextoArquivoNorma.aspx" />
+    <Content Include="Versao.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MasterLogin.Master" />
+    <Content Include="ashx\Autocomplete\OrgaoAnteriorAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\TipoDeNormaAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\OrgaoAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\AutoriaAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\InteressadoAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\TipoDeFonteAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\TipoDePublicacaoAutocomplete.ashx" />
+    <Content Include="ashx\Arquivo\NormaIncluirArquivo.ashx" />
+    <Content Include="ashx\Consulta\NormaConsulta.ashx" />
+    <Content Include="ashx\Consulta\OrgaoConsulta.ashx" />
+    <Content Include="ashx\Cadastro\NormaIncluir.ashx" />
+    <Content Include="ashx\Cadastro\NormaEditar.ashx" />
+    <Content Include="ashx\Visualizacao\NormaDetalhes.ashx" />
+    <Content Include="ashx\Cadastro\VocabularioIncluir.ashx" />
+    <Content Include="ashx\Cadastro\VocabularioEditar.ashx" />
+    <Content Include="ashx\Visualizacao\VocabularioDetalhes.ashx" />
+    <Content Include="ashx\Exclusao\NormaExcluir.ashx" />
+    <Content Include="ashx\Exclusao\VocabularioExcluir.ashx" />
+    <Content Include="ashx\Datatable\VocabularioDatatable.ashx" />
+    <Content Include="ashx\Autocomplete\VocabularioAutocomplete.ashx" />
+    <Content Include="PesquisarDiario.aspx" />
+    <Content Include="CadastrarDiario.aspx" />
+    <Content Include="ashx\Arquivo\DiarioIncluirArquivo.ashx" />
+    <Content Include="ashx\Cadastro\DiarioIncluir.ashx" />
+    <Content Include="ashx\Consulta\VocabularioTrocarTermoConsulta.ashx" />
+    <Content Include="ashx\Cadastro\VocabularioTrocar.ashx" />
+    <Content Include="ashx\Path\VocabularioPath.ashx" />
+    <Content Include="DetalhesDeDiario.aspx" />
+    <Content Include="ashx\Visualizacao\DiarioDetalhes.ashx" />
+    <Content Include="EditarDiario.aspx" />
+    <Content Include="ashx\Cadastro\DiarioEditar.ashx" />
+    <Content Include="ashx\Exclusao\DiarioExcluir.ashx" />
+    <Content Include="ResultadoDePesquisaDiario.aspx" />
+    <Content Include="ashx\Datatable\DiarioDatatable.ashx" />
+    <Content Include="FaleConosco.aspx" />
+    <Content Include="ashx\Push\NotifiquemeIncluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeLogin.ashx" />
+    <Content Include="ashx\Push\NotifiquemeCheckLogin.ashx" />
+    <Content Include="ashx\Push\NotifiquemeSessaoEnd.ashx" />
+    <Content Include="ashx\Datatable\NotifiquemeNormasMonitoradasDatatable.ashx" />
+    <Content Include="ashx\Push\NotifiquemeDetalhes.ashx" />
+    <Content Include="ashx\Push\NotifiquemeEditar.ashx" />
+    <Content Include="ashx\Arquivo\DiarioTextoArquivo.ashx" />
+    <Content Include="ashx\Arquivo\NormaTextoArquivo.ashx" />
+    <Content Include="ashx\Push\NotifiquemeNormaIncluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeNormaExcluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeNormaEditar.ashx" />
+    <Content Include="ashx\Push\NotifiquemeCriacaoNormaIncluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeCriacaoNormaExcluir.ashx" />
+    <Content Include="ashx\Consulta\VocabularioListasConsulta.ashx" />
+    <Content Include="ashx\Autocomplete\UsuarioAutocomplete.ashx" />
+    <Content Include="ashx\Consulta\VocabularioTotalConsulta.ashx" />
+    <Content Include="ashx\Consulta\VocabularioHomonimosConsulta.ashx" />
+    <Content Include="ashx\Datatable\VocabularioHomonimosDatatable.ashx" />
+    <Content Include="ashx\Datatable\NotifiquemeDatatable.ashx" />
+    <Content Include="ashx\Relatorio\NormaRelatorio.ashx" />
+    <Content Include="ashx\Consulta\TipoDeNormaConsulta.ashx" />
+    <Content Include="ashx\Visualizacao\NotifiquemeDetalhes.ashx" />
+    <Content Include="ashx\Datatable\CestaPesquisaDatatable.ashx" />
+    <Content Include="ashx\Datatable\HistoricoDePesquisaDatatable.ashx" />
+    <Content Include="ashx\Cadastro\HistoricoDePesquisaIncluir.ashx" />
+    <Content Include="ashx\Exclusao\HistoricoDePesquisaExcluir.ashx" />
+    <Content Include="ashx\Autocomplete\TipoDeRelacaoAutocomplete.ashx" />
+    <Content Include="ashx\Cadastro\VideIncluir.ashx" />
+    <Content Include="ashx\Cadastro\VideEditar.ashx" />
+    <Content Include="ashx\Exclusao\VideExcluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeRecriarSenha.ashx" />
+    <Content Include="ashx\Push\NotifiquemeEnviarRecriarSenha.ashx" />
+    <Content Include="ashx\Autocomplete\RequerenteAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\RequeridoAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\ProcuradorAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\RelatorAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\SituacaoAutocomplete.ashx" />
+    <Content Include="ashx\Push\NotifiquemeCriacaoNormaEditar.ashx" />
+    <Content Include="ashx\Datatable\ResultadoDePesquisaDatatable.ashx" />
+    <Content Include="ashx\Consulta\OrgaosInferioresConsulta.ashx" />
+    <Content Include="ashx\Consulta\HierarquiaOrgaoConsulta.ashx" />
+    <Content Include="ashx\Consulta\OrigemDaNormaConsulta.ashx" />
+    <Content Include="DesativarNormaPush.aspx" />
+    <Content Include="Arquivo.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ashx\Arquivo\DiarioTextoArquivo.ashx.cs">
+      <DependentUpon>DiarioTextoArquivo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Arquivo\HtmlFileEncoded.ashx.cs">
+      <DependentUpon>HtmlFileEncoded.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Arquivo\ImportFile.ashx.cs">
+      <DependentUpon>ImportFile.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Arquivo\NormaEditarArquivo.ashx.cs">
+      <DependentUpon>NormaEditarArquivo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Arquivo\NormaExibirArquivo.ashx.cs">
+      <DependentUpon>NormaExibirArquivo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Arquivo\NormaIncluirArquivo.ashx.cs">
+      <DependentUpon>NormaIncluirArquivo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Arquivo\NormaTextoArquivo.ashx.cs">
+      <DependentUpon>NormaTextoArquivo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Arquivo\UploadFile.ashx.cs">
+      <DependentUpon>UploadFile.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\AtualizarOrigemDasNormas.ashx.cs">
+      <DependentUpon>AtualizarOrigemDasNormas.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\AutoriaAutocomplete.ashx.cs">
+      <DependentUpon>AutoriaAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\InteressadoAutocomplete.ashx.cs">
+      <DependentUpon>InteressadoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\NotifiquemeAutocomplete.ashx.cs">
+      <DependentUpon>NotifiquemeAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\OrgaoAnteriorAutocomplete.ashx.cs">
+      <DependentUpon>OrgaoAnteriorAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\OrgaoAutocomplete.ashx.cs">
+      <DependentUpon>OrgaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\OrgaoPaiAutocomplete.ashx.cs">
+      <DependentUpon>OrgaoPaiAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\PerfilAutocomplete.ashx.cs">
+      <DependentUpon>PerfilAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\ProcuradorAutocomplete.ashx.cs">
+      <DependentUpon>ProcuradorAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\RelatorAutocomplete.ashx.cs">
+      <DependentUpon>RelatorAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\RequerenteAutocomplete.ashx.cs">
+      <DependentUpon>RequerenteAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\RequeridoAutocomplete.ashx.cs">
+      <DependentUpon>RequeridoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\SituacaoAutocomplete.ashx.cs">
+      <DependentUpon>SituacaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDeEdicaoAutocomplete.ashx.cs">
+      <DependentUpon>TipoDeEdicaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDeFonteAutocomplete.ashx.cs">
+      <DependentUpon>TipoDeFonteAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDeNormaAutocomplete.ashx.cs">
+      <DependentUpon>TipoDeNormaAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDePublicacaoAutocomplete.ashx.cs">
+      <DependentUpon>TipoDePublicacaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDeRelacaoAutocomplete.ashx.cs">
+      <DependentUpon>TipoDeRelacaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\UsuarioAutocomplete.ashx.cs">
+      <DependentUpon>UsuarioAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\VocabularioAutocomplete.ashx.cs">
+      <DependentUpon>VocabularioAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\ArquivoIncluir.ashx.cs">
+      <DependentUpon>ArquivoIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\AutoriaEditar.ashx.cs">
+      <DependentUpon>AutoriaEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\AutoriaIncluir.ashx.cs">
+      <DependentUpon>AutoriaIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\HistoricoDePesquisaIncluir.ashx.cs">
+      <DependentUpon>HistoricoDePesquisaIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Arquivo\UploadHtml.ashx.cs">
+      <DependentUpon>UploadHtml.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\InteressadoEditar.ashx.cs">
+      <DependentUpon>InteressadoEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\InteressadoIncluir.ashx.cs">
+      <DependentUpon>InteressadoIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\NormaEditar.ashx.cs">
+      <DependentUpon>NormaEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\NormaIncluir.ashx.cs">
+      <DependentUpon>NormaIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\ProcuradorEditar.ashx.cs">
+      <DependentUpon>ProcuradorEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\ProcuradorIncluir.ashx.cs">
+      <DependentUpon>ProcuradorIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\RelatorEditar.ashx.cs">
+      <DependentUpon>RelatorEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\RelatorIncluir.ashx.cs">
+      <DependentUpon>RelatorIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\RequerenteEditar.ashx.cs">
+      <DependentUpon>RequerenteEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\RequerenteIncluir.ashx.cs">
+      <DependentUpon>RequerenteIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\RequeridoEditar.ashx.cs">
+      <DependentUpon>RequeridoEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\RequeridoIncluir.ashx.cs">
+      <DependentUpon>RequeridoIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\SituacaoEditar.ashx.cs">
+      <DependentUpon>SituacaoEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\SituacaoIncluir.ashx.cs">
+      <DependentUpon>SituacaoIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDeEdicaoEditar.ashx.cs">
+      <DependentUpon>TipoDeEdicaoEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDeEdicaoIncluir.ashx.cs">
+      <DependentUpon>TipoDeEdicaoIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDeFonteEditar.ashx.cs">
+      <DependentUpon>TipoDeFonteEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDeFonteIncluir.ashx.cs">
+      <DependentUpon>TipoDeFonteIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\OrgaoEditar.ashx.cs">
+      <DependentUpon>OrgaoEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\OrgaoIncluir.ashx.cs">
+      <DependentUpon>OrgaoIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDeNormaEditar.ashx.cs">
+      <DependentUpon>TipoDeNormaEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDeNormaIncluir.ashx.cs">
+      <DependentUpon>TipoDeNormaIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDePublicacaoEditar.ashx.cs">
+      <DependentUpon>TipoDePublicacaoEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDePublicacaoIncluir.ashx.cs">
+      <DependentUpon>TipoDePublicacaoIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDeRelacaoEditar.ashx.cs">
+      <DependentUpon>TipoDeRelacaoEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\TipoDeRelacaoIncluir.ashx.cs">
+      <DependentUpon>TipoDeRelacaoIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\UsuarioEditar.ashx.cs">
+      <DependentUpon>UsuarioEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\UsuarioIncluir.ashx.cs">
+      <DependentUpon>UsuarioIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\VideEditar.ashx.cs">
+      <DependentUpon>VideEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\VideIncluir.ashx.cs">
+      <DependentUpon>VideIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\VocabularioEditar.ashx.cs">
+      <DependentUpon>VocabularioEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\VocabularioIncluir.ashx.cs">
+      <DependentUpon>VocabularioIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\VocabularioTrocar.ashx.cs">
+      <DependentUpon>VocabularioTrocar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\ArquivosConsulta.ashx.cs">
+      <DependentUpon>ArquivosConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\DiarioConsulta.ashx.cs">
+      <DependentUpon>DiarioConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\HistoricoDePesquisaConsulta.ashx.cs">
+      <DependentUpon>HistoricoDePesquisaConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\NormaConsulta.ashx.cs">
+      <DependentUpon>NormaConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\OrgaoConsulta.ashx.cs">
+      <DependentUpon>OrgaoConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\TipoDeNormaConsulta.ashx.cs">
+      <DependentUpon>TipoDeNormaConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\ValidarInativacaoHierarquiaInferior.ashx.cs">
+      <DependentUpon>ValidarInativacaoHierarquiaInferior.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\VocabularioHomonimosConsulta.ashx.cs">
+      <DependentUpon>VocabularioHomonimosConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\VocabularioListasConsulta.ashx.cs">
+      <DependentUpon>VocabularioListasConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\VocabularioTotalConsulta.ashx.cs">
+      <DependentUpon>VocabularioTotalConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\VocabularioTrocarTermoConsulta.ashx.cs">
+      <DependentUpon>VocabularioTrocarTermoConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\AcessoDatatable.ashx.cs">
+      <DependentUpon>AcessoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\ArquivoDatatable.ashx.cs">
+      <DependentUpon>ArquivoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\AutoriaDatatable.ashx.cs">
+      <DependentUpon>AutoriaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\CestaPesquisaDatatable.ashx.cs">
+      <DependentUpon>CestaPesquisaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\ErroExtracaoDatatable.ashx.cs">
+      <DependentUpon>ErroExtracaoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\ErroIndexacaoDatatable.ashx.cs">
+      <DependentUpon>ErroIndexacaoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\ErroSistemaDatatable.ashx.cs">
+      <DependentUpon>ErroSistemaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\FavoritosDatatable.ashx.cs">
+      <DependentUpon>FavoritosDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\HistoricoDePesquisaDatatable.ashx.cs">
+      <DependentUpon>HistoricoDePesquisaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\InteressadoDatatable.ashx.cs">
+      <DependentUpon>InteressadoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\LixeiraDatatable.ashx.cs">
+      <DependentUpon>LixeiraDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\NotifiquemeDatatable.ashx.cs">
+      <DependentUpon>NotifiquemeDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\NotifiquemeNormasMonitoradasDatatable.ashx.cs">
+      <DependentUpon>NotifiquemeNormasMonitoradasDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\OperacaoDatatable.ashx.cs">
+      <DependentUpon>OperacaoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\OrgaoDatatable.ashx.cs">
+      <DependentUpon>OrgaoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\ProcuradorDatatable.ashx.cs">
+      <DependentUpon>ProcuradorDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\RelatorDatatable.ashx.cs">
+      <DependentUpon>RelatorDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\RequerenteDatatable.ashx.cs">
+      <DependentUpon>RequerenteDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\RequeridoDatatable.ashx.cs">
+      <DependentUpon>RequeridoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\ResultadoDePesquisaDatatable.ashx.cs">
+      <DependentUpon>ResultadoDePesquisaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\SessaoDatatable.ashx.cs">
+      <DependentUpon>SessaoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\SituacaoDatatable.ashx.cs">
+      <DependentUpon>SituacaoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\TipoDeEdicaoDatatable.ashx.cs">
+      <DependentUpon>TipoDeEdicaoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\TipoDeFonteDatatable.ashx.cs">
+      <DependentUpon>TipoDeFonteDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\TipoDeNormaDatatable.ashx.cs">
+      <DependentUpon>TipoDeNormaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\TipoDePublicacaoDatatable.ashx.cs">
+      <DependentUpon>TipoDePublicacaoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\TipoDeRelacaoDatatable.ashx.cs">
+      <DependentUpon>TipoDeRelacaoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\UsuarioDatatable.ashx.cs">
+      <DependentUpon>UsuarioDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\VocabularioDatatable.ashx.cs">
+      <DependentUpon>VocabularioDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\VocabularioHomonimosDatatable.ashx.cs">
+      <DependentUpon>VocabularioHomonimosDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Email\EnviarEmail.ashx.cs">
+      <DependentUpon>EnviarEmail.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\ErrorJS.ashx.cs">
+      <DependentUpon>ErrorJS.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\ArquivoExcluir.ashx.cs">
+      <DependentUpon>ArquivoExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\AutoriaExcluir.ashx.cs">
+      <DependentUpon>AutoriaExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\HistoricoDePesquisaExcluir.ashx.cs">
+      <DependentUpon>HistoricoDePesquisaExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\InteressadoExcluir.ashx.cs">
+      <DependentUpon>InteressadoExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\NormaExcluir.ashx.cs">
+      <DependentUpon>NormaExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\OrgaoExcluir.ashx.cs">
+      <DependentUpon>OrgaoExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\ProcuradorExcluir.ashx.cs">
+      <DependentUpon>ProcuradorExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\RelatorExcluir.ashx.cs">
+      <DependentUpon>RelatorExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\RequerenteExcluir.ashx.cs">
+      <DependentUpon>RequerenteExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\RequeridoExcluir.ashx.cs">
+      <DependentUpon>RequeridoExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\SessaoExcluir.ashx.cs">
+      <DependentUpon>SessaoExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\SituacaoExcluir.ashx.cs">
+      <DependentUpon>SituacaoExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\TipoDeEdicaoExcluir.ashx.cs">
+      <DependentUpon>TipoDeEdicaoExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\TipoDeFonteExcluir.ashx.cs">
+      <DependentUpon>TipoDeFonteExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\TipoDeNormaExcluir.ashx.cs">
+      <DependentUpon>TipoDeNormaExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\TipoDeRelacaoExcluir.ashx.cs">
+      <DependentUpon>TipoDeRelacaoExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\UsuarioExcluir.ashx.cs">
+      <DependentUpon>UsuarioExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\VideExcluir.ashx.cs">
+      <DependentUpon>VideExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\VocabularioExcluir.ashx.cs">
+      <DependentUpon>VocabularioExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Login\checkLogin.ashx.cs">
+      <DependentUpon>checkLogin.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Login\Login.ashx.cs">
+      <DependentUpon>Login.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\NormaDatatable.ashx.cs">
+      <DependentUpon>NormaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Login\SessaoEnd.ashx.cs">
+      <DependentUpon>SessaoEnd.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Path\ConfiguracaoPath.ashx.cs">
+      <DependentUpon>ConfiguracaoPath.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Path\OrigemDaNormaPath.ashx.cs">
+      <DependentUpon>OrigemDaNormaPath.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Path\VocabularioPath.ashx.cs">
+      <DependentUpon>VocabularioPath.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\FavoritosExcluir.ashx.cs">
+      <DependentUpon>FavoritosExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\FavoritosIncluir.ashx.cs">
+      <DependentUpon>FavoritosIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeCheckLogin.ashx.cs">
+      <DependentUpon>NotifiquemeCheckLogin.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeCriacaoNormaEditar.ashx.cs">
+      <DependentUpon>NotifiquemeCriacaoNormaEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeCriacaoNormaExcluir.ashx.cs">
+      <DependentUpon>NotifiquemeCriacaoNormaExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeCriacaoNormaIncluir.ashx.cs">
+      <DependentUpon>NotifiquemeCriacaoNormaIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeDetalhes.ashx.cs">
+      <DependentUpon>NotifiquemeDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeEditar.ashx.cs">
+      <DependentUpon>NotifiquemeEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeEnviarRecriarSenha.ashx.cs">
+      <DependentUpon>NotifiquemeEnviarRecriarSenha.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeIncluir.ashx.cs">
+      <DependentUpon>NotifiquemeIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeLogin.ashx.cs">
+      <DependentUpon>NotifiquemeLogin.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeNormaEditar.ashx.cs">
+      <DependentUpon>NotifiquemeNormaEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeNormaExcluir.ashx.cs">
+      <DependentUpon>NotifiquemeNormaExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeNormaIncluir.ashx.cs">
+      <DependentUpon>NotifiquemeNormaIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeRecriarSenha.ashx.cs">
+      <DependentUpon>NotifiquemeRecriarSenha.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeSessaoEnd.ashx.cs">
+      <DependentUpon>NotifiquemeSessaoEnd.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Reindexacao\AlterIdxExpUrl.ashx.cs">
+      <DependentUpon>AlterIdxExpUrl.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Reindexacao\CreateIndex.ashx.cs">
+      <DependentUpon>CreateIndex.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Reindexacao\CreateType.ashx.cs">
+      <DependentUpon>CreateType.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Reindexacao\FollowIndexing.ashx.cs">
+      <DependentUpon>FollowIndexing.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Reindexacao\GetEs.ashx.cs">
+      <DependentUpon>GetEs.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Reindexacao\GetMetadata.ashx.cs">
+      <DependentUpon>GetMetadata.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Reindexacao\Reindex.ashx.cs">
+      <DependentUpon>Reindex.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Reindexacao\ResetRest.ashx.cs">
+      <DependentUpon>ResetRest.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Relatorio\NormaRelatorio.ashx.cs">
+      <DependentUpon>NormaRelatorio.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\RestaurarExcluido.ashx.cs">
+      <DependentUpon>RestaurarExcluido.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\AcessoDetalhes.ashx.cs">
+      <DependentUpon>AcessoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\AutoriaDetalhes.ashx.cs">
+      <DependentUpon>AutoriaDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\ConfiguracaoDetalhes.ashx.cs">
+      <DependentUpon>ConfiguracaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\ErroExtracaoDetalhes.ashx.cs">
+      <DependentUpon>ErroExtracaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\ErroIndexacaoDetalhes.ashx.cs">
+      <DependentUpon>ErroIndexacaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\ErroSistemaDetalhes.ashx.cs">
+      <DependentUpon>ErroSistemaDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\InteressadoDetalhes.ashx.cs">
+      <DependentUpon>InteressadoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\NotificacaoDetalhes.ashx.cs">
+      <DependentUpon>NotificacaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\LixeiraDetalhes.ashx.cs">
+      <DependentUpon>LixeiraDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\NormaDetalhes.ashx.cs">
+      <DependentUpon>NormaDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\NotifiquemeDetalhes.ashx.cs">
+      <DependentUpon>NotifiquemeDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\OperacaoDetalhes.ashx.cs">
+      <DependentUpon>OperacaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\OrgaoDetalhes.ashx.cs">
+      <DependentUpon>OrgaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\ProcuradorDetalhes.ashx.cs">
+      <DependentUpon>ProcuradorDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\RelatorDetalhes.ashx.cs">
+      <DependentUpon>RelatorDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\RequerenteDetalhes.ashx.cs">
+      <DependentUpon>RequerenteDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\RequeridoDetalhes.ashx.cs">
+      <DependentUpon>RequeridoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\SituacaoDetalhes.ashx.cs">
+      <DependentUpon>SituacaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\TipoDeEdicaoDetalhes.ashx.cs">
+      <DependentUpon>TipoDeEdicaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\TipoDeFonteDetalhes.ashx.cs">
+      <DependentUpon>TipoDeFonteDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\TipoDeNormaDetalhes.ashx.cs">
+      <DependentUpon>TipoDeNormaDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\TipoDePublicacaoExcluir.ashx.cs">
+      <DependentUpon>TipoDePublicacaoExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\TipoDePublicacaoDetalhes.ashx.cs">
+      <DependentUpon>TipoDePublicacaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\TipoDeRelacaoDetalhes.ashx.cs">
+      <DependentUpon>TipoDeRelacaoDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\UsuarioDetalhes.ashx.cs">
+      <DependentUpon>UsuarioDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\VocabularioDetalhes.ashx.cs">
+      <DependentUpon>VocabularioDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="BaixarArquivoDiario.aspx.cs">
+      <DependentUpon>BaixarArquivoDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BaixarArquivoDiario.aspx.designer.cs">
+      <DependentUpon>BaixarArquivoDiario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BaixarArquivoNorma.aspx.cs">
+      <DependentUpon>BaixarArquivoNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BaixarArquivoNorma.aspx.designer.cs">
+      <DependentUpon>BaixarArquivoNorma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CadastrarAutoria.aspx.cs">
+      <DependentUpon>CadastrarAutoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarInteressado.aspx.cs">
+      <DependentUpon>CadastrarInteressado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarProcurador.aspx.cs">
+      <DependentUpon>CadastrarProcurador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarNotifiqueme.aspx.cs">
+      <DependentUpon>CadastrarNotifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarRelator.aspx.cs">
+      <DependentUpon>CadastrarRelator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarRequerente.aspx.cs">
+      <DependentUpon>CadastrarRequerente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarRequerido.aspx.cs">
+      <DependentUpon>CadastrarRequerido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarSituacao.aspx.cs">
+      <DependentUpon>CadastrarSituacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarTipoDeEdicao.aspx.cs">
+      <DependentUpon>CadastrarTipoDeEdicao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarTipoDeFonte.aspx.cs">
+      <DependentUpon>CadastrarTipoDeFonte.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarNorma.aspx.cs">
+      <DependentUpon>CadastrarNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarOrgao.aspx.cs">
+      <DependentUpon>CadastrarOrgao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarTipoDeNorma.aspx.cs">
+      <DependentUpon>CadastrarTipoDeNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarTipoDePublicacao.aspx.cs">
+      <DependentUpon>CadastrarTipoDePublicacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarTipoDeRelacao.aspx.cs">
+      <DependentUpon>CadastrarTipoDeRelacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarUsuario.aspx.cs">
+      <DependentUpon>CadastrarUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarVide.aspx.cs">
+      <DependentUpon>CadastrarVide.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarVocabulario.aspx.cs">
+      <DependentUpon>CadastrarVocabulario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CamposTabelados.aspx.cs">
+      <DependentUpon>CamposTabelados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Configuracao.aspx.cs">
+      <DependentUpon>Configuracao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeAcesso.aspx.cs">
+      <DependentUpon>DetalhesDeAcesso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeAutoria.aspx.cs">
+      <DependentUpon>DetalhesDeAutoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeErroExtracao.aspx.cs">
+      <DependentUpon>DetalhesDeErroExtracao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeErroIndexacao.aspx.cs">
+      <DependentUpon>DetalhesDeErroIndexacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeErroSistema.aspx.cs">
+      <DependentUpon>DetalhesDeErroSistema.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeInteressado.aspx.cs">
+      <DependentUpon>DetalhesDeInteressado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeLixeira.aspx.cs">
+      <DependentUpon>DetalhesDeLixeira.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeNorma.aspx.cs">
+      <DependentUpon>DetalhesDeNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeNotificacao.aspx.cs">
+      <DependentUpon>DetalhesDeNotificacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeNotifiqueme.aspx.cs">
+      <DependentUpon>DetalhesDeNotifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeOperacao.aspx.cs">
+      <DependentUpon>DetalhesDeOperacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeProcurador.aspx.cs">
+      <DependentUpon>DetalhesDeProcurador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeRelator.aspx.cs">
+      <DependentUpon>DetalhesDeRelator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeRequerente.aspx.cs">
+      <DependentUpon>DetalhesDeRequerente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeRequerido.aspx.cs">
+      <DependentUpon>DetalhesDeRequerido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeSituacao.aspx.cs">
+      <DependentUpon>DetalhesDeSituacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeTipoDeEdicao.aspx.cs">
+      <DependentUpon>DetalhesDeTipoDeEdicao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeTipoDeFonte.aspx.cs">
+      <DependentUpon>DetalhesDeTipoDeFonte.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeOrgao.aspx.cs">
+      <DependentUpon>DetalhesDeOrgao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeTipoDeNorma.aspx.cs">
+      <DependentUpon>DetalhesDeTipoDeNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeTipoDePublicacao.aspx.cs">
+      <DependentUpon>DetalhesDeTipoDePublicacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeTipoDeRelacao.aspx.cs">
+      <DependentUpon>DetalhesDeTipoDeRelacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeUsuario.aspx.cs">
+      <DependentUpon>DetalhesDeUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeVocabulario.aspx.cs">
+      <DependentUpon>DetalhesDeVocabulario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Arquivos.aspx.cs">
+      <DependentUpon>Arquivos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Diario.aspx.cs">
+      <DependentUpon>Diario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Diario.aspx.designer.cs">
+      <DependentUpon>Diario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Download.aspx.cs">
+      <DependentUpon>Download.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Download.aspx.designer.cs">
+      <DependentUpon>Download.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarArquivo.aspx.cs">
+      <DependentUpon>EditarArquivo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarAutoria.aspx.cs">
+      <DependentUpon>EditarAutoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarInteressado.aspx.cs">
+      <DependentUpon>EditarInteressado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarLinks.aspx.cs">
+      <DependentUpon>EditarLinks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarLinks.aspx.designer.cs">
+      <DependentUpon>EditarLinks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarProcurador.aspx.cs">
+      <DependentUpon>EditarProcurador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarRelator.aspx.cs">
+      <DependentUpon>EditarRelator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarRequerente.aspx.cs">
+      <DependentUpon>EditarRequerente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarRequerido.aspx.cs">
+      <DependentUpon>EditarRequerido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarSituacao.aspx.cs">
+      <DependentUpon>EditarSituacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarTipoDeEdicao.aspx.cs">
+      <DependentUpon>EditarTipoDeEdicao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarTipoDeFonte.aspx.cs">
+      <DependentUpon>EditarTipoDeFonte.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarNorma.aspx.cs">
+      <DependentUpon>EditarNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarOrgao.aspx.cs">
+      <DependentUpon>EditarOrgao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarTipoDeNorma.aspx.cs">
+      <DependentUpon>EditarTipoDeNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarTipoDePublicacao.aspx.cs">
+      <DependentUpon>EditarTipoDePublicacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarTipoDeRelacao.aspx.cs">
+      <DependentUpon>EditarTipoDeRelacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarUsuario.aspx.cs">
+      <DependentUpon>EditarUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarVide.aspx.cs">
+      <DependentUpon>EditarVide.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarVocabulario.aspx.cs">
+      <DependentUpon>EditarVocabulario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Erro.aspx.cs">
+      <DependentUpon>Erro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EstatisticasDePesquisas.aspx.cs">
+      <DependentUpon>EstatisticasDePesquisas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Favoritos.aspx.cs">
+      <DependentUpon>Favoritos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GerenciarVocabulario.aspx.cs">
+      <DependentUpon>GerenciarVocabulario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HistoricoDePesquisa.aspx.cs">
+      <DependentUpon>HistoricoDePesquisa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListasVocabulario.aspx.cs">
+      <DependentUpon>ListasVocabulario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginNotifiqueme.aspx.cs">
+      <DependentUpon>LoginNotifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterLogin.Master.cs">
+      <DependentUpon>MasterLogin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Norma.aspx.cs">
+      <DependentUpon>Norma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Norma.aspx.designer.cs">
+      <DependentUpon>Norma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Notifiqueme.aspx.cs">
+      <DependentUpon>Notifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarAcesso.aspx.cs">
+      <DependentUpon>PesquisarAcesso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarErroExtracao.aspx.cs">
+      <DependentUpon>PesquisarErroExtracao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarErroIndexacao.aspx.cs">
+      <DependentUpon>PesquisarErroIndexacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarErroSistema.aspx.cs">
+      <DependentUpon>PesquisarErroSistema.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarInteressado.aspx.cs">
+      <DependentUpon>PesquisarInteressado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarLixeira.aspx.cs">
+      <DependentUpon>PesquisarLixeira.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarNorma.aspx.cs">
+      <DependentUpon>PesquisarNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarNotificacao.aspx.cs">
+      <DependentUpon>PesquisarNotificacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarOperacao.aspx.cs">
+      <DependentUpon>PesquisarOperacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarPesquisas.aspx.cs">
+      <DependentUpon>PesquisarPesquisas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarProcurador.aspx.cs">
+      <DependentUpon>PesquisarProcurador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarPush.aspx.cs">
+      <DependentUpon>PesquisarPush.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarRelator.aspx.cs">
+      <DependentUpon>PesquisarRelator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarRequerente.aspx.cs">
+      <DependentUpon>PesquisarRequerente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarRequerido.aspx.cs">
+      <DependentUpon>PesquisarRequerido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarSituacao.aspx.cs">
+      <DependentUpon>PesquisarSituacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarTipoDeEdicao.aspx.cs">
+      <DependentUpon>PesquisarTipoDeEdicao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarTipoDeFonte.aspx.cs">
+      <DependentUpon>PesquisarTipoDeFonte.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarOrgao.aspx.cs">
+      <DependentUpon>PesquisarOrgao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarTipoDeNorma.aspx.cs">
+      <DependentUpon>PesquisarTipoDeNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarTipoDePublicacao.aspx.cs">
+      <DependentUpon>PesquisarTipoDePublicacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarTipoDeRelacao.aspx.cs">
+      <DependentUpon>PesquisarTipoDeRelacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarUsuario.aspx.cs">
+      <DependentUpon>PesquisarUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarVocabulario.aspx.cs">
+      <DependentUpon>PesquisarVocabulario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecriarSenhaNotifiqueme.aspx.cs">
+      <DependentUpon>RecriarSenhaNotifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecriarSenhaNotifiqueme.aspx.designer.cs">
+      <DependentUpon>RecriarSenhaNotifiqueme.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reindexacao.aspx.cs">
+      <DependentUpon>Reindexacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Relatorio.aspx.cs">
+      <DependentUpon>Relatorio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RelatorioDePesquisa.aspx.cs">
+      <DependentUpon>RelatorioDePesquisa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RelatorioDePesquisaDeNorma.aspx.cs">
+      <DependentUpon>RelatorioDePesquisaDeNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RelatorioDeVocabulario.aspx.cs">
+      <DependentUpon>RelatorioDeVocabulario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisa.aspx.cs">
+      <DependentUpon>ResultadoDePesquisa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaAcesso.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaAcesso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaErroIndexacao.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaErroIndexacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaErroSistema.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaErroSistema.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaLixeira.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaLixeira.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaNorma.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaNotificacao.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaNotificacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaOperacao.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaOperacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaOrgao.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaOrgao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaErroExtracao.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaErroExtracao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaPesquisas.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaPesquisas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaPush.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaPush.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaSessao.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaSessao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AjustarChaveCronologia.aspx.cs">
+      <DependentUpon>AjustarChaveCronologia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AjustarChaveCronologia.aspx.designer.cs">
+      <DependentUpon>AjustarChaveCronologia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\AjustarChaveDiarios.aspx.cs">
+      <DependentUpon>AjustarChaveDiarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AjustarChaveDiarios.aspx.designer.cs">
+      <DependentUpon>AjustarChaveDiarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\AjustarNotifiqueme.aspx.cs">
+      <DependentUpon>AjustarNotifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AjustarNotifiqueme.aspx.designer.cs">
+      <DependentUpon>AjustarNotifiqueme.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\AjustarOrgaos.aspx.cs">
+      <DependentUpon>AjustarOrgaos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AjustarOrgaos.aspx.designer.cs">
+      <DependentUpon>AjustarOrgaos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\AtualizarAutorias.aspx.cs">
+      <DependentUpon>AtualizarAutorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AtualizarAutorias.aspx.designer.cs">
+      <DependentUpon>AtualizarAutorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\AjustarOrgaoNormaAssociada.aspx.cs">
+      <DependentUpon>AjustarOrgaoNormaAssociada.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AjustarOrgaoNormaAssociada.aspx.designer.cs">
+      <DependentUpon>AjustarOrgaoNormaAssociada.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\AtualizarFontes.aspx.cs">
+      <DependentUpon>AtualizarFontes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AtualizarFontes.aspx.designer.cs">
+      <DependentUpon>AtualizarFontes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\AtualizarNormas.aspx.cs">
+      <DependentUpon>AtualizarNormas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AtualizarNormas.aspx.designer.cs">
+      <DependentUpon>AtualizarNormas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\AtualizarTiposDeNorma.aspx.cs">
+      <DependentUpon>AtualizarTiposDeNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\AtualizarTiposDeNorma.aspx.designer.cs">
+      <DependentUpon>AtualizarTiposDeNorma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\DeletarDtIdxNormas.aspx.cs">
+      <DependentUpon>DeletarDtIdxNormas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\DeletarDtIdxNormas.aspx.designer.cs">
+      <DependentUpon>DeletarDtIdxNormas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rotinas\Reindexar.aspx.cs">
+      <DependentUpon>Reindexar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rotinas\Reindexar.aspx.designer.cs">
+      <DependentUpon>Reindexar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Sinj.Master.cs">
+      <DependentUpon>Sinj.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sinj.Master.designer.cs">
+      <DependentUpon>Sinj.Master</DependentUpon>
+    </Compile>
+    <Compile Include="PesquisarAutoria.aspx.cs">
+      <DependentUpon>PesquisarAutoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TextoArquivoDiario.aspx.cs">
+      <DependentUpon>TextoArquivoDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TextoArquivoDiario.aspx.designer.cs">
+      <DependentUpon>TextoArquivoDiario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TextoArquivoNorma.aspx.cs">
+      <DependentUpon>TextoArquivoNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TextoArquivoNorma.aspx.designer.cs">
+      <DependentUpon>TextoArquivoNorma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PesquisarDiario.aspx.cs">
+      <DependentUpon>PesquisarDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CadastrarDiario.aspx.cs">
+      <DependentUpon>CadastrarDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ashx\Arquivo\DiarioIncluirArquivo.ashx.cs">
+      <DependentUpon>DiarioIncluirArquivo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\DiarioIncluir.ashx.cs">
+      <DependentUpon>DiarioIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="DetalhesDeDiario.aspx.cs">
+      <DependentUpon>DetalhesDeDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\DiarioDetalhes.ashx.cs">
+      <DependentUpon>DiarioDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarDiario.aspx.cs">
+      <DependentUpon>EditarDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ashx\Cadastro\DiarioEditar.ashx.cs">
+      <DependentUpon>DiarioEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\DiarioExcluir.ashx.cs">
+      <DependentUpon>DiarioExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ResultadoDePesquisaDiario.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ashx\Datatable\DiarioDatatable.ashx.cs">
+      <DependentUpon>DiarioDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="FaleConosco.aspx.cs">
+      <DependentUpon>FaleConosco.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ashx\Consulta\OrgaosInferioresConsulta.ashx.cs">
+      <DependentUpon>OrgaosInferioresConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\HierarquiaOrgaoConsulta.ashx.cs">
+      <DependentUpon>HierarquiaOrgaoConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\OrigemDaNormaConsulta.ashx.cs">
+      <DependentUpon>OrigemDaNormaConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="DesativarNormaPush.aspx.cs">
+      <DependentUpon>DesativarNormaPush.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DesativarNormaPush.aspx.designer.cs">
+      <DependentUpon>DesativarNormaPush.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Arquivo.ashx.cs">
+      <DependentUpon>Arquivo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Versao.aspx.cs">
+      <DependentUpon>Versao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Versao.aspx.designer.cs">
+      <DependentUpon>Versao.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sinj.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ashx\Portal\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Reindexacao\CreateIndex.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Reindexacao\GetEs.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Reindexacao\CreateType.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Reindexacao\Reindex.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Reindexacao\AlterIdxExpUrl.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Reindexacao\ResetRest.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Reindexacao\GetMetadata.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Reindexacao\FollowIndexing.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Path\OrigemDaNormaPath.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\AtualizarOrigemDasNormas.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Consulta\ValidarInativacaoHierarquiaInferior.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\ErrorJS.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\FavoritosDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\FavoritosIncluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\FavoritosExcluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Arquivo\NormaEditarArquivo.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Arquivo\NormaExibirArquivo.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\ErroExtracaoDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Visualizacao\ErroExtracaoDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\ErroSistemaDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\AcessoDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Visualizacao\AcessoDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Visualizacao\ErroSistemaDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Autocomplete\NotifiquemeAutocomplete.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\SessaoDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Exclusao\SessaoExcluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\OperacaoDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Visualizacao\OperacaoDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Email\EnviarEmail.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Visualizacao\NotificacaoDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\ErroIndexacaoDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Visualizacao\ErroIndexacaoDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\LixeiraDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Visualizacao\LixeiraDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\RestaurarExcluido.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Consulta\HistoricoDePesquisaConsulta.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\TipoDeEdicaoDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Cadastro\TipoDeEdicaoEditar.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Cadastro\TipoDeEdicaoIncluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Visualizacao\TipoDeEdicaoDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Exclusao\TipoDeEdicaoExcluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Exclusao\ArquivoExcluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Consulta\ArquivosConsulta.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Cadastro\ArquivoIncluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Arquivo\UploadHtml.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Arquivo\UploadFile.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Arquivo\HtmlFileEncoded.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Autocomplete\TipoDeEdicaoAutocomplete.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Consulta\DiarioConsulta.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Arquivo\ImportFile.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\ArquivoDatatable.ashx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>10499</DevelopmentServerPort>
+          <DevelopmentServerVPath>/sinjcadastro/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+    <MonoDevelop>
+      <Properties VerifyCodeBehindFields="True" VerifyCodeBehindEvents="True">
+        <XspParameters Port="8081" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <WebDeployTargets>
+          <Target Name="">
+            <FileCopier Handler="MonoDevelop.Deployment.LocalFileCopyHandler" TargetDirectory="/home/brlight/Desktop/sinj_deploy/sinjcadastro" ctype="LocalFileCopyConfiguration" />
+          </Target>
+        </WebDeployTargets>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

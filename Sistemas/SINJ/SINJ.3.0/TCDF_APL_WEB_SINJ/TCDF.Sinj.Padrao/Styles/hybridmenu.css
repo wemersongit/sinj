@@ -1,0 +1,345 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+/**
+ * html5doctor.com Reset Stylesheet v1.6.1 (http://html5doctor.com/html-5-reset-stylesheet/)
+ * Richard Clark (http://richclarkdesign.com)
+ * http://cssreset.com
+ */
+
+#hybridmenu ul, #hybridmenu li, #mobile-menu ul, #mobile-menu li, article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+nav ul {
+    list-style:none;
+}
+blockquote, q {
+    quotes:none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+
+
+/* ----------------------------- JQuery UI ----------------------------- */
+
+.ui-helper-hidden{display:none}.ui-helper-hidden-accessible{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.ui-helper-reset{margin:0;padding:0;border:0;outline:0;line-height:1.3;text-decoration:none;font-size:100%;list-style:none}.ui-helper-clearfix:before,.ui-helper-clearfix:after{content:"";display:table;border-collapse:collapse}.ui-helper-clearfix:after{clear:both}.ui-helper-clearfix{min-height:0}.ui-helper-zfix{width:100%;height:100%;top:0;left:0;position:absolute;opacity:0;filter:Alpha(Opacity=0)}.ui-front{z-index:100}.ui-state-disabled{cursor:default!important}.ui-icon{display:block;text-indent:-99999px;overflow:hidden;background-repeat:no-repeat}.ui-widget-overlay{position:fixed;top:0;left:0;width:100%;height:100%}
+
+/* ----------------------------- Custom Code ----------------------------- */
+
+
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+#wrapper {
+  width: 100%;
+  margin: 0 auto;
+  min-height: 600px;  
+  position: relative;
+  background-color: white;
+  left: 0;
+}
+
+
+h1 {
+  font-size: 23px;
+  line-height: 26px;
+  padding-bottom: 20px;
+}
+
+p {
+  padding-bottom: 5px;
+}
+
+/* ----------------------------- Menu Code ----------------------------- */
+
+#hybridmenu {
+  -moz-box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+  position: fixed;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #3da023; /* Default intense green color of menu */
+  top: 0;
+  z-index: 1000;
+  left: 0;
+}
+
+#hybridmenu ul {
+  margin: 0 auto;
+  width: 80%;
+}
+
+#hybridmenu ul li {
+  float: left;
+  height: 75px;
+}
+
+#hybridmenu ul li a,
+#mobile-menu ul li a {
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-decoration: none;
+  padding: 28px 20px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#mobile-menu ul li a {
+  height: auto;
+}
+
+#hybridmenu ul li:hover a {
+  background-color: #6fc15a; /* Hover color of menu */
+}
+
+#hybridmenu ul li:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+#hybridmenu li.logo a {
+  padding: 0 20px;
+}
+
+#hybridmenu .logo,
+#hybridmenu ul li.logo:hover a {
+  background: none;
+}
+
+#hybridmenu ul li.menu-right {
+  float: right;
+}
+
+#hybridmenu ul li.menu-right a {
+  font-size: 14px;
+}
+
+#hybridmenu ul li.parent {
+  position: relative;
+}
+
+#hybridmenu ul li.parent.hidden {
+  overflow: hidden;
+}
+
+#hybridmenu ul li.parent.opened {
+  overflow: visible;
+}
+
+#hybridmenu ul.sub-menu {
+  background-color: #3da023; /* Default intense green color of menu */
+  position: absolute;
+  width: 250px;  
+  display: none;
+  -moz-box-shadow: 1px -1px 3px rgba(0, 0, 0, 0.5); 
+  -webkit-box-shadow: 1px -1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px -1px 3px rgba(0, 0, 0, 0.5); 
+}
+
+#hybridmenu ul.sub-menu li {
+  height: auto;
+  width: 100%;
+}
+
+#hybridmenu ul li i,
+#hybridmenu ul li.mobile-menu-item {
+  display: none;
+  font-size: 22px;
+  color: white;
+}
+
+#hybridmenu ul.sub-menu li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  font-size: 14px;
+}
+
+#hybridmenu ul.sub-menu li:hover a {
+  background-color: #6fc15a;  /* Hover color of menu */
+}
+
+#hybridmenu ul li.mobile-menu-item i {
+  padding-top: 26px;
+  padding-left: 20px;
+}
+
+#hybridmenu ul li.mobile-menu-item {
+  width: 20%;
+  cursor: pointer;
+}
+
+#hybridmenu ul li.mobile-menu-item:hover {
+  background-color: transparent;
+}
+
+#mobile-menu {
+  position: absolute;
+  background-color: #EEEEEE;
+  top: 0;
+  overflow: hidden;
+  width: 80%;
+}
+
+#mobile-menu ul li {
+  background-color: #3da023; /* Default intense green color of menu */
+  border-top: 1px solid #eee; 
+}
+
+#mobile-menu ul li:hover {
+  background-color: #6fc15a; /* Hover color of menu */
+  border-top: 1px solid #eee;
+}
+
+#mobile-menu ul li a {
+  padding: 25px 15px;
+}
+
+#mobile-menu ul li a span {
+  padding-left: 15px;
+}
+
+#mobile-menu ul li a i {
+  font-size: 23px;
+  vertical-align: middle;
+}
+
+.fa-chevron-right { /* arrow style */
+  float: right;
+  color: white;
+}
+
+li:not(.hassub) .fa-chevron-right{ /* hide arrow inside LIs with no sub menus */
+	display: none;
+}
+
+.fa-chevron-left { /* arrow style */
+  color: white;
+}
+
+#wrapper.mobile-opened,
+nav#hybridmenu.mobile-opened {
+  left: 80%;
+}
+
+nav#hybridmenu.mobile-opened ul {
+  margin: 0;
+}
+
+.fa-chevron-left {
+  padding-right: 15px;
+}
+
+.mobile-heading,
+#mobile-menu ul.sub-menu {
+  background-color: #3da023; /* Default intense green color of menu */
+}
+
+#mobile-menu ul.sub-menu {
+  position: absolute;
+  width: 80%;
+  z-index: 999;
+  left: -80%;
+  top: 0;  
+  height: 100%;
+}
+
+#mobile-menu ul.sub-menu .fa-chevron-right {
+  display: none; /* hide right arrow for 2nd level LIs */
+}
+
+#mobile-menu ul.sub-menu.opened {
+  left: 0;
+  width: 100%;
+}
+
+.mobile-heading i.fa-chevron-right {
+  display: none;
+}
+
+/* ----------------------------- CSS Media Queries ----------------------------- */
+
+/*
+These rules control which portions of the menu gets shown when the screen size is below a certain width.
+By default 3 stages are defined.
+*/
+
+@media screen and (max-width: 1175px) { /* Stage 1: Hide menu text and show corresponding CSS font icons (from Fontawesome) instead */
+
+  #hybridmenu ul li a span {
+    display: none;
+  }
+
+  #hybridmenu ul li i {
+    display: inline-block;
+  }
+
+}
+
+@media screen and (max-width: 767px) { /* Stage 2: Show CSS font icons AND hide primary (left) menu icons */
+
+  #hybridmenu ul li {
+    display: none;
+  }
+
+  #hybridmenu ul li.mobile-menu-item,
+  #hybridmenu ul li.logo,
+  #hybridmenu ul li.menu-right {
+    display: block;
+  }
+
+  #hybridmenu ul li a span {
+    display: inline;
+    padding-left: 10px;
+  }
+
+  #hybridmenu ul li.menu-right a span {
+    display: none;
+  }  
+
+}
+
+@media screen and (max-width: 486px) { /* Stage 3: /* Hide all top menu icons except right menu icons, show left side bar mobile menu */
+  #hybridmenu ul li.menu-right {
+    display: none;
+  }
+
+  #hybridmenu ul li.logo {
+    float: right;
+  }
+
+  #hybridmenu ul li.mobile-menu-item {
+    width: 30%
+  }
+
+}

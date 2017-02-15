@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using TCDF.Sinj.OV;
+using TCDF.Sinj.Log;
+using util.BRLight;
+
+namespace TCDF.Sinj.Web.ashx.Datatable
+{
+    /// <summary>
+    /// Summary description for FavoritosDatatable
+    /// </summary>
+    public class FavoritosDatatable : IHttpHandler
+    {
+
+        public void ProcessRequest(HttpContext context)
+        {
+            var sAction = "FAV.PES";
+            var json_resultado = "";
+            var _iDisplayLength = context.Request["iDisplayLength"];
+            var _iDisplayStart = context.Request["iDisplayStart"];
+            var _sEcho = context.Request.Params["sEcho"];
+            SessaoUsuarioOV sessao_usuario = null;
+            try
+            {
+                if (Config.ValorChave("Aplicacao") == "CADASTRO")
+                {
+                    sessao_usuario = Util.ValidarSessao();
+                    //Não faz nada se o usuário não tiver sessão no portal pois essa pesquisa pode ser feita por qualquer um.
+                }
+                var es = new ES();
+                object datatable_result = null;
+                var _base = context.Request["b"];
+                if (_base == "norma")
+                {
+                    var result_norma = es.PesquisarDocs<NormaOV>(context, sessao_usuario, "sinj_norma");
+                    datatable_result = new { aaData = result_norma.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_norma.hits.total };
+                }
+                json_resultado = Newtonsoft.Json.JsonConvert.SerializeObject(datatable_result);
+            }
+            catch (Exception ex)
+            {
+                json_resultado = "{ \"aaData\": [], \"sEcho\": \"" + _sEcho + "\", \"iTotalRecords\": \"" + _iDisplayLength + "\", \"iTotalDisplayRecords\": 0}";
+                var erro = new ErroRequest
+                {
+                    Pagina = context.Request.Path,
+                    RequestQueryString = context.Request.QueryString,
+                    MensagemDaExcecao = Excecao.LerTodasMensagensDaExcecao(ex, true),
+                    StackTrace = ex.StackTrace
+                };
+                if (sessao_usuario != null)
+                {
+                    LogErro.gravar_erro(sAction, erro, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
+                }
+            }
+            context.Response.ContentType = "application/json";
+            context.Response.Write(json_resultado);
+            context.Response.End();
+        }
+
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+    }
+}

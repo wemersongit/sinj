@@ -1,0 +1,148 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="CadastrarDiario.aspx.cs" Inherits="TCDF.Sinj.Web.CadastrarDiario" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_diario.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $('#button_salvar_diario').click(function () {
+                return fnSalvar("form_diario");
+            });
+            ConstruirControlesDinamicos();
+
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
+    <div id="slave" class="on-show-top">
+        <div class="divIdentificadorDePagina">
+	        <label>.: Cadastrar Diário</label>
+	    </div>
+        <div id="div_controls" class="control">
+        </div>
+        <div class="form">
+            <form id="form_diario" name="formCadastroDiario" action="#" method="post">
+                <div id="div_diario">
+                    <div id="div_identificacao">
+                        <br />
+                            <div id="div_notificacao_diario" class="notify w-80-pc mauto" style="display:none;"></div>
+                        <fieldset>
+                            <legend>Diário</legend>
+                            <div class="mauto table">
+                                <div class="line">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Tipo:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                    <div id="div_autocomplete_tipo_fonte" class="cell w-60-pc">
+                                        <input id="ch_tipo_fonte" name="ch_tipo_fonte" type="hidden" value="" obrigatorio="sim" label="Tipo de Diário" />
+                                        <input id="nm_tipo_fonte" name="nm_tipo_fonte" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_fonte"></a>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Número:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-20-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="nr_diario" name="nr_diario" type="number" value="" class="w-100-pc" obrigatorio="sim" label="Número" />
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="cell fr">
+                                            <label>Letra:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-20-pc">
+                                        <div class="cell w-50-pc">
+                                            <input id="cr_diario" name="cr_diario" type="text" value="" class="w-50-pc"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Seção:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-100-pc">
+                                            <input id="secao_diario" name="secao_diario" type="text" value="" class="w-10-pc"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Data de Publicação:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input label="Data" obrigatorio="sim" id="dt_assinatura" name="dt_assinatura" type="text" value="" class="w-30-pc date" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Pendente de Revisão:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input type="checkbox" label="Pendente de Revisão" id="st_pendente" name="st_pendente" value="true" onclick="javascript:MarcarPendente();"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="line_ds_pendencia" class="line">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Observação:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input type="text" label="Pendente de Revisão" id="ds_pendencia" name="ds_pendencia" value="" class="w-80-pc"/>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="line">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Selecionar Arquivo:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-100-pc">
+                                            <input label="Arquivo" obrigatorio="sim" type="hidden" id="hidden_uuid_arquivo_diario" name="uuid_arquivo_diario" class="uuid" value=""/>
+                                            <input type="hidden" id="hidden_mimetype_arquivo_diario" name="mimetype_arquivo_diario" class="mimetype" value=""/>
+                                            <input type="hidden" id="hidden_filesize_arquivo_diario" name="filesize_arquivo_diario" class="filesize" value=""/>
+                                            <input type="hidden" id="hidden_id_file_arquivo_diario" name="id_file_arquivo_diario" class="id_file" value=""/>
+                                            <input type="hidden" id="hidden_filename_arquivo_diario" name="filename_arquivo_diario" class="filename" value=""/>
+                                            <label id="label_arquivo_diario" class="name" style="color:#000;"></label>
+                                            <a href="javascript:void(0);" onclick="javascript:AnexarArquivo(event);" class="attach" style="display: inline;"><img valign="absmiddle" alt="Anexar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_attach_p.png"/></a>
+                                            <a href="javascript:void(0);" onclick="javascript:DeletarArquivo(event);" class="delete" style="display: none;"><img valign="absmiddle" alt="Remover" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png"/></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div style="width:210px; margin:auto;" class="loaded pos_cad">
+                    <button id="button_salvar_diario">
+                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" />Salvar
+                    </button>
+                    <button type="reset">
+                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_eraser_p.png" />Limpar
+                    </button>
+                </div>
+                <div id="div_loading_diario" class="loading" style="display:none;"></div>
+            </form>
+        </div>
+    </div>
+</asp:Content>

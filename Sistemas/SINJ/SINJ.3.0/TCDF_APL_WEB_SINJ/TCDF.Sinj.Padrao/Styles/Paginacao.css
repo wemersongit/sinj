@@ -1,0 +1,13 @@
+/*Paginacao
+----------------------------------------------------------*/
+.divControlesPaginacao{width:100%; height:20px; }
+.divControlesPaginacao .paginacao {background-color:#FFF;cursor:pointer;margin-right:15px;}
+.divControlesPaginacao .disabled{background-color:#FFF;cursor:default;margin-right:15px;}
+div.imageFirst{float:left; height:20px; width:20px; background: url("../Imagens/ico_ArrowFirstPage.png")no-repeat;}
+div.imagePrevious{float:left; height:20px; width:20px; background: url("../Imagens/ico_ArrowPreviousPage.png")no-repeat;}
+div.imageNext{float:left; height:20px; width:20px; background: url("../Imagens/ico_ArrowNextPage.png")no-repeat;}
+div.imageLast{float:left; height:20px; width:20px; background: url("../Imagens/ico_ArrowLastPage.png")no-repeat;}
+div.imageFirst.disabled{float:left; height:20px; width:20px; background: url("../Imagens/ico_ArrowFirstPageDisabled.png")no-repeat;}
+div.imagePrevious.disabled{float:left; height:20px; width:20px; background: url("../Imagens/ico_ArrowPreviousPageDisabled.png")no-repeat;}
+div.imageNext.disabled{float:left; height:20px; width:20px; background: url("../Imagens/ico_ArrowNextPageDisabled.png")no-repeat;}
+div.imageLast.disabled{float:left; height:20px; width:20px; background: url("../Imagens/ico_ArrowLastPageDisabled.png")no-repeat;}
