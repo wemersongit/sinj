@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APP_DELETE_TERMOS_NAO_USADOS", "APP_DELETE_TERMOS_NAO_USADOS.csproj", "{213FAC07-B8E4-4459-9BF7-329839E26038}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{213FAC07-B8E4-4459-9BF7-329839E26038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213FAC07-B8E4-4459-9BF7-329839E26038}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213FAC07-B8E4-4459-9BF7-329839E26038}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213FAC07-B8E4-4459-9BF7-329839E26038}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
