@@ -33,13 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="neo.BRLightES">
-      <HintPath>..\..\..\..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
     </Reference>
     <Reference Include="neo.BRLightREST">
-      <HintPath>..\..\..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
     <Reference Include="neo.BRLightSession">
-      <HintPath>..\..\..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -48,13 +48,13 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Web.Services" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="util.BRLight">
-      <HintPath>..\..\..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>
     <Reference Include="TCDF.Sinj">
-      <HintPath>..\..\..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
