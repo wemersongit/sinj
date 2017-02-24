@@ -33,10 +33,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="neo.BRLightES">
-      <HintPath>..\..\..\..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
     </Reference>
     <Reference Include="neo.BRLightSession">
-      <HintPath>..\..\..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -49,15 +49,25 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="neo.BRLightREST">
-      <HintPath>..\..\..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+=======
+    <Reference Include="TCDF.Sinj">
+>>>>>>> 985b19b2684e99440a4dbaa0b725f64ba33dee23
       <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
     <Reference Include="util.BRLight">
-      <HintPath>..\..\..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
+      <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
+=======
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+>>>>>>> 985b19b2684e99440a4dbaa0b725f64ba33dee23
   </ItemGroup>
   <ItemGroup>
     <Content Include="BaixarArquivoDiario.aspx" />
