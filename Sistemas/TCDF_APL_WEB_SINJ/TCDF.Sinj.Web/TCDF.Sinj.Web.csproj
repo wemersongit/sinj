@@ -51,23 +51,15 @@
     <Reference Include="neo.BRLightREST">
       <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
-    <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-=======
     <Reference Include="TCDF.Sinj">
->>>>>>> 985b19b2684e99440a4dbaa0b725f64ba33dee23
       <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
     <Reference Include="util.BRLight">
       <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
-=======
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
->>>>>>> 985b19b2684e99440a4dbaa0b725f64ba33dee23
   </ItemGroup>
   <ItemGroup>
     <Content Include="BaixarArquivoDiario.aspx" />
