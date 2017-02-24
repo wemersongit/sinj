@@ -71,8 +71,7 @@ namespace TCDF.Sinj.OV
         public string filename { get; set; }
         public string dt_inicio_vigor { get; set; }
         public string st_aguardar_vigor { get; set; }
-        public bool bAcrescimo { get; set; }
-        public bool bRenumeracao { get; set; }
+        public string nm_relacao_aux { get; set; }
     }
 
 }

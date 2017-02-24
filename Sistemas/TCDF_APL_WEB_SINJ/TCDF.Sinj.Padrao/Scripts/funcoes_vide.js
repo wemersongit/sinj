@@ -181,7 +181,7 @@ function InverterAlteradaAlteradora() {
     }
 }
 
-function abrirSelecionarCaput(nm_sufixo) {
+function abrirSelecionarCaput(nm_sufixo, id_button) {
     $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma').html('');
     limparCaputSelecionado(nm_sufixo);
     var ch_norma = $('#ch_norma_' + nm_sufixo).val();
@@ -198,7 +198,7 @@ function abrirSelecionarCaput(nm_sufixo) {
                 return false;
             }
             if (IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
-                $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma').append(data.ar_atualizado.filename + ' <input type="checkbox" id_file="' + data.ar_atualizado.id_file + '" filename="' + data.ar_atualizado.filename + '" ch_norma="' + data.ch_norma + '" path="atlz" ds_norma="' + getIdentificacaoDeNorma(data) + '" onchange="javascript:selecionarArquivoCaput(this, \'' + nm_sufixo + '\')" style="vertical-align:middle;"><br/>');
+                $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma').append(data.ar_atualizado.filename + ' <input type="checkbox" id_file="' + data.ar_atualizado.id_file + '" filename="' + data.ar_atualizado.filename + '" ch_norma="' + data.ch_norma + '" path="atlz" ds_norma="' + getIdentificacaoDeNorma(data) + '" onchange="javascript:' + ( id_button ? "selecionarArquivoCaputCopiar(\'"+ id_button +"\'," : "selecionarArquivoCaput(") + 'this, \'' + nm_sufixo + '\')" style="vertical-align:middle;"><br/>');
                 $('#div_cad_vide').hide();
                 $('#div_cad_caput_' + nm_sufixo).show();
                 $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma input[type="checkbox"]').prop('checked', 'checked').change();
@@ -222,7 +222,7 @@ function abrirSelecionarCaput(nm_sufixo) {
                     //$('#arquivos_norma').append('<button class="clean" type="button" id_file="' + data.fontes[i].ar_fonte.id_file + '" filename="' + data.fontes[i].ar_fonte.filename + '" ch_norma="' + data.ch_norma + '" path="fontes/' + i + '" onclick="javascript:selecionarArquivoCaput(this)">' + data.fontes[i].ar_fonte.filename + ' <img src="' + _urlPadrao + '/Imagens/ico_check_p.png" /></button><br/>');
                 }
                 if (IsNotNullOrEmpty(ar_fonte, 'id_file')) {
-                    $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma').append(ar_fonte.filename + ' <input type="checkbox" id_file="' + ar_fonte.id_file + '" filename="' + ar_fonte.filename + '" ch_norma="' + data.ch_norma + '" path="fontes/' + iFonte + '" ds_norma="' + getIdentificacaoDeNorma(data) + '" onchange="javascript:selecionarArquivoCaput(this, \'' + nm_sufixo + '\')" style="vertical-align:middle;"><br/>');
+                    $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma').append(ar_fonte.filename + ' <input type="checkbox" id_file="' + ar_fonte.id_file + '" filename="' + ar_fonte.filename + '" ch_norma="' + data.ch_norma + '" path="fontes/' + iFonte + '" ds_norma="' + getIdentificacaoDeNorma(data) + '" onchange="javascript:' + (id_button ? "selecionarArquivoCaputCopiar(\'" + id_button + "\', " : "selecionarArquivoCaput(") + 'this, \'' + nm_sufixo + '\')" style="vertical-align:middle;"><br/>');
                     $('#div_cad_vide').hide();
                     $('#div_cad_caput_' + nm_sufixo).show();
                     $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma input[type="checkbox"]').prop('checked', 'checked').change();
@@ -274,10 +274,10 @@ function selecionarTexto(nm_sufixo){
     }
 }
 
-function selecionarTextoCopiar(el_paste, nm_sufixo) {
+function selecionarTextoCopiar(id_button, nm_sufixo) {
     var text = window.getSelection().toString();
     if (text != '') {
-        $(el_paste).parent().find('textarea').text(text);
+        $('#' + id_button).parent().find('textarea').text(text);
         fecharSelecionarCaput(nm_sufixo);
     }
 }
@@ -325,7 +325,7 @@ function selecionarArquivoCaput(el, nm_sufixo) {
     }
 }
 
-function selecionarArquivoCaputCopiar(el, el_paste, nm_sufixo) {
+function selecionarArquivoCaputCopiar(id_button, el, nm_sufixo) {
     limparCaputSelecionado(nm_sufixo);
     if (!$(el).prop('checked')) {
         return;
@@ -342,7 +342,7 @@ function selecionarArquivoCaputCopiar(el, el_paste, nm_sufixo) {
                     $(value_p).attr('pname', pname);
                 });
                 $('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo p[pname]').mouseup(function () {
-                    selecionarTextoCopiar(el_paste, nm_sufixo);
+                    selecionarTextoCopiar(id_button, nm_sufixo);
                 });
                 $('#div_cad_caput_' + nm_sufixo + ' div.line_conteudo_arquivo label').text('Selecione o texto novo:');
                 $('#div_cad_vide').hide();
@@ -494,7 +494,7 @@ function selecionarCaput(nm_sufixo) {
                                 '</div>' +
                                 '<div class="column w-70-pc">' +
                                     '<div class="cell w-100-pc">' +
-                                        '<button type="button" class="clean" onclick="javascript:abrirSelecionarCaputCopiar(this);" title="Abre o texto da norma alteradora para copia e colar o texto novo no campo abaixo."><img src="'+_urlPadrao+'/Imagens/ico_copy.png" width="15px" /></button>' +
+                                        '<button id="button_texto_antigo_'+i+'" type="button" class="clean" onclick="javascript:abrirSelecionarCaputCopiar(this);" title="Abre o texto da norma alteradora para copia e colar o texto novo no campo abaixo."><img src="'+_urlPadrao+'/Imagens/ico_copy.png" width="15px" /></button>' +
                                         '<textarea name="texto_novo" class="w-95-pc" rows="5"></textarea>' +
                                     '</div>' +
                                 '</div>' +
@@ -523,15 +523,17 @@ function fecharSelecionarCaput(nm_sufixo) {
 
 function abrirSelecionarCaputCopiar(el_paste) {
     var nm_sufixo = 'alteradora';
-
+    var id_button = el_paste.getAttribute('id');
     var $div_conteudo_arquivo = $('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo');
     if ($div_conteudo_arquivo.text().trim() == '') {
-        abrirSelecionarCaput(nm_sufixo);
+        abrirSelecionarCaput(nm_sufixo, id_button);
     }
-    $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma input[type="checkbox"][id_file]').attr('onchange', 'javascript:selecionarArquivoCaputCopiar(this, \'' + nm_sufixo + '\')');
-    var $checked = $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma input[type="checkbox"][id_file]:checked');
-    if ($checked.length > 0) {
-        selecionarArquivoCaputCopiar($checked[0], el_paste, nm_sufixo)
+    else {
+        $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma input[type="checkbox"][id_file]').attr('onchange', 'javascript:selecionarArquivoCaputCopiar(\''+id_button+'\', this, \'' + nm_sufixo + '\')');
+        var $checked = $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma input[type="checkbox"][id_file]:checked');
+        if ($checked.length > 0) {
+            selecionarArquivoCaputCopiar(id_button, $checked[0], nm_sufixo);
+        }
     }
 
 }

@@ -742,9 +742,10 @@ function CriarModalIndexacao(tr) {
 
 function AdicionarDecisao(nm_tipo_decisao, in_tipo_decisao, ds_complemento, dt_decisao) {
     $('#tbody_decisoes .tr_vazia').remove();
-    $('#tbody_decisoes').append(
-        '<tr>' +
-            '<td>' + nm_tipo_decisao + '<input type="hidden" name="decisao" value="' + in_tipo_decisao + '#' + ds_complemento + '#' + dt_decisao + '" /></td>' +
+
+    var id_input = 'input_' + Guid('N');
+    var tr_decisao = '<tr>' +
+            '<td>' + nm_tipo_decisao + '<input id="'+id_input+'" type="hidden" name="decisao" value="" /></td>' +
             '<td>' + ds_complemento + '</td>' +
             '<td>' + dt_decisao + '</td>' +
             ($('#table_decisoes th').length > 3 ?
@@ -752,8 +753,14 @@ function AdicionarDecisao(nm_tipo_decisao, in_tipo_decisao, ds_complemento, dt_d
                     '<a title="Excluir" href="javascript:void(0);" onclick="javascript:DeletarLinha(event);"><img valign="absmiddle" alt="Excluir" src="' + _urlPadrao + '/Imagens/ico_delete_p.png"  /></a>' +
                 '</td>'
             : '') +
-        '</tr>'
-    );
+        '</tr>';
+
+    $('#tbody_decisoes').append(tr_decisao);
+
+    var decisao = { in_decisao: in_tipo_decisao, ds_complemento: ds_complemento, dt_decisao: dt_decisao };
+
+    $('#' + id_input).val(JSON.stringify(decisao));
+
 }
 
 function AdicionarInteressado(nm_interessado, ch_interessado) {

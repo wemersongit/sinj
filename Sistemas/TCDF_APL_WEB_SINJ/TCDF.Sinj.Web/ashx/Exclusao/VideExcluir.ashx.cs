@@ -62,12 +62,14 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         var enum_caput_alterada = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide);
 
                         var caput_alterador = new Caput();
-                        var caput_alterada = new Caput(); 
+                        var caput_alterada = new Caput();
                         var nm_tipo_relacao = "";
+                        var ds_texto_relacao = "";
                         if (enum_caput_alterador.Count() > 0 && enum_caput_alterada.Count() > 0){
                             caput_alterador = enum_caput_alterador.Select(v => v.caput_norma_vide).First();
                             caput_alterada = enum_caput_alterada.Select(v => v.caput_norma_vide).First();
-                            nm_tipo_relacao = enum_caput_alterador.Select(v => v.nm_tipo_relacao).First();;
+                            nm_tipo_relacao = enum_caput_alterador.Select(v => v.nm_tipo_relacao).First();
+                            ds_texto_relacao = enum_caput_alterador.Select(v => v.ds_texto_relacao).First();
                         }
 
                         if (normaAlteradoraOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0)
@@ -93,9 +95,9 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                                             {
                                                 new VideEditar().DesfazerCaputDosArquivos(normaAlteradoraOv, normaAlteradaOv, caput_alterador, caput_alterada);
                                             }
-                                            else if (caput_alterador != null && caput_alterador.caput != null && caput_alterador.caput.Length > 0 && nm_tipo_relacao.ToLower() == "revogação" && old_nm_situacao.ToLower() == "revogado" && normaAlteradaOv.nm_situacao != old_nm_situacao)
+                                            else if (caput_alterador != null && caput_alterador.caput != null && caput_alterador.caput.Length > 0)
                                             {
-                                                new VideEditar().DesfazerRevogacaoDosArquivos(normaAlteradoraOv, normaAlteradaOv, caput_alterador);
+                                                new VideEditar().DesfazerCaputDosArquivos(normaAlteradoraOv, normaAlteradaOv, caput_alterador, ds_texto_relacao);
                                             }
                                         }
                                         else

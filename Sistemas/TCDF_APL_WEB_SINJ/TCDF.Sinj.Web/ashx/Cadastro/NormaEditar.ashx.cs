@@ -257,14 +257,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     {
                         for (var i = 0; i < _decisao.Length; i++)
                         {
-                            var decisao_split = _decisao[i].Split('#');
-                            var decisao = new Decisao
-                            {
-                                in_decisao = (TipoDeDecisaoEnum)int.Parse(decisao_split[0]),
-                                ds_complemento = decisao_split[1],
-                                dt_decisao = decisao_split[2]
-                            };
-                            normaOv.decisoes.Add(decisao);
+                            normaOv.decisoes.Add(JSON.Deserializa<Decisao>(_decisao[i]));
                         }
                     }
 

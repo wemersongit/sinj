@@ -25,7 +25,7 @@
 
 
 
-            carregarArquivosProduzidos(_diretorio);
+            carregarArquivosProduzidos([_diretorio, "000shared"]);
         });
     </script>
 </asp:Content>

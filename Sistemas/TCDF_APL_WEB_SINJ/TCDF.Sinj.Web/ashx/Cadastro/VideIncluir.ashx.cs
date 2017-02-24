@@ -164,26 +164,16 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         vide_alterador.anexo_norma_vide_outra = _anexo_norma_vide_alterada;
                         vide_alterador.artigo_norma_vide_outra = _artigo_norma_vide_alterada;
 
-                        var bAcrescimo = false;
-                        var bRenumeracao = false;
-                        if(nm_tipo_relacao_pos_verificacao.ToLower() == "acrescimo"){
-                            bAcrescimo = true;
-                        }
-                        else if(nm_tipo_relacao_pos_verificacao.ToLower() == "renumeração"){
-                            bRenumeracao = true;
-                        }
                         if (!string.IsNullOrEmpty(_caput_norma_vide_alteradora))
                         {
                             vide_alterador.caput_norma_vide = JSON.Deserializa<Caput>(_caput_norma_vide_alteradora);
-                            vide_alterador.caput_norma_vide.bAcrescimo = bAcrescimo;
-                            vide_alterador.caput_norma_vide.bRenumeracao = bRenumeracao;
+                            vide_alterador.caput_norma_vide.nm_relacao_aux = nm_tipo_relacao_pos_verificacao.ToLower();
                         }
                         if (!string.IsNullOrEmpty(_caput_norma_vide_alterada))
                         {
                             vide_alterador.caput_norma_vide_outra = JSON.Deserializa<Caput>(_caput_norma_vide_alterada);
                             vide_alterador.caput_norma_vide_outra.texto_novo = _caput_texto_novo;
-                            vide_alterador.caput_norma_vide_outra.bAcrescimo = bAcrescimo;
-                            vide_alterador.caput_norma_vide_outra.bRenumeracao = bRenumeracao;
+                            vide_alterador.caput_norma_vide_outra.nm_relacao_aux = nm_tipo_relacao_pos_verificacao.ToLower();
                         }
 
                         vide_alterador.paragrafo_norma_vide_outra = _paragrafo_norma_vide_alterada;
@@ -246,9 +236,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                     {
                                         IncluirCaputNosArquivos(normaAlteradoraOv.ch_norma, normaAlteradaOv.ch_norma, vide_alterador.caput_norma_vide, vide_alterada.caput_norma_vide, _caput_texto_novo, ds_texto_para_alterador_pos_verificacao);
                                     }
-                                    else if (vide_alterador.caput_norma_vide != null && vide_alterador.caput_norma_vide.caput.Length > 0 && normaAlteradaOv.nm_situacao.ToLower() == "revogado" && nm_tipo_relacao_pos_verificacao.ToLower() == "revogação")
+                                    //else if (vide_alterador.caput_norma_vide != null && vide_alterador.caput_norma_vide.caput.Length > 0 && normaAlteradaOv.nm_situacao.ToLower() == "revogado" && nm_tipo_relacao_pos_verificacao.ToLower() == "revogação")
+                                    else if (vide_alterador.caput_norma_vide != null && vide_alterador.caput_norma_vide.caput.Length > 0)
                                     {
-                                        IncluirRevogacaoNosArquivos(normaAlteradoraOv, normaAlteradaOv, vide_alterador.caput_norma_vide, ds_texto_para_alterador_pos_verificacao);
+                                        IncluirCaputNosArquivos(normaAlteradoraOv, normaAlteradaOv, vide_alterador.caput_norma_vide, ds_texto_para_alterador_pos_verificacao);
                                     }
                                 }
                                 else
@@ -342,39 +333,58 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             }
         }
 
-        public void IncluirRevogacaoNosArquivos(NormaOV norma_revogadora, NormaOV norma_revogada, Caput caput_norma_vide_revogadora, string _ds_texto_para_revogador)
+        public void IncluirCaputNosArquivos(NormaOV norma_alteradora, NormaOV norma_alterada, Caput caput_norma_vide_alteradora, string _ds_texto_para_alterador)
         {
             var upload = new UploadHtml();
             var normaRn = new NormaRN();
             var pesquisa = new Pesquisa();
 
+            var if_file_norma_alterada = norma_alterada.getIdFileArquivoVigente();
+            var name_file_norma_alterada = norma_alterada.getNameFileArquivoVigente();
 
-            var if_file_norma_revogada = norma_revogada.getIdFileArquivoVigente();
-            var name_file_norma_revogada = norma_revogada.getNameFileArquivoVigente();
-
-            if (!string.IsNullOrEmpty(if_file_norma_revogada))
+            if (!string.IsNullOrEmpty(if_file_norma_alterada))
             {
+                var aux_ds_texto_para_alterador = _ds_texto_para_alterador.ToLower();
+                var aux_nm_situacao_alterada = norma_alterada.nm_situacao.ToLower();
 
-                var arquivo_norma_vide_revogada = AlterarTextoDaNormaRevogada(norma_revogadora, if_file_norma_revogada, caput_norma_vide_revogadora);
+                var arquivo_norma_vide_alterada = "";
 
-                if (!string.IsNullOrEmpty(arquivo_norma_vide_revogada))
+                if ((aux_nm_situacao_alterada == "revogado" && aux_ds_texto_para_alterador == "revogado") ||
+                    (aux_nm_situacao_alterada == "anulado" && aux_ds_texto_para_alterador == "anulado") ||
+                    (aux_nm_situacao_alterada == "extinta" && aux_ds_texto_para_alterador == "extinta") ||
+                    (aux_nm_situacao_alterada == "inconstitucional" && aux_ds_texto_para_alterador == "declarado inconstitucional") ||
+                    (aux_nm_situacao_alterada == "cancelada" && aux_ds_texto_para_alterador == "cancelada") ||
+                    (aux_nm_situacao_alterada == "suspenso" && aux_ds_texto_para_alterador == "suspenso totalmente")){
+                        arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(norma_alteradora, if_file_norma_alterada, caput_norma_vide_alteradora, _ds_texto_para_alterador);
+                    }
+                else if (aux_ds_texto_para_alterador == "ratificado" ||
+                    aux_ds_texto_para_alterador == "reeditado" ||
+                    aux_ds_texto_para_alterador == "regulamentado" ||
+                    aux_ds_texto_para_alterador == "prorrogado" ||
+                    aux_ds_texto_para_alterador == "legislação correlata")
                 {
-                    var retorno_file_revogada = upload.AnexarHtml(arquivo_norma_vide_revogada, name_file_norma_revogada, "sinj_norma");
+                    arquivo_norma_vide_alterada = AcrescentarInformacaoNoTextoDaNormaAlterada(norma_alteradora, if_file_norma_alterada, caput_norma_vide_alteradora, _ds_texto_para_alterador);
+                }
 
-                    if (retorno_file_revogada.IndexOf("id_file") > -1)
+
+                if (!string.IsNullOrEmpty(arquivo_norma_vide_alterada))
+                {
+                    var retorno_file_alterada = upload.AnexarHtml(arquivo_norma_vide_alterada, name_file_norma_alterada, "sinj_norma");
+
+                    if (retorno_file_alterada.IndexOf("id_file") > -1)
                     {
-                        pesquisa.literal = "ch_norma='" + norma_revogada.ch_norma + "'";
+                        pesquisa.literal = "ch_norma='" + norma_alterada.ch_norma + "'";
                         var listOp = new List<opMode<object>>();
-                        listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_revogada } });
+                        listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
                         normaRn.PathPut<object>(pesquisa, listOp);
 
-                        var arquivo_norma_vide_revogadora = CriarLinkNoTextoDaNormaRevogadora(caput_norma_vide_revogadora, norma_revogada.ch_norma, name_file_norma_revogada);
+                        var arquivo_norma_vide_revogadora = CriarLinkNoTextoDaNormaAlteradora(caput_norma_vide_alteradora, norma_alterada.ch_norma, name_file_norma_alterada);
 
-                        var retorno_file_alteradora = upload.AnexarHtml(arquivo_norma_vide_revogadora, caput_norma_vide_revogadora.filename, "sinj_norma");
+                        var retorno_file_alteradora = upload.AnexarHtml(arquivo_norma_vide_revogadora, caput_norma_vide_alteradora.filename, "sinj_norma");
 
                         if (retorno_file_alteradora.IndexOf("id_file") > -1)
                         {
-                            pesquisa.literal = "ch_norma='" + norma_revogadora.ch_norma + "'";
+                            pesquisa.literal = "ch_norma='" + norma_alteradora.ch_norma + "'";
                             listOp = new List<opMode<object>>();
                             listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alteradora } });
                             normaRn.PathPut<object>(pesquisa, listOp);
@@ -389,26 +399,40 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         {
             var htmlFile = new HtmlFileEncoded();
             var texto = htmlFile.GetHtmlFile(_caput_alteradora.id_file, "sinj_norma", null);
-            var pattern_caput = _caput_alterada.caput[0];
-            if (_caput_alterada.bAcrescimo)
+            return CriarLinkNoTextoDaNormaAlteradora(texto, _caput_alteradora, _caput_alterada);
+        }
+
+        public string CriarLinkNoTextoDaNormaAlteradora(string texto, Caput _caput_alteradora, Caput _caput_alterada)
+        {
+            var pattern_caput = "";
+            switch (_caput_alterada.nm_relacao_aux)
             {
-                pattern_caput = _caput_alterada.caput[0] + "_add";
+                case "acrescimo":
+                    pattern_caput = _caput_alterada.caput[0] + "_add_0";
+                    break;
+                case "renumeração":
+                    pattern_caput = _caput_alterada.caput[0] + "_renum";
+                    break;
+                default:
+                    pattern_caput = _caput_alterada.caput[0];
+                    break;
             }
-            else if (_caput_alterada.bRenumeracao)
-            {
-                pattern_caput = _caput_alterada.caput[0] + "_renum";
-            }
-            var pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.+?)" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "(.+?)</p>";
+            var pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "(.*?)</p>";
             var replacement = "$1$2" + "<a href=\"(_link_sistema_)Norma/" + _caput_alterada.ch_norma + '/' + _caput_alterada.filename + "#" + pattern_caput + "\" >" + _caput_alteradora.link + "</a>" + "$3</p>";
             return Regex.Replace(texto, pattern, replacement);
         }
 
-        public string CriarLinkNoTextoDaNormaRevogadora(Caput _caput_revogadora, string ch_norma_revogada, string name_file_norma_revogada)
+        public string CriarLinkNoTextoDaNormaAlteradora(Caput _caput_revogadora, string ch_norma_revogada, string name_file_norma_revogada)
         {
             var htmlFile = new HtmlFileEncoded();
             var texto = htmlFile.GetHtmlFile(_caput_revogadora.id_file, "sinj_norma", null);
-            var pattern = "(<p.+?linkname=\"" + _caput_revogadora.caput[0] + "\".*?>)(.+?)" + UtilVides.EscapeCharsInToPattern(_caput_revogadora.link) + "(.+?)</p>";
-            var replacement = "$1$2" + "<a href=\"(_link_sistema_)Norma/" + ch_norma_revogada + '/' + name_file_norma_revogada + "\" >" + _caput_revogadora.link + "</a>" + "$3</p>";
+            return CriarLinkNoTextoDaNormaAlteradora(texto, _caput_revogadora, ch_norma_revogada, name_file_norma_revogada);
+        }
+
+        public string CriarLinkNoTextoDaNormaAlteradora(string texto, Caput _caput_alteradora, string ch_norma_alterada, string name_file_norma_alterada)
+        {
+            var pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "(.*?)</p>";
+            var replacement = "$1$2" + "<a href=\"(_link_sistema_)Norma/" + ch_norma_alterada + '/' + name_file_norma_alterada + "\" >" + _caput_alteradora.link + "</a>" + "$3</p>";
             return Regex.Replace(texto, pattern, replacement);
         }
 
@@ -432,28 +456,33 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var replacement = "";
                 for (var i = 0; i < _caput_alterada.caput.Length; i++)
                 {
-                    if (_caput_alterada.bAcrescimo)
+                    switch (_caput_alterada.nm_relacao_aux)
                     {
-                        pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
-
-                        var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
-                        replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
-                        for (var j = 0; j < texto_novo_splited.Length; j++)
-                        {
-                            replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoTexto(texto_novo_splited[j]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
-                        }
-                            
-                        
-                    }
-                    else if (_caput_alterada.bRenumeracao)
-                    {
-                        pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>";
-                        replacement = "$1" + _caput_alterada.caput[i] + "_renum$2<a name=\"" + _caput_alterada.caput[i] + "_renum\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoCaput(_caput_alterada.caput[i]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
-                    }
-                    else
-                    {
-                        pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)</p>";
-                        replacement = "$1" + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + "$2<s>$3$4$5</s></p>$1" + _caput_alterada.caput[i] + "$2$3$4" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoCaput(_caput_alterada.caput[i]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                        case "acrescimo":
+                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
+                            var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
+                            replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
+                            for (var j = 0; j < texto_novo_splited.Length; j++)
+                            {
+                                replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoTexto(texto_novo_splited[j]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                            }
+                            break;
+                        case "renumeração":
+                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>";
+                            replacement = "$1" + _caput_alterada.caput[i] + "_renum$2<a name=\"" + _caput_alterada.caput[i] + "_renum\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoCaput(_caput_alterada.caput[i]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                            break;
+                        case "prorrogação":
+                        case "ratificação":
+                        case "regulamentação":
+                        case "ressalva":
+                        case "retificação":
+                            pattern = "(<p.+?linkname=\"" + _caput_alterada.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?)</p>";
+                            replacement = "$1 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoCaput(_caput_alterada.caput[i]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                            break;
+                        default:
+                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)</p>";
+                            replacement = "$1" + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + "$2<s>$3<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>$5</s></p>\r\n$1" + _caput_alterada.caput[i] + "$2$3$4" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoCaput(_caput_alterada.caput[i]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                            break;
                     }
                     texto = Regex.Replace(texto, pattern, replacement);
                 }
@@ -461,24 +490,49 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             return texto;
         }
 
-        public string AlterarTextoDaNormaRevogada(NormaOV norma_revogadora, string id_file_norma_revogada, Caput _caput_revogadora)
+        public string AlterarTextoCompletoDaNormaAlterada(NormaOV norma_alteradora, string id_file_norma_alterada, Caput _caput_alteradora, string _ds_texto_para_alterador)
         {
             var htmlFile = new HtmlFileEncoded();
-            var texto = htmlFile.GetHtmlFile(id_file_norma_revogada, "sinj_norma", null);
+            var texto = htmlFile.GetHtmlFile(id_file_norma_alterada, "sinj_norma", null);
+            return AlterarTextoCompletoDaNormaAlterada(texto, norma_alteradora, _caput_alteradora, _ds_texto_para_alterador);
+        }
+
+        public string AlterarTextoCompletoDaNormaAlterada(string texto, NormaOV norma_alteradora, Caput _caput_alteradora, string _ds_texto_para_alterador)
+        {
+            var htmlFile = new HtmlFileEncoded();
             var pattern = "(?!<p.+replaced_by=.+>)(<p.+?>)(.+?)</p>";
             var replacement = "$1<s>$2</s></p>";
             texto = Regex.Replace(texto, pattern, replacement);
 
             pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
-            replacement = "$1<p><a href=\"(_link_sistema_)Norma/" + norma_revogadora.ch_norma + "/" + _caput_revogadora.filename + "#" + _caput_revogadora.caput[0] + "\" >Revogado pelo(a) " + _caput_revogadora.ds_norma + "</a></p>";
+            replacement = "$1\r\n<p style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
             texto = Regex.Replace(texto, pattern, replacement);
 
             return texto;
         }
 
+        public string AcrescentarInformacaoNoTextoDaNormaAlterada(NormaOV norma_alteradora, string id_file_norma_alterada, Caput _caput_alteradora, string _ds_texto_para_alterador)
+        {
+            var htmlFile = new HtmlFileEncoded();
+            var texto = htmlFile.GetHtmlFile(id_file_norma_alterada, "sinj_norma", null);
+            return AcrescentarInformacaoNoTextoDaNormaAlterada(texto, norma_alteradora, _caput_alteradora, _ds_texto_para_alterador);
+        }
+
+        public string AcrescentarInformacaoNoTextoDaNormaAlterada(string texto, NormaOV norma_alteradora, Caput _caput_alteradora, string _ds_texto_para_alterador)
+        {
+            var htmlFile = new HtmlFileEncoded();
+            var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
+            var replacement = "$1\r\n<p><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+            if (_ds_texto_para_alterador.ToLower() == "legislação correlata")
+            {
+                replacement = "<p><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >" + _ds_texto_para_alterador + " - " + _caput_alteradora.ds_norma + "</a></p>\r\n$1";
+            }
+            texto = Regex.Replace(texto, pattern, replacement);
+            return texto;
+        }
+
         public string gerarDescricaoDoCaput(string _caput)
         {
-            //var niveis = new Dictionary<string,string>(){{"tit","Título"}, {"cap", "art", "par", "inc", "ltr", "aln"};
             var caput_splited = _caput.Split('_');
             var last_caput = caput_splited.Last();
             if (last_caput.IndexOf("tit") == 0)

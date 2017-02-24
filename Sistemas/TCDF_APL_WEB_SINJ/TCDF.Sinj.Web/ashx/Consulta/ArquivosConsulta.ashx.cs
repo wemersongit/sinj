@@ -20,7 +20,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
         {
             string sRetorno = "{}";
 
-            string _ch_doc_raiz = context.Request["ch_arquivo_raiz"];
+            string[] _ch_doc_raiz = context.Request.Params.GetValues("ch_arquivo_raiz");
             string _id_doc = context.Request["id_doc"];
 
             context.Response.Clear();
@@ -32,21 +32,36 @@ namespace TCDF.Sinj.Web.ashx.Consulta
             try
             {
                 sessao_usuario = Util.ValidarSessao();
-                if (!string.IsNullOrEmpty(_ch_doc_raiz))
+                if (_ch_doc_raiz != null && _ch_doc_raiz.Length > 0)
                 {
-                    var bShared = false;
-                    if (_ch_doc_raiz == "meus_arquivos")
-                    {
-                        _ch_doc_raiz = sessao_usuario.nm_login_usuario;
-                        bShared = true;
+                    var aux_literal = "";
+                    var aux_ch = "";
+                    foreach(var ch in _ch_doc_raiz){
+                        aux_ch = ch;
+                        if (ch == "meus_arquivos")
+                        {
+                            aux_ch = sessao_usuario.nm_login_usuario;
+                        }
+                        else if (ch == "arquivos_orgao_cadastrador")
+                        {
+                            aux_ch = sessao_usuario.orgao_cadastrador.nm_orgao_cadastrador;
+                        }
+
+                        aux_literal += (aux_literal != "" ? " OR " : "" ) + "ch_arquivo_superior='" + aux_ch + "'";
                     }
-                    else if (_ch_doc_raiz == "arquivos_orgao_cadastrador")
-                    {
-                        _ch_doc_raiz = sessao_usuario.orgao_cadastrador.nm_orgao_cadastrador;
-                        bShared = true;
-                    }
+
+                    //if (_ch_doc_raiz == "meus_arquivos")
+                    //{
+                    //    _ch_doc_raiz = sessao_usuario.nm_login_usuario;
+                    //    bShared = true;
+                    //}
+                    //else if (_ch_doc_raiz == "arquivos_orgao_cadastrador")
+                    //{
+                    //    _ch_doc_raiz = sessao_usuario.orgao_cadastrador.nm_orgao_cadastrador;
+                    //    bShared = true;
+                    //}
                     query.limit = null;
-                    query.literal = "nr_nivel_arquivo<=1 AND (ch_arquivo_superior='" + _ch_doc_raiz + "'" + (bShared ? " OR ch_arquivo_superior='000shared'" : "") + ")";
+                    query.literal = "nr_nivel_arquivo<=1 AND ("+aux_literal+")";
                     query.order_by.asc = new string[] { "nr_tipo_arquivo", "ch_arquivo" };
 
                     var oResult = new SINJ_ArquivoRN().Consultar(query);

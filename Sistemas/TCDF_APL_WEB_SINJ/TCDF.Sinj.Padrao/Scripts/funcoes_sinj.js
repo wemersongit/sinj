@@ -3369,8 +3369,17 @@ function carregarArquivosProduzidos(_diretorio) {
     }
 
     if (!IsNotNullOrEmpty(results)) {
+        var aux_query = "";
+        if(isArray(_diretorio)){
+            for(var i=0;i< _diretorio.length;i++){
+                aux_query += (aux_query != "" ? "&" : "") + "ch_arquivo_raiz=" + _diretorio[i];
+            }
+        }
+        else{
+            aux_query = "ch_arquivo_raiz=" + _diretorio;
+        }
         $.ajaxlight({
-            sUrl: "./ashx/Consulta/ArquivosConsulta.ashx?ch_arquivo_raiz=" + _diretorio,
+            sUrl: "./ashx/Consulta/ArquivosConsulta.ashx?" + aux_query,
             sType: "GET",
             fnSuccess: sucesso,
             fnComplete: gComplete,
@@ -3645,6 +3654,7 @@ function configureCkeditor(){
             },
             styles:{'font-family':'tahoma', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'} 
         },
+        {name:'Autoria', element: 'p', styles:{'text-align':'center', 'margin-top':'1px', 'font-size':'14px', 'font-family': 'Tahoma'}},
         {name:'Ementa', element: 'p', styles:{'margin-left':'50%', 'text-align':'justify', 'font-size':'14px', 'font-family': 'Tahoma'}},
         {name:'Corpo', element: 'p', styles:{'text-align':'justify', 'font-size':'14px', 'font-family': 'Tahoma'}},
         {name:'Seção', element: 'p', styles:{'text-align':'center', 'font-size':'14', 'font-weight': 'bold', 'font-family': 'Tahoma'}},
