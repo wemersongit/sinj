@@ -133,7 +133,7 @@
                     <div class="line">
                         <div class="column w-30-pc">
                             <div class="cell fr">
-                                <label>Sumplemento:</label>
+                                <label>Suplemento:</label>
                             </div>
                         </div>
                         <div class="column w-70-pc">

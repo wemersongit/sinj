@@ -2639,6 +2639,7 @@ function DetalhesNorma(data, highlight) {
                             '<td>' + GetText(data.fontes[i].nr_coluna) + '</td>' +
                             '<td>' + GetText(data.fontes[i].ds_observacao_fonte) + '</td>' +
                             '<td>' + GetText(data.fontes[i].ds_republicacao) + '</td>' +
+                            (bCadastro ? ('<td>' + (IsNotNullOrEmpty(data.fontes[i].ar_fonte.id_file) ? '<a title="Baixar Arquivo da Fonte" target="_blank" href="./Download/sinj_norma/'+data.fontes[i].ar_fonte.id_file+'/' + data.fontes[i].ar_fonte.filename + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + data.fontes[i].ar_fonte.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>' : '') + '</td>') : '') +
                         '</tr>'
                     );
                 }

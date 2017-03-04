@@ -95,6 +95,12 @@ namespace TCDF.Sinj
             return util.BRLight.Util.GetVariavel("versao");
         }
 
+        public static bool EhCadastro()
+        {
+            var aplicacao = util.BRLight.Util.GetVariavel("Aplicacao");
+            return aplicacao.Equals("CADASTRO", StringComparison.InvariantCultureIgnoreCase);
+        }
+
         public static SessaoNotifiquemeOV LerSessaoPush()
         {
             return new NotifiquemeRN().LerSessaoNotifiquemeOv();

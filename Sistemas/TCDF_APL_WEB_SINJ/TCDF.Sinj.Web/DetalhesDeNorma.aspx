@@ -171,6 +171,14 @@
                                             <th>Coluna</th>
                                             <th>Observação</th>
                                             <th>Motivo De Republicação</th>
+                                            <%
+                                                if (TCDF.Sinj.Util.EhCadastro())
+                                                {
+                                            %>
+                                            <th>Arquivo Original</th>
+                                            <%
+                                                }
+                                            %>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_fontes">
