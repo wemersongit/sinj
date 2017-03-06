@@ -82,7 +82,20 @@ namespace TCDF.Sinj.Portal.Web
                                 placeHolderHeader.Controls.Add(html_meta_description);
 
                                 var msg = Encoding.UTF8.GetString(file);
-                                msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
+                                if (msg.IndexOf("linkname") > -1)
+                                {
+                                    msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
+                                }
+                                else
+                                {
+                                    Encoding wind1252 = Encoding.GetEncoding(1252);
+                                    Encoding utf8 = Encoding.UTF8;
+                                    byte[] wind1252Bytes = file;
+                                    byte[] utfBytes = Encoding.Convert(wind1252, utf8, wind1252Bytes);
+                                    msg = utf8.GetString(utfBytes);
+                                }
+
+
                                 div_texto.InnerHtml = msg;
                             }
                             else
