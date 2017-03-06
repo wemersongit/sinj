@@ -66,7 +66,7 @@ namespace TCDF.Sinj.Portal.Web
                 }
                 else if (aKeywords.Length == 2)
                 {
-                    var _id_file = aKeywords[1];
+                    var _id_file = aKeywords[0];
                     docOv = docRn.doc(_id_file);
                 }
 
