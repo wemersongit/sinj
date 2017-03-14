@@ -3561,7 +3561,11 @@ function generateLinkNameCaput(text) {
     text = $.trim(text);
     if (IsNotNullOrEmpty(text)) {
         var palavras = text.split(' ');
-        if (palavras[0] == 'TÍTULO') {
+        if (palavras[0] == 'ANEXO') {
+            palavras[1] = palavras[1].replace(/[^a-z0-9]/gi, '_rep_');
+            id = 'ane' + palavras[1].split('_rep_')[0];
+        }
+        else if (palavras[0] == 'TÍTULO') {
             palavras[1] = palavras[1].replace(/[^a-z0-9]/gi, '_rep_');
             id = 'tit' + palavras[1].split('_rep_')[0];
         }
@@ -3596,7 +3600,7 @@ function generateLinkNameCaput(text) {
 //definir nivel do arquivo
 function definirNivelCaput(name) {
     var nivel = 10;
-    var niveis = ["tit", "cap", "art", "par", "inc", "ltr", "aln"];
+    var niveis = ["ane", "tit", "cap", "art", "par", "inc", "ltr", "aln"];
     if (IsNotNullOrEmpty(name) && name.indexOf('_') > -1) {
         name = name.substring(name.lastIndexOf('_') + 1);
     }
@@ -3625,7 +3629,6 @@ function definirEstruturaCaput(name, niveis) {
         primeiro_nivel = definirNivelCaput(niveis[0]);
         ultimo_nivel = definirNivelCaput(niveis[niveis.length - 1]);
     }
-
     if (nivel < primeiro_nivel) {
         niveis = [old_name];
     }
@@ -3649,12 +3652,14 @@ function definirEstruturaCaput(name, niveis) {
 function configureCkeditor(){
     CKEDITOR.config.width = '100%';
     CKEDITOR.config.height = 400;
+    CKEDITOR.config.pasteFilter = 'p[linkname]; a[!href]';
     CKEDITOR.stylesSet.add('default',[
         {name:'Epígrafe', element: 'h1', attributes: {
             epigrafe: 'epigrafe'
             },
             styles:{'font-family':'tahoma', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'} 
         },
+        {name:'Retificação', element: 'p', styles:{'text-align':'right', 'font-size':'14px', 'font-family': 'Tahoma', 'color': '#FF0000'}},
         {name:'Autoria', element: 'p', styles:{'text-align':'center', 'margin-top':'1px', 'font-size':'14px', 'font-family': 'Tahoma'}},
         {name:'Ementa', element: 'p', styles:{'margin-left':'50%', 'text-align':'justify', 'font-size':'14px', 'font-family': 'Tahoma'}},
         {name:'Corpo', element: 'p', styles:{'text-align':'justify', 'font-size':'14px', 'font-family': 'Tahoma'}},
@@ -3662,10 +3667,24 @@ function configureCkeditor(){
         {name:'Assinatura', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma'}},
         {name:'Anexo', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma'}}
     ]);
-                    
+    CKEDITOR.on( 'dialogDefinition', function( ev ) {
+        var dialogName = ev.data.name;
+        var dialogDefinition = ev.data.definition;
+
+        if ( dialogName == 'table' ) {
+            var info = dialogDefinition.getContents( 'info' );
+            // Set default width to 100%
+            info.get( 'txtCellSpace' )[ 'default' ] = '0';         // Set default border to 0
+        }
+    });
 }
 
 function loadCkeditor(id_textarea){
+//    CKEDITOR.replace(id_textarea, {
+//        extraAllowedContent: 'p[linkname,replaced_by];h[epigrafe]',
+//        filebrowserImageBrowseUrl: './Download/imagens',
+//        pasteFilter: 'semantic-content'
+//    });
     CKEDITOR.replace(id_textarea, {
         extraAllowedContent: 'p[linkname,replaced_by];h[epigrafe]',
         filebrowserImageBrowseUrl: './Download/imagens'

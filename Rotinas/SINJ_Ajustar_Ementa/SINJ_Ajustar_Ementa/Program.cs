@@ -33,7 +33,7 @@ namespace SINJ_Ajustar_Ementa
                 {
                     try
                     {
-                        var result = _acessoAdNormaOld.Consultar(new Pesquisa { literal = "dt_last_up::abstime < '04/01/2017 11:00:00'", limit = "100", order_by = new Order_By { asc = new string[] { "id_doc" } } });
+                        var result = _acessoAdNormaOld.Consultar(new Pesquisa { literal = "dt_last_up::abstime < '07/03/2017 21:20:00'", limit = "100", order_by = new Order_By { asc = new string[] { "id_doc" } } });
                         total = result.result_count;
                         //offset += 100;
                         foreach (var norma in result.results)
@@ -54,14 +54,20 @@ namespace SINJ_Ajustar_Ementa
                                 {
                                     foreach (var vide in norma.vides)
                                     {
-                                        vide.caput_norma_vide = null;
-                                        vide.caput_norma_vide_outra = null;
+                                        if (vide.caput_norma_vide == null || vide.caput_norma_vide.GetType() == typeof(string))
+                                        {
+                                            vide.caput_norma_vide = new Caput();
+                                        }
+                                        if (vide.caput_norma_vide_outra == null || vide.caput_norma_vide_outra.GetType() == typeof(string))
+                                        {
+                                            vide.caput_norma_vide_outra = new Caput();
+                                        }
                                     }
                                     normaNova = JSON.Deserializa<NormaOV>(JSON.Serialize<NormaOVOld>(norma));
-                                    foreach (var vide in normaNova.vides)
-                                    {
-                                        vide.caput_norma_vide = new Caput();
-                                    }
+                                    //foreach (var vide in normaNova.vides)
+                                    //{
+                                    //    vide.caput_norma_vide = new Caput();
+                                    //}
                                     Console.WriteLine("Vides: " + normaNova.vides.Count);
                                     normaNova.ax_ajuste = "caput";
                                     if (!_acessoAdNorma.Alterar(normaNova._metadata.id_doc, normaNova))
@@ -81,7 +87,7 @@ namespace SINJ_Ajustar_Ementa
                                     falha++;
                                     id_doc_erro.AppendLine(normaNova._metadata.id_doc.ToString());
                                     Console.WriteLine(ex);
-                                    Console.Read();
+                                    //Console.Read();
                                 }
                             }
                         }
@@ -90,18 +96,18 @@ namespace SINJ_Ajustar_Ementa
                     catch (Exception ex) 
                     {
                         Console.WriteLine(ex);
-                        Console.Read();
+                        //Console.Read();
                     }
                 }
 
                 Console.WriteLine("Ids dos docs que deram erro:");
                 Console.WriteLine(id_doc_erro);
-                Console.Read();
+                //Console.Read();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                Console.Read();
+                //Console.Read();
             }
         }
     }
@@ -221,7 +227,7 @@ namespace SINJ_Ajustar_Ementa
         public string inciso_norma_vide { get; set; }
         public string alinea_norma_vide { get; set; }
         public string item_norma_vide { get; set; }
-        public string caput_norma_vide { get; set; }
+        public object caput_norma_vide { get; set; }
         public string anexo_norma_vide { get; set; }
 
         public string artigo_norma_vide_outra { get; set; }
@@ -229,7 +235,7 @@ namespace SINJ_Ajustar_Ementa
         public string inciso_norma_vide_outra { get; set; }
         public string alinea_norma_vide_outra { get; set; }
         public string item_norma_vide_outra { get; set; }
-        public string caput_norma_vide_outra { get; set; }
+        public object caput_norma_vide_outra { get; set; }
         public string anexo_norma_vide_outra { get; set; }
     }
 }

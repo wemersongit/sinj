@@ -355,7 +355,7 @@ var _columns_diario_es = [
                     url_file = './Diario/' + full.fields.partial[0].ch_diario + '/' + id_file + '/arq/'+i+'/' + nm_file;
                     medida = '<b>(' + (obj_arquivo.arquivo_diario.filesize / 1024).toFixed(0) + ' KB)</b>';
 
-                    links = '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /> ' + medida + '</a>';
+                    links += '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /> ' + medida + '</a>';
                     if (_aplicacao == "CADASTRO") {
                         links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoDiario.aspx?id_file=' + obj_arquivo.arquivo_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" height="20px" /></a>';
                     }
@@ -1517,7 +1517,9 @@ var _columns_arquivos = [
             var html = '';
             if (full.nr_tipo_arquivo == 0) {
                 html = '<div class="div_folder"><a href="javascript:void(0);" nivel="' + full.nr_nivel_arquivo + '" chave="' + full.ch_arquivo + '" onclick="javascript:selecionarPasta(this)" ><img src="' + _urlPadrao + '/Imagens/ico_folder.png" width="18" height="18" /> ' + full.nm_arquivo + '</a></div>';
-                $('#div_list_dir a[chave="' + full.ch_arquivo_superior + '"]').closest('.div_folder').append('<div class="div_folder"><a href="javascript:void(0);" nivel="' + full.nr_nivel_arquivo + '" chave="' + full.ch_arquivo + '" onclick="javascript:selecionarPasta(this)" ><span>&gt;&nbsp;</span><img src="' + _urlPadrao + '/Imagens/ico_folder.png" width="18" height="18" /> ' + full.nm_arquivo + '</a></div>');
+                if ($('#div_list_dir a[chave="' + full.ch_arquivo + '"]').length <= 0) {
+                    $('#div_list_dir a[chave="' + full.ch_arquivo_superior + '"]').closest('.div_folder').append('<div class="div_folder"><a href="javascript:void(0);" nivel="' + full.nr_nivel_arquivo + '" chave="' + full.ch_arquivo + '" onclick="javascript:selecionarPasta(this)" ><span>&gt;&nbsp;</span><img src="' + _urlPadrao + '/Imagens/ico_folder.png" width="18" height="18" /> ' + full.nm_arquivo + '</a></div>');
+                }
             }
             else {
                 var tipo = full.ar_arquivo.mimetype.split('/')[1];

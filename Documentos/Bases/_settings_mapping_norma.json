@@ -79,7 +79,7 @@
                     "filter":[  
                         "lowercase",
                         "asciifolding",
-						"leading_zeroes_filter"
+                        "leading_zeroes_filter"
                     ],
                     "tokenizer":"standard"
                 },
@@ -89,12 +89,12 @@
                     ],
                     "tokenizer":"keyword"
                 },
-				"leading_zeroes_analyzer":{
-					"filter":[
-						"leading_zeroes_filter"
-					],
+                "leading_zeroes_analyzer":{
+                    "filter":[
+                        "leading_zeroes_filter"
+                    ],
                     "tokenizer":"keyword"
-				},
+                },
                 "naturalsort_analyzer":{
                     "tokenizer": "keyword",
                     "filter": "naturalsort"
@@ -110,235 +110,310 @@
         }
     },
     "mappings":{
-        "norma":{  
-            "properties":{  
-                "_metadata":{  
-                    "properties":{  
-                        "dt_doc":{  
+        "norma":{
+            "properties":{
+                "_metadata":{
+                    "properties":{
+                        "dt_doc":{
                             "type":"date",
                             "format":"dd/MM/yyyy HH:mm:ss"
                         },
-                        "dt_idx":{  
+                        "dt_idx":{
                             "type":"date",
                             "format":"dd/MM/yyyy HH:mm:ss"
                         },
-                        "dt_last_up":{  
+                        "dt_last_up":{
                             "type":"date",
                             "format":"dd/MM/yyyy HH:mm:ss"
                         },
-                        "id_doc":{  
+                        "id_doc":{
                             "type":"long"
                         }
                     }
                 },
-                "alteracoes":{  
-                    "properties":{  
-                        "dt_alteracao":{  
+                "alteracoes":{
+                    "properties":{
+                        "dt_alteracao":{
                             "type":"date",
                             "format":"dd/MM/yyyy HH:mm:ss"
                         },
-                        "nm_login_usuario_alteracao":{  
+                        "nm_login_usuario_alteracao":{
                             "type":"string"
                         }
                     }
                 },
-                "ar_acao":{  
-                    "properties":{  
-                        "filesize":{  
+                "ar_acao":{
+                    "properties":{
+                        "filename":{
+                            "type":"string"
+                        },
+                        "filesize":{
                             "type":"long"
+                        },
+                        "filetext":{
+                            "type":"string"
+                        },
+                        "id_file":{
+                            "type":"string"
+                        },
+                        "mimetype":{
+                            "type":"string"
+                        },
+                        "uuid":{
+                            "type":"string"
                         }
                     }
                 },
-                "ar_atualizado":{  
-                    "properties":{  
-                        "filename":{  
+                "ar_atualizado":{
+                    "properties":{
+                        "filename":{
                             "type":"string"
                         },
-                        "filesize":{  
+                        "filesize":{
                             "type":"long"
                         },
-                        "filetext":{  
+                        "filetext":{
                             "type":"string",
-                            "analyzer": "stemmer_analyzer"
+                            "analyzer":"stemmer_analyzer"
                         },
-                        "id_file":{  
+                        "id_file":{
                             "type":"string"
                         },
-                        "mimetype":{  
+                        "mimetype":{
                             "type":"string"
                         },
-                        "uuid":{  
+                        "uuid":{
                             "type":"string"
                         }
                     }
                 },
-                "autorias":{  
-                    "properties":{  
-                        "ch_autoria":{  
+                "autorias":{
+                    "properties":{
+                        "ch_autoria":{
                             "type":"string"
                         },
-                        "nm_autoria":{  
+                        "nm_autoria":{
                             "type":"string"
                         }
                     }
                 },
-                "ch_norma":{  
+                "ax_ajuste":{
                     "type":"string"
                 },
-                "ch_para_nao_duplicacao":{  
+                "ch_norma":{
                     "type":"string"
                 },
-                "ch_situacao":{  
+                "ch_para_nao_duplicacao":{
                     "type":"string"
                 },
-                "ch_tipo_norma":{  
+                "ch_situacao":{
                     "type":"string"
                 },
-                "cr_norma":{  
+                "ch_tipo_norma":{
                     "type":"string"
                 },
-                "ds_ementa":{  
+                "cr_norma":{
+                    "type":"string"
+                },
+                "decisoes":{
+                    "properties":{
+                        "ds_complemento":{
+                            "type":"string"
+                        },
+                        "dt_decisao":{
+                            "type":"string"
+                        },
+                        "in_decisao":{
+                            "type":"long"
+                        },
+                        "nm_decisao":{
+                            "type":"string"
+                        }
+                    }
+                },
+                "ds_efeito_decisao":{
+                    "type":"string"
+                },
+                "ds_ementa":{
                     "type":"string",
-                    "analyzer": "stemmer_analyzer"
+                    "analyzer":"stemmer_analyzer"
                 },
-                "ds_observacao":{  
+                "ds_observacao":{
                     "type":"string"
                 },
-                "ds_pendencia":{  
+                "ds_parametro_constitucional":{
                     "type":"string"
                 },
-                "dt_assinatura":{  
+                "ds_pendencia":{
+                    "type":"string"
+                },
+                "ds_procedencia":{
+                    "type":"string"
+                },
+                "dt_assinatura":{
                     "type":"date",
-                    "format":"dd/MM/yyyy",
                     "fields":{
-                        "dt_assinatura_text":{  
+                        "dt_assinatura_text":{
                             "type":"string"
                         },
                         "dt_assinatura_untouched":{
                             "type":"date",
-                            "format":"dd/MM/yyyy",
-                            "index":"not_analyzed",
-                            "omit_norms":true,
-                            "include_in_all":false
+                            "format":"dd/MM/yyyy"
                         }
-                    }
+                    },
+                    "format":"dd/MM/yyyy"
                 },
-                "dt_autuacao":{  
+                "dt_autuacao":{
                     "type":"date",
-                    "format":"dd/MM/yyyy",
                     "fields":{
-                        "dt_autuacao_text":{  
+                        "dt_autuacao_text":{
                             "type":"string"
                         }
-                    }
+                    },
+                    "format":"dd/MM/yyyy"
                 },
-                "dt_cadastro":{  
+                "dt_cadastro":{
                     "type":"date",
                     "format":"dd/MM/yyyy HH:mm:ss"
                 },
-                "fontes":{  
-                    "properties":{  
-                        "ar_fonte":{  
-                            "properties":{  
-                                "filename":{  
+                "fontes":{
+                    "properties":{
+                        "ar_diario":{
+                            "properties":{
+                                "filename":{
                                     "type":"string"
                                 },
-                                "filesize":{  
+                                "filesize":{
                                     "type":"long"
                                 },
-                                "filetext":{  
-                                    "type":"string",
-                                    "analyzer": "stemmer_analyzer"
-                                },
-                                "id_file":{  
+                                "id_file":{
                                     "type":"string"
                                 },
-                                "mimetype":{  
+                                "mimetype":{
                                     "type":"string"
                                 },
-                                "uuid":{  
+                                "uuid":{
                                     "type":"string"
                                 }
                             }
                         },
-                        "ch_fonte":{  
+                        "ar_fonte":{
+                            "properties":{
+                                "filename":{
+                                    "type":"string"
+                                },
+                                "filesize":{
+                                    "type":"long"
+                                },
+                                "filetext":{
+                                    "type":"string",
+                                    "analyzer":"stemmer_analyzer"
+                                },
+                                "id_file":{
+                                    "type":"string"
+                                },
+                                "mimetype":{
+                                    "type":"string"
+                                },
+                                "uuid":{
+                                    "type":"string"
+                                }
+                            }
+                        },
+                        "ch_fonte":{
                             "type":"string"
                         },
-                        "ch_tipo_fonte":{  
+                        "ch_tipo_fonte":{
                             "type":"string"
                         },
-                        "ch_tipo_publicacao":{  
+                        "ch_tipo_publicacao":{
                             "type":"string"
                         },
-                        "ds_observacao_fonte":{  
+                        "ds_diario":{
                             "type":"string"
                         },
-                        "ds_republicacao":{  
+                        "ds_observacao_fonte":{
                             "type":"string"
                         },
-                        "dt_publicacao":{  
+                        "ds_republicacao":{
+                            "type":"string"
+                        },
+                        "dt_publicacao":{
                             "type":"date",
                             "format":"dd/MM/yyyy"
                         },
-                        "in_tipo_edicao":{  
+                        "in_tipo_edicao":{
                             "type":"long"
                         },
-                        "nm_tipo_edicao":{  
+                        "nm_tipo_edicao":{
                             "type":"string"
                         },
-                        "nm_tipo_fonte":{  
+                        "nm_tipo_fonte":{
                             "type":"string"
                         },
-                        "nm_tipo_publicacao":{  
+                        "nm_tipo_publicacao":{
                             "type":"string"
                         },
-                        "nr_coluna":{  
+                        "nr_coluna":{
                             "type":"string"
                         },
-                        "nr_pagina":{  
+                        "nr_pagina":{
                             "type":"string"
                         }
                     }
                 },
-                "id_ambito":{  
+                "id_ambito":{
                     "type":"long"
                 },
-                "id_orgao_cadastrador":{  
+                "id_orgao_cadastrador":{
                     "type":"long"
                 },
-                "indexacoes":{  
-                    "properties":{  
-                        "vocabulario":{  
-                            "properties":{  
-                                "ch_termo":{  
+                "in_vides":{
+                    "type":"long"
+                },
+                "indexacoes":{
+                    "properties":{
+                        "vocabulario":{
+                            "properties":{
+                                "ch_termo":{
                                     "type":"string"
                                 },
-                                "ch_tipo_termo":{  
+                                "ch_tipo_termo":{
                                     "type":"string"
                                 },
-                                "nm_termo":{  
+                                "nm_termo":{
                                     "type":"string"
                                 }
                             }
                         }
                     }
                 },
-                "nm_ambito":{  
+                "interessados":{
+                    "properties":{
+                        "ch_interessado":{
+                            "type":"string"
+                        },
+                        "nm_interessado":{
+                            "type":"string"
+                        }
+                    }
+                },
+                "nm_ambito":{
                     "type":"string"
                 },
-                "nm_apelido":{  
+                "nm_apelido":{
                     "type":"string"
                 },
-                "nm_login_usuario_cadastro":{  
+                "nm_login_usuario_cadastro":{
                     "type":"string"
                 },
-                "nm_orgao_cadastrador":{  
+                "nm_orgao_cadastrador":{
                     "type":"string"
                 },
-                "nm_pessoa_fisica_e_juridica":{  
+                "nm_pessoa_fisica_e_juridica":{
                     "type":"string"
                 },
-                "nm_situacao":{  
+                "nm_situacao":{
                     "type":"string",
                     "fields":{
                         "nm_situacao_keyword":{
@@ -347,44 +422,42 @@
                         }
                     }
                 },
-                "nm_tipo_norma":{  
+                "nm_tipo_norma":{
                     "type":"string",
-                    "fields":{  
-                        "nm_tipo_norma_untouched":{
-                            "type":"string",
-                            "index":"not_analyzed",
-                            "omit_norms":true,
-                            "include_in_all":false
-                        },
+                    "fields":{
                         "nm_tipo_norma_keyword":{
                             "type":"string",
                             "analyzer":"keyword_analyzer"
+                        },
+                        "nm_tipo_norma_untouched":{
+                            "type":"string",
+                            "index":"not_analyzed"
                         }
                     }
                 },
-                "nr_norma":{   
+                "nr_norma":{
                     "type":"string",
-                    "analyzer": "alfanumeric_analyzer",
+                    "analyzer":"alfanumeric_analyzer",
                     "fields":{
                         "nr_norma_numeric":{
                             "type":"string",
-                            "analyzer": "leading_zeroes_analyzer"
+                            "analyzer":"leading_zeroes_analyzer"
                         },
                         "nr_norma_untouched":{
                             "type":"string",
-                            "analyzer": "naturalsort_analyzer"
+                            "analyzer":"naturalsort_analyzer"
                         }
                     }
                 },
-                "nr_sequencial":{  
+                "nr_sequencial":{
                     "type":"long"
                 },
-                "origens":{  
-                    "properties":{  
-                        "ch_orgao":{  
+                "origens":{
+                    "properties":{
+                        "ch_orgao":{
                             "type":"string"
                         },
-                        "nm_orgao":{  
+                        "nm_orgao":{
                             "type":"string",
                             "fields":{
                                 "nm_orgao_keyword":{
@@ -393,7 +466,7 @@
                                 }
                             }
                         },
-                        "sg_orgao":{  
+                        "sg_orgao":{
                             "type":"string",
                             "fields":{
                                 "sg_orgao_keyword":{
@@ -404,108 +477,237 @@
                         }
                     }
                 },
-                "rankeamentos":{  
+                "rankeamentos":{
                     "type":"string"
                 },
-                "relatores":{  
-                    "properties":{  
-                        "ch_relator":{  
+                "relatores":{
+                    "properties":{
+                        "ch_relator":{
                             "type":"string"
                         },
-                        "nm_relator":{  
+                        "nm_relator":{
                             "type":"string"
                         }
                     }
                 },
-                "requerentes":{  
-                    "properties":{  
-                        "ch_requerente":{  
+                "requerentes":{
+                    "properties":{
+                        "ch_requerente":{
                             "type":"string"
                         },
-                        "nm_requerente":{  
+                        "nm_requerente":{
                             "type":"string"
                         }
                     }
                 },
-                "st_atualizada":{  
+                "requeridos":{
+                    "properties":{
+                        "ch_requerido":{
+                            "type":"string"
+                        },
+                        "nm_requerido":{
+                            "type":"string"
+                        }
+                    }
+                },
+                "st_acao":{
                     "type":"boolean"
                 },
-                "st_destaque":{  
+                "st_atualizada":{
                     "type":"boolean"
                 },
-                "st_nova":{  
+                "st_destaque":{
                     "type":"boolean"
                 },
-                "st_pendencia":{  
+                "st_nova":{
                     "type":"boolean"
                 },
-                "vides":{  
-                    "properties":{  
-                        "alinea_norma_vide":{  
+                "st_pendencia":{
+                    "type":"boolean"
+                },
+                "st_vigor_vide":{
+                    "type":"boolean"
+                },
+                "url_referencia":{
+                    "type":"string"
+                },
+                "vides":{
+                    "properties":{
+                        "alinea_norma_vide":{
                             "type":"string"
                         },
-                        "anexo_norma_vide":{  
+                        "alinea_norma_vide_outra":{
                             "type":"string"
                         },
-                        "artigo_norma_vide":{  
+                        "anexo_norma_vide":{
                             "type":"string"
                         },
-                        "caput_norma_vide":{  
+                        "anexo_norma_vide_outra":{
                             "type":"string"
                         },
-                        "ch_tipo_fonte_norma_vide":{  
+                        "artigo_norma_vide":{
                             "type":"string"
                         },
-                        "ch_tipo_norma_vide":{  
+                        "artigo_norma_vide_outra":{
                             "type":"string"
                         },
-                        "ch_tipo_relacao":{  
+                        "caput_norma_vide":{
+                            "properties":{
+                                "caput":{
+                                    "type":"string"
+                                },
+                                "id_file":{
+                                    "type":"string"
+                                },
+                                "ch_norma":{
+                                    "type":"string"
+                                },
+                                "ds_norma":{
+                                    "type":"string"
+                                },
+                                "path":{
+                                    "type":"string"
+                                },
+                                "linkname":{
+                                    "type":"string"
+                                },
+                                "texto_antigo":{
+                                    "type":"string"
+                                },
+                                "texto_novo":{
+                                    "type":"string"
+                                },
+                                "link":{
+                                    "type":"string"
+                                },
+                                "filename":{
+                                    "type":"string"
+                                },
+                                "dt_inicio_vigor":{
+                                    "type":"string"
+                                },
+                                "st_aguardar_vigor":{
+                                    "type":"string"
+                                },
+                                "nm_relacao_aux":{
+                                    "type":"string"
+                                }
+                            }
+                        },
+                        "caput_norma_vide_outra":{
+                            "properties":{
+                                "caput":{
+                                    "type":"string"
+                                },
+                                "id_file":{
+                                    "type":"string"
+                                },
+                                "ch_norma":{
+                                    "type":"string"
+                                },
+                                "ds_norma":{
+                                    "type":"string"
+                                },
+                                "path":{
+                                    "type":"string"
+                                },
+                                "linkname":{
+                                    "type":"string"
+                                },
+                                "texto_antigo":{
+                                    "type":"string"
+                                },
+                                "texto_novo":{
+                                    "type":"string"
+                                },
+                                "link":{
+                                    "type":"string"
+                                },
+                                "filename":{
+                                    "type":"string"
+                                },
+                                "dt_inicio_vigor":{
+                                    "type":"string"
+                                },
+                                "st_aguardar_vigor":{
+                                    "type":"string"
+                                },
+                                "nm_relacao_aux":{
+                                    "type":"string"
+                                }
+                            }
+                        },
+                        "ch_norma_vide":{
                             "type":"string"
                         },
-                        "ch_vide":{  
+                        "ch_tipo_fonte_norma_vide":{
                             "type":"string"
                         },
-                        "ds_comentario_vide":{  
+                        "ch_tipo_norma_vide":{
                             "type":"string"
                         },
-                        "ds_texto_relacao":{  
+                        "ch_tipo_relacao":{
                             "type":"string"
                         },
-                        "dt_assinatura_norma_vide":{  
+                        "ch_vide":{
+                            "type":"string"
+                        },
+                        "coluna_publicacao_norma_vide":{
+                            "type":"string"
+                        },
+                        "ds_comentario_vide":{
+                            "type":"string"
+                        },
+                        "ds_texto_relacao":{
+                            "type":"string"
+                        },
+                        "dt_assinatura_norma_vide":{
                             "type":"date",
                             "format":"dd/MM/yyyy"
                         },
-                        "dt_publicacao_fonte_norma_vide":{  
+                        "dt_publicacao_fonte_norma_vide":{
                             "type":"string"
                         },
-                        "id_norma_vide":{  
+                        "id_norma_vide":{
                             "type":"long"
                         },
-                        "in_norma_afetada":{  
+                        "in_norma_afetada":{
                             "type":"boolean"
                         },
-                        "in_relacao_de_acao":{  
+                        "in_relacao_de_acao":{
                             "type":"boolean"
                         },
-                        "inciso_norma_vide":{  
+                        "inciso_norma_vide":{
                             "type":"string"
                         },
-                        "item_norma_vide":{  
+                        "inciso_norma_vide_outra":{
                             "type":"string"
                         },
-                        "nm_tipo_fonte_norma_vide":{  
+                        "item_norma_vide":{
                             "type":"string"
                         },
-                        "nm_tipo_norma_vide":{  
+                        "item_norma_vide_outra":{
                             "type":"string"
                         },
-                        "nm_tipo_relacao":{  
+                        "nm_tipo_fonte_norma_vide":{
                             "type":"string"
                         },
-                        "nr_norma_vide":{  
+                        "nm_tipo_norma_vide":{
                             "type":"string"
                         },
-                        "paragrafo_norma_vide":{  
+                        "nm_tipo_relacao":{
+                            "type":"string"
+                        },
+                        "nr_norma_vide":{
+                            "type":"string"
+                        },
+                        "pagina_publicacao_norma_vide":{
+                            "type":"string"
+                        },
+                        "paragrafo_norma_vide":{
+                            "type":"string"
+                        },
+                        "paragrafo_norma_vide_outra":{
                             "type":"string"
                         }
                     }

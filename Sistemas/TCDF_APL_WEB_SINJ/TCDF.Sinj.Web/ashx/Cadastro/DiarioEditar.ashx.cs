@@ -45,6 +45,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _cr_diario = context.Request["cr_diario"];
                     var _secoes_diario = context.Request.Form.GetValues("secao_diario");
                     var _dt_assinatura = context.Request["dt_assinatura"];
+
+                    var _st_suplemento = context.Request["st_suplemento"];
+                    var st_suplemento = false;
+                    var _nm_diferencial_suplemento = context.Request["nm_diferencial_suplemento"];
+
                     var _st_pendente = context.Request["st_pendente"];
                     var st_pendente = false;
 					var _ds_pendencia = context.Request["ds_pendencia"];
@@ -74,6 +79,17 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         }
                     }
 					diarioOv.dt_assinatura = _dt_assinatura;
+
+                    bool.TryParse(_st_suplemento, out st_suplemento);
+                    diarioOv.st_suplemento = st_suplemento;
+                    if (st_suplemento)
+                    {
+                        diarioOv.nm_diferencial_suplemento = _nm_diferencial_suplemento;
+                    }
+                    else
+                    {
+                        diarioOv.nm_diferencial_suplemento = "";
+                    }
 
                     bool.TryParse(_st_pendente, out st_pendente);
                     diarioOv.st_pendente = st_pendente;

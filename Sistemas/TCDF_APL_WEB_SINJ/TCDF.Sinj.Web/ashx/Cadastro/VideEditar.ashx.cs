@@ -638,7 +638,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             replacement = "";
                             break;
                         case "renumeração":
-                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "_renum(\".*?>.*?<a.+?name=\")" + _caput_alterada.caput[i] + "_renum(\".*?></a>.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alterada.texto_novo[i]) + "(.*?)<a class=\"link_vide\".*?>.+?</a></p>";
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "_renum(\".*?>.*?<a.+?name=\")" + _caput_alterada.caput[i] + "_renum(\".*?></a>.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alterada.texto_novo[i]) + "(.*?)<a class=\"link_vide\".*?>.+?</a></p>";
                             replacement = "$1" + _caput_alterada.caput[i] + "$2" + _caput_alterada.caput[i] + "$3" + _caput_alterada.texto_antigo[i] + "</p>";
                             break;
                         case "prorrogação":
@@ -650,7 +650,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             replacement = "$1</p>";
                             break;
                         default:
-                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "_replaced(\".*?)replaced_by=\"" + _caput_alteradora.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + _caput_alterada.caput[i] + "_replaced\".*?></a>(.*?)</s>(.*?)</p>\r\n<p.+?linkname=\"" + _caput_alterada.caput[i] + "\".*?>.*?" + UtilVides.EscapeCharsInToPattern(_caput_alterada.texto_novo[i]) + ".*?<a class=\"link_vide\".*?>.+?</a></p>";
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "_replaced(\".*?)replaced_by=\"" + _caput_alteradora.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + _caput_alterada.caput[i] + "_replaced\".*?></a>(.*?)</s>(.*?)</p>\r\n<p.+?linkname=\"" + _caput_alterada.caput[i] + "\".*?>.*?" + UtilVides.EscapeCharsInToPattern(_caput_alterada.texto_novo[i]) + ".*?<a class=\"link_vide\".*?>.+?</a></p>";
                             replacement = "$1" + _caput_alterada.caput[i] + "$2$3$4<a name=\"" + _caput_alterada.caput[i] + "\"></a>" + _caput_alterada.texto_antigo[i] + "$6</p>";
                             break;
                     }

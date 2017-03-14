@@ -9,11 +9,12 @@
     <asp:PlaceHolder runat="server" id="placeHolderHeader"></asp:PlaceHolder>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/platform.js"></script>
-    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.printElement.js"></script>
 
     <script type="text/javascript" language="javascript">
         function Print() {
-            $('#div_texto').printElement();
+            $('div.control').hide();
+            window.print();
+            $('div.control').show();
         }
         function exibirAlteracoes(el) {
             if (el.getAttribute('refresh')) {
@@ -29,20 +30,36 @@
             if ($('#div_erro').length > 0) {
                 $('.control').hide();
             }
-            if($('p[replaced_by]').length > 0){
-                $('a.compilado').show();
+            if ($('p[replaced_by]').length <= 0) {
+                $('.compilado').hide();
+            }
+            if ($('p').length == $('p[replaced_by]').length) {
+                $('.compilado').hide();
             }
         });
     </script>
+    <style type="text/css">
+        .control{width:100%; float:left;}
+        .print{float:right;}
+        .compilado{float:left;}
+    </style>
 </head>
 <body>
-    <div style="margin-right:50px;" class="control">
+    <div id="div_norma">
         <a href="<%= ResolveUrl("~/") %>" title="Visitar o SINJ-DF - Sistema Integrado de Normas Jurídicas do DF"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="SINJ-DF" /></a>
-        <a id="a_print" runat="server" href="javascript:void(0);" onclick="javascript:Print();" title="Imprimir" style="float:right;"><img alt="print" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_print_p.png"/></a>
+        <div class="control">
+            <div class="compilado">
+                <a href="javascript:void(0)" onclick="javascript:exibirAlteracoes(this);">
+                    Texto Compilado
+                </a>
+            </div>
+            <div class="print">
+                <a href="javascript:void(0);" onclick="javascript:Print();" title="Imprimir">
+                    <img alt="print" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_print_p.png"/>
+                </a>
+            </div>
+        </div>
+        <div id="div_texto" runat="server"></div>
     </div>
-    <div class="control" style="padding:20px;">
-    <a class="compilado" href="javascript:void(0)" onclick="javascript:exibirAlteracoes(this);" style="display:none;">Suprimir Alterações</a>
-    </div>
-    <div id="div_texto" runat="server"></div>
 </body>
 </html>

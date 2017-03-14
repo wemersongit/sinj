@@ -220,6 +220,7 @@
         ga('create', 'UA-20776101-1', 'auto');
         ga('create', 'UA-90051523-1', 'auto', 'brlightTracker');
         ga('send', 'pageview');
+        ga('brlightTracker.send', 'pageview');
     </script>
  </body>
 </html>

@@ -468,7 +468,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             }
                             break;
                         case "renumeração":
-                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>";
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>";
                             replacement = "$1" + _caput_alterada.caput[i] + "_renum$2<a name=\"" + _caput_alterada.caput[i] + "_renum\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoCaput(_caput_alterada.caput[i]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
                             break;
                         case "prorrogação":
@@ -480,11 +480,19 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             replacement = "$1 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoCaput(_caput_alterada.caput[i]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
                             break;
                         default:
-                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)</p>";
-                            replacement = "$1" + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + "$2<s>$3<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>$5</s></p>\r\n$1" + _caput_alterada.caput[i] + "$2$3$4" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoCaput(_caput_alterada.caput[i]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)</p>";
+                            
+                            var matches = Regex.Matches(texto, pattern);
+                            if (matches.Count == 1)
+                            {
+                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s></p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + gerarDescricaoDoCaput(_caput_alterada.caput[i]) + " " + _ds_texto_para_alterador + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                            }
                             break;
                     }
-                    texto = Regex.Replace(texto, pattern, replacement);
+                    if (replacement != "")
+                    {
+                        texto = Regex.Replace(texto, pattern, replacement);
+                    }
                 }
             }
             return texto;
@@ -535,6 +543,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         {
             var caput_splited = _caput.Split('_');
             var last_caput = caput_splited.Last();
+            if (last_caput.IndexOf("ane") == 0)
+            {
+                _caput = "Anexo";
+            }
             if (last_caput.IndexOf("tit") == 0)
             {
                 _caput = "Título";
@@ -563,15 +575,23 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 _caput = "Alínea";
             }
+            else
+            {
+                _caput = "";
+            }
             return _caput;
         }
 
         public string gerarDescricaoDoTexto(string texto)
         {
             var caput = texto.Substring(0, texto.Trim().IndexOf(' ')).ToUpper();
+            if (caput == "ANEXO")
+            {
+                caput = "Anexo";
+            }
             if (caput == "TITULO" || caput == "TÍTULO")
             {
-                caput = "Parágrafo";
+                caput = "Título";
             }
             else if (caput == "CAPITULO" || caput == "CAPÍTULO")
             {
@@ -640,7 +660,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
     {
         public static string EscapeCharsInToPattern(string text)
         {
-            var aChars = new string[] { "(", ")", "$" };
+            var aChars = new string[] { "(", ")", "$", "." };
             foreach(var aChar in aChars){
                 text = text.Replace(aChar, "\\" + aChar);
             }
