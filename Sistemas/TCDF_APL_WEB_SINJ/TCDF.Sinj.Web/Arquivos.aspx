@@ -23,8 +23,6 @@
 
             configureCkeditor();
 
-
-
             carregarArquivosProduzidos([_diretorio, "000shared"]);
         });
     </script>

@@ -3632,19 +3632,24 @@ function definirEstruturaCaput(name, niveis) {
     if (nivel < primeiro_nivel) {
         niveis = [old_name];
     }
-    if (nivel > ultimo_nivel) {
+    else if (nivel > ultimo_nivel) {
         niveis.push(old_name);
     }
-    else if (nivel <= ultimo_nivel) {
+    else if(nivel < ultimo_nivel){
         var niveis2 = [];
         for (var i = 0; i < niveis.length; i++) {
-            if (niveis[i].indexOf(name) == 0) {
+            var ni = definirNivelCaput(niveis[i]);
+            if (nivel <= ni) {
                 niveis2.push(old_name);
                 break;
             }
             niveis2.push(niveis[i]);
         }
         niveis = niveis2;
+    }
+    else if (nivel == ultimo_nivel) {
+        niveis.splice(-1);
+        niveis.push(old_name);
     }
     return niveis;
 }
@@ -3663,11 +3668,13 @@ function configureCkeditor(){
         {name:'Autoria', element: 'p', styles:{'text-align':'center', 'margin-top':'1px', 'font-size':'14px', 'font-family': 'Tahoma'}},
         {name:'Ementa', element: 'p', styles:{'margin-left':'50%', 'text-align':'justify', 'font-size':'14px', 'font-family': 'Tahoma'}},
         {name:'Corpo', element: 'p', styles:{'text-align':'justify', 'font-size':'14px', 'font-family': 'Tahoma'}},
-        {name:'Seção', element: 'p', styles:{'text-align':'center', 'font-size':'14', 'font-weight': 'bold', 'font-family': 'Tahoma'}},
-        {name:'Assinatura', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma'}},
+        {name:'Seção', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma', 'margin-bottom': '0px'}},
+        {name:'Subseção', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma', 'margin-top': '0px'}},
+        {name:'Assinatura', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma', 'margin-bottom': '0px'}},
+        {name:'Cargo', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma', 'margin-top': '0px'}},
         {name:'Anexo', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma'}}
     ]);
-    CKEDITOR.on( 'dialogDefinition', function( ev ) {
+    CKEDITOR.on('dialogDefinition', function( ev ) {
         var dialogName = ev.data.name;
         var dialogDefinition = ev.data.definition;
 
@@ -3677,6 +3684,10 @@ function configureCkeditor(){
             info.get( 'txtCellSpace' )[ 'default' ] = '0';         // Set default border to 0
         }
     });
+    CKEDITOR.on('command', function( ev ) {
+        var dialogName = ev;
+    });
+    
 }
 
 function loadCkeditor(id_textarea){
@@ -3686,7 +3697,7 @@ function loadCkeditor(id_textarea){
 //        pasteFilter: 'semantic-content'
 //    });
     CKEDITOR.replace(id_textarea, {
-        extraAllowedContent: 'p[linkname,replaced_by];h[epigrafe]',
+        extraAllowedContent: 'p[linkname,replaced_by];h[epigrafe];a(linkname)',
         filebrowserImageBrowseUrl: './Download/imagens'
     });
 }

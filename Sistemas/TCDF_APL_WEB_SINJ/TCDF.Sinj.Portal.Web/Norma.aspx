@@ -26,12 +26,9 @@
         }
         $(document).ready(function () {
             if ($('#div_erro').length > 0) {
-                $('.control').hide();
+                $('#div_norma').hide();
             }
-            if ($('p[replaced_by]').length <= 0) {
-                $('.compilado').hide();
-            }
-            if ($('p').length == $('p[replaced_by]').length) {
+            else if ($('p[replaced_by]').length <= 0 || $('p').length == $('p[replaced_by]').length) {
                 $('.compilado').hide();
             }
         });

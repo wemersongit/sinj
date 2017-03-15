@@ -14,13 +14,8 @@
                 sType: "success",
                 oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
                 fnClose: function () {
-                    for (var i = 0; i < results.length; i++) {
-                        if (results[i].ch_arquivo == chave) {
-                            results.splice(i, 1);
-                            $('#div_list_dir div.div_folder.selected>a').click();
-                            break;
-                        }
-                    }
+                    $(el).closest('tr.tr_arq').remove();
+                    
                 }
             });
         }
@@ -422,17 +417,25 @@ function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
     $.each($('#' + id_div + ' p'), function (key_p, value_p) {
         try {
             var linkname = $(value_p).attr('linkname');
+            //O ckeditor tem um comportamento que causa erro na marcação do paragrafo. Quando estamos editando um texto que já foi bandeirado sempre
+            //que inserimos um novo paragrafo o ckeditor replica os atributos do paragrafo anterior duplicando o linkname, nesses casos o paragrafo não terá
+            //âncora então limpamos o linkname do paragrafo e geramos novamente;
+            if (IsNotNullOrEmpty(linkname) && $('p[linkname="' + linkname + '"]').length > 1 && $('a[name].linkname', value_p).length <= 0) {
+                $(value_p).attr('linkname', '');
+                linkname = '';
+            }
             //Se o paragrafo já possuir o atributo linkname (atributo criado para o editor de links conseguir exibir os icones e fazer a funcionalidade de criar e editar ancoras),
             //ele não deve ser mexido
             if (!IsNotNullOrEmpty(linkname)) {
                 //se não tem conteúdo no paragrafo não há porquê tentar criar linkname e ancora
                 if ($.trim(value_p.textContent)) {
                     //tenta criar o atributo linkname no paragrafo com base na primeira ancora dele
-                    if ($('a[name].linkname', value_p).length > 0) {
-                        var value_a = $('a[name].linkname', value_p)[0];
+                    if ($('a[id][name]', value_p).length == 1) {
+                        var value_a = $('a[id][name]', value_p)[0];
                         if (value_a.textContent == '' && value_a.hasAttribute('id') && value_a.hasAttribute('name')) {
                             linkname = value_a.getAttribute('name');
                             $(value_p).attr('linkname', linkname);
+                            $(value_a).addClass('linkname');
                         }
                     }
                     //se o procedimento anterior não conseguiu determinar um linkname então o paragrafo possui uma ancora criada pelo editor de links,
