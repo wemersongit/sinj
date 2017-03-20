@@ -79,7 +79,7 @@
                     <div class="line">
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_pendencia" class="w-90-pc mauto" print="sim" print-type="linha" print-label="Pendência">
+                                <div id="div_pendencia" class="w-90-pc mauto value" print="sim" print-type="linha" print-label="Pendência">
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                     <div class="line">
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_identificacao" class="w-90-pc mauto word-no-break nr_norma nr_norma_text nm_tipo_norma dt_assinatura dt_assinatura_text" style="font-size:18px;" print="sim" print-type="linha" print-label="Identificação">
+                                <div id="div_identificacao" class="w-90-pc mauto word-no-break nr_norma nr_norma_text nm_tipo_norma dt_assinatura dt_assinatura_text value" style="font-size:18px;" print="sim" print-type="linha" print-label="Identificação">
                                 </div>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="ds_url_acompanhamento" class="w-90-pc mauto">
+                                <div id="ds_url_acompanhamento" class="w-90-pc mauto value">
                                 </div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@
                         </div><br />
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_arquivo" class="w-90-pc mauto">
+                                <div id="div_arquivo" class="w-90-pc mauto value">
                                 </div>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                         </div><br />
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_ds_ementa" class="w-90-pc mauto word-no-break ds_ementa" style="text-align:justify;" print="sim" print-type="linha" print-label="Ementa">
+                                <div id="div_ds_ementa" class="w-90-pc mauto word-no-break ds_ementa value" style="text-align:justify;" print="sim" print-type="linha" print-label="Ementa">
                                     
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                         </div><br />
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_ds_origem" class="w-90-pc mauto word-no-break ds_orgao sg_orgao" style="text-align:justify;" print="sim" print-type="linha" print-label="Origem">
+                                <div id="div_ds_origem" class="w-90-pc mauto word-no-break ds_orgao sg_orgao value" style="text-align:justify;" print="sim" print-type="linha" print-label="Origem">
                                 </div>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_observacao" class="w-90-pc mauto word-no-break observacao" style="text-align:justify;" print="sim" print-type="linha" print-label="Observação">
+                                <div id="div_observacao" class="w-90-pc mauto word-no-break observacao value" style="text-align:justify;" print="sim" print-type="linha" print-label="Observação">
                                 </div>
                             </div>
                         </div>
@@ -285,7 +285,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_nome" class="w-90-pc mauto nome" print="sim" print-type="linha" print-label="Nomes">
+                                <div id="div_nome" class="w-90-pc mauto nome value" print="sim" print-type="linha" print-label="Nomes">
                                 </div>
                             </div>
                         </div>
@@ -301,7 +301,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_indexacao" class="w-90-pc mauto nm_termo" print="sim" print-type="coluna" print-label="Indexação">
+                                <div id="div_indexacao" class="w-90-pc mauto nm_termo value" print="sim" print-type="coluna" print-label="Indexação">
                                 </div>
                             </div>
                         </div>
@@ -317,7 +317,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_nm_ambito" class="w-90-pc mauto nm_ambito">
+                                <div id="div_nm_ambito" class="w-90-pc mauto nm_ambito value">
                                 </div>
                             </div>
                         </div>
@@ -333,7 +333,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_nm_apelido" class="w-90-pc mauto nm_apelido" print="sim" print-type="linha" print-label="Apelido">
+                                <div id="div_nm_apelido" class="w-90-pc mauto nm_apelido value" print="sim" print-type="linha" print-label="Apelido">
                                 </div>
                             </div>
                         </div>
@@ -349,7 +349,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_autorias" class="w-90-pc mauto nm_autoria" print="sim" print-type="linha" print-label="Autoria">
+                                <div id="div_autorias" class="w-90-pc mauto nm_autoria value" print="sim" print-type="linha" print-label="Autoria">
                                 </div>
                             </div>
                         </div>
@@ -395,7 +395,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="ds_procedencia" class="w-90-pc mauto">
+                                <div id="ds_procedencia" class="w-90-pc mauto value">
                                 </div>
                             </div>
                         </div>
@@ -411,7 +411,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="ds_parametro_constitucional" class="w-90-pc mauto">
+                                <div id="ds_parametro_constitucional" class="w-90-pc mauto value">
                                 </div>
                             </div>
                         </div>
@@ -527,7 +527,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_ds_texto_da_acao" class="w-90-pc mauto">
+                                <div id="div_ds_texto_da_acao" class="w-90-pc mauto value">
                                 </div>
                             </div>
                         </div>
@@ -593,6 +593,8 @@
             </fieldset>
         </div>
         <div id="div_loading_norma" class="loading" style="display:none;"></div>
-        <div id="div_impressao" style="display:none;"></div> 
+        <div style="display:none;">
+            <div id="div_impressao"></div> 
+        </div>
     </div>
 </asp:Content>

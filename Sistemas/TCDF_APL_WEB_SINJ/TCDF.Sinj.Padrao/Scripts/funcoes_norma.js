@@ -1648,10 +1648,22 @@ function OrdenarVidesPorData(vides) {
             else if (a.in_norma_afetada && parseInt(a.artigo_norma_vide) > parseInt(b.artigo_norma_vide)) {
                 return 1;
             }
-            else if (!a.in_norma_afetada && parseInt(a.artigo_norma_vide) > parseInt(b.artigo_norma_vide)) {
+            else if (!a.in_norma_afetada && parseInt(a.artigo_norma_vide_outra) < parseInt(b.artigo_norma_vide_outra)) {
                 return -1;
             }
-            else if (!a.in_norma_afetada && parseInt(a.artigo_norma_vide) < parseInt(b.artigo_norma_vide)) {
+            else if (!a.in_norma_afetada && parseInt(a.artigo_norma_vide_outra) > parseInt(b.artigo_norma_vide_outra)) {
+                return 1;
+            }
+            else if (a.in_norma_afetada && parseInt(a.paragrafo_norma_vide) < parseInt(b.paragrafo_norma_vide)) {
+                return -1;
+            }
+            else if (a.in_norma_afetada && parseInt(a.paragrafo_norma_vide) > parseInt(b.paragrafo_norma_vide)) {
+                return 1;
+            }
+            else if (!a.in_norma_afetada && parseInt(a.paragrafo_norma_vide_outra) < parseInt(b.paragrafo_norma_vide_outra)) {
+                return -1;
+            }
+            else if (!a.in_norma_afetada && parseInt(a.paragrafo_norma_vide_outra) > parseInt(b.paragrafo_norma_vide_outra)) {
                 return 1;
             }
             else if (a.in_norma_afetada && a.inciso_norma_vide < b.inciso_norma_vide) {
@@ -1660,10 +1672,10 @@ function OrdenarVidesPorData(vides) {
             else if (a.in_norma_afetada && a.inciso_norma_vide > b.inciso_norma_vide) {
                 return 1;
             }
-            else if (!a.in_norma_afetada && a.inciso_norma_vide > b.inciso_norma_vide) {
+            else if (!a.in_norma_afetada && a.inciso_norma_vide_outra < b.inciso_norma_vide_outra) {
                 return -1;
             }
-            else if (!a.in_norma_afetada && a.inciso_norma_vide < b.inciso_norma_vide) {
+            else if (!a.in_norma_afetada && a.inciso_norma_vide_outra > b.inciso_norma_vide_outra) {
                 return 1;
             }
             else {
@@ -1675,6 +1687,12 @@ function OrdenarVidesPorData(vides) {
                         else if (parseInt(a.nr_norma_vide) > parseInt(b.nr_norma_vide)) {
                             return 1;
                         }
+                        else {
+                            return 0;
+                        }
+                    }
+                    else {
+                        return 0;
                     }
                 }
                 else {

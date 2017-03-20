@@ -1174,6 +1174,7 @@
     <div id="div_modal_importar_arquivo" style="display:none; max-width:850px;">
         <form id="form_importar_arquivo" name="form_importar_arquivo" action="#" url-ajax="./ashx/Arquivo/ImportFile.ashx" method="get" onsubmit="javascript:return importarArquivo('arquivo_fonte','form_importar_arquivo');">
             <input type="hidden" name="id_file" value="" />
+            <input type="hidden" name="filename" value="" />
             <input type="hidden" name="nm_base_origem" value="sinj_arquivo" />
             <input type="hidden" name="nm_base_destino" value="sinj_norma" />
             <input type="hidden" name="ds_diario" value="" />

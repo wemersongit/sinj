@@ -297,7 +297,6 @@ namespace TCDF.Sinj.AD
             }
             else if (_tipo_pesquisa == "diario")
             {
-                fields = MontarCamposPesquisados();
                 var _ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                 var _ch_tipo_edicao = context.Request["ch_tipo_edicao"];
                 var _nr_diario = context.Request["nr_diario"];
@@ -305,45 +304,90 @@ namespace TCDF.Sinj.AD
                 var _filetext = context.Request["filetext"];
                 var _op_dt_assinatura = context.Request["op_dt_assinatura"];
                 var _dt_assinatura = context.Request.Form.GetValues("dt_assinatura");
-                if (!string.IsNullOrEmpty(_nr_diario))
-                {
-                    query_textual += (query_textual != "" ? " AND " : "") + "(nr_diario:" + _nr_diario + ")";
-                }
-                if (!string.IsNullOrEmpty(_ch_tipo_fonte))
-                {
-                    query_textual += (query_textual != "" ? " AND " : "") + "(ch_tipo_fonte:" + _ch_tipo_fonte + ")";
-                }
-                if (!string.IsNullOrEmpty(_ch_tipo_edicao))
-                {
-                    query_textual += (query_textual != "" ? " AND " : "") + "(ch_tipo_edicao:" + _ch_tipo_edicao + ")";
-                }
-                if (_dt_assinatura != null && _dt_assinatura.Length > 0 && !string.IsNullOrEmpty(_dt_assinatura[0]))
-                {
-                    query_textual += (query_textual != "" ? " AND " : "") + _docEs.MontarArgumentoRangeQueryString("dt_assinatura", _op_dt_assinatura, string.Join(",", _dt_assinatura));
-                }
-                if (!string.IsNullOrEmpty(_sSearch))
-                {
-                    query_textual += (query_textual != "" ? " AND " : "") + "(_all:" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*)";
-                }
-                if (_secao_diario != null && _secao_diario.Length > 0)
-                {
-                    var sSecao = "";
-                    for (var i = 0; i < _secao_diario.Length; i++)
-                    {
-                        sSecao += (sSecao != "" ? (i < (_secao_diario.Length - 1) ? ", " : " e ") : "") + _secao_diario[i];
-                    }
-                    query_textual += (query_textual != "" ? " AND " : "") + "(secao_diario:\\\"" + sSecao + "\\\")";
-                    fields_highlight += (fields_highlight != "" ? "," : "") + "\"secao_diario\":{\"number_of_fragments\":20,\"fragment_size\":1}";
-                }
+                var filters = new List<string>();
                 if (!string.IsNullOrEmpty(_filetext))
                 {
-                    var sBuscaTexto = _docEs.TratarCaracteresReservadosDoEs(_filetext);
-                    query_textual += (query_textual != "" ? " AND " : "") + "(arquivos.arquivo_diario.filetext:(" + sBuscaTexto + "))";
-                    fields_highlight += (fields_highlight != "" ? "," : "") + "\"arquivos.arquivo_diario.filetext\":{\"highlight_query\":{\"query_string\":{\"query\":\"" + sBuscaTexto + "\"}},\"number_of_fragments\":8,\"fragment_size\":150, \"no_match_size\":300}";
+                    query_filtered = _docEs.TratarCaracteresReservadosDoEs(_filetext);
+                    if (!string.IsNullOrEmpty(_ch_tipo_fonte))
+                    {
+                        filters.Add("{\"term\":{\"ch_tipo_fonte\":\"" + _ch_tipo_fonte + "\"}}");
+                    }
+                    if (!string.IsNullOrEmpty(_ch_tipo_edicao))
+                    {
+                        filters.Add("{\"term\":{\"ch_tipo_edicao\":\"" + _ch_tipo_edicao + "\"}}");
+                    }
+                    if (!string.IsNullOrEmpty(_nr_diario))
+                    {
+                        filters.Add("{\"query\":{\"query_string\":{\"query\":\"nr_diario:" + _nr_diario + "\"}}}");
+                    }
+                    if (_dt_assinatura != null && _dt_assinatura.Length > 0)
+                    {
+                        if (!string.IsNullOrEmpty(_dt_assinatura[0]))
+                        {
+                            filters.Add("{\"range\":{\"dt_assinatura\":{\"gte\":\"" + _dt_assinatura[0] + "\"}}}");
+                        }
+                        if (!string.IsNullOrEmpty(_dt_assinatura[1]))
+                        {
+                            filters.Add("{\"range\":{\"dt_assinatura\":{\"lte\":\"" + _dt_assinatura[1] + "\"}}}");
+                        }
+                    }
+                    if (_secao_diario != null && _secao_diario.Length > 0)
+                    {
+                        var sSecao = "";
+                        for (var i = 0; i < _secao_diario.Length; i++)
+                        {
+                            sSecao += (sSecao != "" ? (i < (_secao_diario.Length - 1) ? ", " : " e ") : "") + _secao_diario[i];
+                        }
+                        filters.Add("{\"query\":{\"query_string\":{\"query\":\"secao_diario:\\\"" + sSecao + "\\\"}}}");
+                    }
+                    if (!string.IsNullOrEmpty(_sSearch))
+                    {
+                        query_filtered += (query_filtered != "" ? " AND " : "") + "(" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*)";
+                    }
+                    foreach (var filter in filters)
+                    {
+                        filters_and += (filters_and != "" ? "," : "") + filter;
+                    }
+                    if (!string.IsNullOrEmpty(filters_and))
+                    {
+                        filters_and = ",\"filter\":{\"and\":[" + filters_and + "]}";
+                    }
+                    if (_exibir_total != "1")
+                    {
+                        fields_highlight += (fields_highlight != "" ? "," : "") + "\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8,\"fragment_size\":150, \"no_match_size\":300}";
+                    }
                 }
-                if (fields_highlight != "" && _exibir_total != "1")
+                else
                 {
-                    highlight = ",\"highlight\":{\"pre_tags\":[\"_pre_tag_highlight_\"],\"post_tags\":[\"_post_tag_highlight_\"],\"fields\":{" + fields_highlight + "}}";
+                    if (!string.IsNullOrEmpty(_nr_diario))
+                    {
+                        query_textual += (query_textual != "" ? " AND " : "") + "(nr_diario:" + _nr_diario + ")";
+                    }
+                    if (!string.IsNullOrEmpty(_ch_tipo_fonte))
+                    {
+                        query_textual += (query_textual != "" ? " AND " : "") + "(ch_tipo_fonte:" + _ch_tipo_fonte + ")";
+                    }
+                    if (!string.IsNullOrEmpty(_ch_tipo_edicao))
+                    {
+                        query_textual += (query_textual != "" ? " AND " : "") + "(ch_tipo_edicao:" + _ch_tipo_edicao + ")";
+                    }
+                    if (_dt_assinatura != null && _dt_assinatura.Length > 0 && !string.IsNullOrEmpty(_dt_assinatura[0]))
+                    {
+                        query_textual += (query_textual != "" ? " AND " : "") + _docEs.MontarArgumentoRangeQueryString("dt_assinatura", _op_dt_assinatura, string.Join(",", _dt_assinatura));
+                    }
+                    if (!string.IsNullOrEmpty(_sSearch))
+                    {
+                        query_textual += (query_textual != "" ? " AND " : "") + "(_all:" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*)";
+                    }
+                    if (_secao_diario != null && _secao_diario.Length > 0)
+                    {
+                        var sSecao = "";
+                        for (var i = 0; i < _secao_diario.Length; i++)
+                        {
+                            sSecao += (sSecao != "" ? (i < (_secao_diario.Length - 1) ? ", " : " e ") : "") + _secao_diario[i];
+                        }
+                        query_textual += (query_textual != "" ? " AND " : "") + "(secao_diario:\\\"" + sSecao + "\\\")";
+                    }
                 }
             }
             else if (_tipo_pesquisa == "diretorio_diario")
@@ -375,7 +419,8 @@ namespace TCDF.Sinj.AD
                 if (!string.IsNullOrEmpty(_filetext))
                 {
                     //query_textual += (query_textual != "" ? " AND " : "") + "(ar_diario.filetext:" + _docEs.TratarCaracteresReservadosDoEs(_filetext) + ")";
-                    query_filtered =  _docEs.TratarCaracteresReservadosDoEs(_filetext);
+                    query_filtered = _docEs.TratarCaracteresReservadosDoEs(_filetext);
+                    fields_highlight = "\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":5,\"fragment_size\":300,\"no_match_size\":300}";
                 }
 
                 if (!string.IsNullOrEmpty(_ch_tipo_fonte))
@@ -416,11 +461,17 @@ namespace TCDF.Sinj.AD
                 foreach(var filter in filters){
                     filters_and += (filters_and != "" ? "," : "") + filter;
                 }
+                if (!string.IsNullOrEmpty(filters_and))
+                {
+                    filters_and = ",\"filter\":{\"and\":[" + filters_and + "]}";
+                }
             }
             if(!string.IsNullOrEmpty(query_filtered) || !string.IsNullOrEmpty(filters_and)){
-                fields_highlight = "\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":5,\"fragment_size\":300,\"no_match_size\":300}";
-                highlight = ",\"highlight\":{\"pre_tags\":[\"_pre_tag_highlight_\"],\"post_tags\":[\"_post_tag_highlight_\"],\"fields\":{" + fields_highlight + "}}";
-                query = "{\"query\":{\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + query_filtered + "\", \"default_operator\":\"AND\"}},\"filter\":{\"and\":[" + filters_and + "]}}}";
+                if (!string.IsNullOrEmpty(fields_highlight))
+                {
+                    highlight = ",\"highlight\":{\"pre_tags\":[\"_pre_tag_highlight_\"],\"post_tags\":[\"_post_tag_highlight_\"],\"fields\":{" + fields_highlight + "}}";
+                }
+                query = "{\"query\":{\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + query_filtered + "\", \"default_operator\":\"AND\"}}" + filters_and + "}}";
             }
             else if (string.IsNullOrEmpty(query_textual))
             {
@@ -433,7 +484,8 @@ namespace TCDF.Sinj.AD
                     highlight = ",\"highlight\":{\"pre_tags\":[\"\"],\"post_tags\":[\"\"],\"fields\":{" + fields_highlight + "}}";
                 }
                 var query_filtro = MontarQueryFiltros(context);
-                query = "{\"query\":{\"query_string\":{\"fields\":[" + fields + "],\"query\":\"" + query_textual + (!string.IsNullOrEmpty(query_filtro) ? " AND (" + query_filtro + ")" : "") + "\", \"default_operator\":\"AND\"}}";
+                fields = fields != "" ? "\"fields\":[" + fields + "]," : "";
+                query = "{\"query\":{\"query_string\":{" + fields + "\"query\":\"" + query_textual + (!string.IsNullOrEmpty(query_filtro) ? " AND (" + query_filtro + ")" : "") + "\", \"default_operator\":\"AND\"}}";
             }
             //query = "{\"query\":{\"query_string\":{\"fields\":[\"ar_diario.filetext\"],\"query\":\"" + query_textual + "\", \"default_operator\":\"AND\"}}";
             //query = "{\"query\":{\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"ar_diario.filetext\"],\"query\":\"" + query_textual + "\", \"default_operator\":\"AND\"}},\"filter\":{\"and\":["+JSON.Serialize<List<string>>(filter)+"]}}";

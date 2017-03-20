@@ -135,6 +135,7 @@
     <Content Include="Favoritos.aspx" />
     <Content Include="GerenciarVocabulario.aspx" />
     <Content Include="HistoricoDePesquisa.aspx" />
+    <Content Include="Imagens.aspx" />
     <Content Include="ListasVocabulario.aspx" />
     <Content Include="LoginNotifiqueme.aspx" />
     <Content Include="Norma.aspx" />
@@ -1234,6 +1235,13 @@
     <Compile Include="HistoricoDePesquisa.aspx.cs">
       <DependentUpon>HistoricoDePesquisa.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Imagens.aspx.cs">
+      <DependentUpon>Imagens.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Imagens.aspx.designer.cs">
+      <DependentUpon>Imagens.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListasVocabulario.aspx.cs">
       <DependentUpon>ListasVocabulario.aspx</DependentUpon>

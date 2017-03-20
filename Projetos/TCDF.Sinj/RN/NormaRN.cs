@@ -222,14 +222,24 @@ namespace TCDF.Sinj.RN
             {
                 if (normaOv.decisoes != null && normaOv.decisoes.Count > 0)
                 {
-                    var decisoes_ordenadas_por_data = normaOv.decisoes;
-                    try{
-                        decisoes_ordenadas_por_data = normaOv.decisoes.OrderBy(d => Convert.ToDateTime(d.dt_decisao)).ToList();
-                    }
-                    catch{
+                    //var decisoes_ordenadas_por_data = normaOv.decisoes;
+                    var decisoes_ordenadas_por_data = new List<Decisao>();
 
+                    foreach (var decisao in normaOv.decisoes)
+                    {
+                        if(!string.IsNullOrEmpty(decisao.dt_decisao)){
+                            decisoes_ordenadas_por_data.Add(decisao);
+                        }
                     }
-                    switch (decisoes_ordenadas_por_data[0].in_decisao)
+                    if (decisoes_ordenadas_por_data.Count > 0)
+                    {
+                        decisoes_ordenadas_por_data = decisoes_ordenadas_por_data.OrderBy(d => Convert.ToDateTime(d.dt_decisao)).ToList();
+                    }
+                    else
+                    {
+                        decisoes_ordenadas_por_data = normaOv.decisoes;
+                    }
+                    switch (decisoes_ordenadas_por_data.Last<Decisao>().in_decisao)
                     {
                         case TipoDeDecisaoEnum.LiminarDeferida:
                             situacaoOv = situacaoRn.Doc("aguardandojulgamentolnardeferida");

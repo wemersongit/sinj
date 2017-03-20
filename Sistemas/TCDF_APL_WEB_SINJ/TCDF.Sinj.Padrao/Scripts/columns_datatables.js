@@ -52,7 +52,7 @@ var _columns_norma = [
 	}
 ];
 
-	var _columns_norma_es = [
+var _columns_norma_es = [
 	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);" class="center"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "_score", "bSortable": false, "visible": true,
 	    "mRender": function (data, type, full) {
 	        if (!IsNotNullOrEmpty(window.aHighlight)) {
@@ -1547,7 +1547,8 @@ var _columns_arquivos = [
     { "indice": 3, "isControl": true, "bSortable": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "grid-cell ws left", "mData": "",
         "mRender": function (data, type, full) {
             if (full.nr_tipo_arquivo == 1) {
-                var tipo = full.ar_arquivo.mimetype.split('/')[1];
+                var mimetypeSplited = full.ar_arquivo.mimetype.split('/');
+                var tipo = mimetypeSplited[1];
                 var ico = '<img src="' + _urlPadrao + '/Imagens/ico_file.png" width="18" height="18" /> ';
                 var bt_download = '<a target="_blank" href="./Download/sinj_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename + '" title="Baixar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_download.png" alt="download" /></a>';
                 var bt_edit = '';
@@ -1555,25 +1556,55 @@ var _columns_arquivos = [
                 var bt_convert = '';
                 var bt_import = '';
                 var bt_delete = '';
+                if (full.ch_arquivo.indexOf('000shared/images') < 0) {
+                    bt_delete = '&nbsp;<a href="javascript:void(0);" onclick="javascript:openDialogDeleteFile(this)" title="Excluir Arquivo"><img height="16" src="' + _urlPadrao + '/Imagens/ico_del_dir.png" alt="excluir" /></a>';
+                }
                 if (IsNotNullOrEmpty(window, 'bProduzir')) {
                     if (tipo == 'html') {
                         bt_edit = '&nbsp;<a href="javascript:void(0);" onclick="javascript:openDialogEditFile(this)" title="Editar Arquivo"><img height="16" src="' + _urlPadrao + '/Imagens/ico_edit_dir.png" alt="editar html" /></a>';
                         bt_link_edit = '&nbsp;<a href="javascript:void(0);" onclick="javascript:openDialogEditLink(this)" title="Editar Links"><img height="16" src="' + _urlPadrao + '/Imagens/ico_edit_link.png" alt="editar link" /></a>';
                         bt_convert = '&nbsp;<a target="_blank" href="./htmltopdf/dc_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename.replace(".html", ".pdf").replace(".htm", ".pdf") + '" title="Converter e Baixar em PDF" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="converter" /></a>';
                     }
-                    if (full.ch_arquivo.indexOf('000shared/images') < 0) {
-                        bt_delete = '&nbsp;<a href="javascript:void(0);" onclick="javascript:openDialogDeleteFile(this)" title="Excluir Arquivo"><img height="16" src="' + _urlPadrao + '/Imagens/ico_del_dir.png" alt="excluir" /></a>';
-                    }
                 } else {
-                    if (tipo == 'html') {
-                        bt_import = '&nbsp;<a target="_blank" href="javascript:void(0);" onclick="javascript:selecionarDocumentoImportar(this);" title="Selecionar documento produzido" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
+                    if (tipo == 'html' || mimetypeSplited[0] == 'image') {
+                        bt_import = '&nbsp;<a target="_blank" href="javascript:void(0);" onclick="javascript:selecionarDocumentoImportar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
                     }
                 }
                 return bt_download + bt_import + bt_convert + bt_edit + bt_link_edit + bt_delete;
             }
             else {
-                return '<a href="javascript:void(0);" onclick="javascript:openDialogDeleteFolder(this)" title="Excluir Diretório" ch_folder_selected="'+full.ch_arquivo+'" nr_nivel_arquivo_selected="'+full.nr_nivel_arquivo+'"><img height="16" src="' + _urlPadrao + '/Imagens/ico_del_dir.png" alt="excluir" /></a>';
+                if (full.ch_arquivo.indexOf('000shared/images') < 0) {
+                    return '<a href="javascript:void(0);" onclick="javascript:openDialogDeleteFolder(this)" title="Excluir Diretório" ch_folder_selected="' + full.ch_arquivo + '" nr_nivel_arquivo_selected="' + full.nr_nivel_arquivo + '"><img height="16" src="' + _urlPadrao + '/Imagens/ico_del_dir.png" alt="excluir" /></a>';
+                }
+                return '';
             }
+        }
+    }
+];
+
+var _columns_imagens = [
+    { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Nome", "sWidth": "", "sClass": "grid-cell ws left", "mData": "nm_arquivo",
+        "mRender": function (data, type, full) {
+            var html = '';
+            if (full.nr_tipo_arquivo == 0) {
+                html = '<div class="div_folder"><a href="javascript:void(0);" onclick="javascript:carregarImagens(\'' + full.ch_arquivo + '\')" ><img src="' + _urlPadrao + '/Imagens/ico_folder.png" width="18" height="18" /> ' + full.nm_arquivo + '</a></div>';
+            }
+            else {
+                if (full.ar_arquivo.mimetype.indexOf('image/') == 0) {
+                    var tipo = full.ar_arquivo.mimetype.split('/')[1];
+                    var size = (full.ar_arquivo.filesize / 1024).toFixed(0) + ' KB';
+                    url = "Download/sinj_arquivo/" + full.ar_arquivo.id_file + "/" + full.ar_arquivo.filename;
+                    var ico = '<img src="./Download/sinj_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename + '" alt="' + full.ar_arquivo.filename + '" style="max-width:50px;max-height:30px;" />';
+                    html = '<div class="div_arq" chave="' + full.ch_arquivo + '"><a target="_blank" href="javascript:void(0);" onclick="javascript:selectImage(\''+url+'\');" title="Selecionar Imagem" >' + ico + ' ' + full.ar_arquivo.filename + ' <img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="ok" /></a></div>';
+                }
+            }
+            return html;
+        }
+    },
+    { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Data de Criação", "sWidth": "", "sClass": "grid-cell ws left", "mData": "_metadata.dt_doc" },
+    { "indice": 2, "sDefaultContent": "", "bSortable": false, "isControl": false, "standard_view": true, "sTitle": "Tamanho", "sWidth": "", "sClass": "grid-cell ws left", "mData": "",
+        "mRender": function (data, type, full) {
+            return (full.ar_arquivo.filesize / 1024).toFixed(0) + ' KB';
         }
     }
 ];

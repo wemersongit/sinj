@@ -79,8 +79,10 @@
                             <a id="a_cesta" href="javascript:void(0);" class="fr" title=""></a>
                         </div>
                         <div id="button_favoritos" class="fr" style="margin-right:5px;margin-left:15px;">
+
                         </div>
                         <div id="button_notifiqueme" class="fr">
+
                         </div>
                     </div>
                     <div class="line">

@@ -28,8 +28,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
             try
             {
                 var sResult = new TipoDeNormaRN().JsonReg(query);
-                var oResult = JSON.Deserializa<Results<TipoDeNorma>>(sResult);
-                sRetorno = JSON.Serialize<Results<TipoDeNorma>>(oResult);
+                var oResult = Newtonsoft.Json.JsonConvert.DeserializeObject<Results<TipoDeNorma>>(sResult);
+                sRetorno = Newtonsoft.Json.JsonConvert.SerializeObject(oResult);
             }
             catch (Exception Ex)
             {

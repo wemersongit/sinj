@@ -150,7 +150,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                     if (!string.IsNullOrEmpty(_caput_norma_vide_alteradora))
                                     {
                                         caput_norma_vide_alteradora = JSON.Deserializa<Caput>(_caput_norma_vide_alteradora);
-                                        if(vide_alterador.caput_norma_vide.caput == null){
+                                        if (vide_alterador.caput_norma_vide == null || vide_alterador.caput_norma_vide.caput == null)
+                                        {
                                             adicionar_caput = true;
                                         }
                                         else if (caput_norma_vide_alteradora.caput[0] != vide_alterador.caput_norma_vide.caput[0] || caput_norma_vide_alteradora.link != vide_alterador.caput_norma_vide.link)

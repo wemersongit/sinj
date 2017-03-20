@@ -3435,6 +3435,7 @@ function selecionarPasta(el) {
                 nRow.setAttribute('tipo', aData.ar_arquivo.mimetype.split('/')[1]);
                 nRow.setAttribute('chave', aData.ch_arquivo);
                 nRow.setAttribute('id_file', aData.ar_arquivo.id_file);
+                nRow.setAttribute('filename', aData.ar_arquivo.filename);
                 nRow.setAttribute('nm_arquivo', aData.nm_arquivo);
             }
         },
@@ -3486,13 +3487,25 @@ function exibirControlesDocumentosProduzidos(ch_dir) {
 
 function selecionarDocumentoImportar(el) {
     var id_file = $(el).closest('tr.tr_arq').attr('id_file');
-    var file_name = $(el).closest('tr.tr_arq').attr('file_name');
+    var filename = $(el).closest('tr.tr_arq').attr('filename');
     var chave = $(el).closest('tr.tr_arq').attr('chave');
     var tipo = $(el).closest('tr.tr_arq').attr('tipo');
     $('#form_importar_arquivo input[name="id_file"]').val(id_file);
+    $('#form_importar_arquivo input[name="filename"]').val(filename);
 
-    $('#form_importar_arquivo input[name="ds_diario"]').val($('#ds_diario').val());
+    var ds_diario = $('#ds_diario').val();
+    if(IsNotNullOrEmpty(ds_diario)){
+        //Foi solicitado que não exibisse a seção na descrição do diário no texto importado
+        ds_diario = ds_diario.replace(/, seção 1, 2 e 3/i,'');
+        ds_diario = ds_diario.replace(/, seção 1 e 2/i,'');
+        ds_diario = ds_diario.replace(/, seção 1 e 3/i,'');
+        ds_diario = ds_diario.replace(/, seção 2 e 3/i,'');
+        ds_diario = ds_diario.replace(/, seção 1/i,'');
+        ds_diario = ds_diario.replace(/, seção 2/i,'');
+        ds_diario = ds_diario.replace(/, seção 3/i,'');
 
+        $('#form_importar_arquivo input[name="ds_diario"]').val($('#ds_diario').val());
+    }
 
 
     $('#input_chave_importar').val(chave + '.' + tipo);
@@ -3662,17 +3675,17 @@ function configureCkeditor(){
         {name:'Epígrafe', element: 'h1', attributes: {
             epigrafe: 'epigrafe'
             },
-            styles:{'font-family':'tahoma', 'font-size':'14px', 'font-weight':'bold', 'text-align':'center'} 
+            styles:{'font-weight':'bold', 'text-align':'center'}
         },
-        {name:'Retificação', element: 'p', styles:{'text-align':'right', 'font-size':'14px', 'font-family': 'Tahoma', 'color': '#FF0000'}},
-        {name:'Autoria', element: 'p', styles:{'text-align':'center', 'margin-top':'1px', 'font-size':'14px', 'font-family': 'Tahoma'}},
-        {name:'Ementa', element: 'p', styles:{'margin-left':'50%', 'text-align':'justify', 'font-size':'14px', 'font-family': 'Tahoma'}},
-        {name:'Corpo', element: 'p', styles:{'text-align':'justify', 'font-size':'14px', 'font-family': 'Tahoma'}},
-        {name:'Seção', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma', 'margin-bottom': '0px'}},
-        {name:'Subseção', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma', 'margin-top': '0px'}},
-        {name:'Assinatura', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma', 'margin-bottom': '0px'}},
-        {name:'Cargo', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma', 'margin-top': '0px'}},
-        {name:'Anexo', element: 'p', styles:{'text-align':'center', 'font-size':'14px', 'font-weight': 'bold', 'font-family': 'Tahoma'}}
+        {name:'Retificação', element: 'p', styles:{'text-align':'right', 'color': '#FF0000'}},
+        {name:'Autoria', element: 'p', styles:{'text-align':'center', 'margin-top':'1px'}},
+        {name:'Ementa', element: 'p', styles:{'margin-left':'50%', 'text-align':'justify'}},
+        {name:'Corpo', element: 'p', styles:{'text-align':'justify'}},
+        {name:'Seção', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
+        {name:'Subseção', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}},
+        {name:'Assinatura', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
+        {name:'Cargo', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}},
+        {name:'Anexo', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold'}}
     ]);
     CKEDITOR.on('dialogDefinition', function( ev ) {
         var dialogName = ev.data.name;
@@ -3698,6 +3711,6 @@ function loadCkeditor(id_textarea){
 //    });
     CKEDITOR.replace(id_textarea, {
         extraAllowedContent: 'p[linkname,replaced_by];h[epigrafe];a(linkname)',
-        filebrowserImageBrowseUrl: './Download/imagens'
+        filebrowserImageBrowseUrl: './Imagens.aspx'
     });
 }
