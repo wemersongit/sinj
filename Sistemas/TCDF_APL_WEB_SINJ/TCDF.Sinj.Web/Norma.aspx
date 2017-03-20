@@ -39,7 +39,7 @@
         .control{width:100%; float:left;}
         .print{float:right;}
         .compilado{float:left;}
-        body{font-size:14px; font-family:Tahoma;}
+        body, p, h1{font-family:Tahoma;font-size:14px;}
     </style>
 </head>
 <body>

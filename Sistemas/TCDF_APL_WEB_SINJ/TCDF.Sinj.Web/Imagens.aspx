@@ -77,7 +77,8 @@
         }
 
         function selectImage(url){
-            window.opener.CKEDITOR.tools.callFunction(<%=Request["CKEditorFuncNum"]%>, url);
+            var urlSinjPortal = '<%=util.BRLight.Util.GetVariavel("URLSinjPortal",true)%>';
+            window.opener.CKEDITOR.tools.callFunction(<%=Request["CKEditorFuncNum"]%>, urlSinjPortal + "/" + url);
             window.close();
         }
 

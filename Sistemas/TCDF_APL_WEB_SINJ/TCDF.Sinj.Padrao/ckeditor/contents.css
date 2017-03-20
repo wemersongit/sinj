@@ -130,3 +130,6 @@ a > img {
 	border: none;
 	outline: 1px solid #0782C1;
 }
+
+/*Adaptações para o SINJ*/
+body, p, h1{font-family:Tahoma;font-size:14px;}
