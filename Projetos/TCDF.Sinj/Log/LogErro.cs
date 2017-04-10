@@ -40,6 +40,12 @@ namespace TCDF.Sinj.Log
             return gravar_erro(erro.ch_erro, _nm_tipo, JSON.Serialize<object>(erro), nm_user, nm_login_user);
         }
 
+        public static ulong gravar_erro(string _nm_tipo, ErroAjax _erro, string nm_user, string nm_login_user)
+        {
+            var erro = new { ch_erro = "erro_ajax", Erro = _erro };
+            return gravar_erro(erro.ch_erro, _nm_tipo, JSON.Serialize<object>(erro), nm_user, nm_login_user);
+        }
+
         private static ulong gravar_erro(string _nm_tipo, string _ch_operacao, string _ds_erro, string nm_user, string nm_login_user)
         {
             ulong id_log = 0;

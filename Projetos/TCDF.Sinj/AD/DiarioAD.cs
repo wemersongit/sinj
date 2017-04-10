@@ -265,7 +265,7 @@ namespace TCDF.Sinj.AD
             var query = "";
             var query_textual = "";
             var query_filtered = "";
-            var filters_and = "";
+            var filters = new List<string>();
             var ids = "";
             if (_tipo_pesquisa == "geral")
             {
@@ -304,7 +304,6 @@ namespace TCDF.Sinj.AD
                 var _filetext = context.Request["filetext"];
                 var _op_dt_assinatura = context.Request["op_dt_assinatura"];
                 var _dt_assinatura = context.Request.Form.GetValues("dt_assinatura");
-                var filters = new List<string>();
                 if (!string.IsNullOrEmpty(_filetext))
                 {
                     query_filtered = _docEs.TratarCaracteresReservadosDoEs(_filetext);
@@ -343,14 +342,6 @@ namespace TCDF.Sinj.AD
                     if (!string.IsNullOrEmpty(_sSearch))
                     {
                         query_filtered += (query_filtered != "" ? " AND " : "") + "(" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*)";
-                    }
-                    foreach (var filter in filters)
-                    {
-                        filters_and += (filters_and != "" ? "," : "") + filter;
-                    }
-                    if (!string.IsNullOrEmpty(filters_and))
-                    {
-                        filters_and = ",\"filter\":{\"and\":[" + filters_and + "]}";
                     }
                     if (_exibir_total != "1")
                     {
@@ -415,7 +406,6 @@ namespace TCDF.Sinj.AD
                 var _dt_assinatura_inicio = context.Request["dt_assinatura_inicio"];
                 var _dt_assinatura_termino = context.Request["dt_assinatura_termino"];
                 var _ano = context.Request["ano"];
-                var filters = new List<string>();
                 if (!string.IsNullOrEmpty(_filetext))
                 {
                     //query_textual += (query_textual != "" ? " AND " : "") + "(ar_diario.filetext:" + _docEs.TratarCaracteresReservadosDoEs(_filetext) + ")";
@@ -450,23 +440,32 @@ namespace TCDF.Sinj.AD
                 }
                 if (!string.IsNullOrEmpty(_ano))
                 {
-                    //query_textual += (query_textual != "" ? " AND " : "") + _docEs.MontarArgumentoRangeQueryString("dt_assinatura", "intervalo", "01/01/"+_ano + ",31/12/"+_ano);
-                    //filters.Add("{\"range\":{\"dt_assinatura\":{\"gte\":\"" + _dt_assinatura_inicio + "\",\"lte\":\"" + _dt_assinatura_termino + "\"}}}");
                     filters.Add("{\"range\":{\"dt_assinatura\":{\"gte\":\"01/01/" + _ano + "\",\"lte\":\"31/12/" + _ano + "\"}}}");
                 }
                 if (!string.IsNullOrEmpty(_sSearch))
                 {
                     query_filtered += (query_filtered != "" ? " AND " : "") + "(" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*)";
                 }
-                foreach(var filter in filters){
+            }
+            if (!string.IsNullOrEmpty(query_filtered) || filters.Count > 0)
+            {
+                string[] _filtros = context.Request.Params.GetValues("filtro");
+                if (_filtros != null)
+                {
+                    foreach (var _filtro in _filtros)
+                    {
+                        filters.Add("{\"query\":{\"query_string\":{\"query\":\""+_filtro+"\"}}}");
+                    }
+                }
+                var filters_and = "";
+                foreach (var filter in filters)
+                {
                     filters_and += (filters_and != "" ? "," : "") + filter;
                 }
                 if (!string.IsNullOrEmpty(filters_and))
                 {
                     filters_and = ",\"filter\":{\"and\":[" + filters_and + "]}";
                 }
-            }
-            if(!string.IsNullOrEmpty(query_filtered) || !string.IsNullOrEmpty(filters_and)){
                 if (!string.IsNullOrEmpty(fields_highlight))
                 {
                     highlight = ",\"highlight\":{\"pre_tags\":[\"_pre_tag_highlight_\"],\"post_tags\":[\"_post_tag_highlight_\"],\"fields\":{" + fields_highlight + "}}";

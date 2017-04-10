@@ -626,11 +626,11 @@ namespace TCDF.Sinj
                     partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"nm_tipo_fonte\",\"nr_diario\",\"cr_diario\",\"secao_diario\",\"dt_assinatura\",\"st_pendente\",\"ar_diario.id_file\",\"ar_diario.filesize\"]}}";
                     break;
                 case "sinj_norma":
-                    partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"fontes.ar_fonte.id_file\",\"fontes.ar_fonte.filesize\",\"nm_tipo_norma\",\"nr_norma\",\"ch_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\"]}}";
+                    partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"ar_atualizado.mimetype\",\"fontes.ar_fonte.id_file\",\"fontes.ar_fonte.filesize\",\"fontes.ar_fonte.mimetype\",\"nm_tipo_norma\",\"nr_norma\",\"ch_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\"]}}";
                     break;
                 case "cesta":
                     var _base = context.Request["b"];
-                    partial_fields = _base == "sinj_norma" ? ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"fontes.ar_fonte.id_file\",\"nm_tipo_norma\",\"nr_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\"]}}" : _base == "sinj_diario" ? ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"nm_tipo_fonte\",\"nr_diario\",\"secao_diario\",\"dt_assinatura\",\"st_pendente\",\"ar_diario.id_file\"]}}" : "";
+                    partial_fields = _base == "sinj_norma" ? ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"ar_atualizado.mimetype\",\"fontes.ar_fonte.id_file\",\"fontes.ar_fonte.filesize\",\"fontes.ar_fonte.mimetype\",\"nm_tipo_norma\",\"nr_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\"]}}" : _base == "sinj_diario" ? ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"nm_tipo_fonte\",\"nr_diario\",\"secao_diario\",\"dt_assinatura\",\"st_pendente\",\"ar_diario.id_file\"]}}" : "";
                     break;
             }
             return partial_fields;

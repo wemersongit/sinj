@@ -149,9 +149,6 @@
     <Compile Include="ashx\Exclusao\HistoricoDePesquisaExcluir.ashx.cs">
       <DependentUpon>HistoricoDePesquisaExcluir.ashx</DependentUpon>
     </Compile>
-    <Compile Include="ashx\js.ashx.cs">
-      <DependentUpon>js.ashx</DependentUpon>
-    </Compile>
     <Compile Include="ashx\Push\FavoritosExcluir.ashx.cs">
       <DependentUpon>FavoritosExcluir.ashx</DependentUpon>
     </Compile>
@@ -360,7 +357,6 @@
     <Content Include="ashx\Datatable\CestaPesquisaDatatable.ashx" />
     <Content Include="ashx\Datatable\HistoricoDePesquisaDatatable.ashx" />
     <Content Include="ashx\Exclusao\HistoricoDePesquisaExcluir.ashx" />
-    <Content Include="ashx\js.ashx" />
     <Content Include="ashx\Push\NotifiquemeCheckLogin.ashx" />
     <Content Include="ashx\Push\NotifiquemeCriacaoNormaExcluir.ashx" />
     <Content Include="ashx\Push\NotifiquemeCriacaoNormaIncluir.ashx" />

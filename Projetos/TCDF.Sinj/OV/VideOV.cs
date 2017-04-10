@@ -72,6 +72,7 @@ namespace TCDF.Sinj.OV
         public string dt_inicio_vigor { get; set; }
         public string st_aguardar_vigor { get; set; }
         public string nm_relacao_aux { get; set; }
+        public string ds_texto_para_alterador_aux { get; set; }
     }
 
 }

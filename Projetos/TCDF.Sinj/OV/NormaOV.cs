@@ -222,6 +222,10 @@ namespace TCDF.Sinj.OV
             return prep;
         }
 
+        public string getDescricaoDaNorma()
+        {
+            return nm_tipo_norma + " " + (!string.IsNullOrEmpty(nr_norma) || nr_norma != "0" ? nr_norma : "") + " de " + dt_assinatura;
+        }
     }
 	
 	public class NormaDetalhada : NormaOV

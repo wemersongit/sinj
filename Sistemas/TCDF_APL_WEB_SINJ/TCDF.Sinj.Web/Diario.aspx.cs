@@ -21,7 +21,7 @@ namespace TCDF.Sinj.Web
             {
                 if (Config.ValorChave("Aplicacao") == "CADASTRO")
                 {
-                    sessao_usuario = Util.ValidarSessao();
+                    Util.ValidarAcesso(base.Page);
                     //Não faz nada se o usuário não tiver sessão no portal pois essa pesquisa pode ser feita por qualquer um.
                 }
                 var aKeywords = new string[0];

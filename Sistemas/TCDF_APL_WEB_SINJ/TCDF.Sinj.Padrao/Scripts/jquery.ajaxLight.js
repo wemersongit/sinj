@@ -174,7 +174,7 @@ $(function () {
         function f_Projeta_Error_Ajax(sMsg, sUrl) {
             var e = { 'message': sMsg, 'url': sUrl, 'pagina': window.location.href };
             if ((sMsg != "") && (sUrl != ""))
-                if (typeof jQuery != 'undefined') $.ajax({ type: 'POST', url: './ashx/ErrorAjax.ashx', data: e, jsonpCallback: "callback", dataType: "jsonp", cache: false, async: true, success: null, error: null });
+                if (typeof jQuery != 'undefined') $.ajax({ type: 'POST', url: './ashx/ErrorAjax.ashx', data: e, dataType: "json", cache: false, async: true, success: null, error: null });
             return;
         }
     })(jQuery);

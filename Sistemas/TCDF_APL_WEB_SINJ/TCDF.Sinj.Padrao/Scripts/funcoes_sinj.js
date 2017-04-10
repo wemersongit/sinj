@@ -2496,7 +2496,7 @@ function getTitleNorma(jNorma) {
     var ds = jNorma.nm_tipo_norma + " " + (jNorma.nr_norma != '0' ? jNorma.nr_norma : "") + "_" + jNorma.dt_assinatura;
     ds = ds.replace(/\W+|[ãÃõÕçÇêÊéÉ\/]/g, "_");
     var mimetype = '';
-    if(IsNotNullOrEmpty(jNorma.ar_atualizado, 'id_file')){
+    if(IsNotNullOrEmpty(jNorma.ar_atualizado, 'mimetype')){
         mimetype = jNorma.ar_atualizado.mimetype;
     }
     else{

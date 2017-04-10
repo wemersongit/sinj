@@ -368,6 +368,7 @@ function clickButtonCaput(el, nm_sufixo) {
             $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput" value="' + linkname + '" />');
             var p = $(el.parentNode).clone();
             $(p).find('a>sup').remove();
+            $(p).find('a.link_vide').remove();
             var text = $(p).text();
             $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput_texto_' + linkname + '" value="' + text + '" />');
 
