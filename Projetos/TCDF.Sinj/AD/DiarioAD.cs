@@ -319,16 +319,9 @@ namespace TCDF.Sinj.AD
                     {
                         filters.Add("{\"query\":{\"query_string\":{\"query\":\"nr_diario:" + _nr_diario + "\"}}}");
                     }
-                    if (_dt_assinatura != null && _dt_assinatura.Length > 0)
+                    if (_dt_assinatura != null && _dt_assinatura.Length > 0 && !string.IsNullOrEmpty(_dt_assinatura[0]))
                     {
-                        if (!string.IsNullOrEmpty(_dt_assinatura[0]))
-                        {
-                            filters.Add("{\"range\":{\"dt_assinatura\":{\"gte\":\"" + _dt_assinatura[0] + "\"}}}");
-                        }
-                        if (!string.IsNullOrEmpty(_dt_assinatura[1]))
-                        {
-                            filters.Add("{\"range\":{\"dt_assinatura\":{\"lte\":\"" + _dt_assinatura[1] + "\"}}}");
-                        }
+                        filters.Add(_docEs.MontarArgumentoRange("dt_assinatura", _op_dt_assinatura, string.Join(",", _dt_assinatura)));
                     }
                     if (_secao_diario != null && _secao_diario.Length > 0)
                     {
