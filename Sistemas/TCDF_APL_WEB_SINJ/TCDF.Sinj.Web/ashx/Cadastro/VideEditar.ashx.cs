@@ -87,14 +87,14 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         normaOv = normaRn.Doc(id_doc);
 
                         TipoDeRelacaoOV relacao = null;
-                        if (!string.IsNullOrEmpty(_artigo_norma_vide_alterada))
-                        {
-                            relacao = normaRn.ObterRelacaoParcial(_ch_tipo_relacao);
-                        }
-                        else
-                        {
-                            relacao = normaRn.ObterRelacao(_ch_tipo_relacao);
-                        }
+                        //if (!string.IsNullOrEmpty(_artigo_norma_vide_alterada))
+                        //{
+                        //    relacao = normaRn.ObterRelacaoParcial(_ch_tipo_relacao);
+                        //}
+                        //else
+                        //{
+                        relacao = normaRn.ObterRelacao(_ch_tipo_relacao);
+                        //}
                         if (relacao != null)
                         {
                             ch_tipo_relacao_pos_verificacao = relacao.ch_tipo_relacao;
@@ -377,6 +377,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 };
                 LogOperacao.gravar_operacao(Util.GetEnumDescription(action) + ",VIDE.EDT", log_editar, id_doc, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
             }
+            catch (FileNotFoundException ex)
+            {
+                sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"alert_message\": \"" + ex.Message + "\"}";
+            }
             catch (Exception ex)
             {
 
@@ -417,7 +421,32 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         /// <param name="videAlteradoDesfazer"></param>
         private void VerificarDispositivosDesfazerEAlterarOsTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado, Vide videAlteradorDesfazer, Vide videAlteradoDesfazer, string nmSituacaoAnterior)
         {
-            new VideExcluir().VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior);
+            var dictionaryFiles = new VideExcluir().VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior);
+
+            if (dictionaryFiles.ContainsKey("id_file_alterador"))
+            {
+                if (videAlterador.caput_norma_vide != null && !string.IsNullOrEmpty(videAlterador.caput_norma_vide.id_file))
+                {
+                    videAlterador.caput_norma_vide.id_file = dictionaryFiles["id_file_alterador"];
+                }
+                else
+                {
+                    normaAlteradora.ar_atualizado.id_file = dictionaryFiles["id_file_alterador"];
+                }
+            }
+
+            if (dictionaryFiles.ContainsKey("id_file_alterado"))
+            {
+                if (videAlterado.caput_norma_vide != null && !string.IsNullOrEmpty(videAlterado.caput_norma_vide.id_file))
+                {
+                    videAlterado.caput_norma_vide.id_file = dictionaryFiles["id_file_alterado"];
+                }
+                else
+                {
+                    normaAlterada.ar_atualizado.id_file = dictionaryFiles["id_file_alterado"];
+                }
+            }
+            
             new VideIncluir().VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradora, normaAlterada, videAlterador, videAlterado);
 
         }

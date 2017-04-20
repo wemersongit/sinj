@@ -4,8 +4,49 @@
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
             $('#button_salvar_vide').click(function () {
-                return fnSalvar("form_editar_vide");
+                return fnSalvar("form_editar_vide", "", sucesso_vide);
             });
+
+            var open_modal = function (data) {
+                $('<div id="modal_notificacao_modal_salvar" />').modallight({
+                    sTitle: "Sucesso",
+                    sContent: "Salvo com sucesso." + (IsNotNullOrEmpty(data, 'alert_message') ? '<br/>Observação:<br/>O vide foi alterado com sucesso mas houve um erro na alteração do arquivo.<br/>Mensagem do erro:<br/>' + data.alert_message : ''),
+                    sType: "success",
+                    oButtons: [{
+                        text: "Ok",
+                        click: function () {
+                            $(this).dialog('close');
+                        }
+                    }],
+                    fnClose: function () {
+                        if (IsNotNullOrEmpty(data, "ch_norma")) {
+                            Redirecionar('?id_norma=' + data.ch_norma);
+                        } else {
+                            if (!Redirecionar('?id_doc=' + data.id_doc_success + "&time=" + new Date().getTime())) {
+                                location.reload();
+                            }
+                        }
+                    }
+                });
+            }
+
+            var sucesso_vide = function (data) {
+                gComplete();
+                if (IsNotNullOrEmpty(data)) {
+                    if (IsNotNullOrEmpty(data, 'id_doc_success')) {
+                        open_modal(data);
+                    }
+                    else {
+                        $('#form_vide .notify').messagelight({
+                            sTitle: "Erro",
+                            sContent: "Erro ao salvar.<br>" + data.error_message,
+                            sType: "error",
+                            sWidth: "",
+                            iTime: null
+                        });
+                    }
+                }
+            };
 
             var id_doc = GetParameterValue('id_doc');
             var ch_vide = GetParameterValue('ch_vide');

@@ -19,7 +19,7 @@
             var open_modal = function (data) {
                 $('<div id="modal_notificacao_modal_salvar" />').modallight({
                     sTitle: "Sucesso",
-                    sContent: "Salvo com sucesso.",
+                    sContent: "Salvo com sucesso." + (IsNotNullOrEmpty(data, 'alert_message') ? '<br/>Observação:<br/>O vide foi incluído com sucesso mas houve um erro na alteração do arquivo.<br/>Mensagem do erro:<br/>'+data.alert_message : ''),
                     sType: "success",
                     oButtons: [
                         {
@@ -92,16 +92,6 @@
                 gComplete();
                 if (IsNotNullOrEmpty(data)) {
                     if (IsNotNullOrEmpty(data, 'id_doc_success')) {
-                        //                        if ($('#caput_norma_vide_alteradora').val() != "") {
-                        //                            $('#form_caput input[name="caput_alteradora"]').val($('#caput_norma_vide_alteradora').val());
-                        //                            $('#form_caput input[name="caput_alterada"]').val($('#caput_norma_vide_alterada').val());
-                        //                            $('#form_caput input[name="texto_novo"]').val($('#texto_novo').val());
-                        //                            $('#form_caput').submit();
-                        //                        }
-                        //                        else {
-                        //                            gComplete();
-                        //                            open_modal(data);
-                        //                        }
                         open_modal(data);
                     }
                     else {

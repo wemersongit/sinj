@@ -55,4 +55,11 @@ namespace TCDF.Sinj
 
         }
     }
+    public class FileNotFoundException : ApplicationException
+    {
+        public FileNotFoundException(string mensagem) : base(mensagem)
+        {
+
+        }
+    }
 }

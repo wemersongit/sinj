@@ -92,12 +92,12 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                 }
                 else
                 {
-                    throw new Exception("Arquivo não encontrado.");
+                    throw new FileNotFoundException("Arquivo não encontrado.");
                 }
             }
             else
             {
-                throw new Exception("Arquivo não encontrado.");
+                throw new FileNotFoundException("Arquivo não encontrado.");
             }
             return sArquivo;
         }

@@ -38,7 +38,7 @@
             <div class="art-top">
                 <div class="right-top">
                     <span>
-                        3.5687
+                        <%= TCDF.Sinj.Util.MostrarVersao() %>
                     </span>
                 </div>
                 <div class="logo">
