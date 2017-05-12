@@ -24,12 +24,48 @@
                 $(el).text('Exibir Alterações');
             }
         }
+        function verificarLinks() {
+            var aP = $('#div_texto > p');
+            var i = 0;
+            var length = aP.length;
+            var pAfter = null;
+            for (; i < length; i++) {
+                if ($('a', aP[i]).length == 1 && $('a', aP[i]).text().indexOf('Legislação Correlata') == 0) {
+                    $('a', aP[i]).attr('show', '1');
+                    if (i >= 3) {
+                        $('a', aP[i]).attr('show', '0');
+                        pAfter = aP[i];
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+            if (pAfter != null && $('a[show="0"]').length > 3) {
+                $('a[show="0"]').hide();
+                $('<p id="p_show"><a href="javascript:void(0);" onclick="exibirLinks()">Exibir mais...</a></p>').insertAfter($(pAfter));
+                $('<p id="p_hide" style="display:none"><a href="javascript:void(0);" onclick="esconderLinks()">Exibir menos...</a></p>').insertAfter($(pAfter));
+            }
+        }
+        function exibirLinks() {
+            $('a[show="0"]').show();
+            $('#p_hide').show();
+            $('#p_show').hide();
+        }
+        function esconderLinks() {
+            $('a[show="0"]').hide();
+            $('#p_hide').hide();
+            $('#p_show').show();
+        }
         $(document).ready(function () {
             if ($('#div_erro').length > 0) {
                 $('#div_norma').hide();
             }
-            else if ($('p[replaced_by]').length <= 0 || $('p').length == $('p[replaced_by]').length) {
-                $('.compilado').hide();
+            else {
+                if ($('p[replaced_by]').length <= 0 || $('p').length == $('p[replaced_by]').length) {
+                    $('.compilado').hide();
+                }
+                verificarLinks();
             }
         });
     </script>

@@ -327,26 +327,29 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             var pesquisa = new Pesquisa();
 
             var arquivo_norma_vide_alteradora = CriarLinkNoTextoDaNormaAlteradora(caput_norma_vide_alteradora, caput_norma_vide_alterada);
-
-            var retorno_file_alteradora = upload.AnexarHtml(arquivo_norma_vide_alteradora, caput_norma_vide_alteradora.filename, "sinj_norma");
-
-            if (retorno_file_alteradora.IndexOf("id_file") > -1)
+            if (!string.IsNullOrEmpty(arquivo_norma_vide_alteradora))
             {
-                pesquisa.literal = "ch_norma='" + ch_norma_alteradora + "'";
-                var listOp = new List<opMode<object>>();
-                listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alteradora } });
-                normaRn.PathPut<object>(pesquisa, listOp);
+                var retorno_file_alteradora = upload.AnexarHtml(arquivo_norma_vide_alteradora, caput_norma_vide_alteradora.filename, "sinj_norma");
+
+                if (retorno_file_alteradora.IndexOf("id_file") > -1)
+                {
+                    pesquisa.literal = "ch_norma='" + ch_norma_alteradora + "'";
+                    var listOp = new List<opMode<object>>();
+                    listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alteradora } });
+                    normaRn.PathPut<object>(pesquisa, listOp);
+                }
             }
-
             var arquivo_norma_vide_alterada = AlterarDispositivosDaNormaAlterada(caput_norma_vide_alterada, caput_norma_vide_alteradora);
-
-            var retorno_file_alterada = upload.AnexarHtml(arquivo_norma_vide_alterada, caput_norma_vide_alterada.filename, "sinj_norma");
-            if (retorno_file_alterada.IndexOf("id_file") > -1)
+            if (!string.IsNullOrEmpty(arquivo_norma_vide_alterada))
             {
-                pesquisa.literal = "ch_norma='" + ch_norma_alterada + "'";
-                var listOp = new List<opMode<object>>();
-                listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
-                normaRn.PathPut<object>(pesquisa, listOp);
+                var retorno_file_alterada = upload.AnexarHtml(arquivo_norma_vide_alterada, caput_norma_vide_alterada.filename, "sinj_norma");
+                if (retorno_file_alterada.IndexOf("id_file") > -1)
+                {
+                    pesquisa.literal = "ch_norma='" + ch_norma_alterada + "'";
+                    var listOp = new List<opMode<object>>();
+                    listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
+                    normaRn.PathPut<object>(pesquisa, listOp);
+                }
             }
         }
 
@@ -365,14 +368,16 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
 
             var arquivoNormaVideAlterada = AlterarDispositivosDaNormaAlterada(caputNormaVideAlterada, normaAlteradora);
-
-            var retorno_file_alterada = upload.AnexarHtml(arquivoNormaVideAlterada, caputNormaVideAlterada.filename, "sinj_norma");
-            if (retorno_file_alterada.IndexOf("id_file") > -1)
+            if (!string.IsNullOrEmpty(arquivoNormaVideAlterada))
             {
-                pesquisa.literal = "ch_norma='" + chNorma_alterada + "'";
-                var listOp = new List<opMode<object>>();
-                listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
-                normaRn.PathPut<object>(pesquisa, listOp);
+                var retorno_file_alterada = upload.AnexarHtml(arquivoNormaVideAlterada, caputNormaVideAlterada.filename, "sinj_norma");
+                if (retorno_file_alterada.IndexOf("id_file") > -1)
+                {
+                    pesquisa.literal = "ch_norma='" + chNorma_alterada + "'";
+                    var listOp = new List<opMode<object>>();
+                    listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
+                    normaRn.PathPut<object>(pesquisa, listOp);
+                }
             }
         }
         
@@ -877,14 +882,17 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             var htmlFile = new HtmlFileEncoded();
             
             var pattern1 = "(?!<p.+replaced_by=.+>)(<p.+?>)(.+?)</p>";
-            var replacement1 = "$1<s>$2</s></p>";
+            Regex rx1 = new Regex(pattern1, RegexOptions.Singleline);
 
             var pattern2 = "(<h1.+?epigrafe=.+?>.+?</h1>)";
-            var replacement2 = "$1\r\n<p style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
-            if (Regex.Matches(texto, pattern1).Count > 0 || Regex.Matches(texto, pattern2).Count == 1)
+            Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+
+            if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
             {
-                texto = Regex.Replace(texto, pattern1, replacement1);
-                texto = Regex.Replace(texto, pattern2, replacement2);
+                var replacement1 = "$1<s>$2</s></p>";
+                var replacement2 = "$1\r\n<p style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                texto = rx1.Replace(texto, replacement1);
+                texto = rx2.Replace(texto, replacement2);
             }
             else
             {
@@ -943,7 +951,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var replacement = "$1\r\n<p><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
                 if (_caput_alteradora.ds_texto_para_alterador_aux == "legislação correlata")
                 {
-                    replacement = "<p><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >" + _caput_alteradora.ds_texto_para_alterador_aux + " - " + _caput_alteradora.ds_norma + "</a></p>\r\n$1";
+                    replacement = "<p><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >Legislação correlata - " + _caput_alteradora.ds_norma + "</a></p>\r\n$1";
                 }
                 texto = Regex.Replace(texto, pattern, replacement);
             }
@@ -978,7 +986,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var replacement = "$1\r\n<p><a href=\"" + aux_href + "\" >(" + dsTextoRelacao + " pelo(a) " + dsNormaAlteradora + ")</a></p>";
                 if (dsTextoRelacao == "legislação correlata")
                 {
-                    replacement = "<p><a href=\"" + aux_href + "\" >" + dsTextoRelacao + " - " + dsNormaAlteradora + "</a></p>\r\n$1";
+                    replacement = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlteradora + "</a></p>\r\n$1";
                 }
                 texto = Regex.Replace(texto, pattern, replacement);
             }
@@ -1014,9 +1022,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             
             if (Regex.Matches(texto, pattern).Count == 1)
             {
-            var replacement = "<p><a href=\"" + aux_href + "\" >" + dsTextoRelacao + " - " + dsNormaAlterada + "</a></p>\r\n$1";
+                var replacement = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n$1";
 
-            texto = Regex.Replace(texto, pattern, replacement);
+                texto = Regex.Replace(texto, pattern, replacement);
             }
             else
             {

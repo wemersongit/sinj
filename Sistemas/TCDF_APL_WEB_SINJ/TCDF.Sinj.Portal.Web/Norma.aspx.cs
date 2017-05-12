@@ -82,7 +82,7 @@ namespace TCDF.Sinj.Portal.Web
                                 placeHolderHeader.Controls.Add(html_meta_description);
 
                                 var msg = Encoding.UTF8.GetString(file);
-                                if (msg.IndexOf("linkname") > -1)
+                                if (msg.IndexOf("(_link_sistema_)") > -1)
                                 {
                                     msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
                                 }

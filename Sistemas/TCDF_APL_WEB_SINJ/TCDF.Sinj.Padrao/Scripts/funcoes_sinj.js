@@ -2761,7 +2761,7 @@ function DetalhesNorma(data, highlight) {
             var link_texto = "";
             if (IsNotNullOrEmpty(id_file)) {
                 var path = document.location.pathname.split('/');
-                var link = document.location.protocol + '//' + document.location.host + '/' + (path.length > 1 ? path[path.length - 2] + '/' : '') + 'BaixarArquivoNorma.aspx?id_norma=' + data.ch_norma;
+                var link = document.location.protocol + '//' + document.location.host + '/' + (path.length > 1 ? path[path.length - 2] + '/' : '') + 'Norma/' + data.ch_norma + '/' + filename;
                 link_texto = 'Texto da Norma - ' + '<a href="' + link + '" target="_blank" title="link do arquivo da norma">' + link + '</a>';
             }
 

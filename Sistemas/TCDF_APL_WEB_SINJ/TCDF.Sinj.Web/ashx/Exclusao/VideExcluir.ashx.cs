@@ -30,6 +30,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             ulong id_doc = 0;
             var action = AcoesDoUsuario.nor_edt;
             SessaoUsuarioOV sessao_usuario = null;
+            var dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
             try
             {
                 sessao_usuario = Util.ValidarSessao();
@@ -46,14 +47,29 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             if (vide.in_norma_afetada)
                             {
                                 normaAlteradaOv = normaOv;
-                                normaAlteradoraOv = normaRn.Doc(vide.ch_norma_vide);
+                                try
+                                {
+
+                                    normaAlteradoraOv = normaRn.Doc(vide.ch_norma_vide);
+                                }
+                                catch (DocNotFoundException)
+                                {
+
+                                }
                             }
                             else
                             {
                                 normaAlteradoraOv = normaOv;
                                 if (!string.IsNullOrEmpty(vide.ch_norma_vide))
                                 {
-                                    normaAlteradaOv = normaRn.Doc(vide.ch_norma_vide);
+                                    try
+                                    {
+                                        normaAlteradaOv = normaRn.Doc(vide.ch_norma_vide);
+                                    }
+                                    catch (DocNotFoundException)
+                                    {
+
+                                    }
                                 }
                             }
                             break;
@@ -61,32 +77,16 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     }
                     if (normaAlteradoraOv != null)
                     {
-
-                        var enum_caput_alterador = normaAlteradoraOv.vides.Where(v => v.ch_vide == _ch_vide);
-                        var enum_caput_alterada = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide);
-
                         var videAlteradorDesfazer = normaAlteradoraOv.vides.Where(v => v.ch_vide == _ch_vide).First();
-                        var videAlteradoDesfazer = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide).First();
-
-
-                        var caput_alterador = new Caput();
-                        var caput_alterada = new Caput();
-                        var nm_tipo_relacao = "";
-                        var ds_texto_relacao = "";
-                        if (enum_caput_alterador.Count() > 0 && enum_caput_alterada.Count() > 0){
-                            caput_alterador = enum_caput_alterador.Select(v => v.caput_norma_vide).First();
-                            caput_alterada = enum_caput_alterada.Select(v => v.caput_norma_vide).First();
-                            nm_tipo_relacao = enum_caput_alterador.Select(v => v.nm_tipo_relacao).First();
-                            ds_texto_relacao = enum_caput_alterador.Select(v => v.ds_texto_relacao).First();
-                        }
 
                         if (normaAlteradoraOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0)
                         {
-                            normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"), nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
+                            normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                             if (normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
                             {
                                 if (normaAlteradaOv != null)
                                 {
+                                    var videAlteradoDesfazer = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide).First();
                                     if (normaAlteradaOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0)
                                     {
                                         var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
@@ -94,19 +94,11 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                                         normaAlteradaOv.ch_situacao = situacao.ch_situacao;
                                         normaAlteradaOv.nm_situacao = situacao.nm_situacao;
 
-                                        normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = normaAlteradoraOv.dt_cadastro, nm_login_usuario_alteracao = normaAlteradoraOv.nm_login_usuario_cadastro });
+                                        normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                                         if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                         {
                                             sRetorno = "{\"id_doc_success\":" + id_doc + "}";
                                             VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior);
-                                            //if (caput_alterador != null && caput_alterador.caput != null && caput_alterador.caput.Length > 0 && caput_alterada != null && caput_alterada.caput != null && caput_alterada.caput.Length > 0)
-                                            //{
-                                            //    new VideEditar().DesfazerCaputDosArquivos(normaAlteradoraOv, normaAlteradaOv, caput_alterador, caput_alterada);
-                                            //}
-                                            //else if (caput_alterador != null && caput_alterador.caput != null && caput_alterador.caput.Length > 0)
-                                            //{
-                                            //    new VideEditar().DesfazerCaputDosArquivos(normaAlteradoraOv, normaAlteradaOv, caput_alterador, ds_texto_relacao);
-                                            //}
                                         }
                                         else
                                         {
@@ -116,7 +108,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                                 }
                                 else
                                 {
-                                    sRetorno = "{\"id_doc_success\":" + id_doc + "}";
+                                    sRetorno = "{\"id_doc_success\":" + normaAlteradoraOv._metadata.id_doc + ", \"alert_message\": \"O vide foi excluído mas a norma alterada não foi encontrada. Se há alteração de vide no arquivo da norma, a mesma deve ser desfeita manualmente.\"}";
                                 }
                             }
                             else
@@ -124,13 +116,25 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                                 throw new Exception("Erro ao excluir Vide.");
                             }
                         }
-                        foreach (var vide_alteradora in normaAlteradoraOv.vides)
+                    }
+                    else if (normaAlteradaOv != null)
+                    {
+                        var videAlteradoDesfazer = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide).First();
+                        if (normaAlteradaOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0)
                         {
-                            if (vide_alteradora.ch_vide == _ch_vide)
+                            var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
+                            var nmSituacaoAnterior = normaAlteradaOv.nm_situacao;
+                            normaAlteradaOv.ch_situacao = situacao.ch_situacao;
+                            normaAlteradaOv.nm_situacao = situacao.nm_situacao;
+
+                            normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
+                            if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                             {
-                                normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"), nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
-                                
-                                break;
+                                sRetorno = "{\"id_doc_success\":" + normaAlteradaOv._metadata.id_doc + ", \"alert_message\": \"O vide foi excluído mas a norma alteradora não foi encontrada. Se há alteração de vide no arquivo da norma, a mesma deve ser desfeita manualmente.\"}";
+                            }
+                            else
+                            {
+                                throw new Exception("Erro ao excluir Vide na norma alterada.");
                             }
                         }
                     }
@@ -719,14 +723,17 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             var texto = new HtmlFileEncoded().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
 
             var pattern1 = "(?!<p.+replaced_by=.+>)(<p.+?>)<s>(.+?)</s></p>";
-            var replacement1 = "$1$2</p>";
+            Regex rx1 = new Regex(pattern1, RegexOptions.Singleline);
 
             var pattern2 = "(<h1.+?epigrafe=.+?>.+?</h1>)\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
-            var replacement2 = "$1";
-            if (Regex.Matches(texto, pattern1).Count > 0 || Regex.Matches(texto, pattern2).Count == 1)
+            Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+
+            if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
             {
-                texto = Regex.Replace(texto, pattern1, replacement1);
-                texto = Regex.Replace(texto, pattern2, replacement2);
+                var replacement1 = "$1$2</p>";
+                var replacement2 = "$1";
+                texto = rx1.Replace(texto, replacement1);
+                texto = rx2.Replace(texto, replacement2);
             }
             else
             {
@@ -741,7 +748,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
             if (dsTextoParaAlterador.ToLower() == "legislação correlata")
             {
-                pattern = "<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>\r\n(<h1.+?epigrafe=.+?>.+?</h1>)";
+                pattern = "<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(Legislação correlata.+?\\)</a></p>\r\n(<h1.+?epigrafe=.+?>.+?</h1>)";
             }
             if (Regex.Matches(texto, pattern).Count == 1)
             {
@@ -775,8 +782,8 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             var dsNormaAlterada = normaAlterada.getDescricaoDaNorma();
             
             var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
-            
-            var pattern = "<p><a href=\"" + aux_href + "\" >" + dsTextoRelacao + " - " + dsNormaAlterada + "</a></p>\r\n";
+
+            var pattern = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n";
             if (Regex.Matches(texto, pattern).Count == 1)
             {
                 texto = Regex.Replace(texto, pattern, "");

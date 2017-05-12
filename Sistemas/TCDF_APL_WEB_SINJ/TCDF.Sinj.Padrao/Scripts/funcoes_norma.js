@@ -1464,23 +1464,23 @@ function ExcluirVide(sender, id_doc, ch_vide) {
                     oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }]
                 });
             }
+            else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
+                $('#div_notificacao_norma').modallight({
+                    sTitle: "Sucesso",
+                    sContent: "Vide removida com sucesso." + IsNotNullOrEmpty(data, 'alert_message') ? "<br/>Observação: " + data.alert_message : "",
+                    sType: "success",
+                    oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
+                    fnClose: function () {
+                        document.location.reload();
+                    }
+                });
+            }
             else if (IsNotNullOrEmpty(data, 'alert_message')) {
                 $('#div_notificacao_norma').modallight({
                     sTitle: "Atenção",
                     sContent: data.alert_message,
                     sType: "alert",
                     oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }]
-                });
-            }
-            else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
-                $('#div_notificacao_norma').modallight({
-                    sTitle: "Sucesso",
-                    sContent: "Vide removida com sucesso.",
-                    sType: "success",
-                    oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
-                    fnClose: function () {
-                        document.location.reload();
-                    }
                 });
             }
             else {
