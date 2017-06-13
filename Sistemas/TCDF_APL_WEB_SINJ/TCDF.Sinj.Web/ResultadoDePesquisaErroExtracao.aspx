@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="ResultadoDePesquisaErroExtracao.aspx.cs" Inherits="TCDF.Sinj.Web.ResultadoDePesquisaErroExtracao" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/columns_datatable.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
-
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
             $("#div_resultado").dataTablesLight({

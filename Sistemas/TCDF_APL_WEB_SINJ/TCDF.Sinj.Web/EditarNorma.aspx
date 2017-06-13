@@ -24,17 +24,27 @@
 	    </div>
         <div id="div_controls" class="control">
         </div>
-        <div id="modal_arquivo" style="display:none;">
+        <div id="div_arquivo" style="display:none;">
             <div id="editar_arquivo_notificacao" class="notify" style="display:none;"></div>
             <form id="form_editar_arquivo" name="form_editar_arquivo" action="#" method="post">
+                <div class="text-right">
+                    <button type="reset" onclick="javascript:closeEditFile();" class="clean">
+                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="cancela" width="18px" height="18px"/>
+                    </button>
+                </div>
                 <input type="hidden" name="id_file" class="id_file" value=""/>
                 <input type="hidden" name="id_doc" class="id_doc" value=""/>
                 <input type="hidden" name="path" class="path" value=""/>
                 <label>Nome do Arquivo:</label><input type="text" name="filename" class="filename" value=""/>
-                <textarea name="arquivo" id="arquivo" rows="10" cols="80" style="display:none">
-                    
-                </textarea>
-                <div id="editar_arquivo_loading" class="loading" style="display:none;"></div>
+                <textarea name="arquivo" id="arquivo" rows="10" cols="80" style="display:none"></textarea>
+                <div style="width:210px; margin:auto; display:none;" class="loaded buttons">
+                    <button type="submit">
+                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_save.png" alt="add" width="18px" height="18px"/> Salvar
+                    </button>
+                    <button type="reset" onclick="javascript:closeEditFile();">
+                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="cancela" width="18px" height="18px"/> Cancelar
+                    </button>
+                </div>
             </form>
         </div>
         <div id="modal_fonte" style="display:none;">

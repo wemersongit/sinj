@@ -66,7 +66,7 @@ namespace TCDF.Sinj.Web
                                 placeHolderHeader.Controls.Add(html_meta_description);
 
                                 var msg = Encoding.UTF8.GetString(file);
-                                if (msg.IndexOf("(_link_sistema_)") > -1)
+                                if (msg.IndexOf("<h1 epigrafe") > -1)
                                 {
                                     msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
                                 }

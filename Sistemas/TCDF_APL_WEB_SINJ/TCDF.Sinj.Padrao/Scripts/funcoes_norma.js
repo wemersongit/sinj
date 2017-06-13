@@ -342,10 +342,10 @@ function EditarFonte(event) {
 
 function CriarModalFonte(tr_fonte) {
     if (!IsNotNullOrEmpty(tr_fonte)) {
-        $('#label_arquivo_fonte_modal').text('');
-        $('#hidden_json_arquivo_fonte_modal').val('');
-        $('.attach', $("#modal_fonte")).show();
-        $('.delete', $("#modal_fonte")).hide();
+//        $('#label_arquivo_fonte_modal').text('');
+//        $('#hidden_json_arquivo_fonte_modal').val('');
+//        $('.attach', $("#modal_fonte")).show();
+//        $('.delete', $("#modal_fonte")).hide();
         $('#modal_fonte .diario').hide();
     }
     else {
@@ -368,11 +368,7 @@ function CriarModalFonte(tr_fonte) {
                     oFonte.nr_coluna = $('#nr_coluna_modal').val();
                     oFonte.ds_observacao_fonte = $('#ds_observacao_fonte_modal').val();
                     oFonte.ds_republicacao = $('#ds_republicacao_modal').val();
-                    oFonte.ar_fonte = { filename: "" };
-                    var sAr_fonte = $('#hidden_json_arquivo_fonte_modal').val();
-                    if (IsNotNullOrEmpty(sAr_fonte)) {
-                        oFonte.ar_fonte = JSON.parse(sAr_fonte);
-                    }
+
 
                     var sJson_diario = $('#json_diario_fonte').val();
                     var oJson_diario = JSON.parse(sJson_diario);
@@ -404,11 +400,25 @@ function CriarModalFonte(tr_fonte) {
                     }
 
                     if (IsNotNullOrEmpty(oFonte, 'ds_diario') && IsNotNullOrEmpty(oFonte, 'ch_tipo_fonte') && IsNotNullOrEmpty(oFonte, 'ch_tipo_publicacao') && IsNotNullOrEmpty(oFonte, 'ar_diario')) {
-                        
                         $('#tbody_fontes .tr_vazia').remove();
-                        var id_input = 'input_' + Guid('N');
-                        var html_fonte = '<td>' + 
-                                '<input id="' + id_input + '" type="hidden" name="fonte" value="" />' +
+                        var guid = Guid('N');
+                        if (IsNotNullOrEmpty(tr_fonte)) {
+                            $($(tr_fonte).find('td')[0]).text(oFonte.ds_diario)
+                            $($(tr_fonte).find('td')[1]).text(oFonte.nm_tipo_publicacao);
+                            $($(tr_fonte).find('td')[2]).text(oFonte.nr_pagina);
+                            $($(tr_fonte).find('td')[3]).text(oFonte.nr_coluna);
+                            $($(tr_fonte).find('td')[4]).text(oFonte.ds_observacao_fonte);
+                            $($(tr_fonte).find('td')[5]).text(oFonte.ds_republicacao);
+                            var json_arquivo = $('input.json_arquivo', $(tr_fonte).find('td')[6]).val();
+                            if (IsNotNullOrEmpty(json_arquivo)) {
+                                oFonte.ar_fonte = JSON.parse(json_arquivo);
+                            }
+                            $('input[name=fonte]', $(tr_fonte).find('td')[6]).val(JSON.stringify(oFonte));
+                        }
+                        else {
+                            var id_input = 'input_' + guid;
+                            var id_td = 'td_' + guid;
+                            var html_fonte = '<td>' +
                                 oFonte.ds_diario +
                             '</td>' +
                             '<td>' + oFonte.nm_tipo_publicacao + '</td>' +
@@ -416,18 +426,22 @@ function CriarModalFonte(tr_fonte) {
                             '<td>' + oFonte.nr_coluna + '</td>' +
                             '<td>' + oFonte.ds_observacao_fonte + '</td>' +
                             '<td>' + oFonte.ds_republicacao + '</td>' +
-                            '<td>' + oFonte.ar_fonte.filename + '</td>' +
+                            '<td id="' + id_td + '">' +
+                                '<input id="' + id_input + '" type="hidden" name="fonte" value="" />' +
+                                '<input type="hidden" class="json_arquivo" value="" />' +
+                                '<label class="name" style="color:#000;"></label>' +
+                                '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" ><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_p.png" width="16px" /></a>' +
+                                '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" style="display:none;"><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_p.png" width="16px" /></a>' +
+                                '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img width="18" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" /></a>' +
+                                '<a path="ar_fonte" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="16" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import.png" /></a>' +
+                            '</td>' +
                             '<td>' +
                                 '<a title="Editar Fonte" href="javascript:void(0);" onclick="javascript:EditarFonte(event);"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"  /></a>' +
                                 '<a title="Excluir Fonte" href="javascript:void(0);" onclick="javascript:DeletarLinha(event);"><img valign="absmiddle" alt="Excluir" src="' + _urlPadrao + '/Imagens/ico_delete_p.png"  /></a>' +
                             '</td>';
-                        if (IsNotNullOrEmpty(tr_fonte)) {
-                            $(tr_fonte).html(html_fonte);
-                        }
-                        else {
                             $('#tbody_fontes').append('<tr>' + html_fonte + '</tr>');
+                            $('#' + id_input).val(JSON.stringify(oFonte));
                         }
-                        $('#' + id_input).val(JSON.stringify(oFonte));
                         $(this).dialog('close');
                     }
                     else {
@@ -1390,16 +1404,29 @@ function PreencherNormaEdicao() {
 
                     for (fonte in data.fontes) {
                         $('#tbody_fontes .tr_vazia').remove();
-                        var id_input = 'input_' + Guid('N');
+                        var guid = Guid('N');
+                        var id_input = 'input_' + guid;
+                        var id_td = 'td_' + guid;
+                        var display_btn_file = IsNotNullOrEmpty(data.fontes[fonte].ar_fonte, 'id_file');
                         $('#tbody_fontes').append(
                             '<tr>' +
-                                '<td>' + data.fontes[fonte].ds_diario + '<input id="' + id_input + '" type="hidden" name="fonte" value="" /></td>' +
+                                '<td>' + data.fontes[fonte].ds_diario + '</td>' +
                                 '<td>' + data.fontes[fonte].nm_tipo_publicacao + '</td>' +
                                 '<td>' + GetText(data.fontes[fonte].nr_pagina) + '</td>' +
                                 '<td>' + GetText(data.fontes[fonte].nr_coluna) + '</td>' +
                                 '<td>' + GetText(data.fontes[fonte].ds_observacao_fonte) + '</td>' +
                                 '<td>' + GetText(data.fontes[fonte].ds_republicacao) + '</td>' +
-                                '<td>' + GetText(data.fontes[fonte].ar_fonte.filename) + '</td>' +
+                                '<td id="' + id_td + '">' +
+                                    '<input id="' + id_input + '" type="hidden" name="fonte" value="" />' +
+                                    '<input type="hidden" class="json_arquivo" value="" />' +
+                                    '<label class="name" style="color:#000;">' +
+                                        GetText(data.fontes[fonte].ar_fonte.filename) +
+                                    '</label>' +
+                                    '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" ' + (display_btn_file? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_p.png" width="16px" /></a>' +
+                                    '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" ' + (!display_btn_file ? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_p.png" width="16px" /></a>' +
+                                    '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img width="18" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" /></a>' +
+                                    '<a path="ar_fonte" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos" ' + (display_btn_file ? 'style="display:none"' : '') + '><img width="16" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import.png" /></a>' +
+                                '</td>' +
                                 '<td>' +
                                     '<a title="Editar Fonte" href="javascript:void(0);" onclick="javascript:EditarFonte(event);"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"  /></a>' +
                                     '<a title="Excluir Fonte" href="javascript:void(0);" onclick="javascript:DeletarLinha(event);"><img valign="absmiddle" alt="Excluir" src="' + _urlPadrao + '/Imagens/ico_delete_p.png"  /></a>' +
@@ -1467,7 +1494,7 @@ function ExcluirVide(sender, id_doc, ch_vide) {
             else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
                 $('#div_notificacao_norma').modallight({
                     sTitle: "Sucesso",
-                    sContent: "Vide removida com sucesso." + IsNotNullOrEmpty(data, 'alert_message') ? "<br/>Observação: " + data.alert_message : "",
+                    sContent: "Vide removida com sucesso." + (IsNotNullOrEmpty(data, 'alert_message') ? ("<br/><div class='alert'><span>Observação:</span> " + data.alert_message + "</div>") : ""),
                     sType: "success",
                     oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
                     fnClose: function () {

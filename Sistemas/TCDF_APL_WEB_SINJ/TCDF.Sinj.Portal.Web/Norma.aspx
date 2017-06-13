@@ -30,7 +30,7 @@
             var length = aP.length;
             var pAfter = null;
             for (; i < length; i++) {
-                if ($('a', aP[i]).length == 1 && $('a', aP[i]).text().indexOf('Legislação Correlata') == 0) {
+                if ($('a', aP[i]).length == 1 && $('a', aP[i]).text().toLowerCase().indexOf('Legislação Correlata') == 0) {
                     $('a', aP[i]).attr('show', '1');
                     if (i >= 3) {
                         $('a', aP[i]).attr('show', '0');

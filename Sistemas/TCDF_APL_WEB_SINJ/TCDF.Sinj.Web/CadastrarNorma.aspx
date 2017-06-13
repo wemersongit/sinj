@@ -24,19 +24,6 @@
 	    </div>
         <div id="div_controls" class="control">
         </div>
-        <div id="modal_arquivo" style="display:none;">
-            <div id="editar_arquivo_notificacao" class="notify" style="display:none;"></div>
-            <form id="form_editar_arquivo" name="form_editar_arquivo" action="#" method="post">
-                <input type="hidden" name="id_file" class="id_file" value=""/>
-                <input type="hidden" name="id_doc" class="id_doc" value=""/>
-                <input type="hidden" name="path" class="path" value=""/>
-                <label>Nome do Arquivo:</label><input type="text" name="filename" class="filename" value=""/>
-                <textarea name="arquivo" id="arquivo" rows="10" cols="80" style="display:none">
-                    
-                </textarea>
-                <div id="editar_arquivo_loading" class="loading" style="display:none;"></div>
-            </form>
-        </div>
         <div id="modal_fonte" style="display:none;">
             <div class="consultar">
                 <form id="form_consultar_diario" name="form_consultar_diario" action="#" method="post"  onsubmit="javascript:return consultarDiario('form_consultar_diario');">
@@ -179,7 +166,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="line">
+                <%--<div class="line">
                     <div class="column w-30-pc">
                         <div class="cell fr">
                             <label>Arquivo da Norma:</label>
@@ -195,7 +182,7 @@
                             <a path="ar_fonte" div_arquivo="arquivo_fonte" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="16" valign="absmiddle" alt="Editar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_import.png" /></a>
                         </div>
                     </div>
-                </div>
+                </div>--%>
             </div>
             <div class="notify" style="display:none;"></div>
         </div>
@@ -545,6 +532,29 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="div_arquivo" style="display:none;" class="mauto w-90-pc">
+            <div id="editar_arquivo_notificacao" class="notify" style="display:none;"></div>
+            <form id="form_editar_arquivo" name="form_editar_arquivo" action="#" method="post">
+                <div class="text-right">
+                    <button type="reset" onclick="javascript:closeEditFile();" class="clean">
+                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="cancela" width="18px" height="18px"/>
+                    </button>
+                </div>
+                <input type="hidden" name="id_file" class="id_file" value=""/>
+                <input type="hidden" name="id_doc" class="id_doc" value=""/>
+                <input type="hidden" name="path" class="path" value=""/>
+                <label>Nome do Arquivo:</label><input type="text" name="filename" class="filename" value=""/>
+                <textarea name="arquivo" id="arquivo" rows="10" cols="80" style="display:none"></textarea>
+                <div style="width:210px; margin:auto; display:none;" class="loaded buttons">
+                    <button type="submit">
+                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_save.png" alt="add" width="18px" height="18px"/> Salvar
+                    </button>
+                    <button type="reset" onclick="javascript:closeEditFile();">
+                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="cancela" width="18px" height="18px"/> Cancelar
+                    </button>
+                </div>
+            </form>
         </div>
         <div class="form">
             <form id="form_norma" name="formCadastroNorma" action="#" method="post">
@@ -1158,7 +1168,6 @@
                         </button>
                     </div>
                 </div>
-                <div id="div_loading_norma" class="loading" style="display:none;"></div>
             </form>
         </div>
     </div>

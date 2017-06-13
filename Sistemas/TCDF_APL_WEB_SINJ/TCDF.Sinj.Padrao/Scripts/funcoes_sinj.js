@@ -277,6 +277,7 @@ function DeletarArquivo(event) {
         $('#' + id_label_container_filename).text('');
         $('.attach', parent).show();
         $('.create', parent).show();
+        $('.import', parent).show();
         $('.delete', parent).hide();
     }
 }
@@ -287,7 +288,14 @@ function deletarInputFile(el) {
     $('.json_arquivo', parent).val('');
     $('a.attach', parent).show();
     $('a.create', parent).show();
+    $('a.import', parent).show();
     $('a.delete', parent).hide();
+    var sFonte = $('input[name=fonte]', parent).val();
+    if(IsNotNullOrEmpty(sFonte)){
+        var oFonte = JSON.parse(sFonte);
+        oFonte.ar_fonte = null;
+        $('input[name=fonte]', parent).val(JSON.stringify(oFonte));
+    }
 }
 
 function salvarArquivoSelecionado(el) {
@@ -301,9 +309,18 @@ function salvarArquivoSelecionado(el) {
                 $('#' + id_div_file + ' input.json_arquivo').val(JSON.stringify(data));
                 $('#' + id_div_file + ' label.name').text(data.filename);
                 $('#' + id_div_file + ' a.attach').hide();
+                $('#' + id_div_file + ' a.create').hide();
+                $('#' + id_div_file + ' a.import').hide();
                 //                $('#' + id_div_file + ' a.edit_file').attr('id_file', '');
                 //                $('#' + id_div_file + ' a.edit_file').hide();
                 $('#' + id_div_file + ' a.delete').show();
+                var sFonte = $('#' + id_div_file + ' input[name=fonte]').val();
+                if(IsNotNullOrEmpty(sFonte)){
+                    var oFonte = JSON.parse(sFonte);
+                    oFonte.ar_fonte = data;
+                    $('#' + id_div_file + ' input[name=fonte]').val(JSON.stringify(oFonte));
+                }
+
             }
         }
         return fnSalvarForm('form_upload_file', sucesso);
@@ -391,6 +408,8 @@ function AnexarArquivo(event) {
                                         $('#' + id_hidden_container_filename).val(data.filename);
                                         $('#' + id_label_container_filename).text(data.filename);
                                         $('.attach', parent).hide();
+                                        $('.create', parent).hide();
+                                        $('.import', parent).hide();
                                         $('.delete', parent).show();
                                         $('#modal_arquivo_' + id_hidden_container_uuid).dialog('close');
                                     } else {
@@ -2901,6 +2920,8 @@ function fn_submit_arquivo(id_div_arquivo) {
             $('#' + id_div_arquivo + ' .filename').val(data.file.filename);
             $('#' + id_div_arquivo + ' .name').text(data.file.filename);
             $('#' + id_div_arquivo + ' .attach').hide();
+            $('#' + id_div_arquivo + ' a.create').hide();
+            $('#' + id_div_arquivo + ' a.import').hide();
             $('#' + id_div_arquivo + ' .delete').show();
             $("#modal_arquivo").modallight('close');
         }
@@ -2944,8 +2965,17 @@ function fnSubmitInputFile(id_div_arquivo) {
             $('#' + id_div_arquivo + ' .json_arquivo').val(JSON.stringify(data.file));
             $('#' + id_div_arquivo + ' .name').text(data.file.filename);
             $('#' + id_div_arquivo + ' .attach').hide();
+            $('#' + id_div_arquivo + ' .create').hide();
+            $('#' + id_div_arquivo + ' .import').hide();
             $('#' + id_div_arquivo + ' .delete').show();
-            $("#modal_arquivo").modallight('close');
+            var sFonte = $('#' + id_div_arquivo + ' input[name=fonte]').val();
+            if(IsNotNullOrEmpty(sFonte)){
+                var oFonte = JSON.parse(sFonte);
+                oFonte.ar_fonte = data.file;
+                $('#' + id_div_arquivo + ' input[name=fonte]').val(JSON.stringify(oFonte));
+            }
+
+            closeEditFile();
         }
     }
     var beforeSubmit = function() {
@@ -3010,26 +3040,43 @@ function EditarArquivo(id_div_arquivo, path) {
             //$('#editar_arquivo_loading').hide(); 
         }, 2000);
     }
-    if ($("#modal_arquivo").hasClass('ui-dialog-content')) {
-        $("#modal_arquivo").modallight('open');
-    } else {
-        $("#modal_arquivo").modallight({
-            sTitle: title_modal,
-            sWidth: '900',
-            sHeight: '600',
-            oButtons: [{
-                text: "Salvar",
-                click: function() {
-                    fn_submit_arquivo(id_div_arquivo);
-                }
-            }, {
-                text: "Cancelar",
-                click: function() {
-                    $("#modal_arquivo").modallight('close');
-                }
-            }]
-        });
-    }
+    openEditFile(title_modal);
+//    if ($("#modal_arquivo").hasClass('ui-dialog-content')) {
+//        $("#modal_arquivo").modallight('open');
+//    } else {
+//        $("#modal_arquivo").modallight({
+//            sTitle: title_modal,
+//            sWidth: '900',
+//            sHeight: '600',
+//            oButtons: [{
+//                text: "Salvar",
+//                click: function() {
+//                    fn_submit_arquivo(id_div_arquivo);
+//                }
+//            }, {
+//                text: "Cancelar",
+//                click: function() {
+//                    $("#modal_arquivo").modallight('close');
+//                }
+//            }]
+//        });
+//    }
+}
+
+function openEditFile(title){
+    $("div.form").hide();
+    $("#div_controls").hide();
+    $("#div_arquivo").show();
+    $('div.divIdentificadorDePagina label').attr('old_text',$('div.divIdentificadorDePagina label').text());
+    $('div.divIdentificadorDePagina label').text('.: ' + title);
+}
+
+function closeEditFile(){
+    $("#div_arquivo").hide();
+    $("div.form").show();
+    $("#div_controls").show();
+    $('div.divIdentificadorDePagina label').text($('div.divIdentificadorDePagina label').attr('old_text'));
+    $('div.IdentificadorDePagina label').attr('old_text','');
 }
 
 function editarInputFile(el) {
@@ -3051,10 +3098,10 @@ function editarInputFile(el) {
         title_modal = "Editar Arquivo";
         var id_doc = GetParameterValue('id_doc');
         var sucesso = function(data) {
-            $('#modal_arquivo .id_file').val(oJson_arquivo.id_file);
-            $('#modal_arquivo .path').val(path);
-            $('#modal_arquivo .id_doc').val(id_doc);
-            $('#modal_arquivo .filename').val(data.file.filename);
+            $('#div_arquivo .id_file').val(oJson_arquivo.id_file);
+            $('#div_arquivo .path').val(path);
+            $('#div_arquivo .id_doc').val(id_doc);
+            $('#div_arquivo .filename').val(data.file.filename);
             $('#arquivo').val(window.unescape(data.fileencoded));
             gInicio();
             setTimeout(function() {
@@ -3076,28 +3123,33 @@ function editarInputFile(el) {
         setTimeout(function() {
             loadCkeditor('arquivo');
             gComplete();
-            //$('#editar_arquivo_loading').hide(); 
+            //$('#editar_arquivo_loading').hide();
         }, 2000);
     }
-    if ($("#modal_arquivo").hasClass('ui-dialog-content')) {
-        $("#modal_arquivo").modallight('destroy');
-    }
-    $("#modal_arquivo").modallight({
-        sTitle: title_modal,
-        sWidth: '900',
-        sHeight: '600',
-        oButtons: [{
-            text: "Salvar",
-            click: function() {
-                fnSubmitInputFile(parent.attr('id'));
-            }
-        }, {
-            text: "Cancelar",
-            click: function() {
-                $("#modal_arquivo").modallight('close');
-            }
-        }]
-    });
+    openEditFile(title_modal);
+//    if ($("#modal_arquivo").hasClass('ui-dialog-content')) {
+//        $("#modal_arquivo").modallight('destroy');
+//    }
+//    $("#modal_arquivo").modallight({
+//        sTitle: title_modal,
+//        sWidth: '900',
+//        sHeight: '600',
+//        _allowInteraction: function(event) {
+//		    return !!$(event.target).closest(".cke").length || this._super(event);
+//	    },
+//        oButtons: [{
+//            text: "Salvar",
+//            click: function() {
+//                fnSubmitInputFile(parent.attr('id'));
+//            }
+//        }, {
+//            text: "Cancelar",
+//            click: function() {
+//                $("#modal_arquivo").modallight('close');
+//            }
+//        }]
+//    });
+    $('#form_editar_arquivo').attr('onsubmit', 'return fnSubmitInputFile("'+parent.attr('id')+'");');
 }
 
 
@@ -3504,7 +3556,7 @@ function selecionarDocumentoImportar(el) {
         ds_diario = ds_diario.replace(/, seção 2/i,'');
         ds_diario = ds_diario.replace(/, seção 3/i,'');
 
-        $('#form_importar_arquivo input[name="ds_diario"]').val($('#ds_diario').val());
+        $('#form_importar_arquivo input[name="ds_diario"]').val(ds_diario);
     }
 
 
@@ -3526,7 +3578,15 @@ function importarArquivo(id_div_file, id_form) {
                 $('#' + id_div_file + ' input.json_arquivo').val(JSON.stringify(data));
                 $('#' + id_div_file + ' label.name').text(data.filename);
                 $('#' + id_div_file + ' a.attach').hide();
+                $('#' + id_div_file + ' a.create').hide();
+                $('#' + id_div_file + ' a.import').hide();
                 $('#' + id_div_file + ' a.delete').show();
+                var sFonte = $('#' + id_div_file + ' input[name=fonte]').val();
+                if(IsNotNullOrEmpty(sFonte)){
+                    var oFonte = JSON.parse(sFonte);
+                    oFonte.ar_fonte = data;
+                    $('#' + id_div_file + ' input[name=fonte]').val(JSON.stringify(oFonte));
+                }
             }
             $("#input_file").val("");
             $('#div_modal_importar_arquivo').modallight('close');

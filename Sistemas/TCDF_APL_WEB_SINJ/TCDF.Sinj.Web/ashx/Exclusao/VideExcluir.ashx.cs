@@ -301,18 +301,20 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
 
             var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
             var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
-            if (!string.IsNullOrEmpty(idFileNormaAlterada) && auxNmSituacaoAlterada != auxNmSituacaoAnterior)
+            if (!string.IsNullOrEmpty(idFileNormaAlterada))
             {
                 var arquivoNormaVideAlterada = "";
 
-                if ((auxNmSituacaoAnterior == "revogado" && auxDsTextoParaAlterador == "revogado") ||
+                //Se a situação da norma foi alterada pela remoção do vide em questão, então não deve alterar o texto, pois essa alteração afeta o texto inteiro
+                if (auxNmSituacaoAlterada != auxNmSituacaoAnterior && ((auxNmSituacaoAnterior == "revogado" && auxDsTextoParaAlterador == "revogado") ||
                     (auxNmSituacaoAnterior == "anulado" && auxDsTextoParaAlterador == "anulado") ||
                     (auxNmSituacaoAnterior == "extinta" && auxDsTextoParaAlterador == "extinta") ||
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlterador == "declarado inconstitucional") ||
+                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlterador == "julgado procedente") ||
                     (auxNmSituacaoAnterior == "cancelada" && auxDsTextoParaAlterador == "cancelada") ||
-                    (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlterador == "suspenso totalmente"))
+                    (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlterador == "suspenso totalmente")))
                 {
-                    arquivoNormaVideAlterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlterada.ch_norma, idFileNormaAlterada, auxDsTextoParaAlterador);
+                    arquivoNormaVideAlterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlterador);
                 }
                 else if (auxDsTextoParaAlterador == "ratificado" ||
                     auxDsTextoParaAlterador == "reeditado" ||
@@ -320,7 +322,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     auxDsTextoParaAlterador == "prorrogado" ||
                     auxDsTextoParaAlterador == "legislação correlata")
                 {
-                    arquivoNormaVideAlterada = RemoverInformacaoNoTextoDaNormaAlterada(normaAlterada.ch_norma, idFileNormaAlterada, auxDsTextoParaAlterador);
+                    arquivoNormaVideAlterada = RemoverInformacaoNoTextoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlterador);
                 }
 
                 if (arquivoNormaVideAlterada != "")
@@ -531,7 +533,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         case "ratificação":
                         case "regulamentação":
                         case "ressalva":
-                        case "retificação":
                             ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada_desfazer.caput[i]) + _caput_alterada_desfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
                             pattern = "(<p.+?linkname=\"" + _caput_alterada_desfazer.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada_desfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"\\(_link_sistema_\\)Norma/" + _caput_alteradora_desfazer.ch_norma + '/' + _caput_alteradora_desfazer.filename + "#" + _caput_alteradora_desfazer.caput[0] + "\">" + ds_link_alterador + "</a>(.*?)</p>";
                             replacement = "$1$2</p>";
@@ -596,7 +597,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     case "ratificação":
                     case "regulamentação":
                     case "ressalva":
-                    case "retificação":
                         ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(caputAlteradoDesfazer.caput[i]) + caputAlteradoDesfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + dsNormaAlteradora + "\\)";
                         pattern = "(<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
                         replacement = "$1$2</p>";
@@ -723,7 +723,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             var texto = new HtmlFileEncoded().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
 
             var pattern1 = "(?!<p.+replaced_by=.+>)(<p.+?>)<s>(.+?)</s></p>";
-            Regex rx1 = new Regex(pattern1, RegexOptions.Singleline);
+            Regex rx1 = new Regex(pattern1);
 
             var pattern2 = "(<h1.+?epigrafe=.+?>.+?</h1>)\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
             Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
