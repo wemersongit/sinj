@@ -430,10 +430,10 @@ function CriarModalFonte(tr_fonte) {
                                 '<input id="' + id_input + '" type="hidden" name="fonte" value="" />' +
                                 '<input type="hidden" class="json_arquivo" value="" />' +
                                 '<label class="name" style="color:#000;"></label>' +
-                                '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" ><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_p.png" width="16px" /></a>' +
-                                '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" style="display:none;"><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_p.png" width="16px" /></a>' +
-                                '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img width="18" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" /></a>' +
-                                '<a path="ar_fonte" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="16" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import.png" /></a>' +
+                                '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" title="Anexar um arquivo" ><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_file2.png" width="18px" /></a>' +
+                                '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" title="Remover o arquivo" style="display:none;"><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_file.png" width="18px" /></a>' +
+                                '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" width="18px" /></a>' +
+                                '<a path="ar_fonte" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="18px" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
                             '</td>' +
                             '<td>' +
                                 '<a title="Editar Fonte" href="javascript:void(0);" onclick="javascript:EditarFonte(event);"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"  /></a>' +
@@ -1422,10 +1422,10 @@ function PreencherNormaEdicao() {
                                     '<label class="name" style="color:#000;">' +
                                         GetText(data.fontes[fonte].ar_fonte.filename) +
                                     '</label>' +
-                                    '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" ' + (display_btn_file? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_p.png" width="16px" /></a>' +
-                                    '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" ' + (!display_btn_file ? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_p.png" width="16px" /></a>' +
-                                    '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img width="18" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" /></a>' +
-                                    '<a path="ar_fonte" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos" ' + (display_btn_file ? 'style="display:none"' : '') + '><img width="16" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import.png" /></a>' +
+                                    '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" title="Anexar um arquivo" ' + (display_btn_file ? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_file2.png" width="18px" /></a>' +
+                                    '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" title="Remover o arquivo" ' + (!display_btn_file ? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_file.png" width="18px" /></a>' +
+                                    '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" width="18px" /></a>' +
+                                    '<a path="ar_fonte" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos" ' + (display_btn_file ? 'style="display:none"' : '') + '><img width="18" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
                                 '</td>' +
                                 '<td>' +
                                     '<a title="Editar Fonte" href="javascript:void(0);" onclick="javascript:EditarFonte(event);"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"  /></a>' +
@@ -1434,6 +1434,9 @@ function PreencherNormaEdicao() {
                             '</tr>'
                         );
                         $('#' + id_input).val(JSON.stringify(data.fontes[fonte]));
+                        if (display_btn_file) {
+                            $('#' + id_td + ' input.json_arquivo').val(JSON.stringify(data.fontes[fonte].ar_fonte));
+                        }
                     }
                     if (IsNotNullOrEmpty(data, 'ar_atualizado.uuid')) {
                         $('#hidden_json_arquivo_texto_atualizado').val(JSON.stringify(data.ar_atualizado));

@@ -3115,7 +3115,6 @@ function editarInputFile(el) {
             sType: "GET",
             fnSuccess: sucesso,
             fnBeforeSend: gInicio,
-            fnError: null,
             bAsync: true
         });
     } else {

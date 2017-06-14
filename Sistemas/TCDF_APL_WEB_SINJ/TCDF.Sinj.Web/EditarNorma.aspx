@@ -189,23 +189,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="line">
-                    <div class="column w-30-pc">
-                        <div class="cell fr">
-                            <label>Arquivo da Norma:</label>
-                        </div>
-                    </div>
-                    <div class="column w-70-pc">
-                        <div id="arquivo_fonte" class="cell w-100-pc">
-                            <input type="hidden" id="hidden_json_arquivo_fonte_modal" name="json_arquivo_fonte_modal" class="json_arquivo" value="" />
-                            <label id="label_arquivo_fonte_modal" class="name" style="color:#000;"></label>
-                            <a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" ><img valign="absmiddle" alt="Anexar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_attach_p.png"  /></a>
-                            <a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" style="display:none;"><img valign="absmiddle" alt="Remover" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png"  /></a>
-                            <a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img width="16" valign="absmiddle" alt="Editar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_edit_file.png" /></a>
-                            <a path="ar_fonte" div_arquivo="arquivo_fonte" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="16" valign="absmiddle" alt="Editar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_import.png" /></a>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="notify" style="display:none;"></div>
         </div>

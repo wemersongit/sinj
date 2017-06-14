@@ -694,6 +694,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         case "ratificação":
                         case "regulamentação":
                         case "ressalva":
+                        case "recepção":
                             ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
                             pattern = "(<p.+?linkname=\"" + _caput_alterada.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?)</p>";
                             replacement = "$1 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
@@ -817,6 +818,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     case "ratificação":
                     case "regulamentação":
                     case "ressalva":
+                    case "recepção":
                         ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
                         pattern = "(<p.+?linkname=\"" + _caput_alterada.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?)</p>";
                         replacement = "$1 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
@@ -1218,7 +1220,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                    (nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
                    (nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
                    (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
-                   (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgado procedente") ||
+                   (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
                    (nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
                    (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente");
         }

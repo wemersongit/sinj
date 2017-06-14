@@ -310,7 +310,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     (auxNmSituacaoAnterior == "anulado" && auxDsTextoParaAlterador == "anulado") ||
                     (auxNmSituacaoAnterior == "extinta" && auxDsTextoParaAlterador == "extinta") ||
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlterador == "declarado inconstitucional") ||
-                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlterador == "julgado procedente") ||
+                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlterador == "julgada procedente") ||
                     (auxNmSituacaoAnterior == "cancelada" && auxDsTextoParaAlterador == "cancelada") ||
                     (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlterador == "suspenso totalmente")))
                 {
@@ -533,6 +533,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         case "ratificação":
                         case "regulamentação":
                         case "ressalva":
+                        case "recepção":
                             ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada_desfazer.caput[i]) + _caput_alterada_desfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
                             pattern = "(<p.+?linkname=\"" + _caput_alterada_desfazer.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada_desfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"\\(_link_sistema_\\)Norma/" + _caput_alteradora_desfazer.ch_norma + '/' + _caput_alteradora_desfazer.filename + "#" + _caput_alteradora_desfazer.caput[0] + "\">" + ds_link_alterador + "</a>(.*?)</p>";
                             replacement = "$1$2</p>";
@@ -597,6 +598,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     case "ratificação":
                     case "regulamentação":
                     case "ressalva":
+                    case "recepção":
                         ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(caputAlteradoDesfazer.caput[i]) + caputAlteradoDesfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + dsNormaAlteradora + "\\)";
                         pattern = "(<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
                         replacement = "$1$2</p>";
