@@ -414,6 +414,7 @@ function CriarModalFonte(tr_fonte) {
                                 oFonte.ar_fonte = JSON.parse(json_arquivo);
                             }
                             $('input[name=fonte]', $(tr_fonte).find('td')[6]).val(JSON.stringify(oFonte));
+                            $('a[ds_diario]', $(tr_fonte).find('td')[6]).attr('ds_diario', oFonte.ds_diario);
                         }
                         else {
                             var id_input = 'input_' + guid;
@@ -433,7 +434,7 @@ function CriarModalFonte(tr_fonte) {
                                 '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" title="Anexar um arquivo" ><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_file2.png" width="18px" /></a>' +
                                 '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" title="Remover o arquivo" style="display:none;"><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_file.png" width="18px" /></a>' +
                                 '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" width="18px" /></a>' +
-                                '<a path="ar_fonte" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="18px" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
+                                '<a path="ar_fonte" ds_diario="' + oFonte.ds_diario + '" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="18px" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
                             '</td>' +
                             '<td>' +
                                 '<a title="Editar Fonte" href="javascript:void(0);" onclick="javascript:EditarFonte(event);"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"  /></a>' +
@@ -1425,7 +1426,7 @@ function PreencherNormaEdicao() {
                                     '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" title="Anexar um arquivo" ' + (display_btn_file ? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_file2.png" width="18px" /></a>' +
                                     '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" title="Remover o arquivo" ' + (!display_btn_file ? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_file.png" width="18px" /></a>' +
                                     '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" width="18px" /></a>' +
-                                    '<a path="ar_fonte" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos" ' + (display_btn_file ? 'style="display:none"' : '') + '><img width="18" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
+                                    '<a path="ar_fonte" ds_diario="' + data.fontes[fonte].ds_diario + '" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos" ' + (display_btn_file ? 'style="display:none"' : '') + '><img width="18" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
                                 '</td>' +
                                 '<td>' +
                                     '<a title="Editar Fonte" href="javascript:void(0);" onclick="javascript:EditarFonte(event);"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"  /></a>' +

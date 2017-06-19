@@ -2521,7 +2521,7 @@ function getTitleNorma(jNorma) {
     else{
         var nm_tipo_publicacao = '';
         for (var i = 0; i < jNorma.fontes.length; i++) {
-            if (IsNotNullOrEmpty(jNorma.fontes[i], 'nm_tipo_publicacao') && IsNotNullOrEmpty(jNorma.fontes[i], 'ar_fonte.id_file')) {
+            if (IsNotNullOrEmpty(jNorma.fontes[i], 'nm_tipo_publicacao') && IsNotNullOrEmpty(jNorma.fontes[i].ar_fonte, 'id_file')) {
                 nm_tipo_publicacao = jNorma.fontes[i].nm_tipo_publicacao.toLowerCase();
                 if (i == 0 && (nm_tipo_publicacao == 'publicação' || nm_tipo_publicacao == 'pub')) {
                     mimetype = jNorma.fontes[i].ar_fonte.mimetype;
@@ -3515,6 +3515,19 @@ function abrirModalImportarArquivo(el) {
             $('#div_modal_importar_arquivo').modallight('destroy');
         }
     });
+    var ds_diario = el.getAttribute('ds_diario');
+    if(IsNotNullOrEmpty(ds_diario)){
+        //Foi solicitado que não exibisse a seção na descrição do diário no texto importado
+        ds_diario = ds_diario.replace(/, seção 1, 2 e 3/i,'');
+        ds_diario = ds_diario.replace(/, seção 1 e 2/i,'');
+        ds_diario = ds_diario.replace(/, seção 1 e 3/i,'');
+        ds_diario = ds_diario.replace(/, seção 2 e 3/i,'');
+        ds_diario = ds_diario.replace(/, seção 1/i,'');
+        ds_diario = ds_diario.replace(/, seção 2/i,'');
+        ds_diario = ds_diario.replace(/, seção 3/i,'');
+
+        $('#form_importar_arquivo input[name="ds_diario"]').val(ds_diario);
+    }
     carregarArquivosProduzidos("arquivos_orgao_cadastrador");
 }
 
@@ -3544,19 +3557,7 @@ function selecionarDocumentoImportar(el) {
     $('#form_importar_arquivo input[name="id_file"]').val(id_file);
     $('#form_importar_arquivo input[name="filename"]').val(filename);
 
-    var ds_diario = $('#ds_diario').val();
-    if(IsNotNullOrEmpty(ds_diario)){
-        //Foi solicitado que não exibisse a seção na descrição do diário no texto importado
-        ds_diario = ds_diario.replace(/, seção 1, 2 e 3/i,'');
-        ds_diario = ds_diario.replace(/, seção 1 e 2/i,'');
-        ds_diario = ds_diario.replace(/, seção 1 e 3/i,'');
-        ds_diario = ds_diario.replace(/, seção 2 e 3/i,'');
-        ds_diario = ds_diario.replace(/, seção 1/i,'');
-        ds_diario = ds_diario.replace(/, seção 2/i,'');
-        ds_diario = ds_diario.replace(/, seção 3/i,'');
-
-        $('#form_importar_arquivo input[name="ds_diario"]').val(ds_diario);
-    }
+    
 
 
     $('#input_chave_importar').val(chave + '.' + tipo);
@@ -3564,6 +3565,7 @@ function selecionarDocumentoImportar(el) {
 }
 
 function importarArquivo(id_div_file, id_form) {
+    $('#' + id_div_file + ' input[name=fonte]').val();
     var sucesso = function (data) {
         $('#super_loading').hide();
         if (IsNotNullOrEmpty(data, 'error_message')) {
@@ -3672,7 +3674,7 @@ function generateLinkNameCaput(text) {
 //definir nivel do arquivo
 function definirNivelCaput(name) {
     var nivel = 10;
-    var niveis = ["ane", "tit", "cap", "art", "par", "inc", "ltr", "aln"];
+    var niveis = ["ane", "tit", "cap", "art", "par", "inc", "let", "aln"];
     if (IsNotNullOrEmpty(name) && name.indexOf('_') > -1) {
         name = name.substring(name.lastIndexOf('_') + 1);
     }

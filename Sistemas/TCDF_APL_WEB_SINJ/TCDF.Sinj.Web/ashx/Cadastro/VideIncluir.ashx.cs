@@ -294,19 +294,23 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
         public void VerificarDispositivosEAlterarOsTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado)
         {
+            //Se possuir dispositivo nas duas normas
             if (videAlterador.caput_norma_vide != null && videAlterado.caput_norma_vide != null && videAlterador.caput_norma_vide.caput != null && videAlterado.caput_norma_vide.caput != null && videAlterador.caput_norma_vide.caput.Length > 0 && videAlterado.caput_norma_vide.caput.Length > 0)
             {
                 IncluirAlteracaoComDispositivosNosArquivosDasNormas(normaAlteradora.ch_norma, normaAlterada.ch_norma, videAlterador.caput_norma_vide, videAlterado.caput_norma_vide);
             }
+            //Se possuir dispositivo na norma alterada
             else if (videAlterado.caput_norma_vide != null && videAlterado.caput_norma_vide.caput != null && videAlterado.caput_norma_vide.caput.Length > 0)
             {
                 IncluirAlteracaoComDispositivoAlteradoNosArquivosDasNormas(normaAlteradora, normaAlterada.ch_norma, videAlterado.caput_norma_vide);
             }
+            //Se possuir dispositivo na norma alteradora
             else if (videAlterador.caput_norma_vide != null && videAlterador.caput_norma_vide.caput != null && videAlterador.caput_norma_vide.caput.Length > 0)
             {
                 IncluirAlteracaoComDispositivoAlteradorNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlterador.caput_norma_vide);
             }
-            else
+            //Se não possuir dispositivo nas normas. Tem que verificar se não tem o dispositivo informado manualmente, pois se tem não aplica a alteração no arquivo
+            else if (!videAlterado.possuiDispositivoInformadoManualmente())
             {
                 IncluirAlteracaoSemDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlterado);
             }
@@ -1083,7 +1087,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 _caput = "Inciso ";
             }
-            else if (last_caput.IndexOf("ltr") == 0)
+            else if (last_caput.IndexOf("let") == 0)
             {
                 _caput = "Letra ";
             }

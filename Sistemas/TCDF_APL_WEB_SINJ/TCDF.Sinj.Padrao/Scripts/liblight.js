@@ -28,8 +28,13 @@ function GetParameterValueDecode(nm_parameter) {
     return values.join();
 }
 
-function GetText(value) {
-    if (IsNotNullOrEmpty(value)) {
+function GetText(value, param) {
+    if (IsNotNullOrEmpty(value) && IsNotNullOrEmpty(param)) {
+        if (IsNotNullOrEmpty(eval('value.' + param))) {
+            return eval('value.' + param);
+        }
+    }
+    else if (IsNotNullOrEmpty(value)) {
         return value;
     }
     return "";

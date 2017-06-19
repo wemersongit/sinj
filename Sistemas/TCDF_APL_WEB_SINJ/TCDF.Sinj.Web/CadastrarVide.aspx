@@ -51,7 +51,7 @@
                                             if (!$('#checkbox_norma_alteradora').prop("checked")) {
                                                 $('#ch_norma_alteradora').val("");
                                                 $('#label_norma_vide_alteradora').html("");
-                                                $('#caput_norma_vide').prop("checked", false);
+                                                //$('#caput_norma_vide').prop("checked", false);
                                                 $('#artigo_norma_vide').val("");
                                                 $('#paragrafo_norma_vide').val("");
                                                 $('#inciso_norma_vide').val("");
@@ -62,7 +62,7 @@
                                             if (!$('#checkbox_norma_alterada').prop("checked")) {
                                                 $('#ch_norma_alterada').val("");
                                                 $('#label_norma_vide_alterada').html("");
-                                                $('#caput_norma_vide_alterada').prop("checked", false);
+                                                //$('#caput_norma_vide_alterada').prop("checked", false);
                                                 $('#artigo_norma_vide_alterada').val("");
                                                 $('#paragrafo_norma_vide_alterada').val("");
                                                 $('#inciso_norma_vide_alterada').val("");
@@ -561,6 +561,18 @@
                                                                     <div class="cell w-100-pc">
                                                                         <input type="hidden" id="caput_norma_vide_alterada" name="caput_norma_vide_alterada" value="" />
                                                                         <label id="label_caput_norma_alterada"></label><a id="a_selecionar_caput_norma_alterada" href="javascript:void(0);" onclick="javascript:abrirSelecionarCaput('alterada');" title="Selecionar o caput da norma alterada"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_edit_dir.png" alt="adicionar" width="16px" height="16px" /></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="line line_caput_norma_alterada" style="display:none;">
+                                                                <div class="column w-30-pc">
+                                                                    <div class="cell w-100-pc">
+                                                                        Descrição:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="column w-70-pc">
+                                                                    <div class="cell w-100-pc">
+                                                                        <textarea id="descricao_caput_norma_alterada"  class="w-100-pc" rows="5"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>

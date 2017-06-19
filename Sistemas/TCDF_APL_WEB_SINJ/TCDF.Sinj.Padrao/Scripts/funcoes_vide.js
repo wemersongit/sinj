@@ -388,6 +388,7 @@ function removerCaput(nm_sufixo) {
         $('#label_caput_norma_' + nm_sufixo).text('');
         $('#a_selecionar_caput_norma_' + nm_sufixo).attr('onclick', 'javascript:abrirSelecionarCaput(\'' + nm_sufixo + '\');').attr('title', 'Selecionar o caput da norma ' + nm_sufixo).html('<img src="' + _urlPadrao + '/Imagens/ico_edit_dir.png" alt="adicionar" width="16px" height="16px" />');
         if (nm_sufixo == "alterada") {
+            $('#descricao_caput_norma_' + nm_sufixo).val('');
             $('#texto_antigo').text('');
             $('div.line_texto_caput').hide();
         }
@@ -406,7 +407,14 @@ function removerCaputParagrafo(el) {
     var jCaput = JSON.parse(sCaput);
     jCaput.caput.splice(posicao, 1);
     jCaput.texto_antigo.splice(posicao, 1);
+    var nm_tipo_relacao = $('#nm_tipo_relacao').val();
+    //ToDo: se for acrescimo a descrição dos dispositivos é definida de outra forma
+    if (nm_tipo_relacao.toLowerCase() != 'acrescimo') {
+        jCaput.ds_caput = getDescricaoDoCaput(jCaput.caput);
+        $('#descricao_caput_norma_alterada').val(jCaput.ds_caput.replaceAll(';', '\n'));
+    }
     $('#caput_norma_vide_alterada').val(JSON.stringify(jCaput));
+
 
     var buttons = $('div.caputedit button[posicao]');
     var iposicao = parseInt(posicao);
@@ -430,6 +438,7 @@ function selecionarCaput(nm_sufixo) {
         var texto = [];
         var caput = [];
         var link = "";
+        var nm_tipo_relacao = $('#nm_tipo_relacao').val();
         if (nm_sufixo == "alterada") {
             for (var i = 0; i < $inputCaput.length; i++) {
                 caput.push($inputCaput[i].value);
@@ -455,10 +464,12 @@ function selecionarCaput(nm_sufixo) {
             linkname: $($inputCaput[0]).val(),
             texto_antigo: texto,
             link: link,
-            filename: $el.attr('filename')
+            filename: $el.attr('filename'),
+            ds_caput: (nm_tipo_relacao.toLowerCase() != 'acrescimo' ? getDescricaoDoCaput(caput) : '')
         }
         $('#caput_norma_vide_' + nm_sufixo).val(JSON.stringify(jCaput));
         $('#label_caput_norma_' + nm_sufixo).text(jCaput.ds_norma + '#' + jCaput.linkname + ' ');
+
         $('#a_selecionar_caput_norma_' + nm_sufixo).attr('onclick', 'javascript:removerCaput(\'' + nm_sufixo + '\');').attr('title', 'Remover o caput da norma ' + nm_sufixo).html('<img src="'+_urlPadrao+'/Imagens/ico_del_dir.png" alt="remover" width="16px" height="16px" />');
 
         if (nm_sufixo == "alterada") {
@@ -467,13 +478,15 @@ function selecionarCaput(nm_sufixo) {
             if (IsNotNullOrEmpty(jCaput.texto_antigo)) {
                 var labeltextoantigo = 'Texto Antigo';
                 var labeltextonovo = 'Texto Novo';
-                var nm_tipo_relacao = $('#nm_tipo_relacao').val();
                 if (nm_tipo_relacao.toLowerCase() == 'acrescimo') {
                     labeltextoantigo = 'Após o Texto';
                     labeltextonovo = 'Inserir o Texto';
-                } else if (nm_tipo_relacao.toLowerCase() == 'renumeração') {
-                    labeltextoantigo = 'Renumerar o Texto';
-                    labeltextonovo = 'Texto Renumerado';
+                } else {
+                    if (nm_tipo_relacao.toLowerCase() == 'renumeração') {
+                        labeltextoantigo = 'Renumerar o Texto';
+                        labeltextonovo = 'Texto Renumerado';
+                    }
+                    $('#descricao_caput_norma_' + nm_sufixo).val(jCaput.ds_caput.replaceAll(';', '\n'));
                 }
                 for (var i = 0; i < jCaput.texto_antigo.length; i++) {
                     $('div.line_texto_caput>div.column').append(
@@ -503,7 +516,6 @@ function selecionarCaput(nm_sufixo) {
                         '</div>'
                     );
                 }
-                //$('#texto_antigo').html(jCaput.texto_antigo.reverse().join('...\r\n<br/>'));
             }
         }
         else {
@@ -512,7 +524,6 @@ function selecionarCaput(nm_sufixo) {
                 $('#a_texto_link').text(jCaput.link);
             }
         }
-
         fecharSelecionarCaput(nm_sufixo);
     }
 }
@@ -537,4 +548,68 @@ function abrirSelecionarCaputCopiar(el_paste) {
         }
     }
 
+}
+
+function getDescricaoDoCaput(caput) {
+    var descricao = "";
+    var descricao_linha = "";
+    var descricao_caput = "";
+    var cSplited = [];
+    if(caput != null && caput.length > 0)
+    {
+        for(var c in caput)
+        {
+            descricao_linha = "";
+            cSplited = caput[c].split('_');
+            for(var cs in cSplited){
+                descricao_caput = getDescricaoDoElemento(cSplited[cs]);
+                if(IsNotNullOrEmpty(descricao_caput)){
+                    descricao_linha += (IsNotNullOrEmpty(descricao_linha) ? ", " : "") + descricao_caput;
+                }
+            }
+            if (IsNotNullOrEmpty(descricao_linha)) {
+                descricao += (IsNotNullOrEmpty(descricao) ? ";" : "") + descricao_linha;
+            }
+        }
+        //descricao += IsNotNullOrEmpty(descricao) ? "." : "";
+    }
+    return descricao;
+}
+
+function getDescricaoDoElemento(caput)
+{
+    var caput1 = caput.substring(0, 3).toLowerCase();
+    var caput2 = "";
+    var caput3 = "";
+    if(caput.length > 3)
+        caput2 = caput.substring(3);
+    if (caput1 == "ane")
+    {
+        caput3 = "Anexo";
+    }
+    else if (caput1 == "art")
+    {
+        caput3 = "Artigo";
+    }
+    else if (caput1 == "par")
+    {
+        caput3 = "Parágrafo";
+    }
+    else if (caput1 == "inc")
+    {
+        caput3 = "Inciso";
+    }
+    else if (caput1 == "let")
+    {
+        caput3 = "Letra";
+    }
+    else if (caput1 == "aln")
+    {
+        caput3 = "Alínea";
+    }
+    if (IsNotNullOrEmpty(caput3))
+    {
+        caput3 += (IsNotNullOrEmpty(caput2) ? " " : "") + caput2;
+    }
+    return caput3;
 }
