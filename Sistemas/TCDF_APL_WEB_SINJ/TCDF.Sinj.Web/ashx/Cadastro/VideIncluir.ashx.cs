@@ -46,6 +46,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             //var _item_norma_vide = context.Request["item_norma_vide"];
             //var _anexo_norma_vide = context.Request["anexo_norma_vide"];
             var _caput_norma_vide_alterada = context.Request["caput_norma_vide_alterada"];
+            var _ds_caput_norma_alterada = context.Request["ds_caput_norma_alterada"];
             var _artigo_norma_vide_alterada = context.Request["artigo_norma_vide_alterada"];
             var _paragrafo_norma_vide_alterada = context.Request["paragrafo_norma_vide_alterada"];
             var _inciso_norma_vide_alterada = context.Request["inciso_norma_vide_alterada"];
@@ -173,6 +174,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         if (!string.IsNullOrEmpty(_caput_norma_vide_alterada))
                         {
                             vide_alterador.caput_norma_vide_outra = JSON.Deserializa<Caput>(_caput_norma_vide_alterada);
+                            vide_alterador.caput_norma_vide_outra.ds_caput = _ds_caput_norma_alterada;
                             vide_alterador.caput_norma_vide_outra.texto_novo = _caput_texto_novo;
                             vide_alterador.caput_norma_vide_outra.nm_relacao_aux = nm_tipo_relacao_pos_verificacao.ToLower();
                             vide_alterador.caput_norma_vide_outra.ds_texto_para_alterador_aux = ds_texto_para_alterador_pos_verificacao.ToLower();
@@ -221,9 +223,12 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 vide_alterada.ds_comentario_vide = _ds_comentario_vide;
 
                                 normaAlteradaOv.vides.Add(vide_alterada);
-                                var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
-                                normaAlteradaOv.ch_situacao = situacao.ch_situacao;
-                                normaAlteradaOv.nm_situacao = situacao.nm_situacao;
+                                if (!normaAlteradaOv.st_situacao_forcada)
+                                {
+                                    var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
+                                    normaAlteradaOv.ch_situacao = situacao.ch_situacao;
+                                    normaAlteradaOv.nm_situacao = situacao.nm_situacao;
+                                }
                                 normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                                 if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                 {

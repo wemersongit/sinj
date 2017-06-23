@@ -104,6 +104,10 @@
                                             $('#a_selecionar_caput_norma_alterada').attr('onclick', 'javascript:removerCaput(\'alterada\');').attr('title', 'Remover o caput da norma alterada').html('<img src="' + _urlPadrao + '/Imagens/ico_del_dir.png" alt="remover" width="16px" height="16px" />');
                                             if (IsNotNullOrEmpty(data.vides[i].caput_norma_vide.texto_antigo)) {
                                                 $('div.line_texto_caput').show();
+                                                $('div.line_ds_caput_norma_alterada').show();
+                                                if (IsNotNullOrEmpty(data.vides[i].caput_norma_vide.ds_caput)) {
+                                                    $('#ds_caput_norma_alterada').val(data.vides[i].caput_norma_vide.ds_caput);
+                                                }
                                                 $('div.line_texto_caput').html($('<div class="column w-100-pc"></div>'));
                                                 for (var j = 0; j < data.vides[i].caput_norma_vide.texto_antigo.length; j++) {
                                                     $('div.line_texto_caput>div.column').append(
@@ -177,6 +181,10 @@
 
                                             if (IsNotNullOrEmpty(data.vides[i].caput_norma_vide_outra.texto_antigo)) {
                                                 $('div.line_texto_caput').show();
+                                                $('div.line_ds_caput_norma_alterada').show();
+                                                if (IsNotNullOrEmpty(data.vides[i].caput_norma_vide_outra.ds_caput)) {
+                                                    $('#ds_caput_norma_alterada').val(data.vides[i].caput_norma_vide_outra.ds_caput);
+                                                }
                                                 $('div.line_texto_caput').html($('<div class="column w-100-pc"></div>'));
                                                 for (var j = 0; j < data.vides[i].caput_norma_vide_outra.texto_antigo.length; j++) {
                                                     $('div.line_texto_caput>div.column').append(
@@ -568,6 +576,18 @@
                                                                     <div class="cell w-100-pc">
                                                                         <input type="hidden" id="caput_norma_vide_alterada" name="caput_norma_vide_alterada" value="" />
                                                                         <label id="label_caput_norma_alterada"></label><a id="a_selecionar_caput_norma_alterada" href="javascript:void(0);" onclick="javascript:abrirSelecionarCaput('alterada');" title="Selecionar o caput da norma alterada"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_edit_dir.png" alt="adicionar" width="16px" height="16px" /></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="line line_ds_caput_norma_alterada" style="display:none;">
+                                                                <div class="column w-30-pc">
+                                                                    <div class="cell w-100-pc">
+                                                                        Descrição:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="column w-70-pc">
+                                                                    <div class="cell w-100-pc">
+                                                                        <textarea id="ds_caput_norma_alterada" name="ds_caput_norma_alterada" class="w-100-pc" rows="5"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>

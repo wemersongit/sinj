@@ -60,7 +60,10 @@ namespace TCDF.Sinj.RN
             Validar(normaOv);
             GerarChaveDaNorma(normaOv);
 
-            DefinirSituacaoDaNorma(normaOv, true);
+            if (!normaOv.st_situacao_forcada)
+            {
+                DefinirSituacaoDaNorma(normaOv, true);
+            }
             
             GerarRankeamentoDeNorma(normaOv);
             
@@ -109,7 +112,10 @@ namespace TCDF.Sinj.RN
             Validar(normaOv);
             GerarChaveDaNorma(normaOv);
             GerarRankeamentoDeNorma(normaOv);
-            DefinirSituacaoDaNorma(normaOv, false);
+            if (!normaOv.st_situacao_forcada)
+            {
+                DefinirSituacaoDaNorma(normaOv, false);
+            }
 			normaOv.st_atualizada = true;
 
             return _normaAd.Atualizar(id_doc, normaOv);

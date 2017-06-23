@@ -11,14 +11,19 @@ namespace TCDF.Sinj.Web
 {
     public partial class EditarNorma : System.Web.UI.Page
     {
+        protected bool isAdmin;
+        protected SessaoUsuarioOV sessao_usuario;
+        protected string situacoes;
         protected void Page_Load(object sender, EventArgs e)
         {
             var podeEditar = false;
             var nm_tipo_norma = "";
-			var usuario_session = Util.ValidarAcessoNasPaginas(base.Page, AcoesDoUsuario.nor_edt);
-            if (usuario_session.ch_perfil == "super_administrador")
+            sessao_usuario = Util.ValidarAcessoNasPaginas(base.Page, AcoesDoUsuario.nor_edt);
+            isAdmin = Util.IsSuperAdmin(sessao_usuario);
+            if (isAdmin)
             {
                 podeEditar = true;
+                situacoes = Util.GetSituacoes();
             }
             else
             {
@@ -42,7 +47,7 @@ namespace TCDF.Sinj.Web
                     nm_tipo_norma = tipoDeNormaOv.nm_tipo_norma;
                     foreach (var orgaoCadastrador in tipoDeNormaOv.orgaos_cadastradores)
                     {
-                        if (usuario_session.orgao_cadastrador.id_orgao_cadastrador == orgaoCadastrador.id_orgao_cadastrador)
+                        if (sessao_usuario.orgao_cadastrador.id_orgao_cadastrador == orgaoCadastrador.id_orgao_cadastrador)
                         {
                             podeEditar = true;
                             break;

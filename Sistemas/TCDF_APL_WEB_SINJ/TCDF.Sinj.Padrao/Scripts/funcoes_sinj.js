@@ -2582,7 +2582,7 @@ function DetalhesNorma(data, highlight) {
             } else if (data.fontes.length > 0) {
                 //rever essa parte pois está pegando o texto da primeira fonte porém existe um requisito que diz que o arquivo da norma pode ser republicado, descartando assim o da publicação (fontes/0)
                 for (var i = 0; i < data.fontes.length; i++ ) {
-                    if (IsNotNullOrEmpty(data.fontes[i].ar_fonte.id_file)) {
+                    if (IsNotNullOrEmpty(data.fontes[i].ar_fonte, 'id_file')) {
                         var nm_tipo_publicacao = data.fontes[i].nm_tipo_publicacao.toLowerCase();
                         if (nm_tipo_publicacao == 'publicação' || nm_tipo_publicacao == 'pub') {
                             id_file = data.fontes[i].ar_fonte.id_file;
@@ -2649,7 +2649,7 @@ function DetalhesNorma(data, highlight) {
                 for (var i = 0; i < data.fontes.length; i++) {
                     $('#tbody_fontes').append(
                         '<tr>' +
-                            '<td>' + (IsNotNullOrEmpty(data.fontes[i], 'ar_diario.id_file') ?
+                            '<td>' + (IsNotNullOrEmpty(data.fontes[i].ar_diario, 'id_file') ?
                                 '<a title="Baixar Diário" target="_blank" href="./Diario/' + data.fontes[i].ar_diario.id_file + '/' + data.fontes[i].ar_diario.filename + '">' + GetText(data.fontes[i].ds_diario) + ' <img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="arquivo" width="18px" /></a>' : 
                                 '<a href="./ResultadoDePesquisa.aspx?tipo_pesquisa=diario&ds_norma=' + data.nm_tipo_norma + ' ' + data.nr_norma + ' de ' + data.dt_assinatura + '&ch_tipo_fonte=' + data.fontes[i].ch_tipo_fonte + '&nm_tipo_fonte=' + data.fontes[i].nm_tipo_fonte + '&op_dt_assinatura=igual&dt_assinatura=' + GetText(data.fontes[i].dt_publicacao) + '">' + data.fontes[i].nm_tipo_fonte + ' ' + GetText(data.fontes[i].dt_publicacao) + '</a>') +
                             '</td>' +
@@ -2658,7 +2658,7 @@ function DetalhesNorma(data, highlight) {
                             '<td>' + GetText(data.fontes[i].nr_coluna) + '</td>' +
                             '<td>' + GetText(data.fontes[i].ds_observacao_fonte) + '</td>' +
                             '<td>' + GetText(data.fontes[i].ds_republicacao) + '</td>' +
-                            (bCadastro ? ('<td>' + (IsNotNullOrEmpty(data.fontes[i].ar_fonte.id_file) ? '<a title="Baixar Arquivo da Fonte" target="_blank" href="./Download/sinj_norma/'+data.fontes[i].ar_fonte.id_file+'/' + data.fontes[i].ar_fonte.filename + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + data.fontes[i].ar_fonte.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>' : '') + '</td>') : '') +
+                            (bCadastro ? ('<td>' + (IsNotNullOrEmpty(data.fontes[i].ar_fonte, 'id_file') ? '<a title="Baixar Arquivo da Fonte" target="_blank" href="./Download/sinj_norma/'+data.fontes[i].ar_fonte.id_file+'/' + data.fontes[i].ar_fonte.filename + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + data.fontes[i].ar_fonte.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>' : '') + '</td>') : '') +
                         '</tr>'
                     );
                 }
@@ -2693,17 +2693,20 @@ function DetalhesNorma(data, highlight) {
                     //                            Art. 102, Caput
                     var dispositivo_afetado = "";
                     if (data.vides[i].in_norma_afetada) {
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].artigo_norma_vide) ? "Art. " + data.vides[i].artigo_norma_vide.replace(/^0?([1-9])$/, data.vides[i].artigo_norma_vide + 'º').replace(/^0+/, '') + ", " : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].paragrafo_norma_vide) ? (data.vides[i].paragrafo_norma_vide.toLowerCase() == "único" || data.vides[i].paragrafo_norma_vide.toLowerCase() == "unico" ? "Parágrafo " + data.vides[i].paragrafo_norma_vide + ", " : "§ " + data.vides[i].paragrafo_norma_vide.replace(/^([1-9])$/, data.vides[i].paragrafo_norma_vide + 'º') + ", ") : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].inciso_norma_vide) ? "inc. " + data.vides[i].inciso_norma_vide + ", " : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].alinea_norma_vide) ? "ali. \"" + data.vides[i].alinea_norma_vide + "\", " : "");
-                        dispositivo_afetado += ((IsNotNullOrEmpty(data.vides[i].caput_norma_vide) && (data.vides[i].caput_norma_vide == true)) ? "Caput. " : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].item_norma_vide) ? "item " + data.vides[i].item_norma_vide + ", " : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].anexo_norma_vide) ? "Anexo " + data.vides[i].anexo_norma_vide : "");
-                        if (dispositivo_afetado.substring(dispositivo_afetado.length - 2) == ", ") {
-                            dispositivo_afetado = dispositivo_afetado.substring(0, dispositivo_afetado.length - 2);
+                        if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'ds_caput')){
+                            dispositivo_afetado = data.vides[i].caput_norma_vide.ds_caput.replaceAll('\n','<br/>');
+                        }else{
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].artigo_norma_vide) ? "Art. " + data.vides[i].artigo_norma_vide.replace(/^0?([1-9])$/, data.vides[i].artigo_norma_vide + 'º').replace(/^0+/, '') + ", " : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].paragrafo_norma_vide) ? (data.vides[i].paragrafo_norma_vide.toLowerCase() == "único" || data.vides[i].paragrafo_norma_vide.toLowerCase() == "unico" ? "Parágrafo " + data.vides[i].paragrafo_norma_vide + ", " : "§ " + data.vides[i].paragrafo_norma_vide.replace(/^([1-9])$/, data.vides[i].paragrafo_norma_vide + 'º') + ", ") : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].inciso_norma_vide) ? "inc. " + data.vides[i].inciso_norma_vide + ", " : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].alinea_norma_vide) ? "ali. \"" + data.vides[i].alinea_norma_vide + "\", " : "");
+                            //dispositivo_afetado += ((IsNotNullOrEmpty(data.vides[i].caput_norma_vide) && (data.vides[i].caput_norma_vide == true)) ? "Caput. " : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].item_norma_vide) ? "item " + data.vides[i].item_norma_vide + ", " : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].anexo_norma_vide) ? "Anexo " + data.vides[i].anexo_norma_vide : "");
+                            if (dispositivo_afetado.substring(dispositivo_afetado.length - 2) == ", ") {
+                                dispositivo_afetado = dispositivo_afetado.substring(0, dispositivo_afetado.length - 2);
+                            }
                         }
-
                         $('#tbody_vides_normas_que_afetam').append(
                             '<tr>' +
                             '<td width="25%">' + (IsNotNullOrEmpty(data.vides[i].ds_texto_relacao) ? data.vides[i].ds_texto_relacao : data.vides[i].nm_tipo_relacao) + '</td>' +
@@ -2716,17 +2719,21 @@ function DetalhesNorma(data, highlight) {
                         );
                     } else {
                         // Caso a norma afete outra, os valores exibidos estao persistidos em campos diferentes:
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].artigo_norma_vide_outra) ? "Art. " + data.vides[i].artigo_norma_vide_outra.replace(/^0?([1-9])$/, data.vides[i].artigo_norma_vide_outra + 'º').replace(/^0+/, '') + ", " : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].paragrafo_norma_vide_outra) ? (data.vides[i].paragrafo_norma_vide_outra.toLowerCase() == "único" || data.vides[i].paragrafo_norma_vide_outra.toLowerCase() == "unico" ? "Parágrafo " + data.vides[i].paragrafo_norma_vide_outra + ", " : "§ " + data.vides[i].paragrafo_norma_vide_outra.replace(/^([1-9])$/, data.vides[i].paragrafo_norma_vide_outra + 'º') + ", ") : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].inciso_norma_vide_outra) ? "inc. " + data.vides[i].inciso_norma_vide_outra + ", " : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].alinea_norma_vide_outra) ? "ali. \"" + data.vides[i].alinea_norma_vide_outra + "\", " : "");
-                        dispositivo_afetado += ((IsNotNullOrEmpty(data.vides[i].caput_norma_vide_outra) && (data.vides[i].caput_norma_vide_outra == true)) ? "Caput. " : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].item_norma_vide_outra) ? "item " + data.vides[i].item_norma_vide_outra + ", " : "");
-                        dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].anexo_norma_vide_outra) ? "Anexo " + data.vides[i].anexo_norma_vide_outra : "");
-                        if (dispositivo_afetado.substring(dispositivo_afetado.length - 2) == ", ") {
-                            dispositivo_afetado = dispositivo_afetado.substring(0, dispositivo_afetado.length - 2);
+                        if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide_outra, 'ds_caput')){
+                            dispositivo_afetado = data.vides[i].caput_norma_vide_outra.ds_caput.replaceAll('\n','<br/>');
                         }
-
+                        else{
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].artigo_norma_vide_outra) ? "Art. " + data.vides[i].artigo_norma_vide_outra.replace(/^0?([1-9])$/, data.vides[i].artigo_norma_vide_outra + 'º').replace(/^0+/, '') + ", " : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].paragrafo_norma_vide_outra) ? (data.vides[i].paragrafo_norma_vide_outra.toLowerCase() == "único" || data.vides[i].paragrafo_norma_vide_outra.toLowerCase() == "unico" ? "Parágrafo " + data.vides[i].paragrafo_norma_vide_outra + ", " : "§ " + data.vides[i].paragrafo_norma_vide_outra.replace(/^([1-9])$/, data.vides[i].paragrafo_norma_vide_outra + 'º') + ", ") : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].inciso_norma_vide_outra) ? "inc. " + data.vides[i].inciso_norma_vide_outra + ", " : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].alinea_norma_vide_outra) ? "ali. \"" + data.vides[i].alinea_norma_vide_outra + "\", " : "");
+                            //dispositivo_afetado += ((IsNotNullOrEmpty(data.vides[i].caput_norma_vide_outra) && (data.vides[i].caput_norma_vide_outra == true)) ? "Caput. " : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].item_norma_vide_outra) ? "item " + data.vides[i].item_norma_vide_outra + ", " : "");
+                            dispositivo_afetado += (IsNotNullOrEmpty(data.vides[i].anexo_norma_vide_outra) ? "Anexo " + data.vides[i].anexo_norma_vide_outra : "");
+                            if (dispositivo_afetado.substring(dispositivo_afetado.length - 2) == ", ") {
+                                dispositivo_afetado = dispositivo_afetado.substring(0, dispositivo_afetado.length - 2);
+                            }
+                        }
                         $('#tbody_vides_normas_afetadas').append(
                             '<tr>' +
                             '<td width="25%">' + (IsNotNullOrEmpty(data.vides[i].ds_texto_relacao) ? data.vides[i].ds_texto_relacao : data.vides[i].nm_tipo_relacao) + '</td>' +
@@ -2953,7 +2960,12 @@ function fnSubmitInputFile(id_div_arquivo) {
         return false;
     }
     CKEDITOR.instances.arquivo.updateElement();
-    document.getElementById('arquivo').value = window.escape(document.getElementById('arquivo').value);
+
+    $('#div_conteudo_arquivo').html(document.getElementById('arquivo').value.replaceAll('&nbsp;', ' '));
+    inserirMarcacoesNosParagrafos('div_conteudo_arquivo', false);
+    document.getElementById('arquivo').value = window.encodeURI($('#div_conteudo_arquivo').html());
+    $('#div_conteudo_arquivo').html('');
+
     var sucesso = function(data) {
         $('#super_loading').hide();
         if (IsNotNullOrEmpty(data, 'error_message')) {
@@ -3629,6 +3641,71 @@ function ehAlinea(termo) {
     return true;
 }
 
+function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
+    var niveis = [];
+    var ultimo_nivel = 0;
+
+    $.each($('#' + id_div + ' p'), function (key_p, value_p) {
+        try {
+            var linkname = $(value_p).attr('linkname');
+            //O ckeditor tem um comportamento que causa erro na marcação do paragrafo. Quando estamos editando um texto que já foi bandeirado sempre
+            //que inserimos um novo paragrafo o ckeditor replica os atributos do paragrafo anterior duplicando o linkname, nesses casos o paragrafo não terá
+            //âncora então limpamos o linkname do paragrafo e geramos novamente;
+            if (IsNotNullOrEmpty(linkname) && $('p[linkname="' + linkname + '"]').length > 1 && $('a[name].linkname', value_p).length <= 0) {
+                $(value_p).attr('linkname', '');
+                linkname = '';
+            }
+            //Se o paragrafo já possuir o atributo linkname (atributo criado para o editor de links conseguir exibir os icones e fazer a funcionalidade de criar e editar ancoras),
+            //ele não deve ser mexido
+            if (!IsNotNullOrEmpty(linkname)) {
+                //se não tem conteúdo no paragrafo não há porquê tentar criar linkname e ancora
+                if ($.trim(value_p.textContent)) {
+                    //tenta criar o atributo linkname no paragrafo com base na primeira ancora dele
+                    if ($('a[id][name]', value_p).length == 1) {
+                        var value_a = $('a[id][name]', value_p)[0];
+                        if (value_a.textContent == '' && value_a.hasAttribute('id') && value_a.hasAttribute('name')) {
+                            linkname = value_a.getAttribute('name');
+                            $(value_p).attr('linkname', linkname);
+                            $(value_a).addClass('linkname');
+                        }
+                    }
+                    //se o procedimento anterior não conseguiu determinar um linkname então o paragrafo possui uma ancora criada pelo editor de links,
+                    //deve tentar criar uma ancora e um linkname com base no conteúdo do paragrafo (art_1, paragrafo_3, capitulo_2, capitulo_2_art_1_paragrafo_3, etc)
+                    if (!IsNotNullOrEmpty(linkname)) {
+                        var p_cloned = $(value_p).clone();
+                        $(p_cloned).find('a>sup').remove();
+                        linkname = generateLinkNameCaput($(p_cloned).text());
+                        var name = linkname;
+                        if (IsNotNullOrEmpty(linkname)) {
+                            if (IsNotNullOrEmpty(niveis)) {
+                                niveis = definirEstruturaCaput(linkname, niveis);
+                                name = niveis.join('_');
+                            }
+                            if ($('#' + name).length <= 0) {
+                                $(value_p).prepend('<a id="' + name + '" name="' + name + '" class="linkname"></a>');
+                                $(value_p).attr('linkname', name);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (IsNotNullOrEmpty(linkname)) {
+                niveis = definirEstruturaCaput(linkname, niveis);
+                if (bEditorLinks) {
+                    $(value_p).prepend('<button class="buttontooltip clean" type="button" onclick="javascript:clickTooltip(this);"><img src="' + _urlPadrao + '/Imagens/ico_anchor_p.png" alt="editar" /></a>');
+                }
+            }
+            else if ($.trim(value_p.textContent) && bEditorLinks) {
+                $(value_p).prepend('<button class="buttontooltip clean" type="button" onclick="javascript:clickTooltip(this);"><img src="' + _urlPadrao + '/Imagens/ico_add_p.png" alt="editar" /></a>');
+            }
+        }
+        catch (ex) {
+            console.log(ex);
+        }
+    });
+}
+
 //Gera um linkname e um caput para ser usado na ancora com base no conteúdo
 function generateLinkNameCaput(text) {
     var id = '';
@@ -3734,7 +3811,7 @@ function configureCkeditor(){
     CKEDITOR.config.pasteFilter = 'p[linkname]; a[!href]';
     CKEDITOR.stylesSet.add('default',[
         {name:'Epígrafe', element: 'h1', attributes: {
-            epigrafe: 'epigrafe'
+                epigrafe: 'epigrafe'
             },
             styles:{'font-weight':'bold', 'text-align':'center'}
         },
@@ -3746,7 +3823,8 @@ function configureCkeditor(){
         {name:'Subseção', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}},
         {name:'Assinatura', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
         {name:'Cargo', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}},
-        {name:'Anexo', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold'}}
+        {name:'Anexo', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
+        {name:'Subanexo', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}}
     ]);
     CKEDITOR.on('dialogDefinition', function( ev ) {
         var dialogName = ev.data.name;

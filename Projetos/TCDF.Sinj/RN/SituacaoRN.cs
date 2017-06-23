@@ -4,6 +4,7 @@ using TCDF.Sinj.OV;
 using System;
 using System.Text.RegularExpressions;
 using util.BRLight;
+using System.Collections.Generic;
 
 namespace TCDF.Sinj.RN
 {
@@ -20,6 +21,11 @@ namespace TCDF.Sinj.RN
 		{
 			return _situacaoDeNormaAd.Consultar(query);
 		}
+
+        public List<SituacaoOV> BuscarTodos()
+        {
+            return _situacaoDeNormaAd.BuscarTodos();
+        }
 
 		public SituacaoOV Doc(ulong id_doc)
 		{

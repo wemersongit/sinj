@@ -10,6 +10,9 @@
             });
             ConstruirControlesDinamicos();
             configureCkeditor();
+            <% if(isAdmin && !string.IsNullOrEmpty(situacoes)){ %>
+                fnAutocompleteSituacao(<%= situacoes%>);
+            <%} %>
         });
         
     </script>
@@ -535,6 +538,7 @@
         </div>
         <div id="div_arquivo" style="display:none;" class="mauto w-90-pc">
             <div id="editar_arquivo_notificacao" class="notify" style="display:none;"></div>
+            <div id="div_conteudo_arquivo"></div>
             <form id="form_editar_arquivo" name="form_editar_arquivo" action="#" method="post">
                 <div class="text-right">
                     <button type="reset" onclick="javascript:closeEditFile();" class="clean">
@@ -712,6 +716,25 @@
                         <fieldset>
                             <legend>Dados Gerais</legend>
                             <div class="mauto table">
+                            <% if (TCDF.Sinj.Util.IsSuperAdmin(sessao_usuario))
+                               { %>
+                                <div class="line">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Situação da Norma:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div id="div_autocomplete_situacao" class="cell w-60-pc">
+                                            <input id="ch_situacao" name="ch_situacao" type="hidden" value="" />
+                                            <input id="nm_situacao" name="nm_situacao" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_situacao"></a>
+                                        </div>
+                                        <div class="cell w-100-pc">
+                                            <span class="attention">Atenção: Ao selecionar uma situação para a norma, a mesma não será alterada por vides ou decisões (ação).</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%} %>
                                 <div id="line_apelido" class="line">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">

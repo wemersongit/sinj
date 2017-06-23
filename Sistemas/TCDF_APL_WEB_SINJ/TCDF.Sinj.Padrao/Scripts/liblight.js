@@ -613,6 +613,13 @@ function isJson(str) {
     return true;
 }
 
+function isInt(i) {
+    if (!isNaN(i)) {
+        return i == parseInt(i);
+    }
+    return false;
+}
+
 // ao iniciar ajax chamar 
 var gInicio = function () { $('#super_loading').show(); };
 // ao completar ajax chamar 

@@ -564,7 +564,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="line line_caput_norma_alterada" style="display:none;">
+                                                            <div class="line line_ds_caput_norma_alterada" style="display:none;">
                                                                 <div class="column w-30-pc">
                                                                     <div class="cell w-100-pc">
                                                                         Descrição:
@@ -572,7 +572,7 @@
                                                                 </div>
                                                                 <div class="column w-70-pc">
                                                                     <div class="cell w-100-pc">
-                                                                        <textarea id="descricao_caput_norma_alterada"  class="w-100-pc" rows="5"></textarea>
+                                                                        <textarea id="ds_caput_norma_alterada" name="ds_caput_norma_alterada" class="w-100-pc" rows="5"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>

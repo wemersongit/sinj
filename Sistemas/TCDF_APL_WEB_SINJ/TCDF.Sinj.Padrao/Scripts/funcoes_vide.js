@@ -146,7 +146,9 @@ function SelecionarNormaVide(ch_norma, ds_norma, dt_assinatura, nm_tipo_norma, s
 
 function resetCaput(nm_sufixo) {
     $('.line_caput_norma_' + nm_sufixo).show();
+    $('.line_ds_caput_norma_' + nm_sufixo).hide();
     $('#caput_norma_vide_' + nm_sufixo).val('');
+    $('#ds_caput_norma_' + nm_sufixo).val('');
     $('#label_caput_norma_' + nm_sufixo).text('');
 
 }
@@ -388,9 +390,10 @@ function removerCaput(nm_sufixo) {
         $('#label_caput_norma_' + nm_sufixo).text('');
         $('#a_selecionar_caput_norma_' + nm_sufixo).attr('onclick', 'javascript:abrirSelecionarCaput(\'' + nm_sufixo + '\');').attr('title', 'Selecionar o caput da norma ' + nm_sufixo).html('<img src="' + _urlPadrao + '/Imagens/ico_edit_dir.png" alt="adicionar" width="16px" height="16px" />');
         if (nm_sufixo == "alterada") {
-            $('#descricao_caput_norma_' + nm_sufixo).val('');
+            $('#ds_caput_norma_' + nm_sufixo).val('');
             $('#texto_antigo').text('');
             $('div.line_texto_caput').hide();
+            $('div.line_ds_caput_norma_alterada').hide();
         }
         else {
             $('#a_texto_link').text('');
@@ -410,8 +413,7 @@ function removerCaputParagrafo(el) {
     var nm_tipo_relacao = $('#nm_tipo_relacao').val();
     //ToDo: se for acrescimo a descrição dos dispositivos é definida de outra forma
     if (nm_tipo_relacao.toLowerCase() != 'acrescimo') {
-        jCaput.ds_caput = getDescricaoDoCaput(jCaput.caput);
-        $('#descricao_caput_norma_alterada').val(jCaput.ds_caput.replaceAll(';', '\n'));
+        $('#ds_caput_norma_alterada').val(getDescricaoDoCaput(jCaput.caput).replaceAll(';', '\n'));
     }
     $('#caput_norma_vide_alterada').val(JSON.stringify(jCaput));
 
@@ -464,8 +466,7 @@ function selecionarCaput(nm_sufixo) {
             linkname: $($inputCaput[0]).val(),
             texto_antigo: texto,
             link: link,
-            filename: $el.attr('filename'),
-            ds_caput: (nm_tipo_relacao.toLowerCase() != 'acrescimo' ? getDescricaoDoCaput(caput) : '')
+            filename: $el.attr('filename')
         }
         $('#caput_norma_vide_' + nm_sufixo).val(JSON.stringify(jCaput));
         $('#label_caput_norma_' + nm_sufixo).text(jCaput.ds_norma + '#' + jCaput.linkname + ' ');
@@ -476,6 +477,7 @@ function selecionarCaput(nm_sufixo) {
             $('div.line_texto_caput').show();
             $('div.line_texto_caput').html($('<div class="column w-100-pc"></div>'));
             if (IsNotNullOrEmpty(jCaput.texto_antigo)) {
+                $('div.line_ds_caput_norma_alterada').show();
                 var labeltextoantigo = 'Texto Antigo';
                 var labeltextonovo = 'Texto Novo';
                 if (nm_tipo_relacao.toLowerCase() == 'acrescimo') {
@@ -486,7 +488,7 @@ function selecionarCaput(nm_sufixo) {
                         labeltextoantigo = 'Renumerar o Texto';
                         labeltextonovo = 'Texto Renumerado';
                     }
-                    $('#descricao_caput_norma_' + nm_sufixo).val(jCaput.ds_caput.replaceAll(';', '\n'));
+                    $('#ds_caput_norma_' + nm_sufixo).val(getDescricaoDoCaput(jCaput.caput).replaceAll(';', '\n'));
                 }
                 for (var i = 0; i < jCaput.texto_antigo.length; i++) {
                     $('div.line_texto_caput>div.column').append(
@@ -581,35 +583,31 @@ function getDescricaoDoElemento(caput)
     var caput1 = caput.substring(0, 3).toLowerCase();
     var caput2 = "";
     var caput3 = "";
-    if(caput.length > 3)
+    if(caput.length > 3){
         caput2 = caput.substring(3);
-    if (caput1 == "ane")
-    {
-        caput3 = "Anexo";
+        if(isInt(caput2)){
+            if(parseInt(caput2) < 10){
+                caput2 += 'º';
+            }
+        }
     }
-    else if (caput1 == "art")
-    {
-        caput3 = "Artigo";
+    if (caput1 == "ane" && IsNotNullOrEmpty(caput2)) {
+        caput3 = "Anexo " + caput2.toUpperCase();
     }
-    else if (caput1 == "par")
-    {
-        caput3 = "Parágrafo";
+    else if (caput1 == "art" && IsNotNullOrEmpty(caput2)){
+        caput3 = "Art. " + caput2;
     }
-    else if (caput1 == "inc")
-    {
-        caput3 = "Inciso";
+    else if (caput1 == "par") {
+        caput3 = (IsNotNullOrEmpty(caput2) ? "§ " + caput2 : "Parágrafo Único");
     }
-    else if (caput1 == "let")
-    {
-        caput3 = "Letra";
+    else if (caput1 == "inc" && IsNotNullOrEmpty(caput2)){
+        caput3 = "inc. " + caput2;
     }
-    else if (caput1 == "aln")
-    {
-        caput3 = "Alínea";
+    else if (caput1 == "let" && IsNotNullOrEmpty(caput2)){
+        caput3 = caput2 + ")";
     }
-    if (IsNotNullOrEmpty(caput3))
-    {
-        caput3 += (IsNotNullOrEmpty(caput2) ? " " : "") + caput2;
+    else if (caput1 == "aln" && IsNotNullOrEmpty(caput2)) {
+        caput3 = "alí. " + caput2;
     }
     return caput3;
 }

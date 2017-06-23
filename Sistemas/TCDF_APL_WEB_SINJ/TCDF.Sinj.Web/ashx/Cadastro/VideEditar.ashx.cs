@@ -50,6 +50,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             //var _anexo_norma_vide = context.Request["anexo_norma_vide"];
 
             var _caput_norma_vide_alterada = context.Request["caput_norma_vide_alterada"];
+            var _ds_caput_norma_alterada = context.Request["ds_caput_norma_alterada"];
 
             var _artigo_norma_vide_alterada = context.Request["artigo_norma_vide_alterada"];
             var _paragrafo_norma_vide_alterada = context.Request["paragrafo_norma_vide_alterada"];
@@ -154,11 +155,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                     ///o campo ds_texto_para_alterador_aux foi inserido no sistema após ele já estar em produção,
                                     ///para evitar problemas na edição destes vides,
                                     ///faço o preenchimento do campo caso o mesmo esteja vazio
-                                    if (!string.IsNullOrEmpty(videAlterador.caput_norma_vide.nm_relacao_aux) && string.IsNullOrEmpty(videAlterador.caput_norma_vide.ds_texto_para_alterador_aux))
+                                    if (videAlterador.caput_norma_vide != null && !string.IsNullOrEmpty(videAlterador.caput_norma_vide.nm_relacao_aux) && string.IsNullOrEmpty(videAlterador.caput_norma_vide.ds_texto_para_alterador_aux))
                                     {
                                         videAlterador.caput_norma_vide.ds_texto_para_alterador_aux = relacao.ds_texto_para_alterador;
                                     }
-                                    if (!string.IsNullOrEmpty(videAlterador.caput_norma_vide_outra.nm_relacao_aux) && string.IsNullOrEmpty(videAlterador.caput_norma_vide_outra.ds_texto_para_alterador_aux))
+                                    if (videAlterador.caput_norma_vide_outra != null && !string.IsNullOrEmpty(videAlterador.caput_norma_vide_outra.nm_relacao_aux) && string.IsNullOrEmpty(videAlterador.caput_norma_vide_outra.ds_texto_para_alterador_aux))
                                     {
                                         videAlterador.caput_norma_vide_outra.ds_texto_para_alterador_aux = relacao.ds_texto_para_alterador;
                                     }
@@ -212,6 +213,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                     if (!string.IsNullOrEmpty(_caput_norma_vide_alterada))
                                     {
                                         videAlterador.caput_norma_vide_outra = JSON.Deserializa<Caput>(_caput_norma_vide_alterada);
+                                        videAlterador.caput_norma_vide_outra.ds_caput = _ds_caput_norma_alterada;
                                         videAlterador.caput_norma_vide_outra.texto_novo = _caput_texto_novo;
                                         videAlterador.caput_norma_vide_outra.nm_relacao_aux = nm_tipo_relacao_pos_verificacao.ToLower();
                                         videAlterador.caput_norma_vide_outra.ds_texto_para_alterador_aux = ds_texto_para_alterador_pos_verificacao.ToLower();
@@ -295,10 +297,14 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                                     videAlterado.caput_norma_vide_outra = videAlterador.caput_norma_vide;
 
                                                     videAlterado.ds_comentario_vide = _ds_comentario_vide;
-                                                    var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
-                                                    normaAlteradaOv.ch_situacao = situacao.ch_situacao;
+
                                                     var nm_situacao_anterior = normaAlteradaOv.nm_situacao;
-                                                    normaAlteradaOv.nm_situacao = situacao.nm_situacao;
+                                                    if (!normaAlteradaOv.st_situacao_forcada)
+                                                    {
+                                                        var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
+                                                        normaAlteradaOv.ch_situacao = situacao.ch_situacao;
+                                                        normaAlteradaOv.nm_situacao = situacao.nm_situacao;
+                                                    }
                                                     normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = normaAlteradoraOv.dt_cadastro, nm_login_usuario_alteracao = normaAlteradoraOv.nm_login_usuario_cadastro });
                                                     if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                                     {

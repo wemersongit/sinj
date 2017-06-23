@@ -59,6 +59,10 @@ namespace TCDF.Sinj.OV
         public bool st_acao { get; set; }
         public string ch_tipo_norma { get; set; }
         public string nm_tipo_norma { get; set; }
+        /// <summary>
+        /// O administrador do sistema pode escolher a situação da norma e a mesma não é alterada pelos demais usuários e, principalmente, pelos vides
+        /// </summary>
+        public bool st_situacao_forcada { get; set; }
         public string ch_situacao { get; set; }
         public string nm_situacao { get; set; }
         public List<Requerente> requerentes { get; set; }

@@ -12,14 +12,22 @@ namespace TCDF.Sinj.Web
 {
     public partial class CadastrarNorma : System.Web.UI.Page
     {
+        protected bool isAdmin;
+        protected SessaoUsuarioOV sessao_usuario;
+        protected string situacoes;
         protected void Page_Load(object sender, EventArgs e)
         {
             var action = AcoesDoUsuario.nor_inc;
-            SessaoUsuarioOV sessao_usuario = null;
+            sessao_usuario = null;
             try
             {
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
+                isAdmin = Util.IsSuperAdmin(sessao_usuario);
+                if (isAdmin)
+                {
+                    situacoes = Util.GetSituacoes();
+                }
             }
             catch (SessionExpiredException)
             {

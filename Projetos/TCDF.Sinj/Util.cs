@@ -90,6 +90,58 @@ namespace TCDF.Sinj
             }
         }
 
+        public static List<SituacaoOV> GetListaSituacoes()
+        {
+            List<SituacaoOV> list = new List<SituacaoOV>();
+            try
+            {
+                var sVariavel = GetSituacoes();
+                if (sVariavel != null)
+                {
+                    list = JSON.Deserializa<List<SituacaoOV>>(sVariavel.ToString());
+                }
+            }
+            catch
+            {
+                
+            }
+            return list;
+        }
+
+        public static string GetSituacoes()
+        {
+            try
+            {
+                var sVariavel = new object();
+                try
+                {
+                    sVariavel = HttpContext.Current.Application["situacoes"];
+                }
+                catch
+                {
+                    sVariavel = null;
+                }
+                if (sVariavel == null)
+                {
+                    sVariavel = JSON.Serialize<List<SituacaoOV>>(new SituacaoRN().BuscarTodos());
+
+                    try
+                    {
+                        HttpContext.Current.Application["situacoes"] = sVariavel;
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                return sVariavel.ToString();
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
         public static string MostrarVersao()
         {
             return util.BRLight.Util.GetVariavel("versao");

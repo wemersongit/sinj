@@ -413,6 +413,20 @@
         },
         {
             "field":{
+                "name":"st_situacao_forcada",
+                "datatype":"Boolean",
+                "required":false,
+                "alias":"Situação Forçada",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Indica se a situação foi selecionada pelo usuário administrador."
+            }
+        },
+        {
+            "field":{
                 "name":"ch_situacao",
                 "datatype":"Text",
                 "required":true,

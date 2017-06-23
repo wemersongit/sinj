@@ -2,12 +2,14 @@ using neo.BRLightREST;
 using TCDF.Sinj.OV;
 using util.BRLight;
 using System;
+using System.Collections.Generic;
 
 namespace TCDF.Sinj.AD
 {
     public class SituacaoAD
     {
         private AcessoAD<SituacaoOV> _acessoAd;
+        private static List<SituacaoOV> oSituacoes;
 
         public SituacaoAD()
         {
@@ -18,6 +20,17 @@ namespace TCDF.Sinj.AD
         internal Results<SituacaoOV> Consultar(Pesquisa query)
         {
             return _acessoAd.Consultar(query);
+        }
+
+        public List<SituacaoOV> BuscarTodos()
+        {
+            if (oSituacoes == null || oSituacoes.Count <= 0)
+            {
+                Pesquisa query = new Pesquisa();
+                query.limit = null;
+                oSituacoes = Consultar(query).results;
+            }
+            return oSituacoes;
         }
 
         internal SituacaoOV Doc(ulong id_doc)

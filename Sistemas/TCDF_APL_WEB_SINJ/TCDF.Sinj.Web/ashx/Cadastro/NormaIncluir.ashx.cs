@@ -94,7 +94,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var _json_arquivo_texto_acao = context.Request["json_arquivo_texto_acao"];
                 var _ds_efeito_decisao = context.Request["ds_efeito_decisao"];
                 var _url_referencia = context.Request["url_referencia"];
-                
+
+                var _ch_situacao = context.Request["ch_situacao"];
+                var _nm_situacao = context.Request["nm_situacao"];
+
                 normaOv = new NormaOV();
                 normaOv.ch_tipo_norma = _ch_tipo_norma;
                 normaOv.nm_tipo_norma = _nm_tipo_norma;
@@ -240,6 +243,13 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                 normaOv.nm_login_usuario_cadastro = sessao_usuario.nm_login_usuario;
                 normaOv.dt_cadastro = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
+
+                normaOv.st_situacao_forcada = !string.IsNullOrEmpty(_ch_situacao);
+                if (normaOv.st_situacao_forcada)
+                {
+                    normaOv.ch_situacao = _ch_situacao;
+                    normaOv.nm_situacao = _nm_situacao;
+                }
 
                 var id_doc = new NormaRN().Incluir(normaOv);
                 if (id_doc > 0)
