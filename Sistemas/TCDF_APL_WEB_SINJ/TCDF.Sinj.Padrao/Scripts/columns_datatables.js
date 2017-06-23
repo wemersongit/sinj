@@ -31,7 +31,7 @@ var _columns_norma = [
 			}
             else if (full.fontes.length > 0) {
                 for (var i = 0; i < full.fontes.length; i++) {
-                    if (IsNotNullOrEmpty(full.fontes[i].ar_fonte.id_file)) {
+                    if (IsNotNullOrEmpty(full.fontes[i].ar_fonte, 'id_file')) {
                         id_file = full.fontes[i].ar_fonte.id_file;
                         tipo = full.fontes[i].ar_fonte.mimetype.split('/')[1];
                     }

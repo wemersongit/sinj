@@ -33,7 +33,7 @@
             var pAfter = null;
             for (; i < length; i++) {
                 if ($('a', aP[i]).length == 1 && $('a', aP[i]).text().toLowerCase().indexOf('legislação correlata') == 0) {
-                    $('a', aP[i]).attr('show', '1');
+                    aText.push($('a', aP[i]).attr('show', '1').attr('leco', 'leco').text());
                     if (i >= 3) {
                         $('a', aP[i]).attr('show', '0');
                         pAfter = aP[i];
@@ -43,6 +43,12 @@
                     break;
                 }
             }
+            aText.sort(function (text1, text2) {
+                return text1 > text2 ? 1 : text1 < text2 ? -1 : 0;
+            });
+            $('#div_texto a[leco="leco"]').each(function (i, o) {
+                o.innerText = aText[i];
+            });
             if (pAfter != null && $('a[show="0"]').length > 3) {
                 $('a[show="0"]').hide();
                 $('<p id="p_show"><a href="javascript:void(0);" onclick="exibirLinks()">Exibir mais...</a></p>').insertAfter($(pAfter));

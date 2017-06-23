@@ -27,6 +27,8 @@ namespace TCDF.Sinj.Web
                     sessao_usuario = Util.ValidarSessao();
                 }
 
+                var link_app = Config.ValorChave("URLSinjPortal", true);
+
                 StringBuilder sb = new StringBuilder();
 
                 //Format
@@ -57,6 +59,7 @@ namespace TCDF.Sinj.Web
                         sb.AppendFormat("\t<td class=\"tabHead\">Situação</td>\r\n");
                         sb.AppendFormat("\t<td class=\"tabHead\">Origem</td>\r\n");
                         sb.AppendFormat("\t<td class=\"tabHead\">Ementa</td>\r\n");
+                        sb.AppendFormat("\t<td class=\"tabHead\">Link</td>\r\n");
                         sb.AppendFormat("</tr>\r\n");
                         sb.AppendFormat("</thead>\r\n");
                         sb.AppendFormat("<tbody>\r\n");
@@ -80,6 +83,7 @@ namespace TCDF.Sinj.Web
                                 }
                                 sb.AppendFormat("\t<td class=\"tabRow\">" + sg_orgao + "</td>\r\n");
                                 sb.AppendFormat("\t<td class=\"tabRow\">" + norma.ds_ementa + "</td>\r\n");
+                                sb.AppendFormat("\t<td class=\"tabRow\">" + link_app + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + "</td>\r\n");
                                 sb.AppendFormat("</tr>\r\n");
                             }
 
@@ -102,6 +106,7 @@ namespace TCDF.Sinj.Web
                                 }
                                 sb.AppendFormat("\t<td class=\"tabRow\">" + sg_orgao + "</td>\r\n");
                                 sb.AppendFormat("\t<td class=\"tabRow\">" + hit.fields.partial[0].ds_ementa + "</td>\r\n");
+                                sb.AppendFormat("\t<td class=\"tabRow\">" + link_app + "/DetalhesDeNorma.aspx?id_norma=" + hit.fields.partial[0].ch_norma + "</td>\r\n");
                                 sb.AppendFormat("</tr>\r\n");
                             }
                         }
@@ -210,6 +215,7 @@ namespace TCDF.Sinj.Web
                             sb.AppendFormat("\t<td class=\"tabHead\">Situação</td>\r\n");
                             sb.AppendFormat("\t<td class=\"tabHead\">Origem</td>\r\n");
                             sb.AppendFormat("\t<td class=\"tabHead\">Ementa</td>\r\n");
+                            sb.AppendFormat("\t<td class=\"tabHead\">Link</td>\r\n");
                             sb.AppendFormat("</tr>\r\n");
                             sb.AppendFormat("</thead>\r\n");
                             sb.AppendFormat("<tbody>\r\n");
@@ -228,6 +234,7 @@ namespace TCDF.Sinj.Web
                                 }
                                 sb.AppendFormat("\t<td class=\"tabRow\">" + sg_orgao + "</td>\r\n");
                                 sb.AppendFormat("\t<td class=\"tabRow\">" + hit.fields.partial[0].ds_ementa + "</td>\r\n");
+                                sb.AppendFormat("\t<td class=\"tabRow\">" + link_app + "/DetalhesDeNorma.aspx?id_norma=" + hit.fields.partial[0].ch_norma + "</td>\r\n");
                                 sb.AppendFormat("</tr>\r\n");
                             }
                             filename = "RelatorioNormas.xls";
