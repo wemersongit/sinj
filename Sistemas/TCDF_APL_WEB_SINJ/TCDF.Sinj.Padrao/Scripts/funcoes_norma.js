@@ -1479,6 +1479,11 @@ function PreencherNormaEdicao() {
                     for (var i = 0; i < data.autorias.length; i++) {
                         fnAppendAutoria(data.autorias[i])
                     }
+                    if (data.st_situacao_forcada) {
+                        $('#st_situacao_forcada').prop('checked', true);
+                        changeStSiuacaoForcada(document.getElementById('st_situacao_forcada'));
+                        $('#ch_situacao').attr('obrigatorio', 'sim');
+                    }
                     $('#ch_situacao').val(data.ch_situacao);
                     $('#nm_situacao').val(data.nm_situacao);
                 }
@@ -1957,5 +1962,16 @@ function exibirBotaoCesta(id_doc) {
         $('#a_cesta').attr('title', 'Adicionar na Cesta');
         $('#a_cesta').attr('onclick', 'javascript:adicionarNormaNaCesta(\'' + id_doc + '\')');
         $('#a_cesta').html('<img width="25" alt="cesta" src="' + _urlPadrao + '/Imagens/ico_basket_p.png"/>');
+    }
+}
+
+function changeStSiuacaoForcada(el) {
+    if ($(el).prop('checked')) {
+        $('.line_situacao').show();
+        $('#ch_situacao').attr('obrigatorio', 'sim');
+    }
+    else {
+        $('.line_situacao').hide();
+        $('#ch_situacao').attr('obrigatorio', 'nao');
     }
 }

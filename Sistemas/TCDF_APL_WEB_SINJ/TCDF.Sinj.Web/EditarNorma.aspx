@@ -695,18 +695,32 @@
                             <% if (TCDF.Sinj.Util.IsSuperAdmin(sessao_usuario))
                                { %>
                                 <div class="line">
+                                    <div class="column w-22-pc">
+                                        <div class="cell fr">
+                                            <label>Forçar Situação: <input id="st_situacao_forcada" name="st_situacao_forcada" type="checkbox" value="1" onchange="changeStSiuacaoForcada(this);" /></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column w-20-pc">
+                                        &nbsp;
+                                    </div>
+                                    <div class="column w-80-pc">
+                                        <div class="cell w-100-pc">
+                                            <span class="attention">Atenção: Ao selecionar uma situação para a norma, a mesma não será alterada por vides e/ou decisões (ação).</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line line_situacao" style="display:none;">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">
-                                            <label>Situação da Norma:</label>
+                                            <label>Situação da Norma*:</label>
                                         </div>
                                     </div>
                                     <div class="column w-70-pc">
                                         <div id="div_autocomplete_situacao" class="cell w-60-pc">
-                                            <input id="ch_situacao" name="ch_situacao" type="hidden" value="" />
+                                            <input id="ch_situacao" name="ch_situacao" type="hidden" value="" label="Situação da Norma" obrigatorio="nao" />
                                             <input id="nm_situacao" name="nm_situacao" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_situacao"></a>
-                                        </div>
-                                        <div class="cell w-100-pc">
-                                            <span class="attention">Atenção: Ao selecionar uma situação para a norma, a mesma não será alterada por vides ou decisões (ação).</span>
                                         </div>
                                     </div>
                                 </div>

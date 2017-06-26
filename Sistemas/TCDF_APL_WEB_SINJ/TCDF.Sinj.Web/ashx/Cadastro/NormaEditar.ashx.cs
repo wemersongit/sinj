@@ -68,6 +68,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _ds_efeito_decisao = context.Request["ds_efeito_decisao"];
                     var _url_referencia = context.Request["url_referencia"];
 
+                    var _st_situacao_forcada = context.Request["st_situacao_forcada"];
                     var _ch_situacao = context.Request["ch_situacao"];
                     var _nm_situacao = context.Request["nm_situacao"];
 
@@ -270,11 +271,21 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     normaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"), nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
 
-                    normaOv.st_situacao_forcada = !string.IsNullOrEmpty(_ch_situacao);
-                    if (normaOv.st_situacao_forcada)
+                    if (_st_situacao_forcada == "1")
                     {
+                        normaOv.st_situacao_forcada = true;
                         normaOv.ch_situacao = _ch_situacao;
                         normaOv.nm_situacao = _nm_situacao;
+                    }
+                    else
+                    {
+                        if (normaOv.st_situacao_forcada)
+                        {
+                            var situacao = normaRn.ObterSituacao(normaOv.vides);
+                            normaOv.ch_situacao = situacao.ch_situacao;
+                            normaOv.nm_situacao = situacao.nm_situacao;
+                        }
+                        normaOv.st_situacao_forcada = false;
                     }
 
                     if (normaRn.Atualizar(id_doc, normaOv))
