@@ -35,6 +35,7 @@ namespace TCDF.Sinj.Web
                 }
                 if (!string.IsNullOrEmpty(_id_norma))
                 {
+                    Util.rejeitarInject(_id_norma);
                     normaOv = new NormaRN().Doc(_id_norma);
 
                     if (!string.IsNullOrEmpty(normaOv.ar_atualizado.id_file))
@@ -133,6 +134,7 @@ namespace TCDF.Sinj.Web
                 }
                 else if (!string.IsNullOrEmpty(_id_file))
                 {
+                    Util.rejeitarInject(id_file);
                     var json_doc = new NormaRN().GetDoc(_id_file);
                     if (json_doc.IndexOf("\"status\": 500") > -1)
                     {
@@ -215,10 +217,15 @@ namespace TCDF.Sinj.Web
                 }
 
             }
+            catch (ParamDangerousException)
+            {
+                Response.Clear();
+                Response.Write("<html><head></head><body><div id=\"div_erro\" style=\"color:#990000; width:500px; margin:auto; text-align:center;\">Erro ao obter arquivo.<br/><br/>Nossa equipe resolverá o problema, você pode tentar mais tarde ou entrar em contato conosco.</div></body></html>");
+            }
             catch (Exception Ex)
             {
                 Response.Clear();
-                Response.Write("<html><head></head><body><div id=\"div_erro\" style=\"color:#990000; width:500px; margin:auto; text-align:center;\">" + util.BRLight.Excecao.LerInnerException(Ex, true) + "<br/><br/>Nossa equipe resolverá o problema, você pode tentar mais tarde ou entrar em contato conosco.</div></body><html>");
+                Response.Write("<html><head></head><body><div id=\"div_erro\" style=\"color:#990000; width:500px; margin:auto; text-align:center;\">" + util.BRLight.Excecao.LerInnerException(Ex, true) + "<br/><br/>Nossa equipe resolverá o problema, você pode tentar mais tarde ou entrar em contato conosco.</div></body></html>");
             }
         }
     }

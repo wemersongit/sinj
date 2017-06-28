@@ -2,9 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head id="Head1" runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="googlebot" content="noindex,nofollow" />
+    <meta http-equiv="Content-Language" content="pt-br" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Arquivo da Norma</title>
     <asp:PlaceHolder runat="server" id="placeHolderHeader"></asp:PlaceHolder>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery-1.11.0.min.js"></script>
@@ -31,6 +33,7 @@
             var i = 0;
             var length = aP.length;
             var pAfter = null;
+            var aText = [];
             for (; i < length; i++) {
                 if ($('a', aP[i]).length == 1 && $('a', aP[i]).text().toLowerCase().indexOf('legislação correlata') == 0) {
                     aText.push($('a', aP[i]).attr('show', '1').attr('leco', 'leco').text());

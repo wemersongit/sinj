@@ -26,6 +26,7 @@ namespace TCDF.Sinj.Web
             {
                 if (!string.IsNullOrEmpty(_id_file))
                 {
+                    Util.rejeitarInject(_id_file);
                     var normaRn = new NormaRN();
                     var json_doc = normaRn.GetDoc(_id_file);
 
@@ -97,6 +98,11 @@ namespace TCDF.Sinj.Web
                         placeHolderHeader.Controls.Add(html_meta_description);
                     }
                 }
+            }
+            catch (ParamDangerousException)
+            {
+                div_texto.InnerHtml = "Erro ao obter arquivo.<br/><br/>Nossa equipe resolverá o problema, você pode tentar mais tarde ou entrar em contato conosco.";
+                a_print.Visible = false;
             }
             catch (Exception Ex)
             {
