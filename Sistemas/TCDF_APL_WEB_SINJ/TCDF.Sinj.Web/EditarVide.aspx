@@ -185,26 +185,39 @@
                                                 if (IsNotNullOrEmpty(data.vides[i].caput_norma_vide_outra.ds_caput)) {
                                                     $('#ds_caput_norma_alterada').val(data.vides[i].caput_norma_vide_outra.ds_caput);
                                                 }
+                                                var labeltextoantigo = 'Texto Antigo';
+                                                var labeltextonovo = 'Texto Novo';
+                                                if (data.vides[i].caput_norma_vide_outra.nm_relacao_aux == 'acrescimo') {
+                                                    labeltextoantigo = 'Após o Texto';
+                                                    labeltextonovo = 'Inserir o Texto';
+                                                } else if (data.vides[i].caput_norma_vide_outra.nm_relacao_aux == 'renumeração') {
+                                                    labeltextoantigo = 'Renumerar o Texto';
+                                                    labeltextonovo = 'Texto Renumerado';
+                                                }
                                                 $('div.line_texto_caput').html($('<div class="column w-100-pc"></div>'));
                                                 for (var j = 0; j < data.vides[i].caput_norma_vide_outra.texto_antigo.length; j++) {
                                                     $('div.line_texto_caput>div.column').append(
-                                                        '<div class="line">' +
-                                                            '<div class="column w-30-pc">' +
-                                                                '<div class="cell w-100-pc">Texto Antigo:</div>' +
-                                                            '</div>' +
-                                                            '<div class="column w-70-pc">' +
-                                                                '<div class="cell w-100-pc">' +
-                                                                    '<div id="texto_antigo" class="w-95-pc">' + data.vides[i].caput_norma_vide_outra.texto_antigo[j] + '</div>' +
+                                                        '<div class="table w-100-pc caputedit">' +
+                                                            '<div class="line">' +
+                                                                '<div class="column w-30-pc">' +
+                                                                    '<div class="cell w-100-pc">Texto Antigo:</div>' +
+                                                                '</div>' +
+                                                                '<div class="column w-70-pc">' +
+                                                                    '<div class="cell w-100-pc">' +
+                                                                        '<div id="texto_antigo" class="w-95-pc">' + data.vides[i].caput_norma_vide_outra.texto_antigo[j] + '</div>' +
+                                                                        '<button type="button" class="del clean" onclick="javascript:removerCaputParagrafo(this);" posicao="' + j + '"><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" width="12px" /></button>' +
+                                                                    '</div>' +
                                                                 '</div>' +
                                                             '</div>' +
-                                                        '</div>' +
-                                                        '<div class="line">' +
-                                                            '<div class="column w-30-pc">' +
-                                                                '<div class="cell w-100-pc">Texto Novo:</div>' +
-                                                            '</div>' +
-                                                            '<div class="column w-70-pc">' +
-                                                                '<div class="cell w-100-pc">' +
-                                                                    '<textarea name="texto_novo" class="w-95-pc" rows="5">' + data.vides[i].caput_norma_vide_outra.texto_novo[j] + '</textarea>' +
+                                                            '<div class="line">' +
+                                                                '<div class="column w-30-pc">' +
+                                                                    '<div class="cell w-100-pc">Texto Novo:</div>' +
+                                                                '</div>' +
+                                                                '<div class="column w-70-pc">' +
+                                                                    '<div class="cell w-100-pc">' +
+                                                                        '<button id="button_texto_antigo_' + j + '" type="button" class="clean" onclick="javascript:abrirSelecionarCaputCopiar(this);" title="Abre o texto da norma alteradora para copia e colar o texto novo no campo abaixo."><img src="' + _urlPadrao + '/Imagens/ico_copy.png" width="15px" /></button>' +
+                                                                        '<textarea name="texto_novo" class="w-95-pc" rows="5">' + data.vides[i].caput_norma_vide_outra.texto_novo[j] + '</textarea>' +
+                                                                    '</div>' +
                                                                 '</div>' +
                                                             '</div>' +
                                                         '</div>'

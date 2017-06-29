@@ -482,7 +482,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         pattern_caput = caputAlterada.caput[0];
                         break;
                 }
-                var pattern = "(<p.+?linkname=\"" + caputAlteradora.caput[0] + "\".*?>)(.*?)<a href=\"\\(_link_sistema_\\)Norma/" + caputAlterada.ch_norma + '/' + caputAlterada.filename + "#" + pattern_caput + "\" >" + UtilVides.EscapeCharsInToPattern(caputAlteradora.link) + "</a>(.*?)</p>";
+                var pattern = "(<p.+?linkname=\"" + caputAlteradora.caput[0] + "\".*?>)(.*?)<a href=\"\\(_link_sistema_\\)Norma/" + caputAlterada.ch_norma + '/' + caputAlterada.filename + "#" + pattern_caput + "\">" + UtilVides.EscapeCharsInToPattern(caputAlteradora.link) + "</a>(.*?)</p>";
                 var matches = Regex.Matches(arquivo_norma_vide_alteradora, pattern);
                 if (matches.Count == 1)
                 {
@@ -506,7 +506,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             {
                 var htmlFile = new HtmlFileEncoded();
                 arquivo_norma_vide_alteradora = htmlFile.GetHtmlFile(normaAlteradora.ar_atualizado.id_file, "sinj_norma", null);
-                var pattern = "(<p.+?linkname=\"" + caputAlteradoraDesfazer.caput[0] + "\".*?>)(.*?)<a href=\"\\(_link_sistema_\\)Norma/" + chNormaAlterada + "/.+?\" >" + UtilVides.EscapeCharsInToPattern(caputAlteradoraDesfazer.link) + "</a>(.*?)</p>";
+                var pattern = "(<p.+?linkname=\"" + caputAlteradoraDesfazer.caput[0] + "\".*?>)(.*?)<a href=\"\\(_link_sistema_\\)Norma/" + chNormaAlterada + "/.+?\">" + UtilVides.EscapeCharsInToPattern(caputAlteradoraDesfazer.link) + "</a>(.*?)</p>";
                 var matches = Regex.Matches(arquivo_norma_vide_alteradora, pattern);
                 if (matches.Count == 1)
                 {
@@ -551,7 +551,12 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         case "regulamentação":
                         case "ressalva":
                         case "recepção":
+                        case "legislação correlata":
                             ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada_desfazer.caput[i]) + _caput_alterada_desfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
+                            if (_caput_alterada_desfazer.nm_relacao_aux == "legislação correlata")
+                            {
+                                ds_link_alterador = "\\(Legislação correlata - " + _caput_alteradora_desfazer.ds_norma + "\\)";
+                            }
                             pattern = "(<p.+?linkname=\"" + _caput_alterada_desfazer.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada_desfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"\\(_link_sistema_\\)Norma/" + _caput_alteradora_desfazer.ch_norma + '/' + _caput_alteradora_desfazer.filename + "#" + _caput_alteradora_desfazer.caput[0] + "\">" + ds_link_alterador + "</a>(.*?)</p>";
                             replacement = "$1$2</p>";
                             break;
@@ -621,7 +626,12 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         case "regulamentação":
                         case "ressalva":
                         case "recepção":
+                        case "legislação correlata":
                             ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(caputAlteradoDesfazer.caput[i]) + caputAlteradoDesfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + dsNormaAlteradora + "\\)";
+                            if (caputAlteradoDesfazer.nm_relacao_aux == "legislação correlata")
+                            {
+                                ds_link_alterador = "\\(Legislação correlata - " + dsNormaAlteradora + "\\)";
+                            }
                             pattern = "(<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
                             replacement = "$1$2</p>";
                             break;
@@ -660,13 +670,13 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             var pattern1 = "(?!<p.+replaced_by=.+>)(<p.+?>)<s>(.+?)</s></p>";
             Regex rx1 = new Regex(pattern1);
 
-            var pattern2 = "(<h1.+?epigrafe=.+?>.+?</h1>)\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
+            var pattern2 = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
             Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
 
             if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
             {
                 var replacement1 = "$1$2</p>";
-                var replacement2 = "$1";
+                var replacement2 = "";
                 texto = rx1.Replace(texto, replacement1);
                 texto = rx2.Replace(texto, replacement2);
             }
@@ -680,15 +690,14 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
         public string RemoverInformacaoNoTextoDaNormaAlterada(string chNormaAlteradora, string idFileNormaAlterada, string dsTextoParaAlterador)
         {
             var texto = new HtmlFileEncoded().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
-            var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
+            var pattern = "\r\n<p><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
             if (dsTextoParaAlterador.ToLower() == "legislação correlata")
             {
-                pattern = "<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(Legislação correlata.+?\\)</a></p>\r\n(<h1.+?epigrafe=.+?>.+?</h1>)";
+                pattern = "<p><a.+?/" + chNormaAlteradora + "/.+?>Legislação correlata.+?</a></p>\r\n";
             }
             if (Regex.Matches(texto, pattern).Count == 1)
             {
-                var replacement = "$1";
-                texto = Regex.Replace(texto, pattern, replacement);
+                texto = Regex.Replace(texto, pattern, "");
             }
             else
             {
@@ -703,32 +712,46 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             var texto = "";
             if (dsTextoRelacao == "legislação correlata")
             {
-                htmlFile.GetHtmlFile(idFileNormaAlteradora, "sinj_norma", null);
-                texto = RemoverInformacaoNoTextoDaNormaAlteradora(texto, normaAlterada, dsTextoRelacao);
+                texto = htmlFile.GetHtmlFile(idFileNormaAlteradora, "sinj_norma", null);
+                //texto = RemoverInformacaoNoTextoDaNormaAlteradora(texto, normaAlterada, dsTextoRelacao);
+                var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
+                var dsNormaAlterada = normaAlterada.getDescricaoDaNorma();
+
+                var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
+
+                var pattern = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n";
+                if (Regex.Matches(texto, pattern).Count == 1)
+                {
+                    texto = Regex.Replace(texto, pattern, "");
+                }
+                else
+                {
+                    texto = "";
+                }
             }
             return texto;
         }
 
-        public string RemoverInformacaoNoTextoDaNormaAlteradora(string texto, NormaOV normaAlterada, string dsTextoRelacao)
-        {
-            var htmlFile = new HtmlFileEncoded();
+        //public string RemoverInformacaoNoTextoDaNormaAlteradora(string texto, NormaOV normaAlterada, string dsTextoRelacao)
+        //{
+        //    var htmlFile = new HtmlFileEncoded();
             
-            var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
-            var dsNormaAlterada = normaAlterada.getDescricaoDaNorma();
+        //    var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
+        //    var dsNormaAlterada = normaAlterada.getDescricaoDaNorma();
             
-            var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
+        //    var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
 
-            var pattern = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n";
-            if (Regex.Matches(texto, pattern).Count == 1)
-            {
-                texto = Regex.Replace(texto, pattern, "");
-            }
-            else
-            {
-                texto = "";
-            }
-            return texto;
-        }
+        //    var pattern = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n";
+        //    if (Regex.Matches(texto, pattern).Count == 1)
+        //    {
+        //        texto = Regex.Replace(texto, pattern, "");
+        //    }
+        //    else
+        //    {
+        //        texto = "";
+        //    }
+        //    return texto;
+        //}
 
         public bool IsReusable
         {

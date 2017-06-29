@@ -435,10 +435,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 {
                     videAlterador.caput_norma_vide.id_file = dictionaryFiles["id_file_alterador"];
                 }
-                else
-                {
-                    normaAlteradora.ar_atualizado.id_file = dictionaryFiles["id_file_alterador"];
-                }
+                normaAlteradora.ar_atualizado.id_file = dictionaryFiles["id_file_alterador"];
             }
 
             if (dictionaryFiles.ContainsKey("id_file_alterado"))
@@ -447,10 +444,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 {
                     videAlterado.caput_norma_vide.id_file = dictionaryFiles["id_file_alterado"];
                 }
-                else
-                {
-                    normaAlterada.ar_atualizado.id_file = dictionaryFiles["id_file_alterado"];
-                }
+                normaAlterada.ar_atualizado.id_file = dictionaryFiles["id_file_alterado"];
             }
             
             new VideIncluir().VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradora, normaAlterada, videAlterador, videAlterado);

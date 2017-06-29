@@ -3622,23 +3622,57 @@ function montarDescricaoDiario(oJson_diario) {
 /*Funções para marcação de caput de arquivos de norma
 ================================================*/
 function ehInciso(termo) {
-    var chars = ["I", "V", "X", "L", "C", "D", "M"];
-    for (var i = 0; i < termo.length; i++) {
-        if (chars.indexOf(termo[i]) < 0) {
-            return false;
-        }
+//    termo = termo.toUpperCase();
+//    var chars = ["I", "V", "X", "L", "C", "D", "M"];
+//    for (var i = 0; i < termo.length; i++) {
+//        if (chars.indexOf(termo[i]) < 0) {
+//            return false;
+//        }
+//    }
+//    return true;
+    var lastIndex = termo.indexOf("-");
+    if(lastIndex > 0){
+        termo = termo.substring(0,lastIndex);
     }
-    return true;
+    return termo.match(/^[IVXLCDM]+$/i);
 }
 
 function ehAlinea(termo) {
-    var chars = ["i", "v", "x", "l", "c", "d", "m"];
-    for (var i = 0; i < termo.length; i++) {
-        if (chars.indexOf(termo[i]) < 0) {
-            return false;
-        }
+//    var chars = ["i", "v", "x", "l", "c", "d", "m"];
+//    for (var i = 0; i < termo.length; i++) {
+//        if (chars.indexOf(termo[i]) < 0) {
+//            return false;
+//        }
+//    }
+//    return true;
+    var lastIndex = termo.indexOf(")");
+    if(lastIndex < 0){
+        return false;
     }
-    return true;
+    if(termo.length == (lastIndex + 1)){
+        termo = termo.substring(0,lastIndex);
+        return termo.match(/[a-z]/i);
+    }
+    return false;
+}
+
+function ehNum(termo) {
+//    var chars = ["i", "v", "x", "l", "c", "d", "m"];
+//    for (var i = 0; i < termo.length; i++) {
+//        if (chars.indexOf(termo[i]) < 0) {
+//            return false;
+//        }
+//    }
+//    return true;
+    var lastIndex = termo.indexOf(".");
+    if(lastIndex < 0){
+        return false;
+    }
+    if(termo.length == (lastIndex + 1)){
+        termo = termo.substring(0,lastIndex);
+        return isInt(termo);
+    }
+    return false;
 }
 
 function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
@@ -3733,16 +3767,16 @@ function generateLinkNameCaput(text) {
         }
         else if (palavras[0] == '§') {
             id = 'par' + palavras[1];
-            id = id.replace(/[^a-z0-9]/gi, '');
+            id = id.replace(/[^0-9]/gi, '');
         }
         else if (ehInciso(palavras[0])) {
-            id = 'inc' + palavras[0].replace(/[^a-z0-9]/gi, '');
-        }
-        else if (palavras[0].length == 2 && palavras[0][1] == ")") {
-            id = 'let' + palavras[0][0].replace(/[^a-z]/gi, '');
+            id = 'inc' + palavras[0].replace(/[^a-z]/gi, '');
         }
         else if (ehAlinea(palavras[0])) {
-            id = 'ali' + palavras[0].replace(/[^a-z]/g, '');
+            id = 'ali' + palavras[0].replace(/[^a-z]/gi, '');
+        }
+        else if (ehNum(palavras[0])) {
+            id = 'num' + palavras[0].replace(/[^0-9]/gi, '');
         }
     }
     return id;
@@ -3751,7 +3785,7 @@ function generateLinkNameCaput(text) {
 //definir nivel do arquivo
 function definirNivelCaput(name) {
     var nivel = 10;
-    var niveis = ["ane", "tit", "cap", "art", "par", "inc", "let", "aln"];
+    var niveis = ["ane", "tit", "cap", "art", "par", "inc", "ali", "num"];
     if (IsNotNullOrEmpty(name) && name.indexOf('_') > -1) {
         name = name.substring(name.lastIndexOf('_') + 1);
     }

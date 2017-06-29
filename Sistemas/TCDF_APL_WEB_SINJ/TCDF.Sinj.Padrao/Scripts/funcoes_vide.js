@@ -600,14 +600,17 @@ function getDescricaoDoElemento(caput)
     else if (caput1 == "par") {
         caput3 = (IsNotNullOrEmpty(caput2) ? "§ " + caput2 : "Parágrafo Único");
     }
-    else if (caput1 == "inc" && IsNotNullOrEmpty(caput2)){
+    else if (caput1 == "inc" && IsNotNullOrEmpty(caput2)) {
         caput3 = "inc. " + caput2;
     }
-    else if (caput1 == "let" && IsNotNullOrEmpty(caput2)){
+    else if (caput1 == "num" && IsNotNullOrEmpty(caput2)) {
+        caput3 = caput2 + ".";
+    }
+    else if (caput1 == "ali" && IsNotNullOrEmpty(caput2)) {
         caput3 = caput2 + ")";
     }
-    else if (caput1 == "aln" && IsNotNullOrEmpty(caput2)) {
-        caput3 = "alí. " + caput2;
+    else if (caput1 == "let" && IsNotNullOrEmpty(caput2)) {
+        caput3 = caput2 + ")";
     }
     return caput3;
 }
