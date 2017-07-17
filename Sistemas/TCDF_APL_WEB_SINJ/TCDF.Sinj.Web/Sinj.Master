@@ -48,6 +48,21 @@
 
     <title>.:: SINJ-DF - Sistema Integrado de Normas Jurídicas do DF ::.</title>
     <script type="text/javascript">
+        window.onbeforeunload = function (e) {
+            e = e || window.event;
+
+            if (document.activeElement.tagName !== 'A' && document.activeElement.tagName !== 'BUTTON') {
+
+                // For IE and Firefox prior to version 4
+                if (e) {
+                    e.returnValue = 'Sure?';
+                }
+
+                // For Safari
+                return 'Sure?';
+            }
+        };
+
         function fAdaptive() {
             if ($('div.right-top').offset().left < $('div.logo').width()) {
                 $('div.right-top').addClass('mobile');
@@ -63,6 +78,7 @@
             }
         }
         $(document).ready(function () {
+
             if (IsNotNullOrEmpty(_user, 'nm_usuario')) {
                 $('#litNmUsuario').text(_user.nm_usuario);
                 $('#menuLogin').hide();
@@ -140,7 +156,7 @@
                     <span id="span_versao"></span>
                 </div>
                 <div class="logo">
-                    <a href="./" title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="sinj" /></a>
+                    <a href="./" title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj_10_anos.png" alt="sinj" /></a>
                 </div>
                 <div class="top-bottom">
                     <div class="top-bottom-left">

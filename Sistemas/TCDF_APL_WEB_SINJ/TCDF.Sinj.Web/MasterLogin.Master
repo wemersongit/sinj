@@ -42,7 +42,7 @@
                     </span>
                 </div>
                 <div class="logo">
-                    <a title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="sinj" /></a>
+                    <a title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj_10_anos.png" alt="sinj" /></a>
                 </div>
                 <div class="top-bottom" style="height: 40px;">
                     <div class="top-bottom-left">

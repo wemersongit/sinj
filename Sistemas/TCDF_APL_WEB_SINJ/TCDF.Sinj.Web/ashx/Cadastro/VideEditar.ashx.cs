@@ -429,6 +429,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         {
             var dictionaryFiles = new VideExcluir().VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior);
 
+
+            //Se possuir id_file_alterador a alteração implicou em um novo if_file para os arquivos, mesmo se não alterou os caputs podem estar utilizando id_file que não corresponde mais com o id_file da norma
             if (dictionaryFiles.ContainsKey("id_file_alterador"))
             {
                 if (videAlterador.caput_norma_vide != null && !string.IsNullOrEmpty(videAlterador.caput_norma_vide.id_file))
@@ -436,6 +438,13 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     videAlterador.caput_norma_vide.id_file = dictionaryFiles["id_file_alterador"];
                 }
                 normaAlteradora.ar_atualizado.id_file = dictionaryFiles["id_file_alterador"];
+            }
+            else if(!string.IsNullOrEmpty(normaAlteradora.ar_atualizado.id_file))
+            {
+                if (videAlterador.caput_norma_vide != null && !string.IsNullOrEmpty(videAlterador.caput_norma_vide.id_file))
+                {
+                    videAlterador.caput_norma_vide.id_file = normaAlteradora.ar_atualizado.id_file;
+                }
             }
 
             if (dictionaryFiles.ContainsKey("id_file_alterado"))
@@ -445,6 +454,13 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     videAlterado.caput_norma_vide.id_file = dictionaryFiles["id_file_alterado"];
                 }
                 normaAlterada.ar_atualizado.id_file = dictionaryFiles["id_file_alterado"];
+            }
+            else if (!string.IsNullOrEmpty(normaAlterada.ar_atualizado.id_file))
+            {
+                if (videAlterado.caput_norma_vide != null && !string.IsNullOrEmpty(videAlterado.caput_norma_vide.id_file))
+                {
+                    videAlterado.caput_norma_vide.id_file = normaAlterada.ar_atualizado.id_file;
+                }
             }
             
             new VideIncluir().VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradora, normaAlterada, videAlterador, videAlterado);

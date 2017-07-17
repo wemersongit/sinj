@@ -1,6 +1,27 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TCDF.Sinj.Web.Default" %>
 <asp:Content ID="ContentHeader" ContentPlaceHolderID="Head" runat="server">
-    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_pesquisas.js"></script>
+    <script type="text/javascript"src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_pesquisas.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            _campos_pesquisa_avancada.push({
+                ch_campo: "dt_cadastro",
+                nm_campo: "Data de Cadastro",
+                type: "datetime"
+            });
+            _campos_pesquisa_avancada.push({
+                ch_campo: "nm_orgao_cadastrador",
+                nm_campo: "Órgão Cadastrador",
+                type: "autocomplete",
+                data: '[{ "nm_orgao_cadastrador": "CLDF" }, { "nm_orgao_cadastrador": "PGDF" }, { "nm_orgao_cadastrador": "SEPLAG" }, { "nm_orgao_cadastrador": "TCDF"}]',
+                url_ajax: null,
+                sKeyDataName: "nm_orgao_cadastrador",
+                sValueDataName: "nm_orgao_cadastrador"
+            });
+            montarPaginaDePesquisa();
+        });
+        
+    </script>
+    
 </asp:Content>
 <asp:Content ID="ContentBody" ContentPlaceHolderID="Body" runat="server">
     <div id="slave">

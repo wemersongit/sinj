@@ -521,24 +521,42 @@ namespace TCDF.Sinj
                             }
                             else if (_tipo_campo == "datetime")
                             {
+                                _ch_operador = _ch_operador.Replace("_", "");
                                 var ch_valor_splited = _ch_valor.Split(',');
                                 if (ch_valor_splited.Length == 2)
                                 {
-                                    for (var i = 0; i < ch_valor_splited.Length; i++)
+                                    if (ch_valor_splited[0].IndexOf(' ') < 0 && ch_valor_splited[1].IndexOf(' ') < 0)
                                     {
-                                        var aux_valor_splited = ch_valor_splited[i].Split(' ');
-                                        if (aux_valor_splited.Length == 2 && aux_valor_splited[1] == "00:00:00")
-                                        {
-                                            ch_valor_splited[i] = aux_valor_splited[0];
-                                        }
+                                        ch_valor_splited[0] = "\\\"" + ch_valor_splited[0] + " 00:00:00\\\"";
+                                        ch_valor_splited[1] = "\\\"" + ch_valor_splited[1] + " 23:59:59\\\"";
                                     }
+                                }
+                                else if (_ch_operador == "diferente")
+                                {
+                                    if (ch_valor_splited[0].IndexOf(' ') < 0)
+                                    {
+                                        ch_valor_splited = new string[] { "\\\"" + ch_valor_splited[0] + " 00:00:00\\\"", "\\\"" + ch_valor_splited[0] + " 23:59:59\\\"" };
+                                        _ch_operador = "intervalo";
+                                    }
+                                    query_textual += (query_textual != "" ? aux_conector_es : "") + "(\"NOT\":" + _docEs.MontarArgumentoRangeQueryString(_ch_campo, _ch_operador, _ch_valor) + ")";
                                 }
                                 else
                                 {
-                                    var aux_valor_splited = ch_valor_splited[0].Split(' ');
-                                    if (aux_valor_splited.Length == 2 && aux_valor_splited[1] == "00:00:00")
+                                    if (ch_valor_splited[0].IndexOf(' ') < 0)
                                     {
-                                        ch_valor_splited = new string[] { ch_valor_splited[0], aux_valor_splited[0] + " 23:59:59" };
+                                        if (_ch_operador == "igual" || _ch_operador == "menor" || _ch_operador == "maiorouigual")
+                                        {
+                                            ch_valor_splited[0] = "\\\"" + ch_valor_splited[0] + " 00:00:00\\\"";
+                                        }
+                                        else if (_ch_operador == "maior" || _ch_operador == "menorouigual")
+                                        {
+                                            ch_valor_splited[0] = "\\\"" + ch_valor_splited[0] + " 23:59:59\\\"";
+                                        }
+                                    }
+                                    var aux_valor_splited = ch_valor_splited[0].Split(' ');
+                                    if (aux_valor_splited.Length == 2 && (aux_valor_splited[1] == "00:00:00" || aux_valor_splited[1] == "00:00:00\\\"") && _ch_operador == "igual")
+                                    {
+                                        ch_valor_splited = new string[] { "\\\"" + aux_valor_splited[0] + " 00:00:00\\\"", "\\\"" + aux_valor_splited[0] + " 23:59:59\\\"" };
                                         _ch_operador = "intervalo";
                                     }
                                 }
@@ -623,14 +641,14 @@ namespace TCDF.Sinj
             switch (_bbusca)
             {
                 case "sinj_diario":
-                    partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"nm_tipo_fonte\",\"nr_diario\",\"cr_diario\",\"secao_diario\",\"dt_assinatura\",\"st_pendente\",\"ar_diario.id_file\",\"ar_diario.filesize\"]}}";
+                    partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"nm_tipo_fonte\",\"nr_diario\",\"cr_diario\",\"secao_diario\",\"dt_assinatura\",\"st_pendente\",\"ar_diario.id_file\",\"ar_diario.filesize\",\"dt_cadastro\",\"nm_login_usuario_cadastro\"]}}";
                     break;
                 case "sinj_norma":
-                    partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"ar_atualizado.mimetype\",\"fontes.ar_fonte.id_file\",\"fontes.ar_fonte.filesize\",\"fontes.ar_fonte.mimetype\",\"nm_tipo_norma\",\"nr_norma\",\"ch_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\"]}}";
+                    partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"ar_atualizado.mimetype\",\"nm_tipo_norma\",\"nr_norma\",\"ch_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\",\"vides\",\"nm_apelido\",\"ds_observacao\",\"autorias.nm_autoria\",\"nm_pessoa_fisica_e_juridica\",\"fontes\",\"indexacoes\",\"dt_cadastro\",\"nm_login_usuario_cadastro\"]}}";
                     break;
                 case "cesta":
                     var _base = context.Request["b"];
-                    partial_fields = _base == "sinj_norma" ? ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"ar_atualizado.mimetype\",\"fontes.ar_fonte.id_file\",\"fontes.ar_fonte.filesize\",\"fontes.ar_fonte.mimetype\",\"nm_tipo_norma\",\"nr_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\"]}}" : _base == "sinj_diario" ? ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"nm_tipo_fonte\",\"nr_diario\",\"secao_diario\",\"dt_assinatura\",\"st_pendente\",\"ar_diario.id_file\"]}}" : "";
+                    partial_fields = _base == "sinj_norma" ? ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"ar_atualizado.mimetype\",\"nm_tipo_norma\",\"nr_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\",\"vides\",\"nm_apelido\",\"ds_observacao\",\"autorias.nm_autoria\",\"nm_pessoa_fisica_e_juridica\",\"fontes\",\"indexacoes\",\"dt_cadastro\",\"nm_login_usuario_cadastro\"]}}" : _base == "sinj_diario" ? ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"nm_tipo_fonte\",\"nr_diario\",\"secao_diario\",\"dt_assinatura\",\"st_pendente\",\"ar_diario.id_file\",\"dt_cadastro\",\"nm_login_usuario_cadastro\"]}}" : "";
                     break;
             }
             return partial_fields;

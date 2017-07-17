@@ -360,19 +360,21 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
 
             var arquivoNormaVideAlterada = RemoverAlteracaoNoTextoDaNormaAlterada(normaAlterada, normaAlteradora, caputAlteradoDesfazer);
-
-            var retornoFileAlterada = upload.AnexarHtml(arquivoNormaVideAlterada, caputAlteradoDesfazer.filename, "sinj_norma");
-            var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
-            if (!string.IsNullOrEmpty(oFileAlterada.id_file))
+            if (!string.IsNullOrEmpty(arquivoNormaVideAlterada))
             {
-                pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                var listOp = new List<opMode<object>>();
-                listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
-                var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                if (oRetornoPath.success == 1)
+                var retornoFileAlterada = upload.AnexarHtml(arquivoNormaVideAlterada, caputAlteradoDesfazer.filename, "sinj_norma");
+                var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
+                if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                 {
-                    dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
+                    pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
+                    var listOp = new List<opMode<object>>();
+                    listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
+                    var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
+                    var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
+                    if (oRetornoPath.success == 1)
+                    {
+                        dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
+                    }
                 }
             }
             return dictionaryIdFiles;

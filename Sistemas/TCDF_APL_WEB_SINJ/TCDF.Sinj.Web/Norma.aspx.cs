@@ -16,6 +16,7 @@ namespace TCDF.Sinj.Web
 {
     public partial class Norma : System.Web.UI.Page
     {
+        protected string title = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             SessaoUsuarioOV sessao_usuario = null;
@@ -54,8 +55,9 @@ namespace TCDF.Sinj.Web
                         var file = docRn.download(docOv.id_file);
                         if (file != null && file.Length > 0)
                         {
+                            title = normaOv.getDescricaoDaNorma();
                             if(docOv.mimetype.IndexOf("html")>-1){
-                                Page.Title = docOv.filename.Substring(0, docOv.filename.IndexOf(".") - 1);
+                                //Page.Title = docOv.filename.Substring(0, docOv.filename.IndexOf(".") - 1);
                                 HtmlMeta html_meta_keywords = new HtmlMeta();
                                 html_meta_keywords.Name = "keywords";
                                 html_meta_keywords.Content = "sinj, distrito, federal, df," + Page.Title;

@@ -1004,6 +1004,28 @@ var _operadores_pesquisa_avancada = {
         ch_operador: "intervalo",
         nm_operador: "intervalo"
     }],
+    "datetime": [{
+        ch_operador: "igual",
+        nm_operador: "igual a"
+    }, {
+        ch_operador: "maior",
+        nm_operador: "maior que"
+    }, {
+        ch_operador: "maior_ou_igual",
+        nm_operador: "maior ou igual a"
+    }, {
+        ch_operador: "menor",
+        nm_operador: "menor que"
+    }, {
+        ch_operador: "menor_ou_igual",
+        nm_operador: "menor ou igual a"
+    }, {
+        ch_operador: "diferente",
+        nm_operador: "diferente"
+    }, {
+        ch_operador: "intervalo",
+        nm_operador: "intervalo"
+    }],
     "autocomplete": [{
         ch_operador: "igual",
         nm_operador: "igual a"

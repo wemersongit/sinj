@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿function montarPaginaDePesquisa() {
     $('.accordion').accordion({
         animate: 300,
         heightStyle: "content"
@@ -14,7 +14,7 @@
         sValueDataName: 'nm_tipo_norma'
     });
 
-   
+
     $('#div_autocomplete_assunto').autocompletelight({
         sKeyDataName: "ch_termo",
         sValueDataName: "nm_termo",
@@ -107,7 +107,7 @@
         history.replaceState({ accordion: accordion_ativo }, "", "");
         //        history.pushState(null, "", replaceUrlParam(document.location.href, "accordion", $(this).accordion("option", "active")));
     });
-});
+}
 
 function RecuperarDoHistorico(tipo_pesquisa) {
     switch (tipo_pesquisa) {
@@ -334,7 +334,7 @@ function SelecionarCampo() {
                 sLinkName: "a_valor"
             });
         }
-        else if (type == 'date') {
+        else if (type == 'date' || type == 'datetime') {
             $('#div_valor').html('<input id="ch_valor" value="" class="w-30-pc" type="text"/>');
             inicializarDatePicker({ element: $('#div_valor input') });
         }

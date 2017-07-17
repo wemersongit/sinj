@@ -16,6 +16,7 @@ namespace TCDF.Sinj.Portal.Web
 {
     public partial class Norma : System.Web.UI.Page
     {
+        protected string title = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -68,6 +69,7 @@ namespace TCDF.Sinj.Portal.Web
                         var file = docRn.download(docOv.id_file);
                         if (file != null && file.Length > 0)
                         {
+                            title = normaOv.getDescricaoDaNorma();
                             if (docOv.mimetype.IndexOf("html") > -1)
                             {
                                 Page.Title = _title;

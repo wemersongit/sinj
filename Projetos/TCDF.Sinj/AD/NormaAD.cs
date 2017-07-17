@@ -539,6 +539,7 @@ namespace TCDF.Sinj.AD
                             }
                             else if (_tipo_campo == "number" || _tipo_campo == "date")
                             {
+                                _ch_operador = _ch_operador.Replace("_","");
                                 if (_ch_campo == "ano_assinatura")
                                 {
                                     var ch_operador_aux = _ch_operador;
@@ -572,24 +573,42 @@ namespace TCDF.Sinj.AD
                             }
                             else if (_tipo_campo == "datetime")
                             {
+                                _ch_operador = _ch_operador.Replace("_", "");
                                 var ch_valor_splited = _ch_valor.Split(',');
                                 if (ch_valor_splited.Length == 2)
                                 {
-                                    for (var i = 0; i < ch_valor_splited.Length; i++)
+                                    if (ch_valor_splited[0].IndexOf(' ') < 0 && ch_valor_splited[1].IndexOf(' ') < 0)
                                     {
-                                        var aux_valor_splited = ch_valor_splited[i].Split(' ');
-                                        if (aux_valor_splited.Length == 2 && aux_valor_splited[1] == "00:00:00")
-                                        {
-                                            ch_valor_splited[i] = aux_valor_splited[0];
-                                        }
+                                        ch_valor_splited[0] = "\\\"" + ch_valor_splited[0] + " 00:00:00\\\"";
+                                        ch_valor_splited[1] = "\\\"" + ch_valor_splited[1] + " 23:59:59\\\"";
                                     }
+                                }
+                                else if (_ch_operador == "diferente")
+                                {
+                                    if (ch_valor_splited[0].IndexOf(' ') < 0)
+                                    {
+                                        ch_valor_splited = new string[] { "\\\"" + ch_valor_splited[0] + " 00:00:00\\\"", "\\\"" + ch_valor_splited[0] + " 23:59:59\\\"" };
+                                        _ch_operador = "intervalo";
+                                    }
+                                    query_textual += (query_textual != "" ? aux_conector_es : "") + "(\"NOT\":" + _docEs.MontarArgumentoRangeQueryString(_ch_campo, _ch_operador, _ch_valor) + ")";
                                 }
                                 else
                                 {
-                                    var aux_valor_splited = ch_valor_splited[0].Split(' ');
-                                    if (aux_valor_splited.Length == 2 && aux_valor_splited[1] == "00:00:00")
+                                    if (ch_valor_splited[0].IndexOf(' ') < 0)
                                     {
-                                        ch_valor_splited = new string[] { ch_valor_splited[0], aux_valor_splited[0] + " 23:59:59" };
+                                        if (_ch_operador == "igual" || _ch_operador == "menor" || _ch_operador == "maiorouigual")
+                                        {
+                                            ch_valor_splited[0] = "\\\"" + ch_valor_splited[0] + " 00:00:00\\\"";
+                                        }
+                                        else if (_ch_operador == "maior" || _ch_operador == "menorouigual")
+                                        {
+                                            ch_valor_splited[0] = "\\\"" + ch_valor_splited[0] + " 23:59:59\\\"";
+                                        }
+                                    }
+                                    var aux_valor_splited = ch_valor_splited[0].Split(' ');
+                                    if (aux_valor_splited.Length == 2 && (aux_valor_splited[1] == "00:00:00" || aux_valor_splited[1] == "00:00:00\\\"") && _ch_operador == "igual")
+                                    {
+                                        ch_valor_splited = new string[] { "\\\"" + aux_valor_splited[0] + " 00:00:00\\\"", "\\\"" + aux_valor_splited[0] + " 23:59:59\\\"" };
                                         _ch_operador = "intervalo";
                                     }
                                 }

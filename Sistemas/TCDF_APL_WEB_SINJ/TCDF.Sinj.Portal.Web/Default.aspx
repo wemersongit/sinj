@@ -1,6 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Default" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_pesquisas.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            montarPaginaDePesquisa();
+        });
+        
+    </script>
 </asp:Content>
 <asp:Content ID="ContentBody" ContentPlaceHolderID="Body" runat="server">
     <div id="slave">

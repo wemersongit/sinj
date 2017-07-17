@@ -15,7 +15,7 @@ namespace levantamento_vides
         {
             try
             {
-                new Program().GerarRelatorioVidesSemNormas();
+                //new Program().GerarRelatorioVidesSemNormas();
             }
             catch (Exception ex)
             {
@@ -23,6 +23,59 @@ namespace levantamento_vides
                 Console.WriteLine("Exception: " + mensagem);
                 Console.Beep();
                 Console.Read();
+            }
+        }
+
+        private void GerarSiteMaps()
+        {
+            var tipoNormaRn = new TCDF.Sinj.RN.TipoDeNormaRN();
+
+            var query = new Pesquisa();
+            query.limit = null;
+            var tipos = tipoNormaRn.Consultar(query);
+            
+            ulong from = 0;
+            ulong size = 100;
+            ulong result_count = 1;
+            var normaRn = new TCDF.Sinj.RN.NormaRN();
+
+            query.limit = size.ToString();
+            query.order_by.asc = new string[] { "dt_assinatura" };
+            query.select = new string[] { "ch_norma", "ch_tipo_norma", "nm_tipo_norma", "nr_norma", "dt_assinatura", "ar_atualizado", "ar_fonte" };
+            StringBuilder sb = new StringBuilder();
+            foreach(var tipo in tipos.results){
+                while (from <= result_count)
+                {
+                    try
+                    {
+                        query.offset = from.ToString();
+
+                        Console.WriteLine("offset: " + query.offset);
+
+                        var result = normaRn.Consultar(query);
+                        result_count = result.result_count;
+                        foreach (var norma in result.results){
+                            if(string.IsNullOrEmpty(norma.getIdFileArquivoVigente())){
+                                continue;
+                            }
+                            sb.AppendLine("    <loc>http://www.sinj.df.gov.br/sinj/.aspx?tipo_pesquisa=norma&all=&ch_tipo_norma=10000000&nm_tipo_norma=ADC&nr_norma=&ano_assinatura=&ch_orgao=&ch_hierarquia=&sg_hierarquia_nm_vigencia=&origem_por=toda_a_hierarquia_em_qualquer_epoca</loc>");
+    //                        <url>
+        
+    //    <changefreq>monthly</changefreq>
+    //    <priority>0.5</priority>
+    //</url>
+                        }
+                        from += size;
+                    }
+                    catch (Exception ex)
+                    {
+                        var mensagem = util.BRLight.Excecao.LerTodasMensagensDaExcecao(ex, false);
+                        Console.WriteLine("Exception: " + mensagem);
+                        Console.Beep();
+                        Console.Read();
+                    }
+
+                }
             }
         }
 
