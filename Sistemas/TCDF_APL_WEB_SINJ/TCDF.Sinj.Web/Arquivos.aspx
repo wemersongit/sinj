@@ -5,6 +5,20 @@
     <script type="text/javascript"  src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_documentos.js"></script>
 
     <script type="text/javascript" charset="utf-8">
+        window.onbeforeunload = function (e) {
+            e = e || window.event;
+
+            if (document.activeElement.tagName !== 'A' && document.activeElement.tagName !== 'BUTTON') {
+
+                // For IE and Firefox prior to version 4
+                if (e) {
+                    e.returnValue = 'Sure?';
+                }
+
+                // For Safari
+                return 'Sure?';
+            }
+        };
 
         $(document).ready(function () {
             var _diretorio = '<%= _diretorio %>';

@@ -16,7 +16,7 @@ namespace TCDF.Sinj
     {
         public static void rejeitarInject(string texto)
         {
-            if (!string.IsNullOrEmpty(texto) && texto.IndexOfAny(new char[] { ';', '\'', '-', '/', '*', '_' }) > -1)
+            if (!string.IsNullOrEmpty(texto) && texto.IndexOfAny(new char[] { ';', '\'', '/', '*', '_' }) > -1)
             {
                 throw new ParamDangerousException("Detectada a existência de caracteres nocivos.");
             }
