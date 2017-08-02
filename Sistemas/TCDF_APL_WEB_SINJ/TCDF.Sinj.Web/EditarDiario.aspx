@@ -24,7 +24,7 @@
             <div id="div_diario">
                 <fieldset>
                     <div id="div_notificacao_diario" class="notify" style="display:none;"></div>
-                    <legend>Tipo de Diário</legend>
+                    <legend>Diário</legend>
                     <div class="mauto table">
                         <div class="line">
                           <div class="column w-20-pc">
