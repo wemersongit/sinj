@@ -31,6 +31,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             ulong id_doc = 0;
             var _ch_vide = context.Request["ch_vide"];
 
+            var _dt_controle_alteracao = context.Request["dt_controle_alteracao"];
             var _ch_tipo_relacao = context.Request["ch_tipo_relacao"];
             var _nm_tipo_relacao = context.Request["nm_tipo_relacao"];
             var _ds_texto_para_alterador = context.Request["ds_texto_para_alterador"];
@@ -79,6 +80,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
+                var dDt_controle_alteracao = Convert.ToDateTime(_dt_controle_alteracao);
                 var normaRn = new NormaRN();
                 if (!string.IsNullOrEmpty(_id_doc) && !string.IsNullOrEmpty(_ch_vide))
                 {
@@ -131,6 +133,29 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             //var adicionar_caput = false;
                             //var alterar_caput = false;
                             //var remover_caput = false;
+
+                            //Vai comparar a data da ultima alteração com a data que o usuário abriu a página de editar vides e disparar uma exceção de risco de inconsistencia
+                            if (normaAlteradoraOv.alteracoes.Count > 0)
+                            {
+                                var dDt_alteracao = Convert.ToDateTime(normaAlteradoraOv.alteracoes.Last<AlteracaoOV>().dt_alteracao);
+                                var usuario = normaAlteradoraOv.alteracoes.Last<AlteracaoOV>().nm_login_usuario_alteracao;
+                                if (dDt_controle_alteracao < dDt_alteracao)
+                                {
+                                    throw new RiskOfInconsistency("A norma alteradora foi modificada pelo usuário <b>" + usuario + "</b> às <b>" + dDt_alteracao + "</b> tornando a sua modificação inconsistente.<br/> É aconselhável atualizar a página e refazer as modificações ou forçar a alteração.<br/>Obs.: Clicar em 'Salvar mesmo assim' vai forçar a alteração e pode sobrescrever as modificações do usuário <b>" + usuario + "</b>.");
+                                }
+                            }
+
+                            //Vai comparar a data da ultima alteração com a data que o usuário abriu a página de editar vides e disparar uma exceção de risco de inconsistencia
+                            if (normaAlteradaOv != null && normaAlteradaOv.alteracoes.Count > 0)
+                            {
+                                var dDt_alteracao = Convert.ToDateTime(normaAlteradaOv.alteracoes.Last<AlteracaoOV>().dt_alteracao);
+                                var usuario = normaAlteradaOv.alteracoes.Last<AlteracaoOV>().nm_login_usuario_alteracao;
+                                if (dDt_controle_alteracao < dDt_alteracao)
+                                {
+                                    throw new RiskOfInconsistency("A norma alterada foi modificada pelo usuário <b>" + usuario + "</b> às <b>" + dDt_alteracao + "</b> tornando a sua modificação inconsistente.<br/> É aconselhável atualizar a página e refazer as modificações ou forçar a alteração.<br/>Obs.: Clicar em 'Salvar mesmo assim' vai forçar a alteração e pode sobrescrever as modificações do usuário <b>" + usuario + "</b>.");
+                                }
+                            }
+
                             foreach (var videAlterador in normaAlteradoraOv.vides)
                             {
                                 if (videAlterador.ch_vide == _ch_vide)
@@ -389,10 +414,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             }
             catch (Exception ex)
             {
-
-                if (ex is PermissionException || ex is DocDuplicateKeyException || ex is SessionExpiredException || ex is DocValidacaoException)
+                if (ex is PermissionException || ex is DocDuplicateKeyException || ex is SessionExpiredException || ex is DocValidacaoException || ex is RiskOfInconsistency)
                 {
-                    sRetorno = "{\"error_message\": \"" + ex.Message + "\"}";
+                    sRetorno = "{\"error_message\": \"" + ex.Message + "\", \"type_error\":\"" + ex.GetType().Name + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
                 }
                 else
                 {

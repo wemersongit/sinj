@@ -64,6 +64,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
                     normaDetalhada.tipoDeNorma = JSON.Deserializa<TipoDeNorma>(sTipoDeNormaOv);
                     normaDetalhada.ds_ementa = Regex.Replace(normaDetalhada.ds_ementa, "\\<[^\\>]*\\>", string.Empty);
                     normaDetalhada.ds_observacao = Regex.Replace(normaDetalhada.ds_observacao, "\\<[^\\>]*\\>", string.Empty);
+                    normaDetalhada.dt_controle_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
                     sRetorno = JSON.Serialize<NormaDetalhada>(normaDetalhada);
                 }
                 else

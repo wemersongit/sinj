@@ -238,7 +238,8 @@ namespace TCDF.Sinj.OV
 		{
 			origensOv = new List<OrgaoOV>();
 		}
-		public List<OrgaoOV> origensOv { get; set; }
+        public List<OrgaoOV> origensOv { get; set; }
         public TipoDeNorma tipoDeNorma { get; set; }
+        public string dt_controle_alteracao { get; set; }
 	}
 }

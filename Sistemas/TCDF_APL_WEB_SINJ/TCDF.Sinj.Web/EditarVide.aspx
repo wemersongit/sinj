@@ -36,6 +36,31 @@
                     if (IsNotNullOrEmpty(data, 'id_doc_success')) {
                         open_modal(data);
                     }
+                    else if (IsNotNullOrEmpty(data, 'type_error') && data.type_error == 'RiskOfInconsistency') {
+                        $('<div id="modal_notificacao_modal_salvar" />').modallight({
+                            sTitle: "Erro de Inconsistência",
+                            sContent: data.error_message,
+                            sType: "error",
+                            oButtons: [
+                                {
+                                    text: "Atualizar Página", click: function () {
+                                        location.reload();
+                                    }
+                                },
+                                {
+                                    text: "Salvar mesmo assim", click: function () {
+                                        $("#dt_controle_alteracao").val(data.dt_controle_alteracao);
+                                        $('#button_salvar_vide').click();
+
+                                        $(this).dialog('destroy');
+                                    }
+                                }
+                            ],
+                            fnClose: function () {
+                                location.reload();
+                            }
+                        });
+                    }
                     else {
                         $('#form_vide .notify').messagelight({
                             sTitle: "Erro",
@@ -63,6 +88,7 @@
                             });
                         }
                         else if (IsNotNullOrEmpty(data.ch_norma)) {
+                            $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
                             for (var i = 0; i < data.vides.length; i++) {
                                 if (data.vides[i].ch_vide == ch_vide) {
                                     $('#ch_tipo_relacao').val(data.vides[i].ch_tipo_relacao);
@@ -332,6 +358,7 @@
         </div>
         <div id="div_cad_vide">
             <form id="form_editar_vide" name="formEditarVide" action="#" method="post">
+                <input type="hidden" id="dt_controle_alteracao" name="dt_controle_alteracao" value="" />
                 <div id="div_vide" class="loaded">
                     <fieldset class="w-95-pc">
                         <legend>Vide</legend>

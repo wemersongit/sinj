@@ -19,7 +19,7 @@
             var open_modal = function (data) {
                 $('<div id="modal_notificacao_modal_salvar" />').modallight({
                     sTitle: "Sucesso",
-                    sContent: "Salvo com sucesso." + (IsNotNullOrEmpty(data, 'alert_message') ? '<br/>Observação:<br/>O vide foi incluído com sucesso mas houve um erro na alteração do arquivo.<br/>Mensagem do erro:<br/>'+data.alert_message : ''),
+                    sContent: "Salvo com sucesso." + (IsNotNullOrEmpty(data, 'alert_message') ? '<br/>Observação:<br/>O vide foi incluído com sucesso mas houve um erro na alteração do arquivo.<br/>Mensagem do erro:<br/>' + data.alert_message : ''),
                     sType: "success",
                     oButtons: [
                         {
@@ -94,6 +94,31 @@
                     if (IsNotNullOrEmpty(data, 'id_doc_success')) {
                         open_modal(data);
                     }
+                    else if (IsNotNullOrEmpty(data, 'type_error') && data.type_error == 'RiskOfInconsistency') {
+                        $('<div id="modal_notificacao_modal_salvar" />').modallight({
+                            sTitle: "Erro de Inconsistência",
+                            sContent: data.error_message,
+                            sType: "error",
+                            oButtons: [
+                                {
+                                    text: "Atualizar Página", click: function () {
+                                        location.reload();
+                                    }
+                                },
+                                {
+                                    text: "Salvar mesmo assim", click: function () {
+                                        $("#dt_controle_alteracao").val(data.dt_controle_alteracao);
+                                        $('#button_salvar_vide').click();
+
+                                        $(this).dialog('destroy');
+                                    }
+                                }
+                            ],
+                            fnClose: function () {
+                                location.reload();
+                            }
+                        });
+                    }
                     else {
                         $('#form_vide .notify').messagelight({
                             sTitle: "Erro",
@@ -121,6 +146,7 @@
                         }
                         else if (IsNotNullOrEmpty(data.ch_tipo_norma)) {
                             $('#ch_norma_alteradora').val(data.ch_norma);
+                            $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
                             $('#nm_tipo_norma_alteradora').val(data.nm_tipo_norma);
                             $('#dt_assinatura_alteradora').val(data.dt_assinatura);
                             $('#label_norma_vide_alteradora').text(data.nm_tipo_norma + " " + data.nr_norma + " " + data.dt_assinatura);
@@ -279,6 +305,7 @@
         </div>
         <div id="div_cad_vide">
             <form id="form_vide" name="formCadastroVide" action="#" method="post">
+                <input type="hidden" id="dt_controle_alteracao" name="dt_controle_alteracao" value="" />
                 <div id="div_vide" class="loaded">
                     <fieldset class="w-95-pc">
                         <legend>Vide</legend>

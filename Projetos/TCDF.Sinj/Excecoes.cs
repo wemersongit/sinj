@@ -63,6 +63,15 @@ namespace TCDF.Sinj
 
         }
     }
+    public class RiskOfInconsistency : ApplicationException
+    {
+        public RiskOfInconsistency(string mensagem)
+            : base(mensagem)
+        {
+
+        }
+    }
+
     public class ParamDangerousException : ApplicationException
     {
         public ParamDangerousException(string mensagem)

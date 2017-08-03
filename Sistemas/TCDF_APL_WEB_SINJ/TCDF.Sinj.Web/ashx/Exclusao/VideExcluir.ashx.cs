@@ -195,7 +195,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 videAlteradoDesfazer.caput_norma_vide.caput != null && videAlteradorDesfazer.caput_norma_vide.caput.Length > 0 && videAlteradoDesfazer.caput_norma_vide.caput.Length > 0)
             {
                 dictionaryIdFiles = RemoverAlteracaoComDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer.caput_norma_vide, videAlteradoDesfazer.caput_norma_vide);
-                //IncluirAlteracaoComDispositivosNosArquivosDasNormas(normaAlteradora.ch_norma, normaAlterada.ch_norma, videAlterador.caput_norma_vide, videAlterado.caput_norma_vide);
             }
             else if (videAlteradoDesfazer.caput_norma_vide != null && videAlteradoDesfazer.caput_norma_vide.caput != null && videAlteradoDesfazer.caput_norma_vide.caput.Length > 0)
             {
@@ -208,7 +207,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             else
             {
                 dictionaryIdFiles = RemoverAlteracaoSemDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlteradoDesfazer, nmSituacaoAnterior);
-                //IncluirAlteracaoSemDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlterado);
             }
             return dictionaryIdFiles;
         }
@@ -238,11 +236,11 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 var oFileAlteradora = JSON.Deserializa<ArquivoOV>(retornoFileAlteradora);
                 if (!string.IsNullOrEmpty(oFileAlteradora.id_file))
                 {
-                    listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
-                    pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
-                    var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                    var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                    if (oRetornoPath.success == 1)
+                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
+                    //pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
+                    //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
+                    //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
+                    if (normaRn.PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null) == "UPDATED")
                     {
                         dictionaryIdFiles.Add("id_file_alterador", oFileAlteradora.id_file);
                     }
@@ -257,11 +255,11 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
                 if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                 {
-                    listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
-                    pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                    var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                    var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                    if (oRetornoPath.success == 1)
+                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
+                    //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
+                    //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
+                    //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
+                    if (normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
                     {
                         dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
                     }
@@ -287,11 +285,11 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 var oFileAlteradora = JSON.Deserializa<ArquivoOV>(retornoFileAlteradora);
                 if (!string.IsNullOrEmpty(oFileAlteradora.id_file))
                 {
-                    listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
-                    pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
-                    var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                    var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                    if (oRetornoPath.success == 1)
+                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
+                    //pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
+                    //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
+                    //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
+                    if (normaRn.PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null) == "UPDATED")
                     {
                         dictionaryIdFiles.Add("id_file_alterador", oFileAlteradora.id_file);
                     }
@@ -334,12 +332,12 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
                     if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                     {
-                        listOp = new List<opMode<object>>();
-                        listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
-                        pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                        var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                        var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                        if (oRetornoPath.success == 1)
+                        //listOp = new List<opMode<object>>();
+                        //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
+                        //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
+                        //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
+                        //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
+                        if (normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
                         {
                             dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
                         }
@@ -366,12 +364,13 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
                 if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                 {
-                    pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                    var listOp = new List<opMode<object>>();
-                    listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
-                    var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                    var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                    if (oRetornoPath.success == 1)
+                    //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
+                    //var listOp = new List<opMode<object>>();
+                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
+                    //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
+                    //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
+                    //if (oRetornoPath.success == 1)
+                    if (normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
                     {
                         dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
                     }
@@ -416,12 +415,13 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
                     if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                     {
-                        pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                        var listOp = new List<opMode<object>>();
-                        listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
-                        var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                        var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                        if (oRetornoPath.success == 1)
+                        //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
+                        //var listOp = new List<opMode<object>>();
+                        //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
+                        //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
+                        //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
+                        //if (oRetornoPath.success == 1)
+                        if (normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
                         {
                             dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
                         }
@@ -434,12 +434,13 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             var oFileAlteradora = JSON.Deserializa<ArquivoOV>(retornoFileAlteradora);
                             if (!string.IsNullOrEmpty(oFileAlteradora.id_file))
                             {
-                                pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
-                                listOp = new List<opMode<object>>();
-                                listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
-                                sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                                oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                                if (oRetornoPath.success == 1)
+                                //pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
+                                //listOp = new List<opMode<object>>();
+                                //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
+                                //sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
+                                //oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
+                                //if (oRetornoPath.success == 1)
+                                if (normaRn.PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null) == "UPDATED")
                                 {
                                     dictionaryIdFiles.Add("id_file_alterador", oFileAlteradora.id_file);
                                 }
