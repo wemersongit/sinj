@@ -2610,7 +2610,7 @@ function DetalhesNorma(data, highlight) {
                             id_file = data.fontes[i].ar_fonte.id_file;
                             continue;
                         }
-                        if (nm_tipo_publicacao == 'republicação' || nm_tipo_publicacao == 'rep') {
+                        if (nm_tipo_publicacao == 'republicação' || nm_tipo_publicacao == 'rep' || nm_tipo_publicacao == 'retificação' || nm_tipo_publicacao == 'ret') {
                             id_file = data.fontes[i].ar_fonte.id_file;
                             break;
                         }
@@ -3788,8 +3788,8 @@ function generateLinkNameCaput(text) {
             id = 'par';
         }
         else if (palavras[0] == '§') {
-            id = 'par' + palavras[1];
-            id = id.replace(/[^0-9]/gi, '');
+            id = palavras[1];
+            id = 'par' + id.replace(/[^0-9]/gi, '');
         }
         else if (ehInciso(palavras[0])) {
             id = 'inc' + palavras[0].replace(/[^a-z]/gi, '');

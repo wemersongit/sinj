@@ -105,7 +105,6 @@
     $('.accordion').on("accordionactivate", function () {
         var accordion_ativo = $(this).accordion("option", "active");
         history.replaceState({ accordion: accordion_ativo }, "", "");
-        //        history.pushState(null, "", replaceUrlParam(document.location.href, "accordion", $(this).accordion("option", "active")));
     });
 }
 

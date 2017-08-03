@@ -216,7 +216,7 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
                         iFonte = i;
                         continue;
                     }
-                    if (nm_tipo_publicacao == 'republicação' || nm_tipo_publicacao == 'rep') {
+                    if (nm_tipo_publicacao == 'republicação' || nm_tipo_publicacao == 'rep' || nm_tipo_publicacao == 'retificação' || nm_tipo_publicacao == 'ret') {
                         ar_fonte = data.fontes[i].ar_fonte;
                         iFonte = i;
                         break;

@@ -46,6 +46,19 @@
         },
         {
             "field": {
+                "name": "sgs_tipo_norma",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Siglas",
+                "multivalued": true,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Siglas do Tipo de Norma."
+            }
+        },
+        {
+            "field": {
                 "name": "in_g1",
                 "datatype": "Boolean",
                 "required": false,

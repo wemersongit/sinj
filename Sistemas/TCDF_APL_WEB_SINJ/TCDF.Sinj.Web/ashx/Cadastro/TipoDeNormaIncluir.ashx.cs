@@ -27,6 +27,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 Util.ValidarUsuario(sessao_usuario, action);
                 var _nm_tipo_norma = context.Request["nm_tipo_norma"];
                 var _ds_tipo_norma = context.Request["ds_tipo_norma"];
+                var _sgs_tipo_norma = context.Request.Form.GetValues("sgs_tipo_norma");
                 var _orgaos_cadastradores = context.Request["orgao_cadastrador"];
                 var _grupos = context.Request["grupos"];
                 var _in_conjunta = context.Request["in_conjunta"];
@@ -37,6 +38,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 tipoDeNormaOv = new TipoDeNormaOV();
                 tipoDeNormaOv.nm_tipo_norma = _nm_tipo_norma;
                 tipoDeNormaOv.ds_tipo_norma = _ds_tipo_norma;
+                tipoDeNormaOv.sgs_tipo_norma = _sgs_tipo_norma.ToList<string>();
                 if (!string.IsNullOrEmpty(_orgaos_cadastradores))
                 {
                     foreach (var _orgao_cadastrador in _orgaos_cadastradores.Split(','))

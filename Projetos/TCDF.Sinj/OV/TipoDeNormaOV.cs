@@ -7,12 +7,14 @@ namespace TCDF.Sinj.OV
     public class TipoDeNormaOV : metadata
     {
         public TipoDeNormaOV(){
+            sgs_tipo_norma = new List<string>();
             orgaos_cadastradores = new List<OrgaoCadastrador>();
             alteracoes = new List<AlteracaoOV>();
         }
 
         public string ch_tipo_norma { get; set; }
         public string nm_tipo_norma { get; set; }
+        public List<string> sgs_tipo_norma { get; set; }
         public string ds_tipo_norma { get; set; }
 
         public List<OrgaoCadastrador> orgaos_cadastradores { get; set; }

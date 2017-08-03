@@ -57,15 +57,14 @@ namespace TCDF.Sinj.RN
 
         public ulong Incluir(NormaOV normaOv)
         {
-            Validar(normaOv);
-            GerarChaveDaNorma(normaOv);
+            ValidarGerarChaveEAuxDeRankeamentoDaNorma(normaOv);
 
             if (!normaOv.st_situacao_forcada)
             {
                 DefinirSituacaoDaNorma(normaOv, true);
             }
             
-            GerarRankeamentoDeNorma(normaOv);
+            //GerarRankeamentoDeNorma(normaOv);
             
             normaOv.ch_norma = Guid.NewGuid().ToString("N");
 			normaOv.st_nova = true;
@@ -81,9 +80,9 @@ namespace TCDF.Sinj.RN
             else return false;
         }
 
-        private void Validar(NormaOV normaOv)
+        private void ValidarGerarChaveEAuxDeRankeamentoDaNorma(NormaOV normaOv)
         {
-            var tipodenorma = new TipoDeNormaRN().Doc(normaOv.ch_tipo_norma);
+            var tipoDeNorma = new TipoDeNormaRN().Doc(normaOv.ch_tipo_norma);
             if (string.IsNullOrEmpty(normaOv.ch_tipo_norma) || string.IsNullOrEmpty(normaOv.nm_tipo_norma))
             {
 				throw new DocValidacaoException("Tipo de Norma não informado.");
@@ -100,18 +99,58 @@ namespace TCDF.Sinj.RN
             {
 				throw new DocValidacaoException("Âmbito invállido.");
             }
-            if (!tipodenorma.in_conjunta && normaOv.origens.Count > 1)
+            if (!tipoDeNorma.in_conjunta && normaOv.origens.Count > 1)
             {
                 throw new DocValidacaoException("A norma deve conter apenas uma Origem.");
             }
+            List<string> chaves = new List<string>();
+            StringBuilder chave = new StringBuilder();
+            if (normaOv.nr_norma.Equals("0"))
+            {
+                normaOv.nr_norma = "";
+            }
+            chave.Append(normaOv.ch_tipo_norma + "#");
+            chave.Append(normaOv.nr_norma + "#");
+
+            if (!tipoDeNorma.in_numeracao_por_orgao)
+            {
+                chave.Append(normaOv.cr_norma + "#");
+                chave.Append(normaOv.nr_sequencial);
+                chaves.Add(chave.ToString());
+            }
+            else
+            {
+                var ano = "0000";
+                // Se a norma for sem número, deve ser usada a data de assinatura completa e não somente o ano
+                if (string.IsNullOrEmpty(normaOv.nr_norma))
+                {
+                    ano = normaOv.dt_assinatura;
+                }
+                else
+                {
+                    var dt_assinatura_split = normaOv.dt_assinatura.Split('/');
+
+                    if (dt_assinatura_split.Length == 3)
+                    {
+                        ano = dt_assinatura_split[2];
+                    }
+                }
+                chave.Append(ano + "#");
+                chave.Append(normaOv.cr_norma + "#");
+                chave.Append(normaOv.nr_sequencial + "#");
+                foreach (var orgao in normaOv.origens)
+                {
+                    chaves.Add(orgao.ch_orgao + "|" + chave.ToString());
+                }
+            }
+            //normaOv.ch_para_nao_duplicacao = GerarChaveParaNaoDuplicacaoDaNorma(normaOv.ch_tipo_norma, normaOv.nr_norma, normaOv.nr_sequencial, normaOv.cr_norma, normaOv.dt_assinatura, normaOv.origens.Select<Orgao, string>(o => o.ch_orgao).ToArray<string>());
+            normaOv.ch_para_nao_duplicacao = chaves;
+            GerarRankeamentoDeNorma(normaOv, tipoDeNorma);
         }
 		
 		public bool Atualizar(ulong id_doc, NormaOV normaOv)
         {
-
-            Validar(normaOv);
-            GerarChaveDaNorma(normaOv);
-            GerarRankeamentoDeNorma(normaOv);
+            ValidarGerarChaveEAuxDeRankeamentoDaNorma(normaOv);
             if (!normaOv.st_situacao_forcada)
             {
                 DefinirSituacaoDaNorma(normaOv, false);
@@ -283,65 +322,82 @@ namespace TCDF.Sinj.RN
             normaOv.nm_situacao = situacaoOv.nm_situacao;
         }
 
-        public void GerarRankeamentoDeNorma(NormaOV normaOv)
+        private void GerarRankeamentoDeNorma(NormaOV normaOv, TipoDeNormaOV tipoDeNorma)
         {
-            if (normaOv.rankeamentos.IndexOf(normaOv.nm_tipo_norma) < 0)
+            var ano = "";
+            var nr_norma = "";
+            var dt_assinatura = "";
+            normaOv.rankeamentos = new List<string>();
+            normaOv.rankeamentos.Add(normaOv.nm_tipo_norma);
+
+            if (!string.IsNullOrEmpty(normaOv.nr_norma))
             {
-                normaOv.rankeamentos.Add(normaOv.nm_tipo_norma);
-            }
-            if (normaOv.rankeamentos.IndexOf(normaOv.nr_norma) < 0 && !string.IsNullOrEmpty(normaOv.nr_norma))
-            {
+                nr_norma = normaOv.nr_norma;
                 normaOv.rankeamentos.Add(normaOv.nr_norma);
             }
-            if (normaOv.rankeamentos.IndexOf(normaOv.dt_assinatura) < 0)
+            if (!string.IsNullOrEmpty(normaOv.dt_assinatura))
             {
+                dt_assinatura = normaOv.dt_assinatura;
+                var dt_splited = normaOv.dt_assinatura.Split('/');
+                if (dt_splited.Length == 3 && dt_splited[2].Length == 4)
+                {
+                    ano = dt_splited[2];
+                    normaOv.rankeamentos.Add(ano);
+                }
                 normaOv.rankeamentos.Add(normaOv.dt_assinatura);
             }
             foreach (var origem in normaOv.origens)
             {
-                if (normaOv.rankeamentos.IndexOf(origem.sg_orgao) < 0)
+                normaOv.rankeamentos.Add(origem.sg_orgao);
+                normaOv.rankeamentos.Add(origem.nm_orgao);
+            }
+            foreach (var sg_tipo_norma in tipoDeNorma.sgs_tipo_norma)
+            {
+                normaOv.rankeamentos.Add(sg_tipo_norma);
+                if (!string.IsNullOrEmpty(nr_norma))
                 {
-                    normaOv.rankeamentos.Add(origem.sg_orgao);
+                    normaOv.rankeamentos.Add(sg_tipo_norma + " " + nr_norma);
                 }
-                if (normaOv.rankeamentos.IndexOf(origem.nm_orgao) < 0)
+                normaOv.rankeamentos.Add(sg_tipo_norma + " " + nr_norma + " " + dt_assinatura);
+                if (!string.IsNullOrEmpty(ano))
                 {
-                    normaOv.rankeamentos.Add(origem.nm_orgao);
+                    normaOv.rankeamentos.Add(sg_tipo_norma + " " + nr_norma + " " + ano);
+                    normaOv.rankeamentos.Add(sg_tipo_norma + " " + nr_norma + " " + ano.Substring(2));
                 }
             }
-        }
-
-        public void GerarChaveDaNorma(NormaOV normaOv)
-        {
-            normaOv.ch_para_nao_duplicacao = GerarChaveParaNaoDuplicacaoDaNorma(normaOv.ch_tipo_norma, normaOv.nr_norma, normaOv.nr_sequencial, normaOv.cr_norma, normaOv.dt_assinatura, normaOv.origens.Select<Orgao, string>(o => o.ch_orgao).ToArray<string>());
         }
 
         public List<string> GerarChaveParaNaoDuplicacaoDaNorma(string ch_tipo_norma, string nr_norma, int nr_sequencial, string cr_norma, string dt_assinatura, string[] chs_orgao)
         {
             List<string> chaves = new List<string>();
             StringBuilder chave = new StringBuilder();
+
+            chave.Append(ch_tipo_norma + "#");
+            chave.Append(nr_norma + "#");
+
             var tipodenorma = new TipoDeNormaRN().Doc(ch_tipo_norma);
             if (!tipodenorma.in_numeracao_por_orgao)
             {
-                chave.Append(ch_tipo_norma + "#");
-                chave.Append(nr_norma + "#");
                 chave.Append(cr_norma + "#");
                 chave.Append(nr_sequencial);
                 chaves.Add(chave.ToString());
             }
             else
             {
-                chave.Append(ch_tipo_norma + "#");
-                chave.Append(nr_norma + "#");
-                var dt_assinatura_split = dt_assinatura.Split('/');
                 var ano = "0000";
-                if (dt_assinatura_split.Length == 3)
-                {
-                    ano = dt_assinatura_split[2];
-                }
                 // Se a norma for sem número, deve ser usada a data de assinatura completa e não somente o ano
                 if (string.IsNullOrEmpty(nr_norma) || nr_norma == "0")
                 {
                     ano = dt_assinatura;
+                }
+                else
+                {
+                    var dt_assinatura_split = dt_assinatura.Split('/');
+
+                    if (dt_assinatura_split.Length == 3)
+                    {
+                        ano = dt_assinatura_split[2];
+                    }
                 }
                 chave.Append(ano + "#");
                 chave.Append(cr_norma + "#");

@@ -28,15 +28,17 @@
                 $(el).text('Exibir Alterações');
             }
         }
+        //Verifica os links de LECO, ordena e insere o link 'exibir mais...' e 'exibir menos...' caso exista mais de 3 links de LECO
         function verificarLinks() {
             var aP = $('#div_texto > p');
             var i = 0;
             var length = aP.length;
             var pAfter = null;
-            var aText = [];
+            var aOrder = [];
             for (; i < length; i++) {
                 if ($('a', aP[i]).length == 1 && $('a', aP[i]).text().toLowerCase().indexOf('legislação correlata') == 0) {
-                    aText.push($('a', aP[i]).attr('show', '1').attr('leco', 'leco').text());
+                    $('a', aP[i]).attr('show', '1').attr('leco', 'leco');
+                    aOrder.push({ 'text': $('a', aP[i]).text(), 'href': $('a', aP[i]).attr('href') });
                     if (i >= 3) {
                         $('a', aP[i]).attr('show', '0');
                         pAfter = aP[i];
@@ -46,11 +48,12 @@
                     break;
                 }
             }
-            aText.sort(function (text1, text2) {
-                return text1 > text2 ? 1 : text1 < text2 ? -1 : 0;
+            aOrder.sort(function (a1, a2) {
+                return a1.text > a2.text ? 1 : a1.text < a2.text ? -1 : 0;
             });
             $('#div_texto a[leco="leco"]').each(function (i, o) {
-                o.innerText = aText[i];
+                o.innerText = aOrder[i].text;
+                o.href = aOrder[i].href;
             });
             if (pAfter != null && $('a[show="0"]').length > 3) {
                 $('a[show="0"]').hide();

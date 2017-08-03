@@ -6,6 +6,7 @@
             $("#div_resultado").dataTablesLight({
                 sAjaxUrl: './ashx/Datatable/DiarioDatatable.ashx' + window.location.search,
                 aoColumns: _columns_diario,
+                iDisplayLength: 25,
                 sIdTable: 'datatable_diarios'
             });
         });
