@@ -75,7 +75,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             break;
                         }
                     }
-                    if (normaAlteradoraOv != null)
+                    if (normaAlteradoraOv != null && normaAlteradoraOv.vides.Count > 0)
                     {
                         var videAlteradorDesfazer = normaAlteradoraOv.vides.Where(v => v.ch_vide == _ch_vide).First();
 
@@ -84,7 +84,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                             if (normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
                             {
-                                if (normaAlteradaOv != null)
+                                if (normaAlteradaOv != null && normaAlteradaOv.vides.Count > 0)
                                 {
                                     var videAlteradoDesfazer = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide).First();
                                     if (normaAlteradaOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0)
@@ -108,16 +108,16 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                                 }
                                 else
                                 {
-                                    sRetorno = "{\"id_doc_success\":" + normaAlteradoraOv._metadata.id_doc + ", \"alert_message\": \"O vide foi excluído mas a norma alterada não foi encontrada. Se há alteração de vide no arquivo da norma, a mesma deve ser desfeita manualmente.\"}";
+                                    sRetorno = "{\"id_doc_success\":" + normaAlteradoraOv._metadata.id_doc + ", \"alert_message\": \"O vide foi excluído mas a norma alterada não foi encontrada ou não possui vides. Se há alteração de vide no arquivo da norma, a mesma deve ser desfeita manualmente.\"}";
                                 }
                             }
                             else
                             {
-                                throw new Exception("Erro ao excluir Vide.");
+                                throw new Exception("Erro ao excluir Vide da norma alteradora e consequentemente o vido da norma alterada não foi excluído também.");
                             }
                         }
                     }
-                    else if (normaAlteradaOv != null)
+                    else if (normaAlteradaOv != null && normaAlteradaOv.vides.Count > 0)
                     {
                         var videAlteradoDesfazer = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide).First();
                         if (normaAlteradaOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0)
@@ -133,7 +133,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                             if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                             {
-                                sRetorno = "{\"id_doc_success\":" + normaAlteradaOv._metadata.id_doc + ", \"alert_message\": \"O vide foi excluído mas a norma alteradora não foi encontrada. Se há alteração de vide no arquivo da norma, a mesma deve ser desfeita manualmente.\"}";
+                                sRetorno = "{\"id_doc_success\":" + normaAlteradaOv._metadata.id_doc + ", \"alert_message\": \"O vide foi excluído mas a norma alteradora não foi encontrada ou não possui vides. Se há alteração de vide no arquivo da norma, a mesma deve ser desfeita manualmente.\"}";
                             }
                             else
                             {

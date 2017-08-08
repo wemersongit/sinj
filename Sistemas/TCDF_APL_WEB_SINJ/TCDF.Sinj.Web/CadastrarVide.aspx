@@ -44,6 +44,9 @@
                                     {
                                         text: "Continuar",
                                         click: function () {
+                                            if (IsNotNullOrEmpty(data, 'dt_controle_alteracao')) {
+                                                $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
+                                            }
                                             $("#ch_tipo_relacao").val("");
                                             $("#nm_tipo_relacao").val("");
                                             $("#ds_comentario_vide").val("");

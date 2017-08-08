@@ -3798,7 +3798,7 @@ function generateLinkNameCaput(text) {
             id = 'ali' + palavras[0].replace(/[^a-z]/gi, '');
         }
         else if (ehNum(palavras[0])) {
-            id = 'num' + palavras[0].replace(/[^0-9]/gi, '');
+            id = 'num' + palavras[0].replace(/[^0-9.]/gi, '');
         }
     }
     return id;

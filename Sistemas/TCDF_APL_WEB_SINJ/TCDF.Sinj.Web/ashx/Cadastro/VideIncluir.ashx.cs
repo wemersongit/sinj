@@ -255,7 +255,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                                 if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                 {
-                                    sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\"}";
+                                    sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
                                     VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada);
                                 }
                                 else
@@ -265,7 +265,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             }
                             else
                             {
-                                sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\"}";
+                                sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
                             }
                         }
                         else
@@ -299,7 +299,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                 if (ex is PermissionException || ex is DocDuplicateKeyException || ex is SessionExpiredException || ex is DocValidacaoException || ex is RiskOfInconsistency)
                 {
-                    sRetorno = "{\"error_message\": \"" + ex.Message + "\", \"type_error\":\"" + ex.GetType().Name + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
+                    sRetorno = "{\"error_message\": \"" + ex.Message + "\", \"type_error\":\"" + ex.GetType().Name + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
                 }
                 else
                 {
@@ -706,13 +706,28 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     switch (_caput_alterada.nm_relacao_aux)
                     {
                         case "acrescimo":
-                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
                             var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
-                            replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
-                            for (var j = 0; j < texto_novo_splited.Length; j++)
+                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?)(replaced_by=\".*?\")(.*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
+                            replacement = "$1" + _caput_alterada.caput[i] + "$2$3$4$5";
+                            //É necessário verificar a existencia do atributo replaced_by no paragrafo antes se aplicar o regex.
+                            //Quando tem o parametro replaced_by tem que evitar acrescentá-lo nos paragrafos que estão sendo acrescidos.
+                            if (Regex.Matches(texto, pattern).Count == 1)
                             {
-                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
-                                replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                for (var j = 0; j < texto_novo_splited.Length; j++)
+                                {
+                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                                    replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2$4<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                }
+                            }
+                            else
+                            {
+                                pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
+                                replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
+                                for (var j = 0; j < texto_novo_splited.Length; j++)
+                                {
+                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                                    replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                }
                             }
                             break;
                         case "renumeração":
@@ -835,14 +850,30 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 switch (_caput_alterada.nm_relacao_aux)
                 {
                     case "acrescimo":
-                        pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
                         var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
-                        replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
-                        for (var j = 0; j < texto_novo_splited.Length; j++)
+                        pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?)(replaced_by=\".*?\")(.*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
+                        replacement = "$1" + _caput_alterada.caput[i] + "$2$3$4$5";
+                        //É necessário verificar a existencia do atributo replaced_by no paragrafo antes se aplicar o regex.
+                        //Quando tem o parametro replaced_by tem que evitar acrescentá-lo nos paragrafos que estão sendo acrescidos.
+                        if (Regex.Matches(texto, pattern).Count == 1)
                         {
-                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
-                            replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                            for (var j = 0; j < texto_novo_splited.Length; j++)
+                            {
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
+                                replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2$4<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                            }
                         }
+                        else
+                        {
+                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
+                            replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
+                            for (var j = 0; j < texto_novo_splited.Length; j++)
+                            {
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
+                                replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                            }
+                        }
+                        
                         break;
                     case "renumeração":
                         ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
@@ -1195,7 +1226,12 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
         public static string gerarDescricaoDoTexto(string texto)
         {
-            var caput = texto.Substring(0, texto.Trim().IndexOf(' ')).ToUpper();
+            var caput = "";
+            texto = texto.Trim().ToUpper();
+            if (texto.IndexOf(' ') >= 0)
+            {
+                caput = texto.Substring(0, texto.IndexOf(' '));
+            }
             if (caput == "ANEXO")
             {
                 caput = "Anexo ";
@@ -1227,6 +1263,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             else if (ehNum(caput))
             {
                 caput = "Número ";
+            }
+            else
+            {
+                caput = "";
             }
             return caput;
         }
