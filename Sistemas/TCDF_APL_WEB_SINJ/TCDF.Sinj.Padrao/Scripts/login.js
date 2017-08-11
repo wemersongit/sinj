@@ -74,7 +74,7 @@ function Deslogar() {
     //ShowMessage("PanelNotificacao", " Sistema sendo finalizado com segurança!!!", "alert");
     var sucesso = function (data) {
         if (data.excluido) {
-            top.document.location.href = "./Login.aspx?exit=3";
+            document.location.href = "./Login.aspx?exit=3";
             return;
         } else {
             $('#a_logout').show();

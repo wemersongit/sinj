@@ -3711,6 +3711,13 @@ function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
                 $(value_p).attr('linkname', '');
                 linkname = '';
             }
+            //Caso o usuário edite a ancora deve-se limpar o attr linkname do paragrafo
+            //e usar a class linkname como filtro para pegar somente as ancoras geradas no client-side caso contrario
+            //pode gerar conflito com as ancoras geradas no server-sice
+            else if(IsNotNullOrEmpty(linkname) && $('a[name]', value_p).length == 1 && !IsNotNullOrEmpty($('a[name]', value_p)[0].previousSibling) && $('a[name]', value_p).attr('name') != linkname){
+                $(value_p).attr('linkname', '');
+                linkname = '';
+            }
             //Se o paragrafo já possuir o atributo linkname (atributo criado para o editor de links conseguir exibir os icones e fazer a funcionalidade de criar e editar ancoras),
             //ele não deve ser mexido
             if (!IsNotNullOrEmpty(linkname)) {
@@ -3738,6 +3745,8 @@ function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
                                 name = niveis.join('_');
                             }
                             if ($('#' + name).length <= 0) {
+                                //a class linkname na ancora auxilia identificar quando o linkname foi gerado no client-side
+                                //ajudando a diferenciar dos linknames gerados no server-side
                                 $(value_p).prepend('<a id="' + name + '" name="' + name + '" class="linkname"></a>');
                                 $(value_p).attr('linkname', name);
                             }
@@ -3892,18 +3901,10 @@ function configureCkeditor(){
             info.get( 'txtCellSpace' )[ 'default' ] = '0';         // Set default border to 0
         }
     });
-    CKEDITOR.on('command', function( ev ) {
-        var dialogName = ev;
-    });
     
 }
 
 function loadCkeditor(id_textarea){
-//    CKEDITOR.replace(id_textarea, {
-//        extraAllowedContent: 'p[linkname,replaced_by];h[epigrafe]',
-//        filebrowserImageBrowseUrl: './Download/imagens',
-//        pasteFilter: 'semantic-content'
-//    });
     CKEDITOR.replace(id_textarea, {
         extraAllowedContent: 'p[linkname,replaced_by];h[epigrafe];a(linkname)',
         filebrowserImageBrowseUrl: './Imagens.aspx'

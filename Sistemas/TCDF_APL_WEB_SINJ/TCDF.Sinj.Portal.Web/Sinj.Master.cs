@@ -22,6 +22,8 @@ namespace TCDF.Sinj.Portal.Web
             }
         }
         public static string jsValorChave() {
+            var ambitos = Util.GetAmbitos();
+            var orgaosCadastradores = Util.GetOrgaosCadastradores();
             return string.Concat(
                 "  var _urlApps = '", util.BRLight.Util.GetVariavel("apps", true), "';"
                 , "  var _urlPadrao = '", Util._urlPadrao, "';"
@@ -29,8 +31,8 @@ namespace TCDF.Sinj.Portal.Web
                 , "  var _aplicacao = '", util.BRLight.Util.GetVariavel("Aplicacao"), "';" //Util quando as aplicações estiverem unificadas...
                 , "  var _versao = '", Util.MostrarVersao(), "';"
                 , "  var _extensoes = ", util.BRLight.Util.GetVariavel("Extensoes"), ";"
-                , "  var _ambitos = ", Util.GetAmbitos(), ";"
-                , "  var _orgaos_cadastradores = ", Util.GetOrgaosCadastradores(), ";"
+                , "  var _ambitos = ", (!string.IsNullOrEmpty(ambitos) ? ambitos : "[]"), ";"
+                , "  var _orgaos_cadastradores = ", (!string.IsNullOrEmpty(orgaosCadastradores) ? ambitos : "[]"), ";"
                 , "  var _notifiqueme = ", (oSessaoNotifiqueme != null) ? JSON.Serialize<SessaoNotifiquemeOV>(oSessaoNotifiqueme) : "null", ";"
                 , "  var _nm_cookie_push = '", util.BRLight.Util.GetVariavel("NmCookiePush"), "';"
                 , "  try { "

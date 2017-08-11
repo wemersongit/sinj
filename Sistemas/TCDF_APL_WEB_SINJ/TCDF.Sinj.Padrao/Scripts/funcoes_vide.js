@@ -255,20 +255,28 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
     }
 }
 
-function selecionarTexto(nm_sufixo){
-    var text = window.getSelection().toString();
+function selecionarTexto(nm_sufixo, _a) {
+    var text = '';
+    var parentNode;
+    if (IsNotNullOrEmpty(_a)) {
+        text = _a.innerText;
+        parentNode = _a.parentNode;
+    }
+    else{
+        text = window.getSelection().toString();
+        parentNode = window.getSelection().baseNode.parentNode;
+    }
     if (text != '') {
-        var parentNode = window.getSelection().baseNode.parentNode;
         var linkname = parentNode.getAttribute('linkname');
         if ($('p[linkname="' + linkname + '"]').text().length < text.length) {
             alert('Erro! Não selecione mais de um parágrafo por vez.');
             return false;
         }
         if (IsNotNullOrEmpty(linkname)) {
-            $('#div_cad_caput_'+nm_sufixo+' div.div_caputs_selecionados input[name="caput"][value="' + linkname + '"]').remove();
-            $('#div_cad_caput_'+nm_sufixo+' div.div_caputs_selecionados input[name="caput_texto_' + linkname + '"]').remove();
-            $('#div_cad_caput_'+nm_sufixo+' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput" value="' + linkname + '" />');
-            $('#div_cad_caput_'+nm_sufixo+' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput_texto_' + linkname + '" value="' +  text + '" />');
+            $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados input[name="caput"][value="' + linkname + '"]').remove();
+            $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados input[name="caput_texto_' + linkname + '"]').remove();
+            $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput" value="' + linkname + '" />');
+            $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput_texto_' + linkname + '" value="' + text + '" />');
 
             selecionarCaput(nm_sufixo);
 
@@ -310,6 +318,9 @@ function selecionarArquivoCaput(el, nm_sufixo) {
                 if (nm_sufixo == "alteradora") {
                     $('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo p[linkname]').mouseup(function () {
                         selecionarTexto(nm_sufixo);
+                    });
+                    $('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo p[linkname] a[href]').attr('href', 'javascript:void(0);').click(function () {
+                        selecionarTexto(nm_sufixo, this);
                     });
                 }
 

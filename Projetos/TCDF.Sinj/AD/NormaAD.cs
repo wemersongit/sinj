@@ -314,6 +314,7 @@ namespace TCDF.Sinj.AD
                 var _nr_norma = context.Request["nr_norma"];
                 var _norma_sem_numero = context.Request["norma_sem_numero"];
                 var _ano_assinatura = context.Request["ano_assinatura"];
+                var _dt_assinatura = context.Request["dt_assinatura"];
                 var _ch_orgao = context.Request["ch_orgao"];
                 var _ch_termo = context.Request.Form.GetValues("ch_termo");
                 if (!string.IsNullOrEmpty(_ch_tipo_norma))
@@ -323,6 +324,10 @@ namespace TCDF.Sinj.AD
                 if (!string.IsNullOrEmpty(_ano_assinatura))
                 {
                     query_textual += (query_textual != "" ? " AND " : "") + "(dt_assinatura:[01/01/" + _ano_assinatura + " TO 31/12/" + _ano_assinatura + "])";
+                }
+                if (!string.IsNullOrEmpty(_dt_assinatura))
+                {
+                    query_textual += (query_textual != "" ? " AND " : "") + "(dt_assinatura:(\\\"" + _dt_assinatura + "\\\"))";
                 }
                 if (_ch_termo != null && _ch_termo.Length > 0)
                 {

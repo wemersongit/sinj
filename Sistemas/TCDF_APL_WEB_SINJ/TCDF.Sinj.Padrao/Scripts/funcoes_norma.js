@@ -1542,20 +1542,12 @@ function ExcluirVide(sender, id_doc, ch_vide) {
                 });
             }
         }
-        var inicio = function () {
-            $('a', $td).hide();
-            $td.append('<div class="loading-p" />');
-        }
-        var complete = function () {
-            $('a', $td).show();
-            $('div.loading-p', $td).remove();
-        }
         $.ajaxlight({
             sUrl: "./ashx/Exclusao/VideExcluir.ashx?id_doc=" + id_doc + "&ch_vide="+ch_vide,
             fnSuccess: sucesso,
-            fnBeforeSend: inicio,
-            fnComplete: complete,
-            aSync: true
+            fnBeforeSend: gInicio,
+            fnComplete: gComplete,
+            bAsync: true
         });
     }
 }

@@ -603,7 +603,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         
 
         /// <summary>
-        /// Alterar o texto da norma alteradora para criar um transformar link para o dispositivo da norma alterada
+        /// Alterar o texto da norma alteradora para criar um link para o dispositivo da norma alterada
         /// </summary>
         /// <param name="_caput_alteradora"></param>
         /// <param name="_caput_alterada"></param>
@@ -633,15 +633,19 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     pattern_caput = _caput_alterada.caput[0];
                     break;
             }
-            var pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "(.*?)</p>";
-            if (Regex.Matches(texto, pattern).Count == 1)
+            var pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)<a(.*?)>" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "</a>(.*?)</p>";
+            if (Regex.Matches(texto, pattern).Count == 0)
             {
-                var replacement = "$1$2" + "<a href=\"(_link_sistema_)Norma/" + _caput_alterada.ch_norma + '/' + _caput_alterada.filename + "#" + pattern_caput + "\">" + _caput_alteradora.link + "</a>" + "$3</p>";
-                texto = Regex.Replace(texto, pattern, replacement);
-            }
-            else
-            {
-                texto = "";
+                pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "(.*?)</p>";
+                if (Regex.Matches(texto, pattern).Count == 1)
+                {
+                    var replacement = "$1$2" + "<a href=\"(_link_sistema_)Norma/" + _caput_alterada.ch_norma + '/' + _caput_alterada.filename + "#" + pattern_caput + "\">" + _caput_alteradora.link + "</a>" + "$3</p>";
+                    texto = Regex.Replace(texto, pattern, replacement);
+                }
+                else
+                {
+                    texto = "";
+                }
             }
             return texto;
         }
@@ -655,15 +659,19 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
         public string CriarLinkNoTextoDaNormaAlteradora(string texto, Caput _caput_alteradora, string ch_norma_alterada, string name_file_norma_alterada)
         {
-            var pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "(.*?)</p>";
-            if (Regex.Matches(texto, pattern).Count == 1)
+            var pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)<a(.*?)>" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "</a>(.*?)</p>";
+            if (Regex.Matches(texto, pattern).Count == 0)
             {
-                var replacement = "$1$2" + "<a href=\"(_link_sistema_)Norma/" + ch_norma_alterada + '/' + name_file_norma_alterada + "\">" + _caput_alteradora.link + "</a>" + "$3</p>";
-                texto = Regex.Replace(texto, pattern, replacement);
-            }
-            else
-            {
-                texto = "";
+                pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "(.*?)</p>";
+                if (Regex.Matches(texto, pattern).Count == 1)
+                {
+                    var replacement = "$1$2" + "<a href=\"(_link_sistema_)Norma/" + ch_norma_alterada + '/' + name_file_norma_alterada + "\">" + _caput_alteradora.link + "</a>" + "$3</p>";
+                    texto = Regex.Replace(texto, pattern, replacement);
+                }
+                else
+                {
+                    texto = "";
+                }
             }
             return texto;
         }
@@ -761,18 +769,32 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             replacement = "$1 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                             break;
                         default:
-                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)( <a class=\"link_vide\".*?</a>)</p>";
+                            //verifica primeiro quantas vezes o paragrafo já foi alterado
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(_replaced.*?\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "_replaced.*?\".*?></a>)(.*?)</p>";
                             var matches = Regex.Matches(texto, pattern);
-                            if (matches.Count == 1)
+                            var iReplaceds = matches.Count;
+
+                            //em seguida usa-se o pattern para pegar o paragrafo que está sendo alterado, e se estiver sendo alterado pela segunda vez já vai possuir class='link_vide'
+                            //sendo assim deve-se manter os links do mesmo e inserir links novo no proximo vigente
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)( <a class=\"link_vide\".*?</a>)</p>";
+                            matches = Regex.Matches(texto, pattern);
+                            if (matches.Count > 0)
                             {
                                 ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+
+                                var sReplaced = "_replaced";
+                                for (var j = 0; j < iReplaceds; j++)
+                                {
+                                    sReplaced += "_replaced";
+                                }
+
                                 if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
                                 {
-                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                                 }
                                 else
                                 {
-                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                                 }
                             }
                             else
@@ -906,18 +928,32 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         replacement = "$1 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                         break;
                     default:
-                        pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)( <a class=\"link_vide\".*?</a>)</p>";
+                        //verifica primeiro quantas vezes o paragrafo já foi alterado
+                        pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(_replaced.*?\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "_replaced.*?\".*?></a>)(.*?)</p>";
                         var matches = Regex.Matches(texto, pattern);
-                        if (matches.Count == 1)
+                        var iReplaceds = matches.Count;
+
+                        //em seguida usa-se o pattern para pegar o paragrafo que está sendo alterado, e se estiver sendo alterado pela segunda vez já vai possuir class='link_vide'
+                        //sendo assim deve-se manter os links do mesmo e inserir links novo no proximo vigente
+                        pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)( <a class=\"link_vide\".*?</a>)</p>";
+                        matches = Regex.Matches(texto, pattern);
+                        if (matches.Count > 0)
                         {
                             ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
+
+                            var sReplaced = "_replaced";
+                            for (var j = 0; j < iReplaceds; j++)
+                            {
+                                sReplaced += "_replaced";
+                            }
+                            
                             if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
                             {
-                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                             }
                             else
                             {
-                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                             }
                         }
                         else
@@ -1181,19 +1217,19 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         {
             var caput_splited = _caput.Split('_');
             var last_caput = caput_splited.Last();
-            if (last_caput.IndexOf("ane") == 0)
-            {
-                _caput = "Anexo ";
-            }
-            if (last_caput.IndexOf("tit") == 0)
-            {
-                _caput = "Título ";
-            }
-            else if (last_caput.IndexOf("cap") == 0)
-            {
-                _caput = "Capítulo ";
-            }
-            else if (last_caput.IndexOf("art") == 0)
+            //if (last_caput.IndexOf("ane") == 0)
+            //{
+            //    _caput = "Anexo ";
+            //}
+            //if (last_caput.IndexOf("tit") == 0)
+            //{
+            //    _caput = "Título ";
+            //}
+            //else if (last_caput.IndexOf("cap") == 0)
+            //{
+            //    _caput = "Capítulo ";
+            //}
+            if (last_caput.IndexOf("art") == 0)
             {
                 _caput = "Artigo ";
             }
@@ -1213,10 +1249,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 _caput = "Alínea ";
             }
-            else if (last_caput.IndexOf("num") == 0)
-            {
-                _caput = "Número ";
-            }
+            //else if (last_caput.IndexOf("num") == 0)
+            //{
+            //    _caput = "Número ";
+            //}
             else
             {
                 _caput = "";
@@ -1232,19 +1268,19 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 caput = texto.Substring(0, texto.IndexOf(' '));
             }
-            if (caput == "ANEXO")
-            {
-                caput = "Anexo ";
-            }
-            if (caput == "TITULO" || caput == "TÍTULO")
-            {
-                caput = "Título ";
-            }
-            else if (caput == "CAPITULO" || caput == "CAPÍTULO")
-            {
-                caput = "Capítulo ";
-            }
-            else if (caput == "ART" || caput == "ART.")
+            //if (caput == "ANEXO")
+            //{
+            //    caput = "Anexo ";
+            //}
+            //if (caput == "TITULO" || caput == "TÍTULO")
+            //{
+            //    caput = "Título ";
+            //}
+            //else if (caput == "CAPITULO" || caput == "CAPÍTULO")
+            //{
+            //    caput = "Capítulo ";
+            //}
+            if (caput == "ART" || caput == "ART.")
             {
                 caput = "Artigo ";
             }
@@ -1260,10 +1296,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 caput = "Alínea ";
             }
-            else if (ehNum(caput))
-            {
-                caput = "Número ";
-            }
+            //else if (ehNum(caput))
+            //{
+            //    caput = "Número ";
+            //}
             else
             {
                 caput = "";
