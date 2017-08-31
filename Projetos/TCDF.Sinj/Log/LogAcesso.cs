@@ -17,6 +17,10 @@ namespace TCDF.Sinj.Log
         public static ulong gravar_acesso(string login, bool sucesso, string msg, string nm_user, string nm_login_user)
         {
             ulong id_log = 0;
+            if (Util.ehReplica())
+            {
+                return id_log;
+            }
             try
             {
                 var servidor = util.BRLight.Util.Variables("LOCAL_ADDR");

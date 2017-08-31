@@ -2212,7 +2212,7 @@ function MontarHighlight(obj, sCampo) {
 
 function fn_submit_highlight() {
     for (var i = 0; i < aHighlight.length; i++) {
-        if (doc_clicked == aHighlight[i].doc) {
+        if (doc_clicked == aHighlight[i].doc && base_clicked == aHighlight[i].nm_base) {
             if (IsNotNullOrEmpty(id_file)) {
                 if (IsNotNullOrEmpty(texto)) {
                     document.form_highlight.action = "./TextoArquivoNorma.aspx?id_file=" + id_file;
@@ -2221,7 +2221,7 @@ function fn_submit_highlight() {
                 }
             }
             //          document.form_highlight.action = "./DetalhesDeNorma.aspx?id_doc=" + doc_clicked;
-            document.form_highlight.action = "./DetalhesDeNorma.aspx?id_norma=" + aHighlight[i].ch_doc;
+            document.form_highlight.action = aHighlight[i].action;
             document.form_highlight.highlight.value = window.escape(JSON.stringify(aHighlight[i].highlight));
             return true;
         }
@@ -2232,6 +2232,12 @@ function fn_submit_highlight() {
 function aplicarHighlight(selector, highlight, parent, className) {
     if (IsNotNullOrEmpty(highlight))
         for (var key in highlight) {
+            for(var i in highlight[key]){
+                if(highlight[key][i].indexOf('_pre_tag_highlight_') > -1){
+                    highlight[key][i] = highlight[key][i].replace('_pre_tag_highlight_', '').replace('_post_tag_highlight_', '');
+                }
+            }
+            
             $(selector + key, parent).highlight(highlight[key], {
                 wordsOnly: false,
                 className: className

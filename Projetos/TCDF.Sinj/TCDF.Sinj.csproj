@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="neo.BRLightES">
-      <HintPath>..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
-    </Reference>
     <Reference Include="neo.BRLightSession">
       <HintPath>..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
     </Reference>
@@ -77,6 +74,9 @@
     <Compile Include="AD\TipoDeRelacaoAD.cs" />
     <Compile Include="AD\UsuarioAD.cs" />
     <Compile Include="AD\VocabularioAD.cs" />
+    <Compile Include="ESUtil\AD.cs" />
+    <Compile Include="ESUtil\Doc.cs" />
+    <Compile Include="ESUtil\Model.cs" />
     <Compile Include="Excecoes.cs" />
     <Compile Include="LB.cs" />
     <Compile Include="Log\AD\log_acessoAD.cs" />

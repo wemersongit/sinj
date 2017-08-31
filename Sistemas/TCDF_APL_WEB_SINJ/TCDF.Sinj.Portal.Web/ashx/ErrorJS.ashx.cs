@@ -35,6 +35,7 @@ namespace TCDF.Sinj.Portal.Web.ashx
 
             var _json = JSON.Serialize<ErroJS>(_erro);
 
+
             LogErro.gravar_erro("JavaScript", _erro, "PORTAL", "sinj_portal");
 
 

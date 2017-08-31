@@ -49,6 +49,11 @@ namespace TCDF.Sinj.Log
         private static ulong gravar_erro(string _nm_tipo, string _ch_operacao, string _ds_erro, string nm_user, string nm_login_user)
         {
             ulong id_log = 0;
+
+            if (Util.ehReplica())
+            {
+                return id_log;
+            }
             try
             {
                 var olog_erroOV = new log_erroOV();

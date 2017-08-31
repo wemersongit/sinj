@@ -12,6 +12,12 @@ namespace TCDF.Sinj.Portal.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Util.ehReplica())
+            {
+                Response.Redirect("./", true);
+            }
+
             string sRetorno = "";
             var _email_usuario_push = Request["email_usuario_push"];
             var _ch_norma_monitorada = Request["ch_norma_monitorada"];

@@ -58,7 +58,7 @@ var _columns_norma_es = [
 	        if (!IsNotNullOrEmpty(window.aHighlight)) {
 	            aHighlight = [];
 	        }
-	        aHighlight.push({ highlight: full.highlight, doc: full.fields.partial[0]._metadata.id_doc, ch_doc: full.fields.partial[0].ch_norma });
+	        aHighlight.push({ highlight: full.highlight, nm_base: 'sinj_norma', doc: full.fields.partial[0]._metadata.id_doc, action: './DetalhesDeNorma.aspx?id_norma=' + full.fields.partial[0].ch_norma });
 	        return '<a valor="sinj_norma_' + full.fields.partial[0]._metadata.id_doc + '" title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(\'sinj_norma_' + full.fields.partial[0]._metadata.id_doc + '\');"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /></a>';
 	        //        return '<input class="check_cesta" type="checkbox" value="sinj_norma_' + full.fields.partial[0]._metadata.id_doc + '" />';
 	    }
@@ -70,7 +70,7 @@ var _columns_norma_es = [
 	},
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo e Número", "sWidth": "", "sClass": "grid-cell ws nm_tipo_norma nr_norma", "mData": "nm_tipo_norma", "visible": false,
 	    "mRender": function (data, type, full) {
-	        return '<button title="Detalhes" name="btn" type="submit" title="Detalhes" class="link" onclick="javascript:doc_clicked=' + full.fields.partial[0]._metadata.id_doc + ';"><H2>' + full.fields.partial[0].nm_tipo_norma + " " + full.fields.partial[0].nr_norma + '</H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>';
+	        return '<button title="Detalhes" name="btn" type="submit" title="Detalhes" class="link" onclick="javascript:doc_clicked=' + full.fields.partial[0]._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2>' + full.fields.partial[0].nm_tipo_norma + " " + full.fields.partial[0].nr_norma + '</H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>';
 	    }
 	},
 	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Assinatura", "sWidth": "", "sClass": "grid-cell ws dt_assinatura", "mData": "dt_assinatura", "visible": false,
@@ -125,7 +125,7 @@ var _columns_norma_es = [
 	        var html = '<div class="table w-100-pc">';
 	        html += '<div class="line">' +
                 '<div class="column">' +
-	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full.fields.partial[0]._metadata.id_doc + ';"><H2><span class="nm_tipo_norma">' + full.fields.partial[0].nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full.fields.partial[0].nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full.fields.partial[0].dt_assinatura + ' <span class="st_norma nm_situacao">' + full.fields.partial[0].nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
+	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full.fields.partial[0]._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full.fields.partial[0].nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full.fields.partial[0].nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full.fields.partial[0].dt_assinatura + ' <span class="st_norma nm_situacao">' + full.fields.partial[0].nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
 	            '</div>' +
             '</div>';
 	        var origens = "";
@@ -206,7 +206,7 @@ _columns_norma_cesta[0] = {
         if (!IsNotNullOrEmpty(window.aHighlight)) {
             aHighlight = [];
         }
-        aHighlight.push({ highlight: full.highlight, doc: full.fields.partial[0]._metadata.id_doc, ch_doc: full.fields.partial[0].ch_norma });
+        aHighlight.push({ highlight: full.highlight, nm_base: 'sinj_norma', doc: full.fields.partial[0]._metadata.id_doc, action: './DetalhesDeNorma.aspx?id_norma=' + full.fields.partial[0].ch_norma });
         return "<a title='Remover da Cesta' href='javascript:ExcluirDaCesta(\"sinj_norma_" + full.fields.partial[0]._metadata.id_doc + "\");' class='a_delete' ><img valign='absmiddle' alt='Excluir'  src='" + _urlPadrao + "/Imagens/ico_trash_p.png'  /></a>";
     }
 };
@@ -287,6 +287,10 @@ var _columns_diario = [
 var _columns_diario_es = [
 	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "", "bSortable": false,
 	    "mRender": function (data, type, full) {
+	        if (!IsNotNullOrEmpty(window.aHighlight)) {
+	            aHighlight = [];
+	        }
+	        aHighlight.push({ highlight: full.highlight, nm_base: 'sinj_diario', doc: full.fields.partial[0]._metadata.id_doc, action: "./DetalhesDeDiario.aspx?id_doc=" + full.fields.partial[0]._metadata.id_doc });
 	        return '<a valor="sinj_diario_' + full.fields.partial[0]._metadata.id_doc + '" title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(\'sinj_diario_' + full.fields.partial[0]._metadata.id_doc + '\');"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /></a>';
 	    }
 	},
@@ -324,8 +328,12 @@ var _columns_diario_es = [
     { "indice": 6, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "left ws", "bSortable": false,
         "mRender": function (data, type, full) {
             var html = '<div class="table w-100-pc">';
+            var buttonTitle = '<H2><span class="nm_tipo_fonte nr_diario dt_assinatura dt_assinatura_text nm_diferencial_edicao nm_tipo_edicao nm_diferencial_suplemento secao_diario">' + montarDescricaoDiario(full.fields.partial[0]) + '</span></H2>';
+            if (_aplicacao == "CADASTRO") {
+                buttonTitle = '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full.fields.partial[0]._metadata.id_doc + ';base_clicked=\'sinj_diario\'">' + buttonTitle + '<img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></button>';
+            }
             html += '<div class="line">' +
-                '<div class="column"><H1>' + montarDescricaoDiario(full.fields.partial[0]) + '</H1></div>' +
+                '<div class="column">' + buttonTitle + '</div>' +
             '</div>';
             var campo_highlight = '';
             var id_file = "";
@@ -352,7 +360,7 @@ var _columns_diario_es = [
 
                     id_file = obj_arquivo.arquivo_diario.id_file;
                     nm_file = obj_arquivo.arquivo_diario.filename;
-                    url_file = './Diario/' + full.fields.partial[0].ch_diario + '/' + id_file + '/arq/'+i+'/' + nm_file;
+                    url_file = './Diario/' + full.fields.partial[0].ch_diario + '/' + id_file + '/arq/' + i + '/' + nm_file;
                     medida = '<b>(' + (obj_arquivo.arquivo_diario.filesize / 1024).toFixed(0) + ' KB)</b>';
 
                     links += '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /> ' + medida + '</a>';

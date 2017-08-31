@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using util.BRLight;
-using neo.BRLightES;
 using Newtonsoft.Json;
 using TCDF.Sinj.Log;
+using TCDF.Sinj.ESUtil;
 
 namespace TCDF.Sinj.Web.ashx.Reindexacao
 {

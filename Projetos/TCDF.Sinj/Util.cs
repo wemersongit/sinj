@@ -161,6 +161,11 @@ namespace TCDF.Sinj
             return aplicacao.Equals("CADASTRO", StringComparison.InvariantCultureIgnoreCase);
         }
 
+        public static bool ehReplica()
+        {
+            return util.BRLight.Util.GetVariavel("Replica") == "1";
+        }
+
         public static SessaoNotifiquemeOV LerSessaoPush()
         {
             return new NotifiquemeRN().LerSessaoNotifiquemeOv();
@@ -277,17 +282,21 @@ namespace TCDF.Sinj
 
         public static string GetInfoServerApp()
         {
-            string ambiente;
-            string shortIp;
-            string versao;
-            string port;
+            string ambiente = "";
+            string shortIp = "";
+            string versao = "";
+            string port = "";
             try
             {
-                ambiente = Config.ValorChave("Ambiente", false);
+                ambiente = util.BRLight.Util.GetVariavel("Ambiente");
+                if(ehReplica())
+                {
+                    ambiente += "." + "r";
+                }
             }
             catch
             {
-                ambiente = "";
+                ambiente = "A_NV";
             }
             try
             {
@@ -306,19 +315,12 @@ namespace TCDF.Sinj
                     {
                         shortIp = ip.Substring(ip.LastIndexOf('/')).Replace("/", "");
                     }
-                    else
-                    {
-                        shortIp = "";
-                    }
-                }
-                else
-                {
-                    shortIp = "";
                 }
             }
             catch
             {
-                shortIp = "";
+                //Server Ip Not Verified
+                shortIp = "SI_NV";
             }
             try
             {
@@ -326,7 +328,7 @@ namespace TCDF.Sinj
             }
             catch
             {
-                versao = "";
+                versao = "V_NV";
             }
             try
             {
@@ -334,8 +336,9 @@ namespace TCDF.Sinj
             }
             catch
             {
-                port = "";
+                port = "P_NV";
             }
+
             return ambiente + "." + versao + "." + shortIp + ":" + port;
         }
 

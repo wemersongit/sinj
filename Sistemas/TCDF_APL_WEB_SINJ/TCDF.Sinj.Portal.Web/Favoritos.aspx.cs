@@ -11,7 +11,10 @@ namespace TCDF.Sinj.Portal.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Util.ehReplica())
+            {
+                Response.Redirect("./", true);
+            }
         }
     }
 }

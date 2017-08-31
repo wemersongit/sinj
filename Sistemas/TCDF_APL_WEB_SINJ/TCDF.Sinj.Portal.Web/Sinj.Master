@@ -166,9 +166,13 @@
                             <ul id="navPage" class="ul-menu">
                                 <li id="li_pesquisas">  <a title="Pesquisas"                class="lnkmenu" id="aPesquisas"     href="./" >Pesquisas</a>          </li>
                                 <li id="li_contato">    <a title="Fale Conosco"             class="lnkmenu" id="aContato"       href="./FaleConosco">Fale Conosco</a>      </li>
+                                <%--Se for réplicado (GDF) a aplicação não poderá ter escrita em banco--%>
+                                <% if (util.BRLight.Util.GetVariavel("Replica") != "1")
+                                   { %>
                                 <li id="li_historico">  <a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a>      </li>
                                 <li id="li_notifiqueme"><a title="Notifique-me"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a>      </li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a>      </li>
+                                <%} %>
                             </ul>
                             <div id="div_user_notifiqueme">
                             </div>

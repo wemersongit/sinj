@@ -14,6 +14,11 @@ namespace TCDF.Sinj.Portal.Web
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+            if (Util.ehReplica())
+            {
+                Response.Redirect("./", true);
+            }
+
 			var _redirecionar_notifiqueme = Request ["redirecionar_notifiqueme"];
 
 			var notifiquemeRn = new NotifiquemeRN();

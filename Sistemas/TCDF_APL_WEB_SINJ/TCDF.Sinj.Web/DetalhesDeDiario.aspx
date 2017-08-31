@@ -1,9 +1,15 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeDiario.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeDiario" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.highlight.js"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_diario.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript">
+        <%
+            var highlight = HttpUtility.UrlDecode(Request.Form["highlight"]);
+        %>
+        var highlight = <%= !string.IsNullOrEmpty(highlight) ? highlight : "\"\"" %>;
         $(document).ready(function () {
-            DetalhesDeDiario();
+            cookies_aux = ['back_history_aux_datatable', 'back_history_aux_filtros', 'back_history_aux_tab'];
+            DetalhesDeDiario(highlight);
         });
     </script>
 </asp:Content>
@@ -38,7 +44,7 @@
                             </div>
                         </div>
                         <div class="column w-70-pc">
-                            <div id="div_nm_tipo_fonte" class="cell w-60-pc">
+                            <div id="div_nm_tipo_fonte" class="cell w-60-pc nm_tipo_fonte">
                             </div>
                         </div>
                     </div>
@@ -49,7 +55,7 @@
                             </div>
                         </div>
                         <div class="column w-70-pc">
-                            <div id="div_nm_tipo_edicao" class="cell w-60-pc">
+                            <div id="div_nm_tipo_edicao" class="cell w-60-pc nm_tipo_edicao">
                             </div>
                         </div>
                     </div>
@@ -60,7 +66,7 @@
                             </div>
                         </div>
                         <div class="column w-70-pc">
-                            <div id="div_nm_diferencial_edicao" class="cell w-60-pc">
+                            <div id="div_nm_diferencial_edicao" class="cell w-60-pc nm_diferencial_edicao">
                             </div>
                         </div>
                     </div>
@@ -71,7 +77,7 @@
                             </div>
                         </div>
                         <div class="column w-70-pc">
-                            <div id="div_nr_diario" class="cell w-60-pc">
+                            <div id="div_nr_diario" class="cell w-60-pc nr_diario">
                             </div>
                         </div>
                     </div>
@@ -93,7 +99,7 @@
                             </div>
                         </div>
                         <div class="column w-70-pc">
-                            <div id="div_secao_diario" class="cell w-60-pc">
+                            <div id="div_secao_diario" class="cell w-60-pc secao_diario">
                             </div>
                         </div>
                     </div>
@@ -104,7 +110,7 @@
                             </div>
                         </div>
                         <div class="column w-70-pc">
-                            <div id="div_dt_assinatura" class="cell w-60-pc">
+                            <div id="div_dt_assinatura" class="cell w-60-pc dt_assinatura_text">
                             </div>
                         </div>
                     </div>
@@ -148,7 +154,7 @@
                             </div>
                         </div>
                         <div class="column w-70-pc">
-                            <div id="div_nm_diferencial_suplemento" class="cell w-60-pc">
+                            <div id="div_nm_diferencial_suplemento" class="cell w-60-pc nm_diferencial_suplemento">
                             </div>
                         </div>
                     </div>

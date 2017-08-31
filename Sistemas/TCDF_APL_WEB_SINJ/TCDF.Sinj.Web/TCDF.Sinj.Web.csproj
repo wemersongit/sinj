@@ -32,9 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="neo.BRLightES">
-      <HintPath>..\..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
-    </Reference>
     <Reference Include="neo.BRLightSession">
       <HintPath>..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
     </Reference>

@@ -76,6 +76,10 @@ namespace TCDF.Sinj.Log
         private static ulong gravar_operacao(string _ch_operacao, string _ds_operacao_detalhes, ulong id_doc_origem, string nm_user, string nm_login_user)
         {
             ulong id_log = 0;
+            if (Util.ehReplica())
+            {
+                return id_log;
+            }
             try
             {
                 var olog_operacaoOV = new log_operacaoOV();
@@ -103,6 +107,10 @@ namespace TCDF.Sinj.Log
 
         public static bool gravar_operacao_dt_fim(ulong id_doc)
         {
+            if (Util.ehReplica())
+            {
+                return false;
+            }
             Params.CheckNotZeroOrNull("id_doc", id_doc);
             return new log_operacaoRN().AlterarPath_dt_fim(id_doc);
         }

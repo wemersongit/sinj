@@ -191,7 +191,10 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                     pesquisa.ds_historico = "(Pesquisa Avançada) " + pesquisa.ds_historico;
                 }
 
-                new RN.HistoricoDePesquisaRN().Incluir(pesquisa);
+                if (!Util.ehReplica())
+                {
+                    new RN.HistoricoDePesquisaRN().Incluir(pesquisa);
+                }
 
                 sRetorno = "{\"success_message\":\"Histórico incluído com sucesso\", \"pesquisa\":" + JSON.Serialize<HistoricoDePesquisaOV>(pesquisa) + "}";
             }

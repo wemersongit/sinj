@@ -1,4 +1,4 @@
-function DetalhesDeDiario() {
+function DetalhesDeDiario(_highlight) {
     var id_doc = GetParameterValue("id_doc");
     var ch_diario = GetParameterValue("ch_diario");
     if (id_doc != "" || ch_diario != "") {
@@ -59,6 +59,9 @@ function DetalhesDeDiario() {
                                 getVal(arquivo.ds_arquivo)
                             );
                         }
+                    }
+                    if(IsNotNullOrEmpty(_highlight)){
+                        aplicarHighlight('.', _highlight, '#div_diario');
                     }
                     $('#div_diario').show();
                 }

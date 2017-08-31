@@ -14,6 +14,12 @@ namespace TCDF.Sinj.Portal.Web
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+            if (Util.ehReplica())
+            {
+                Response.Redirect("./", true);
+            }
+
+
 			var _ch_token = Request["recriar"];
 			var resultado_acao = Request["ra"];
 			if (!string.IsNullOrEmpty(_ch_token))

@@ -335,41 +335,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                                     {
                                                         sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\"}";
                                                         VerificarDispositivosDesfazerEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, videAlterador, videAlterado, videAlteradorDesfazer, videAlteradoDesfazer, nm_situacao_anterior);
-                                                        //if(adicionar_caput){
-                                                        //    new VideIncluir().VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada);
-
-                                                            //if (vide_alterador.caput_norma_vide != null && vide_alterada.caput_norma_vide != null && vide_alterador.caput_norma_vide.caput.Length > 0 && vide_alterada.caput_norma_vide.caput.Length > 0)
-                                                            //{
-                                                            //    new VideIncluir().IncluirAlteracaoComDispositivosNosArquivosDasNormas(normaAlteradoraOv.ch_norma, normaAlteradaOv.ch_norma, vide_alterador.caput_norma_vide, vide_alterada.caput_norma_vide, _caput_texto_novo);
-                                                            //}
-                                                            //else if(vide_alterador.caput_norma_vide != null && vide_alterador.caput_norma_vide.caput.Length > 0)
-                                                            //{
-                                                            //    new VideIncluir().IncluirAlteracaoComDispositivosNosArquivosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador.caput_norma_vide, ds_texto_para_alterador_pos_verificacao);
-                                                            //}
-                                                        //}
-                                                        //else if (alterar_caput)
-                                                        //{
-
-                                                            //if (vide_alterador.caput_norma_vide != null && vide_alterada.caput_norma_vide != null && vide_alterador.caput_norma_vide.caput.Length > 0 && vide_alterada.caput_norma_vide.caput.Length > 0)
-                                                            //{
-                                                            //    AlterarCaputDosArquivos(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada, caput_norma_vide_alteradora, caput_norma_vide_alterada);
-                                                            //}
-                                                            //else if (vide_alterador.caput_norma_vide != null && vide_alterador.caput_norma_vide.caput.Length > 0)
-                                                            //{
-                                                            //    AlterarCaputDosArquivos(normaAlteradoraOv, normaAlteradaOv, vide_alterador, caput_norma_vide_alteradora);
-                                                            //}
-                                                        //}
-                                                        //else if (remover_caput)
-                                                        //{
-                                                        //    if (caput_norma_vide_alteradora != null && caput_norma_vide_alterada != null && caput_norma_vide_alteradora.caput != null && caput_norma_vide_alteradora.caput.Length > 0 && caput_norma_vide_alterada.caput != null && caput_norma_vide_alterada.caput.Length > 0)
-                                                        //    {
-                                                        //        DesfazerCaputDosArquivos(normaAlteradoraOv, normaAlteradaOv, caput_norma_vide_alteradora, caput_norma_vide_alterada);
-                                                        //    }
-                                                        //    else if (caput_norma_vide_alteradora != null && caput_norma_vide_alteradora.caput != null && caput_norma_vide_alteradora.caput.Length > 0)
-                                                        //    {
-                                                        //        DesfazerCaputDosArquivos(normaAlteradoraOv, normaAlteradaOv, caput_norma_vide_alteradora, vide_alterador.ds_texto_relacao);
-                                                        //    }
-                                                        //}
+                                                        
                                                     }
                                                     else
                                                     {

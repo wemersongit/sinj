@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="neo.BRLightES">
-      <HintPath>..\..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
-    </Reference>
     <Reference Include="neo.BRLightREST">
       <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>

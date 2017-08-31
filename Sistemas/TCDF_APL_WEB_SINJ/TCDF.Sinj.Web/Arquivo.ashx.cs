@@ -24,32 +24,31 @@ namespace TCDF.Sinj.Web
                 {
                     Util.rejeitarInject(_id_norma);
 					normaOv = new NormaRN().Doc(_id_norma);
-					var documento = new NormaRN().Download(normaOv.ar_atualizado.id_file);
-					if (documento != null && documento.Length > 0)
-					{
-						context.Response.Clear();
-						context.Response.ContentType = normaOv.ar_atualizado.mimetype;
-						context.Response.AppendHeader("Content-Length", documento.Length.ToString());
-						context.Response.AppendHeader("Content-Disposition", "inline; filename=\"" + normaOv.ar_atualizado.filename + "\"");
-						context.Response.BinaryWrite(documento);
-						context.Response.Flush();
-					}
+                    var nm_file = "";
+
+                    if (!string.IsNullOrEmpty(normaOv.ar_atualizado.id_file))
+                    {
+                        nm_file = normaOv.ar_atualizado.filename;
+                    }
                     else
                     {
-					    documento = new NormaRN().Download(normaOv.fontes[0].ar_fonte.id_file);
-					    if (documento != null && documento.Length > 0)
-					    {
-						    context.Response.Clear();
-						    context.Response.ContentType = normaOv.ar_atualizado.mimetype;
-						    context.Response.AppendHeader("Content-Length", documento.Length.ToString());
-						    context.Response.AppendHeader("Content-Disposition", "inline; filename=\"" + normaOv.ar_atualizado.filename + "\"");
-						    context.Response.BinaryWrite(documento);
-						    context.Response.Flush();
-                        }
-                        else
+                        foreach (var fonte in normaOv.fontes)
                         {
-                            throw new Exception("Arquivo não encontrado.");
+                            if (!string.IsNullOrEmpty(fonte.ar_fonte.filename))
+                            {
+                                nm_file = fonte.ar_fonte.filename;
+                                break;
+                            }
                         }
+                    }
+                    if (!string.IsNullOrEmpty(nm_file))
+                    {
+                        //Redireciona para nova página de downloads da norma
+                        context.Response.Redirect("./Norma/" + _id_norma + "/" + nm_file, true);
+                    }
+                    else
+                    {
+                        throw new Exception("Arquivo não encontrado.");
                     }
 				}
             }
