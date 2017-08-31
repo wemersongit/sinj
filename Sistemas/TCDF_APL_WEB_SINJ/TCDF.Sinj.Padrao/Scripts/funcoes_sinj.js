@@ -3555,7 +3555,28 @@ function abrirModalImportarArquivo(el) {
             $('#div_modal_importar_arquivo').modallight('destroy');
         }
     });
+
+    //caso seja uma retificação, o descrição do diário que aparece no rodapé do texto importado deve ser a do último diário publicado ou republicado
     var ds_diario = el.getAttribute('ds_diario');
+    var publicacao = el.getAttribute('publicacao').toLowerCase();
+    if(publicacao == "retificação" || publicacao == "ret"){
+        var aPublicacoes = $('#tbody_fontes a[publicacao]');
+        var ds_diario_publicacao = '';
+        for(var i = 0; i < aPublicacoes.length; i++){
+            publicacao = aPublicacoes[i].getAttribute('publicacao').toLowerCase();
+            //caso ds_diario seja igual ao a[ds_diario] o laço deve interromper para pegar a descrição de um diário posterior ao da fonte que está sendo editada
+            if(ds_diario == aPublicacoes[i].getAttribute('ds_diario')){
+                break;
+            }
+            //vai pegando a descrição até sair do laço, pode percorrer todos os elementos do array, ou sair caso atinja o elemento cujo arquivo está sendo importado (comparando o ds_diario)
+            else if(publicacao == "publicação" || publicacao == "pub" || publicacao == "republicação" || publicacao == "rep"){
+                ds_diario_publicacao = aPublicacoes[i].getAttribute('ds_diario');
+            }
+        }
+        if(IsNotNullOrEmpty(ds_diario_publicacao)){
+            ds_diario = ds_diario_publicacao;
+        }
+    }
     if(IsNotNullOrEmpty(ds_diario)){
         //Foi solicitado que não exibisse a seção na descrição do diário no texto importado
         ds_diario = ds_diario.replace(/, seção 1, 2 e 3/i,'');

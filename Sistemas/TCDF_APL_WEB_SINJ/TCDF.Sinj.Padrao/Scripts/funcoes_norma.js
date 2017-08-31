@@ -336,28 +336,11 @@ function EditarFonte(event) {
     $('#nr_coluna_modal').val(GetText(oFonte.nr_coluna));
     $('#ds_observacao_fonte_modal').val(GetText(oFonte.ds_observacao_fonte));
     $('#ds_republicacao_modal').val(GetText(oFonte.ds_republicacao));
-    //    if (IsNotNullOrEmpty(fonte_split[10]) && IsNotNullOrEmpty(fonte_split[11]) && IsNotNullOrEmpty(fonte_split[12]) && IsNotNullOrEmpty(fonte_split[13])) {
-//    if (IsNotNullOrEmpty(oFonte, 'ar_fonte.uuid') && IsNotNullOrEmpty(oFonte, 'ar_fonte.mimetype') && IsNotNullOrEmpty(oFonte, 'ar_fonte.filesize') && IsNotNullOrEmpty(oFonte, 'ar_fonte.id_file') && IsNotNullOrEmpty(oFonte, 'ar_fonte.filename')) {
-//        $('#label_arquivo_fonte_modal').text(oFonte.ar_fonte.filename);
-//        $('#hidden_json_arquivo_fonte_modal').val(JSON.stringify(oFonte.ar_fonte));
-//        $('.attach', $("#modal_fonte")).hide();
-//        $('.delete', $("#modal_fonte")).show();
-//        if (oFonte.ar_fonte.mimetype != "text/html" && oFonte.ar_fonte.mimetype != "text/htm") {
-//            $('.create', $("#modal_fonte")).hide();
-//        }
-//        else{
-//            $('.create', $("#modal_fonte")).show();
-//        }
-//    }
     CriarModalFonte(tr_fonte);
 }
 
 function CriarModalFonte(tr_fonte) {
     if (!IsNotNullOrEmpty(tr_fonte)) {
-//        $('#label_arquivo_fonte_modal').text('');
-//        $('#hidden_json_arquivo_fonte_modal').val('');
-//        $('.attach', $("#modal_fonte")).show();
-//        $('.delete', $("#modal_fonte")).hide();
         $('#modal_fonte .diario').hide();
     }
     else {
@@ -415,7 +398,7 @@ function CriarModalFonte(tr_fonte) {
                         $('#tbody_fontes .tr_vazia').remove();
                         var guid = Guid('N');
                         if (IsNotNullOrEmpty(tr_fonte)) {
-                            $($(tr_fonte).find('td')[0]).text(oFonte.ds_diario)
+                            $($(tr_fonte).find('td')[0]).text(oFonte.ds_diario);
                             $($(tr_fonte).find('td')[1]).text(oFonte.nm_tipo_publicacao);
                             $($(tr_fonte).find('td')[2]).text(oFonte.nr_pagina);
                             $($(tr_fonte).find('td')[3]).text(oFonte.nr_coluna);
@@ -431,27 +414,25 @@ function CriarModalFonte(tr_fonte) {
                         else {
                             var id_input = 'input_' + guid;
                             var id_td = 'td_' + guid;
-                            var html_fonte = '<td>' +
-                                oFonte.ds_diario +
-                            '</td>' +
-                            '<td>' + oFonte.nm_tipo_publicacao + '</td>' +
-                            '<td>' + oFonte.nr_pagina + '</td>' +
-                            '<td>' + oFonte.nr_coluna + '</td>' +
-                            '<td>' + oFonte.ds_observacao_fonte + '</td>' +
-                            '<td>' + oFonte.ds_republicacao + '</td>' +
-                            '<td id="' + id_td + '">' +
-                                '<input id="' + id_input + '" type="hidden" name="fonte" value="" />' +
-                                '<input type="hidden" class="json_arquivo" value="" />' +
-                                '<label class="name" style="color:#000;"></label>' +
-                                '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" title="Anexar um arquivo" ><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_file2.png" width="18px" /></a>' +
-                                '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" title="Remover o arquivo" style="display:none;"><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_file.png" width="18px" /></a>' +
-                                '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" width="18px" /></a>' +
-                                '<a path="ar_fonte" ds_diario="' + oFonte.ds_diario + '" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="18px" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
-                            '</td>' +
-                            '<td>' +
-                                '<a title="Editar Fonte" href="javascript:void(0);" onclick="javascript:EditarFonte(event);"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"  /></a>' +
-                                '<a title="Excluir Fonte" href="javascript:void(0);" onclick="javascript:DeletarLinha(event);"><img valign="absmiddle" alt="Excluir" src="' + _urlPadrao + '/Imagens/ico_delete_p.png"  /></a>' +
-                            '</td>';
+                            var html_fonte = '<td>' + oFonte.ds_diario + '</td>' +
+                                '<td>' + oFonte.nm_tipo_publicacao + '</td>' +
+                                '<td>' + oFonte.nr_pagina + '</td>' +
+                                '<td>' + oFonte.nr_coluna + '</td>' +
+                                '<td>' + oFonte.ds_observacao_fonte + '</td>' +
+                                '<td>' + oFonte.ds_republicacao + '</td>' +
+                                '<td id="' + id_td + '">' +
+                                    '<input id="' + id_input + '" type="hidden" name="fonte" value="" />' +
+                                    '<input type="hidden" class="json_arquivo" value="" />' +
+                                    '<label class="name" style="color:#000;"></label>' +
+                                    '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" title="Anexar um arquivo" ><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_file2.png" width="18px" /></a>' +
+                                    '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" title="Remover o arquivo" style="display:none;"><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_file.png" width="18px" /></a>' +
+                                    '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" width="18px" /></a>' +
+                                    '<a path="ar_fonte" publicacao="' + oFonte.nm_tipo_publicacao + '" ds_diario="' + oFonte.ds_diario + '" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="18px" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
+                                '</td>' +
+                                '<td>' +
+                                    '<a title="Editar Fonte" href="javascript:void(0);" onclick="javascript:EditarFonte(event);"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"  /></a>' +
+                                    '<a title="Excluir Fonte" href="javascript:void(0);" onclick="javascript:DeletarLinha(event);"><img valign="absmiddle" alt="Excluir" src="' + _urlPadrao + '/Imagens/ico_delete_p.png"  /></a>' +
+                                '</td>';
                             $('#tbody_fontes').append('<tr>' + html_fonte + '</tr>');
                             $('#' + id_input).val(JSON.stringify(oFonte));
                         }
@@ -696,18 +677,6 @@ function CriarModalIndexacao(tr) {
                             ch_termos += (ch_termos != "" ? "#" : "") + $(inputs_hidden_ch_termo[i]).val();
                             ch_tipo_termos += (ch_tipo_termos != "" ? "#" : "") + $(inputs_hidden_ch_tipo_termo[i]).val();
                             nm_termos += (nm_termos != "" ? ", " : "") + $(inputs_hidden_nm_termo[i]).val();
-//                            if (inputs_hidden_ch_tipo_termo[i].value == "DE") {
-//                                for (var j = 0; j < trs_indexacao.length; j++) {
-//                                    if (trs_indexacao[j].value.indexOf(inputs_hidden_ch_termo[i].value) > -1 && (!IsNotNullOrEmpty(tr) || trs_indexacao[j].value != $('input[name="indexacao"]', tr).val())) {
-//                                        $('#modal_indexacao .notify').messagelight({
-//                                            sContent: "O Descritor " + inputs_hidden_nm_termo[i].value + " já está sendo usado.",
-//                                            sType: "error",
-//                                            iTime: 5000
-//                                        });
-//                                        return false;
-//                                    }
-//                                }
-//                            }
                             indexacao += (indexacao != "" ? "|" : "") + $(inputs_hidden_ch_termo[i]).val() + "#"
                                     + $(inputs_hidden_ch_tipo_termo[i]).val() + "#"
                                     + $(inputs_hidden_nm_termo[i]).val();
@@ -1438,7 +1407,7 @@ function PreencherNormaEdicao() {
                                     '<a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" title="Anexar um arquivo" ' + (display_btn_file ? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Anexar" src="' + _urlPadrao + '/Imagens/ico_attach_file2.png" width="18px" /></a>' +
                                     '<a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" title="Remover o arquivo" ' + (!display_btn_file ? 'style="display:none"' : '') + '><img valign="absmiddle" alt="Remover" src="' + _urlPadrao + '/Imagens/ico_delete_file.png" width="18px" /></a>' +
                                     '<a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_edit_file.png" width="18px" /></a>' +
-                                    '<a path="ar_fonte" ds_diario="' + data.fontes[fonte].ds_diario + '" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos" ' + (display_btn_file ? 'style="display:none"' : '') + '><img width="18" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
+                                    '<a path="ar_fonte" publicacao="' + oFonte.nm_tipo_publicacao + '" ds_diario="' + data.fontes[fonte].ds_diario + '" div_arquivo="' + id_td + '" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos" ' + (display_btn_file ? 'style="display:none"' : '') + '><img width="18" valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_import_file.png" /></a>' +
                                 '</td>' +
                                 '<td>' +
                                     '<a title="Editar Fonte" href="javascript:void(0);" onclick="javascript:EditarFonte(event);"><img valign="absmiddle" alt="Editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"  /></a>' +
