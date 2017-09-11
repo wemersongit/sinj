@@ -3,9 +3,9 @@ var id_file = "";
 var text = "";
 
 $(document).ready(function () {
-    SalvarConsultaNoHistorico();
     var tipo_pesquisa = GetParameterValue('tipo_pesquisa');
     var nm_aba = '';
+    var nm_base_aux_total = null;
     if (tipo_pesquisa == "geral") {
         $('#tabs_pesquisa').html(
             '<ul>' +
@@ -29,8 +29,6 @@ $(document).ready(function () {
                 '<div id="div_cesta_diario"></div>' +
             '</div>'
         ).tabs();
-        ConsultarTotal(null);
-        ConsultarTotalCesta();
         nm_aba = 'sinj_norma';
     }
     else if (tipo_pesquisa == "norma") {
@@ -48,8 +46,8 @@ $(document).ready(function () {
                 '<div id="div_cesta_norma"></div>' +
             '</div>'
         ).tabs();
-        ConsultarTotal('sinj_norma');
         nm_aba = 'sinj_norma';
+        nm_base_aux_total = nm_aba;
     }
     else if (tipo_pesquisa == "diario") {
         $('#tabs_pesquisa').html(
@@ -66,8 +64,8 @@ $(document).ready(function () {
                 '<div id="div_cesta_diario"></div>' +
             '</div>'
         ).tabs();
-        ConsultarTotal(null);
         nm_aba = 'sinj_diario';
+        nm_base_aux_total = nm_aba;
     }
     else if (tipo_pesquisa == "avancada") {
         $('#tabs_pesquisa').html(
@@ -84,9 +82,11 @@ $(document).ready(function () {
                 '<div id="div_cesta_norma"></div>' +
             '</div>'
         ).tabs();
-        ConsultarTotal('sinj_norma');
         nm_aba = 'sinj_norma';
+        nm_base_aux_total = nm_aba;
     }
+    ConsultarTotal(nm_base_aux_total);
+    ConsultarTotalCesta();
 
     //Abrir a ultima aba selecionada ante de mudar de página
     var nm_li_click = '';
@@ -114,13 +114,13 @@ $(document).ready(function () {
 
 });
 
-function SalvarConsultaNoHistorico() {
+function SalvarConsultaNoHistorico(counts) {
     if (IsNotNullOrEmpty(window.location.search)) {
         var search = window.location.search.substring(1);
         var params = search.split('&');
         var consulta = "";
         for (var i = 0; i < params.length; i++) {
-            consulta += (consulta != "" ? "&" : "") + "consulta=" + params[i] + "";
+            consulta += (consulta != "" ? "&" : "") + "consulta=" + params[i];
         }
         if (!IsNotNullOrEmpty($.cookie('sinj_ch_history'))) {
             $.cookie('sinj_ch_history', Guid("N"), { expires: 7, path: '/' })
@@ -131,7 +131,7 @@ function SalvarConsultaNoHistorico() {
             }
         }
         $.ajaxlight({
-            sUrl: './ashx/Cadastro/HistoricoDePesquisaIncluir.ashx' + window.location.search + "&" + consulta + '&chave=' + $.cookie('sinj_ch_history'),
+            sUrl: './ashx/Cadastro/HistoricoDePesquisaIncluir.ashx' + window.location.search + "&" + consulta + '&chave=' + $.cookie('sinj_ch_history') + '&' + counts,
             sType: "GET",
             fnError: null,
             bAsync: true,
@@ -144,9 +144,12 @@ function SalvarConsultaNoHistorico() {
 function ConsultarTotal(nm_base) {
     var sucesso = function (data) {
         if (IsNotNullOrEmpty(data, 'counts')) {
+            var paramCountsToHistory = '';
             for (var i = 0; i < data.counts.length; i++) {
                 $('#total_' + data.counts[i].nm_base).text(data.counts[i].count.count);
+                paramCountsToHistory += (paramCountsToHistory != "" ? "&" : "") + "total=" + JSON.stringify({ nm_base: data.counts[i].nm_base, ds_base: data.counts[i].ds_base, nr_total: data.counts[i].count.count });
             }
+            SalvarConsultaNoHistorico(paramCountsToHistory);
         }
     };
     var inicio = function () {
@@ -158,7 +161,7 @@ function ConsultarTotal(nm_base) {
         }
     }
     $.ajaxlight({
-        sUrl: './ashx/Datatable/ResultadoDePesquisaDatatable.ashx?exibir_total=1' + (IsNotNullOrEmpty(nm_base) ? '&bbusca='+nm_base : ''),
+        sUrl: './ashx/Datatable/ResultadoDePesquisaDatatable.ashx?exibir_total=1' + (IsNotNullOrEmpty(nm_base) ? '&bbusca=' + nm_base : ''),
         oData: parseURL(window.location.href).aoData,
         sType: "POST",
         fnError: null,

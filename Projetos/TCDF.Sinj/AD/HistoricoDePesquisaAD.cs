@@ -121,29 +121,89 @@ namespace TCDF.Sinj.AD
         private string MontarConsulta(HttpContext context)
         {
             var query = "";
-            var sOrder = MontarOrdenamento(context);
-            var _chave = context.Request["chave"];
-            var _termo = context.Request["termo"];
+            var _tipo_pesquisa = context.Request["tipo_pesquisa"];
             var _dt_historico = context.Request["dt_historico"];
             var _dt_historico_fim = context.Request["dt_historico_fim"];
             var _op_intervalo = context.Request["op_intervalo"];
-            var _size = context.Request["size"];
-            var _tipo_pesquisa = context.Request["tipo_pesquisa"];
+            
             if (_tipo_pesquisa == "estatistica")
             {
-                query = "{\"from\":0,\"size\":1,\"sort\":[{\"dt_doc\":{\"order\":\"asc\"}}]," +
-                    "\"aggs\":{" +
-                        "\"agg_terms\":{\"terms\":{\"field\":\"valor_keyword\",\"size\":" + _size + "}}," +
-                        "\"agg_dt_historico\":{\"date_histogram\":{\"field\":\"dt_historico\",\"interval\":\"1d\",\"format\":\"dd/MM/yyyy\",\"order\" : { \"_key\" : \"desc\" }}},"+
-                        "\"agg_tipo_pesquisa\":{\"filters\":{\"filters\":{" +
-                            "\"geral\":{\"query\":{\"query_string\":{\"query\":\"ds_historico:(Geral)\"}}}," +
-                            "\"norma\":{\"query\":{\"query_string\":{\"query\":\"ds_historico:(Norma)\"}}}," +
-                            "\"diario\":{\"query\":{\"query_string\":{\"query\":\"ds_historico:(Diário)\"}}}," +
-                            "\"avancada\":{\"query\":{\"query_string\":{\"query\":\"ds_historico:(Avançada)\"}}}" +
-                        "}}}" +
-                    "}}";
+                var _nm_agg = context.Request["nm_agg"];
+                var _agrupar_dt = context.Request["agrupar_dt"];
+                var _size = context.Request["size"];
+                if (string.IsNullOrEmpty(_size))
+                {
+                    _size = "0";
+                }
+                if (!string.IsNullOrEmpty(_nm_agg))
+                {
+                    var query_string = "";
+                    if (!string.IsNullOrEmpty(_dt_historico) && !string.IsNullOrEmpty(_op_intervalo))
+                    {
+                        if (_op_intervalo == "intervalo" && !string.IsNullOrEmpty(_dt_historico_fim))
+                        {
+                            _dt_historico = "\\\"" + _dt_historico + " 00:00:00\\\",\\\"" + _dt_historico_fim + " 23:59:59\\\"";
+                        }
+                        else if (_op_intervalo == "menor" || _op_intervalo == "maiorouigual")
+                        {
+                            _dt_historico = "\\\"" + _dt_historico + " 00:00:00\\\"";
+                        }
+                        else if (_op_intervalo == "maior" || _op_intervalo == "menorouigual")
+                        {
+                            _dt_historico = "\\\"" + _dt_historico + " 23:59:59\\\"";
+                        }
+                        else if (_op_intervalo == "igual")
+                        {
+                            _op_intervalo = "intervalo";
+                            _dt_historico = "\\\"" + _dt_historico + " 00:00:00\\\",\\\"" + _dt_historico + " 23:59:59\\\"";
+                        }
+
+                        query_string = "\"query\":{\"query_string\":{\"query\":\"" + _docEs.MontarArgumentoRangeQueryString("dt_historico", _op_intervalo, _dt_historico) + "\"}},";
+                    }
+                    switch (_nm_agg)
+                    {
+                        case "agg_termos":
+                            query = "{" + query_string + "\"from\":0,\"size\":1,\"sort\":[{\"dt_doc\":{\"order\":\"asc\"}}], \"aggs\":{" +
+                                "\"agg_termos\":{\"terms\":{\"field\":\"valor_keyword\",\"size\":" + _size + ",\"order\":{\"agg_sum\":\"desc\"}},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}" +
+                            "}}";
+                            break;
+                        case "agg_tipos":
+                            query = "{" + query_string + "\"from\":0,\"size\":1,\"sort\":[{\"dt_doc\":{\"order\":\"asc\"}}], \"aggs\":{" +
+                                "\"agg_tipos\":{\"terms\":{\"field\":\"nm_tipo_pesquisa_keyword\",\"size\":" + _size + ",\"order\":{\"agg_sum\":\"desc\"}},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}" +
+                            "}}";
+                            break;
+                        case "agg_dt_historico":
+                            var interval_format = "\"interval\":\"1d\",\"format\":\"dd/MM/yyyy\"";
+                            if (_agrupar_dt == "mes")
+                            {
+                                interval_format = "\"interval\":\"1M\",\"format\":\"MM/yyyy\"";
+                            }
+                            else if (_agrupar_dt == "ano")
+                            {
+                                interval_format = "\"interval\":\"1y\",\"format\":\"yyyy\"";
+                            }
+                            query = "{" + query_string + "\"from\":0,\"size\":1,\"sort\":[{\"dt_doc\":{\"order\":\"asc\"}}], \"aggs\":{" +
+                                "\"agg_dt_historico\":{\"date_histogram\":{\"field\":\"dt_historico\", " + interval_format + ",\"order\" : { \"_key\" : \"desc\" }},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}" +
+                            "}}";
+                            break;
+                    }
+                }
+                else
+                {
+                    query = "{\"from\":0,\"size\":1,\"sort\":[{\"dt_doc\":{\"order\":\"asc\"}}]," +
+                        "\"aggs\":{" +
+                            "\"agg_termos\":{\"terms\":{\"field\":\"valor_keyword\",\"size\":" + _size + ",\"order\":{\"agg_sum\":\"desc\"}},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}," +
+                            "\"agg_dt_historico\":{\"date_histogram\":{\"field\":\"dt_historico\",\"interval\":\"1d\",\"format\":\"dd/MM/yyyy\",\"order\" : { \"_key\" : \"desc\" }},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}," +
+                            "\"agg_tipos\":{\"terms\":{\"field\":\"nm_tipo_pesquisa_keyword\",\"size\":" + _size + ",\"order\":{\"agg_sum\":\"desc\"}},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}" +
+                        "}}";
+                }
             }
-            else{
+            else
+            {
+                var _chave = context.Request["chave"];
+                var _termo = context.Request["termo"];
+                var sOrder = MontarOrdenamento(context);
+
                 if (!string.IsNullOrEmpty(_chave))
                 {
                     query = "ch_usuario:" + _chave + "";

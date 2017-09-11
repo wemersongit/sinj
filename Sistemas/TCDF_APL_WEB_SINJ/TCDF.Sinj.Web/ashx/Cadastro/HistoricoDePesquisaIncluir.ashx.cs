@@ -20,6 +20,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             var _chave = context.Request["chave"];
             var _tipo_pesquisa = context.Request["tipo_pesquisa"];
             var _consulta = context.Request.QueryString.GetValues("consulta");
+            var _sTotais = context.Request.QueryString.GetValues("total");
             try
             {
                 var consulta = string.Join("&", _consulta);
@@ -29,9 +30,14 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 pesquisa.ch_usuario = _chave;
                 pesquisa.consulta = consulta;
                 pesquisa.dt_historico = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
+                foreach (var sTotal in _sTotais)
+                {
+                    pesquisa.total.Add(JSON.Deserializa<TotalOV>(sTotal));
+                }
                 var _all = context.Request["all"];
                 if (_tipo_pesquisa == "geral")
                 {
+                    pesquisa.nm_tipo_pesquisa = "Pesquisa Geral";
                     pesquisa.ds_historico = "(Pesquisa Geral) " + _all;
                     pesquisa.argumentos.Add(new ArgumentoOV { campo = "all", operador = "igual", valor = _all });
                 }
@@ -82,6 +88,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         pesquisa.argumentos.Add(new ArgumentoOV { campo = "Origem", operador = "igual", valor = _nm_orgao + " E " + _origem_por.Replace("_", " "), conector = (pesquisa.ds_historico != "" ? " E " : "") });
                     }
                     pesquisa.ds_historico = "(Pesquisa de Normas) " + pesquisa.ds_historico;
+                    pesquisa.nm_tipo_pesquisa = "Pesquisa de Normas";
                 }
                 else if (_tipo_pesquisa == "diario")
                 {
@@ -160,6 +167,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         }
                     }
                     pesquisa.ds_historico = "(Pesquisa de Diário) " + pesquisa.ds_historico;
+                    pesquisa.nm_tipo_pesquisa = "Pesquisa de Diário";
                 }
                 else if (_tipo_pesquisa == "avancada")
                 {
@@ -189,6 +197,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         }
                     }
                     pesquisa.ds_historico = "(Pesquisa Avançada) " + pesquisa.ds_historico;
+                    pesquisa.nm_tipo_pesquisa = "Pesquisa Avançada";
                 }
 
                 new RN.HistoricoDePesquisaRN().Incluir(pesquisa);

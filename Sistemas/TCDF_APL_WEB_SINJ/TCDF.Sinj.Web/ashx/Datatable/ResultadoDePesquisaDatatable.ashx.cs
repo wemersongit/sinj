@@ -41,15 +41,15 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                 {
                     if (_bbusca == "sinj_norma")
                     {
-                        sRetorno = "{\"counts\":[{\"nm_base\":\"" + _bbusca + "\",\"count\":" + normaRn.PesquisarTotalEs(context) + "}]}";
+                        sRetorno = "{\"counts\":[{\"nm_base\":\"" + _bbusca + "\",\"ds_base\":\"Normas\",\"count\":" + normaRn.PesquisarTotalEs(context) + "}]}";
                     }
                     else if (_bbusca == "sinj_diario")
                     {
-                        sRetorno = "{\"counts\":[{\"nm_base\":\"" + _bbusca + "\",\"count\":" + diarioRn.PesquisarTotalEs(context) + "}]}";
+                        sRetorno = "{\"counts\":[{\"nm_base\":\"" + _bbusca + "\",\"ds_base\":\"Diários\",\"count\":" + diarioRn.PesquisarTotalEs(context) + "}]}";
                     }
                     else
                     {
-                        sRetorno = "{\"counts\":[{\"nm_base\":\"sinj_norma\",\"count\":" + normaRn.PesquisarTotalEs(context) + "},{\"nm_base\":\"sinj_diario\",\"count\":" + diarioRn.PesquisarTotalEs(context) + "}]}";
+                        sRetorno = "{\"counts\":[{\"nm_base\":\"sinj_norma\",\"ds_base\":\"Normas\",\"count\":" + normaRn.PesquisarTotalEs(context) + "},{\"nm_base\":\"sinj_diario\",\"ds_base\":\"Diários\",\"count\":" + diarioRn.PesquisarTotalEs(context) + "}]}";
                     }
                 }
                 else
@@ -77,7 +77,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
             {
                 if (_exibir_total == "1")
                 {
-                    sRetorno = "{\"counts\":[{\"nm_base\":\"sinj_norma\",\"count\":{\"count\":0}},{\"nm_base\":\"sinj_diario\",\"count\":{\"count\":0}},{\"nm_base\":\"cesta\",\"count\":{\"count\":0}}]}";
+                    sRetorno = "{\"counts\":[{\"nm_base\":\"sinj_norma\",\"ds_base\":\"Normas\",\"count\":{\"count\":0}},{\"nm_base\":\"sinj_diario\",\"ds_base\":\"Diários\",\"count\":{\"count\":0}}]}";
                 }
                 else
                 {

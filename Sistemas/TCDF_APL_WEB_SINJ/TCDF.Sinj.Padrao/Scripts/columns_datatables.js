@@ -1276,19 +1276,30 @@ var _columns_norma_associada_vocabulario = [
 ];
 
 
-var _columns_historico = [
-	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Data e Hora", "sWidth": "20%", "sClass": "grid-cell ws", "sDefaultContent": "", "mData": "dt_historico", "asSorting": ["desc", "asc"],
-		"mRender": function (data, type, full) {
-			return full._source.dt_historico;
-		}
+	var _columns_historico = [
+	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Data e Hora", "sWidth": "", "sClass": "grid-cell ws", "sDefaultContent": "", "mData": "dt_historico", "asSorting": ["desc", "asc"],
+	    "mRender": function (data, type, full) {
+	        return full._source.dt_historico;
+	    }
 	},
-	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Pesquisa", "sWidth": "70%", "sClass": "grid-cell ws", "sDefaultContent": "", "mData": "_source.ds_historico", "bSortable": false },
-	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "grid-cell ws all", "mData": "", "bSortable": false,
-		"mRender": function (data, type, full) {
-			var detalhes = "<a href='./ResultadoDePesquisa.aspx?" + window.unescape(full._source.consulta) + "' title='Pesquisar'><img valign='absmiddle' alt='pesquisar' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a>";
-			var editar = "<a href='./Pesquisas.aspx?" + full._source.consulta + "' title='Editar'><img valign='absmiddle' alt='editar' src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' /></a>";
-			return detalhes + "&nbsp;" + editar;
-		}
+	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Pesquisa", "sWidth": "", "sClass": "grid-cell ws", "sDefaultContent": "", "mData": "_source.ds_historico", "bSortable": false },
+	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Total", "sWidth": "10%", "sClass": "grid-cell ws", "sDefaultContent": "", "mData": "_source.total", "bSortable": false,
+	    "mRender": function (data, type, full) {
+	        var total = '';
+	        if (IsNotNullOrEmpty(full, '_source.total')) {
+	            for (var i in full._source.total) {
+	                total += '<b>' + full._source.total[i].ds_base + '</b>: ' + full._source.total[i].nr_total + '<br/>';
+	            }
+	        }
+	        return total;
+	    }
+	},
+	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "60px", "sClass": "grid-cell ws all", "mData": "", "bSortable": false,
+	    "mRender": function (data, type, full) {
+	        var detalhes = "<a href='./ResultadoDePesquisa.aspx?" + window.unescape(full._source.consulta) + "' title='Pesquisar'><img valign='absmiddle' alt='pesquisar' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a>";
+	        var editar = "<a href='./Pesquisas.aspx?" + full._source.consulta + "' title='Editar'><img valign='absmiddle' alt='editar' src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' /></a>";
+	        return detalhes + "&nbsp;" + editar;
+	    }
 	}
 ];
 

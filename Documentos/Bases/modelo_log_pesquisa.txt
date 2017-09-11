@@ -31,6 +31,20 @@
         },
         {  
             "field":{  
+                "name":"nm_tipo_pesquisa",
+                "datatype":"Text",
+                "required":true,
+                "alias":"tipo",
+                "multivalued":false,
+                "indices":[
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Identifica em qual pesquisa a consulta foi realizada (geral, avançada, etc.)."
+            }
+        },
+        {  
+            "field":{  
                 "name":"usuario",
                 "datatype":"Text",
                 "required":false,
@@ -83,6 +97,70 @@
                     "Textual"
                 ],
                 "description":"Contém os parametros encodados utilizados na consulta."
+            }
+        },
+        {  
+            "field":{  
+                "name":"contador",
+                "datatype":"Integer",
+                "required":false,
+                "alias":"Contador",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Contém a quantidade de vezes que o usuário realizou a pesquisa."
+            }
+        },
+        {
+            "group": {
+                "content":[
+                    {
+                        "field": {
+                            "name": "nm_base",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Nome",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Noma da base"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ds_base",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Apelido",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Apelido da base"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nr_total",
+                            "datatype": "Integer",
+                            "required": false,
+                            "alias": "Total",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Total de registros"
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Total por base",
+                    "description": "Armazena a quantidade de registros em cada no momento da última vez que a última consulta foi realizada",
+                    "name": "total",
+                    "multivalued": true
+                }
             }
         },
         {
@@ -160,7 +238,7 @@
         "description":"Um histórico das pesquisas realizadas.",
         "color":"#3f7f7f",
         "file_ext_time":0,
-        "idx_exp_url":"http://127.0.0.1:9200/sinj_log_pesquisa/historico_de_pesquisa",
+        "idx_exp_url":"http://127.0.0.1:9200/sinj_log_pesquisa/pesquisa",
         "file_ext":false,
         "password":"BRLight@)!$",
         "name":"sinj_log_pesquisa"

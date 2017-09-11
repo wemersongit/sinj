@@ -11,12 +11,19 @@ namespace TCDF.Sinj.OV
         public HistoricoDePesquisaOV()
         {
             argumentos = new List<ArgumentoOV>();
+            total = new List<TotalOV>();
         }
         public string ch_consulta { get; set; }
         public string ch_usuario { get; set; }
+        public string nm_tipo_pesquisa { get; set; }
         public string dt_historico { get; set; }
         public string ds_historico { get; set; }
         public string consulta { get; set; }
+        public List<TotalOV> total { get; set; }
+        /// <summary>
+        /// conta quantas vezes o mesmo usuario efetuou a mesma pesquisa
+        /// </summary>
+        public long contador { get; set; }
         public List<ArgumentoOV> argumentos { get; set; }
     }
 
@@ -26,5 +33,15 @@ namespace TCDF.Sinj.OV
         public string operador { get; set; }
         public string valor { get; set; }
         public string conector { get; set; }
+    }
+
+    /// <summary>
+    /// Quantidade de registros encontrados por base na consulta
+    /// </summary>
+    public class TotalOV
+    {
+        public string nm_base { get; set; }
+        public string ds_base { get; set; }
+        public long nr_total { get; set; }
     }
 }

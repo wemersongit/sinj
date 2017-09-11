@@ -285,7 +285,7 @@ namespace TCDF.Sinj.Web
                 sg_orgao += (sg_orgao != "" ? "<br style=\"mso-data-placement:same-cell;\"/>" : "") + orgao.sg_orgao + " - " + orgao.nm_orgao;
             }
             sb.AppendFormat("\t<td class=\"tabRow\">" + sg_orgao + "</td>\r\n");
-            sb.AppendFormat("\t<td class=\"tabRow\">" + norma.ds_ementa + "</td>\r\n");
+            sb.AppendFormat("\t<td class=\"tabRow\">" + norma.ds_ementa.Replace("}","") + "</td>\r\n");
             sb.AppendFormat("\t<td class=\"tabRow\">" + link_app + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + "</td>\r\n");
             if (bCadastro)
             {

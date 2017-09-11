@@ -33,14 +33,16 @@ namespace TCDF.Sinj.RN
             historicoDePesquisaOv.ch_consulta = historicoDePesquisaOv.ch_usuario + "_" + historicoDePesquisaOv.ds_historico;
             Pesquisa query = new Pesquisa();
             query.literal = "ch_consulta='" + historicoDePesquisaOv.ch_consulta + "'";
-            query.select = new string[] { "id_doc" };
+            query.select = new string[] { "id_doc", "contador" };
             var results = Consultar(query);
             if (results.results.Count > 0)
             {
+                historicoDePesquisaOv.contador = results.results[0].contador + 1;
                 Atualizar(results.results[0]._metadata.id_doc, historicoDePesquisaOv);
             }
             else
             {
+                historicoDePesquisaOv.contador++;
                 _historicoDePesquisaAd.Incluir(historicoDePesquisaOv);
             }
         }

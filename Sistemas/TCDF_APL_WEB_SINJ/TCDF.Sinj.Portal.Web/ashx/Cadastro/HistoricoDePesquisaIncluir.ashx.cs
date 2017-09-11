@@ -20,15 +20,18 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
             var _chave = context.Request["chave"];
             var _tipo_pesquisa = context.Request["tipo_pesquisa"];
             var _consulta = context.Request.QueryString.GetValues("consulta");
+            var _sTotais = context.Request.QueryString.GetValues("total");
             try
             {
                 var consulta = string.Join("&", _consulta);
                 consulta = HttpUtility.UrlEncode(consulta);
-
                 var pesquisa = new HistoricoDePesquisaOV();
                 pesquisa.ch_usuario = _chave;
                 pesquisa.consulta = consulta;
                 pesquisa.dt_historico = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
+                foreach(var sTotal in _sTotais){
+                    pesquisa.total.Add(JSON.Deserializa<TotalOV>(sTotal));
+                }
                 var _all = context.Request["all"];
                 if (_tipo_pesquisa == "geral")
                 {
