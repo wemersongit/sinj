@@ -50,4 +50,5 @@ namespace TCDF.Sinj.Web {
 		
 		protected System.Web.UI.WebControls.ContentPlaceHolder Body;
 	}
+
 }

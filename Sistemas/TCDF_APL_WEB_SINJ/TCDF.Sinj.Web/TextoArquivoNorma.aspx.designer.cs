@@ -11,5 +11,4 @@ namespace TCDF.Sinj.Web {
         
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_texto;
     }
-
 }
