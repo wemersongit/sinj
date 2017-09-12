@@ -162,6 +162,11 @@ namespace TCDF.Sinj.AD
                     }
                     switch (_nm_agg)
                     {
+                        case "agg_pesquisas":
+                            query = "{" + query_string + "\"from\":0,\"size\":1,\"sort\":[{\"dt_doc\":{\"order\":\"asc\"}}], \"aggs\":{" +
+                                "\"agg_pesquisas\":{\"terms\":{\"field\":\"ds_historico_keyword\",\"size\":" + _size + ",\"order\":{\"agg_sum\":\"desc\"}},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}" +
+                            "}}";
+                            break;
                         case "agg_termos":
                             query = "{" + query_string + "\"from\":0,\"size\":1,\"sort\":[{\"dt_doc\":{\"order\":\"asc\"}}], \"aggs\":{" +
                                 "\"agg_termos\":{\"terms\":{\"field\":\"valor_keyword\",\"size\":" + _size + ",\"order\":{\"agg_sum\":\"desc\"}},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}" +
@@ -192,6 +197,7 @@ namespace TCDF.Sinj.AD
                 {
                     query = "{\"from\":0,\"size\":1,\"sort\":[{\"dt_doc\":{\"order\":\"asc\"}}]," +
                         "\"aggs\":{" +
+                            "\"agg_pesquisas\":{\"terms\":{\"field\":\"ds_historico_keyword\",\"size\":" + _size + ",\"order\":{\"agg_sum\":\"desc\"}},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}," +
                             "\"agg_termos\":{\"terms\":{\"field\":\"valor_keyword\",\"size\":" + _size + ",\"order\":{\"agg_sum\":\"desc\"}},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}," +
                             "\"agg_dt_historico\":{\"date_histogram\":{\"field\":\"dt_historico\",\"interval\":\"1d\",\"format\":\"dd/MM/yyyy\",\"order\" : { \"_key\" : \"desc\" }},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}," +
                             "\"agg_tipos\":{\"terms\":{\"field\":\"nm_tipo_pesquisa_keyword\",\"size\":" + _size + ",\"order\":{\"agg_sum\":\"desc\"}},\"aggs\":{\"agg_sum\":{\"sum\":{\"field\":\"contador\"}}}}" +

@@ -248,6 +248,7 @@
         </div>
         <div id="div_body" class="body">
             <div class="inner-body">
+                <h1 style="padding-left:50px;color: #036735;background: #EEE;font-size: 23px;font-family: Trebuchet MS, Verdana, Arial;">Informamos que o sistema ficará em manutenção no dia 13/09, no período da manhã.</h1>
                 <div id="div_voltar" class="w-100-pc text-right"><a href="javascript:void(0);" onclick="javascript:voltar()" title="Voltar" class="back"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_back.png" alt="&lt;" />&nbsp;Voltar</a></div>
                 <div class="content">
                     <asp:ContentPlaceHolder ID="Body" runat="server">

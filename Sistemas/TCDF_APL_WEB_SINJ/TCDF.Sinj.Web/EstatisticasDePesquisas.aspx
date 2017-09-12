@@ -20,23 +20,44 @@
     <script type="text/javascript">
         var charts = {};
 
-        var jOptionsDatatable = {
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-            "ordering": false,
-            "oLanguage": {
-                "oPaginate": { "sFirst": "<<", "sLast": ">>", "sNext": ">", "sPrevious": "<" },
-                "sEmptyTable": "Não foram encontrados registros",
-                "sInfo": "<span>Exibindo de <b>_START_</b> até <b>_END_</b> de <b>_TOTAL_</b> registros encontrados.</span>",
-                "sInfoEmpty": " ",
-                "sInfoFiltered": "",
-                "sInfoThousands": ".",
-                "sLengthMenu": "Exibir _MENU_ registros",
-                "sLoadingRecords": "Carregando...",
-                "sProcessing": "<span><b>Processando...</b></span>",
-                "sSearch": "Filtrar",
-                "sZeroRecords": "Não foram encontrados registros"
-            }
-        }
+        var _columns_estatisticas = {
+            "agg_pesquisas":[
+	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Pesquisa", "sWidth": "", "sClass": "grid-cell ws", "mData": "key"},
+	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
+	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
+	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
+                        return "";
+                    }
+                }
+            ],
+            "agg_termos":[
+	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Termo", "sWidth": "", "sClass": "grid-cell ws", "mData": "key"},
+	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
+	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
+	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
+                        return "";
+                    }
+                }
+            ],
+            "agg_tipos":[
+	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo de Pesquisa", "sWidth": "", "sClass": "grid-cell ws", "mData": "key"},
+	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
+	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
+	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
+                        return "";
+                    }
+                }
+            ],
+            "agg_dt_historico":[
+	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Período", "sWidth": "", "sClass": "grid-cell ws", "mData": "key"},
+	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
+	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
+	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
+                        return "";
+                    }
+                }
+            ]
+        };
 
         function selectRange(el) {
             if ($(el).val() == 'intervalo') {
@@ -102,93 +123,105 @@
         }
 
         function listarAggs(id_form) {
-            var nm_agg = "";
             if (IsNotNullOrEmpty(id_form)) {
-                nm_agg = document.forms[id_form].nm_agg.value;
-            }
-            try {
-                var sucesso = function (data) {
-                    if (IsNotNullOrEmpty(data, 'aggregations')) {
-                        var aggs = ["agg_termos", "agg_tipos", "agg_dt_historico"];
-                        if (IsNotNullOrEmpty(nm_agg)) {
-                            aggs = [nm_agg];
-                        }
-
-                        for (var a = 0; a < aggs.length; a++) {
-                            //$('#super_loading').hide();
-                            var agg = aggs[a];
+                var nm_agg = document.forms[id_form].nm_agg.value;
+                try {
+                    var sucesso = function (data) {
+                        if (IsNotNullOrEmpty(data, 'aggregations')) {
                             var tbody = '';
-                            var oAgg = eval('data.aggregations.' + agg);
+                            var oAgg = eval('data.aggregations.' + nm_agg);
+                            //$('.' + nm_agg).removeClass('scroll');
+                            //$('#tfoot_' + nm_agg).html('');
 
-                            $('.' + agg).removeClass('scroll');
-                            $('#tfoot_' + agg).html('');
-
-                            $("#table_" + agg).DataTable().destroy();
+                            $("#table_" + nm_agg).DataTable().destroy();
 
                             if (IsNotNullOrEmpty(oAgg, 'buckets') && oAgg.buckets.length > 0) {
                                 var labels_chart = [];
                                 var data_chart_sum_value = [];
                                 var data_chart_doc_count = [];
-                                if (oAgg.buckets.length > 10) {
-                                    $('.' + agg).addClass('scroll');
-                                }
+//                                if (oAgg.buckets.length > 10) {
+//                                    $('.' + nm_agg).addClass('scroll');
+//                                }
                                 var iTotal = 0;
                                 var i = 0;
                                 var maior = 0;
                                 var searchLink = '';
                                 var sum_value = 0;
                                 var doc_count = 0;
+                                var aoData = [];
+                                var oData = {};
                                 for (; i < oAgg.buckets.length; i++) {
                                     var link = '';
-                                    var key = IsNotNullOrEmpty(oAgg.buckets[i].key_as_string) ? oAgg.buckets[i].key_as_string : oAgg.buckets[i].key;
-                                    doc_count = oAgg.buckets[i].doc_count;
-                                    sum_value = oAgg.buckets[i].agg_sum.value;
-
-                                    labels_chart.push(key);
-
-                                    data_chart_sum_value.push(sum_value);
-                                    data_chart_doc_count.push(doc_count);
-
-                                    if (agg == 'agg_termos') {
-                                        searchLink = '?termo=' + key;
+                                    
+                                    oData = {
+                                        key: IsNotNullOrEmpty(oAgg.buckets[i].key_as_string) ? oAgg.buckets[i].key_as_string : oAgg.buckets[i].key,
+                                        doc_count: oAgg.buckets[i].doc_count,
+                                        sum_value: oAgg.buckets[i].agg_sum.value
                                     }
-                                    else if (agg == 'agg_tipos') {
-                                        searchLink = '?nm_tipo_pesquisa=' + key;
-                                    }
-                                    else if (agg == 'agg_dt_historico') {
-                                        searchLink = '?dt_historico=' + key;
-                                    }
-                                    link = '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx' + searchLink + '" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
 
-                                    //$('#tbody_resultado').append('<tr class="' + (i % 2 == 0 ? "EEE" : "") + ' termo"><td>' + data.aggregations.agg_termos.buckets[i].key + '</td><td style="text-align:center;">' + data.aggregations.agg_termos.buckets[i].doc_count + '</td><td>' + link + '</td></tr>');
+                                    labels_chart.push(oData.key);
 
-                                    tbody += '<tr class="' + (i % 2 == 0 ? "EEE" : "") + ' ' + agg + '"><td>' + key + '</td><td class="text-center">' + sum_value + '</td><td class="text-center">' + doc_count + '</td><td>' + link + '</td></tr>';
+                                    data_chart_sum_value.push(oData.sum_value);
+                                    data_chart_doc_count.push(oData.doc_count);
 
-                                    iTotal += sum_value;
-                                    if (sum_value > maior) {
-                                        maior = sum_value;
+//                                    if (nm_agg == 'agg_termos') {
+//                                        searchLink = '?termo=' + key;
+//                                    }
+//                                    else if (nm_agg == 'agg_tipos') {
+//                                        searchLink = '?nm_tipo_pesquisa=' + key;
+//                                    }
+//                                    else if (nm_agg == 'agg_dt_historico') {
+//                                        searchLink = '?dt_historico=' + key;
+//                                    }
+//                                    link = '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx' + searchLink + '" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
+
+//                                    //$('#tbody_resultado').append('<tr class="' + (i % 2 == 0 ? "EEE" : "") + ' termo"><td>' + data.aggregations.agg_termos.buckets[i].key + '</td><td style="text-align:center;">' + data.aggregations.agg_termos.buckets[i].doc_count + '</td><td>' + link + '</td></tr>');
+
+//                                    tbody += '<tr class="' + (i % 2 == 0 ? "EEE" : "") + ' ' + nm_agg + '"><td>' + key + '</td><td class="text-center">' + sum_value + '</td><td class="text-center">' + doc_count + '</td><td>' + link + '</td></tr>';
+
+                                    iTotal += oData.sum_value;
+                                    if (oData.sum_value > maior) {
+                                        maior = oData.sum_value;
                                     }
-                                    if (doc_count > maior) {
-                                        maior = doc_count;
+                                    if (oData.doc_count > maior) {
+                                        maior = oData.doc_count;
                                     }
+                                    aoData.push(oData);
 
                                 }
-                                //$('#tfoot_' + agg).html('<tr class="' + (i % 2 == 0 ? "EEE" : "") + ' ' + agg + '"><td class="bold">TOTAL</td><td colspan="2" class="text-center">' + iTotal + '</td></tr>');
-                                $('#tbody_' + agg).html(tbody);
 
-                                $("#table_" + agg).dataTable(jOptionsDatatable);
+                                $("#table_" + nm_agg).dataTable({
+                                    "data":aoData,
+                                    "aoColumns":_columns_estatisticas[nm_agg],
+                                    "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+                                    "aaSorting":[[1, "desc"]],
+                                    //"ordering": true,
+                                    "oLanguage": {
+                                        "oPaginate": { "sFirst": "<<", "sLast": ">>", "sNext": ">", "sPrevious": "<" },
+                                        "sEmptyTable": "Não foram encontrados registros",
+                                        "sInfo": "<span>Exibindo de <b>_START_</b> até <b>_END_</b> de <b>_TOTAL_</b> registros encontrados.</span>",
+                                        "sInfoEmpty": " ",
+                                        "sInfoFiltered": "",
+                                        "sInfoThousands": ".",
+                                        "sLengthMenu": "Exibir _MENU_ registros",
+                                        "sLoadingRecords": "Carregando...",
+                                        "sProcessing": "<span><b>Processando...</b></span>",
+                                        "sSearch": "Filtrar",
+                                        "sZeroRecords": "Não foram encontrados registros"
+                                    }
+                                });
 
-                                $("#chart_" + agg).show();
-                                if (IsNotNullOrEmpty(charts['chart_' + agg])) {
-                                    charts['chart_' + agg].data.datasets[0].data = data_chart_doc_count;
-                                    charts['chart_' + agg].data.datasets[1].data = data_chart_sum_value;
-                                    charts['chart_' + agg].data.labels = labels_chart;
-                                    charts['chart_' + agg].options.scales.yAxes[0].ticks.stepSize = maior.toString().length >= 3 ? 10 : (maior > 60 ? parseInt(maior / 10, 10) : maior > 30 ? 5 : 1);
+                                $("#chart_" + nm_agg).show();
+                                if (IsNotNullOrEmpty(charts['chart_' + nm_agg])) {
+                                    charts['chart_' + nm_agg].data.datasets[0].data = data_chart_doc_count;
+                                    charts['chart_' + nm_agg].data.datasets[1].data = data_chart_sum_value;
+                                    charts['chart_' + nm_agg].data.labels = labels_chart;
+                                    charts['chart_' + nm_agg].options.scales.yAxes[0].ticks.stepSize = maior.toString().length >= 3 ? 10 : (maior > 60 ? parseInt(maior / 10, 10) : maior > 30 ? 5 : 1);
 
-                                    charts['chart_' + agg].update();
+                                    charts['chart_' + nm_agg].update();
                                 }
                                 else {
-                                    charts['chart_' + agg] = new Chart(document.getElementById("chart_" + agg), {
+                                    charts['chart_' + nm_agg] = new Chart(document.getElementById("chart_" + nm_agg), {
                                         responsive: true,
                                         type: 'line',
                                         data: {
@@ -227,33 +260,34 @@
                                 }
                             }
                             else {
-                                if (IsNotNullOrEmpty(charts['chart_' + agg])) {
-                                    charts['chart_' + agg].destroy();
+                                if (IsNotNullOrEmpty(charts['chart_' + nm_agg])) {
+                                    charts['chart_' + nm_agg].destroy();
                                 }
-                                $("#chart_" + agg).hide();
-                                $('#tbody_' + agg).html('<tr><td colspan="2">Nenhum registro encontrado.</td></tr>');
+                                $("#chart_" + nm_agg).hide();
+                                $('#tbody_' + nm_agg).html('<tr><td colspan="2">Nenhum registro encontrado.</td></tr>');
                             }
                         }
+                        $('#super_loading').hide();
                     }
-                    $('#super_loading').hide();
-                }
 
-                var jOptions = {
-                    sUrl: "./ashx/Consulta/HistoricoDePesquisaConsulta.ashx?tipo_pesquisa=estatistica",
-                    sType: "GET",
-                    fnSuccess: sucesso,
-                    fnBeforeSend: gInicio,
-                    bAsync: true
-                };
+                    var jOptions = {
+                        sUrl: "./ashx/Consulta/HistoricoDePesquisaConsulta.ashx?tipo_pesquisa=estatistica",
+                        sType: "GET",
+                        fnSuccess: sucesso,
+                        fnBeforeSend: gInicio,
+                        bAsync: true
+                    };
 
-                if (IsNotNullOrEmpty(id_form)) {
-                    jOptions.sType= "POST";
-                    jOptions.sFormId= id_form;
+                    if (IsNotNullOrEmpty(id_form)) {
+                        jOptions.sType= "POST";
+                        jOptions.sFormId= id_form;
+                    }
+                    $.ajaxlight(jOptions);
+                } catch (e) {
+                    console.log(e);
                 }
-                $.ajaxlight(jOptions);
-            } catch (e) {
-                console.log(e);
             }
+            
             return false;
         }
 
@@ -280,7 +314,10 @@
         <div id="tabs_estatistica" class="tabs_estatistica tabs_datatable w-90-pc mauto">
             <ul>
                 <li>
-                    <a href="#termos_pesquisados" onclick="clickAba(this);" first="first">Termos Pesquisados</a>
+                    <a href="#pesquisas" onclick="clickAba(this);" first="first">Pesquisas</a>
+                </li>
+                <li>
+                    <a href="#termos_pesquisados" onclick="clickAba(this);">Termos Pesquisados</a>
                 </li>
                 <li>
                     <a href="#tipos_de_pesquisa" onclick="clickAba(this);">Tipos de Pesquisa</a>
@@ -289,6 +326,95 @@
                     <a href="#por_periodo" onclick="clickAba(this);">Por Período</a>
                 </li>
             </ul>
+            <div id="pesquisas">
+                <div class="table w-100-pc">
+                    <div class="line">
+                        <div class="column w-100-pc">
+                            <div class="table w-100-pc">
+                                <h1>
+                                    PESQUISAS REALIZADAS
+                                </h1>
+                                <div class="line">
+                                    <div class="column w-100-pc">
+                                        <div class="filtro">
+                                            <form id="form_configuracoes_pesquisas" name="form_configuracoes_pesquisas" method="POST" action="#" onsubmit="javascript:return listarAggs('form_configuracoes_pesquisas');">
+                                                <input type="hidden" name="nm_agg" value="agg_pesquisas" />
+                                                <div class="table mleft">
+                                                    <div class="line">
+                                                        <div class="column">
+                                                            <div class="cell fr">
+                                                                <label>Filtrar por data:</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="column">
+                                                            <select name="op_intervalo" onchange="selectRange(this)">
+                                                                <option value=""></option>
+                                                                <option value="igual">Igual</option>
+                                                                <option value="maior">Maior que</option>
+                                                                <option value="maiorouigual">Maior ou igual</option>
+                                                                <option value="menor">Menor que</option>
+                                                                <option value="menorouigual">Menor ou igual</option>
+                                                                <option value="diferente">Diferente</option>
+                                                                <option value="intervalo">Intervalo</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="column">
+                                                            <input name="dt_historico" type="text" class="date" />
+                                                        </div>
+                                                        <div class="column interval" style="display:none">
+                                                            &nbsp;até&nbsp;
+                                                            <input label="Data" name="dt_historico_fim" type="text" class="date"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line">
+                                                        <div class="column w-100-pc">
+                                                            <div class="text-right">
+                                                                <button type="submit" title="Aplicar">
+                                                                    <img src="<%=TCDF.Sinj.Util._urlPadrao%>/Imagens/ico_check.png?1" width="20" height="20" />Aplicar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="text-right">
+                                            <button type="button" title="Gerar PDF" onclick="javascript:printPDFTable('Tabela dos termos usados nas pesquisas', 'table_agg_pesquisas')">
+                                                <img src="<%=TCDF.Sinj.Util._urlPadrao%>/Imagens/ico_pdf.png?1" width="20" height="20" /> Salvar Tabela
+                                            </button>
+                                            <button type="button" title="Gerar PDF" onclick="javascript:printPDFChart('Gráfico dos termos usados nas pesquisas', 'chart_agg_pesquisas')">
+                                                <img src="<%=TCDF.Sinj.Util._urlPadrao%>/Imagens/ico_pdf.png?1" width="20" height="20" /> Salvar Gráfico
+                                            </button>
+                                        </div>
+                                        <br />
+                                        <div class="tabela agg_pesquisas">
+                                            <table id="table_agg_pesquisas">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Pesquisa</th>
+                                                        <th>Quantidade</th>
+                                                        <th>Quantidade/Usuário</th>
+                                                        <th>Histórico</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                
+                                                </tbody>
+                                                <tfoot>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <br />
+                                        <div class="grafico">
+                                            <canvas id="chart_agg_pesquisas"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id="termos_pesquisados">
                 <div class="table w-100-pc">
                     <div class="line">
@@ -355,9 +481,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Termos Pesquisados</th>
-                                                        <th style="text-align:center;">Quantidade</th>
-                                                        <th style="text-align:center;">Quantidade/Usuário</th>
-                                                        <th> </th>
+                                                        <th>Quantidade</th>
+                                                        <th>Quantidade/Usuário</th>
+                                                        <th>Histórico</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbody_agg_termos">
@@ -444,9 +570,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Tipo de Pesquisa</th>
-                                                        <th style="text-align:center;">Quantidade</th>
-                                                        <th style="text-align:center;">Quantidade/Usuário</th>
-                                                        <th> </th>
+                                                        <th>Quantidade</th>
+                                                        <th>Quantidade/Usuário</th>
+                                                        <th>Histórico</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbody_agg_tipos">
@@ -546,9 +672,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Período</th>
-                                                        <th style="text-align:center;">Quantidade</th>
-                                                        <th style="text-align:center;">Quantidade/Usuário</th>
-                                                        <th> </th>
+                                                        <th>Quantidade</th>
+                                                        <th>Quantidade/Usuário</th>
+                                                        <th>Histórico</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbody_agg_dt_historico">
