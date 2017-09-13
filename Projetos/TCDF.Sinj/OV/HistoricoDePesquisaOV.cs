@@ -12,6 +12,7 @@ namespace TCDF.Sinj.OV
         {
             argumentos = new List<ArgumentoOV>();
             total = new List<TotalOV>();
+            registros_clicados = new List<RegistroClicado>();
         }
         public string ch_consulta { get; set; }
         public string ch_usuario { get; set; }
@@ -25,6 +26,7 @@ namespace TCDF.Sinj.OV
         /// </summary>
         public long contador { get; set; }
         public List<ArgumentoOV> argumentos { get; set; }
+        public List<RegistroClicado> registros_clicados { get; set; }
     }
 
     public class ArgumentoOV
@@ -43,5 +45,13 @@ namespace TCDF.Sinj.OV
         public string nm_base { get; set; }
         public string ds_base { get; set; }
         public long nr_total { get; set; }
+    }
+
+    public class RegistroClicado
+    {
+        public string ch_registro_clicado { get; set; }
+        public string nm_base_clicado { get; set; }
+        public string ds_registro_clicado { get; set; }
+        public long contador_clicado { get; set; }
     }
 }

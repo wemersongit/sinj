@@ -83,6 +83,9 @@
                 "consulta": {
                     "type": "string"
                 },
+                "contador": {
+                    "type": "long"
+                },
                 "ds_historico": {
                     "type": "string",
                     "fields": {
@@ -99,6 +102,29 @@
                 "dt_historico": {
                     "type": "date",
                     "format": "dd/MM/yyyy HH:mm:ss"
+                },
+                "registros_clicados": {
+                    "type": "nested",
+                    "properties": {
+                        "ch_registro_clicado": {
+                            "type": "string"
+                        },
+                        "nm_base_clicado": {
+                            "type": "string"
+                        },
+                        "contador_clicado": {
+                            "type": "long"
+                        },
+                        "ds_registro_clicado": {
+                            "type": "string",
+                            "fields": {
+                                "ds_registro_clicado_keyword": {
+                                    "type": "string",
+                                    "analyzer": "keyword_analyzer"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

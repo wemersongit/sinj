@@ -26,7 +26,7 @@
 	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
 	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
 	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
-                        return "";
+                        return '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx?ds_historico='+full.key+'" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
                     }
                 }
             ],
@@ -35,7 +35,7 @@
 	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
 	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
 	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
-                        return "";
+                        return '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx?termo='+full.key+'" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
                     }
                 }
             ],
@@ -44,7 +44,7 @@
 	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
 	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
 	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
-                        return "";
+                        return '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx?nm_tipo_pesquisa='+full.key+'" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
                     }
                 }
             ],
@@ -53,7 +53,7 @@
 	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
 	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
 	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
-                        return "";
+                        return '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx?dt_historico='+full.key+'" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
                     }
                 }
             ]
@@ -130,18 +130,12 @@
                         if (IsNotNullOrEmpty(data, 'aggregations')) {
                             var tbody = '';
                             var oAgg = eval('data.aggregations.' + nm_agg);
-                            //$('.' + nm_agg).removeClass('scroll');
-                            //$('#tfoot_' + nm_agg).html('');
-
                             $("#table_" + nm_agg).DataTable().destroy();
 
                             if (IsNotNullOrEmpty(oAgg, 'buckets') && oAgg.buckets.length > 0) {
                                 var labels_chart = [];
                                 var data_chart_sum_value = [];
                                 var data_chart_doc_count = [];
-//                                if (oAgg.buckets.length > 10) {
-//                                    $('.' + nm_agg).addClass('scroll');
-//                                }
                                 var iTotal = 0;
                                 var i = 0;
                                 var maior = 0;
@@ -164,21 +158,6 @@
                                     data_chart_sum_value.push(oData.sum_value);
                                     data_chart_doc_count.push(oData.doc_count);
 
-//                                    if (nm_agg == 'agg_termos') {
-//                                        searchLink = '?termo=' + key;
-//                                    }
-//                                    else if (nm_agg == 'agg_tipos') {
-//                                        searchLink = '?nm_tipo_pesquisa=' + key;
-//                                    }
-//                                    else if (nm_agg == 'agg_dt_historico') {
-//                                        searchLink = '?dt_historico=' + key;
-//                                    }
-//                                    link = '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx' + searchLink + '" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
-
-//                                    //$('#tbody_resultado').append('<tr class="' + (i % 2 == 0 ? "EEE" : "") + ' termo"><td>' + data.aggregations.agg_termos.buckets[i].key + '</td><td style="text-align:center;">' + data.aggregations.agg_termos.buckets[i].doc_count + '</td><td>' + link + '</td></tr>');
-
-//                                    tbody += '<tr class="' + (i % 2 == 0 ? "EEE" : "") + ' ' + nm_agg + '"><td>' + key + '</td><td class="text-center">' + sum_value + '</td><td class="text-center">' + doc_count + '</td><td>' + link + '</td></tr>';
-
                                     iTotal += oData.sum_value;
                                     if (oData.sum_value > maior) {
                                         maior = oData.sum_value;
@@ -195,7 +174,6 @@
                                     "aoColumns":_columns_estatisticas[nm_agg],
                                     "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
                                     "aaSorting":[[1, "desc"]],
-                                    //"ordering": true,
                                     "oLanguage": {
                                         "oPaginate": { "sFirst": "<<", "sLast": ">>", "sNext": ">", "sPrevious": "<" },
                                         "sEmptyTable": "Não foram encontrados registros",

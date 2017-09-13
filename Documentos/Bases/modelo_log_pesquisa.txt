@@ -224,9 +224,73 @@
                     }
                 ],
                 "metadata": {
-                    "alias": "argumentos",
+                    "alias": "Argumentos",
                     "description": "Grupo multivalorado com os argumentos de pesquisa (campo, operador e valor)",
-                    "name": "Argumentos",
+                    "name": "argumentos",
+                    "multivalued": true
+                }
+            }
+        },
+        {
+            "group": {
+                "content":[
+                    {
+                        "field": {
+                            "name": "ch_registro_clicado",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Chave do Registro",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "A chave que identifica o registro clicado."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nm_base_clicado",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Base do Registro",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "A base do registro clicado."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ds_registro_clicado",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Descrição do Registro",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Descrição do registro clicado"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "contador_clicado",
+                            "datatype": "Integer",
+                            "required": false,
+                            "alias": "Contador de cliques",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Conta quantos cliques o registro recebeu pelo usuário na consulta."
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Registros Clicados",
+                    "description": "Grupo multivalorado com os dados dos registros que o usuário clicou com a consulta realizada.",
+                    "name": "registros_clicados",
                     "multivalued": true
                 }
             }

@@ -2220,9 +2220,9 @@ function fn_submit_highlight() {
                     return true;
                 }
             }
-            //          document.form_highlight.action = "./DetalhesDeNorma.aspx?id_doc=" + doc_clicked;
             document.form_highlight.action = aHighlight[i].action;
             document.form_highlight.highlight.value = window.escape(JSON.stringify(aHighlight[i].highlight));
+
             return true;
         }
     }
