@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Download.aspx.cs" Inherits="TCDF.Sinj.Web.Download" %>
 <!DOCTYPE html>
 <html>
-<head>
+<head id="Head1" runat="server">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="googlebot" content="noindex,nofollow" />
@@ -13,8 +13,6 @@
     </style>
 </head>
 <body>
-    <div runat="server" id="div_imagens">
-        
-    </div>
+    <div runat="server" id="div_texto"></div>
 </body>
 </html>

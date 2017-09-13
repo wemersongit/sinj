@@ -59,6 +59,34 @@
             ]
         };
 
+        function getStepSize(value){
+            var length = value.toString().length;
+            if(length >= 2){
+                var nCalcRange = 0;
+                var nCalcSize = 0;
+                for(var i = 0; i < length; i++){
+                    nCalcRange = parseInt(nCalcRange + '1');
+                    if(nCalcSize == 0){
+                        nCalcSize = 1;
+                    }
+                    else{
+                        nCalcSize = parseInt(nCalcSize + '0');
+                    }
+                }
+                if(value < (nCalcRange * 3)){
+                    return nCalcSize / 10;
+                }
+                if(value < (nCalcRange * 6)){
+                    return nCalcSize / 5;
+                }
+                if(value < (nCalcRange * 9)){
+                    return nCalcSize / 2;
+                }
+            }
+
+            return 1;
+        }
+
         function selectRange(el) {
             if ($(el).val() == 'intervalo') {
                 $('div.interval', $(el).closest('div.line')).show();
@@ -194,7 +222,7 @@
                                     charts['chart_' + nm_agg].data.datasets[0].data = data_chart_doc_count;
                                     charts['chart_' + nm_agg].data.datasets[1].data = data_chart_sum_value;
                                     charts['chart_' + nm_agg].data.labels = labels_chart;
-                                    charts['chart_' + nm_agg].options.scales.yAxes[0].ticks.stepSize = maior.toString().length >= 3 ? 10 : (maior > 60 ? parseInt(maior / 10, 10) : maior > 30 ? 5 : 1);
+                                    charts['chart_' + nm_agg].options.scales.yAxes[0].ticks.stepSize = getStepSize(maior);
 
                                     charts['chart_' + nm_agg].update();
                                 }
@@ -221,12 +249,13 @@
                                                 yAxes: [{
                                                     ticks: {
                                                         beginAtZero: true,
-                                                        stepSize: maior.toString().length >= 3 ? 10 : (maior > 60 ? parseInt(maior / 10, 10) : maior > 30 ? 5 : 1)
+                                                        stepSize: getStepSize(maior)
                                                     }
                                                 }],
                                                 xAxes: [{
                                                     ticks: {
-                                                        minRotation: 89
+                                                        minRotation: 89,
+                                                        maxTicksLimit: 100
                                                     }
                                                 }]
                                             },
@@ -345,6 +374,27 @@
                                                         </div>
                                                     </div>
                                                     <div class="line">
+                                                        <div class="column">
+                                                            <div class="cell fr">
+                                                                <label>Quantidade de registros:</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="column">
+                                                            <select name="size">
+                                                                <option value=""></option>
+                                                                <option value="10">10</option>
+                                                                <option value="50">50</option>
+                                                                <option value="100">100</option>
+                                                                <option value="500">500</option>
+                                                                <option value="1000" selected="selected">1000</option>
+                                                                <option value="5000">5000</option>
+                                                                <option value="10000">10000</option>
+                                                                <option value="50000">50000</option>
+                                                                <option value="Todos">Todos</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line">
                                                         <div class="column w-100-pc">
                                                             <div class="text-right">
                                                                 <button type="submit" title="Aplicar">
@@ -434,6 +484,27 @@
                                                         </div>
                                                     </div>
                                                     <div class="line">
+                                                        <div class="column">
+                                                            <div class="cell fr">
+                                                                <label>Quantidade de registros:</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="column">
+                                                            <select name="size">
+                                                                <option value=""></option>
+                                                                <option value="10">10</option>
+                                                                <option value="50">50</option>
+                                                                <option value="100">100</option>
+                                                                <option value="500">500</option>
+                                                                <option value="1000" selected="selected">1000</option>
+                                                                <option value="5000">5000</option>
+                                                                <option value="10000">10000</option>
+                                                                <option value="50000">50000</option>
+                                                                <option value="Todos">Todos</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line">
                                                         <div class="column w-100-pc">
                                                             <div class="text-right">
                                                                 <button type="submit" title="Aplicar">
@@ -520,6 +591,27 @@
                                                         <div class="column interval" style="display:none">
                                                             &nbsp;até&nbsp;
                                                             <input label="Data" name="dt_historico_fim" type="text" class="date"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line">
+                                                        <div class="column">
+                                                            <div class="cell fr">
+                                                                <label>Quantidade de registros:</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="column">
+                                                            <select name="size">
+                                                                <option value=""></option>
+                                                                <option value="10">10</option>
+                                                                <option value="50">50</option>
+                                                                <option value="100">100</option>
+                                                                <option value="500">500</option>
+                                                                <option value="1000" selected="selected">1000</option>
+                                                                <option value="5000">5000</option>
+                                                                <option value="10000">10000</option>
+                                                                <option value="50000">50000</option>
+                                                                <option value="Todos">Todos</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="line">
@@ -621,6 +713,27 @@
                                                                 <option value="dia">Dia</option>
                                                                 <option value="mes">Mês</option>
                                                                 <option value="ano">Ano</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line">
+                                                        <div class="column">
+                                                            <div class="cell fr">
+                                                                <label>Quantidade de registros:</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="column">
+                                                            <select name="size">
+                                                                <option value=""></option>
+                                                                <option value="10">10</option>
+                                                                <option value="50">50</option>
+                                                                <option value="100">100</option>
+                                                                <option value="500">500</option>
+                                                                <option value="1000" selected="selected">1000</option>
+                                                                <option value="5000">5000</option>
+                                                                <option value="10000">10000</option>
+                                                                <option value="50000">50000</option>
+                                                                <option value="Todos">Todos</option>
                                                             </select>
                                                         </div>
                                                     </div>

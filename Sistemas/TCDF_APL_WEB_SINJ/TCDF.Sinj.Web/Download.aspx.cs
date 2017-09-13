@@ -8,11 +8,13 @@ using neo.BRLightREST;
 using TCDF.Sinj.Log;
 using util.BRLight;
 using TCDF.Sinj.RN;
+using System.Text;
 
 namespace TCDF.Sinj.Web
 {
     public partial class Download : System.Web.UI.Page
     {
+        protected string title = "";
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -32,27 +34,27 @@ namespace TCDF.Sinj.Web
                 {
                     if (!string.IsNullOrEmpty(_id_file))
                     {
-                        if (_nm_base == "norma")
-                        {
-                            _nm_base = "sinj_norma";
-                            //nesse contexto o id_file é na verdade ch_norma
-                            var normaOv = new NormaRN().Doc(_id_file);
+                        //if (_nm_base == "norma")
+                        //{
+                        //    _nm_base = "sinj_norma";
+                        //    //nesse contexto o id_file é na verdade ch_norma
+                        //    var normaOv = new NormaRN().Doc(_id_file);
 
-                            if (!string.IsNullOrEmpty(normaOv.ar_atualizado.id_file))
-                            {
-                                _id_file = normaOv.ar_atualizado.id_file;
-                            }
-                            else
-                            {
-                                foreach (var fonte in normaOv.fontes)
-                                {
-                                    if (!string.IsNullOrEmpty(fonte.ar_fonte.id_file))
-                                    {
-                                        _id_file = fonte.ar_fonte.id_file;
-                                    }
-                                }
-                            }
-                        }
+                        //    if (!string.IsNullOrEmpty(normaOv.ar_atualizado.id_file))
+                        //    {
+                        //        _id_file = normaOv.ar_atualizado.id_file;
+                        //    }
+                        //    else
+                        //    {
+                        //        foreach (var fonte in normaOv.fontes)
+                        //        {
+                        //            if (!string.IsNullOrEmpty(fonte.ar_fonte.id_file))
+                        //            {
+                        //                _id_file = fonte.ar_fonte.id_file;
+                        //            }
+                        //        }
+                        //    }
+                        //}
                         var docRn = new Doc(_nm_base);
                         var docOv = docRn.doc(_id_file);
                         if (docOv.id_file != null)
@@ -65,12 +67,39 @@ namespace TCDF.Sinj.Web
                                     arquivo = new ArquivoOV { filename = docOv.filename, filesize = docOv.filesize, id_file = docOv.id_file, mimetype = docOv.mimetype }
                                 };
                                 LogOperacao.gravar_operacao("DWN", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-                                Response.Clear();
-                                Response.ContentType = docOv.mimetype;
-                                Response.AppendHeader("Content-Length", file.Length.ToString());
-                                Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
-                                Response.BinaryWrite(file);
-                                Response.Flush();
+
+                                if (_nm_base == "sinj_norma")
+                                {
+
+                                    var msg = Encoding.UTF8.GetString(file);
+                                    if (msg.IndexOf("<h1 epigrafe") > -1)
+                                    {
+                                        msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
+                                    }
+                                    else
+                                    {
+                                        Encoding wind1252 = Encoding.GetEncoding(1252);
+                                        Encoding utf8 = Encoding.UTF8;
+                                        byte[] wind1252Bytes = file;
+                                        byte[] utfBytes = Encoding.Convert(wind1252, utf8, wind1252Bytes);
+                                        msg = utf8.GetString(utfBytes);
+                                    }
+
+
+                                    div_texto.InnerHtml = msg;
+                                }
+                                else if (_nm_base == "sinj_arquivo" && docOv.mimetype.IndexOf("html") > -1){
+                                    var msg = Encoding.UTF8.GetString(file);
+                                    div_texto.InnerHtml = msg;
+                                }
+                                else{
+                                    Response.Clear();
+                                    Response.ContentType = docOv.mimetype;
+                                    Response.AppendHeader("Content-Length", file.Length.ToString());
+                                    Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
+                                    Response.BinaryWrite(file);
+                                    Response.Flush();
+                                }
                             }
                             else
                             {
@@ -82,68 +111,6 @@ namespace TCDF.Sinj.Web
                             throw new Exception("Arquivo não encontrado.");
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    var mensagem = Excecao.LerTodasMensagensDaExcecao(ex, false);
-
-                    var erro = new ErroRequest
-                    {
-                        Pagina = Request.Path,
-                        RequestQueryString = Request.QueryString,
-                        MensagemDaExcecao = Excecao.LerTodasMensagensDaExcecao(ex, true),
-                        StackTrace = ex.StackTrace
-                    };
-                    if (sessao_usuario != null)
-                    {
-                        LogErro.gravar_erro("DWN", erro, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-                    }
-
-                    Response.Clear();
-                    Response.Write("<html><head></head><body><div id=\"div_erro\" style=\"color:#990000; width:500px; margin:auto; text-align:center;\">" + mensagem + "<br/><br/>Tente mais tarde ou entre em contato com o administrador do sistema.</div></body><html>");
-                }
-            }
-            else if (aKeywords.Length == 1 && aKeywords[0] == "imagens")
-            {
-                try
-                {
-                    var query = new Pesquisa();
-                    query.limit = null;
-                    query.literal = "ch_arquivo like '000shared/images/%' AND nr_tipo_arquivo=1";
-                    query.order_by.asc = new string[] { "nr_tipo_arquivo", "ch_arquivo" };
-
-                    var oResult = new SINJ_ArquivoRN().Consultar(query);
-
-                    var table = "";
-                    var tr = "";
-
-                    var url = "";
-                    var urlSinjPortal = util.BRLight.Util.GetVariavel("URLSinjPortal",true);
-                    if(urlSinjPortal == "-1"){
-                        urlSinjPortal = ResolveUrl("~");
-                    }
-
-                    var i = 0;
-                    foreach(var arquivo in oResult.results){
-                        if (i % 5 == 0)
-                        {
-                            if (tr != "")
-                            {
-                                tr += "</tr>";
-                            }
-                            tr += "<tr>";
-                        }
-                        url = "Download/sinj_arquivo/" + arquivo.ar_arquivo.id_file + "/" + arquivo.ar_arquivo.filename;
-                        tr += "<td><img onclick='javascript:selectImage(\"" + urlSinjPortal + "/" + url + "\");' src='" + ResolveUrl("~") + url + "' style='max-width:200px;' /></td>";
-                        i++;
-                    }
-                    div_imagens.InnerHtml = "<table>" + tr + "</table>"+
-                        "<script type=\"text/javascript\" charset=\"utf-8\">"+
-                            "function selectImage(url){" +
-                                "window.opener.CKEDITOR.tools.callFunction(" + Request["CKEditorFuncNum"] + ", url);" +
-                                "window.close();" +
-                            "}"+
-                        "</script>";
                 }
                 catch (Exception ex)
                 {
