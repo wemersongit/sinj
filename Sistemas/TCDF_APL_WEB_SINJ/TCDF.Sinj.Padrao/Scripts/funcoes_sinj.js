@@ -3558,8 +3558,11 @@ function abrirModalImportarArquivo(el) {
 
     //caso seja uma retificação, o descrição do diário que aparece no rodapé do texto importado deve ser a do último diário publicado ou republicado
     var ds_diario = el.getAttribute('ds_diario');
-    var publicacao = el.getAttribute('publicacao').toLowerCase();
-    if(publicacao == "retificação" || publicacao == "ret"){
+    var publicacao = "";
+    if(IsNotNullOrEmpty(el.getAttribute('publicacao'))){
+        publicacao = el.getAttribute('publicacao').toLowerCase();
+    }
+    if(publicacao == "retificação" || publicacao == "ret" || publicacao == ""){
         var aPublicacoes = $('#tbody_fontes a[publicacao]');
         var ds_diario_publicacao = '';
         for(var i = 0; i < aPublicacoes.length; i++){

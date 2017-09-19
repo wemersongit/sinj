@@ -330,7 +330,7 @@ namespace TCDF.Sinj.AD
                         {
                             sSecao += (sSecao != "" ? (i < (_secao_diario.Length - 1) ? ", " : " e ") : "") + _secao_diario[i];
                         }
-                        filters.Add("{\"query\":{\"query_string\":{\"query\":\"secao_diario:\\\"" + sSecao + "\\\"}}}");
+                        filters.Add("{\"query\":{\"query_string\":{\"query\":\"secao_diario:\\\"" + sSecao + "\\\"\"}}}");
                     }
                     if (!string.IsNullOrEmpty(_sSearch))
                     {

@@ -88,11 +88,11 @@ namespace AtualizarLogDePesquisa
                             {
                                 doc.nm_tipo_pesquisa = "Pesquisa de Normas";
                             }
-                            if (doc.ds_historico.IndexOf("(Pesquisa de Diário)") == 0)
+                            else if (doc.ds_historico.IndexOf("(Pesquisa de Diário)") == 0)
                             {
                                 doc.nm_tipo_pesquisa = "Pesquisa de Diário";
                             }
-                            if (doc.ds_historico.IndexOf("(Pesquisa Avançada)") == 0)
+                            else if (doc.ds_historico.IndexOf("(Pesquisa Avançada)") == 0)
                             {
                                 doc.nm_tipo_pesquisa = "Pesquisa Avançada";
                             }
@@ -118,6 +118,7 @@ namespace AtualizarLogDePesquisa
                             }
                             travadoNoErro = true;
                         }
+
                         i++;
                     }
                 }
@@ -128,6 +129,10 @@ namespace AtualizarLogDePesquisa
                     this._sb_error.AppendLine(DateTime.Now + ": Erro na raiz do método para atualizar Pesquisas.");
                     this._sb_error.AppendLine("       Mensagem da Exceção: " + Excecao.LerTodasMensagensDaExcecao(ex, false));
                     this._sb_error.AppendLine("       StackTrace: " + ex.StackTrace);
+                }
+                if (this._sb_error.Length > 100000 || this._sb_info.Length > 100000)
+                {
+                    Log();
                 }
             }
             this._sb_info.AppendLine(DateTime.Now + ": Conclusão do procedimento para atualizar as Pesquisa.");

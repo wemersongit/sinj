@@ -22,8 +22,8 @@
 
         var _columns_estatisticas = {
             "agg_pesquisas":[
-	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Pesquisa", "sWidth": "", "sClass": "grid-cell ws", "mData": "key"},
-	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
+	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Pesquisa", "sWidth": "60%", "sClass": "grid-cell ws", "mData": "key"},
+	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value" },
 	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
 	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
                         return '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx?ds_historico='+full.key+'" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
@@ -31,8 +31,8 @@
                 }
             ],
             "agg_termos":[
-	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Termo", "sWidth": "", "sClass": "grid-cell ws", "mData": "key"},
-	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
+	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Termo", "sWidth": "60%", "sClass": "grid-cell ws", "mData": "key"},
+	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value" },
 	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
 	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
                         return '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx?termo='+full.key+'" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
@@ -40,8 +40,8 @@
                 }
             ],
             "agg_tipos":[
-	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo de Pesquisa", "sWidth": "", "sClass": "grid-cell ws", "mData": "key"},
-	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
+	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo de Pesquisa", "sWidth": "60%", "sClass": "grid-cell ws", "mData": "key"},
+	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value" },
 	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
 	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
                         return '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx?nm_tipo_pesquisa='+full.key+'" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
@@ -49,8 +49,8 @@
                 }
             ],
             "agg_dt_historico":[
-	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Período", "sWidth": "", "sClass": "grid-cell ws", "mData": "key"},
-	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value", "sorting": "desc" },
+	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Período", "sWidth": "60%", "sClass": "grid-cell ws", "mData": "key"},
+	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value" },
 	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
 	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
                         return '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx?dt_historico='+full.key+'" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
@@ -197,24 +197,13 @@
 
                                 }
 
-                                $("#table_" + nm_agg).dataTable({
-                                    "data":aoData,
+                                $("#datatable_" + nm_agg).dataTablesLight({
+                                    "sIdTable": "table_" + nm_agg,
+                                    "aoData":aoData,
+                                    "bServerSide": false,
                                     "aoColumns":_columns_estatisticas[nm_agg],
                                     "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-                                    "aaSorting":[[1, "desc"]],
-                                    "oLanguage": {
-                                        "oPaginate": { "sFirst": "<<", "sLast": ">>", "sNext": ">", "sPrevious": "<" },
-                                        "sEmptyTable": "Não foram encontrados registros",
-                                        "sInfo": "<span>Exibindo de <b>_START_</b> até <b>_END_</b> de <b>_TOTAL_</b> registros encontrados.</span>",
-                                        "sInfoEmpty": " ",
-                                        "sInfoFiltered": "",
-                                        "sInfoThousands": ".",
-                                        "sLengthMenu": "Exibir _MENU_ registros",
-                                        "sLoadingRecords": "Carregando...",
-                                        "sProcessing": "<span><b>Processando...</b></span>",
-                                        "sSearch": "Filtrar",
-                                        "sZeroRecords": "Não foram encontrados registros"
-                                    }
+                                    "aaSorting":[[1, "desc"]]
                                 });
 
                                 $("#chart_" + nm_agg).show();
@@ -415,22 +404,7 @@
                                             </button>
                                         </div>
                                         <br />
-                                        <div class="tabela agg_pesquisas">
-                                            <table id="table_agg_pesquisas">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Pesquisa</th>
-                                                        <th>Quantidade</th>
-                                                        <th>Quantidade/Usuário</th>
-                                                        <th>Histórico</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                
-                                                </tbody>
-                                                <tfoot>
-                                                </tfoot>
-                                            </table>
+                                        <div id="datatable_agg_pesquisas">
                                         </div>
                                         <br />
                                         <div class="grafico">
@@ -525,22 +499,7 @@
                                             </button>
                                         </div>
                                         <br />
-                                        <div class="tabela agg_termos">
-                                            <table id="table_agg_termos" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Termos Pesquisados</th>
-                                                        <th>Quantidade</th>
-                                                        <th>Quantidade/Usuário</th>
-                                                        <th>Histórico</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tbody_agg_termos">
-                                
-                                                </tbody>
-                                                <tfoot id="tfoot_agg_termos">
-                                                </tfoot>
-                                            </table>
+                                        <div id="datatable_agg_termos">
                                         </div>
                                         <br />
                                         <div class="grafico">
@@ -635,21 +594,7 @@
                                             </button>
                                         </div>
                                         <br />
-                                        <div class="tabela agg_tipos">
-                                            <table id="table_agg_tipos" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tipo de Pesquisa</th>
-                                                        <th>Quantidade</th>
-                                                        <th>Quantidade/Usuário</th>
-                                                        <th>Histórico</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tbody_agg_tipos">
-                                                </tbody>
-                                                <tfoot id="tfoot_agg_tipos">
-                                                </tfoot>
-                                            </table>
+                                        <div id="datatable_agg_tipo">
                                         </div>
                                         <br />
                                         <div class="grafico">
@@ -758,21 +703,7 @@
                                             </button>
                                         </div>
                                         <br />
-                                        <div class="tabela agg_dt_historico">
-                                            <table id="table_agg_dt_historico" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Período</th>
-                                                        <th>Quantidade</th>
-                                                        <th>Quantidade/Usuário</th>
-                                                        <th>Histórico</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tbody_agg_dt_historico">
-                                                </tbody>
-                                                <tfoot id="tfoot_agg_dt_historico">
-                                                </tfoot>
-                                            </table>
+                                        <div id="datatable_agg_dt_historico">
                                         </div>
                                         <br />
                                         <div class="grafico">
