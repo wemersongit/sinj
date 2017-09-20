@@ -227,7 +227,7 @@ namespace TCDF.Sinj.AD
         /// <returns></returns>
         private string MontarHighlight()
         {
-            return "\"nm_tipo_fonte\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nr_diario_text\":{\"number_of_fragments\":20,\"fragment_size\":1},\"dt_assinatura_text\":{\"number_of_fragments\":20,\"fragment_size\":1},\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150, \"no_match_size\":300}";
+            return "\"nm_tipo_fonte\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nr_diario_text\":{\"number_of_fragments\":20,\"fragment_size\":1},\"dt_assinatura_text\":{\"number_of_fragments\":20,\"fragment_size\":1},\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150, \"no_match_size\":300},\"ar_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150, \"no_match_size\":300}";
         }
 
         /// <summary>
