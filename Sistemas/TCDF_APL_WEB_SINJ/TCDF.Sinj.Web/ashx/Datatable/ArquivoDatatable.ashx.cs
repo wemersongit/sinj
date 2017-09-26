@@ -20,7 +20,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
         {
             var json_resultado = "";
             Pesquisa pesquisa = new Pesquisa();
-
+            pesquisa.limit = null;
             string _ch_arquivo_superior = context.Request["ch_arquivo_superior"];
 
             var _sSearch = context.Request["sSearch"];

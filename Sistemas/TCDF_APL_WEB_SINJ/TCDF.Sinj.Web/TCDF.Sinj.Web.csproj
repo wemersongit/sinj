@@ -108,7 +108,6 @@
     <Content Include="Arquivos.aspx" />
     <Content Include="Diario.aspx" />
     <Content Include="Download.aspx" />
-    <Content Include="EditarArquivo.aspx" />
     <Content Include="EditarAutoria.aspx" />
     <Content Include="EditarInteressado.aspx" />
     <Content Include="EditarLinks.aspx" />
@@ -1133,10 +1132,6 @@
     </Compile>
     <Compile Include="Download.aspx.designer.cs">
       <DependentUpon>Download.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="EditarArquivo.aspx.cs">
-      <DependentUpon>EditarArquivo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EditarAutoria.aspx.cs">
       <DependentUpon>EditarAutoria.aspx</DependentUpon>

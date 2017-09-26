@@ -227,15 +227,15 @@ namespace TCDF.Sinj
             }
             catch (SessionExpiredException)
             {
-                page.Response.Redirect("./Login.aspx?cd=1", true);
+                page.Response.Redirect("~/Login.aspx?cd=1", true);
             }
             catch (PermissionException)
             {
-                page.Response.Redirect("./Erro.aspx?cd=0", true);
+                page.Response.Redirect("~/Erro.aspx?cd=0", true);
             }
             catch (Exception ex)
             {
-                page.Response.Redirect("./Erro.aspx", true);
+                page.Response.Redirect("~/Erro.aspx", true);
                 var erro = new ErroRequest
                 {
                     Pagina = page.Request.Path,
@@ -258,7 +258,7 @@ namespace TCDF.Sinj
             }
             catch (SessionExpiredException)
             {
-                page.Response.Redirect("./Login.aspx?cd=1&redirecionar=" + url_pagina, true);
+                page.Response.Redirect("~/Login.aspx?cd=1&redirecionar=" + url_pagina, true);
                 return null;
             }
         }

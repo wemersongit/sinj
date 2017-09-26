@@ -546,8 +546,6 @@
                     </button>
                 </div>
                 <input type="hidden" name="id_file" class="id_file" value=""/>
-                <input type="hidden" name="id_doc" class="id_doc" value=""/>
-                <input type="hidden" name="path" class="path" value=""/>
                 <label>Nome do Arquivo:</label><input type="text" name="filename" class="filename" value=""/>
                 <textarea name="arquivo" id="arquivo" rows="10" cols="80" style="display:none"></textarea>
                 <div style="width:210px; margin:auto; display:none;" class="loaded buttons">

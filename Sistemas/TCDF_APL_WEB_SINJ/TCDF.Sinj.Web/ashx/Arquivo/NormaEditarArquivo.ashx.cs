@@ -32,8 +32,8 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
             {
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
-                ulong id_doc = 0;
-                ulong.TryParse(_id_doc, out id_doc);
+                //ulong id_doc = 0;
+                //ulong.TryParse(_id_doc, out id_doc);
                 var arquivo_bytes = System.Text.UnicodeEncoding.UTF8.GetBytes(arquivo_text);
                 //var arquivo_bytes = Convert.FromBase64String(arquivo_text);
                 if (filename.IndexOf(".htm") < 0 || filename.IndexOf(".html") < 0)
@@ -45,43 +45,49 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                 var oRetorno_anexar = JSON.Deserializa<ArquivoOV>(sRetorno_anexar);
                 if (oRetorno_anexar != null && !string.IsNullOrEmpty(oRetorno_anexar.uuid))
                 {
-                    var sucesso = false;
-                    if (id_doc > 0 && !string.IsNullOrEmpty(_id_file))
+                    //var sucesso = false;
+                    //if (id_doc > 0 && !string.IsNullOrEmpty(_id_file))
+                    //{
+                    //    NormaRN normaRn = new NormaRN();
+                    //    var normaOv = new NormaRN().Doc(id_doc);
+                    //    if (path_file == "ar_fonte")
+                    //    {
+                    //        for (var i = 0; i < normaOv.fontes.Count; i++)
+                    //        {
+                    //            if (normaOv.fontes[i].ar_fonte.id_file == _id_file)
+                    //            {
+                    //                sucesso = normaRn.PathPut(id_doc, "fontes/" + i + "/ar_fonte", sRetorno_anexar, null) == "UPDATED";
+                    //            }
+                    //        }
+                    //    }
+                    //    else if (normaOv.GetType().GetProperty(path_file) != null)
+                    //    {
+                    //        sucesso = normaRn.PathPut(id_doc, path_file, sRetorno_anexar, null) == "UPDATED";
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    sucesso = true;
+                    //}
+                    //if (sucesso)
+                    //{
+                    //    sRetorno = "{\"success_message\":\"Arquivo salvo com sucesso.\",\"file\":" + sRetorno_anexar + "}";
+                    //    var log_arquivo = new LogUpload
+                    //    {
+                    //        arquivo = JSON.Deserializa<ArquivoOV>(sRetorno)
+                    //    };
+                    //    LogOperacao.gravar_operacao(Util.GetEnumDescription(action) + ".ARQ", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
+                    //}
+                    //else
+                    //{
+                    //    sRetorno = "{\"error_message\":\"O arquivo não foi salvo.\",\"file\":" + sRetorno_anexar + "}";
+                    //}
+                    sRetorno = "{\"success_message\":\"Arquivo salvo com sucesso.\",\"file\":" + sRetorno_anexar + "}";
+                    var log_arquivo = new LogUpload
                     {
-                        NormaRN normaRn = new NormaRN();
-                        var normaOv = new NormaRN().Doc(id_doc);
-                        if (path_file == "ar_fonte")
-                        {
-                            for (var i = 0; i < normaOv.fontes.Count; i++)
-                            {
-                                if (normaOv.fontes[i].ar_fonte.id_file == _id_file)
-                                {
-                                    sucesso = normaRn.PathPut(id_doc, "fontes/" + i + "/ar_fonte", sRetorno_anexar, null) == "UPDATED";
-                                }
-                            }
-                        }
-                        else if (normaOv.GetType().GetProperty(path_file) != null)
-                        {
-                            sucesso = normaRn.PathPut(id_doc, path_file, sRetorno_anexar, null) == "UPDATED";
-                        }
-                    }
-                    else
-                    {
-                        sucesso = true;
-                    }
-                    if (sucesso)
-                    {
-                        sRetorno = "{\"success_message\":\"Arquivo salvo com sucesso.\",\"file\":" + sRetorno_anexar + "}";
-                        var log_arquivo = new LogUpload
-                        {
-                            arquivo = JSON.Deserializa<ArquivoOV>(sRetorno)
-                        };
-                        LogOperacao.gravar_operacao(Util.GetEnumDescription(action) + ".ARQ", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-                    }
-                    else
-                    {
-                        sRetorno = "{\"error_message\":\"O arquivo não foi salvo.\",\"file\":" + sRetorno_anexar + "}";
-                    }
+                        arquivo = JSON.Deserializa<ArquivoOV>(sRetorno)
+                    };
+                    LogOperacao.gravar_operacao(Util.GetEnumDescription(action) + ".ARQ", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
                 }
             }
             catch (ParametroInvalidoException ex)

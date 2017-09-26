@@ -1531,7 +1531,7 @@ var _columns_lixeira = [
 ];
 
 var _columns_arquivos = [
-    { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Nome", "sWidth": "", "sClass": "grid-cell ws left", "mData": "nm_arquivo",
+    { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Nome", "sWidth": "", "sClass": "grid-cell ws left", "mData": "nm_arquivo", "sorting": "desc",
         "mRender": function (data, type, full) {
             var html = '';
             if (full.nr_tipo_arquivo == 0) {
