@@ -16,6 +16,9 @@
                     $('#id_doc').val(data._metadata.id_doc);
                     $('#nm_tipo_norma').val(data.nm_tipo_norma);
                     $('#ds_tipo_norma').val(data.ds_tipo_norma);
+                    for (var i = 0; i < data.sgs_tipo_norma.length; i++) {
+                        $('#div_siglas').preppend('<div><input name="sgs_tipo_norma" type="text" value="' + data.sgs_tipo_norma[i] + '" class="w-40-pc" /><button title="Remover sigla" class="link" onclick="delSigla(this)"><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" /></button><div>');
+                    }
                     for (var i = 0; i < data.orgaos_cadastradores.length; i++) {
                         $('#div_orgaos_cadastradores input[value="' + data.orgaos_cadastradores[i].id_orgao_cadastrador + '"]').prop("checked", true);
                     }
@@ -96,6 +99,9 @@ function DetalhesTipoDeNorma() {
                     $('#div_nm_tipo_norma').text(data.nm_tipo_norma);
                     $('#div_ds_tipo_norma').text(data.ds_tipo_norma);
                     $('#div_orgaos_cadastradores').text(data.get_orgaos_cadastradores);
+                    for (var i = 0; i < data.sgs_tipo_norma.length; i++) {
+                        $('#div_siglas').append(data.sgs_tipo_norma[i] + '<br/>');
+                    }
                     $('#div_grupos').text(data.get_grupos);
                     if (data.in_g1) {
                         $('#div_in_g1').text("sim");
@@ -172,4 +178,15 @@ function DetalhesTipoDeNorma() {
             bAsync: true
         });
     }
+}
+
+
+function delSigla(el) {
+    $(el).closest('div').remove();
+}
+function addSigla() {
+    //
+    $('#div_siglas>button[add]').remove();
+    $('#div_siglas').append('<div><input name="sgs_tipo_norma" type="text" value="" class="w-40-pc" /><button title="Remover sigla" class="link" onclick="delSigla(this)"><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" /></button><div>');
+    $('#div_siglas').append('<button add title="Adicionar uma sigla" class="link" onclick="addSigla()"><img src="' + _urlPadrao + '/Imagens/ico_add_p.png" /></button>');
 }

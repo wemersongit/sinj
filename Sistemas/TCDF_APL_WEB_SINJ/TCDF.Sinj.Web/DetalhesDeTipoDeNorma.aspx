@@ -52,6 +52,17 @@
                     <div class="line">
                         <div class="column w-30-pc">
                             <div class="cell fr">
+                                <label>Siglas:</label>
+                            </div>
+                        </div>
+                        <div class="column w-70-pc">
+                            <div id="div_siglas" class="cell w-60-pc">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <div class="column w-30-pc">
+                            <div class="cell fr">
                                 <label>Órgão Cadastrador:</label>
                             </div>
                         </div>

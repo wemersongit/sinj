@@ -43,7 +43,17 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     tipoDeNormaOv = tipoDeNormaRn.Doc(id_doc);
                     tipoDeNormaOv.nm_tipo_norma = _nm_tipo_norma;
                     tipoDeNormaOv.ds_tipo_norma = _ds_tipo_norma;
-                    tipoDeNormaOv.sgs_tipo_norma = _sgs_tipo_norma.ToList<string>();
+                    tipoDeNormaOv.sgs_tipo_norma = new List<string>();
+                    if (_sgs_tipo_norma != null)
+                    {
+                        foreach (var _sg in _sgs_tipo_norma)
+                        {
+                            if (!string.IsNullOrEmpty(_sg))
+                            {
+                                tipoDeNormaOv.sgs_tipo_norma.Add(_sg);
+                            }
+                        }
+                    }
                     tipoDeNormaOv.orgaos_cadastradores = new List<OrgaoCadastrador>();
                     if (!string.IsNullOrEmpty(_orgaos_cadastradores))
                     {

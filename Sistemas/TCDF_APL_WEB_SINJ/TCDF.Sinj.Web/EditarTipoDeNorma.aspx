@@ -53,6 +53,19 @@
                         <div class="line">
                             <div class="column w-30-pc">
                                 <div class="cell fr">
+                                    <label>Siglas:</label>
+                                </div>
+                            </div>
+                            <div class="column w-70-pc">
+                                <div id="div_siglas" class="cell w-60-pc">
+                                    <button add title="Adicionar uma sigla" class="link" onclick="addSigla()"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_add_p.png" /></button>
+                                    <!--<input id="sgs_tipo_norma" name="sgs_tipo_norma" type="text" value="" class="w-40-pc" />-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="column w-30-pc">
+                                <div class="cell fr">
                                     <label>Órgão Cadastrador:</label>
                                 </div>
                             </div>
