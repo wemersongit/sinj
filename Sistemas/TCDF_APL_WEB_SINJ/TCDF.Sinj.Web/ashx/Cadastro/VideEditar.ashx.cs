@@ -334,7 +334,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                                     if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                                     {
                                                         sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\"}";
-                                                        VerificarDispositivosDesfazerEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, videAlterador, videAlterado, videAlteradorDesfazer, videAlteradoDesfazer, nm_situacao_anterior);
+                                                        VerificarDispositivosDesfazerEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, videAlterador, videAlterado, videAlteradorDesfazer, videAlteradoDesfazer, nm_situacao_anterior, sessao_usuario.nm_login_usuario);
                                                         
                                                     }
                                                     else
@@ -415,9 +415,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         /// <param name="videAlterado"></param>
         /// <param name="videAlteradorDesfazer"></param>
         /// <param name="videAlteradoDesfazer"></param>
-        private void VerificarDispositivosDesfazerEAlterarOsTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado, Vide videAlteradorDesfazer, Vide videAlteradoDesfazer, string nmSituacaoAnterior)
+        private void VerificarDispositivosDesfazerEAlterarOsTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado, Vide videAlteradorDesfazer, Vide videAlteradoDesfazer, string nmSituacaoAnterior, string nm_login_usuario)
         {
-            var dictionaryFiles = new VideExcluir().VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior);
+            var dictionaryFiles = new VideExcluir().VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior, nm_login_usuario);
 
 
             //Se possuir id_file_alterador a alteração implicou em um novo if_file para os arquivos, mesmo se não alterou os caputs podem estar utilizando id_file que não corresponde mais com o id_file da norma

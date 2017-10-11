@@ -17,7 +17,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
     /// </summary>
     public class VideIncluir : IHttpHandler
     {
-
         public void ProcessRequest(HttpContext context)
         {
             var sRetorno = "";
@@ -256,6 +255,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                 {
                                     sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
+                                    VerificarDispositivosESalvarOsTextosAntigosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada, sessao_usuario.nm_login_usuario);
                                     VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada);
                                 }
                                 else
@@ -320,6 +320,71 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
         }
 
+        public void VerificarDispositivosESalvarOsTextosAntigosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado, string nm_login_usuario)
+        {
+            //Se possuir dispositivo nas duas normas
+            if (videAlterador.caput_norma_vide != null && videAlterado.caput_norma_vide != null && videAlterador.caput_norma_vide.caput != null && videAlterado.caput_norma_vide.caput != null && videAlterador.caput_norma_vide.caput.Length > 0 && videAlterado.caput_norma_vide.caput.Length > 0)
+            {
+                SalvarTextoAntigoDaNorma(normaAlteradora, videAlterador, nm_login_usuario);
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlterado, nm_login_usuario);
+            }
+            //Se possuir dispositivo na norma alterada
+            else if (videAlterado.caput_norma_vide != null && videAlterado.caput_norma_vide.caput != null && videAlterado.caput_norma_vide.caput.Length > 0)
+            {
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlterado, nm_login_usuario);
+            }
+            //Se possuir dispositivo na norma alteradora
+            else if (videAlterador.caput_norma_vide != null && videAlterador.caput_norma_vide.caput != null && videAlterador.caput_norma_vide.caput.Length > 0)
+            {
+                SalvarTextoAntigoDaNorma(normaAlteradora, videAlterador, nm_login_usuario);
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlterado, nm_login_usuario);
+            }
+            //Se não possuir dispositivo nas normas. Tem que verificar se não tem o dispositivo informado manualmente, pois se tem não aplica a alteração no arquivo
+            else if (!videAlterado.possuiDispositivoInformadoManualmente())
+            {
+                SalvarTextoAntigoDaNorma(normaAlteradora, videAlterador, nm_login_usuario);
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlterado, nm_login_usuario);
+            }
+        }
+
+        /// <summary>
+        /// Inserir alteração nos dispositivos do arquivo da norma alterada.
+        /// </summary>
+        /// <param name="normaAlteradora"></param>
+        /// <param name="chNorma_alterada"></param>
+        /// <param name="caputNormaVideAlterada"></param>
+        public void SalvarTextoAntigoDaNorma(NormaOV norma, Vide vide, string nm_login_usuario)
+        {
+            var normaRn = new NormaRN();
+            
+            var fileNorma = norma.getFileArquivoVigente();
+
+            if(fileNorma.id_file != null){
+
+                var byteFileNorma = normaRn.Download(fileNorma.id_file);
+
+                if (byteFileNorma != null)
+                {
+                    var sRetornoFileNomra = normaRn.AnexarArquivo(new FileParameter(byteFileNorma, fileNorma.filename, fileNorma.mimetype));
+                    var retornoFileNomra = JSON.Deserializa<ArquivoOV>(sRetornoFileNomra);
+                    if (retornoFileNomra.id_file != null)
+                    {
+                        var arquivoVersionado = new ArquivoVersionadoNormaOV()
+                        {
+                            ch_norma = norma.ch_norma,
+                            ch_vide = vide.ch_vide,
+                            norma = norma,
+                            ar_arquivo_versionado = retornoFileNomra,
+                            dt_arquivo_versionado = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"),
+                            nm_login_usuario = nm_login_usuario
+
+                        };
+                        new ArquivoVersionadoNormaRN().Incluir(arquivoVersionado);
+                    }
+                }
+            }
+        }
+
         public void VerificarDispositivosEAlterarOsTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado)
         {
             //Se possuir dispositivo nas duas normas
@@ -365,10 +430,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                 if (retorno_file_alteradora.IndexOf("id_file") > -1)
                 {
-                    //pesquisa.literal = "ch_norma='" + ch_norma_alteradora + "'";
-                    //var listOp = new List<opMode<object>>();
-                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alteradora } });
-                    //normaRn.PathPut<object>(pesquisa, listOp);
                     normaRn.PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retorno_file_alteradora, null);
                 }
             }
@@ -378,10 +439,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var retorno_file_alterada = upload.AnexarHtml(arquivo_norma_vide_alterada, caput_norma_vide_alterada.filename, "sinj_norma");
                 if (retorno_file_alterada.IndexOf("id_file") > -1)
                 {
-                    //pesquisa.literal = "ch_norma='" + ch_norma_alterada + "'";
-                    //var listOp = new List<opMode<object>>();
-                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
-                    //normaRn.PathPut<object>(pesquisa, listOp);
                     normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retorno_file_alterada, null);
                 }
             }
@@ -407,10 +464,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var retorno_file_alterada = upload.AnexarHtml(arquivoNormaVideAlterada, caputNormaVideAlterada.filename, "sinj_norma");
                 if (retorno_file_alterada.IndexOf("id_file") > -1)
                 {
-                    //pesquisa.literal = "ch_norma='" + chNorma_alterada + "'";
-                    //var listOp = new List<opMode<object>>();
-                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
-                    //normaRn.PathPut<object>(pesquisa, listOp);
                     normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retorno_file_alterada, null);
                 }
             }
@@ -453,10 +506,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     if (retorno_file_alterada.IndexOf("id_file") > -1)
                     {
-                        //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                        //var listOp = new List<opMode<object>>();
-                        //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
-                        //normaRn.PathPut<object>(pesquisa, listOp);
                         normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retorno_file_alterada, null);
 
                         var arquivo_norma_vide_revogadora = CriarLinkNoTextoDaNormaAlteradora(caputNormaVideAlterador, normaAlterada.ch_norma, name_file_norma_alterada);
@@ -466,10 +515,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                             if (retorno_file_alteradora.IndexOf("id_file") > -1)
                             {
-                                //pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
-                                //listOp = new List<opMode<object>>();
-                                //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alteradora } });
-                                //normaRn.PathPut<object>(pesquisa, listOp);
                                 normaRn.PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retorno_file_alteradora, null);
                             }
                         }
@@ -513,10 +558,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     if (retorno_file_alterada.IndexOf("id_file") > -1)
                     {
-                        //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                        //var listOp = new List<opMode<object>>();
-                        //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
-                        //normaRn.PathPut<object>(pesquisa, listOp);
                         normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retorno_file_alterada, null);
 
                         var arquivoNormaAlteradora = AcrescentarInformacaoNoTextoDaNormaAlteradora(normaAlterada, idFileNormaAlteradora, aux_ds_texto_alterador);
@@ -526,81 +567,13 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                             if (retornoFileAlteradora.IndexOf("id_file") > -1)
                             {
-                                //pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
-                                //listOp = new List<opMode<object>>();
-                                //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
-                                //normaRn.PathPut<object>(pesquisa, listOp);
                                 normaRn.PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null);
                             }
                         }
                     }
                 }
             }
-        }
-
-        //public void IncluirCaputNosArquivos(NormaOV norma_alteradora, NormaOV norma_alterada, Caput caput_norma_vide_alteradora)
-        //{
-        //    var upload = new UploadHtml();
-        //    var normaRn = new NormaRN();
-        //    var pesquisa = new Pesquisa();
-
-        //    var if_file_norma_alterada = norma_alterada.getIdFileArquivoVigente();
-        //    var name_file_norma_alterada = norma_alterada.getNameFileArquivoVigente();
-
-        //    if (!string.IsNullOrEmpty(if_file_norma_alterada))
-        //    {
-        //        var aux_nm_situacao_alterada = norma_alterada.nm_situacao.ToLower();
-
-        //        var arquivo_norma_vide_alterada = "";
-
-        //        if ((aux_nm_situacao_alterada == "revogado" && caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "revogado") ||
-        //            (aux_nm_situacao_alterada == "anulado" && caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "anulado") ||
-        //            (aux_nm_situacao_alterada == "extinta" && caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "extinta") ||
-        //            (aux_nm_situacao_alterada == "inconstitucional" && caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "declarado inconstitucional") ||
-        //            (aux_nm_situacao_alterada == "cancelada" && caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "cancelada") ||
-        //            (aux_nm_situacao_alterada == "suspenso" && caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "suspenso totalmente"))
-        //        {
-        //            arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(norma_alteradora, if_file_norma_alterada, caput_norma_vide_alteradora);
-        //        }
-        //        else if (caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "ratificado" ||
-        //            caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "reeditado" ||
-        //            caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "regulamentado" ||
-        //            caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "prorrogado" ||
-        //            caput_norma_vide_alteradora.ds_texto_para_alterador_aux == "legislação correlata")
-        //        {
-        //            arquivo_norma_vide_alterada = AcrescentarInformacaoNoTextoDaNormaAlterada(norma_alteradora, if_file_norma_alterada, caput_norma_vide_alteradora);
-        //        }
-
-
-        //        if (!string.IsNullOrEmpty(arquivo_norma_vide_alterada))
-        //        {
-        //            var retorno_file_alterada = upload.AnexarHtml(arquivo_norma_vide_alterada, name_file_norma_alterada, "sinj_norma");
-
-        //            if (retorno_file_alterada.IndexOf("id_file") > -1)
-        //            {
-        //                pesquisa.literal = "ch_norma='" + norma_alterada.ch_norma + "'";
-        //                var listOp = new List<opMode<object>>();
-        //                listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alterada } });
-        //                normaRn.PathPut<object>(pesquisa, listOp);
-
-        //                var arquivo_norma_vide_revogadora = CriarLinkNoTextoDaNormaAlteradora(caput_norma_vide_alteradora, norma_alterada.ch_norma, name_file_norma_alterada);
-
-        //                var retorno_file_alteradora = upload.AnexarHtml(arquivo_norma_vide_revogadora, caput_norma_vide_alteradora.filename, "sinj_norma");
-
-        //                if (retorno_file_alteradora.IndexOf("id_file") > -1)
-        //                {
-        //                    pesquisa.literal = "ch_norma='" + norma_alteradora.ch_norma + "'";
-        //                    listOp = new List<opMode<object>>();
-        //                    listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retorno_file_alteradora } });
-        //                    normaRn.PathPut<object>(pesquisa, listOp);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //}
-
-        
+        }        
 
         /// <summary>
         /// Alterar o texto da norma alteradora para criar um link para o dispositivo da norma alterada
@@ -1106,38 +1079,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 texto = "";
             }
-            //return AcrescentarInformacaoNoTextoDaNormaAlterada(texto, normaAlteradora, dsTextoRelacao);
             return texto;
         }
-
-        //public string AcrescentarInformacaoNoTextoDaNormaAlterada(string texto, NormaOV normaAlteradora, string dsTextoRelacao)
-        //{
-        //    var htmlFile = new HtmlFileEncoded();
-        //    var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
-
-        //    var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
-        //    var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
-
-        //    var aux_href = !string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma;
-
-
-        //    if (Regex.Matches(texto, pattern).Count == 1)
-        //    {
-
-        //        var replacement = "$1\r\n<p><a href=\"" + aux_href + "\" >(" + dsTextoRelacao + " pelo(a) " + dsNormaAlteradora + ")</a></p>";
-        //        if (dsTextoRelacao == "legislação correlata")
-        //        {
-        //            replacement = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlteradora + "</a></p>\r\n$1";
-        //        }
-        //        texto = Regex.Replace(texto, pattern, replacement);
-        //    }
-        //    else
-        //    {
-        //        texto = "";
-        //    }
-
-        //    return texto;
-        //}
 
         public string AcrescentarInformacaoNoTextoDaNormaAlteradora(NormaOV normaAlterada, string idFileNormaAlteradora, string dsTextoRelacao)
         {
@@ -1146,7 +1089,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             if (dsTextoRelacao == "legislação correlata")
             {
                 texto = htmlFile.GetHtmlFile(idFileNormaAlteradora, "sinj_norma", null);
-                //texto = AcrescentarInformacaoNoTextoDaNormaAlteradora(texto, normaAlterada, dsTextoRelacao);
                 var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
 
                 var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
@@ -1167,31 +1109,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             }
             return texto;
         }
-
-        //public string AcrescentarInformacaoNoTextoDaNormaAlteradora(string texto, NormaOV normaAlterada, string dsTextoRelacao)
-        //{
-        //    var htmlFile = new HtmlFileEncoded();
-        //    var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
-
-        //    var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
-        //    var dsNormaAlterada = normaAlterada.getDescricaoDaNorma();
-
-        //    var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
-            
-        //    if (Regex.Matches(texto, pattern).Count == 1)
-        //    {
-        //        var replacement = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n$1";
-
-        //        texto = Regex.Replace(texto, pattern, replacement);
-        //    }
-        //    else
-        //    {
-        //        texto = "";
-        //    }
-        //    return texto;
-        //}
-
-        
 
         public bool IsReusable
         {
@@ -1217,18 +1134,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         {
             var caput_splited = _caput.Split('_');
             var last_caput = caput_splited.Last();
-            //if (last_caput.IndexOf("ane") == 0)
-            //{
-            //    _caput = "Anexo ";
-            //}
-            //if (last_caput.IndexOf("tit") == 0)
-            //{
-            //    _caput = "Título ";
-            //}
-            //else if (last_caput.IndexOf("cap") == 0)
-            //{
-            //    _caput = "Capítulo ";
-            //}
             if (last_caput.IndexOf("art") == 0)
             {
                 _caput = "Artigo ";
@@ -1249,10 +1154,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 _caput = "Alínea ";
             }
-            //else if (last_caput.IndexOf("num") == 0)
-            //{
-            //    _caput = "Número ";
-            //}
             else
             {
                 _caput = "";
@@ -1268,18 +1169,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 caput = texto.Substring(0, texto.IndexOf(' '));
             }
-            //if (caput == "ANEXO")
-            //{
-            //    caput = "Anexo ";
-            //}
-            //if (caput == "TITULO" || caput == "TÍTULO")
-            //{
-            //    caput = "Título ";
-            //}
-            //else if (caput == "CAPITULO" || caput == "CAPÍTULO")
-            //{
-            //    caput = "Capítulo ";
-            //}
             if (caput == "ART" || caput == "ART.")
             {
                 caput = "Artigo ";
@@ -1296,10 +1185,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 caput = "Alínea ";
             }
-            //else if (ehNum(caput))
-            //{
-            //    caput = "Número ";
-            //}
             else
             {
                 caput = "";
@@ -1309,15 +1194,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
         public static bool ehInciso(string termo)
         {
-            //char[] chars = new char[] { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
-            //for (var i = 0; i < termo.Length; i++)
-            //{
-            //    if (chars.Count<char>(c => c == termo[i]) < 0)
-            //    {
-            //        return false;
-            //    }
-            //}
-            //return true;
             var lastIndex = termo.IndexOf("-");
             if(lastIndex > 0){
                 termo = termo.Substring(0,lastIndex);
@@ -1327,16 +1203,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
         public static bool ehAlinea(string termo)
         {
-            //termo = termo.ToLower();
-            //char[] chars = new char[] { 'i', 'v', 'x', 'l', 'c', 'd', 'm' };
-            //for (var i = 0; i < termo.Length; i++)
-            //{
-            //    if (chars.Count<char>(c => c == termo[i]) < 0)
-            //    {
-            //        return false;
-            //    }
-            //}
-            //return true;
             var lastIndex = termo.IndexOf(")");
             if(lastIndex < 0){
                 return false;

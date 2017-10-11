@@ -1,6 +1,24 @@
 ﻿/* funcoes_sinj.js
 ===========================================*/
 
+/*========================
+Manipula a div com o comunicado.
+Para ativar o comunicado atribua '1' no attr st na div div_communication
+Quando o usuário clica em fechar armazena uma informação em cookie (expirando em 30 dias) e assim a div fica escondida.
+Para voltar a exibir deve mudar o attr title na div div_communication*/
+$(document).ready(function(){
+    var title_communication = $('#div_communication').attr('title');
+    var st_communication = $('#div_communication').attr('st');
+    if (st_communication == "1" && IsNotNullOrEmpty(title_communication) && !IsNotNullOrEmpty($.cookie(title_communication))) {
+        $('#div_communication').show();
+    }
+});
+function closeCommunication(){
+    var title_communication = $('#div_communication').hide().attr('title');
+    $.cookie(title_communication, "closed", { expires: 30, path: '/' });
+}
+/*========================*/
+
 var aHighlight = [];
 
 function Pesquisar(id_form) {

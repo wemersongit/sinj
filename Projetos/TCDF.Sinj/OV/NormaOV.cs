@@ -115,6 +115,33 @@ namespace TCDF.Sinj.OV
             return id_file;
         }
 
+        public ArquivoOV getFileArquivoVigente()
+        {
+            var file = new ArquivoOV();
+            if (!string.IsNullOrEmpty(ar_atualizado.id_file))
+            {
+                file = ar_atualizado;
+            }
+            else
+            {
+                if (fontes.Count > 0)
+                {
+                    if (fontes[0].ar_fonte != null && !string.IsNullOrEmpty(fontes[0].ar_fonte.id_file))
+                    {
+                        file = fontes[0].ar_fonte;
+                    }
+                    foreach (var fonte in fontes)
+                    {
+                        if (!string.IsNullOrEmpty(fonte.ar_fonte.id_file) && (fonte.nm_tipo_publicacao.Equals("republicação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("retificação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("ret", StringComparison.InvariantCultureIgnoreCase)))
+                        {
+                            file = fonte.ar_fonte;
+                        }
+                    }
+                }
+            }
+            return file;
+        }
+
         public string getNameFileArquivoVigente()
         {
             var name_file = "";

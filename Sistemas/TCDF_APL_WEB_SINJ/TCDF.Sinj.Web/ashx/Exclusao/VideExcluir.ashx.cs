@@ -77,17 +77,27 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     }
                     if (normaAlteradoraOv != null && normaAlteradoraOv.vides.Count > 0)
                     {
-                        var videAlteradorDesfazer = normaAlteradoraOv.vides.Where(v => v.ch_vide == _ch_vide).First();
-
-                        if (normaAlteradoraOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0)
+                        var iEnumVideAlteradorDesfazer = normaAlteradoraOv.vides.Where(v => v.ch_vide == _ch_vide);
+                        Vide videAlteradorDesfazer = null;
+                        if (iEnumVideAlteradorDesfazer.Count() > 0)
+                        {
+                            videAlteradorDesfazer = iEnumVideAlteradorDesfazer.First();
+                        }
+                        if (normaAlteradoraOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0 && videAlteradorDesfazer != null)
                         {
                             normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                             if (normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
                             {
                                 if (normaAlteradaOv != null && normaAlteradaOv.vides.Count > 0)
                                 {
-                                    var videAlteradoDesfazer = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide).First();
-                                    if (normaAlteradaOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0)
+
+                                    var iEnumVideAlteradoDesfazer = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide);
+                                    Vide videAlteradoDesfazer = null;
+                                    if (iEnumVideAlteradoDesfazer.Count() > 0)
+                                    {
+                                        videAlteradoDesfazer = iEnumVideAlteradoDesfazer.First();
+                                    }
+                                    if (normaAlteradaOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0 && videAlteradoDesfazer != null)
                                     {
                                         var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
                                         var nmSituacaoAnterior = normaAlteradaOv.nm_situacao;
@@ -98,7 +108,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                                         if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                         {
                                             sRetorno = "{\"id_doc_success\":" + id_doc + "}";
-                                            VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior);
+                                            VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior, sessao_usuario.nm_login_usuario);
                                         }
                                         else
                                         {
@@ -119,7 +129,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     }
                     else if (normaAlteradaOv != null && normaAlteradaOv.vides.Count > 0)
                     {
-                        var videAlteradoDesfazer = normaAlteradaOv.vides.Where(v => v.ch_vide == _ch_vide).First();
                         if (normaAlteradaOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0)
                         {
                             var nmSituacaoAnterior = normaAlteradaOv.nm_situacao;
@@ -188,24 +197,32 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
         /// <param name="videAlteradoDesfazer"></param>
         /// <param name="nmSituacaoAnterior"></param>
         /// <returns>Contém os novos id_file dos respectivos arquivos alterados e salvos novamente</returns>
-        public Dictionary<string, string> VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlteradorDesfazer, Vide videAlteradoDesfazer, string nmSituacaoAnterior)
+        public Dictionary<string, string> VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlteradorDesfazer, Vide videAlteradoDesfazer, string nmSituacaoAnterior, string nm_login_usuario)
         {
+            var videIncluir = new VideIncluir();
             var dictionaryIdFiles = new Dictionary<string, string>();
             if (videAlteradorDesfazer.caput_norma_vide != null && videAlteradoDesfazer.caput_norma_vide != null && videAlteradorDesfazer.caput_norma_vide.caput != null &&
                 videAlteradoDesfazer.caput_norma_vide.caput != null && videAlteradorDesfazer.caput_norma_vide.caput.Length > 0 && videAlteradoDesfazer.caput_norma_vide.caput.Length > 0)
             {
+                videIncluir.SalvarTextoAntigoDaNorma(normaAlteradora, videAlteradorDesfazer, nm_login_usuario);
+                videIncluir.SalvarTextoAntigoDaNorma(normaAlterada, videAlteradoDesfazer, nm_login_usuario);
                 dictionaryIdFiles = RemoverAlteracaoComDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer.caput_norma_vide, videAlteradoDesfazer.caput_norma_vide);
             }
             else if (videAlteradoDesfazer.caput_norma_vide != null && videAlteradoDesfazer.caput_norma_vide.caput != null && videAlteradoDesfazer.caput_norma_vide.caput.Length > 0)
             {
+                videIncluir.SalvarTextoAntigoDaNorma(normaAlterada, videAlteradoDesfazer, nm_login_usuario);
                 dictionaryIdFiles = RemoverAlteracaoComDispositivoAlteradoNosArquivosDasNormas(normaAlterada, normaAlteradora, videAlteradoDesfazer.caput_norma_vide);
             }
             else if (videAlteradorDesfazer.caput_norma_vide != null && videAlteradorDesfazer.caput_norma_vide.caput != null && videAlteradorDesfazer.caput_norma_vide.caput.Length > 0)
             {
+                videIncluir.SalvarTextoAntigoDaNorma(normaAlteradora, videAlteradorDesfazer, nm_login_usuario);
+                videIncluir.SalvarTextoAntigoDaNorma(normaAlterada, videAlteradoDesfazer, nm_login_usuario);
                 dictionaryIdFiles = RemoverAlteracaoComDispositivoAlteradorNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer.caput_norma_vide, nmSituacaoAnterior);
             }
             else
             {
+                videIncluir.SalvarTextoAntigoDaNorma(normaAlteradora, videAlteradorDesfazer, nm_login_usuario);
+                videIncluir.SalvarTextoAntigoDaNorma(normaAlterada, videAlteradoDesfazer, nm_login_usuario);
                 dictionaryIdFiles = RemoverAlteracaoSemDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlteradoDesfazer, nmSituacaoAnterior);
             }
             return dictionaryIdFiles;
@@ -236,10 +253,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 var oFileAlteradora = JSON.Deserializa<ArquivoOV>(retornoFileAlteradora);
                 if (!string.IsNullOrEmpty(oFileAlteradora.id_file))
                 {
-                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
-                    //pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
-                    //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                    //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
                     if (normaRn.PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null) == "UPDATED")
                     {
                         dictionaryIdFiles.Add("id_file_alterador", oFileAlteradora.id_file);
@@ -255,10 +268,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
                 if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                 {
-                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
-                    //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                    //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                    //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
                     if (normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
                     {
                         dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
@@ -285,10 +294,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 var oFileAlteradora = JSON.Deserializa<ArquivoOV>(retornoFileAlteradora);
                 if (!string.IsNullOrEmpty(oFileAlteradora.id_file))
                 {
-                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
-                    //pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
-                    //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                    //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
                     if (normaRn.PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null) == "UPDATED")
                     {
                         dictionaryIdFiles.Add("id_file_alterador", oFileAlteradora.id_file);
@@ -332,11 +337,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
                     if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                     {
-                        //listOp = new List<opMode<object>>();
-                        //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
-                        //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                        //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                        //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
                         if (normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
                         {
                             dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
@@ -364,12 +364,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
                 if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                 {
-                    //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                    //var listOp = new List<opMode<object>>();
-                    //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
-                    //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                    //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                    //if (oRetornoPath.success == 1)
                     if (normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
                     {
                         dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
@@ -415,12 +409,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
                     if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                     {
-                        //pesquisa.literal = "ch_norma='" + normaAlterada.ch_norma + "'";
-                        //var listOp = new List<opMode<object>>();
-                        //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlterada } });
-                        //var sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                        //var oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                        //if (oRetornoPath.success == 1)
                         if (normaRn.PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
                         {
                             dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
@@ -434,12 +422,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             var oFileAlteradora = JSON.Deserializa<ArquivoOV>(retornoFileAlteradora);
                             if (!string.IsNullOrEmpty(oFileAlteradora.id_file))
                             {
-                                //pesquisa.literal = "ch_norma='" + normaAlteradora.ch_norma + "'";
-                                //listOp = new List<opMode<object>>();
-                                //listOp.Add(new opMode<object> { path = "ar_atualizado", mode = "update", args = new string[] { retornoFileAlteradora } });
-                                //sRetornoPath = normaRn.PathPut<object>(pesquisa, listOp);
-                                //oRetornoPath = JSON.Deserializa<opResult>(sRetornoPath);
-                                //if (oRetornoPath.success == 1)
                                 if (normaRn.PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null) == "UPDATED")
                                 {
                                     dictionaryIdFiles.Add("id_file_alterador", oFileAlteradora.id_file);
@@ -734,27 +716,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             }
             return texto;
         }
-
-        //public string RemoverInformacaoNoTextoDaNormaAlteradora(string texto, NormaOV normaAlterada, string dsTextoRelacao)
-        //{
-        //    var htmlFile = new HtmlFileEncoded();
-            
-        //    var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
-        //    var dsNormaAlterada = normaAlterada.getDescricaoDaNorma();
-            
-        //    var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
-
-        //    var pattern = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n";
-        //    if (Regex.Matches(texto, pattern).Count == 1)
-        //    {
-        //        texto = Regex.Replace(texto, pattern, "");
-        //    }
-        //    else
-        //    {
-        //        texto = "";
-        //    }
-        //    return texto;
-        //}
 
         public bool IsReusable
         {

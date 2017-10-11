@@ -248,6 +248,11 @@
         </div>
         <div id="div_body" class="body">
             <div class="inner-body">
+                <div id="div_communication" st="0" title="manutencao1" style="display:none; font-size:14px; font-family: Trebuchet MS, Verdana, Arial; text-align: center; background-color: #EEE; width:650px; margin:auto;">
+                    <button class="clean" onclick="closeCommunication();" title="Fechar o comunicado" style="float:right; padding:0px; font-weight: bold; background: #DDD; width: 15px; height: 15px; border-radius:0px;">x</button>
+                    <h2 style="font-size: 18px; color:#DD0000;">COMUNICADO</h2>
+                    <span>No dia 06/10/2017, sexta-feira, às 17h, para a realização de manutenção, o SINJ ficará indisponível por uma hora.</span>
+                </div>
                 <div id="div_voltar" class="w-100-pc text-right"><a href="javascript:void(0);" onclick="javascript:voltar()" title="Voltar" class="back"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_back.png" alt="&lt;" />&nbsp;Voltar</a></div>
                 <div class="content">
                     <asp:ContentPlaceHolder ID="Body" runat="server">

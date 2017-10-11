@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AD\AmbitoAD.cs" />
+    <Compile Include="AD\ArquivoVersionadoNormaAD.cs" />
     <Compile Include="AD\SINJ_ArquivoAD.cs" />
     <Compile Include="AD\AutoriaAD.cs" />
     <Compile Include="AD\CestaAD.cs" />
@@ -101,7 +102,9 @@
     <Compile Include="OV\AlteracaoOV.cs" />
     <Compile Include="OV\AmbitoOV.cs" />
     <Compile Include="OV\ArquivoFullOV.cs" />
+    <Compile Include="OV\ArquivoVersionado.cs" />
     <Compile Include="OV\AutoriaOV.cs" />
+    <Compile Include="OV\ArquivoVersionadoNormaOV.cs" />
     <Compile Include="OV\DiarioOV.cs" />
     <Compile Include="OV\EmailOV.cs" />
     <Compile Include="OV\ExcluidoOV.cs" />
@@ -138,6 +141,7 @@
     <Compile Include="ES.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RN\AmbitoRN.cs" />
+    <Compile Include="RN\ArquivoVersionadoNormaRN.cs" />
     <Compile Include="RN\SINJ_ArquivoRN.cs" />
     <Compile Include="RN\AutoriaRN.cs" />
     <Compile Include="RN\CestaRN.cs" />
