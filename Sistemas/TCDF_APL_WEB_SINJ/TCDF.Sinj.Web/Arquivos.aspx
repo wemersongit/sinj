@@ -39,7 +39,7 @@
 
             carregarArquivosProduzidos([_diretorio, "000shared"]);
 
-            $('#form_editor_file').attr('url-ajax', './ashx/Cadastro/ArquivoIncluir.ashx?info_teste=' + _user.nm_login_usuario);
+            //$('#form_editor_file').attr('url-ajax', './ashx/Cadastro/ArquivoIncluir.ashx?info_teste=' + _user.nm_login_usuario);
         });
     </script>
 </asp:Content>

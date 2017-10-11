@@ -356,6 +356,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         public void SalvarTextoAntigoDaNorma(NormaOV norma, Vide vide, string nm_login_usuario)
         {
             var normaRn = new NormaRN();
+            var arquivoVersionadoRn = new ArquivoVersionadoNormaRN();
             
             var fileNorma = norma.getFileArquivoVigente();
 
@@ -365,7 +366,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                 if (byteFileNorma != null)
                 {
-                    var sRetornoFileNomra = normaRn.AnexarArquivo(new FileParameter(byteFileNorma, fileNorma.filename, fileNorma.mimetype));
+                    var sRetornoFileNomra = arquivoVersionadoRn.AnexarArquivo(new FileParameter(byteFileNorma, fileNorma.filename, fileNorma.mimetype));
                     var retornoFileNomra = JSON.Deserializa<ArquivoOV>(sRetornoFileNomra);
                     if (retornoFileNomra.id_file != null)
                     {
@@ -379,7 +380,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             nm_login_usuario = nm_login_usuario
 
                         };
-                        new ArquivoVersionadoNormaRN().Incluir(arquivoVersionado);
+                        arquivoVersionadoRn.Incluir(arquivoVersionado);
                     }
                 }
             }

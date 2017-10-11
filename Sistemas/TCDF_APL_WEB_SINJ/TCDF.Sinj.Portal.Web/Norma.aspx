@@ -34,7 +34,7 @@
             var i = 0;
             var length = aP.length;
             var pAfter = null;
-            var aText = [];
+            var aOrder = [];
             for (; i < length; i++) {
                 if ($('a', aP[i]).length == 1 && $('a', aP[i]).text().toLowerCase().indexOf('legislação correlata') == 0) {
                     $('a', aP[i]).attr('show', '1').attr('leco', 'leco');
