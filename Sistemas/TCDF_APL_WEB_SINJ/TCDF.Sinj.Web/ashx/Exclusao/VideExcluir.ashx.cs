@@ -506,30 +506,35 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             return arquivo_norma_vide_alteradora;
         }
 
-        public string RemoverAlteracaoNoTextoDaNormaAlterada(NormaOV norma_alterada, Caput _caput_alterada_desfazer, Caput _caput_alteradora_desfazer)
+        public string RemoverAlteracaoNoTextoDaNormaAlterada(NormaOV norma_alterada, Caput caputAlteradoDesfazer, Caput _caput_alteradora_desfazer)
         {
             var texto = "";
             //Na teoria se uma norma tem vide com dispositivos o ar_atualizado.id_file não deveria ser vazio, mas em alguns casos tem surgido essa anomalia devido à alguma falha na inclusão do vide com dispositivos
             //Até o momento foi percebido que quando um dispositivo selecionado possui quebra de linha, <br/>, o sistema não consegue aplicar o Regex da alteração.
-            if (_caput_alterada_desfazer.caput.Length == _caput_alterada_desfazer.texto_antigo.Length && !string.IsNullOrEmpty(norma_alterada.ar_atualizado.id_file))
+            if (caputAlteradoDesfazer.caput.Length == caputAlteradoDesfazer.texto_antigo.Length && !string.IsNullOrEmpty(norma_alterada.ar_atualizado.id_file))
             {
                 texto = new HtmlFileEncoded().GetHtmlFile(norma_alterada.ar_atualizado.id_file, "sinj_norma", null);
                 var bAlterou = false;
                 var pattern = "";
                 var replacement = "";
                 var ds_link_alterador = "";
-                for (var i = 0; i < _caput_alterada_desfazer.caput.Length; i++)
+                for (var i = 0; i < caputAlteradoDesfazer.caput.Length; i++)
                 {
-                    switch (_caput_alterada_desfazer.nm_relacao_aux)
+                    switch (caputAlteradoDesfazer.nm_relacao_aux)
                     {
                         case "acrescimo":
-                            pattern = "<p.+?linkname=\"" + _caput_alterada_desfazer.caput[i] + "_add_.+?\".*?>.*? <a class=\"link_vide\".*?>.+?</a></p>";
+                            pattern = "<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "_add_.+?\".*?>.*? <a class=\"link_vide\".*?>.+?</a></p>";
                             replacement = "";
                             break;
                         case "renumeração":
-                            ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada_desfazer.caput[i]) + _caput_alterada_desfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
-                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada_desfazer.caput[i]) + "_renum(\".*?>.*?<a.+?name=\")" + _caput_alterada_desfazer.caput[i] + "_renum(\".*?></a>.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alterada_desfazer.texto_novo[i]) + "(.*?) <a class=\"link_vide\" href=\"\\(_link_sistema_\\)Norma/" + _caput_alteradora_desfazer.ch_norma + '/' + _caput_alteradora_desfazer.filename + "#" + _caput_alteradora_desfazer.caput[0] + "\">" + ds_link_alterador + "</a>(.*?)</p>";
-                            replacement = "$1" + _caput_alterada_desfazer.caput[i] + "$2" + _caput_alterada_desfazer.caput[i] + "$3" + _caput_alterada_desfazer.texto_antigo[i] + "$4$5</p>";
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*?pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_renum(\".*?>.*?<a.+?name=\")" + caputAlteradoDesfazer.caput[i] + "_renum(\".*?></a>.*?)" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.texto_novo[i]) + "(.*?) <a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2" + caputAlteradoDesfazer.caput[i] + "$3" + caputAlteradoDesfazer.texto_antigo[i] + "$4$5</p>";
+                            break;
+                        case "revigoração":
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*?pelo\\(a\\) .+?\\)";
+                            pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "\".*?)replaced_by_disabled=\"(.*?)\"(.*?)(<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?)( <a class=\"link_vide\".*?>.*?)<a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1replaced_by=\"$2\"$3<s>$4</s>$5$6</p>";
                             break;
                         case "prorrogação":
                         case "ratificação":
@@ -537,29 +542,29 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         case "ressalva":
                         case "recepção":
                         case "legislação correlata":
-                            ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada_desfazer.caput[i]) + _caput_alterada_desfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
-                            if (_caput_alterada_desfazer.nm_relacao_aux == "legislação correlata")
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
+                            if (caputAlteradoDesfazer.nm_relacao_aux == "legislação correlata")
                             {
                                 ds_link_alterador = "\\(Legislação correlata - " + _caput_alteradora_desfazer.ds_norma + "\\)";
                             }
-                            pattern = "(<p.+?linkname=\"" + _caput_alterada_desfazer.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada_desfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"\\(_link_sistema_\\)Norma/" + _caput_alteradora_desfazer.ch_norma + '/' + _caput_alteradora_desfazer.filename + "#" + _caput_alteradora_desfazer.caput[0] + "\">" + ds_link_alterador + "</a>(.*?)</p>";
+                            pattern = "(<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
                             replacement = "$1$2</p>";
                             break;
                         default:
-                            ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada_desfazer.caput[i]) + _caput_alterada_desfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
-                            if (!string.IsNullOrEmpty(_caput_alterada_desfazer.texto_novo[i]))
+                            ds_link_alterador = "\\(.*?" + UtilVides.getRelacaoParaTextoAlterador(caputAlteradoDesfazer.ds_texto_para_alterador_aux,true) + "pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
+                            if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
                             {
-                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada_desfazer.caput[i]) + "_replaced.*?(\".*?)replaced_by=\"" + _caput_alteradora_desfazer.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + _caput_alterada_desfazer.caput[i] + "_replaced.*?\".*?></a>(.*?)</s>(.*?)</p>\r\n<p.+?linkname=\"" + _caput_alterada_desfazer.caput[i] + "\".*?>.*?" + UtilVides.EscapeCharsInToPattern(_caput_alterada_desfazer.texto_novo[i]) + ".*? <a class=\"link_vide\".*?>.+?</a></p>";
-                                replacement = "$1" + _caput_alterada_desfazer.caput[i] + "$2$3$4<a name=\"" + _caput_alterada_desfazer.caput[i] + "\"></a>" + _caput_alterada_desfazer.texto_antigo[i] + "$6</p>";
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_replaced.*?(\".*?)replaced_by=\"" + _caput_alteradora_desfazer.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "_replaced.*?\".*?></a>(.*?)</s>(.*?)</p>\r\n<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?>.*?" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.texto_novo[i]) + ".*? <a class=\"link_vide\".*?>.+?</a></p>";
+                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a id=\"" + caputAlteradoDesfazer.caput[i] + "\" name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6</p>";
                             }
                             else
                             {
-                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada_desfazer.caput[i]) + "_replaced.*?(\".*?)replaced_by=\"" + _caput_alteradora_desfazer.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + _caput_alterada_desfazer.caput[i] + "_replaced.*?\".*?></a>(.*?)</s>(.*?) <a class=\"link_vide\" href=\"\\(_link_sistema_\\)Norma/" + _caput_alteradora_desfazer.ch_norma + '/' + _caput_alteradora_desfazer.filename + "#" + _caput_alteradora_desfazer.caput[0] + "\">" + ds_link_alterador + "</a>(.*?)</p>";
-                                replacement = "$1" + _caput_alterada_desfazer.caput[i] + "$2$3$4<a name=\"" + _caput_alterada_desfazer.caput[i] + "\"></a>" + _caput_alterada_desfazer.texto_antigo[i] + "$6$7</p>";
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_replaced.*?(\".*?)replaced_by=\"" + _caput_alteradora_desfazer.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "_replaced.*?\".*?></a>(.*?)</s>(.*?) <a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
+                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a id=\"" + caputAlteradoDesfazer.caput[i] + "\" name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6$7</p>";
                             }
                             break;
                     }
-                    if (Regex.Matches(texto, pattern).Count == 1)
+                    if (Regex.Matches(texto, pattern).Count == 1 || (caputAlteradoDesfazer.nm_relacao_aux == "acrescimo" && Regex.Matches(texto, pattern).Count > 1))
                     {
                         texto = Regex.Replace(texto, pattern, replacement);
                         bAlterou = true;
@@ -602,9 +607,14 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             replacement = "";
                             break;
                         case "renumeração":
-                            ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(caputAlteradoDesfazer.caput[i]) + caputAlteradoDesfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) .+?\\)";
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) .+?\\)";
                             pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_renum(\".*?>.*?<a.+?name=\")" + caputAlteradoDesfazer.caput[i] + "_renum(\".*?></a>.*?)" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.texto_novo[i]) + "(.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
                             replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2" + caputAlteradoDesfazer.caput[i] + "$3" + caputAlteradoDesfazer.texto_antigo[i] + "$4$5</p>";
+                            break;
+                        case "revigoração":
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) .+?\\)";
+                            pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "\".*?)replaced_by_disabled=\"(.*?)\"(.*?)(<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?)( <a class=\"link_vide\".*?>.*?)<a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1replaced_by=\"$2\"$3<s>$4</s>$5</p>";
                             break;
                         case "prorrogação":
                         case "ratificação":
@@ -612,7 +622,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         case "ressalva":
                         case "recepção":
                         case "legislação correlata":
-                            ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(caputAlteradoDesfazer.caput[i]) + caputAlteradoDesfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + dsNormaAlteradora + "\\)";
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) " + dsNormaAlteradora + "\\)";
                             if (caputAlteradoDesfazer.nm_relacao_aux == "legislação correlata")
                             {
                                 ds_link_alterador = "\\(Legislação correlata - " + dsNormaAlteradora + "\\)";
@@ -621,20 +631,20 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             replacement = "$1$2</p>";
                             break;
                         default:
-                            ds_link_alterador = "\\(" + UtilVides.gerarDescricaoDoCaput(caputAlteradoDesfazer.caput[i]) + caputAlteradoDesfazer.ds_texto_para_alterador_aux + " pelo\\(a\\) " + dsNormaAlteradora + "\\)";
+                            ds_link_alterador = "\\(" + UtilVides.getRelacaoParaTextoAlterador(caputAlteradoDesfazer.ds_texto_para_alterador_aux, true) + "pelo\\(a\\) " + dsNormaAlteradora + "\\)";
                             if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
                             {
                                 pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_replaced(\".*?)replaced_by=\"" + normaAlteradora.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "_replaced\".*?></a>(.*?)</s>(.*?)</p>\r\n<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?>.*?" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.texto_novo[i]) + ".*? <a class=\"link_vide\".*?>.+?</a></p>";
-                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6</p>";
+                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a id=\"" + caputAlteradoDesfazer.caput[i] + "\" name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6</p>";
                             }
                             else
                             {
                                 pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_replaced(\".*?)replaced_by=\"" + normaAlteradora.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "_replaced\".*?></a>(.*?)</s>(.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
-                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6$7</p>";
+                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a id=\"" + caputAlteradoDesfazer.caput[i] + "\" name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6$7</p>";
                             }
                             break;
                     }
-                    if (Regex.Matches(texto, pattern).Count == 1)
+                    if (Regex.Matches(texto, pattern).Count == 1 || (caputAlteradoDesfazer.nm_relacao_aux == "acrescimo" && Regex.Matches(texto, pattern).Count > 1))
                     {
                         texto = Regex.Replace(texto, pattern, replacement);
                         bAlterou = true;

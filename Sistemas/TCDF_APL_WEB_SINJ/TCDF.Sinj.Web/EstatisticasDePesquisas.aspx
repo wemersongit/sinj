@@ -594,7 +594,7 @@
                                             </button>
                                         </div>
                                         <br />
-                                        <div id="datatable_agg_tipo">
+                                        <div id="datatable_agg_tipos">
                                         </div>
                                         <br />
                                         <div class="grafico">

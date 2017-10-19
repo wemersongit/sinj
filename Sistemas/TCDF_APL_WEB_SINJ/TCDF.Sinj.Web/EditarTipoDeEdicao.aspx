@@ -66,7 +66,7 @@
                         <button id="button_salvar_tipo_de_edicao">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/none.png" class="save" />Salvar
                         </button>
-                        <button onclick="javascript:window.history.back();">
+                        <button type="button" onclick="javascript:window.history.back();">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/none.png" class="cancel" />Cancelar
                         </button>
                     </div>

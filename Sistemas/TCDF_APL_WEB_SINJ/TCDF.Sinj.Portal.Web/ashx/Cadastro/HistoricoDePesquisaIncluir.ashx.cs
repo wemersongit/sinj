@@ -39,7 +39,10 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                 {
                     pesquisa.nm_tipo_pesquisa = "Pesquisa Geral";
                     pesquisa.ds_historico = "(Pesquisa Geral) " + _all;
-                    pesquisa.argumentos.Add(new ArgumentoOV { campo = "all", operador = "igual", valor = _all });
+                    if (!string.IsNullOrEmpty(_all))
+                    {
+                        pesquisa.argumentos.Add(new ArgumentoOV { campo = "all", operador = "igual", valor = _all });
+                    }
                 }
                 else if (_tipo_pesquisa == "norma")
                 {
@@ -168,6 +171,65 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                     }
                     pesquisa.ds_historico = "(Pesquisa de Diário) " + pesquisa.ds_historico;
                     pesquisa.nm_tipo_pesquisa = "Pesquisa de Diário";
+                }
+                else if (_tipo_pesquisa == "diretorio_diario")
+                {
+                    var _nm_tipo_fonte = context.Request["nm_tipo_fonte"];
+                    var _ano = context.Request["ano"];
+                    var _mes = context.Request["mes"];
+                    pesquisa.ds_historico = "";
+                    if (!string.IsNullOrEmpty(_nm_tipo_fonte))
+                    {
+                        pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Tipo=" + _nm_tipo_fonte;
+                        pesquisa.argumentos.Add(new ArgumentoOV { campo = "Tipo", operador = "igual", valor = _nm_tipo_fonte, conector = "" });
+                    }
+                    if (!string.IsNullOrEmpty(_ano))
+                    {
+                        pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Ano=" + _ano;
+                        pesquisa.argumentos.Add(new ArgumentoOV { campo = "Ano", operador = "igual", valor = _ano, conector = (pesquisa.ds_historico != "" ? " E " : "") });
+                    }
+                    if (!string.IsNullOrEmpty(_mes))
+                    {
+                        pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Mês=" + _mes;
+                        pesquisa.argumentos.Add(new ArgumentoOV { campo = "Mês", operador = "igual", valor = _mes, conector = (pesquisa.ds_historico != "" ? " E " : "") });
+                    }
+                    pesquisa.ds_historico = "(Pesquisa de Diário - Diretório) " + pesquisa.ds_historico;
+                    pesquisa.nm_tipo_pesquisa = "Pesquisa de Diário - Diretório";
+                }
+                else if (_tipo_pesquisa == "texto_diario")
+                {
+                    var _ch_tipo_fonte = context.Request["ch_tipo_fonte"];
+                    var _nm_tipo_fonte = context.Request["nm_tipo_fonte"];
+                    var _filetext = context.Request["filetext"];
+                    var _intervalo = context.Request["intervalo"];
+                    var _dt_assinatura_inicio = context.Request["dt_assinatura_inicio"];
+                    var _dt_assinatura_termino = context.Request["dt_assinatura_termino"];
+                    pesquisa.ds_historico = "";
+                    if (!string.IsNullOrEmpty(_nm_tipo_fonte))
+                    {
+                        pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Tipo=" + _nm_tipo_fonte;
+                        pesquisa.argumentos.Add(new ArgumentoOV { campo = "Tipo", operador = "igual", valor = _nm_tipo_fonte, conector = "" });
+                    }
+                    if (!string.IsNullOrEmpty(_filetext))
+                    {
+                        pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Texto=" + _filetext;
+                        pesquisa.argumentos.Add(new ArgumentoOV { campo = "Texto", operador = "igual", valor = _filetext, conector = (pesquisa.ds_historico != "" ? " E " : "") });
+                    }
+                    if (!string.IsNullOrEmpty(_dt_assinatura_inicio))
+                    {
+                        if (_intervalo == "1")
+                        {
+                            pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Data de Publicação >= " + _dt_assinatura_inicio + " E Data de Publicação <= " + _dt_assinatura_termino;
+                            pesquisa.argumentos.Add(new ArgumentoOV { campo = "Data de Publicação", operador = "intervalo", valor = _dt_assinatura_inicio + (!string.IsNullOrEmpty(_dt_assinatura_termino) ? (" até " + _dt_assinatura_termino) : ""), conector = (pesquisa.ds_historico != "" ? " E " : "") });
+                        }
+                        else
+                        {
+                            pesquisa.argumentos.Add(new ArgumentoOV { campo = "Data de Publicação", operador = "igual", valor = _dt_assinatura_inicio, conector = (pesquisa.ds_historico != "" ? " E " : "") });
+                            pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Data de Publicação = " + _dt_assinatura_inicio;
+                        }
+                    }
+                    pesquisa.ds_historico = "(Pesquisa de Diário - Texto) " + pesquisa.ds_historico;
+                    pesquisa.nm_tipo_pesquisa = "Pesquisa de Diário - Texto";
                 }
                 else if (_tipo_pesquisa == "avancada")
                 {

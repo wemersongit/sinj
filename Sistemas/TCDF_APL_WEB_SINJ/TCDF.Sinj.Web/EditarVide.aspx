@@ -663,7 +663,7 @@
                         <button id="button_salvar_vide">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" alt="salvar" />Salvar
                         </button>
-                        <button type="reset">
+                        <button type="button" onclick="javascript:window.history.back();">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_eraser_p.png" alt="limpar" />Limpar
                         </button>
                     </div>

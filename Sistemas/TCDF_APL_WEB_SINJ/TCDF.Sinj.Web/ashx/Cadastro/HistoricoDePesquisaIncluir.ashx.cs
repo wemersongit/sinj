@@ -39,7 +39,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 {
                     pesquisa.nm_tipo_pesquisa = "Pesquisa Geral";
                     pesquisa.ds_historico = "(Pesquisa Geral) " + _all;
-                    pesquisa.argumentos.Add(new ArgumentoOV { campo = "all", operador = "igual", valor = _all });
+                    if (!string.IsNullOrEmpty(_all))
+                    {
+                        pesquisa.argumentos.Add(new ArgumentoOV { campo = "all", operador = "igual", valor = _all });
+                    }
                 }
                 else if (_tipo_pesquisa == "norma")
                 {

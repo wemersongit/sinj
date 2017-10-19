@@ -1470,53 +1470,75 @@ function PreencherNormaEdicao() {
     }
 }
 
+function ExcluirVideConfirmado(sender, id_doc, ch_vide) {
+    var sucesso = function (data) {
+        if (IsNotNullOrEmpty(data, 'error_message')) {
+            $('#div_notificacao_norma').modallight({
+                sTitle: "Erro",
+                sContent: data.error_message,
+                sType: "error",
+                oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }]
+            });
+        }
+        else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
+            $('#div_notificacao_norma').modallight({
+                sTitle: "Sucesso",
+                sContent: "Vide removida com sucesso." + (IsNotNullOrEmpty(data, 'alert_message') ? ("<br/><div class='alert'><span>Observação:</span> " + data.alert_message + "</div>") : ""),
+                sType: "success",
+                oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
+                fnClose: function () {
+                    document.location.reload();
+                }
+            });
+        }
+        else if (IsNotNullOrEmpty(data, 'alert_message')) {
+            $('#div_notificacao_norma').modallight({
+                sTitle: "Atenção",
+                sContent: data.alert_message,
+                sType: "alert",
+                oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }]
+            });
+        }
+        else {
+            $('#div_notificacao_norma').modallight({
+                sTitle: "Erro",
+                sContent: "Ocorreu um erro desconhecido.",
+                sType: "error",
+                oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }]
+            });
+        }
+    }
+    $.ajaxlight({
+        sUrl: "./ashx/Exclusao/VideExcluir.ashx?id_doc=" + id_doc + "&ch_vide=" + ch_vide,
+        fnSuccess: sucesso,
+        fnBeforeSend: gInicio,
+        fnComplete: gComplete,
+        bAsync: true
+    });
+}
+
 function ExcluirVide(sender, id_doc, ch_vide) {
     if (IsNotNullOrEmpty(id_doc) && IsNotNullOrEmpty(ch_vide)) {
-        var $td = $(sender).parent();
-
-        var sucesso = function (data) {
-            if (IsNotNullOrEmpty(data, 'error_message')) {
-                $('#div_notificacao_norma').modallight({
-                    sTitle: "Erro",
-                    sContent: data.error_message,
-                    sType: "error",
-                    oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }]
-                });
-            }
-            else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
-                $('#div_notificacao_norma').modallight({
-                    sTitle: "Sucesso",
-                    sContent: "Vide removida com sucesso." + (IsNotNullOrEmpty(data, 'alert_message') ? ("<br/><div class='alert'><span>Observação:</span> " + data.alert_message + "</div>") : ""),
-                    sType: "success",
-                    oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
-                    fnClose: function () {
-                        document.location.reload();
+        $("#modal_confirmar_excluir_vide").modallight({
+            sTitle: "Excluir Vide",
+            sContent: "Deseja excluir o vide?",
+            sType: "alert",
+            sWidth: '300',
+            oButtons: [
+                {
+                    text: "Sim",
+                    click: function () {
+                        ExcluirVideConfirmado(sender, id_doc, ch_vide);
+                        $(this).dialog('close');
                     }
-                });
-            }
-            else if (IsNotNullOrEmpty(data, 'alert_message')) {
-                $('#div_notificacao_norma').modallight({
-                    sTitle: "Atenção",
-                    sContent: data.alert_message,
-                    sType: "alert",
-                    oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }]
-                });
-            }
-            else {
-                $('#div_notificacao_norma').modallight({
-                    sTitle: "Erro",
-                    sContent: "Ocorreu um erro desconhecido.",
-                    sType: "error",
-                    oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }]
-                });
-            }
-        }
-        $.ajaxlight({
-            sUrl: "./ashx/Exclusao/VideExcluir.ashx?id_doc=" + id_doc + "&ch_vide="+ch_vide,
-            fnSuccess: sucesso,
-            fnBeforeSend: gInicio,
-            fnComplete: gComplete,
-            bAsync: true
+                },
+                {
+                    text: "Não",
+                    click: function () {
+                        $(this).dialog('close');
+                    }
+                }
+            ]
         });
     }
 }
@@ -1698,55 +1720,70 @@ function OrdenarVidesPorData(vides) {
                         else if (parseInt(a.nr_norma_vide) > parseInt(b.nr_norma_vide)) {
                             return 1;
                         }
-                        else {
-                            return 0;
-                        }
                     }
-                    else {
-                        return 0;
-                    }
+                    return 0;
                 }
                 else {
                     var a_dispositivo_afetado = "";
                     if (a.in_norma_afetada) {
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.artigo_norma_vide) ? "Art. " + a.artigo_norma_vide.replace(/^([1-9]|9)$/, a.artigo_norma_vide + 'º') + ", " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.paragrafo_norma_vide) ? "Par. " + a.paragrafo_norma_vide.replace(/^([1-9]|9)$/, a.paragrafo_norma_vide + 'º') + ", " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.anexo_norma_vide) ? "Anexo " + a.anexo_norma_vide + ", " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.inciso_norma_vide) ? "inc. " + a.inciso_norma_vide + ", " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.alinea_norma_vide) ? a.alinea_norma_vide + ", " : "");
-                        a_dispositivo_afetado += ((IsNotNullOrEmpty(a.caput_norma_vide) && (a.caput_norma_vide == true)) ? "Caput. " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.item_norma_vide) ? "Item " + a.item_norma_vide : "");
+                        if (IsNotNullOrEmpty(a.caput_norma_vide, 'caput')) {
+                            a_dispositivo_afetado = a.caput_norma_vide.caput[0];
+                        }
+                        else {
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.artigo_norma_vide) ? "Art. " + a.artigo_norma_vide.replace(/^([1-9]|9)$/, a.artigo_norma_vide + 'º') + ", " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.paragrafo_norma_vide) ? "Par. " + a.paragrafo_norma_vide.replace(/^([1-9]|9)$/, a.paragrafo_norma_vide + 'º') + ", " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.anexo_norma_vide) ? "Anexo " + a.anexo_norma_vide + ", " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.inciso_norma_vide) ? "inc. " + a.inciso_norma_vide + ", " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.alinea_norma_vide) ? a.alinea_norma_vide + ", " : "");
+                            a_dispositivo_afetado += ((IsNotNullOrEmpty(a.caput_norma_vide) && (a.caput_norma_vide == true)) ? "Caput. " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.item_norma_vide) ? "Item " + a.item_norma_vide : "");
+                        }
                     }
                     else {
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.artigo_norma_vide_outra) ? "Art. " + a.artigo_norma_vide_outra.replace(/^([1-9]|9)$/, a.artigo_norma_vide_outra + 'º') + ", " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.paragrafo_norma_vide_outra) ? "Par. " + a.paragrafo_norma_vide_outra.replace(/^([1-9]|9)$/, a.paragrafo_norma_vide_outra + 'º') + ", " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.anexo_norma_vide_outra) ? "Anexo " + a.anexo_norma_vide_outra + ", " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.inciso_norma_vide_outra) ? "inc. " + a.inciso_norma_vide_outra + ", " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.alinea_norma_vide_outra) ? a.alinea_norma_vide_outra + ", " : "");
-                        a_dispositivo_afetado += ((IsNotNullOrEmpty(a.caput_norma_vide_outra) && (a.caput_norma_vide_outra == true)) ? "Caput. " : "");
-                        a_dispositivo_afetado += (IsNotNullOrEmpty(a.item_norma_vide_outra) ? "Item " + a.item_norma_vide_outra : "");
+                        if (IsNotNullOrEmpty(a.caput_norma_vide_outra, 'caput')) {
+                            a_dispositivo_afetado = a.caput_norma_vide_outra.caput[0];
+                        }
+                        else {
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.artigo_norma_vide_outra) ? "Art. " + a.artigo_norma_vide_outra.replace(/^([1-9]|9)$/, a.artigo_norma_vide_outra + 'º') + ", " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.paragrafo_norma_vide_outra) ? "Par. " + a.paragrafo_norma_vide_outra.replace(/^([1-9]|9)$/, a.paragrafo_norma_vide_outra + 'º') + ", " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.anexo_norma_vide_outra) ? "Anexo " + a.anexo_norma_vide_outra + ", " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.inciso_norma_vide_outra) ? "inc. " + a.inciso_norma_vide_outra + ", " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.alinea_norma_vide_outra) ? a.alinea_norma_vide_outra + ", " : "");
+                            a_dispositivo_afetado += ((IsNotNullOrEmpty(a.caput_norma_vide_outra) && (a.caput_norma_vide_outra == true)) ? "Caput. " : "");
+                            a_dispositivo_afetado += (IsNotNullOrEmpty(a.item_norma_vide_outra) ? "Item " + a.item_norma_vide_outra : "");
+                        }
                     }
                     if (a_dispositivo_afetado.substring(a_dispositivo_afetado.length - 2) == ", ") {
                         a_dispositivo_afetado = a_dispositivo_afetado.substring(0, a_dispositivo_afetado.length - 2);
                     }
                     var b_dispositivo_afetado = "";
                     if (b.in_norma_afetada) {
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.artigo_norma_vide) ? "Art. " + b.artigo_norma_vide.replace(/^([1-9]|9)$/, b.artigo_norma_vide + 'º') + ", " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.paragrafo_norma_vide) ? "Par. " + b.paragrafo_norma_vide.replace(/^([1-9]|9)$/, b.paragrafo_norma_vide + 'º') + ", " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.anexo_norma_vide) ? "Anexo " + b.anexo_norma_vide + ", " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.inciso_norma_vide) ? "inc. " + b.inciso_norma_vide + ", " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.alinea_norma_vide) ? b.alinea_norma_vide + ", " : "");
-                        b_dispositivo_afetado += ((IsNotNullOrEmpty(b.caput_norma_vide) && (b.caput_norma_vide == true)) ? "Caput. " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.item_norma_vide) ? "Item " + b.item_norma_vide : "");
+                        if (IsNotNullOrEmpty(b.caput_norma_vide, 'caput')) {
+                            b_dispositivo_afetado = b.caput_norma_vide.caput[0];
+                        }
+                        else {
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.artigo_norma_vide) ? "Art. " + b.artigo_norma_vide.replace(/^([1-9]|9)$/, b.artigo_norma_vide + 'º') + ", " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.paragrafo_norma_vide) ? "Par. " + b.paragrafo_norma_vide.replace(/^([1-9]|9)$/, b.paragrafo_norma_vide + 'º') + ", " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.anexo_norma_vide) ? "Anexo " + b.anexo_norma_vide + ", " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.inciso_norma_vide) ? "inc. " + b.inciso_norma_vide + ", " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.alinea_norma_vide) ? b.alinea_norma_vide + ", " : "");
+                            b_dispositivo_afetado += ((IsNotNullOrEmpty(b.caput_norma_vide) && (b.caput_norma_vide == true)) ? "Caput. " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.item_norma_vide) ? "Item " + b.item_norma_vide : "");
+                        }
                     }
                     else {
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.artigo_norma_vide_outra) ? "Art. " + b.artigo_norma_vide_outra.replace(/^([1-9]|9)$/, b.artigo_norma_vide_outra + 'º') + ", " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.paragrafo_norma_vide_outra) ? "Par. " + b.paragrafo_norma_vide_outra.replace(/^([1-9]|9)$/, b.paragrafo_norma_vide_outra + 'º') + ", " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.anexo_norma_vide_outra) ? "Anexo " + b.anexo_norma_vide_outra + ", " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.inciso_norma_vide_outra) ? "inc. " + b.inciso_norma_vide_outra + ", " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.alinea_norma_vide_outra) ? b.alinea_norma_vide_outra + ", " : "");
-                        b_dispositivo_afetado += ((IsNotNullOrEmpty(b.caput_norma_vide_outra) && (b.caput_norma_vide_outra == true)) ? "Caput. " : "");
-                        b_dispositivo_afetado += (IsNotNullOrEmpty(b.item_norma_vide_outra) ? "Item " + b.item_norma_vide_outra : "");
+                        if (IsNotNullOrEmpty(b.caput_norma_vide_outra, 'caput')) {
+                            b_dispositivo_afetado = b.caput_norma_vide_outra.caput[0];
+                        }
+                        else {
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.artigo_norma_vide_outra) ? "Art. " + b.artigo_norma_vide_outra.replace(/^([1-9]|9)$/, b.artigo_norma_vide_outra + 'º') + ", " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.paragrafo_norma_vide_outra) ? "Par. " + b.paragrafo_norma_vide_outra.replace(/^([1-9]|9)$/, b.paragrafo_norma_vide_outra + 'º') + ", " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.anexo_norma_vide_outra) ? "Anexo " + b.anexo_norma_vide_outra + ", " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.inciso_norma_vide_outra) ? "inc. " + b.inciso_norma_vide_outra + ", " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.alinea_norma_vide_outra) ? b.alinea_norma_vide_outra + ", " : "");
+                            b_dispositivo_afetado += ((IsNotNullOrEmpty(b.caput_norma_vide_outra) && (b.caput_norma_vide_outra == true)) ? "Caput. " : "");
+                            b_dispositivo_afetado += (IsNotNullOrEmpty(b.item_norma_vide_outra) ? "Item " + b.item_norma_vide_outra : "");
+                        }
                     }
                     if (b_dispositivo_afetado.substring(b_dispositivo_afetado.length - 2) == ", ") {
                         b_dispositivo_afetado = b_dispositivo_afetado.substring(0, b_dispositivo_afetado.length - 2);

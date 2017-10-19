@@ -22,7 +22,7 @@ namespace TCDF.Sinj.AD
         /// <returns></returns>
         private string MontarPartialFields()
         {
-            return ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"fontes.ar_fonte.id_file\",\"fontes.ar_fonte.filesize\",\"nm_tipo_norma\",\"nr_norma\",\"ch_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\"]}}";
+            return ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.ch_orgao\",\"origens.nm_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"fontes.ar_fonte.id_file\",\"fontes.ar_fonte.filesize\",\"nm_tipo_norma\",\"nr_norma\",\"ch_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\"]}}";
         }
 
         public string MontarConsulta(HttpContext context)

@@ -23,6 +23,21 @@
                 location.reload();
             }
             else {
+                var regex = new RegExp(/revogado.*?pelo\(a\)/);
+                $('p[replaced_by]:contains("revogado")').each(function (k, p) {
+                    if (regex.test($(p).text())) {
+                        var aLinkVide = $('a.link_vide', $(p));
+                        if (aLinkVide.length > 0) {
+                            var aTexto = $(aLinkVide[aLinkVide.length - 1]).text();
+                            if (regex.test(aTexto)) {
+                                var ds = generateDescriptionToParagraph($(p).text());
+                                $(p).text(ds + ' ');
+                                $(aLinkVide[aLinkVide.length - 1]).appendTo($(p));
+                                $(p).removeAttr('replaced_by');
+                            }
+                        }
+                    }
+                });
                 $('p[replaced_by]').remove();
                 $(el).attr('refresh', '1');
                 $(el).text('Exibir Alterações');
@@ -70,6 +85,55 @@
             $('a[show="0"]').hide();
             $('#p_hide').hide();
             $('#p_show').show();
+        }
+
+        function generateDescriptionToParagraph(text) {
+            var ds = '';
+            text = $.trim(text);
+            if (text != "") {
+                var palavras = text.split(' ');
+                if (palavras[0] == 'ANEXO' || palavras[0] == 'TÍTULO' || palavras[0] == 'CAPÍTULO' || palavras[0] == 'Art.' || (palavras[0] == 'Parágrafo' && palavras[1] == 'Único') || palavras[0] == '§') {
+                    ds = palavras[0] + ' ' + palavras[1];
+                }
+                else if (ehInciso(palavras[0]) || ehAlinea(palavras[0]) || ehNum(palavras[0])) {
+                    ds = palavras[0];
+                }
+                else {
+                    ds = "...";
+                }
+            }
+            return ds;
+        }
+        function ehInciso(termo) {
+            var lastIndex = termo.indexOf("-");
+            if (lastIndex > 0) {
+                termo = termo.substring(0, lastIndex);
+            }
+            return termo.match(/^[IVXLCDM]+$/i);
+        }
+
+        function ehAlinea(termo) {
+            var lastIndex = termo.indexOf(")");
+            if (lastIndex < 0) {
+                return false;
+            }
+            if (termo.length == (lastIndex + 1)) {
+                termo = termo.substring(0, lastIndex);
+                return termo.match(/[a-z]/i);
+            }
+            return false;
+        }
+
+        function ehNum(termo) {
+            var lastIndex = termo.indexOf(".");
+            if (lastIndex < 0) {
+                return false;
+            }
+            if (termo.length == (lastIndex + 1)) {
+                termo = termo.substring(0, lastIndex);
+                return isInt(termo);
+            }
+            return false;
         }
         $(document).ready(function () {
             if ($('#div_erro').length > 0) {

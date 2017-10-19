@@ -153,6 +153,7 @@ div.table div.column div.cell.fr {color:#38953F; text-decoration: none; word-bre
 ----------------------------------------------------------*/
 /*a.button{margin: 2px; padding: 5px; background-color: #AAAAAA; color: #FFF !important; text-decoration: none; border-radius: 4px;}*/
 a.button.p{font-size:9px; padding:3px; margin:1px;}
+a.clear{text-decoration:none;}
 div.control{width:90%; margin:auto;padding:7px 0px;}
 .div-light-button {display: table-cell;}
 /*.div-light-button {cursor:pointer; border-radius: 8px; padding:3px; display: table-cell; vertical-align: middle; border: 2px outset; border-color:#38953F;}

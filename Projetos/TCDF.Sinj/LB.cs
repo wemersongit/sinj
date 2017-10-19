@@ -116,7 +116,7 @@ namespace TCDF.Sinj
                 }
                 if (!string.IsNullOrEmpty(_nr_norma))
                 {
-                    query += (query != "" ? " and " : "") + "nr_norma='" + _nr_norma + "'";
+                    query += (query != "" ? " and " : "") + string.Format("TRANSLATE(LTRIM(nr_norma, '0'), '.-, ', '')=TRANSLATE(LTRIM('{0}', '0'), '.-, ', '')", _nr_norma);
                 }
                 if (!string.IsNullOrEmpty(_nr_ano) && int.TryParse(_nr_ano, out nr_ano))
                 {

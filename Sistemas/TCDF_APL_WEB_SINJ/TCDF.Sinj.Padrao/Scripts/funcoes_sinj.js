@@ -3548,14 +3548,6 @@ function montarDescricaoDiario(oJson_diario) {
 /*Funções para marcação de caput de arquivos de norma
 ================================================*/
 function ehInciso(termo) {
-//    termo = termo.toUpperCase();
-//    var chars = ["I", "V", "X", "L", "C", "D", "M"];
-//    for (var i = 0; i < termo.length; i++) {
-//        if (chars.indexOf(termo[i]) < 0) {
-//            return false;
-//        }
-//    }
-//    return true;
     var lastIndex = termo.indexOf("-");
     if(lastIndex > 0){
         termo = termo.substring(0,lastIndex);
@@ -3564,13 +3556,6 @@ function ehInciso(termo) {
 }
 
 function ehAlinea(termo) {
-//    var chars = ["i", "v", "x", "l", "c", "d", "m"];
-//    for (var i = 0; i < termo.length; i++) {
-//        if (chars.indexOf(termo[i]) < 0) {
-//            return false;
-//        }
-//    }
-//    return true;
     var lastIndex = termo.indexOf(")");
     if(lastIndex < 0){
         return false;
@@ -3583,13 +3568,6 @@ function ehAlinea(termo) {
 }
 
 function ehNum(termo) {
-//    var chars = ["i", "v", "x", "l", "c", "d", "m"];
-//    for (var i = 0; i < termo.length; i++) {
-//        if (chars.indexOf(termo[i]) < 0) {
-//            return false;
-//        }
-//    }
-//    return true;
     var lastIndex = termo.indexOf(".");
     if(lastIndex < 0){
         return false;
@@ -3648,12 +3626,15 @@ function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
                                 niveis = definirEstruturaCaput(linkname, niveis);
                                 name = niveis.join('_');
                             }
-                            if ($('#' + name).length <= 0) {
-                                //a class linkname na ancora auxilia identificar quando o linkname foi gerado no client-side
-                                //ajudando a diferenciar dos linknames gerados no server-side
-                                $(value_p).prepend('<a id="' + name + '" name="' + name + '" class="linkname"></a>');
-                                $(value_p).attr('linkname', name);
-                            }
+                        }
+                        else{
+                            name = 'txt_' + Guid('N');
+                        }
+                        if ($('#' + name).length <= 0) {
+                            //a class linkname na ancora auxilia identificar quando o linkname foi gerado no client-side
+                            //ajudando a diferenciar dos linknames gerados no server-side
+                            $(value_p).prepend('<a id="' + name + '" name="' + name + '" class="linkname"></a>');
+                            $(value_p).attr('linkname', name);
                         }
                     }
                 }
@@ -3778,6 +3759,7 @@ function configureCkeditor(){
     CKEDITOR.config.width = '100%';
     CKEDITOR.config.height = 400;
     CKEDITOR.config.pasteFilter = 'p[linkname]; a[!href]';
+    //CKEDITOR.config.extraPlugins = 'copyformatting';
     CKEDITOR.stylesSet.add('default',[
         {name:'Epígrafe', element: 'h1', attributes: {
                 epigrafe: 'epigrafe'
@@ -3810,7 +3792,39 @@ function configureCkeditor(){
 
 function loadCkeditor(id_textarea){
     CKEDITOR.replace(id_textarea, {
-        extraAllowedContent: 'p[linkname,replaced_by];h[epigrafe];a(linkname)',
+        disallowedContent: 'br',
+        shiftEnterMode: CKEDITOR.ENTER_P,
+        extraAllowedContent: 'p[linkname,replaced_by,replaced_by_disabled];h[epigrafe];a(linkname,link_vide)',
         filebrowserImageBrowseUrl: './Imagens.aspx'
     });
+}
+
+//Salvar as consultas textuais feitas
+function SalvarConsultaNoHistorico(counts, search) {
+    if (!IsNotNullOrEmpty(search)) {
+        search = window.location.search.substring(1);
+    }
+    if (IsNotNullOrEmpty(search)) {
+        var params = search.split('&');
+        var consulta = "";
+        for (var i = 0; i < params.length; i++) {
+            consulta += (consulta != "" ? "&" : "") + "consulta=" + params[i];
+        }
+        if (!IsNotNullOrEmpty($.cookie('sinj_ch_history'))) {
+            $.cookie('sinj_ch_history', Guid("N"), { expires: 7, path: '/' });
+        }
+        var sucesso = function (data) {
+            if (IsNotNullOrEmpty(data, "pesquisa.ds_historico")) {
+                $('#span_ds_historico').text("Pesquisa atual: " + data.pesquisa.ds_historico);
+            }
+        }
+        $.ajaxlight({
+            sUrl: './ashx/Cadastro/HistoricoDePesquisaIncluir.ashx?' + search + "&" + consulta + '&chave=' + $.cookie('sinj_ch_history') + '&' + counts,
+            sType: "GET",
+            fnError: null,
+            bAsync: true,
+            fnSuccess: sucesso
+        });
+    }
+    return false;
 }

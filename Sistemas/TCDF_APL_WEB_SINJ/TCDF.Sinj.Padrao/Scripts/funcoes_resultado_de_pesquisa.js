@@ -114,33 +114,6 @@ $(document).ready(function () {
 
 });
 
-function SalvarConsultaNoHistorico(counts) {
-    if (IsNotNullOrEmpty(window.location.search)) {
-        var search = window.location.search.substring(1);
-        var params = search.split('&');
-        var consulta = "";
-        for (var i = 0; i < params.length; i++) {
-            consulta += (consulta != "" ? "&" : "") + "consulta=" + params[i];
-        }
-        if (!IsNotNullOrEmpty($.cookie('sinj_ch_history'))) {
-            $.cookie('sinj_ch_history', Guid("N"), { expires: 7, path: '/' })
-        }
-        var sucesso = function (data) {
-            if (IsNotNullOrEmpty(data, "pesquisa.ds_historico")) {
-                $('#span_ds_historico').text("Pesquisa atual: " + data.pesquisa.ds_historico);
-            }
-        }
-        $.ajaxlight({
-            sUrl: './ashx/Cadastro/HistoricoDePesquisaIncluir.ashx' + window.location.search + "&" + consulta + '&chave=' + $.cookie('sinj_ch_history') + '&' + counts,
-            sType: "GET",
-            fnError: null,
-            bAsync: true,
-            fnSuccess: sucesso
-        });
-    }
-    return false;
-}
-
 function ConsultarTotal(nm_base) {
     var sucesso = function (data) {
         if (IsNotNullOrEmpty(data, 'counts')) {

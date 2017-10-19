@@ -39,6 +39,8 @@
                         else {
                             $('#div_ano').hide();
                         }
+                        var paramCountsToHistory = "total=" + JSON.stringify({ nm_base: 'sinj_diario', ds_base: 'Diários', nr_total: data.aaData.iTotalDisplayRecords });
+                        SalvarConsultaNoHistorico(paramCountsToHistory, $("#form_pesquisa_diario").serialize());
                     }
                 });
             }

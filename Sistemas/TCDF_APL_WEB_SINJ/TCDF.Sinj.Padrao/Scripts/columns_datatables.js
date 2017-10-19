@@ -188,10 +188,72 @@ var _columns_norma_es = [
 
 var _columns_norma_favoritos = _columns_norma_es.slice(0);
 _columns_norma_favoritos[0] = { "indice": 0, "isControl": true, "standard_view": true, "sTitle": ' ', "sWidth": "30px", "sClass": "grid-cell ws", "mData": "", "bSortable": false,
-    "mRender": function (data, type, full) {
-        return '<div class="button_favoritos_' + full.fields.partial[0].ch_norma + '" style="width:30px;"><a href="javascript:void(0);" title="Remover da lista de favoritos" onclick="javascript:RemoverFavoritos(\'.button_favoritos_' + full.fields.partial[0].ch_norma + '\',\'norma_' + full.fields.partial[0].ch_norma + '\');" ><img alt="*" src="' + _urlPadrao + '/Imagens/ico_del_fav.png" /></a></div>';
+        "mRender": function (data, type, full) {
+            return '<div class="button_favoritos_' + full.fields.partial[0].ch_norma + '" style="width:30px;"><a href="javascript:void(0);" title="Remover da lista de favoritos" onclick="javascript:RemoverFavoritos(\'.button_favoritos_' + full.fields.partial[0].ch_norma + '\',\'norma_' + full.fields.partial[0].ch_norma + '\');" ><img alt="*" src="' + _urlPadrao + '/Imagens/ico_del_fav.png" /></a></div>';
     }
 };
+_columns_norma_favoritos[8].mRender = function (data, type, full) {
+    var html = '<div class="table w-100-pc">';
+	html += '<div class="line">' +
+        '<div class="column">' +
+	        '<H2><a title="Detalhes" class="clear" href="./DetalhesDeNorma.aspx?id_norma=' + full.fields.partial[0].ch_norma + '"><span class="nm_tipo_norma">' + full.fields.partial[0].nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full.fields.partial[0].nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full.fields.partial[0].dt_assinatura + ' <span class="st_norma nm_situacao">' + full.fields.partial[0].nm_situacao + '</span> <img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </a></H2>' +
+	    '</div>' +
+    '</div>';
+	var origens = "";
+	for (var i = 0; i < full.fields.partial[0].origens.length; i++) {
+	    origens += (origens != "" ? "<br/>" : "") + full.fields.partial[0].origens[i].sg_orgao + ' - ' + full.fields.partial[0].origens[i].nm_orgao;
+	}
+	html += '<div class="line">' +
+        '<div class="column w-10-pc">' +
+	        '<label>Origem:</label>' +
+	    '</div>' +
+        '<div class="column w-90-pc sg_orgao nm_orgao">' +
+	        origens +
+	    '</div>' +
+    '</div>';
+	html += '<div class="line">' +
+        '<div class="column w-10-pc">' +
+	        '<label>Ementa:</label>' +
+	    '</div>' +
+        '<div class="column w-90-pc text-justify ds_ementa">' +
+	        full.fields.partial[0].ds_ementa +
+	    '</div>' +
+    '</div>';
+
+	var id_file = "";
+	var nm_file = getTitleNorma(full.fields.partial[0]);
+	var links = "";
+	var url_file = '';
+	var medida = "";
+	if (IsNotNullOrEmpty(full.fields.partial[0].ar_atualizado, 'id_file')) {
+	    id_file = full.fields.partial[0].ar_atualizado.id_file;
+	    url_file = './Norma/' + full.fields.partial[0].ch_norma + '/' + nm_file;
+	    medida = '<b>(' + (full.fields.partial[0].ar_atualizado.filesize / 1024).toFixed(0) + ' KB)</b>';
+	}
+	else if (IsNotNullOrEmpty(full.fields.partial[0].fontes) && full.fields.partial[0].fontes.length > 0 && IsNotNullOrEmpty(full.fields.partial[0].fontes[0].ar_fonte, 'id_file')) {
+	    id_file = full.fields.partial[0].fontes[0].ar_fonte.id_file;
+	    url_file = './Norma/' + full.fields.partial[0].ch_norma + '/' + nm_file;
+	    medida = '<b>(' + (full.fields.partial[0].fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB)</b>';
+	}
+	if (IsNotNullOrEmpty(url_file)) {
+	    links = '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" width="20px" /> ' + medida + '</a>';
+	    if (_aplicacao == "CADASTRO") {
+	        links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" /></a>';
+	    }
+	}
+
+	if (links != '') {
+	    html += '<div class="line">' +
+        '<div class="column w-10-pc">' +
+	        '<label>Texto Integral:</label>' +
+	    '</div>' +
+        '<div class="column w-90-pc">' +
+	        links +
+	    '</div>' +
+    '</div></div>';
+	}
+	return html;
+}
 
 var _columns_norma_cesta = _columns_norma_es.slice(0);
 _columns_norma_cesta[0] = {
@@ -1581,7 +1643,7 @@ var _columns_arquivos = [
                 if (IsNotNullOrEmpty(window, 'bProduzir')) {
                     if (tipo == 'html') {
                         bt_edit = '&nbsp;<a href="javascript:void(0);" onclick="javascript:openDialogEditFile(this)" title="Editar Arquivo"><img height="16" src="' + _urlPadrao + '/Imagens/ico_edit_dir.png" alt="editar html" /></a>';
-                        bt_link_edit = '&nbsp;<a href="javascript:void(0);" onclick="javascript:openDialogEditLink(this)" title="Editar Links"><img height="16" src="' + _urlPadrao + '/Imagens/ico_edit_link.png" alt="editar link" /></a>';
+                        //bt_link_edit = '&nbsp;<a href="javascript:void(0);" onclick="javascript:openDialogEditLink(this)" title="Editar Links"><img height="16" src="' + _urlPadrao + '/Imagens/ico_edit_link.png" alt="editar link" /></a>';
                         bt_convert = '&nbsp;<a target="_blank" href="./htmltopdf/dc_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename.replace(".html", ".pdf").replace(".htm", ".pdf") + '" title="Converter e Baixar em PDF" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="converter" /></a>';
                     }
                 } else {

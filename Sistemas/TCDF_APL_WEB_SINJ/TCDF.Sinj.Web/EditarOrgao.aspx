@@ -554,7 +554,7 @@
                         <button id="button_salvar_orgao" onclick="javascript: return SalvarComInativarFilhos()">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" />Salvar
                         </button>
-                        <button onclick="javascript:window.history.back();">
+                        <button type="button" onclick="javascript:window.history.back();">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png" />Cancelar
                         </button>
                     </div>

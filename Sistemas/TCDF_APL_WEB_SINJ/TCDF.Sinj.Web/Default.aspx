@@ -171,10 +171,6 @@
 					<div>
 						<div class="div-accordion-content">
                             <div class="pesquisa">
-                                <div class="control">
-                                        <a title="Pesquisar no texto dos diários." href="./PesquisarTextoDiario.aspx" class="button"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_loupe_p.png">Pesquisar no Texto</a>
-                                        <a title="Navegar nos diários por ano e mês." href="./PesquisarDiretorioDiario.aspx" class="button"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_loupe_p.png">Navegar por Diretórios</a>
-                                </div>
                                 <form id="form_pesquisa_diario" name="formPesquisaDiario" action="./ResultadoDePesquisa" method="get">
                                     <input name="tipo_pesquisa" type="hidden" value="diario"/>
                                     <div class="mauto table w-100-pc">

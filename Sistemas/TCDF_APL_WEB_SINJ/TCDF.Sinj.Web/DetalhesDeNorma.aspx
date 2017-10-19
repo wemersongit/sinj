@@ -45,6 +45,8 @@
     </div>
     <div id="modal_arquivo" style="display:none;">
     </div>
+    <div id="modal_confirmar_excluir_vide" style="display:none;">
+    </div>
     <div class="form">
         <div id="modal_texto" style="display:none;">
             <div class="loading" style="display:none;"></div>

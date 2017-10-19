@@ -7,6 +7,7 @@
         function PesquisarFavoritos(nm_base) {
             if (nm_base == "favoritos_norma") {
                 $('#div_favoritos').dataTablesLight({
+                    responsive: null,
                     sAjaxUrl: './ashx/Datatable/FavoritosDatatable.ashx?tipo_pesquisa=favoritos&b=norma',
                     aoColumns: _columns_norma_favoritos,
                     sIdTable: 'datatable_favoritos',

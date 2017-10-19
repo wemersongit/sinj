@@ -49,7 +49,9 @@
             $('#th_diarios').text((nm_tipo_fonte != "" ? nm_tipo_fonte + 's' : 'Diários ') + ' de ' + mes + ' de ' + ano);
             var success = function (data) {
                 $('#super_loading').hide();
+                var paramCountsToHistory = '';
                 if (IsNotNullOrEmpty(data, 'hits.hits')) {
+                    paramCountsToHistory = "total=" + JSON.stringify({ nm_base: 'sinj_diario', ds_base: 'Diários', nr_total: data.hits.total });
                     $('#tbody_resultado').append('<tr><td colspan="2">' + data.hits.hits.length + ' registro' + (data.hits.hits.length > 1 ? "s" : "") + ' encontrado' + (data.hits.hits.length > 1 ? "s" : "") + '.</td></tr>');
                     var dt_assinatura = "";
                     var guid = "";
@@ -80,14 +82,17 @@
                             '&nbsp;&nbsp;<a title="baixar arquivo" target="_blank" href="'+url_file+'"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="15px" />' +
                             '<b>' + (data.hits.hits[i].fields.partial[0].ar_diario.filesize / 1024).toFixed(0) + ' KB</b></a>';
                         }
-                        var nm_diario = data.hits.hits[i].fields.partial[0].nm_tipo_fonte + ' ' + data.hits.hits[i].fields.partial[0].nr_diario + ' ' + ' seção ' + data.hits.hits[i].fields.partial[0].secao_diario + ' de ' + data.hits.hits[i].fields.partial[0].dt_assinatura;
+                        var nm_diario = montarDescricaoDiario(data.hits.hits[i].fields.partial[0]);
+                        //var nm_diario = data.hits.hits[i].fields.partial[0].nm_tipo_fonte + ' ' + data.hits.hits[i].fields.partial[0].nr_diario + ' ' + ' seção ' + data.hits.hits[i].fields.partial[0].secao_diario + ' de ' + data.hits.hits[i].fields.partial[0].dt_assinatura;
                         //                        $('#div_resultado').append('<a target="_blank" title="Baixar Arquivo do Diário" href="./BaixarArquivoDiario.aspx?id_file=' + data.hits.hits[i].fields.partial[0].ar_diario.id_file + '" >' + nm_file + ' (' + medida + ')' + '<img src="' + _urlPadrao + '/Imagens/ico_link.png" width="20px" height="20px"/></a><br/>');
                         $('#tbody_resultado').append('<tr class="' + guid + '"><td>&nbsp;&nbsp;&nbsp;&nbsp;' + nm_diario + '</td><td>' + links + '</td></tr>');
                     }
                 }
                 else {
+                    paramCountsToHistory = "total=" + JSON.stringify({ nm_base: 'sinj_diario', ds_base: 'Diários', nr_total: 0 });
                     $('#tbody_resultado').append('<tr><td colspan="2">Nenhum registro encontrado.</td></tr>');
                 }
+                SalvarConsultaNoHistorico(paramCountsToHistory, 'tipo_pesquisa=diretorio_diario&nm_tipo_fonte=' + nm_tipo_fonte + '&ano=' + ano + '&mes='+mes);
             }
             var beforeSubmit = function (Data) {
                 $('#super_loading').show();

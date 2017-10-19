@@ -443,6 +443,7 @@ namespace TCDF.Sinj.RN
             var situacoes = new SituacaoRN().Consultar(pesquisa);
             int importanciaFinal = Int32.MaxValue;
             bool existeRevigoracao = false;
+            bool ajuizado = false;
             var vides_que_afetam_a_norma = vides.Where<Vide>(v => v.in_norma_afetada).ToList<Vide>();
 
             var i_revigoracao = 0;
@@ -457,6 +458,11 @@ namespace TCDF.Sinj.RN
                     if (!EhModificacaoTotal(vide))
                     {
                         importanciaDaVez = 8;
+                    }
+                    else if (importanciaDaVez > importanciaFinal && ajuizado)
+                    {
+                        importanciaFinal = importanciaDaVez;
+                        ajuizado = false;
                     }
                 }
                 // Inconstitucional 6(*8)
@@ -537,6 +543,15 @@ namespace TCDF.Sinj.RN
                 if (importanciaDaVez < importanciaFinal)
                 {
                     importanciaFinal = importanciaDaVez;
+                    //ajuda a modificar de ajuizado para suspenso quando entre os vides há um ajuizado seguido de um liminar deferida
+                    if (relacao.nm_tipo_relacao.ToLower() == "ajuizado")
+                    {
+                        ajuizado = true;
+                    }
+                    else
+                    {
+                        ajuizado = false;
+                    }
                 }
                 i_revigoracao++;
             }

@@ -697,7 +697,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             {
                                 for (var j = 0; j < texto_novo_splited.Length; j++)
                                 {
-                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
                                     replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2$4<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                                 }
                             }
@@ -707,13 +707,13 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
                                 for (var j = 0; j < texto_novo_splited.Length; j++)
                                 {
-                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
                                     replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                                 }
                             }
                             break;
                         case "renumeração":
-                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
                             pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?(<a class=\"link_vide\".+?</a>)</p>";
                             if (Regex.Matches(texto, pattern).Count == 1)
                             {
@@ -728,13 +728,18 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 }
                             }
                             break;
+                        case "revigoração":
+                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i].Replace("_replaced","")) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                            pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "\".*?)replaced_by=\"(.*?)\"(.*?)<s>(.*?)</s>(.*?)</p>";
+                            replacement = "$1replaced_by_disabled=\"$2\"$3$4$5 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                            break;
                         case "prorrogação":
                         case "ratificação":
                         case "regulamentação":
                         case "ressalva":
                         case "recepção":
                         case "legislação correlata":
-                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
                             if (_caput_alterada.nm_relacao_aux == "legislação correlata")
                             {
                                 ds_link_alterador = "(Legislação correlata - " + _caput_alteradora.ds_norma + ")";
@@ -754,7 +759,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             matches = Regex.Matches(texto, pattern);
                             if (matches.Count > 0)
                             {
-                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
 
                                 var sReplaced = "_replaced";
                                 for (var j = 0; j < iReplaceds; j++)
@@ -777,7 +782,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 matches = Regex.Matches(texto, pattern);
                                 if (matches.Count == 1)
                                 {
-                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
                                     if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
                                     {
                                         replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s></p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
@@ -855,7 +860,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         {
                             for (var j = 0; j < texto_novo_splited.Length; j++)
                             {
-                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
                                 replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2$4<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                             }
                         }
@@ -865,14 +870,14 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
                             for (var j = 0; j < texto_novo_splited.Length; j++)
                             {
-                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
                                 replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                             }
                         }
                         
                         break;
                     case "renumeração":
-                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
+                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
                         pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?(<a class=\"link_vide\".+?</a>)</p>";
                         if (Regex.Matches(texto, pattern).Count == 1)
                         {
@@ -887,13 +892,18 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             }
                         }
                         break;
+                    case "revigoração":
+                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i].Replace("_replaced", "")) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
+                        pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "\".*?)replaced_by=\"(.*?)\"(.*?)<s>(.*?)</s>(.*?)</p>";
+                        replacement = "$1replaced_by_disabled=\"$2\"$3$4$5 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                        break;
                     case "prorrogação":
                     case "ratificação":
                     case "regulamentação":
                     case "ressalva":
                     case "recepção":
                     case "legislação correlata":
-                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
+                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
                         if (_caput_alterada.nm_relacao_aux == "legislação correlata")
                         {
                             ds_link_alterador = "(Legislação correlata - " + ds_norma_alteradora + ")";
@@ -913,7 +923,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         matches = Regex.Matches(texto, pattern);
                         if (matches.Count > 0)
                         {
-                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
+                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
 
                             var sReplaced = "_replaced";
                             for (var j = 0; j < iReplaceds; j++)
@@ -936,7 +946,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             matches = Regex.Matches(texto, pattern);
                             if (matches.Count == 1)
                             {
-                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + _caput_alterada.ds_texto_para_alterador_aux + " pelo(a) " + ds_norma_alteradora + ")";
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
                                 if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
                                 {
                                     replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s></p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
@@ -1133,6 +1143,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
         public static string gerarDescricaoDoCaput(string _caput)
         {
+
             var caput_splited = _caput.Split('_');
             var last_caput = caput_splited.Last();
             if (last_caput.IndexOf("art") == 0)
@@ -1191,6 +1202,27 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 caput = "";
             }
             return caput;
+        }
+
+        public static string getRelacaoParaTextoAlterador(string relacao, bool regexExcluir=false)
+        {
+            string ds = relacao;
+
+            var relacaoSplited = relacao.Split(' ');
+            if (!(relacaoSplited[0].Equals("veto", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("texto", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("denominação", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("legislação", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                if(relacaoSplited[0].EndsWith("o"))
+                {
+                    relacaoSplited[0] += regexExcluir ? ".*?" : "(a)";
+                }
+                else if(relacaoSplited[0].EndsWith("a"))
+                {
+                    relacaoSplited[0] += regexExcluir ? ".*?" : "(o)";
+                }
+                ds = string.Join<string>(" ", relacaoSplited);
+            }
+
+            return ds;
         }
 
         public static bool ehInciso(string termo)
