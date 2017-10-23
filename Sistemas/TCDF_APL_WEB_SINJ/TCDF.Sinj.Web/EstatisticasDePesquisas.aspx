@@ -100,7 +100,7 @@
             var target = el.href.split('#')[1];
             if(!$('#'+target).hasClass('loaded')){
                 listarAggs($('#' + target + ' form').attr('id'));
-                $('#' + target).addClass('loaded')
+                $('#' + target).addClass('loaded');
             }
         }
 
