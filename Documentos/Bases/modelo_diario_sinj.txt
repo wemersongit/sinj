@@ -62,7 +62,7 @@
             "field": {
                 "name": "secao_diario",
                 "datatype": "Text",
-                "required": true,
+                "required": false,
                 "alias": "Seção",
                 "multivalued": false,
                 "indices": [

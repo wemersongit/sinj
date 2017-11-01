@@ -43,9 +43,6 @@ var _columns_norma = [
                 links = '<a title="baixar arquivo" target="_blank" href="./Norma/' + full.ch_norma + '/' + filename + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>' +
 						'&nbsp;&nbsp;' +
 						'<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>';
-//				links = '<a title="baixar arquivo" target="_blank" href="./BaixarArquivoNorma.aspx?id_norma=' + full.ch_norma + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>' +
-//						'&nbsp;&nbsp;' +
-//						'<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>';
 			}
 			return links;
 		}
@@ -310,7 +307,7 @@ var _columns_diario = [
 	        return full.nr_diario + (IsNotNullOrEmpty(full.cr_diario) ? " " + full.cr_diario : "");
 	    }
 	},
-	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Seção", "sWidth": "", "sClass": "grid-cell ws secao_diario", "mData": "secao_diario" },
+	{ "indice": 2, "sDefaultContent": "", "isControl": false, "standard_view": true, "sTitle": "Seção", "sWidth": "", "sClass": "grid-cell ws secao_diario", "mData": "secao_diario" },
     { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo de Edição", "sWidth": "15%", "sClass": "grid-cell ws nm_tipo_edicao", "mData": "nm_tipo_edicao" },
     { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Diferencial Edição", "sWidth": "", "sClass": "grid-cell ws nm_diferencial_edicao", "mData": "nm_diferencial_edicao" },
 	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Data de Assinatura", "sWidth": "", "sClass": "grid-cell ws dt_assinatura", "mData": "dt_assinatura", "sorting": "desc" },
@@ -373,7 +370,7 @@ var _columns_diario_es = [
 	},
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Seção", "sWidth": "", "sClass": "grid-cell ws secao_diario", "mData": "secao_diario", "visible": false,
 	    "mRender": function (data, type, full) {
-	        return full.fields.partial[0].secao_diario;
+	        return getVal(full.fields.partial[0].secao_diario);
 	    }
 	},
 	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Data de Publicação", "sWidth": "", "sClass": "grid-cell ws dt_assinatura", "mData": "dt_assinatura", "visible": false,
@@ -448,7 +445,7 @@ var _columns_diario_es = [
     }
 ];
 
-    var _columns_texto_diario = [
+var _columns_texto_diario = [
     { "indice": 5, "isControl": false, "standard_view": true, "sTitle": "<br/>", "sWidth": "", "sClass": "left ws all", "mData": "", "bSortable": false,
         "mRender": function (data, type, full) {
             var medida = '';

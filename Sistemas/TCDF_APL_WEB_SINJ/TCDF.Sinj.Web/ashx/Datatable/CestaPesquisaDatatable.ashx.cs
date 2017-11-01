@@ -5,6 +5,7 @@ using System.Web;
 using TCDF.Sinj.Log;
 using util.BRLight;
 using TCDF.Sinj.OV;
+using TCDF.Sinj.RN;
 
 namespace TCDF.Sinj.Web.ashx.Datatable
 {
@@ -29,20 +30,20 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                     sessao_usuario = Util.ValidarSessao();
                     //Não faz nada se o usuário não tiver sessão no portal pois essa pesquisa pode ser feita por qualquer um.
                 }
-                var es = new ES();
+                CestaRN cestaRn = new CestaRN();
                 object datatable_result = null;
                 var _base = context.Request["b"];
                 if (_base == "sinj_norma")
                 {
                     sAction = "CST.NOR";
-                    var result_norma = es.PesquisarDocs<NormaOV>(context, sessao_usuario, "sinj_norma");
+                    var result_norma = cestaRn.ConsultarEs<NormaOV>(context);
                     datatable_result = new { aaData = result_norma.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_norma.hits.total };
                 }
                 else if (_base == "sinj_diario")
                 {
                     sAction = "CST.DIO";
-                    var result_norma = es.PesquisarDocs<DiarioOV>(context, sessao_usuario, "sinj_diario");
-                    datatable_result = new { aaData = result_norma.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_norma.hits.total };
+                    var result_diario = cestaRn.ConsultarEs<DiarioOV>(context);
+                    datatable_result = new { aaData = result_diario.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_diario.hits.total };
                 }
                 json_resultado = Newtonsoft.Json.JsonConvert.SerializeObject(datatable_result);
             }

@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="column w-70-pc">
                                         <div class="cell w-100-pc">
-                                            <label style="margin-right:10px;"><input type="checkbox" name="secao_diario" value="1" style="vertical-align:middle;" obrigatorio="sim" label="Seção"/> 1</label>
+                                            <label style="margin-right:10px;"><input type="checkbox" name="secao_diario" value="1" style="vertical-align:middle;"/> 1</label>
                                             <label style="margin-right:10px;"><input type="checkbox" name="secao_diario" value="2" style="vertical-align:middle;"/> 2</label>
                                             <label style="margin-right:10px;"><input type="checkbox" name="secao_diario" value="3" style="vertical-align:middle;"/> 3</label>
                                         </div>

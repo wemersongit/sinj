@@ -26,7 +26,7 @@ function DetalhesDeDiario(_highlight) {
                     $('#div_nm_diferencial_edicao').text(getVal(data.nm_diferencial_edicao));
                     $('#div_nr_diario').text(data.nr_diario);
                     $('#div_cr_diario').text(data.cr_diario);
-                    $('#div_secao_diario').text(data.secao_diario);
+                    $('#div_secao_diario').text(getVal(data.secao_diario));
                     $('#div_dt_assinatura').text(data.dt_assinatura);
                     if (!data.st_pendente) {
                         $('#div_st_pendente').text("Não");

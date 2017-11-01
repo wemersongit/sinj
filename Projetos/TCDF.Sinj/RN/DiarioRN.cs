@@ -93,16 +93,19 @@ namespace TCDF.Sinj.RN
             if(!string.IsNullOrEmpty(diarioOv.cr_diario)){
                 chave.Append(diarioOv.cr_diario + "#");
             }
-            chave.Append(diarioOv.ch_tipo_edicao + "#");
+            chave.Append(diarioOv.ch_tipo_edicao);
             if (diarioOv.st_suplemento)
             {
-                chave.Append("suplemento#");
+                chave.Append("#suplemento");
                 if (!string.IsNullOrEmpty(diarioOv.nm_diferencial_suplemento))
                 {
-                    chave.Append(diarioOv.nm_diferencial_suplemento.ToLower().Replace(" ","") + "#");
+                    chave.Append("#" + diarioOv.nm_diferencial_suplemento.ToLower().Replace(" ",""));
                 }
             }
-            chave.Append(diarioOv.secao_diario);
+            if (!string.IsNullOrEmpty(diarioOv.secao_diario))
+            {
+                chave.Append("#" + diarioOv.secao_diario);
+            }
             diarioOv.ch_para_nao_duplicacao = chave.ToString();
         }
 

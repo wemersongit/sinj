@@ -3540,7 +3540,7 @@ function montarDescricaoDiario(oJson_diario) {
                         (IsNotNullOrEmpty(oJson_diario.cr_diario) ? ' ' + oJson_diario.cr_diario : '') +
                         ((IsNotNullOrEmpty(oJson_diario.nm_tipo_edicao) && oJson_diario.nm_tipo_edicao != 'Normal' || IsNotNullOrEmpty(oJson_diario.nm_diferencial_edicao)) ? ', Edição ' + oJson_diario.nm_tipo_edicao + (IsNotNullOrEmpty(oJson_diario.nm_diferencial_edicao) ? ' ' + oJson_diario.nm_diferencial_edicao : '') : '') +
                         (oJson_diario.st_suplemento ? ', Suplemento' + (IsNotNullOrEmpty(oJson_diario.nm_diferencial_suplemento) ? ' ' + oJson_diario.nm_diferencial_suplemento : '') : '') +
-                        ', seção ' + oJson_diario.secao_diario + ' de ' +
+                        (IsNotNullOrEmpty(oJson_diario.secao_diario) ? ', seção ' + oJson_diario.secao_diario : '') + ' de ' +
                         oJson_diario.dt_assinatura;
 }
 
@@ -3630,12 +3630,14 @@ function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
                         else{
                             name = 'txt_' + Guid('N');
                         }
-                        if ($('#' + name).length <= 0) {
-                            //a class linkname na ancora auxilia identificar quando o linkname foi gerado no client-side
-                            //ajudando a diferenciar dos linknames gerados no server-side
-                            $(value_p).prepend('<a id="' + name + '" name="' + name + '" class="linkname"></a>');
-                            $(value_p).attr('linkname', name);
+                        //caso o linkname fique repetido cria-se um guid e adiciona a ela pois no novo requisito está previsto que todos os paragrafos devem possuir uma ancora
+                        if ($('#' + name).length > 0) {
+                            name = name + '_' + Guid('N');
                         }
+                        //a class linkname na ancora auxilia identificar quando o linkname foi gerado no client-side
+                        //ajudando a diferenciar dos linknames gerados no server-side
+                        $(value_p).prepend('<a id="' + name + '" name="' + name + '" class="linkname"></a>');
+                        $(value_p).attr('linkname', name);
                     }
                 }
             }
