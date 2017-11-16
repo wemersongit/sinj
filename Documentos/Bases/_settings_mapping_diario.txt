@@ -1,99 +1,107 @@
-{ 
-    "settings":{
-        "analysis":{  
-            "char_filter":{  
-                "alfanumeric_pattern":{  
-                    "type":"pattern_replace",
-                    "pattern":"[^a-zA-Z0-9]",
-                    "replacement":""
+{
+    "settings": {
+        "index": {
+            "analysis": {
+                "char_filter": {
+                    "alfanumeric_pattern": {
+                        "type": "pattern_replace",
+                        "pattern": "[^a-zA-Z0-9]",
+                        "replacement": ""
+                    },
+                    "cabecalho_pattern": {
+                        "type": "pattern_replace",
+                        "pattern": "\\n\\f.*?\\n.*?\\n",
+                        "replacement": " "
+                    },
+                    "mapping_filter": {
+                        "type": "mapping",
+                        "mappings": ["-\\n=>"]
+                    }
                 },
-                "mapping_filter":{  
-                    "type":"mapping",
-                    "mappings":["-\\n=>"]
-                }
-            },
-            "tokenizer":{  
-                "ngram_tokenizer":{  
-                    "min_gram":"2",
-                    "type":"ngram",
-                    "max_gram":"3",
-                    "token_chars":[  
-                        "digit",
-                        "letter"
-                    ]
-                }
-            },
-            "filter":{
-                "stemmer_pt_br":{
-                    "type":"stemmer",
-                    "name":"brazilian"
+                "analyzer": {
+                    "keyword_analyzer": {
+                        "tokenizer": "keyword"
+                    },
+                    "default": {
+                        "filter": [
+                            "lowercase",
+                            "asciifolding"
+                        ],
+                        "tokenizer": "standard"
+                    },
+                    "stemmer_analyzer_and_mapping": {
+                        "char_filter": [
+                            "cabecalho_pattern",
+                            "mapping_filter"
+                        ],
+                        "filter": [
+                            "lowercase",
+                            "asciifolding",
+                            "stemmer_pt_br"
+                        ],
+                        "tokenizer": "standard"
+                    },
+                    "alfanumeric_analyzer": {
+                        "char_filter": [
+                            "alfanumeric_pattern"
+                        ],
+                        "filter": [
+                            "lowercase",
+                            "asciifolding"
+                        ],
+                        "tokenizer": "standard"
+                    },
+                    "stemmer_analyzer": {
+                        "filter": [
+                            "lowercase",
+                            "asciifolding",
+                            "stemmer_pt_br"
+                        ],
+                        "tokenizer": "standard"
+                    },
+                    "ngram_analyzer": {
+                        "char_filter": [
+                            "alfanumeric_pattern"
+                        ],
+                        "filter": [
+                            "lowercase",
+                            "asciifolding"
+                        ],
+                        "tokenizer": "ngram_tokenizer"
+                    },
+                    "numeric_analyzer": {
+                        "filter": [
+                            "numeric_filter"
+                        ],
+                        "tokenizer": "keyword"
+                    }
                 },
-                "numeric_filter":{
-                    "type":"pattern_replace",
-                    "pattern":"[^0-9]",
-                    "replacement":""
-                }
-            },
-            "analyzer":{  
-                "keyword_analyzer":{
-                    "tokenizer":"keyword"
+                "filter": {
+                    "stemmer_pt_br": {
+                        "type": "stemmer",
+                        "name": "brazilian"
+                    },
+                    "numeric_filter": {
+                        "type": "pattern_replace",
+                        "pattern": "[^0-9]",
+                        "replacement": ""
+                    }
                 },
-                "ngram_analyzer":{  
-                    "char_filter":[  
-                        "alfanumeric_pattern"
-                    ],
-                    "filter":[  
-                        "lowercase",
-                        "asciifolding"
-                    ],
-                    "tokenizer":"ngram_tokenizer"
-                },
-                "stemmer_analyzer":{
-                    "tokenizer":"standard",
-                    "filter":[
-                        "lowercase",
-                        "asciifolding",
-                        "stemmer_pt_br"
-                    ]
-                },
-                "stemmer_analyzer_and_mapping":{
-                    "char_filter":[  
-                        "mapping_filter"
-                    ],
-                    "tokenizer":"standard",
-                    "filter":[
-                        "lowercase",
-                        "asciifolding",
-                        "stemmer_pt_br"
-                    ]
-                },
-                "alfanumeric_analyzer":{
-                    "char_filter":[  
-                        "alfanumeric_pattern"
-                    ],
-                    "filter":[  
-                        "lowercase",
-                        "asciifolding"
-                    ],
-                    "tokenizer":"standard"
-                },
-                "numeric_analyzer":{
-                    "filter":[  
-                        "numeric_filter"
-                    ],
-                    "tokenizer":"keyword"
-                },
-                "default":{  
-                    "filter":[  
-                        "lowercase",
-                        "asciifolding"
-                    ],
-                    "tokenizer":"standard"
+                "tokenizer": {
+                    "ngram_tokenizer": {
+                        "min_gram": "2",
+                        "type": "ngram",
+                        "max_gram": "3",
+                        "token_chars": [
+                            "digit",
+                            "letter"
+                        ]
+                    }
                 }
             }
         }
     },
-    "mappings": {
+    "mappings":{
         "diario": {
             "properties": {
                 "_metadata": {

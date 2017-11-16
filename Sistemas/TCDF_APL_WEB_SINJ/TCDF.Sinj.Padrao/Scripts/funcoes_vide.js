@@ -304,6 +304,27 @@ function selecionarArquivoCaput(el, nm_sufixo) {
             $('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo').html(window.unescape(data.fileencoded));
 
             if ($('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo p').length > 0) {
+                //regex para localizar o link da revogação caso haja
+                var regex = new RegExp(/revogado.*?pelo\(a\)/);
+                //itera em todos os paragrafos com o atributo replaced que é o que identifica se um paragrafo sofre ou não uma alteração
+                $('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo p[replaced_by]').each(function (k, p) {
+                    //se possuir o texto de revogação
+                    if (regex.test($(p).text())) {
+                        var aLinkVide = $('a.link_vide', $(p));
+                        //se possuir links de vide
+                        if (aLinkVide.length > 0) {
+                            //pega o texto do último link de vide
+                            var aTexto = $(aLinkVide[aLinkVide.length - 1]).text();
+                            //se o último link de vide no paragrafo for o de revogação então o mesmo não será removido no texto
+                            if (regex.test(aTexto)) {
+                                $(p).removeAttr('replaced_by');
+                            }
+                        }
+                    }
+                });
+                //remove todos os parágrafos alterados, renumerados, etc., menos os revogados
+                $('p[replaced_by]').remove();
+
                 $.each($('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo p'), function (key_p, value_p) {
                     var linkname = $(value_p).attr('linkname');
                     if (IsNotNullOrEmpty(linkname)) {

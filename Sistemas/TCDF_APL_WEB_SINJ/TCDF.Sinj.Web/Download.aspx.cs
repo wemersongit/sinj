@@ -68,7 +68,7 @@ namespace TCDF.Sinj.Web
                                 };
                                 LogOperacao.gravar_operacao("DWN", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
 
-                                if (_nm_base == "sinj_norma")
+                                if (_nm_base == "sinj_norma" || _nm_base == "sinj_arquivo_versionado_norma")
                                 {
 
                                     var msg = Encoding.UTF8.GetString(file);

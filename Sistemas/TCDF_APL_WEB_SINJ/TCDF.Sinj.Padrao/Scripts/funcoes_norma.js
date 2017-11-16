@@ -1424,6 +1424,8 @@ function PreencherNormaEdicao() {
                         $('#hidden_json_arquivo_texto_atualizado').val(JSON.stringify(data.ar_atualizado));
                         $('#label_arquivo_texto_atualizado').text(data.ar_atualizado.filename);
                         $('.attach', $("#div_texto_atualizado")).hide();
+                        $('.import', $("#div_texto_atualizado")).hide();
+                        $('.recovery', $("#div_texto_atualizado")).hide();
                         $('.delete', $("#div_texto_atualizado")).show();
                         if (data.ar_atualizado.mimetype != "text/html" && data.ar_atualizado.mimetype != "text/htm") {
                             $('.create', $("#div_texto_atualizado")).hide();
@@ -1431,8 +1433,11 @@ function PreencherNormaEdicao() {
                         else {
                             $('.create', $("#div_texto_atualizado")).show();
                         }
-
                     }
+
+                    //recuperar arquivo
+                    $('#form_recuperar_arquivo > input[name="ch_norma"]').val(data.ch_norma);
+
                     if (IsNotNullOrEmpty(data.ar_acao, 'id_file')) {
                         $('#hidden_json_arquivo_texto_acao').val(JSON.stringify(data.ar_acao));
                         $('#label_arquivo_texto_acao').text(data.ar_acao.filename);
@@ -1972,4 +1977,75 @@ function changeStSiuacaoForcada(el) {
         $('.line_situacao').hide();
         $('#ch_situacao').attr('obrigatorio', 'nao');
     }
+}
+
+function abrirModalRecuperarArquivo(el) {
+    $('#input_arquivo_recuperar').val('');
+    $('#form_recuperar_arquivo').attr('onsubmit', 'javascript:return recuperarArquivo(\'form_recuperar_arquivo\');')
+    $('#div_modal_recuperar_arquivo').modallight({
+        sTitle: "Recuperar Documento",
+        sHeight: "auto",
+        sWidth: "850",
+        oPosition: "center",
+        oButtons: [
+                    { html: '<img alt="importar" valign="absmiddle" src="' + _urlPadrao + '/Imagens/ico_check_p.png" width="20" height="20" /> Recuperar', click: function () { form_recuperar_arquivo.onsubmit(); } },
+                    { html: '<img alt="cancelar" valign="absmiddle" src="' + _urlPadrao + '/Imagens/ico_fechar.png" width="20" height="20" /> Cancelar', click: function () { $('#div_modal_recuperar_arquivo').modallight("close"); } }
+                ],
+        fnClose: function () {
+            $('#div_modal_recuperar_arquivo').modallight('destroy');
+        }
+    });
+
+    $('#div_list_dir').html('');
+    $('#div_list_arq').html('');
+
+    $("#div_list_arquivos_versionados").dataTablesLight({
+        sAjaxUrl: "./ashx/Datatable/ArquivoVersionadoDatatable.ashx?ch_norma=" + $('#form_recuperar_arquivo > input[name="ch_norma"]').val(),
+        aoColumns: _columns_arquivos_versionados,
+        sIdTable: 'datatable_arquivos_versionados',
+        responsive: null,
+        bFilter: false,
+        iDisplayLength: -1,
+        fnCreatedRow: function (nRow, aData, iDataIndex) {
+            nRow.className += " tr_arq";
+            nRow.setAttribute('id_file', aData.ar_arquivo_versionado.id_file);
+            nRow.setAttribute('filename', aData.ar_arquivo_versionado.filename);
+            nRow.setAttribute('dt_arquivo_versionado', aData.dt_arquivo_versionado);
+        },
+    });
+}
+
+function selecionarDocumentoRecuperar(el) {
+    var id_file = $(el).closest('tr.tr_arq').attr('id_file');
+    var filename = $(el).closest('tr.tr_arq').attr('filename');
+    var dt_arquivo_versionado = $(el).closest('tr.tr_arq').attr('dt_arquivo_versionado');
+    $('#form_recuperar_arquivo input[name="id_file"]').val(id_file);
+    $('#input_chave_arquivo_recuperar').val(filename + ', versionado em ' + dt_arquivo_versionado);
+    $('#input_chave_arquivo_recuperar').closest('div.table').show();
+}
+
+function recuperarArquivo(id_form) {
+    var sucesso = function (data) {
+        $('#super_loading').hide();
+        if (IsNotNullOrEmpty(data, 'error_message')) {
+            notificar('#' + id_form, data.error_message, 'error');
+        }
+        else {
+            if (IsNotNullOrEmpty(data, "success_message")) {
+                notificar('#div_detalhes_doc', data.success_message, 'success');
+            }
+            if (IsNotNullOrEmpty(data, "id_file")) {
+                $('#arquivo_atualizado input.json_arquivo').val(JSON.stringify(data));
+                $('#arquivo_atualizado label.name').text(data.filename);
+                $('#arquivo_atualizado a.attach').hide();
+                $('#arquivo_atualizado a.create').hide();
+                $('#arquivo_atualizado a.import').hide();
+                $('#arquivo_atualizado a.recovery').hide();
+                $('#arquivo_atualizado a.delete').show();
+            }
+            $("#input_file").val("");
+            $('#div_modal_recuperar_arquivo').modallight('close');
+        }
+    }
+    return fnSalvarForm(id_form, sucesso);
 }

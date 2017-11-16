@@ -349,7 +349,7 @@
         "description": "Base de Diários do SINJ",
         "color": "#003300",
         "file_ext_time": 2,
-        "idx_exp_url": "http://127.0.0.1:9200/sinj_diario/diario",
+        "idx_exp_url": "http://127.0.0.1:9200/sinj_diario_index2/diario",
         "file_ext": true,
         "password": "BRLight@)!$",
         "name": "sinj_diario"

@@ -1686,3 +1686,32 @@ var _columns_imagens = [
         }
     }
 ];
+
+var _columns_arquivos_versionados = [
+    { "indice": 0, "isControl": false, "bSortable": false, "standard_view": true, "sTitle": "Nome", "sWidth": "", "sClass": "grid-cell ws left", "mData": "ar_arquivo_versionado",
+        "mRender": function (data, type, full) {
+            var tipo = data.mimetype.split('/')[1];
+            var ico = '<img src="' + _urlPadrao + '/Imagens/ico_file.png" width="18" height="18" />';
+            if (tipo == 'html') {
+                ico = '<img src="' + _urlPadrao + '/Imagens/ico_html.png" alt="html" width="18" height="18" />';
+            } else if (tipo == 'pdf') {
+                ico = '<img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="pdf" width="18" height="18" />';
+            }
+            return '<div class="div_arq">' + ico + ' ' + data.filename + '</div>';
+        }
+    },
+    { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Data da versão", "sWidth": "", "sClass": "grid-cell ws left", "mData": "dt_arquivo_versionado", "sorting": "desc" },
+    { "indice": 2, "sDefaultContent": "", "bSortable": false, "isControl": false, "standard_view": true, "sTitle": "Tamanho", "sWidth": "", "sClass": "grid-cell ws left", "mData": "ar_arquivo_versionado",
+        "mRender": function (data) {
+            return (data.filesize / 1024).toFixed(0) + ' KB';
+        }
+    },
+    { "indice": 3, "isControl": true, "bSortable": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "grid-cell ws left", "mData": "",
+        "mRender": function (data, type, full) {
+            var tipo = full.ar_arquivo_versionado.mimetype.split('/')[1];
+            var bt_download = '<a target="_blank" href="./Download/sinj_arquivo_versionado_norma/' + full.ar_arquivo_versionado.id_file + '/' + full.ar_arquivo_versionado.filename + '" title="Baixar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_download.png" alt="download" /></a>';
+            var bt_recovery = '&nbsp;<a target="_blank" href="javascript:void(0);" onclick="javascript:selecionarDocumentoRecuperar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
+            return bt_download + bt_recovery;
+        }
+    }
+];

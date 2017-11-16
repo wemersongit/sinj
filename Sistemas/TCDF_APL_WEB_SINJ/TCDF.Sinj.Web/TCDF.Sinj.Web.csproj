@@ -378,6 +378,9 @@
     <Compile Include="ashx\Arquivo\NormaTextoArquivo.ashx.cs">
       <DependentUpon>NormaTextoArquivo.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx\Arquivo\RecoveryFile.ashx.cs">
+      <DependentUpon>RecoveryFile.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx\Arquivo\UploadFile.ashx.cs">
       <DependentUpon>UploadFile.ashx</DependentUpon>
     </Compile>
@@ -593,6 +596,9 @@
     </Compile>
     <Compile Include="ashx\Datatable\ArquivoDatatable.ashx.cs">
       <DependentUpon>ArquivoDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\ArquivoVersionadoDatatable.ashx.cs">
+      <DependentUpon>ArquivoVersionadoDatatable.ashx</DependentUpon>
     </Compile>
     <Compile Include="ashx\Datatable\AutoriaDatatable.ashx.cs">
       <DependentUpon>AutoriaDatatable.ashx</DependentUpon>
@@ -1777,6 +1783,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\ErrorAjax.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\ArquivoVersionadoDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Arquivo\RecoveryFile.ashx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

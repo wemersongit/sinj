@@ -296,6 +296,7 @@ function DeletarArquivo(event) {
         $('.attach', parent).show();
         $('.create', parent).show();
         $('.import', parent).show();
+        $('.recovery', parent).show();
         $('.delete', parent).hide();
     }
 }
@@ -307,6 +308,7 @@ function deletarInputFile(el) {
     $('a.attach', parent).show();
     $('a.create', parent).show();
     $('a.import', parent).show();
+    $('a.recovery', parent).show();
     $('a.delete', parent).hide();
     var sFonte = $('input[name=fonte]', parent).val();
     if(IsNotNullOrEmpty(sFonte)){
@@ -329,6 +331,7 @@ function salvarArquivoSelecionado(el) {
                 $('#' + id_div_file + ' a.attach').hide();
                 $('#' + id_div_file + ' a.create').hide();
                 $('#' + id_div_file + ' a.import').hide();
+                $('#' + id_div_file + ' a.recovery').hide();
                 //                $('#' + id_div_file + ' a.edit_file').attr('id_file', '');
                 //                $('#' + id_div_file + ' a.edit_file').hide();
                 $('#' + id_div_file + ' a.delete').show();
@@ -428,6 +431,7 @@ function AnexarArquivo(event) {
                                         $('.attach', parent).hide();
                                         $('.create', parent).hide();
                                         $('.import', parent).hide();
+                                        $('.recovery', parent).hide();
                                         $('.delete', parent).show();
                                         $('#modal_arquivo_' + id_hidden_container_uuid).dialog('close');
                                     } else {
@@ -2975,6 +2979,7 @@ function fnSubmitInputFile(id_div_arquivo) {
             $('#' + id_div_arquivo + ' .attach').hide();
             $('#' + id_div_arquivo + ' .create').hide();
             $('#' + id_div_arquivo + ' .import').hide();
+            $('#' + id_div_arquivo + ' .recovery').hide();
             $('#' + id_div_arquivo + ' .delete').show();
             var sFonte = $('#' + id_div_arquivo + ' input[name=fonte]').val();
             if(IsNotNullOrEmpty(sFonte)){
@@ -3519,6 +3524,7 @@ function importarArquivo(id_div_file, id_form) {
                 $('#' + id_div_file + ' a.attach').hide();
                 $('#' + id_div_file + ' a.create').hide();
                 $('#' + id_div_file + ' a.import').hide();
+                $('#' + id_div_file + ' a.recovery').hide();
                 $('#' + id_div_file + ' a.delete').show();
                 var sFonte = $('#' + id_div_file + ' input[name=fonte]').val();
                 if(IsNotNullOrEmpty(sFonte)){
@@ -3694,7 +3700,7 @@ function generateLinkNameCaput(text) {
             id = 'ali' + palavras[0].replace(/[^a-z]/gi, '');
         }
         else if (ehNum(palavras[0])) {
-            id = 'num' + palavras[0].replace(/[^0-9.]/gi, '');
+            id = 'num' + palavras[0].replace(/[^0-9]/gi, '');
         }
     }
     return id;
@@ -3785,8 +3791,14 @@ function configureCkeditor(){
 
         if ( dialogName == 'table' ) {
             var info = dialogDefinition.getContents( 'info' );
-            // Set default width to 100%
-            info.get( 'txtCellSpace' )[ 'default' ] = '0';         // Set default border to 0
+            // Set default border to 0
+            info.get( 'txtCellSpace' )[ 'default' ] = '0';
+        }
+        else if(dialogName == 'link'){
+            var target = dialogDefinition.getContents('target');
+            target.get('linkTargetType')['default'] = 'popup';
+            target.get('width')['default'] = 800;
+            target.get('height')['default'] = 600;
         }
     });
     

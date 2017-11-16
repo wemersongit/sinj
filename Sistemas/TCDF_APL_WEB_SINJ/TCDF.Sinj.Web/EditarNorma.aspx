@@ -940,6 +940,7 @@
                                             <a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" style="display:none;"><img valign="absmiddle" alt="Remover" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png"  /></a>
                                             <a path="ar_atualizado" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img width="16" valign="absmiddle" alt="Editar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_edit_file.png" /></a>
                                             <a path="ar_atualizado" div_arquivo="arquivo_atualizado" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="16" valign="absmiddle" alt="importar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_import.png" /></a>
+                                            <a href="javascript:void(0);" onclick="javascript:abrirModalRecuperarArquivo(this);" class="recovery" title="Recupera o arquivo do módulo de versionamento"><img width="16" valign="absmiddle" alt="recuperar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_restore_p.png" /></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1243,6 +1244,30 @@
                     </div>
                     <div class="column w-90-pc">
                         <input class="input_chave_importar w-90-pc" disabled="disabled" id="input_chave_importar" label="Arquivo" obrigatorio="sim" type="text" value="" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal Recuperar Documentos Versionados -->
+    <div id="div_modal_recuperar_arquivo" style="display:none; max-width:850px;">
+        <form id="form_recuperar_arquivo" name="form_recuperar_arquivo" action="#" url-ajax="./ashx/Arquivo/RecoveryFile.ashx" method="get" onsubmit="javascript:return recuperarArquivo('form_recuperar_arquivo');">
+            <input type="hidden" name="id_file" value="" />
+            <input type="hidden" name="ch_norma" value="" />
+            <div class="notify" style="display:none;"></div>
+            <div id="div_arquivos_versionados" class="div_arquivos">
+                <div id="div_list_arquivos_versionados">
+
+                </div>
+            </div>
+            <div class="table w-100-pc" style="display:none;">
+                <div class="line">
+                    <div class="column w-10-pc">
+                        <label>Arquivo:</label>
+                    </div>
+                    <div class="column w-90-pc">
+                        <input class="input_chave_importar w-90-pc" disabled="disabled" id="input_chave_arquivo_recuperar" label="Arquivo" obrigatorio="sim" type="text" value="" />
                     </div>
                 </div>
             </div>
