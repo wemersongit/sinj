@@ -5,6 +5,7 @@
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_notifiqueme.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_norma.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>    
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/sessao_notifiqueme.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <div class="divIdentificadorDePagina">
@@ -52,7 +53,12 @@
                                     </div>
                                     <div class="column w-350-px">
                                         <div class="cell w-100-pc">
-                                            <input id="ds_termo_diario_monitorado" name="ds_termo_diario_monitorado" type="text" class="w-90-pc" obrigatorio="sim" label="Texto a ser monitorado" /><a href="javascript:void(0);" data-toggle="tooltip" title='Informe o texto que deseja monitorar nos diários. Este campo é obrigatório.'>&nbsp;<img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
+                                            <input id="ds_termo_diario_monitorado" name="ds_termo_diario_monitorado" type="text" class="w-90-pc" obrigatorio="sim" label="Texto a ser monitorado" onkeyup="changeInExata();" /><a href="javascript:void(0);" data-toggle="tooltip" title='Informe o texto que deseja monitorar nos diários. Este campo é obrigatório.'>&nbsp;<img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="cell w-100-pc">
+                                            <label><input title="A busca exata irá inserir, automaticamente, aspas no texto monitorado para garantir maior relevância à sua pesquisa." id="in_exata" type="checkbox" checked="checked" style="vertical-align:middle;" onchange="changeInExata();" />A busca será exata.</label>
                                         </div>
                                     </div>
                                 </div>

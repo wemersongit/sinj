@@ -1180,7 +1180,7 @@ var _columns_notifiqueme_termos_diarios_monitorados = [
 	},
 	{ "indice": 3, "isControl": false, "standard_view": true, "sClass": "grid-cell ws center all", "bSortable": false, "mData": "ch_termo_diario_monitorado",
 	    "mRender": function (data, type, full) {
-	        var sTermoDiarioMonitorado = getVal(full.ch_tipo_fonte_diario_monitorado) + "#" + getVal(full.nm_tipo_fonte_diario_monitorado) + "#" + full.ds_termo_diario_monitorado;
+	        var sTermoDiarioMonitorado = getVal(full.ch_tipo_fonte_diario_monitorado) + "#" + getVal(full.nm_tipo_fonte_diario_monitorado) + "#" + full.ds_termo_diario_monitorado.replace(/\"/g,'\\"');
 	        return "<a href='javascript:void(0);' onclick='javascript:editarTermoDiarioMonitorado(event,\"" + sTermoDiarioMonitorado + "\", \"" + full.ch_termo_diario_monitorado + "\")' title='editar monitoramento' ><img src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' alt='editar' /></a>&nbsp;" +
                 "<a href='javascript:void(0);' onclick='javascript:CriarModalConfirmacaoRemoverTermoDiarioMonitorado(event,\"" + data + "\")' title='excluir monitoramento' ><img src='" + _urlPadrao + "/Imagens/ico_delete_p.png' alt='delete' /></a><div class='loading-p' style='display:none'></div>";
 	    }

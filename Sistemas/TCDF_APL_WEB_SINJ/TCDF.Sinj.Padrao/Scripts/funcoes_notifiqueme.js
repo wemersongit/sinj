@@ -605,6 +605,12 @@ function editarTermoDiarioMonitorado(event, sTermoDiarioMonitorado, ch_termo_dia
         $('#ch_tipo_fonte_diario_monitorado').val(ch_tipo_fonte_diario_monitorado);
         $('#nm_tipo_fonte_diario_monitorado').val(nm_tipo_fonte_diario_monitorado);
         $('#ds_termo_diario_monitorado').val(ds_termo_diario_monitorado);
+        if (ds_termo_diario_monitorado.indexOf('"') == 0) {
+            $('#in_exata').prop('checked', true);
+        }
+        else {
+            $('#in_exata').prop('checked', false);
+        }
 
         $('#form_termo_acompanhar_diario').attr('url-ajax', './ashx/Push/NotifiquemeTermoDiarioEditar.ashx');
         $('#form_termo_acompanhar_diario button.add').hide();
@@ -631,4 +637,16 @@ function selecionarNorma(ch_norma) {
         bAsync: true,
         iTimeout: 40000
     });
+}
+
+function changeInExata() {
+    var value = $('#ds_termo_diario_monitorado').val().replace(/\"/g, '');
+    if (value != '') {
+        if ($('#in_exata').is(':checked')) {
+            $('#ds_termo_diario_monitorado').val('"' + value + '"');
+        }
+        else {
+            $('#ds_termo_diario_monitorado').val(value);
+        }
+    }
 }
