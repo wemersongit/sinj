@@ -46,6 +46,7 @@ namespace TCDF.Sinj.Web {
 
         protected System.Web.UI.HtmlControls.HtmlGenericControl li_relatorio;
 
+
         protected System.Web.UI.HtmlControls.HtmlGenericControl li_auditoria;
 		
 		protected System.Web.UI.WebControls.ContentPlaceHolder Body;

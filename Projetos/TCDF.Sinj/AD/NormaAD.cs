@@ -236,7 +236,7 @@ namespace TCDF.Sinj.AD
         /// <returns></returns>
         private string MontarCamposPesquisados()
         {
-            return "\"nm_tipo_norma^2\",\"nr_norma^2\",\"nr_norma_numeric^2\",\"dt_assinatura_text^2\",\"dt_autuacao_text\",\"rankeamentos^3\",\"nm_situacao\",\"nm_ambito\",\"nm_apelido^2\",\"ds_ementa^3\",\"nm_orgao^2\",\"sg_orgao^2\",\"ar_atualizado.filetext\",\"fontes.ar_fonte.filetext\",\"nm_termo^3\"";
+			return "\"nm_tipo_norma^2\",\"nr_norma^2\",\"nr_norma_numeric^2\",\"dt_assinatura_text^2\",\"dt_autuacao_text\",\"rankeamentos^3\",\"nm_situacao\",\"nm_ambito\",\"nm_apelido^2\",\"ds_ementa^3\",\"nm_orgao^2\",\"sg_orgao^2\",\"ar_atualizado.filetext\",\"fontes.ar_fonte.filetext\",\"nm_termo^3\",\"nm_pessoa_fisica_e_juridica^2\",\"ds_observacao^2\"";
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace TCDF.Sinj.AD
         /// <returns></returns>
         private string MontarHighlight()
         {
-            return "\"nm_tipo_norma\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nr_norma\":{\"number_of_fragments\":20,\"fragment_size\":1},\"dt_assinatura_text\":{\"number_of_fragments\":20,\"fragment_size\":1},\"dt_autuacao_text\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nm_situacao\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nm_ambito\":{\"number_of_fragments\":20,\"fragment_size\":1},\"ds_apelido\":{\"number_of_fragments\":20,\"fragment_size\":1},\"ds_ementa\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nm_orgao\":{\"number_of_fragments\":20,\"fragment_size\":1},\"sg_orgao\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nm_termo\":{\"number_of_fragments\":20,\"fragment_size\":1},\"fontes.ar_fonte.filetext\":{\"number_of_fragments\":5, \"fragment_size\":60},\"ar_atualizado.filetext\":{\"number_of_fragments\":5, \"fragment_size\":60}";
+			return "\"nm_tipo_norma\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nr_norma\":{\"number_of_fragments\":20,\"fragment_size\":1},\"dt_assinatura_text\":{\"number_of_fragments\":20,\"fragment_size\":1},\"dt_autuacao_text\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nm_situacao\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nm_ambito\":{\"number_of_fragments\":20,\"fragment_size\":1},\"ds_apelido\":{\"number_of_fragments\":20,\"fragment_size\":1},\"ds_ementa\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nm_orgao\":{\"number_of_fragments\":20,\"fragment_size\":1},\"sg_orgao\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nm_termo\":{\"number_of_fragments\":20,\"fragment_size\":1},\"ds_observacao\":{\"number_of_fragments\":20,\"fragment_size\":1},\"nm_pessoa_fisica_e_juridica\":{\"number_of_fragments\":20,\"fragment_size\":1},\"fontes.ar_fonte.filetext\":{\"number_of_fragments\":5, \"fragment_size\":60},\"ar_atualizado.filetext\":{\"number_of_fragments\":5, \"fragment_size\":60}";
         }
 
         /// <summary>
