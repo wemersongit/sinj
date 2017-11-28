@@ -353,7 +353,6 @@
     <Content Include="ashx\Consulta\OrgaosInferioresConsulta.ashx" />
     <Content Include="ashx\Consulta\HierarquiaOrgaoConsulta.ashx" />
     <Content Include="ashx\Consulta\OrigemDaNormaConsulta.ashx" />
-    <Content Include="DesativarNormaPush.aspx" />
     <Content Include="Arquivo.ashx" />
   </ItemGroup>
   <ItemGroup>
@@ -818,6 +817,15 @@
     </Compile>
     <Compile Include="ashx\Push\NotifiquemeSessaoEnd.ashx.cs">
       <DependentUpon>NotifiquemeSessaoEnd.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeTermoDiarioExcluir.ashx.cs">
+      <DependentUpon>NotifiquemeTermoDiarioExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeTermoDiarioEditar.ashx.cs">
+      <DependentUpon>NotifiquemeTermoDiarioEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeTermoDiarioIncluir.ashx.cs">
+      <DependentUpon>NotifiquemeTermoDiarioIncluir.ashx</DependentUpon>
     </Compile>
     <Compile Include="ashx\Reindexacao\AlterIdxExpUrl.ashx.cs">
       <DependentUpon>AlterIdxExpUrl.ashx</DependentUpon>
@@ -1604,13 +1612,6 @@
     <Compile Include="ashx\Consulta\OrigemDaNormaConsulta.ashx.cs">
       <DependentUpon>OrigemDaNormaConsulta.ashx</DependentUpon>
     </Compile>
-    <Compile Include="DesativarNormaPush.aspx.cs">
-      <DependentUpon>DesativarNormaPush.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DesativarNormaPush.aspx.designer.cs">
-      <DependentUpon>DesativarNormaPush.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Arquivo.ashx.cs">
       <DependentUpon>Arquivo.ashx</DependentUpon>
     </Compile>
@@ -1789,6 +1790,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\Arquivo\RecoveryFile.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\NotifiquemeTermoDiarioIncluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\NotifiquemeTermoDiarioEditar.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\NotifiquemeTermoDiarioExcluir.ashx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

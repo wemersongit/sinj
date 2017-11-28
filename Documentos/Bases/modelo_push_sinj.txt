@@ -360,6 +360,96 @@
                     "name": "criacao_normas_monitoradas"
                 }
             }
+        },
+        {
+            "group": {
+                "content": [
+                    {
+                        "field": {
+                            "name": "ch_termo_diario_monitorado",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Chave",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Identifica o item monitorado. Para ser usado na deleção e edição pela aplicação."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ch_tipo_fonte_diario_monitorado",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Diário",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Identifica a chave do tipo de diário monitorado."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nm_tipo_fonte_diario_monitorado",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Diário",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Identifica o tipo de diário monitorado."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ds_termo_diario_monitorado",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Termo",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Identifica o termo monitorado."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "dt_cadastro_termo_diario_monitorado",
+                            "datatype": "Date",
+                            "required": false,
+                            "alias": "Data de inclusão.",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Identifica a data em que  o termo foi adicionado para ser monitorado."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "st_termo_diario_monitorado",
+                            "datatype": "Boolean",
+                            "required": false,
+                            "alias": "Ativo",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Identifica se o monitoramento em questão está ativo."
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Termos monitorados nos diários",
+                    "description": "Lista com os termos monitorados nos diários.",
+                    "multivalued": true,
+                    "name": "termos_diarios_monitorados"
+                }
+            }
         }
     ],
     "metadata": {

@@ -18,25 +18,24 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
         public void ProcessRequest(HttpContext context)
         {
             string sRetorno = "";
-            var _ch_tipo_norma = context.Request["ch_tipo_norma"];
-            var _nm_tipo_norma = context.Request["nm_tipo_norma"];
-            var _primeiro_conector = context.Request["primeiro_conector"];
-            var _ch_orgao = context.Request["ch_orgao"];
-            var _nm_orgao = context.Request["nm_orgao"];
-            var _segundo_conector = context.Request["segundo_conector"];
-            var _ch_termo = context.Request["ch_termo"];
-            var _ch_tipo_termo = context.Request["ch_tipo_termo"];
-            var _nm_termo = context.Request["nm_termo"];
-            var _st_criacao = context.Request["st_criacao"];
-            
+            var _ch_tipo_norma = context.Request["ch_tipo_norma_criacao"];
+            var _nm_tipo_norma = context.Request["nm_tipo_norma_criacao"];
+            var _primeiro_conector = context.Request["primeiro_conector_criacao"];
+            var _ch_orgao = context.Request["ch_orgao_criacao"];
+            var _nm_orgao = context.Request["nm_orgao_criacao"];
+            var _segundo_conector = context.Request["segundo_conector_criacao"];
+            var _ch_termo = context.Request["ch_termo_criacao"];
+            var _ch_tipo_termo = context.Request["ch_tipo_termo_criacao"];
+            var _nm_termo = context.Request["nm_termo_criacao"];
+
             ulong id_push = 0;
             var notifiquemeOv = new NotifiquemeOV();
-            var action = "PORTAL_PUS.EDT";
+            var action = AcoesDoUsuario.pus_edt;
+            SessaoNotifiquemeOV sessaoNotifiquemeOv = null;
 
             var conectores = 0;
             var parametros = 0;
 
-            SessaoNotifiquemeOV sessaoNotifiquemeOv = null;
             try
             {
                 if (!string.IsNullOrEmpty(_ch_tipo_norma) || !string.IsNullOrEmpty(_ch_orgao) || !string.IsNullOrEmpty(_ch_termo))
@@ -45,7 +44,6 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                     sessaoNotifiquemeOv = notifiquemeRn.LerSessaoNotifiquemeOv();
                     notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
                     id_push = notifiquemeOv._metadata.id_doc;
-
                     // A diferença de parametros e conectores deve sempre ser igual a 1.
                     if (!string.IsNullOrEmpty(_primeiro_conector))
                     {
@@ -55,7 +53,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                     {
                         conectores++;
                     }
-                    
+
                     if (!string.IsNullOrEmpty(_ch_tipo_norma))
                     {
                         parametros++;
@@ -85,16 +83,15 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                         ch_termo_criacao = _ch_termo,
                         ch_tipo_termo_criacao = _ch_tipo_termo,
                         nm_termo_criacao = _nm_termo,
-                        st_criacao = bool.Parse(_st_criacao)
+                        st_criacao = true
                     };
-                    if ( notifiquemeOv.criacao_normas_monitoradas.Count<CriacaoDeNormaMonitoradaPushOV>(c => c.ch_orgao_criacao == criacao_norma_monitorada_ov.ch_orgao_criacao && c.ch_termo_criacao == criacao_norma_monitorada_ov.ch_termo_criacao && c.ch_tipo_norma_criacao == criacao_norma_monitorada_ov.ch_tipo_norma_criacao) <= 0)
+                    if (notifiquemeOv.criacao_normas_monitoradas.Count<CriacaoDeNormaMonitoradaPushOV>(c => c.ch_orgao_criacao == criacao_norma_monitorada_ov.ch_orgao_criacao && c.ch_termo_criacao == criacao_norma_monitorada_ov.ch_termo_criacao && c.ch_tipo_norma_criacao == criacao_norma_monitorada_ov.ch_tipo_norma_criacao) <= 0)
                     {
                         notifiquemeOv.criacao_normas_monitoradas.Add(criacao_norma_monitorada_ov);
-                        var json_criacao_normas_monitoradas = JSON.Serialize<List<CriacaoDeNormaMonitoradaPushOV>>(notifiquemeOv.criacao_normas_monitoradas);
-                        var retornoPath = notifiquemeRn.PathPut(id_push, "criacao_normas_monitoradas", json_criacao_normas_monitoradas, null);
-                        if (retornoPath == "UPDATED")
+                        if (notifiquemeRn.Atualizar(id_push, notifiquemeOv))
                         {
-                            sRetorno = "{\"criacao_normas_monitoradas\":" + json_criacao_normas_monitoradas + "}";
+                            notifiquemeOv.senha_usuario_push = null;
+                            sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
                         }
                         else
                         {
@@ -103,12 +100,12 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                     }
                     else
                     {
-                        throw new DocDuplicateKeyException("Critério de monitoramento repetido.");
+                        throw new DocDuplicateKeyException("Não é possível salvar essa informação porque ela está duplicada.");
                     }
                 }
                 else
                 {
-                    throw new Exception("Erro ao adicionar critério para monitorar. id_push:" + id_push);
+                    throw new Exception("Erro ao adicionar critério para monitorar. Deve ser informado algum valor para incluí-lo na sua lista de monitoramento.");
                 }
             }
             catch (Exception ex)
@@ -131,7 +128,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                 };
                 if (sessaoNotifiquemeOv != null)
                 {
-                    LogErro.gravar_erro(action, erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
+                    LogErro.gravar_erro(Util.GetEnumDescription(action) + "NORMA.CRI.EDT", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
                 }
             }
             context.Response.Write(sRetorno);

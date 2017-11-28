@@ -75,12 +75,18 @@ namespace TCDF.Sinj.RN
             return _diarioAd.PathPut(id_doc, path, value, retorno);
         }
 
+        public string PathPut<T>(Pesquisa pesquisa, List<opMode<T>> listopMode)
+        {
+            return _diarioAd.PathPut<T>(pesquisa, listopMode);
+        }
+
         public ulong Incluir(DiarioOV diarioOv)
         {
             Validar(diarioOv);
 			diarioOv.ch_diario = Guid.NewGuid().ToString("N");
             diarioOv.nr_ano = int.Parse(diarioOv.dt_assinatura.Split('/')[2]);
             GerarChaveDoDiario(diarioOv);
+            diarioOv.st_novo = true;
             return _diarioAd.Incluir(diarioOv);
         }
 

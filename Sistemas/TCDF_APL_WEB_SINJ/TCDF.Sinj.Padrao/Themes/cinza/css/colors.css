@@ -32,7 +32,7 @@ div.pesquisa button { color: #38953F;}
 
 /*CADASTRO
 ----------------------------------------------------------*/
-div.form fieldset {background-color:#EEE;}
+div.form fieldset {background-color:#F4F4F4;}
 div.form fieldset legend {color: #036735;}
 div.form label, form label { color: #38953F;}
 div.menu-suspenso li a{color:#036735; background-color:transparent; }

@@ -194,6 +194,15 @@
     <Compile Include="ashx\Push\NotifiquemeSessaoEnd.ashx.cs">
       <DependentUpon>NotifiquemeSessaoEnd.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx\Push\NotifiquemeTermoDiarioEditar.ashx.cs">
+      <DependentUpon>NotifiquemeTermoDiarioEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeTermoDiarioExcluir.ashx.cs">
+      <DependentUpon>NotifiquemeTermoDiarioExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeTermoDiarioIncluir.ashx.cs">
+      <DependentUpon>NotifiquemeTermoDiarioIncluir.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx\Visualizacao\DiarioDetalhes.ashx.cs">
       <DependentUpon>DiarioDetalhes.ashx</DependentUpon>
     </Compile>
@@ -442,5 +451,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\Autocomplete\TipoDeEdicaoAutocomplete.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\NotifiquemeTermoDiarioIncluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\NotifiquemeTermoDiarioEditar.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\NotifiquemeTermoDiarioExcluir.ashx" />
   </ItemGroup>
 </Project>

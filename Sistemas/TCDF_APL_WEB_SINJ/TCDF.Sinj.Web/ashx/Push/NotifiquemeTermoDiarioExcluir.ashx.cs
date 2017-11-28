@@ -2,68 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TCDF.Sinj.RN;
 using TCDF.Sinj.OV;
+using TCDF.Sinj.RN;
 using util.BRLight;
 using TCDF.Sinj.Log;
 
 namespace TCDF.Sinj.Web.ashx.Push
 {
     /// <summary>
-    /// Summary description for NotifiquemeNormaIncluir
+    /// Summary description for NotifiquemeTermiDiarioExcluir
     /// </summary>
-    public class NotifiquemeNormaIncluir : IHttpHandler
+    public class NotifiquemeTermiDiarioExcluir : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
         {
             string sRetorno = "";
-            var _ch_norma = context.Request["ch_norma"];
+            var _ch_termo_diario_monitorado = context.Request["ch_termo_diario_monitorado"];
+
             ulong id_push = 0;
             var notifiquemeOv = new NotifiquemeOV();
             var action = AcoesDoUsuario.pus_edt;
             SessaoNotifiquemeOV sessaoNotifiquemeOv = null;
             try
             {
-                if (!string.IsNullOrEmpty(_ch_norma))
+                if (!string.IsNullOrEmpty(_ch_termo_diario_monitorado))
                 {
                     var notifiquemeRn = new NotifiquemeRN();
                     sessaoNotifiquemeOv = notifiquemeRn.LerSessaoNotifiquemeOv();
                     notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
                     id_push = notifiquemeOv._metadata.id_doc;
-                    if (notifiquemeOv.normas_monitoradas.Count<NormaMonitoradaPushOV>(n => n.ch_norma_monitorada == _ch_norma) <= 0)
+
+                    notifiquemeOv.termos_diarios_monitorados.RemoveAll(c => c.ch_termo_diario_monitorado == _ch_termo_diario_monitorado);
+
+                    if (notifiquemeRn.Atualizar(id_push, notifiquemeOv))
                     {
-                        var normaOv = new NormaRN().Doc(_ch_norma);
-                        NormaMonitoradaPushOV norma_monitorada = new NormaMonitoradaPushOV
-                        {
-                            ch_tipo_norma_monitorada = normaOv.ch_tipo_norma,
-                            nm_tipo_norma_monitorada = normaOv.nm_tipo_norma,
-                            dt_assinatura_norma_monitorada = normaOv.dt_assinatura,
-                            nr_norma_monitorada = normaOv.nr_norma,
-                            dt_cadastro_norma_monitorada = DateTime.Now.ToString("dd'/'MM'/'yyyy"),
-                            ch_norma_monitorada = normaOv.ch_norma,
-                            st_norma_monitorada = true
-                        };
-                        notifiquemeOv.normas_monitoradas.Add(norma_monitorada);
-                        if (notifiquemeRn.Atualizar(id_push, notifiquemeOv))
-                        {
-                            new NotifiquemeRN().AtualizarSessao(notifiquemeOv);
-                            notifiquemeOv.senha_usuario_push = null;
-                            sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
-                        }
-                        else
-                        {
-                            throw new Exception("Erro ao adicionar norma para monitorar. ch_doc:" + _ch_norma);
-                        }
+                        notifiquemeOv.senha_usuario_push = null;
+                        sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
                     }
                     else
                     {
-                        throw new DocDuplicateKeyException("Não é possível salvar essa informação porque ela está duplicada.");
+                        throw new Exception("Erro ao remover critério do monitoramento. id_push:" + id_push);
                     }
                 }
                 else
                 {
-                    throw new Exception("Erro ao adicionar norma para monitorar. ch_doc:" + _ch_norma);
+                    throw new Exception("Erro ao remover critério do monitoramento. id_push:" + id_push);
                 }
             }
             catch (Exception ex)
@@ -86,7 +70,7 @@ namespace TCDF.Sinj.Web.ashx.Push
                 };
                 if (sessaoNotifiquemeOv != null)
                 {
-                    LogErro.gravar_erro(Util.GetEnumDescription(action) + "NORMA.ADD", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
+                    LogErro.gravar_erro(Util.GetEnumDescription(action) + ".DIARIO.DEL", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
                 }
             }
             context.Response.Write(sRetorno);

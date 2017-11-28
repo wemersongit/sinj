@@ -41,6 +41,16 @@ namespace TCDF.Sinj.OV
         public ArquivoOV ar_diario { get; set; }
         public List<ArquivoDiario> arquivos { get; set; }
         public List<AlteracaoOV> alteracoes { get; set; }
+
+        public bool st_novo { get; set; }
+
+        public string getDescricaoDiario()
+        {
+            return nm_tipo_fonte + " nº " + nr_diario + (!string.IsNullOrEmpty(cr_diario) ? " " + cr_diario : "") +
+                    ((!string.IsNullOrEmpty(nm_tipo_edicao) && nm_tipo_edicao != "Normal" || !string.IsNullOrEmpty(nm_diferencial_edicao)) ? ", Edição " + nm_tipo_edicao + (!string.IsNullOrEmpty(nm_diferencial_edicao) ? " " + nm_diferencial_edicao : "") : "") +
+                    (st_suplemento ? ", Suplemento" + (!string.IsNullOrEmpty(nm_diferencial_suplemento) ? " " + nm_diferencial_suplemento : "") : "") +
+                    " de " + dt_assinatura;
+        }
     }
 
     public class ArquivoDiario {

@@ -183,6 +183,20 @@
         },
         {
             "field": {
+                "name": "st_novo",
+                "datatype": "Boolean",
+                "required": true,
+                "alias": "Novo",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Indica se o diário é novo para o serviço push recuperar os diários e notificar os usuários."
+            }
+        },
+        {
+            "field": {
                 "name": "ds_pendencia",
                 "datatype": "Text",
                 "required": false,

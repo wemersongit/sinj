@@ -2,58 +2,63 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TCDF.Sinj.RN;
 using TCDF.Sinj.OV;
+using TCDF.Sinj.RN;
 using util.BRLight;
 using TCDF.Sinj.Log;
 
-namespace TCDF.Sinj.Web.ashx.Push
+namespace TCDF.Sinj.Portal.Web.ashx.Push
 {
     /// <summary>
-    /// Summary description for NotifiquemeNormaIncluir
+    /// Summary description for NotifiquemeTermoDiarioIncluir
     /// </summary>
-    public class NotifiquemeNormaIncluir : IHttpHandler
+    public class NotifiquemeTermoDiarioIncluir : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
         {
             string sRetorno = "";
-            var _ch_norma = context.Request["ch_norma"];
+            var _ch_tipo_fonte_diario_monitorado = context.Request["ch_tipo_fonte_diario_monitorado"];
+            var _nm_tipo_fonte_diario_monitorado = context.Request["nm_tipo_fonte_diario_monitorado"];
+            var _ds_termo_diario_monitorado = context.Request["ds_termo_diario_monitorado"];
             ulong id_push = 0;
             var notifiquemeOv = new NotifiquemeOV();
             var action = AcoesDoUsuario.pus_edt;
             SessaoNotifiquemeOV sessaoNotifiquemeOv = null;
             try
             {
-                if (!string.IsNullOrEmpty(_ch_norma))
+                if (!string.IsNullOrEmpty(_ds_termo_diario_monitorado))
                 {
+                    var termos = _ds_termo_diario_monitorado.Split(' ');
+                    if (termos.Count() == 1 && termos[0].Length <= 3)
+                    {
+                        throw new DocValidacaoException("O valor informado é uma palavra muito curta que, além de irrelevante, pode ocasionar notificações excessivas ao seu e-mail.");
+                    }
+
                     var notifiquemeRn = new NotifiquemeRN();
                     sessaoNotifiquemeOv = notifiquemeRn.LerSessaoNotifiquemeOv();
                     notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
                     id_push = notifiquemeOv._metadata.id_doc;
-                    if (notifiquemeOv.normas_monitoradas.Count<NormaMonitoradaPushOV>(n => n.ch_norma_monitorada == _ch_norma) <= 0)
+                    if (notifiquemeOv.termos_diarios_monitorados.Count<TermoDiarioMonitoradoPushOV>(t => t.ds_termo_diario_monitorado.Equals(_ds_termo_diario_monitorado, StringComparison.InvariantCultureIgnoreCase) && t.ch_termo_diario_monitorado == _ch_tipo_fonte_diario_monitorado) <= 0)
                     {
-                        var normaOv = new NormaRN().Doc(_ch_norma);
-                        NormaMonitoradaPushOV norma_monitorada = new NormaMonitoradaPushOV
+                        TermoDiarioMonitoradoPushOV termoMonitorado = new TermoDiarioMonitoradoPushOV
                         {
-                            ch_tipo_norma_monitorada = normaOv.ch_tipo_norma,
-                            nm_tipo_norma_monitorada = normaOv.nm_tipo_norma,
-                            dt_assinatura_norma_monitorada = normaOv.dt_assinatura,
-                            nr_norma_monitorada = normaOv.nr_norma,
-                            dt_cadastro_norma_monitorada = DateTime.Now.ToString("dd'/'MM'/'yyyy"),
-                            ch_norma_monitorada = normaOv.ch_norma,
-                            st_norma_monitorada = true
+                            ch_termo_diario_monitorado = Guid.NewGuid().ToString("N"),
+                            ch_tipo_fonte_diario_monitorado = _ch_tipo_fonte_diario_monitorado,
+                            nm_tipo_fonte_diario_monitorado = _nm_tipo_fonte_diario_monitorado,
+                            ds_termo_diario_monitorado = _ds_termo_diario_monitorado,
+                            dt_cadastro_termo_diario_monitorado = DateTime.Now.ToString("dd'/'MM'/'yyyy"),
+                            st_termo_diario_monitorado = true
                         };
-                        notifiquemeOv.normas_monitoradas.Add(norma_monitorada);
+                        notifiquemeOv.termos_diarios_monitorados.Add(termoMonitorado);
                         if (notifiquemeRn.Atualizar(id_push, notifiquemeOv))
                         {
-                            new NotifiquemeRN().AtualizarSessao(notifiquemeOv);
                             notifiquemeOv.senha_usuario_push = null;
                             sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
                         }
                         else
                         {
-                            throw new Exception("Erro ao adicionar norma para monitorar. ch_doc:" + _ch_norma);
+                            throw new Exception("Erro ao adicionar termo para monitorar diário. termo:" + _ds_termo_diario_monitorado);
                         }
                     }
                     else
@@ -63,12 +68,12 @@ namespace TCDF.Sinj.Web.ashx.Push
                 }
                 else
                 {
-                    throw new Exception("Erro ao adicionar norma para monitorar. ch_doc:" + _ch_norma);
+                    throw new Exception("Erro ao adicionar termo para monitorar diário. termo:" + _ds_termo_diario_monitorado);
                 }
             }
             catch (Exception ex)
             {
-                if (ex is PermissionException || ex is DocDuplicateKeyException || ex is SessionExpiredException)
+                if (ex is PermissionException || ex is DocDuplicateKeyException || ex is SessionExpiredException || ex is DocValidacaoException)
                 {
                     sRetorno = "{\"error_message\": \"" + ex.Message + "\"}";
                 }
@@ -86,7 +91,7 @@ namespace TCDF.Sinj.Web.ashx.Push
                 };
                 if (sessaoNotifiquemeOv != null)
                 {
-                    LogErro.gravar_erro(Util.GetEnumDescription(action) + "NORMA.ADD", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
+                    LogErro.gravar_erro(Util.GetEnumDescription(action) + ".DIARIO.ADD", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
                 }
             }
             context.Response.Write(sRetorno);

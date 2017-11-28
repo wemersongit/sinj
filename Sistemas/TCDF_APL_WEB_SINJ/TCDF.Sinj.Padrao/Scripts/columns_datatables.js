@@ -1170,16 +1170,32 @@ var _columns_vocabulario_restaurados = [
 }
 ];
 
+var _columns_notifiqueme_termos_diarios_monitorados = [
+	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Diário", "sDefaultContent": "", "sClass": "grid-cell ws nm_tipo_fonte_diario_monitorado", "mData": "nm_tipo_fonte_diario_monitorado" },
+	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Termos", "sClass": "grid-cell ws ds_termo_diario_monitorado", "mData": "ds_termo_diario_monitorado" },
+	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Ativo", "sClass": "grid-cell ws center", "mData": "st_termo_diario_monitorado",
+	    "mRender": function (data, type, full) {
+	        return "<input type='checkbox' " + (data ? "checked='checked'" : "") + " onchange='alterarStTermoDiarioMonitorado(event, \"" + full.ch_termo_diario_monitorado + "\")' title='status do monitoramento' /><div class='loading-p' style='display:none'></div>";
+	    }
+	},
+	{ "indice": 3, "isControl": false, "standard_view": true, "sClass": "grid-cell ws center all", "bSortable": false, "mData": "ch_termo_diario_monitorado",
+	    "mRender": function (data, type, full) {
+	        var sTermoDiarioMonitorado = getVal(full.ch_tipo_fonte_diario_monitorado) + "#" + getVal(full.nm_tipo_fonte_diario_monitorado) + "#" + full.ds_termo_diario_monitorado;
+	        return "<a href='javascript:void(0);' onclick='javascript:editarTermoDiarioMonitorado(event,\"" + sTermoDiarioMonitorado + "\", \"" + full.ch_termo_diario_monitorado + "\")' title='editar monitoramento' ><img src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' alt='editar' /></a>&nbsp;" +
+                "<a href='javascript:void(0);' onclick='javascript:CriarModalConfirmacaoRemoverTermoDiarioMonitorado(event,\"" + data + "\")' title='excluir monitoramento' ><img src='" + _urlPadrao + "/Imagens/ico_delete_p.png' alt='delete' /></a><div class='loading-p' style='display:none'></div>";
+	    }
+	}
+];
+
 var _columns_notifiqueme_normas_monitoradas = [
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Norma", "sClass": "grid-cell ws",
 		"mRender": function (data, type, full) {
 			return "<a href='./DetalhesDeNorma.aspx?id_norma=" + full.ch_norma_monitorada + "' title='detalhes da norma'>" + full.nm_tipo_norma_monitorada + " " + full.nr_norma_monitorada + " de " + full.dt_assinatura_norma_monitorada + "</a>";
 		}
-	},
-	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Data", "sClass": "grid-cell ws center", "mData": "dt_cadastro_norma_monitorada" },
-	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Ativo", "sClass": "grid-cell ws center", "mData": "st_norma_monitorada",
+    },
+    { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Ativo", "sClass": "grid-cell ws center", "mData": "st_norma_monitorada",
 		"mRender": function (data, type, full) {
-			return "<input type='checkbox' " + (data ? "checked='checked'" : "") + " onchange='javascript:AlterarStNormaMonitorada(event, " + full.id_norma_monitorada + ")' title='status do monitoramento' /><div class='loading-p' style='display:none'></div>";
+		    return "<input type='checkbox' " + (data ? "checked='checked'" : "") + " onchange='javascript:alterarStNormaMonitorada(event, \"" + full.ch_norma_monitorada + "\")' title='status do monitoramento' /><div class='loading-p' style='display:none'></div>";
 		}
 	},
 	{ "indice": 3, "isControl": false, "standard_view": true, "sClass": "grid-cell ws center all", "bSortable": false, "mData": "ch_norma_monitorada",
@@ -1190,16 +1206,21 @@ var _columns_notifiqueme_normas_monitoradas = [
 ];
 
 var _columns_notifiqueme_criacao_normas_monitoradas = [
-	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo", "sClass": "grid-cell ws", "mData": "nm_tipo_norma_criacao" },
+	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo", "sClass": "grid-cell ws", "mData": "nm_tipo_norma_criacao", "sorting": "asc" },
 	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "", "sClass": "grid-cell ws", "mData": "primeiro_conector_criacao" },
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Origem", "sClass": "grid-cell ws", "mData": "nm_orgao_criacao" },
 	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "", "sClass": "grid-cell ws", "mData": "segundo_conector_criacao" },
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Indexação", "sClass": "grid-cell ws", "mData": "nm_termo_criacao" },
+	{ "indice": 6, "isControl": false, "standard_view": true, "sTitle": "Ativo", "sClass": "grid-cell ws center", "mData": "st_criacao",
+	    "mRender": function (data, type, full) {
+	        return "<input type='checkbox' " + (data ? "checked='checked'" : "") + " onchange='javascript:alterarStCriacaoNormaMonitorada(event, \"" + full.ch_criacao_norma_monitorada + "\")' title='status do monitoramento' /><div class='loading-p' style='display:none'></div>";
+	    }
+	},
 	{ "indice": 6, "isControl": false, "standard_view": true, "sClass": "grid-cell ws center all", "bSortable": false,
 		"mRender": function (data, type, full) {
-			var sCriacao_normas_monitoradas = full.ch_tipo_norma_criacao + "#" + full.nm_tipo_norma_criacao + "#" + full.primeiro_conector_criacao + "#" + full.ch_orgao_criacao + "#" + full.nm_orgao_criacao + "#" + full.segundo_conector_criacao + "#" + full.ch_termo_criacao + "#" + full.ch_tipo_termo_criacao + "#" + full.nm_termo_criacao + "#" + full.st_criacao;
-			return "<a href='javascript:void(0);' onclick='javascript:EditarCriacaoNormaMonitorada(event, \"" + sCriacao_normas_monitoradas + "\", \"" + full.ch_criacao_norma_monitorada + "\")' ><img src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' alt='editar' /></a>&nbsp;" +
-				"<a href='javascript:void(0);' onclick='javascript:CriarModalConfirmacaoRemoverCriacaoNormaMonitorada(event, \"" + full.ch_criacao_norma_monitorada + "\")' ><img src='" + _urlPadrao + "/Imagens/ico_delete_p.png' alt='delete' /></a><div class='loading-p' style='display:none'></div>";
+			var sCriacao_normas_monitoradas = full.ch_tipo_norma_criacao + "#" + full.nm_tipo_norma_criacao + "#" + full.primeiro_conector_criacao + "#" + full.ch_orgao_criacao + "#" + full.nm_orgao_criacao + "#" + full.segundo_conector_criacao + "#" + full.ch_termo_criacao + "#" + full.ch_tipo_termo_criacao + "#" + full.nm_termo_criacao;
+			return "<a href='javascript:void(0);' onclick='javascript:EditarCriacaoNormaMonitorada(event, \"" + sCriacao_normas_monitoradas + "\", \"" + full.ch_criacao_norma_monitorada + "\")' title='editar monitoramento' ><img src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' alt='editar' /></a>&nbsp;" +
+				"<a href='javascript:void(0);' onclick='javascript:CriarModalConfirmacaoRemoverCriacaoNormaMonitorada(event, \"" + full.ch_criacao_norma_monitorada + "\")' title='excluir monitoramento'><img src='" + _urlPadrao + "/Imagens/ico_delete_p.png' alt='delete' /></a><div class='loading-p' style='display:none'></div>";
 		}
 	}
 ];
@@ -1362,35 +1383,6 @@ var _columns_norma_associada_vocabulario = [
 	}
 ];
 
-//var _columns_norma_notifiqueme = [
-//{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo e Número", "sWidth": "20%", "sClass": "grid-cell ws _all nm_tipo_norma nr_norma", "mData": "nm_tipo_norma",
-//    "mRender": function (data, type, full) {
-//        return full.nm_tipo_norma + " " + full.nr_norma + " " + full.dt_assinatura;
-//    }
-//},
-//{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Origem", "sWidth": "", "sClass": "grid-cell ws sg_orgao", "mData": "origens", "bSortable": false,
-//    "mRender": function (data) {
-//        var origens = "";
-//        for (var i = 0; i < data.length; i++) {
-//            origens += (origens != "" ? "<br/>" : "") + '<a href="javascript:void(0)" onclick="javascript:CriarModalDescricaoOrigem(\'' + data[i].ch_orgao + '\')">' + data[i].sg_orgao + '</a>';
-//        }
-//        return origens;
-//    }
-//},
-//{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Ementa", "sWidth": "35%", "sClass": "grid-cell ws ds_ementa", "mData": "ds_ementa", "bSortable": false },
-//{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Situação", "sWidth": "", "sClass": "center ws nm_situacao", "mData": "nm_situacao" },
-//{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "center ws all", "bSortable": false,
-//    "mRender": function (data, type, full) {
-//        var detalhes = "";
-//        var ds_norma = full.nm_tipo_norma + " " + full.nr_norma + " " + full.dt_assinatura;
-//        var selecionar = "<a href='javascript:void(0);' onclick='javascript:Notificar(\"" + full.ch_norma + "\");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
-//        return detalhes + selecionar;
-//    }
-//}
-//];
-
-
-
 var _columns_norma_notifiqueme = [
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo e Número", "sWidth": "20%", "sClass": "grid-cell ws nm_tipo_norma nr_norma", "mData": "nm_tipo_norma",
 		"mRender": function (data, type, full) {
@@ -1420,77 +1412,16 @@ var _columns_norma_notifiqueme = [
 		"mRender": function (data, type, full) {
 			var detalhes = "";
 			var ds_norma = full.nm_tipo_norma + " " + full.nr_norma + " " + full.dt_assinatura;
-			var selecionar = "<a href='javascript:void(0);' onclick='javascript:Notificar(\"" + full.fields.partial[0].ch_norma + "\");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
+			var selecionar = "<a href='javascript:void(0);' onclick='selecionarNorma(\"" + full.fields.partial[0].ch_norma + "\");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
 			return detalhes + selecionar;
 		}
 	}
 ];
 
-//var _columns_norma_cesta = [
-//{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo e Número", "sWidth": "20%", "sClass": "grid-cell ws _all nm_tipo_norma nr_norma", "mData": "nm_tipo_norma",
-//    "mRender": function (data, type, full) {
-//        return '<a href="./DetalhesDeNorma.aspx?id_doc=' + full.fields.partial[0]._metadata.id_doc + '" title="Visualizar detalhes da norma" />' + full.fields.partial[0].nm_tipo_norma + " " + (full.fields.partial[0].nr_norma != 0 ? full.fields.partial[0].nr_norma : "") + ' <img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
-//    }
-//},
-//{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Assinatura", "sWidth": "", "sClass": "grid-cell ws dt_assinatura", "mData": "dt_assinatura",
-//    "mRender": function (data, type, full) {
-//        return full.fields.partial[0].dt_assinatura;
-//    }
-//},
-//{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Origem", "sWidth": "", "sClass": "grid-cell ws sg_orgao", "mData": "origens", "bSortable": false,
-//    "mRender": function (data, type, full) {
-//        var origens = "";
-//        for (var i = 0; i < full.fields.partial[0].origens.length; i++) {
-//            origens += (origens != "" ? "<br/>" : "") + '<a href="javascript:void(0)" onclick="javascript:CriarModalDescricaoOrigem(\'' + full.fields.partial[0].origens[i].ch_orgao + '\')">' + full.fields.partial[0].origens[i].sg_orgao + '</a>';
-//        }
-//        return origens;
-//    }
-//},
-//{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Ementa", "sWidth": "", "sClass": "grid-cell ws ds_ementa", "mData": "ds_ementa", "bSortable": false,
-//    "mRender": function (data, type, full) {
-//        return full.fields.partial[0].ds_ementa;
-//    }
-//},
-//{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Situação", "sWidth": "", "sClass": "center ws nm_situacao", "mData": "nm_situacao",
-//    "mRender": function (data, type, full) {
-//        return full.fields.partial[0].nm_situacao;
-//    }
-//},
-
-//{ "indice": 5, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "110px", "sClass": "center ws", "bSortable": false,
-//    "mRender": function (data, type, full) {
-//        var remover = "<a title='Remover da Cesta' href='javascript:ExcluirDaCesta(\"norma_" + full.fields.partial[0]._metadata.id_doc + "\");' class='a_delete' ><img valign='absmiddle' alt='Excluir'  src='" + _urlPadrao + "/Imagens/ico_trash_p.png'  /></a>";
-
-//        var id_file = "";
-//        var links = "";
-//        if (IsNotNullOrEmpty(full.fields.partial[0].ar_atualizado, 'id_file')) {
-//            id_file = full.fields.partial[0].ar_atualizado.id_file;
-//        }
-//        else if (IsNotNullOrEmpty(full.fields.partial[0].fontes) && full.fields.partial[0].fontes.length > 0 && IsNotNullOrEmpty(full.fields.partial[0].fontes[0].ar_fonte, 'id_file')) {
-//            id_file = full.fields.partial[0].fontes[0].ar_fonte.id_file;
-//        }
-//        if (IsNotNullOrEmpty(id_file)) {
-//            links = '<a title="baixar arquivo" target="_blank" href="./BaixarArquivoNorma.aspx?id_file=' + id_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>' +
-//                    '&nbsp;&nbsp;' +
-//                    '<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a> &nbsp;&nbsp;';
-//        }
-//        return links + remover;
-//    }
-//}
-//];
-
 var _columns_erro_sistema = [
     { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Data", "sWidth": "", "sClass": "grid-cell ws", "mData": "dt_log_erro" },
     { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Tipo", "sWidth": "", "sClass": "grid-cell ws", "mData": "nm_tipo" },
     { "indice": 2, "sDefaultContent": "", "isControl": false, "standard_view": true, "sTitle": "Usuário", "sWidth": "", "sClass": "grid-cell ws", "mData": "nm_login_user_erro" },
-//    { "indice": 3, "sDefaultContent": "", "isControl": false, "standard_view": true, "sTitle": "Mensagem", "sWidth": "40%", "sClass": "center ws all", "mData": "", "bSortable": false,
-//        "mRender": function (data, type, full) {
-//            var oErro = JSON.parse(full.ds_erro);
-//            if (IsNotNullOrEmpty(oErro, "Erro.MensagemDaExcecao")) {
-//                return oErro.Erro.MensagemDaExcecao;
-//            }
-//        }
-//    },
     { "indice": 4, "sDefaultContent": "", "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "20px", "sClass": "center ws all", "mData": "", "bSortable": false,
         "mRender": function (data, type, full) {
             return "&nbsp;<a title='Detalhes' href='./DetalhesDeErroSistema.aspx?id_doc=" + full._metadata.id_doc + "'  ><img valign='absmiddle' alt='Detalhes' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a>";

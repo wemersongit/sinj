@@ -10,16 +10,15 @@ using TCDF.Sinj.Log;
 namespace TCDF.Sinj.Portal.Web.ashx.Push
 {
     /// <summary>
-    /// Summary description for NotifiquemeNormaEditar
+    /// Summary description for NotifiquemeTermoDiarioExcluir
     /// </summary>
-    public class NotifiquemeNormaEditar : IHttpHandler
+    public class NotifiquemeTermoDiarioExcluir : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
         {
             string sRetorno = "";
-            var _ch_norma = context.Request["ch_norma_monitorada"];
-            var _st_norma_monitorada = context.Request["st_norma_monitorada"];
+            var _ch_termo_diario_monitorado = context.Request["ch_termo_diario_monitorado"];
 
             ulong id_push = 0;
             var notifiquemeOv = new NotifiquemeOV();
@@ -27,21 +26,14 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
             SessaoNotifiquemeOV sessaoNotifiquemeOv = null;
             try
             {
-                if (!string.IsNullOrEmpty(_ch_norma) && !string.IsNullOrEmpty(_st_norma_monitorada))
+                if (!string.IsNullOrEmpty(_ch_termo_diario_monitorado))
                 {
                     var notifiquemeRn = new NotifiquemeRN();
                     sessaoNotifiquemeOv = notifiquemeRn.LerSessaoNotifiquemeOv();
                     notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
                     id_push = notifiquemeOv._metadata.id_doc;
 
-                    foreach (var norma_monitorada in notifiquemeOv.normas_monitoradas)
-                    {
-                        if (norma_monitorada.ch_norma_monitorada == _ch_norma)
-                        {
-                            norma_monitorada.st_norma_monitorada = _st_norma_monitorada == "1";
-                            break;
-                        }
-                    }
+                    notifiquemeOv.termos_diarios_monitorados.RemoveAll(c => c.ch_termo_diario_monitorado == _ch_termo_diario_monitorado);
 
                     if (notifiquemeRn.Atualizar(id_push, notifiquemeOv))
                     {
@@ -50,12 +42,12 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                     }
                     else
                     {
-                        throw new Exception("Erro ao alterar status do monitoramento da norma. ch_doc:" + _ch_norma);
+                        throw new Exception("Erro ao remover critério do monitoramento. id_push:" + id_push);
                     }
                 }
                 else
                 {
-                    throw new Exception("Erro ao alterar status do monitoramento da norma. ch_doc:" + _ch_norma);
+                    throw new Exception("Erro ao remover critério do monitoramento. id_push:" + id_push);
                 }
             }
             catch (Exception ex)
@@ -78,7 +70,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                 };
                 if (sessaoNotifiquemeOv != null)
                 {
-                    LogErro.gravar_erro(Util.GetEnumDescription(action) + "NORMA.EDT", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
+                    LogErro.gravar_erro(Util.GetEnumDescription(action) + ".DIARIO.DEL", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
                 }
             }
             context.Response.Write(sRetorno);

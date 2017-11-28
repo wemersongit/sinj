@@ -21,7 +21,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
             var _ch_norma = context.Request["ch_norma"];
             ulong id_push = 0;
             var notifiquemeOv = new NotifiquemeOV();
-            var action = "PORTAL_PUS.EDT";
+            var action = AcoesDoUsuario.pus_edt;
             SessaoNotifiquemeOV sessaoNotifiquemeOv = null;
             try
             {
@@ -34,7 +34,8 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                     if (notifiquemeOv.normas_monitoradas.Count<NormaMonitoradaPushOV>(n => n.ch_norma_monitorada == _ch_norma) <= 0)
                     {
                         var normaOv = new NormaRN().Doc(_ch_norma);
-                        NormaMonitoradaPushOV norma_monitorada = new NormaMonitoradaPushOV {
+                        NormaMonitoradaPushOV norma_monitorada = new NormaMonitoradaPushOV
+                        {
                             ch_tipo_norma_monitorada = normaOv.ch_tipo_norma,
                             nm_tipo_norma_monitorada = normaOv.nm_tipo_norma,
                             dt_assinatura_norma_monitorada = normaOv.dt_assinatura,
@@ -43,17 +44,21 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                             ch_norma_monitorada = normaOv.ch_norma,
                             st_norma_monitorada = true
                         };
-                        var retornoPath = notifiquemeRn.PathPost(id_push, "normas_monitoradas", JSON.Serialize<NormaMonitoradaPushOV>(norma_monitorada), null);
-                        if (retornoPath == "OK")
+                        notifiquemeOv.normas_monitoradas.Add(norma_monitorada);
+                        if (notifiquemeRn.Atualizar(id_push, notifiquemeOv))
                         {
-                            notifiquemeOv = notifiquemeRn.Doc(id_push);
                             new NotifiquemeRN().AtualizarSessao(notifiquemeOv);
-                            sRetorno = "{\"ch_doc_success\":\"" + _ch_norma + "\"}";
+                            notifiquemeOv.senha_usuario_push = null;
+                            sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
                         }
                         else
                         {
                             throw new Exception("Erro ao adicionar norma para monitorar. ch_doc:" + _ch_norma);
                         }
+                    }
+                    else
+                    {
+                        throw new DocDuplicateKeyException("Não é possível salvar essa informação porque ela está duplicada.");
                     }
                 }
                 else
@@ -81,7 +86,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                 };
                 if (sessaoNotifiquemeOv != null)
                 {
-                    LogErro.gravar_erro(action, erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
+                    LogErro.gravar_erro(Util.GetEnumDescription(action) + "NORMA.ADD", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
                 }
             }
             context.Response.Write(sRetorno);

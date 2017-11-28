@@ -22,7 +22,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
 
             ulong id_push = 0;
             var notifiquemeOv = new NotifiquemeOV();
-            var action = "PORTAL_PUS.EDT";
+            var action = AcoesDoUsuario.pus_edt;
             SessaoNotifiquemeOV sessaoNotifiquemeOv = null;
             try
             {
@@ -33,20 +33,12 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                     notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
                     id_push = notifiquemeOv._metadata.id_doc;
 
-                    var criacao_normas_monitoradas = new List<CriacaoDeNormaMonitoradaPushOV>();
-                    foreach (var criacao in notifiquemeOv.criacao_normas_monitoradas)
-                    {
-                        if (criacao.ch_criacao_norma_monitorada == _ch_criacao_norma_monitorada)
-                        {
-                            continue;
-                        }
-                        criacao_normas_monitoradas.Add(criacao);
-                    }
-                    var retornoPath = notifiquemeRn.PathPut(id_push, "criacao_normas_monitoradas", JSON.Serialize<List<CriacaoDeNormaMonitoradaPushOV>>(criacao_normas_monitoradas), null);
+                    notifiquemeOv.criacao_normas_monitoradas.RemoveAll(c => c.ch_criacao_norma_monitorada == _ch_criacao_norma_monitorada);
 
-                    if (retornoPath == "UPDATED")
+                    if (notifiquemeRn.Atualizar(id_push, notifiquemeOv))
                     {
-                        sRetorno = "{\"id_doc_success\":\"" + id_push + "\"}";
+                        notifiquemeOv.senha_usuario_push = null;
+                        sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
                     }
                     else
                     {
@@ -78,7 +70,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                 };
                 if (sessaoNotifiquemeOv != null)
                 {
-                    LogErro.gravar_erro(action, erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
+                    LogErro.gravar_erro(Util.GetEnumDescription(action) + "NORMA.CRI.DEL", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
                 }
             }
             context.Response.Write(sRetorno);

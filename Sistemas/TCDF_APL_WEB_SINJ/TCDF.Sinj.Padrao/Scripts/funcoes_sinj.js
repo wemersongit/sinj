@@ -2029,6 +2029,21 @@ function Validar(form) {
                 }
             }
 
+            if (e[i].getAttribute("specials") == "unico") {
+                var selector_compare = e[i].getAttribute("querySelectorCompare");
+                var elements_compare = document.querySelectorAll(selector_compare);
+                var valueCompare = e[i].value.toLowerCase().trim();
+                for(var j = 0; j < elements_compare.length; j++){
+                    if(valueCompare == elements_compare[j].value.toLowerCase()){
+                        throw "O campo " + e[i].getAttribute("label") + " est&aacute; com valor duplicado!!!";
+                    }
+                }
+                if (!isEmail(e[i].value)) {
+                    focusElement(e[i]);
+                    throw "O campo  " + e[i].getAttribute("label") + " est&aacute; com um valor inv&aacute;lido para um email!!!";
+                }
+            }
+
             if (e[i].getAttribute("comparar") != null) {
 
                 if (e[i].getAttribute("comparar") != "") {
@@ -3204,17 +3219,7 @@ function fnSalvarForm(id_form, _sucesso) {
         //Ex: pagina.aspx?id_doc=30. No exemplo id_doc é o param-redirect e 30 é o valor retornado do server
         var sParamRedirect = $('#' + id_form).attr("param-redirect");
         var sButtonRedirect = $('#' + id_form).attr("button-redirect");
-        var sDivNotificar = $('#' + id_form).attr("divNotificar");
-        if (!IsNotNullOrEmpty(sDivNotificar)) {
-            var oDivNotificar = $('#' + id_form + ' .notify');
-            if (oDivNotificar.length > 0) {
-                sDivNotificar = $(oDivNotificar[0]).attr('id');
-                if (!IsNotNullOrEmpty(sDivNotificar)) {
-                    sDivNotificar = Guid();
-                    $(oDivNotificar).attr('id', sDivNotificar);
-                }
-            }
-        }
+
         //determinar os botões que aparecerão no modal.
         //se type-buttons for nulo ou vazio o sucesso do ajax fará só o redirect(caso haja url-redirect)
         var sTypeButtons = $('#' + id_form).attr("type-buttons");

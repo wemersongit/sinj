@@ -18,41 +18,39 @@ namespace TCDF.Sinj.Web.ashx.Push
         public void ProcessRequest(HttpContext context)
         {
             string sRetorno = "";
-            var _ch_norma = context.Request["ch_norma"];
-            var _path = context.Request["path"];
-            var _value = context.Request["value"];
+            var _ch_norma = context.Request["ch_norma_monitorada"];
+            var _st_norma_monitorada = context.Request["st_norma_monitorada"];
+
             ulong id_push = 0;
             var notifiquemeOv = new NotifiquemeOV();
             var action = AcoesDoUsuario.pus_edt;
             SessaoNotifiquemeOV sessaoNotifiquemeOv = null;
             try
             {
-                if (!string.IsNullOrEmpty(_ch_norma))
+                if (!string.IsNullOrEmpty(_ch_norma) && !string.IsNullOrEmpty(_st_norma_monitorada))
                 {
                     var notifiquemeRn = new NotifiquemeRN();
                     sessaoNotifiquemeOv = notifiquemeRn.LerSessaoNotifiquemeOv();
                     notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
                     id_push = notifiquemeOv._metadata.id_doc;
-                    var j = -1;
-                    for (var i = 0; i < notifiquemeOv.normas_monitoradas.Count; i++)
+
+                    foreach (var norma_monitorada in notifiquemeOv.normas_monitoradas)
                     {
-                        if (notifiquemeOv.normas_monitoradas[i].ch_norma_monitorada == _ch_norma)
+                        if (norma_monitorada.ch_norma_monitorada == _ch_norma)
                         {
-                            j = i;
+                            norma_monitorada.st_norma_monitorada = _st_norma_monitorada == "1";
                             break;
                         }
                     }
-                    if (j > -1)
+
+                    if (notifiquemeRn.Atualizar(id_push, notifiquemeOv))
                     {
-                        var retornoPath = notifiquemeRn.PathPut(id_push, "normas_monitoradas/" + j + "/"+_path, _value, null);
-                        if (retornoPath == "UPDATED")
-                        {
-                            sRetorno = "{\"ch_doc_success\":\"" + _ch_norma + "\"}";
-                        }
-                        else
-                        {
-                            throw new Exception("Erro ao alterar status do monitoramento da norma. ch_doc:" + _ch_norma);
-                        }
+                        notifiquemeOv.senha_usuario_push = null;
+                        sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
+                    }
+                    else
+                    {
+                        throw new Exception("Erro ao alterar status do monitoramento da norma. ch_doc:" + _ch_norma);
                     }
                 }
                 else
@@ -80,7 +78,7 @@ namespace TCDF.Sinj.Web.ashx.Push
                 };
                 if (sessaoNotifiquemeOv != null)
                 {
-                    LogErro.gravar_erro(Util.GetEnumDescription(action), erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
+                    LogErro.gravar_erro(Util.GetEnumDescription(action) + "NORMA.EDT", erro, sessaoNotifiquemeOv.nm_usuario_push, sessaoNotifiquemeOv.email_usuario_push);
                 }
             }
             context.Response.Write(sRetorno);

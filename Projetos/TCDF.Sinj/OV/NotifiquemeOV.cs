@@ -9,6 +9,7 @@ namespace TCDF.Sinj.OV
         public NotifiquemeOV(){
             normas_monitoradas = new List<NormaMonitoradaPushOV>();
             criacao_normas_monitoradas = new List<CriacaoDeNormaMonitoradaPushOV>();
+            termos_diarios_monitorados = new List<TermoDiarioMonitoradoPushOV>();
             favoritos = new List<string>();
         }
 
@@ -29,6 +30,8 @@ namespace TCDF.Sinj.OV
 
         // Contém uma lista de chaves concatenadas com identificadores de base (norma ou diario). Ex.: norma_78993
         public List<string> favoritos { get; set; }
+
+        public List<TermoDiarioMonitoradoPushOV> termos_diarios_monitorados { get; set; }
         public List<NormaMonitoradaPushOV> normas_monitoradas { get; set; }
         public List<CriacaoDeNormaMonitoradaPushOV> criacao_normas_monitoradas { get; set; }
 
@@ -36,6 +39,16 @@ namespace TCDF.Sinj.OV
         /// Indica se o usuário está ativo ou não.
         /// </summary>
         public bool st_push { get; set; }
+    }
+
+    public class TermoDiarioMonitoradoPushOV
+    {
+        public string ch_termo_diario_monitorado { get; set; }
+        public string ch_tipo_fonte_diario_monitorado { get; set; }
+        public string nm_tipo_fonte_diario_monitorado { get; set; }
+        public string ds_termo_diario_monitorado { get; set; }
+        public string dt_cadastro_termo_diario_monitorado { get; set; }
+        public bool st_termo_diario_monitorado { get; set; }
     }
 
     public class NormaMonitoradaPushOV

@@ -64,7 +64,6 @@
             </div>
             <div id="div_notificacao_norma" class="notify w-90-pc mauto" style="display:none;"></div>
             <fieldset class="w-90-pc">
-                <legend>Norma</legend>
                 <div class="mauto table">
                     <div class="w-100-pc fr" style="margin-top:10px;">
                         <div class="fr" style="margin-right:5px;margin-left:15px;">

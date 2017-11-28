@@ -11,7 +11,7 @@ function Notificar(ch_norma) {
                 iTime: null
             });
         }
-        else if (IsNotNullOrEmpty(data, 'ch_doc_success')) {
+        else if (IsNotNullOrEmpty(data, 'email_usuario_push')) {
             $("<div id='modal_notifiqueme' />").modallight({
                 sTitle: "Notifique-me",
                 sType: "success",
@@ -44,8 +44,7 @@ function Notificar(ch_norma) {
         $('#div_norma').hide();
     }
     var complete = function () {
-        $('#div_loading_norma').hide();
-        $('#div_norma').show();
+        gComplete();
         if (!IsNotNullOrEmpty(_notifiqueme)) {
             $("<div id='modal_notifiqueme' />").modallight({
                 sTitle: "Notifique-me",
@@ -73,7 +72,7 @@ function Notificar(ch_norma) {
         sType: "GET",
         fnSuccess: sucesso,
         fnComplete: complete,
-        fnBeforeSend: inicio,
+        fnBeforeSend: gInicio,
         bAsync: true,
         iTimeout: 40000
     });
@@ -90,7 +89,7 @@ function PararNotificar(ch_norma) {
                 iTime: null
             });
         }
-        else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
+        else if (IsNotNullOrEmpty(data, 'email_usuario_push')) {
             $("<div id='modal_notifiqueme' />").modallight({
                 sTitle: "Notifique-me",
                 sType: "success",

@@ -65,6 +65,11 @@ namespace TCDF.Sinj.AD
             return _acessoAd.pathPut(id_doc, path, value, retorno);
         }
 
+        internal string PathPut<T>(Pesquisa pesquisa, List<opMode<T>> listopMode)
+        {
+            return new AcessoAD<T>(_nm_base).OP(pesquisa, listopMode);
+        }
+
         /// <summary>
         /// Inclui um diario e retorna o id_doc
         /// </summary>
