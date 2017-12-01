@@ -270,7 +270,8 @@ namespace TCDF.Sinj.AD
             var query = "";
             var query_textual = "";
             var query_filtered = "";
-            var filters = new List<string>();
+            var filtersAnd = new List<string>();
+            var filtersOr = new List<string>();
             var ids = "";
             if (_tipo_pesquisa == "geral")
             {
@@ -289,7 +290,7 @@ namespace TCDF.Sinj.AD
                     {
                         //Remove a acentuação porque a consulta com asterisco não funciona com acentuação
                         util.BRLight.ManipulaTexto.RemoverAcentuacao(ref _sSearch);
-                        query_textual += " AND _all:(" + _docEs.TratarCaracteresReservadosDoEs(_sSearch) + "*)";
+                        query_textual += " AND _all:((" + _docEs.TratarCaracteresReservadosDoEs(_sSearch) + "*) OR (" + _docEs.TratarCaracteresReservadosDoEs(_sSearch) + "))";
                     }
 
                     //Aplicar filtro por unidade
@@ -314,19 +315,19 @@ namespace TCDF.Sinj.AD
                     query_filtered = _docEs.TratarCaracteresReservadosDoEs(_filetext);
                     if (!string.IsNullOrEmpty(_ch_tipo_fonte))
                     {
-                        filters.Add("{\"term\":{\"ch_tipo_fonte\":\"" + _ch_tipo_fonte + "\"}}");
+                        filtersAnd.Add("{\"term\":{\"ch_tipo_fonte\":\"" + _ch_tipo_fonte + "\"}}");
                     }
                     if (!string.IsNullOrEmpty(_ch_tipo_edicao))
                     {
-                        filters.Add("{\"term\":{\"ch_tipo_edicao\":\"" + _ch_tipo_edicao + "\"}}");
+                        filtersAnd.Add("{\"term\":{\"ch_tipo_edicao\":\"" + _ch_tipo_edicao + "\"}}");
                     }
                     if (!string.IsNullOrEmpty(_nr_diario))
                     {
-                        filters.Add("{\"query\":{\"query_string\":{\"query\":\"nr_diario:" + _nr_diario + "\"}}}");
+                        filtersAnd.Add("{\"query\":{\"query_string\":{\"query\":\"nr_diario:" + _nr_diario + "\"}}}");
                     }
                     if (_dt_assinatura != null && _dt_assinatura.Length > 0 && !string.IsNullOrEmpty(_dt_assinatura[0]))
                     {
-                        filters.Add(_docEs.MontarArgumentoRange("dt_assinatura", _op_dt_assinatura, string.Join(",", _dt_assinatura)));
+                        filtersAnd.Add(_docEs.MontarArgumentoRange("dt_assinatura", _op_dt_assinatura, string.Join(",", _dt_assinatura)));
                     }
                     if (_secao_diario != null && _secao_diario.Length > 0)
                     {
@@ -335,11 +336,11 @@ namespace TCDF.Sinj.AD
                         {
                             sSecao += (sSecao != "" ? (i < (_secao_diario.Length - 1) ? ", " : " e ") : "") + _secao_diario[i];
                         }
-                        filters.Add("{\"query\":{\"query_string\":{\"query\":\"secao_diario:\\\"" + sSecao + "\\\"\"}}}");
+                        filtersAnd.Add("{\"query\":{\"query_string\":{\"query\":\"secao_diario:\\\"" + sSecao + "\\\"\"}}}");
                     }
                     if (!string.IsNullOrEmpty(_sSearch))
                     {
-                        query_filtered += (query_filtered != "" ? " AND " : "") + "(" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*)";
+                        query_filtered += (query_filtered != "" ? " AND " : "") + "((" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*) OR (" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "))";
                     }
                     if (_exibir_total != "1")
                     {
@@ -366,7 +367,7 @@ namespace TCDF.Sinj.AD
                     }
                     if (!string.IsNullOrEmpty(_sSearch))
                     {
-                        query_textual += (query_textual != "" ? " AND " : "") + "(_all:" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*)";
+                        query_textual += (query_textual != "" ? " AND " : "") + "(_all:((" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*) OR (" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + ")))";
                     }
                     if (_secao_diario != null && _secao_diario.Length > 0)
                     {
@@ -377,6 +378,43 @@ namespace TCDF.Sinj.AD
                         }
                         query_textual += (query_textual != "" ? " AND " : "") + "(secao_diario:\\\"" + sSecao + "\\\")";
                     }
+                }
+            }
+            else if (_tipo_pesquisa == "notifiqueme")
+            {
+                var _ch_tipo_fonte = context.Request["ch_tipo_fonte"];
+                var _filetext = context.Request["filetext"];
+                var _in_exata = context.Request["in_exata"];
+                var textoConsultado = _filetext.Replace("\"", "");
+                if (textoConsultado.Contains(" "))
+                {
+                    if (_in_exata == "1")
+                    {
+                        textoConsultado = "\\\"" + textoConsultado + "\\\"";
+                    }
+                    else
+                    {
+                        textoConsultado = "\\\"" + textoConsultado + "\\\"~5";
+                    }
+                }
+                query_filtered = textoConsultado;
+                if (!string.IsNullOrEmpty(_ch_tipo_fonte))
+                {
+                    filtersAnd.Add("{\"term\":{\"ch_tipo_fonte\":\"" + _ch_tipo_fonte + "\"}}");
+                }
+                else
+                {
+                    filtersOr.Add("{\"term\":{\"ch_tipo_fonte\":\"1\"}}");
+                    filtersOr.Add("{\"term\":{\"ch_tipo_fonte\":\"4\"}}");
+                    filtersOr.Add("{\"term\":{\"ch_tipo_fonte\":\"11\"}}");
+                }
+                if (!string.IsNullOrEmpty(_sSearch))
+                {
+                    query_filtered += (query_filtered != "" ? " AND " : "") + "((" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*) OR (" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "))";
+                }
+                if (_exibir_total != "1")
+                {
+                    fields_highlight += (fields_highlight != "" ? "," : "") + "\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8,\"fragment_size\":150, \"no_match_size\":300}";
                 }
             }
             else if (_tipo_pesquisa == "diretorio_diario")
@@ -393,7 +431,7 @@ namespace TCDF.Sinj.AD
                 if (!string.IsNullOrEmpty(_ano) && !string.IsNullOrEmpty(_mes))
                 {
                     query_textual += (query_textual != "" ? " AND " : "") + _docEs.MontarArgumentoRangeQueryString("dt_assinatura", "maiorouigual", "01/" + _mes + "/" + _ano);
-                    query_textual += (query_textual != "" ? " AND " : "") + _docEs.MontarArgumentoRangeQueryString("dt_assinatura", "menor", "01/" + (_mes == "12" ? "01" : (int.Parse(_mes) + 1).ToString()) + "/" + (_mes == "12" ? (int.Parse(_ano) + 1).ToString() : _ano ));
+                    query_textual += (query_textual != "" ? " AND " : "") + _docEs.MontarArgumentoRangeQueryString("dt_assinatura", "menor", "01/" + (_mes == "12" ? "01" : (int.Parse(_mes) + 1).ToString()) + "/" + (_mes == "12" ? (int.Parse(_ano) + 1).ToString() : _ano));
                 }
             }
             else if (_tipo_pesquisa == "texto_diario")
@@ -414,61 +452,71 @@ namespace TCDF.Sinj.AD
                 if (!string.IsNullOrEmpty(_ch_tipo_fonte))
                 {
                     //query_textual += (query_textual != "" ? " AND " : "") + "(ch_tipo_fonte:" + _ch_tipo_fonte + ")";
-                    filters.Add("{\"term\":{\"ch_tipo_fonte\":\""+_ch_tipo_fonte+"\"}}");
+                    filtersAnd.Add("{\"term\":{\"ch_tipo_fonte\":\"" + _ch_tipo_fonte + "\"}}");
                 }
                 if (_intervalo == "1")
                 {
                     if (!string.IsNullOrEmpty(_dt_assinatura_inicio))
                     {
                         //query_textual += (query_textual != "" ? " AND " : "") + _docEs.MontarArgumentoRangeQueryString("dt_assinatura", "maiorouigual", _dt_assinatura_inicio);
-                        filters.Add("{\"range\":{\"dt_assinatura\":{\"gte\":\"" + _dt_assinatura_inicio + "\"}}}");
+                        filtersAnd.Add("{\"range\":{\"dt_assinatura\":{\"gte\":\"" + _dt_assinatura_inicio + "\"}}}");
                     }
                     if (!string.IsNullOrEmpty(_dt_assinatura_termino))
                     {
                         //query_textual += (query_textual != "" ? " AND " : "") + _docEs.MontarArgumentoRangeQueryString("dt_assinatura", "menorouigual", _dt_assinatura_termino);
-                        filters.Add("{\"range\":{\"dt_assinatura\":{\"lte\":\"" + _dt_assinatura_termino + "\"}}}");
+                        filtersAnd.Add("{\"range\":{\"dt_assinatura\":{\"lte\":\"" + _dt_assinatura_termino + "\"}}}");
                     }
                 }
                 else
                 {
                     if (!string.IsNullOrEmpty(_dt_assinatura_inicio))
                     {
-                        filters.Add("{\"term\":{\"dt_assinatura\":\"" + _dt_assinatura_inicio + "\"}}");
+                        filtersAnd.Add("{\"term\":{\"dt_assinatura\":\"" + _dt_assinatura_inicio + "\"}}");
                     }
                 }
                 if (!string.IsNullOrEmpty(_ano))
                 {
-                    filters.Add("{\"range\":{\"dt_assinatura\":{\"gte\":\"01/01/" + _ano + "\",\"lte\":\"31/12/" + _ano + "\"}}}");
+                    filtersAnd.Add("{\"range\":{\"dt_assinatura\":{\"gte\":\"01/01/" + _ano + "\",\"lte\":\"31/12/" + _ano + "\"}}}");
                 }
                 if (!string.IsNullOrEmpty(_sSearch))
                 {
-                    query_filtered += (query_filtered != "" ? " AND " : "") + "(" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*)";
+                    query_filtered += (query_filtered != "" ? " AND " : "") + "((" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "*) OR (" + _docEs.TratarCaracteresReservadosDoEsPesquisaAvancada(_sSearch) + "))";
                 }
             }
-            if (!string.IsNullOrEmpty(query_filtered) || filters.Count > 0)
+            if (!string.IsNullOrEmpty(query_filtered) || (filtersAnd.Count > 0 || filtersOr.Count > 0))
             {
                 string[] _filtros = context.Request.Params.GetValues("filtro");
                 if (_filtros != null)
                 {
                     foreach (var _filtro in _filtros)
                     {
-                        filters.Add("{\"query\":{\"query_string\":{\"query\":\""+_filtro+"\"}}}");
+                        filtersAnd.Add("{\"query\":{\"query_string\":{\"query\":\""+_filtro+"\"}}}");
                     }
                 }
-                var filters_and = "";
-                foreach (var filter in filters)
+                var sfiltersAnd = "";
+                var sfiltersOr = "";
+                var sFilters = "";
+                foreach (var filter in filtersAnd)
                 {
-                    filters_and += (filters_and != "" ? "," : "") + filter;
+                    sfiltersAnd += (sfiltersAnd != "" ? "," : "") + filter;
                 }
-                if (!string.IsNullOrEmpty(filters_and))
+                foreach (var filter in filtersOr)
                 {
-                    filters_and = ",\"filter\":{\"and\":[" + filters_and + "]}";
+                    sfiltersOr += (sfiltersOr != "" ? "," : "") + filter;
+                }
+                if (!string.IsNullOrEmpty(sfiltersAnd))
+                {
+                    sFilters = ",\"filter\":{\"and\":[" + sfiltersAnd + "]}";
+                }
+                if (!string.IsNullOrEmpty(sfiltersOr))
+                {
+                    sFilters = (string.IsNullOrEmpty(sFilters) ? ",\"filter\":{" : "" ) + "\"or\":[" + sfiltersOr + "]}";
                 }
                 if (!string.IsNullOrEmpty(fields_highlight))
                 {
                     highlight = ",\"highlight\":{\"pre_tags\":[\"_pre_tag_highlight_\"],\"post_tags\":[\"_post_tag_highlight_\"],\"fields\":{" + fields_highlight + "}}";
                 }
-                query = "{\"query\":{\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + query_filtered + "\", \"default_operator\":\"AND\"}}" + filters_and + "}}";
+                query = "{\"query\":{\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + query_filtered + "\", \"default_operator\":\"AND\"}}" + sFilters + "}}";
             }
             else if (string.IsNullOrEmpty(query_textual))
             {

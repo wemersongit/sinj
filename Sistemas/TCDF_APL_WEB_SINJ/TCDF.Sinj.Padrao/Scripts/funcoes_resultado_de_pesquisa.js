@@ -49,7 +49,7 @@ $(document).ready(function () {
         nm_aba = 'sinj_norma';
         nm_base_aux_total = nm_aba;
     }
-    else if (tipo_pesquisa == "diario") {
+    else if (tipo_pesquisa == "diario" || tipo_pesquisa == "notifiqueme") {
         $('#tabs_pesquisa').html(
             '<ul>' +
                 '<li nm="sinj_diario"><a class="aba" href="#div_resultado_diario" onclick="javascript:ClicarAba(\'sinj_diario\');">Diários <span id="total_sinj_diario" class="total"></span></a></li>' +
@@ -154,7 +154,8 @@ function ClicarAba(nm_base) {
         }
     }
     else if (nm_base == "sinj_diario") {
-        $('#a_relatorio').show();
+        if(tipo_pesquisa == "notifiqueme")
+            $('#a_relatorio').hide();
         if ($('#datatable_diarios').length <= 0) {
 
             PesquisarDatatable(nm_base, recuperarFiltrosDoCookie());

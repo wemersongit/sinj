@@ -503,7 +503,8 @@ namespace SINJ_PUSH_APP
                 if (resultsDiario.results.Count > 0)
                 {
                     var idsDiario = "";
-                    var idsDiarioQuery = "";
+                    string sFiltersId = "";
+                    string sFilters = "";
                     var sQuery = "";
                     var corpoEmail = "";
                     var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj_large.jpg";
@@ -511,7 +512,7 @@ namespace SINJ_PUSH_APP
                     foreach (var diario in resultsDiario.results)
                     {
                         idsDiario += (!string.IsNullOrEmpty(idsDiario) ? " OR " : "") + "id_doc=" + diario._metadata.id_doc;
-                        idsDiarioQuery += (!string.IsNullOrEmpty(idsDiarioQuery) ? " OR " : "") + diario._metadata.id_doc;
+                        sFiltersId += (!string.IsNullOrEmpty(sFiltersId) ? "," : "") + "{\"term\":{\"id_doc\":\""+diario._metadata.id_doc+"\"}}";
                     }
                     pesquisaDiario.literal = idsDiario;
                     //após a consulta atualiza o campo st_novo para false
@@ -543,7 +544,18 @@ namespace SINJ_PUSH_APP
                                             textoConsultado = "\\\"" + textoConsultado + "\\\"~5";
                                         }
                                     }
-                                    sQuery = "{\"_source\":{\"exclude\":[\"*.filetext\"]},\"query\":{\"query_string\":{\"query\":\"id_doc:(" + idsDiarioQuery + ") AND arquivos.arquivo_diario.filetext:(" + textoConsultado + ")" + " AND ch_tipo_fonte:(" + (!string.IsNullOrEmpty(termo_diario.ch_tipo_fonte_diario_monitorado) ? termo_diario.ch_tipo_fonte_diario_monitorado : "1 OR 4 OR 11") + ")" + "\"}},\"highlight\":{\"pre_tags\":[\"<b>\"],\"post_tags\":[\"</b>\"],\"fields\":{\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150}}}}";
+                                    sFilters = ",\"filter\":{\"and\":[{\"or\":[" + sFiltersId + "]}";
+                                    if (!string.IsNullOrEmpty(termo_diario.ch_tipo_fonte_diario_monitorado))
+                                    {
+                                        sFilters += ",{\"or\":[{\"term\":{\"ch_tipo_fonte\":\""+termo_diario.ch_tipo_fonte_diario_monitorado+"\"}}]}";
+                                    }
+                                    else{
+                                        sFilters += ",{\"or\":[{\"term\":{\"ch_tipo_fonte\":\"1\"}}";
+                                        sFilters += ",{\"term\":{\"ch_tipo_fonte\":\"4\"}}";
+                                        sFilters += ",{\"term\":{\"ch_tipo_fonte\":\"11\"}}]}";
+                                    }
+                                    sFilters += "]}";
+                                    sQuery = "{\"_source\":{\"exclude\":[\"*.filetext\"]},\"query\": {\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + textoConsultado + "\"}}" + sFilters + "}},\"highlight\":{\"pre_tags\":[\"<b>\"],\"post_tags\":[\"</b>\"],\"fields\":{\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150}}}}";
                                     var diarios = new ES().PesquisarDocs<DiarioOV>(sQuery, url_es);
                                     if (diarios.hits.hits.Count > 0)
                                     {
