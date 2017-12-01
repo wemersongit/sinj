@@ -9,7 +9,6 @@
     <div class="form">
         <div id="div_contato" class="loaded">
             <fieldset class="w-80-pc">
-                <legend>Contato</legend>
                 <div class="mauto table">
                     <div class="line">
                         <div class="column w-30-pc">

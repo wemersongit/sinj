@@ -21,7 +21,7 @@
             <div id="div_relator">
             <div id="div_notificacao_relator" class="notify" style="display:none;"></div>
                 <fieldset class="w-60-pc">
-                    <legend>Relator</legend>
+                    <!--<legend>Relator</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-30-pc">

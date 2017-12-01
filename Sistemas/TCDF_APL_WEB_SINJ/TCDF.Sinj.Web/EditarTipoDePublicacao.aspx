@@ -22,7 +22,7 @@
             <input id="id_doc" name="id_doc" type="hidden" value="" class="w-90-pc" />
             <div id="div_tipo_de_publicacao">
                 <fieldset class="w-60-pc">
-                    <legend>Tipo de Publicação</legend>
+                    <!--<legend>Tipo de Publicação</legend>-->
                     <div id="div_notificacao_tipo_de_publicacao" class="notify" style="display:none;"></div>
                     <div class="mauto table">
                         <div class="line">

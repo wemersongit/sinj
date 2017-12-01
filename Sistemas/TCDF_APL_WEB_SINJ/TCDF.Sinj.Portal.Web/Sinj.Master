@@ -65,7 +65,7 @@
             }
         }
         $(document).ready(function () {
-            if(file.indexOf('Default') > -1){
+            if (history.length <= 0) {
                 $('#div_voltar').hide();
             }
             $('#span_versao').text(_versao);
@@ -170,7 +170,7 @@
                                 <% if (util.BRLight.Util.GetVariavel("Replica") != "1")
                                    { %>
                                 <li id="li_historico">  <a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a>      </li>
-                                <li id="li_notifiqueme"><a title="Notifique-me"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a>      </li>
+                                <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a>      </li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a>      </li>
                                 <%} %>
                             </ul>

@@ -24,7 +24,7 @@
         <div id="div_operacao" class="loaded">
             <div id="div_notificacao" class="notify" style="display:none;"></div>
             <fieldset class="w-60-pc">
-                <legend>Operação</legend>
+                <!--<legend>Operação</legend>-->
                 <div class="mauto table">
                     <div class="line">
                         <div class="column w-30-pc">

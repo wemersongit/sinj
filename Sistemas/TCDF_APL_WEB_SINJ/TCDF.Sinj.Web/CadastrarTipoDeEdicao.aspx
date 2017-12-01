@@ -21,7 +21,7 @@
             <div id="div_tipo_de_edicao">
             <div id="div_notificacao_tipo_de_edicao" class="notify" style="display:none;"></div>
                 <fieldset class="w-60-pc">
-                    <legend>Tipo de Edição</legend>
+                    <!--<legend>Tipo de Edição</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-30-pc">

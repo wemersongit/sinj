@@ -1173,14 +1173,19 @@ var _columns_vocabulario_restaurados = [
 var _columns_notifiqueme_termos_diarios_monitorados = [
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Diário", "sDefaultContent": "", "sClass": "grid-cell ws nm_tipo_fonte_diario_monitorado", "mData": "nm_tipo_fonte_diario_monitorado" },
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Termos", "sClass": "grid-cell ws ds_termo_diario_monitorado", "mData": "ds_termo_diario_monitorado" },
-	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Ativo", "sClass": "grid-cell ws center", "mData": "st_termo_diario_monitorado",
+	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Busca", "sWidth": "100px", "sClass": "grid-cell ws center", "mData": "in_exata_diario_monitorado",
+	    "mRender": function (data, type, full) {
+	        return data ? "Exata" : "Aproximada";
+	    }
+	},
+	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Habilitar/Desabilitar", "sWidth": "125px", "sClass": "grid-cell ws center", "mData": "st_termo_diario_monitorado",
 	    "mRender": function (data, type, full) {
 	        return "<input type='checkbox' " + (data ? "checked='checked'" : "") + " onchange='alterarStTermoDiarioMonitorado(event, \"" + full.ch_termo_diario_monitorado + "\")' title='status do monitoramento' /><div class='loading-p' style='display:none'></div>";
 	    }
 	},
 	{ "indice": 3, "isControl": false, "standard_view": true, "sClass": "grid-cell ws center all", "bSortable": false, "mData": "ch_termo_diario_monitorado",
 	    "mRender": function (data, type, full) {
-	        var sTermoDiarioMonitorado = getVal(full.ch_tipo_fonte_diario_monitorado) + "#" + getVal(full.nm_tipo_fonte_diario_monitorado) + "#" + full.ds_termo_diario_monitorado.replace(/\"/g,'\\"');
+	        var sTermoDiarioMonitorado = getVal(full.ch_tipo_fonte_diario_monitorado) + "#" + getVal(full.nm_tipo_fonte_diario_monitorado) + "#" + full.ds_termo_diario_monitorado.replace(/\"/g, '\\"') + "#" + (full.in_exata_diario_monitorado ? "1" : "0");
 	        return "<a href='javascript:void(0);' onclick='javascript:editarTermoDiarioMonitorado(event,\"" + sTermoDiarioMonitorado + "\", \"" + full.ch_termo_diario_monitorado + "\")' title='editar monitoramento' ><img src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' alt='editar' /></a>&nbsp;" +
                 "<a href='javascript:void(0);' onclick='javascript:CriarModalConfirmacaoRemoverTermoDiarioMonitorado(event,\"" + data + "\")' title='excluir monitoramento' ><img src='" + _urlPadrao + "/Imagens/ico_delete_p.png' alt='delete' /></a><div class='loading-p' style='display:none'></div>";
 	    }

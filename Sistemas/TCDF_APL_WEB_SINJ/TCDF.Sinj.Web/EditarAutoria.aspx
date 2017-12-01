@@ -23,7 +23,7 @@
             <div id="div_autoria">
                 <fieldset class="w-60-pc">
                  <div id="div_notificacao_autoria" class="notify" style="display:none;"></div>
-                    <legend>Autoria</legend>
+                    <!--<legend>Autoria</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-30-pc">

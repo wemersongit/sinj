@@ -23,7 +23,7 @@
             <div id="div_interessado">
                 <fieldset class="w-60-pc">
                     <div id="div_notificacao_interessado" class="notify" style="display:none;"></div>
-                    <legend>Interessado</legend>
+                    <!--<legend>Interessado</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-30-pc">

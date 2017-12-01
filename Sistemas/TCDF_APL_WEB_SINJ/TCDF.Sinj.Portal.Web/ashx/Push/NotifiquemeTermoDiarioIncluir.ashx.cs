@@ -21,6 +21,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
             var _ch_tipo_fonte_diario_monitorado = context.Request["ch_tipo_fonte_diario_monitorado"];
             var _nm_tipo_fonte_diario_monitorado = context.Request["nm_tipo_fonte_diario_monitorado"];
             var _ds_termo_diario_monitorado = context.Request["ds_termo_diario_monitorado"];
+            var _in_exata_diario_monitorado = context.Request["in_exata_diario_monitorado"];
             ulong id_push = 0;
             var notifiquemeOv = new NotifiquemeOV();
             var action = AcoesDoUsuario.pus_edt;
@@ -48,7 +49,8 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                             nm_tipo_fonte_diario_monitorado = _nm_tipo_fonte_diario_monitorado,
                             ds_termo_diario_monitorado = _ds_termo_diario_monitorado,
                             dt_cadastro_termo_diario_monitorado = DateTime.Now.ToString("dd'/'MM'/'yyyy"),
-                            st_termo_diario_monitorado = true
+                            st_termo_diario_monitorado = true,
+                            in_exata_diario_monitorado = _in_exata_diario_monitorado == "1"
                         };
                         notifiquemeOv.termos_diarios_monitorados.Add(termoMonitorado);
                         if (notifiquemeRn.Atualizar(id_push, notifiquemeOv))

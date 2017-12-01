@@ -361,7 +361,7 @@
                 <input type="hidden" id="dt_controle_alteracao" name="dt_controle_alteracao" value="" />
                 <div id="div_vide" class="loaded">
                     <fieldset class="w-95-pc">
-                        <legend>Vide</legend>
+                        <!--<legend>Vide</legend>-->
                         <div id="div_notificacao_vide" class="notify" style="display:none;"></div>
                         <div class="mauto table">
                             <div class="line">

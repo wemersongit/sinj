@@ -13,6 +13,11 @@
                         "pattern": "\\n\\f.*?\\n.*?\\n",
                         "replacement": " "
                     },
+                    "processo_pattern": {
+                        "type": "pattern_replace",
+                        "pattern": "(\\d)[,.\\-/]",
+                        "replacement": "$1"
+                    },
                     "mapping_filter": {
                         "type": "mapping",
                         "mappings": ["-\\n=>"]
@@ -32,6 +37,7 @@
                     "stemmer_analyzer_and_mapping": {
                         "char_filter": [
                             "cabecalho_pattern",
+                            "processo_pattern",
                             "mapping_filter"
                         ],
                         "filter": [

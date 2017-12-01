@@ -441,6 +441,19 @@
                             ],
                             "description": "Identifica se o monitoramento em questão está ativo."
                         }
+                    },
+                    {
+                        "field": {
+                            "name": "in_exata_diario_monitorado",
+                            "datatype": "Boolean",
+                            "required": false,
+                            "alias": "Busca Exata",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Identifica se a busca é exata ou aproximada."
+                        }
                     }
                 ],
                 "metadata": {

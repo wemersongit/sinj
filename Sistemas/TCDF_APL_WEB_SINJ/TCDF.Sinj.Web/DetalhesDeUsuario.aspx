@@ -25,7 +25,7 @@
                 </div>
             </div>
             <fieldset>
-                <legend>Usuário</legend>
+                <!--<legend>Usuário</legend>-->
                 <div class="mauto table">
                     <div class="line">
                         <div class="column w-30-pc">

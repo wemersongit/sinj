@@ -65,7 +65,7 @@
             <div id="div_notificacao" class="notify" style="display:none;"></div>
             <div id="div_pesquisa">
                 <fieldset>
-                    <legend>Pesquisa</legend>
+                    <!--<legend>Pesquisa</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-20-pc">

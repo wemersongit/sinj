@@ -19,7 +19,7 @@
             <div id="div_vocabulario">
             <div id="div_notificacao_vocabulario" class="notify" style="display:none;"></div>
                 <fieldset>
-                    <legend>Vocabulário</legend>
+                    <!--<legend>Vocabulário</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-20-pc">

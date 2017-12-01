@@ -25,7 +25,7 @@
         <form id="form_pesquisa_erro_indexacao" name="formPesquisaErroIndexacao" action="./ResultadoDePesquisaErroIndexacao.aspx" method="get">
             <div id="div_pesquisa">
                 <fieldset>
-                    <legend>Pesquisa</legend>
+                    <!--<legend>Pesquisa</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-20-pc">

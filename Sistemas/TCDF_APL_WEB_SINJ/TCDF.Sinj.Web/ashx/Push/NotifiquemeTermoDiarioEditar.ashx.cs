@@ -24,6 +24,7 @@ namespace TCDF.Sinj.Web.ashx.Push
             var _nm_tipo_fonte_diario_monitorado = context.Request["nm_tipo_fonte_diario_monitorado"];
             var _ds_termo_diario_monitorado = context.Request["ds_termo_diario_monitorado"];
             var _st_termo_diario_monitorado = context.Request["st_termo_diario_monitorado"];
+            var _in_exata_diario_monitorado = context.Request["in_exata_diario_monitorado"];
 
             ulong id_push = 0;
             var notifiquemeOv = new NotifiquemeOV();
@@ -47,6 +48,7 @@ namespace TCDF.Sinj.Web.ashx.Push
                                 termo_diario_monitorado.ch_tipo_fonte_diario_monitorado = _ch_tipo_fonte_diario_monitorado;
                                 termo_diario_monitorado.nm_tipo_fonte_diario_monitorado = _nm_tipo_fonte_diario_monitorado;
                                 termo_diario_monitorado.ds_termo_diario_monitorado = _ds_termo_diario_monitorado;
+                                termo_diario_monitorado.in_exata_diario_monitorado = _in_exata_diario_monitorado == "1";
                             }
                             else
                             {

@@ -21,7 +21,7 @@
         <form id="form_vocabulario" name="formCadastroVocabulario" action="#" method="post">
             <div id="div_vocabulario">
                 <fieldset>
-                    <legend>Vocabulário</legend>
+                    <!--<legend>Vocabulário</legend>-->
                     <div id="div_notificacao_vocabulario" class="notify" style="display:none;"></div>
                     <div class="mauto table">
                         <div class="line">

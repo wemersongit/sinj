@@ -22,7 +22,7 @@
             <div id="div_usuario">
             <div id="div_notificacao_usuario" class="notify" style="display:none;"></div>
                 <fieldset>
-                    <legend>Usuário</legend>
+                    <!--<legend>Usuário</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-30-pc">

@@ -22,7 +22,7 @@
             <input id="id_doc" name="id_doc" type="hidden" value="" class="w-90-pc" />
             <div id="div_requerente">
                 <fieldset class="w-60-pc">
-                    <legend>Requerente</legend>
+                    <!--<legend>Requerente</legend>-->
                     <div id="div_notificacao_requerente" class="notify" style="display:none;"></div>
                     <div class="mauto table">
                         <div class="line">

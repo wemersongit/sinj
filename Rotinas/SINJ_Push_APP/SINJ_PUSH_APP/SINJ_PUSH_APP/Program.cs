@@ -12,6 +12,7 @@ using util.BRLight;
 using TCDF.Sinj.Log;
 using TCDF.Sinj.ESUtil;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace SINJ_PUSH_APP
 {
@@ -531,15 +532,25 @@ namespace SINJ_PUSH_APP
                             foreach(var termo_diario in usuarioPush.termos_diarios_monitorados){
                                 if (termo_diario.st_termo_diario_monitorado)
                                 {
-                                    //\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150, \"no_match_size\":300}
-                                    sQuery = "{\"_source\":{\"exclude\":[\"*.filetext\"]},\"query\":{\"query_string\":{\"query\":\"id_doc:(" + idsDiarioQuery + ") AND arquivos.arquivo_diario.filetext:(" + termo_diario.ds_termo_diario_monitorado + ")" + (!string.IsNullOrEmpty(termo_diario.ch_tipo_fonte_diario_monitorado) ? " AND ch_tipo_fonte:(" + termo_diario.ch_tipo_fonte_diario_monitorado + ")" : "") + "\"}},\"highlight\":{\"pre_tags\":[\"<b>\"],\"post_tags\":[\"</b>\"],\"fields\":{\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150}}}}";
+                                    var textoConsultado = termo_diario.ds_termo_diario_monitorado.Replace("\"", "");
+                                    if(textoConsultado.Contains<char>(' ')){
+                                        if (termo_diario.in_exata_diario_monitorado)
+                                        {
+                                            textoConsultado = "\\\"" + textoConsultado + "\\\"";
+                                        }
+                                        else
+                                        {
+                                            textoConsultado = "\\\"" + textoConsultado + "\\\"~5";
+                                        }
+                                    }
+                                    sQuery = "{\"_source\":{\"exclude\":[\"*.filetext\"]},\"query\":{\"query_string\":{\"query\":\"id_doc:(" + idsDiarioQuery + ") AND arquivos.arquivo_diario.filetext:(" + textoConsultado + ")" + " AND ch_tipo_fonte:(" + (!string.IsNullOrEmpty(termo_diario.ch_tipo_fonte_diario_monitorado) ? termo_diario.ch_tipo_fonte_diario_monitorado : "1 OR 4 OR 11") + ")" + "\"}},\"highlight\":{\"pre_tags\":[\"<b>\"],\"post_tags\":[\"</b>\"],\"fields\":{\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150}}}}";
                                     var diarios = new ES().PesquisarDocs<DiarioOV>(sQuery, url_es);
                                     if (diarios.hits.hits.Count > 0)
                                     {
                                         var email = new EmailRN();
                                         var display_name_remetente = "SINJ Notifica";
                                         var destinatario = new[] { usuarioPush.email_usuario_push };
-                                        var titulo = (diarios.hits.hits.Count > 1 ? "Foram cadastrador " + diarios.hits.hits.Count + " diários foram cadastrados" : "Foi cadastrado um diário") + " no SINJ contendo o texto \"" + termo_diario.ds_termo_diario_monitorado + "\".";
+                                        var titulo = (diarios.hits.hits.Count > 1 ? "Foram cadastrador " + diarios.hits.hits.Count + " diários foram cadastrados" : "Foi cadastrado um diário") + " no SINJ contendo o texto: " + termo_diario.ds_termo_diario_monitorado + ".";
                                         var html = true;
 
 

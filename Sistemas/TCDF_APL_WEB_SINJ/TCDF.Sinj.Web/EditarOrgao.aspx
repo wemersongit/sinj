@@ -229,7 +229,7 @@
                     </div>
                 </div>
                 <fieldset>
-                    <legend>Órgão</legend>
+                    <!--<legend>Órgão</legend>-->
                     <div id="div_notificacao_orgao" class="notify" style="display:none;"></div>
                     <div class="mauto table">
                         <div class="line">

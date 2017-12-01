@@ -61,7 +61,6 @@
         <form id="form_notifiqueme" name="formCadastroNotifiqueme" post="post" action="#">
             <div id="div_notifiqueme">
                 <fieldset class="w-60-pc">
-                    <legend>Autoria</legend>
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-30-pc">

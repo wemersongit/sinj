@@ -26,7 +26,7 @@
     <div class="form">
         <div id="div_notifiqueme" class="loaded">
             <fieldset class="w-60-pc">
-                <legend>Usuário do Notifiqueme</legend>
+                <!--<legend>Usuário do Notifiqueme</legend>-->
                 <div class="mauto table">
                     <div class="line">
                         <div class="column w-30-pc">

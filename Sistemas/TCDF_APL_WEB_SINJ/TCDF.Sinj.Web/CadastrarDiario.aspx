@@ -25,7 +25,7 @@
                         <br />
                             <div id="div_notificacao_diario" class="notify w-80-pc mauto" style="display:none;"></div>
                         <fieldset>
-                            <legend>Diário</legend>
+                            <!--<legend>Diário</legend>-->
                             <div class="mauto table">
                                 <div class="line">
                                     <div class="column w-20-pc">

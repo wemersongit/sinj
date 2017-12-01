@@ -30,7 +30,7 @@
         <div id="div_notificacao" class="notify" style="display:none;"></div>
         <div id="div_erro_sistema" class="loaded">
             <fieldset class="w-60-pc">
-                <legend>Erro de Sistema</legend>
+                <!--<legend>Erro de Sistema</legend>-->
                 <div class="mauto table w-90-pc">
                     <div class="line">
                         <div class="column w-20-pc">

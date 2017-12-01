@@ -23,7 +23,7 @@
             <div id="div_tipo_de_fonte">
                 <fieldset class="w-60-pc">
                     <div id="div_notificacao_tipo_de_fonte" class="notify" style="display:none;"></div>
-                    <legend>Tipo de Fonte</legend>
+                    <!--<legend>Tipo de Fonte</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-30-pc">

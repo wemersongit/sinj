@@ -56,7 +56,7 @@ $(document).ready(function () {
                 sValueDataName: "nm_tipo_fonte",
                 sInputHiddenName: "ch_tipo_fonte_diario_monitorado",
                 sInputName: "nm_tipo_fonte_diario_monitorado",
-                sAjaxUrl: './ashx/Autocomplete/TipoDeFonteAutocomplete.ashx',
+                sAjaxUrl: './ashx/Autocomplete/TipoDeFonteAutocomplete.ashx?chaves=1,4,11',
                 bLinkAll: true,
                 sLinkName: "a_tipo_fonte"
             });
@@ -600,17 +600,13 @@ function editarTermoDiarioMonitorado(event, sTermoDiarioMonitorado, ch_termo_dia
         var ch_tipo_fonte_diario_monitorado = termoDiarioMonitoradoSplited[0];
         var nm_tipo_fonte_diario_monitorado = termoDiarioMonitoradoSplited[1];
         var ds_termo_diario_monitorado = termoDiarioMonitoradoSplited[2];
+        var in_exata_diario_monitorado = termoDiarioMonitoradoSplited[3];
         
         $('#ch_termo_diario_monitorado').val(ch_termo_diario_monitorado);
         $('#ch_tipo_fonte_diario_monitorado').val(ch_tipo_fonte_diario_monitorado);
         $('#nm_tipo_fonte_diario_monitorado').val(nm_tipo_fonte_diario_monitorado);
         $('#ds_termo_diario_monitorado').val(ds_termo_diario_monitorado);
-        if (ds_termo_diario_monitorado.indexOf('"') == 0) {
-            $('#in_exata').prop('checked', true);
-        }
-        else {
-            $('#in_exata').prop('checked', false);
-        }
+        $('#in_exata').prop('checked', in_exata_diario_monitorado == "1");
 
         $('#form_termo_acompanhar_diario').attr('url-ajax', './ashx/Push/NotifiquemeTermoDiarioEditar.ashx');
         $('#form_termo_acompanhar_diario button.add').hide();

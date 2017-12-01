@@ -286,7 +286,7 @@
         <form id="form_orgao" name="formCadastroOrgao" action="#" method="post">
             <div id="div_orgao">
                 <fieldset>
-                    <legend>Órgão</legend>
+                    <!--<legend>Órgão</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-100-pc">

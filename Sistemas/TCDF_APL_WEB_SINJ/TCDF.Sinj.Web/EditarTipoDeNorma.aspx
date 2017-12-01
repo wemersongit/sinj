@@ -23,7 +23,7 @@
             <input id="id_doc" name="id_doc" type="hidden" value="" class="w-90-pc" />
             <div id="div_tipo_de_norma">
                 <fieldset class="w-60-pc">
-                    <legend>Tipo de Norma</legend>
+                    <!--<legend>Tipo de Norma</legend>-->
                     <div id="div_notificacao_tipo_de_norma" class="notify" style="display:none;"></div>
                     <div class="mauto table">
                         <div class="line">

@@ -20,7 +20,7 @@
             <div id="div_situacao">
             <div id="div_notificacao_situacao" class="notify" style="display:none;"></div>
                 <fieldset class="w-60-pc">
-                    <legend>Situação</legend>
+                    <!--<legend>Situação</legend>-->
                     <div class="mauto table">
                         <div class="line">
                             <div class="column w-30-pc">

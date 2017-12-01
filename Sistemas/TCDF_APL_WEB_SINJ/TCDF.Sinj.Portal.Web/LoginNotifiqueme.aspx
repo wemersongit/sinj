@@ -45,8 +45,8 @@
                         </div>
                         <div class="line">
                             <div class="column w-100-pc">
-                                <div class="cell w-100-pc text-center">
-                                    Este é o login do "Notifique-me" (PUSH) do sistema SINJ.
+                                <div class="cell w-100-pc">
+                                    <p>Este é o serviço de notificação (PUSH) do sistema SINJ. Receba e-mails notificando sobre as criações e alterações de normas e criação de diários oficiais contendo um texto de seu interesse.</p>
                                 </div>
                             </div>
                         </div>

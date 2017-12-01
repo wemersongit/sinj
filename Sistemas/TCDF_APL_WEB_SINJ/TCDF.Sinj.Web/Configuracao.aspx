@@ -15,7 +15,7 @@
     <div class="form">
         <div id="div_configuracao">
             <fieldset>
-                <legend>Configuração</legend>
+                <!--<legend>Configuração</legend>-->
                 <div class="mauto table">
                     <div class="line">
                         <div class="column w-30-pc">

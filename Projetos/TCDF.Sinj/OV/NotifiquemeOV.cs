@@ -49,6 +49,7 @@ namespace TCDF.Sinj.OV
         public string ds_termo_diario_monitorado { get; set; }
         public string dt_cadastro_termo_diario_monitorado { get; set; }
         public bool st_termo_diario_monitorado { get; set; }
+        public bool in_exata_diario_monitorado { get; set; }
     }
 
     public class NormaMonitoradaPushOV

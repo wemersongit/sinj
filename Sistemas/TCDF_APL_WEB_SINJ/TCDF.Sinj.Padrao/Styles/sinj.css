@@ -112,7 +112,10 @@ button.link H2 {display:inline-block;}
 /*CADASTRO
 ----------------------------------------------------------*/
 div.form {-moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px; clear:both;}
-div.form fieldset {width:80%; border:0px; margin:auto; -moz-border-radius:7px; -webkit-border-radius:7px; border-radius:7px;}
+div.form fieldset {width:80%; border:0px; margin:15px auto; -moz-border-radius:7px; -webkit-border-radius:7px; border-radius:7px;}
+div.form fieldset legend {font-weight: bold; background-color: #f4f4f4; border-radius: 7px; padding: 5px 10px;}
+div.form fieldset fieldset {width:90%; border:1px solid;}
+div.form fieldset fieldset legend {font-weight: normal; background-color: transparent;}
 div.form div.table {width:100%; margin-left:auto; margin-right:auto;}
 div.form input[type="button"] { width:100px; padding:5px; -moz-border-radius:4; -webkit-border-radius:4px; border-radius:4px; cursor:pointer;}
 div.menu-suspenso {position:fixed; top:150px; right:1px; }

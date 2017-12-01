@@ -24,7 +24,7 @@
         <div id="div_lixeira" class="loaded">
             <div id="div_notificacao" class="notify" style="display:none;"></div>
             <fieldset class="w-60-pc">
-                <legend>Regitro da Lixeira</legend>
+                <!--<legend>Regitro da Lixeira</legend>-->
                 <div class="mauto table">
                     <div class="w-100-pc fr" style="margin-top:10px;">
                         <div class="fl" style="margin-right:5px;margin-left:15px;">

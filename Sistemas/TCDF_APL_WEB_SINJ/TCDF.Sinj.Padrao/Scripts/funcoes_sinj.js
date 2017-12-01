@@ -2861,9 +2861,9 @@ function DetalhesNorma(data, highlight) {
             );
 
             if (IsNotNullOrEmpty(_notifiqueme) && _notifiqueme.ch_normas_monitoradas.indexOf(data.ch_norma) >= 0) {
-                $('#button_notifiqueme').html('<div class="div-light-button fr"><a href="javascript:void(0);" onclick="javascript:PararNotificar(\'' + data.ch_norma + '\');" title="Para de receber e-mail sobre as edições deste ato." ><img alt="@" src="' + _urlPadrao + '/Imagens/ico_stop_email_p.png" />Parar Notificação</a></div>');
+                $('#button_notifiqueme').html('<div class="div-light-button fr"><a href="javascript:void(0);" onclick="javascript:PararNotificar(\'' + data.ch_norma + '\');" title="Parar de receber e-mail sobre as alterações deste ato" ><img alt="@" src="' + _urlPadrao + '/Imagens/ico_stop_email_p.png" />Parar Notificação</a></div>');
             } else {
-                $('#button_notifiqueme').html('<div class="div-light-button fr"><a href="javascript:void(0);" onclick="javascript:Notificar(\'' + data.ch_norma + '\');" title="Receber e-mail quando este ato for editado." ><img alt="@" src="' + _urlPadrao + '/Imagens/ico_email_p.png" />Notificar-me</a></div>');
+                $('#button_notifiqueme').html('<div class="div-light-button fr"><a href="javascript:void(0);" onclick="javascript:Notificar(\'' + data.ch_norma + '\');" title="Receber e-mail quando este ato sofrer alteração" ><img alt="@" src="' + _urlPadrao + '/Imagens/ico_email_p.png" />Notificar-me</a></div>');
             }
             CarregarBotaoFavoritos('#button_favoritos', 'norma_' + data.ch_norma);
             if (bCadastro) {
