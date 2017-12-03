@@ -217,6 +217,9 @@ function DetalhesPush(data) {
         for (var i = 0; i < data.criacao_normas_monitoradas.length; i++) {
             $('#tbody_criacao_normas').append('<tr><td>' + GetText(data.criacao_normas_monitoradas[i].nm_tipo_norma_criacao) + '</td><td>' + GetText(data.criacao_normas_monitoradas[i].primeiro_conector_criacao) + '</td><td>' + GetText(data.criacao_normas_monitoradas[i].nm_orgao_criacao) + '</td><td>' + GetText(data.criacao_normas_monitoradas[i].segundo_conector_criacao) + '</td><td>' + GetText(data.criacao_normas_monitoradas[i].nm_termo_criacao) + '</td><td>' + TratarCamposBooleanos(data.criacao_normas_monitoradas[i].st_criacao) + '</td></tr>');
         }
+        for (var i = 0; i < data.termos_diarios_monitorados.length; i++) {
+            $('#tbody_termos_diarios').append('<tr><td>' + GetText(data.termos_diarios_monitorados[i].nm_tipo_fonte_diario_monitorado) + '</td><td>' + GetText(data.termos_diarios_monitorados[i].ds_termo_diario_monitorado) + '</td><td>' + (data.termos_diarios_monitorados[i].in_exata_diario_monitorado ? "Exata" : "Aproximada") + '</td><td>' + TratarCamposBooleanos(data.termos_diarios_monitorados[i].st_termo_diario_monitorado) + '</td></tr>');
+        }
     }
 }
 

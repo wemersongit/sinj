@@ -534,6 +534,7 @@ namespace SINJ_PUSH_APP
                                 if (termo_diario.st_termo_diario_monitorado)
                                 {
                                     var textoConsultado = termo_diario.ds_termo_diario_monitorado.Replace("\"", "");
+                                    //se tem mais de uma palavra pode ser usado busca exata ou aproximada de 5
                                     if(textoConsultado.Contains<char>(' ')){
                                         if (termo_diario.in_exata_diario_monitorado)
                                         {

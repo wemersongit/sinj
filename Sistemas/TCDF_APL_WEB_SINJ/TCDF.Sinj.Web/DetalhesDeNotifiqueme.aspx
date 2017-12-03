@@ -65,7 +65,7 @@
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
                                 <table class="w-90-pc mauto">
-                                    <caption>Normas Monitoradas</caption>
+                                    <caption>Monitoramento de alteração de Normas</caption>
                                     <thead>
                                         <tr>
                                             <th>Norma</th>
@@ -83,7 +83,7 @@
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
                                 <table class="w-90-pc mauto">
-                                    <caption>Monitoramento de Criação</caption>
+                                    <caption>Monitoramento de Criação de Normas</caption>
                                     <thead>
                                         <tr>
                                             <th>Tipo</th>
@@ -95,6 +95,25 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_criacao_normas">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc">
+                                <table class="w-90-pc mauto">
+                                    <caption>Monitoramento de Diários</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <th>Texto</th>
+                                            <th>Busca</th>
+                                            <th>Ativo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_termos_diarios">
                                     </tbody>
                                 </table>
                             </div>
