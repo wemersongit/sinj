@@ -30,7 +30,7 @@ namespace TCDF.Sinj.Web.ashx.Push
                 id_doc = notifiquemeOv._metadata.id_doc;
                 if (notifiquemeOv != null)
                 {
-                    notifiquemeOv.senha_usuario_push = "";
+                    notifiquemeOv.senha_usuario_push = null;
                     sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
                 }
                 else

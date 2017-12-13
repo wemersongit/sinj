@@ -212,7 +212,7 @@ function DetalhesPush(data) {
         $('#div_nm_usuario_push').text(data.nm_usuario_push);
         $('#div_st_push').text(data.st_push ? "Ativo" : "Inativo");
         for (var i = 0; i < data.normas_monitoradas.length; i++) {
-            $('#tbody_normas_monitoradas').append('<tr><td>' + GetText(data.normas_monitoradas[i].nm_tipo_norma_monitorada) + ' ' + GetText(data.normas_monitoradas[i].dt_assinatura_norma_monitorada) + '</td><td>' + GetText(data.normas_monitoradas[i].dt_cadastro_norma_monitorada) + '</td><td>' + TratarCamposBooleanos(data.normas_monitoradas[i].st_norma_monitorada) + '</td></tr>');
+            $('#tbody_normas_monitoradas').append('<tr><td>' + GetText(data.normas_monitoradas[i].nm_tipo_norma_monitorada) + ' ' + GetText(data.normas_monitoradas[i].nr_norma_monitorada) + ' de ' + GetText(data.normas_monitoradas[i].dt_assinatura_norma_monitorada) + '</td><td>' + GetText(data.normas_monitoradas[i].dt_cadastro_norma_monitorada) + '</td><td>' + TratarCamposBooleanos(data.normas_monitoradas[i].st_norma_monitorada) + '</td></tr>');
         }
         for (var i = 0; i < data.criacao_normas_monitoradas.length; i++) {
             $('#tbody_criacao_normas').append('<tr><td>' + GetText(data.criacao_normas_monitoradas[i].nm_tipo_norma_criacao) + '</td><td>' + GetText(data.criacao_normas_monitoradas[i].primeiro_conector_criacao) + '</td><td>' + GetText(data.criacao_normas_monitoradas[i].nm_orgao_criacao) + '</td><td>' + GetText(data.criacao_normas_monitoradas[i].segundo_conector_criacao) + '</td><td>' + GetText(data.criacao_normas_monitoradas[i].nm_termo_criacao) + '</td><td>' + TratarCamposBooleanos(data.criacao_normas_monitoradas[i].st_criacao) + '</td></tr>');

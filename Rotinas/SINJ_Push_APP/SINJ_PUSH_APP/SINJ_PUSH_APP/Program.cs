@@ -502,6 +502,7 @@ namespace SINJ_PUSH_APP
                 this._sb_info.AppendLine(DateTime.Now + ": Total de diários ST_NOVO=true => " + resultsDiario.results.Count);
                 if (resultsDiario.results.Count > 0)
                 {
+                    var countDiarios = 0;
                     var idsDiario = "";
                     string sFiltersId = "";
                     string sFilters = "";
@@ -509,6 +510,7 @@ namespace SINJ_PUSH_APP
                     var corpoEmail = "";
                     var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj_large.jpg";
                     var url_es = new DocEs().GetUrlEs(util.BRLight.Util.GetVariavel("NmBaseDiario", true)) + "/_search";
+                    countDiarios = resultsDiario.results.Count;
                     foreach (var diario in resultsDiario.results)
                     {
                         idsDiario += (!string.IsNullOrEmpty(idsDiario) ? " OR " : "") + "id_doc=" + diario._metadata.id_doc;
@@ -556,14 +558,14 @@ namespace SINJ_PUSH_APP
                                         sFilters += ",{\"term\":{\"ch_tipo_fonte\":\"11\"}}]}";
                                     }
                                     sFilters += "]}";
-                                    sQuery = "{\"_source\":{\"exclude\":[\"*.filetext\"]},\"query\": {\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + textoConsultado + "\"}}" + sFilters + "}},\"highlight\":{\"pre_tags\":[\"<b>\"],\"post_tags\":[\"</b>\"],\"fields\":{\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150}}}}";
+                                    sQuery = "{\"size\": " + countDiarios + ", \"_source\":{\"exclude\":[\"*.filetext\"]},\"query\": {\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + textoConsultado + "\"}}" + sFilters + "}},\"highlight\":{\"pre_tags\":[\"<span style='background:#FFFF55; font-weight:bold;'>\"],\"post_tags\":[\"</span>\"],\"fields\":{\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150}}}}";
                                     var diarios = new ES().PesquisarDocs<DiarioOV>(sQuery, url_es);
                                     if (diarios.hits.hits.Count > 0)
                                     {
                                         var email = new EmailRN();
                                         var display_name_remetente = "SINJ Notifica";
                                         var destinatario = new[] { usuarioPush.email_usuario_push };
-                                        var titulo = (diarios.hits.hits.Count > 1 ? "Foram cadastrador " + diarios.hits.hits.Count + " diários foram cadastrados" : "Foi cadastrado um diário") + " no SINJ contendo o texto: " + termo_diario.ds_termo_diario_monitorado + ".";
+                                        var titulo = (diarios.hits.hits.Count > 1 ? "Foram cadastrados " + diarios.hits.hits.Count + " diários" : "Foi cadastrado um diário") + " no SINJ contendo o texto: " + termo_diario.ds_termo_diario_monitorado + ".";
                                         var html = true;
 
 
@@ -589,7 +591,7 @@ namespace SINJ_PUSH_APP
                                         corpoEmail = corpoEmail + "                                <td style=\"background-color: #B4E6CBs; text-align: left;\">";
                                         corpoEmail = corpoEmail + "                                    <div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
                                         corpoEmail = corpoEmail + "	                                       " + titulo + "<br/>";
-                                        corpoEmail = corpoEmail + "		                                   As informações sobre " + (diarios.hits.hits.Count > 1 ? diarios.hits.hits.Count + "esses diários" : "esse diário") + " estão abaixo:";
+                                        corpoEmail = corpoEmail + "		                                   As informações sobre " + (diarios.hits.hits.Count > 1 ? "esses diários" : "esse diário") + " estão abaixo:";
                                         corpoEmail = corpoEmail + "	                                   </div>";
                                         corpoEmail = corpoEmail + "	                                   <div>";
                                         corpoEmail = corpoEmail + "		                                   <table cellspacing=\"0\" cellpadding=\"2\" rules=\"all\" border=\"1\" style=\"border-color:#A3A3A3;border-style:Solid;width:100%;border-collapse:collapse;font-size: 11px;\">";

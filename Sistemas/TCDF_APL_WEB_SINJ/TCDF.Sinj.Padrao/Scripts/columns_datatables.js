@@ -1241,18 +1241,33 @@ var _columns_total_termos_tipo = [
 	}
 ];
 
-var _columns_usuario_notifiqueme = [
+	var _columns_usuario_notifiqueme = [
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "E-mail", "sClass": "grid-cell ws", "mData": "email_usuario_push" },
 	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Nome", "sClass": "grid-cell ws center", "mData": "nm_usuario_push" },
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Ativo", "sClass": "grid-cell ws center", "mData": "st_push",
-		"mRender": function (data) {
-			return TratarCamposBooleanos(data);
-		}
+	    "mRender": function (data) {
+	        return TratarCamposBooleanos(data);
+	    }
+	},
+	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Monitorando", "bSortable": false, "sClass": "grid-cell ws left",
+	    "mRender": function (data, type, full) {
+	        var monitorando = '';
+	        if (IsNotNullOrEmpty(full.criacao_normas_monitoradas)) {
+	            monitorando += 'Normas (criação): ' + full.criacao_normas_monitoradas.length + '<br/>';
+	        }
+	        if (IsNotNullOrEmpty(full.normas_monitoradas)) {
+	            monitorando += 'Normas (alteração): ' + full.normas_monitoradas.length + '<br/>';
+	        }
+	        if (IsNotNullOrEmpty(full.termos_diarios_monitorados)) {
+	            monitorando += 'Diários: ' + full.termos_diarios_monitorados.length + '<br/>';
+	        }
+	        return monitorando;
+	    }
 	},
 	{ "indice": 6, "isControl": false, "standard_view": true, "sClass": "grid-cell ws center all", "bSortable": false,
-		"mRender": function (data, type, full) {
-			return '<a href="./DetalhesDeNotifiqueme.aspx?id_doc=' + full._metadata.id_doc + '" title="Visualizar detalhes do usuário" /><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
-		}
+	    "mRender": function (data, type, full) {
+	        return '<a href="./DetalhesDeNotifiqueme.aspx?id_doc=' + full._metadata.id_doc + '" title="Visualizar detalhes do usuário" /><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
+	    }
 	}
 ];
 

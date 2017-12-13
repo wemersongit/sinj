@@ -45,6 +45,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
                 }
                 if (notifiquemeOv != null)
                 {
+                    notifiquemeOv.senha_usuario_push = null;
                     sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
                 }
                 else

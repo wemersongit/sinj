@@ -26,6 +26,9 @@ namespace TCDF.Sinj.Web.ashx.Datatable
             var _dt_doc = context.Request.Params["dt_doc"];
             var _dt_doc_fim = context.Request["dt_doc_fim"];
             var _op_intervalo = context.Request["op_intervalo"];
+            var _dt_last_up = context.Request.Params["dt_last_up"];
+            var _dt_last_up_fim = context.Request["dt_last_up_fim"];
+            var _op_intervalo_dt_last_up = context.Request["op_intervalo_dt_last_up"];
             var _email_usuario_push = context.Request.Params["email_usuario_push"];
             var _st_push = context.Request.Params["st_push"];
             var _sSearch = context.Request.Params["sSearch"];
@@ -76,6 +79,17 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                     else
                     {
                         pesquisa.literal += (!string.IsNullOrEmpty(pesquisa.literal) ? " AND " : "") + "dt_doc::date" + LB.ReplaceOperatorToQuery(_op_intervalo) + "'" + _dt_doc + "'";
+                    }
+                }
+                if (!string.IsNullOrEmpty(_dt_last_up))
+                {
+                    if (_op_intervalo == "intervalo" && !string.IsNullOrEmpty(_dt_last_up_fim))
+                    {
+                        pesquisa.literal += (!string.IsNullOrEmpty(pesquisa.literal) ? " AND " : "") + "dt_last_up::date>='" + _dt_last_up + "' AND dt_last_up::date<='" + _dt_last_up_fim + "'";
+                    }
+                    else
+                    {
+                        pesquisa.literal += (!string.IsNullOrEmpty(pesquisa.literal) ? " AND " : "") + "dt_last_up::date" + LB.ReplaceOperatorToQuery(_op_intervalo_dt_last_up) + "'" + _dt_last_up + "'";
                     }
                 }
                 if (!string.IsNullOrEmpty(_email_usuario_push))

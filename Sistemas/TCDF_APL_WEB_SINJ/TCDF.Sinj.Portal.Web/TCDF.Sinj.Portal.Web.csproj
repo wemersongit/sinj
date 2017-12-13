@@ -76,6 +76,13 @@
     <Content Include="RecriarSenhaNotifiqueme.aspx" />
     <Content Include="robots.txt" />
     <Content Include="sitemap.txt" />
+    <Content Include="sitemap.xml" />
+    <Content Include="sitemap1.txt" />
+    <Content Include="sitemap2.txt" />
+    <Content Include="sitemap3.txt" />
+    <Content Include="sitemap4.txt" />
+    <Content Include="sitemap5.txt" />
+    <Content Include="sitemap6.txt" />
     <Content Include="TextoArquivoDiario.aspx" />
     <Content Include="TextoArquivoNorma.aspx" />
     <Content Include="BaixarArquivoDiario.aspx" />
