@@ -10,6 +10,7 @@ using TCDF.Sinj.RN;
 using System.IO;
 using System.Text;
 using TCDF.Sinj.Log;
+using neo.BRLightREST;
 
 namespace TCDF.Sinj.Web
 {
@@ -254,6 +255,7 @@ namespace TCDF.Sinj.Web
                 sb.AppendFormat("\t<td class=\"tabHead\">Autoria</td>\r\n");
                 sb.AppendFormat("\t<td class=\"tabHead\">Lista de Nomes</td>\r\n");
                 sb.AppendFormat("\t<td class=\"tabHead\">Fontes</td>\r\n");
+                sb.AppendFormat("\t<td class=\"tabHead\">Texto Integral</td>\r\n");
                 sb.AppendFormat("\t<td class=\"tabHead\">Indexação</td>\r\n");
                 sb.AppendFormat("\t<td class=\"tabHead\">Data do Cadastro</td>\r\n");
                 sb.AppendFormat("\t<td class=\"tabHead\">Cadastrador</td>\r\n");
@@ -274,6 +276,8 @@ namespace TCDF.Sinj.Web
             var nm_autorias = "";
             var nomes = "";
             var ds_fontes = "";
+            ArquivoOV ar_vigente;
+            var ds_file = "";
             var ds_indexacao = "";
             //Row   
             sb.AppendFormat("<tr>\r\n");
@@ -382,28 +386,33 @@ namespace TCDF.Sinj.Web
                 sb.AppendFormat("\t<td class=\"tabRow\">" + vides + "</td>\r\n"); sb.AppendFormat("\t<td class=\"tabRow\">" + norma.nm_apelido + "</td>\r\n");
                 sb.AppendFormat("\t<td class=\"tabRow\">" + norma.ds_observacao + "</td>\r\n");
 
-                nm_autorias = "";
                 foreach (var autoria in norma.autorias)
                 {
                     nm_autorias += (nm_autorias != "" ? "<br style=\"mso-data-placement:same-cell;\"/>" : "") + autoria.nm_autoria;
                 }
                 sb.AppendFormat("\t<td class=\"tabRow\">" + nm_autorias + "</td>\r\n");
 
-                nomes = "";
                 foreach (var nm_pessoa in norma.nm_pessoa_fisica_e_juridica)
                 {
                     nomes += (nomes != "" ? "<br style=\"mso-data-placement:same-cell;\"/>" : "") + nm_pessoa;
                 }
                 sb.AppendFormat("\t<td class=\"tabRow\">" + nomes + "</td>\r\n");
 
-                ds_fontes = "";
+
                 foreach (var fonte in norma.fontes)
                 {
                     ds_fontes += (ds_fontes != "" ? "<br style=\"mso-data-placement:same-cell;\"/>" : "") + fonte.nm_tipo_publicacao + " " + fonte.ds_diario;
                 }
                 sb.AppendFormat("\t<td class=\"tabRow\">" + ds_fontes + "</td>\r\n");
 
-                ds_indexacao = "";
+                ar_vigente = norma.getFileArquivoVigente();
+
+                if (!string.IsNullOrEmpty(ar_vigente.filename))
+                {
+                    ds_file = ar_vigente.filename + " (" + Util.GetFileSizeInBytes(ar_vigente.filesize) + ")";
+                }
+                sb.AppendFormat("\t<td class=\"tabRow\">" + ds_file + "</td>\r\n");
+
                 foreach (var indexacao in norma.indexacoes)
                 {
                     ds_indexacao += ds_indexacao != "" ? "<br style=\"mso-data-placement:same-cell;\"/>" : "";

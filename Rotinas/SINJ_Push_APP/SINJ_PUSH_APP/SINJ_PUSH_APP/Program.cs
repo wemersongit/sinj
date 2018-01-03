@@ -62,8 +62,8 @@ namespace SINJ_PUSH_APP
         {
             try
             {
-                //MonitorarNormasAtualizadasPush();
-                //MonitorarNormasNovasPush();
+                MonitorarNormasAtualizadasPush();
+                MonitorarNormasNovasPush();
                 MonitorarDiarioPush();
                 this.Log();
             }

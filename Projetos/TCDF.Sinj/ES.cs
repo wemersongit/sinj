@@ -644,7 +644,7 @@ namespace TCDF.Sinj
                     partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"nm_tipo_fonte\",\"nr_diario\",\"cr_diario\",\"secao_diario\",\"dt_assinatura\",\"st_pendente\",\"ar_diario.id_file\",\"ar_diario.filesize\",\"dt_cadastro\",\"nm_login_usuario_cadastro\"]}}";
                     break;
                 case "sinj_norma":
-                    partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"ar_atualizado.mimetype\",\"nm_tipo_norma\",\"nr_norma\",\"ch_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\",\"vides\",\"nm_apelido\",\"ds_observacao\",\"autorias.nm_autoria\",\"nm_pessoa_fisica_e_juridica\",\"fontes\",\"indexacoes\",\"dt_cadastro\",\"nm_login_usuario_cadastro\"]}}";
+                    partial_fields = ", \"partial_fields\":{\"partial\":{\"include\":[\"_metadata.id_doc\",\"origens.sg_orgao\",\"origens.nm_orgao\",\"origens.ch_orgao\",\"ar_atualizado.id_file\",\"ar_atualizado.filesize\",\"ar_atualizado.mimetype\",\"ar_atualizado.filename\",\"nm_tipo_norma\",\"nr_norma\",\"ch_norma\",\"dt_assinatura\",\"ds_ementa\",\"nm_situacao\",\"vides\",\"nm_apelido\",\"ds_observacao\",\"autorias.nm_autoria\",\"nm_pessoa_fisica_e_juridica\",\"fontes\",\"indexacoes\",\"dt_cadastro\",\"nm_login_usuario_cadastro\"]}}";
                     break;
                 case "cesta":
                     var _base = context.Request["b"];

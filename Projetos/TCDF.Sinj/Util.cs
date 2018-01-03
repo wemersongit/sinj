@@ -365,6 +365,34 @@ namespace TCDF.Sinj
                 return "";
             }
         }
+
+        public static string GetFileSizeInBytes(ulong TotalBytes)
+        {
+            if (TotalBytes >= 1073741824) //Giga Bytes
+            {
+                Decimal FileSize = Decimal.Divide(TotalBytes, 1073741824);
+                return String.Format("{0:##.##} GB", FileSize);
+            }
+            else if (TotalBytes >= 1048576) //Mega Bytes
+            {
+                Decimal FileSize = Decimal.Divide(TotalBytes, 1048576);
+                return String.Format("{0:##.##} MB", FileSize);
+            }
+            else if (TotalBytes >= 1024) //Kilo Bytes
+            {
+                Decimal FileSize = Decimal.Divide(TotalBytes, 1024);
+                return String.Format("{0:##.##} KB", FileSize);
+            }
+            else if (TotalBytes > 0)
+            {
+                Decimal FileSize = TotalBytes;
+                return String.Format("{0:##.##} Bytes", FileSize);
+            }
+            else
+            {
+                return "0 Bytes";
+            }
+        }
     }
 
     public enum AcoesDoUsuario
