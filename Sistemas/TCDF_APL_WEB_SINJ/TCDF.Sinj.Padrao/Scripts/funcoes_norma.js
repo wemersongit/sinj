@@ -365,17 +365,19 @@ function CriarModalFonte(tr_fonte) {
 
 
                     var sJson_diario = $('#json_diario_fonte').val();
-                    var oJson_diario = JSON.parse(sJson_diario);
 
-                    oFonte.ch_tipo_fonte = oJson_diario.ch_tipo_fonte;
-                    oFonte.nm_tipo_fonte = oJson_diario.nm_tipo_fonte;
-                    oFonte.dt_publicacao = oJson_diario.dt_assinatura;
+                    if(IsNotNullOrEmpty(sJson_diario)){
+                        var oJson_diario = JSON.parse(sJson_diario);
 
-                    oFonte.ds_diario = $('#ds_diario').val();
-
-
-                    var sJson_arquivo_diario = $('#json_arquivo_diario_fonte').val();
-                    oFonte.ar_diario = JSON.parse(sJson_arquivo_diario);
+                        oFonte.ch_tipo_fonte = oJson_diario.ch_tipo_fonte;
+                        oFonte.nm_tipo_fonte = oJson_diario.nm_tipo_fonte;
+                        oFonte.dt_publicacao = oJson_diario.dt_assinatura;
+                        oFonte.ds_diario = $('#ds_diario').val();
+                        var sJson_arquivo_diario = $('#json_arquivo_diario_fonte').val();
+                        if(IsNotNullOrEmpty(sJson_arquivo_diario)){
+                            oFonte.ar_diario = JSON.parse(sJson_arquivo_diario);
+                        }
+                    }
 
                     //Fonte não pode data de publicação anterior à data de assinatura da norma
                     if (IsNotNullOrEmpty(oFonte, 'dt_publicacao')) {
@@ -393,7 +395,7 @@ function CriarModalFonte(tr_fonte) {
                         }
                     }
 
-                    if (IsNotNullOrEmpty(oFonte, 'ds_diario') && IsNotNullOrEmpty(oFonte, 'ch_tipo_fonte') && IsNotNullOrEmpty(oFonte, 'ch_tipo_publicacao') && IsNotNullOrEmpty(oFonte, 'ar_diario')) {
+                    if (((IsNotNullOrEmpty(oFonte, 'ds_diario') && IsNotNullOrEmpty(oFonte, 'ar_diario')) || $('#ch_tipo_norma').val() == '11000000' ) && IsNotNullOrEmpty(oFonte, 'ch_tipo_fonte') && IsNotNullOrEmpty(oFonte, 'ch_tipo_publicacao')) {
                         $('#tbody_fontes .tr_vazia').remove();
                         var guid = Guid('N');
                         if (IsNotNullOrEmpty(tr_fonte)) {
@@ -461,6 +463,27 @@ function CriarModalFonte(tr_fonte) {
     });
 }
 
+function onblurTipoDeFonte(){
+    if($('#ch_tipo_norma').val() == '11000000' && $('#ch_tipo_fonte_modal').val() == '18'){
+        $('#buttonProsseguirSemDiario').show();
+    }
+    else{
+        $('#buttonProsseguirSemDiario').hide();
+    }
+}
+
+function prosseguirSemDiario(){
+    if(!IsNotNullOrEmpty($('#ch_tipo_fonte_modal').val()) || !IsNotNullOrEmpty($('#dt_assinatura_fonte_modal').val())){
+        Validar('form_consultar_diario');
+        return false;
+    }
+    $('#json_diario_fonte').val('{"ch_tipo_fonte": "' + $('#ch_tipo_fonte_modal').val() + '", "nm_tipo_fonte": "' + $('#nm_tipo_fonte_modal').val() + '", "dt_assinatura": "' + $('#dt_assinatura_fonte_modal').val() + '"}');
+    $('#json_arquivo_diario_fonte').val('');
+    $('#ds_diario').val($('#nm_tipo_fonte_modal').val() + ' de ' + $('#dt_assinatura_fonte_modal').val());
+    $('#modal_fonte .consultar').hide();
+    $('#modal_fonte .resultado').hide();
+    $('#modal_fonte .diario').show();
+}
 
 function CriarModalOrigem() {
     $('#modal_origem .dados_orgao').hide();

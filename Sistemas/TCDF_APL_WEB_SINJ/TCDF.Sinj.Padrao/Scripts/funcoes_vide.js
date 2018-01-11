@@ -287,6 +287,9 @@ function selecionarTexto(nm_sufixo, _a) {
 function selecionarTextoCopiar(id_button, nm_sufixo) {
     var text = window.getSelection().toString();
     if (text != '') {
+        while (text.indexOf('\n\n') > -1) {
+            text = text.replace(/\n\n/g, '\n');
+        }
         $('#' + id_button).parent().find('textarea').text(text);
         fecharSelecionarCaput(nm_sufixo);
     }

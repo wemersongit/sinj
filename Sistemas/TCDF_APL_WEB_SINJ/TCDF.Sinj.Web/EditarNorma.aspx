@@ -80,8 +80,11 @@
                         </div>
                         <div class="line">
                             <div class="column w-100-pc text-right">
-                                <button type="submit">
+                                <button type="submit" title="Consulta os diários com tipo e data informados">
                                     <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_loupe_p.png" alt="ok" /> Consultar Diários
+                                </button>
+                                <button id="buttonProsseguirSemDiario" title="Prosseguir a inclusão da fonte sem selecionar um diário" onclick="prosseguirSemDiario()" style="display:none;">
+                                    <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_alert_p.png" alt="alerta" /> Prosseguir sem Diário
                                 </button>
                             </div>
                         </div>

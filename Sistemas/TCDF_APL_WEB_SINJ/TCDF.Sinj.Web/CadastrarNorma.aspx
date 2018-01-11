@@ -40,7 +40,7 @@
                             <div class="column w-70-pc">
                                 <div id="div_autocomplete_tipo_fonte_modal" class="cell w-60-pc">
                                     <input id="ch_tipo_fonte_modal" name="ch_tipo_fonte" obrigatorio="sim" label="Tipo de Fonte" type="hidden" value="" />
-                                    <input id="nm_tipo_fonte_modal" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_fonte"></a>
+                                    <input id="nm_tipo_fonte_modal" type="text" value="" class="w-80-pc" onblur="onblurTipoDeFonte()"/><a title="Listar" id="a_tipo_fonte"></a>
                                 </div>
                             </div>
                         </div>
@@ -52,14 +52,17 @@
                             </div>
                             <div class="column w-70-pc">
                                 <div class="cell w-50-pc">
-                                    <input name="dt_assinatura" type="text" value="" class="w-50-pc date" obrigatorio="sim" label="Data da Publicação" />
+                                    <input id="dt_assinatura_fonte_modal" name="dt_assinatura" type="text" value="" class="w-50-pc date" obrigatorio="sim" label="Data da Publicação" />
                                 </div>
                             </div>
                         </div>
                         <div class="line">
                             <div class="column w-100-pc text-right">
-                                <button type="submit">
+                                <button type="submit" title="Consulta os diários com tipo e data informados">
                                     <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_loupe_p.png" alt="ok" /> Consultar Diários
+                                </button>
+                                <button id="buttonProsseguirSemDiario" title="Prosseguir a inclusão da fonte sem selecionar um diário" onclick="prosseguirSemDiario()" style="display:none;">
+                                    <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_alert_p.png" alt="alerta" /> Prosseguir sem Diário
                                 </button>
                             </div>
                         </div>
@@ -169,23 +172,6 @@
                         </div>
                     </div>
                 </div>
-                <%--<div class="line">
-                    <div class="column w-30-pc">
-                        <div class="cell fr">
-                            <label>Arquivo da Norma:</label>
-                        </div>
-                    </div>
-                    <div class="column w-70-pc">
-                        <div id="arquivo_fonte" class="cell w-100-pc">
-                            <input type="hidden" id="hidden_json_arquivo_fonte_modal" name="json_arquivo_fonte_modal" class="json_arquivo" value="" />
-                            <label id="label_arquivo_fonte_modal" class="name" style="color:#000;"></label>
-                            <a href="javascript:void(0);" onclick="javascript:anexarInputFile(this);" class="attach" ><img valign="absmiddle" alt="Anexar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_attach_p.png"  /></a>
-                            <a href="javascript:void(0);" onclick="javascript:deletarInputFile(this);" class="delete" style="display:none;"><img valign="absmiddle" alt="Remover" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png"  /></a>
-                            <a path="ar_fonte" href="javascript:void(0);" onclick="javascript:editarInputFile(this);" class="create" title="Editar ou criar um arquivo"><img width="16" valign="absmiddle" alt="Editar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_edit_file.png" /></a>
-                            <a path="ar_fonte" div_arquivo="arquivo_fonte" href="javascript:void(0);" onclick="javascript:abrirModalImportarArquivo(this);" class="import" title="Importar arquivo do módulo de arquivos"><img width="16" valign="absmiddle" alt="Editar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_import.png" /></a>
-                        </div>
-                    </div>
-                </div>--%>
             </div>
             <div class="notify" style="display:none;"></div>
         </div>
