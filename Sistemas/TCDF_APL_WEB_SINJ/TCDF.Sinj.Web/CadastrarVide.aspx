@@ -238,7 +238,7 @@
             <div class="div_caputs_selecionados"></div>
             <div class="table w-100-pc">
                 <div class="head">
-                    <div class="title">Caput da Norma Alteradora</div>
+                    <div class="title" style="width:100%; padding:10px;">Texto da Norma Alteradora</div>
                 </div>
                 <div class="line">
                     <div class="column w-30-pc">
@@ -274,7 +274,7 @@
             <div class="div_caputs_selecionados"></div>
             <div class="table w-100-pc">
                 <div class="head">
-                    <div class="title">Caput da Norma Alterada</div>
+                    <div class="title" style="width:100%; padding:10px;">Texto da Norma Alterada</div>
                 </div>
                 <div class="line">
                     <div class="column w-30-pc">
@@ -285,6 +285,16 @@
                     <div class="column w-70-pc">
                         <div class="arquivos_norma" class="cell w-100-pc">
                         </div>
+                    </div>
+                </div>
+                <div class="line line_enable_replaced" style="display:none;">
+                    <div class="column w-30-pc">
+                        <div class="cell fr">
+                            <label>Exibir dispositivos alterados:</label>
+                        </div>
+                    </div>
+                    <div class="column w-70-pc">
+                        <input type="checkbox" onclick="clickEnableReplaced(this)" />
                     </div>
                 </div>
                 <div class="line line_conteudo_arquivo" style="display:none;">

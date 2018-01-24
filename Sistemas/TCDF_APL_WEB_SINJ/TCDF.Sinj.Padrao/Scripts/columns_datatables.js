@@ -343,7 +343,7 @@ var _columns_diario = [
 	}
 ];
 
-var _columns_diario_es = [
+	var _columns_diario_es = [
 	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "", "bSortable": false,
 	    "mRender": function (data, type, full) {
 	        if (!IsNotNullOrEmpty(window.aHighlight)) {
@@ -431,6 +431,10 @@ var _columns_diario_es = [
                 }
             }
 
+            if (IsNotNullOrEmpty(campo_highlight)) {
+                campo_highlight = campo_highlight.replace(/## img.* ##/g, '').replace(/##/g, '');
+            }
+
             html += '<div class="line">' +
                     '<div class="column w-80-pc">' +
 	                    campo_highlight +
@@ -463,10 +467,16 @@ var _columns_texto_diario = [
                 links += '&nbsp;&nbsp;<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /></a>';
                 var icone = '<div class="text-center">' + links + '<br/>' + medida + '</div>';
                 var campo_highlight = MontarHighlight(full.highlight, 'ar_diario.filetext');
+                if (IsNotNullOrEmpty(campo_highlight)) {
+                    campo_highlight = campo_highlight.replace(/## img.* ##/g, '').replace(/##/g, '');
+                }
                 arquivos = '<div class="line"><div class="column w-80-pc">' + campo_highlight + '</div><div class="column w-20-pc">' + icone + '</div></div>';
             }
             else if (IsNotNullOrEmpty(full.fields.partial[0], 'arquivos')) {
                 var campo_highlight = MontarHighlight(full.highlight, 'arquivos.arquivo_diario.filetext');
+                if (IsNotNullOrEmpty(campo_highlight)) {
+                    campo_highlight = campo_highlight.replace(/## img.* ##/g, '').replace(/##/g, '');
+                }
                 for (var i = 0; i < full.fields.partial[0].arquivos.length; i++) {
                     var obj_arquivo = full.fields.partial[0].arquivos[i];
                     medida = (obj_arquivo.arquivo_diario.filesize / 1024).toFixed(0) + ' KB<br/>';

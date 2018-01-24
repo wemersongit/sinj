@@ -123,6 +123,33 @@
                         <div class="line">
                             <div class="column w-20-pc">
                                 <div class="cell fr">
+                                    <label>Data de Alteração:</label>
+                                </div>
+                            </div>
+                            <div class="column w-70-pc">
+                                <div class="cell">
+                                    <select name="op_intervalo_dt_last_up" onchange="javascript:selecionarOperador(this)" id_target="div_intervalo_dt_last_up" class="fl">
+                                        <option value="igual">igual</option>
+                                        <option value="maior">maior</option>
+                                        <option value="maiorouigual">maior ou igual</option>
+                                        <option value="menor">menor</option>
+                                        <option value="menorouigual">menor ou igual</option>
+                                        <option value="diferente">diferente</option>
+                                        <option value="intervalo">intervalo</option>
+                                    </select>
+                                </div>
+                                <div class="cell">
+                                    <input name="dt_last_up" type="text" value="" class="date" />
+                                </div>
+                                <div id="div_intervalo_dt_last_up" class="cell" style="display:none">
+                                    &nbsp;até&nbsp;
+                                    <input name="dt_last_up_fim" type="text" value="" class="date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="column w-20-pc">
+                                <div class="cell fr">
                                     <label>Nome de Usuario:</label>
                                 </div>
                             </div>

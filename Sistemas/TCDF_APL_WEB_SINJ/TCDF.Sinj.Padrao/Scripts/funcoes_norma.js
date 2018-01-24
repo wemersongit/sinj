@@ -1168,6 +1168,7 @@ function SelecionarTipoDeNorma() {
         $('#div_publicacoes').show();
         $('#div_indexacao').show();
         if ($('#in_g1').val() === "true") {
+            $('#line_autorias').show();
         }
         if ($('#in_g2').val() === "true") {
             $('#line_interessados').show();

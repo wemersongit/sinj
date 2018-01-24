@@ -334,6 +334,11 @@ namespace TCDF.Sinj.RN
             {
                 nr_norma = normaOv.nr_norma;
                 normaOv.rankeamentos.Add(normaOv.nr_norma);
+                int testeNr = 0;
+                if (int.TryParse(normaOv.nr_norma, out testeNr) && nr_norma.Length > 3)
+                {
+                    normaOv.rankeamentos.Add(normaOv.nr_norma.Insert(nr_norma.Length - 3 , "."));
+                }
             }
             if (!string.IsNullOrEmpty(normaOv.dt_assinatura))
             {

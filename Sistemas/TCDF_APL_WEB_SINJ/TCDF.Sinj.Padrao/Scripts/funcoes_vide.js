@@ -190,6 +190,7 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
     if (IsNotNullOrEmpty(ch_norma)) {
         var sucesso = function (data) {
             if (IsNotNullOrEmpty(data, 'error_message')) {
+                gComplete();
                 $('#div_notificacao_norma').messagelight({
                     sTitle: "Erro",
                     sContent: data.error_message,
@@ -200,7 +201,7 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
                 return false;
             }
             if (IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
-                $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma').append(data.ar_atualizado.filename + ' <input type="checkbox" id_file="' + data.ar_atualizado.id_file + '" filename="' + data.ar_atualizado.filename + '" ch_norma="' + data.ch_norma + '" path="atlz" ds_norma="' + getIdentificacaoDeNorma(data) + '" onchange="javascript:' + ( id_button ? "selecionarArquivoCaputCopiar(\'"+ id_button +"\'," : "selecionarArquivoCaput(") + 'this, \'' + nm_sufixo + '\')" style="vertical-align:middle;"><br/>');
+                $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma').append(data.ar_atualizado.filename + ' <input type="checkbox" id_file="' + data.ar_atualizado.id_file + '" filename="' + data.ar_atualizado.filename + '" ch_norma="' + data.ch_norma + '" path="atlz" ds_norma="' + getIdentificacaoDeNorma(data) + '" onchange="javascript:' + (id_button ? "selecionarArquivoCaputCopiar(\'" + id_button + "\'," : "selecionarArquivoCaput(") + 'this, \'' + nm_sufixo + '\')" style="vertical-align:middle;"><br/>');
                 $('#div_cad_vide').hide();
                 $('#div_cad_caput_' + nm_sufixo).show();
                 $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma input[type="checkbox"]').prop('checked', 'checked').change();
@@ -234,6 +235,7 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
                 }
             }
             else {
+                gComplete();
                 $('#div_notificacao_norma').messagelight({
                     sTitle: "Erro",
                     sContent: "Ocorreu um erro não identificado.",
@@ -247,7 +249,6 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
             sUrl: './ashx/Visualizacao/NormaDetalhes.ashx?id_norma=' + ch_norma,
             sType: "GET",
             fnSuccess: sucesso,
-            fnComplete: gComplete,
             fnBeforeSend: gInicio,
             bAsync: true,
             iTimeout: 40000
@@ -308,7 +309,7 @@ function selecionarArquivoCaput(el, nm_sufixo) {
 
             if ($('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo p').length > 0) {
                 //regex para localizar o link da revogação caso haja
-                var regex = new RegExp(/revogado.*?pelo\(a\)/);
+                var regex = new RegExp(/(revogado\(a\)|declarado\(a\) inconstitucional).*?pelo\(a\)/);
                 //itera em todos os paragrafos com o atributo replaced que é o que identifica se um paragrafo sofre ou não uma alteração
                 $('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo p[replaced_by]').each(function (k, p) {
                     //se possuir o texto de revogação
@@ -326,7 +327,7 @@ function selecionarArquivoCaput(el, nm_sufixo) {
                     }
                 });
                 //remove todos os parágrafos alterados, renumerados, etc., menos os revogados
-                $('p[replaced_by]').remove();
+                $('p[replaced_by]').hide();
 
                 $.each($('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo p'), function (key_p, value_p) {
                     var linkname = $(value_p).attr('linkname');
@@ -350,13 +351,16 @@ function selecionarArquivoCaput(el, nm_sufixo) {
 
                 $('#div_cad_caput_' + nm_sufixo + ' div.line_conteudo_arquivo label').text('Selecione o Link:');
                 $('#div_cad_caput_' + nm_sufixo + ' div.line_conteudo_arquivo').show();
+                $('#div_cad_caput_' + nm_sufixo + ' div.line_enable_replaced').show();
                 $('#div_cad_caput_' + nm_sufixo + ' div.line_buttons').show();
             }
+            gComplete();
         }
         $.ajaxlight({
             sUrl: "./ashx/Arquivo/HtmlFileEncoded.ashx?nm_base=sinj_norma&id_file=" + id_file,
             sType: "GET",
             fnSuccess: sucesso,
+            fnBeforeSend: gInicio,
             bAsync: true
         });
     }
@@ -465,6 +469,7 @@ function limparCaputSelecionado(nm_sufixo) {
     $('#div_cad_caput_' + nm_sufixo + ' div.div_conteudo_arquivo').html('');
     $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').html('');
     $('#div_cad_caput_' + nm_sufixo + ' div.line_conteudo_arquivo').hide();
+    $('#div_cad_caput_' + nm_sufixo + ' div.line_enable_replaced').hide();
     $('#div_cad_caput_' + nm_sufixo + ' div.line_buttons').hide();
 }
 
@@ -648,4 +653,15 @@ function getDescricaoDoElemento(caput)
         caput3 = caput2 + ")";
     }
     return caput3;
+}
+
+
+function clickEnableReplaced(check) {
+    var enabled = $(check).is(':checked');
+    if(enabled){
+        $('p[replaced_by]').show();
+    }
+    else{
+        $('p[replaced_by]').hide();
+    }
 }

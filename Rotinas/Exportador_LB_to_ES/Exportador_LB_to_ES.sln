@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exportador_LB_to_ES", "Exportador_LB_to_ES\Exportador_LB_to_ES.csproj", "{97129793-8C46-4062-BF90-CD83FB7E9158}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exportador_LB_to_ES.ManagerProcesses", "Exportador_LB_to_ES.ManagerProcesses\Exportador_LB_to_ES.ManagerProcesses.csproj", "{6E26F4B2-E52C-4126-BE19-E69DED6F2438}"

@@ -732,6 +732,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i].Replace("_replaced","")) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
                             pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "\".*?)replaced_by=\"(.*?)\"(.*?)<s>(.*?)</s>(.*?)</p>";
                             replacement = "$1replaced_by_disabled=\"$2\"$3$4$5 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                            if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
+                            {
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)replaced_by=\"(.*?)\"(.*?>)(.*?)(<a.+?name=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?></a>)(.*?)</p>";
+                                replacement = "$1" + _caput_alterada.caput[i] + "$2replaced_by=\"$3\"$4$5$6" + _caput_alterada.caput[i] + "$7$8</p>\r\n$1" + _caput_alterada.caput[i].Replace("_replaced", "") + "$2replaced_by_disabled=\"$3\"$4<a name=\"" + _caput_alterada.caput[i].Replace("_replaced", "") + "\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                            }
                             break;
                         case "prorrogação":
                         case "ratificação":
@@ -896,6 +901,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i].Replace("_replaced", "")) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
                         pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "\".*?)replaced_by=\"(.*?)\"(.*?)<s>(.*?)</s>(.*?)</p>";
                         replacement = "$1replaced_by_disabled=\"$2\"$3$4$5 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                        if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
+                        {
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)replaced_by=\"(.*?)\"(.*?>)(.*?)(<a.+?name=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?></a>)(.*?)</p>";
+                            replacement = "$1" + _caput_alterada.caput[i] + "$2replaced_by=\"$3\"$4$5$6" + _caput_alterada.caput[i] + "$7$8</p>\r\n$1" + _caput_alterada.caput[i].Replace("_replaced", "") + "$2replaced_by_disabled=\"$3\"$4<a name=\"" + _caput_alterada.caput[i].Replace("_replaced", "") + "\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                        }
                         break;
                     case "prorrogação":
                     case "ratificação":

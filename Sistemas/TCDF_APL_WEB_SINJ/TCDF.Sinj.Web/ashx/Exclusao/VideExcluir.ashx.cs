@@ -535,6 +535,11 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*?pelo\\(a\\) .+?\\)";
                             pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "\".*?)replaced_by_disabled=\"(.*?)\"(.*?)(<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?)( <a class=\"link_vide\".*?>.*?)<a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
                             replacement = "$1replaced_by=\"$2\"$3<s>$4</s>$5$6</p>";
+                            if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
+                            {
+                                pattern = "<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i].Replace("_replaced", "") + "\".*?replaced_by_disabled=\".*?\".*?</p>";
+                                replacement = "";
+                            }
                             break;
                         case "prorrogação":
                         case "ratificação":
@@ -564,6 +569,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             }
                             break;
                     }
+                    var teste = Regex.Matches(texto, pattern).Count;
                     if (Regex.Matches(texto, pattern).Count == 1 || (caputAlteradoDesfazer.nm_relacao_aux == "acrescimo" && Regex.Matches(texto, pattern).Count > 1))
                     {
                         texto = Regex.Replace(texto, pattern, replacement);
@@ -615,6 +621,11 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) .+?\\)";
                             pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "\".*?)replaced_by_disabled=\"(.*?)\"(.*?)(<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?)( <a class=\"link_vide\".*?>.*?)<a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
                             replacement = "$1replaced_by=\"$2\"$3<s>$4</s>$5</p>";
+                            if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
+                            {
+                                pattern = "<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i].Replace("_replaced", "") + "\".*?replaced_by_disabled=\".*?\".*?</p>";
+                                replacement = "";
+                            }
                             break;
                         case "prorrogação":
                         case "ratificação":
@@ -644,6 +655,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             }
                             break;
                     }
+                    var teste = Regex.Matches(texto, pattern).Count;
                     if (Regex.Matches(texto, pattern).Count == 1 || (caputAlteradoDesfazer.nm_relacao_aux == "acrescimo" && Regex.Matches(texto, pattern).Count > 1))
                     {
                         texto = Regex.Replace(texto, pattern, replacement);
