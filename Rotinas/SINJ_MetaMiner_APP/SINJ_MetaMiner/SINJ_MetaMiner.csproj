@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AD\db.cs" />
     <Compile Include="AD\SINJ_MetaMinerAD.cs" />
     <Compile Include="OV\AuxMetadadoLexml.cs" />
     <Compile Include="OV\NormaLexml.cs" />

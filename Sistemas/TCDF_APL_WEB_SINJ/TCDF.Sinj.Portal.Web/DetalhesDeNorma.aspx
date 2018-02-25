@@ -96,13 +96,7 @@
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
                                 <div class="w-90-pc mauto">
-                                    <H4>ADI TJDFT - Acompanhe aqui:</H4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column w-100-pc">
-                            <div class="cell w-100-pc">
-                                <div id="ds_url_acompanhamento" class="w-90-pc mauto value">
+                                    <H4></H4>
                                 </div>
                             </div>
                         </div>

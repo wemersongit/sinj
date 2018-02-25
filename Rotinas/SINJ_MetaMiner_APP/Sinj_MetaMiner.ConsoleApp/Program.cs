@@ -23,6 +23,7 @@ namespace Sinj_MetaMiner.ConsoleApp
         private long updates;
         private long inserts;
         private long deletes;
+        private int cursorTop;
         public Program()
         {
             updates = 0;
@@ -59,36 +60,40 @@ namespace Sinj_MetaMiner.ConsoleApp
                 if(length_page == "-1"){
                     length_page = "500";
                 }
-                //Recupera as normas de 1000 em 1000 no REST e processa cada uma
-                var pesquisa = new Pesquisa { select = new string[] {"nm_orgao_cadastrador", "nm_tipo_norma", "ds_ementa", "dt_assinatura", "nr_norma", "fontes", "ch_norma", "dt_doc", "dt_last_up", "nm_apelido", "indexacoes", "ar_atualizado"}, offset = "0", limit = length_page, order_by = new Order_By { asc = new string[]{"ch_norma"} } };
-                var result_length = 1;
-                while (result_length > 0)
+                //Faz uma consulta para identificar o total, que será usado no laço
+                var pesquisa = new Pesquisa { limit = "1", select = new string[] {"ch_norma"} };
+                var result = new TCDF.Sinj.RN.NormaRN().Consultar(pesquisa);
+                var result_length = result.result_count;
+                //Recupera as normas no REST e processa cada uma
+                pesquisa = new Pesquisa { select = new string[] { "nm_orgao_cadastrador", "nm_tipo_norma", "ds_ementa", "dt_assinatura", "nr_norma", "fontes", "ch_norma", "dt_doc", "alteracoes", "nm_apelido", "indexacoes", "ar_atualizado" }, offset = "0", limit = length_page, order_by = new Order_By { desc = new string[] { "dt_last_up::abstime" } } };
+                program.cursorTop = 7;
+                
+
+                for (ulong i = 0; i < result_length; i = i + Convert.ToUInt64(length_page))
                 {
+                    pesquisa.offset = i.ToString();
                     program._sb_info.AppendLine(DateTime.Now + ": Pesquisa => " + JSON.Serialize<Pesquisa>(pesquisa));
-                    var result = new TCDF.Sinj.RN.NormaRN().Consultar(pesquisa);
-                    //Quando o offset for maior que o limit então result.results.Count será igual a 0
-                    result_length = result.results.Count;
-                    if (result_length > 0)
+                    result = new TCDF.Sinj.RN.NormaRN().Consultar(pesquisa);
+                    foreach (var norma in result.results)
                     {
-                        foreach (var norma in result.results)
+                        if (program.cursorTop >= 20)
                         {
-                            //Mantenho todas as normas na lista para em seguida processar o delete ('D') no dataset
-                            normas_ch.Add(norma.ch_norma);
-                            ///As normas que não forem processadas ficam nessa lista para em seguida, se o parametro -f (force) tiver sido passado,
-                            ///serem marcadas como 'D' no dataset
-                            program.CompareRegisters(norma, normas_lexml);
-                            Console.SetCursorPosition(0, 0);
-                            Console.WriteLine("Comparando Update e Insert");
-                            Console.WriteLine("Normas Lexml: " + total_lexml);
-                            Console.WriteLine("Normas SINJ: " + normas_ch.Count);
-                            Console.WriteLine("Normas Inseridas: " + program.inserts);
-                            Console.WriteLine("Normas Atualizadas: " + program.updates);
-                            Console.WriteLine("Normas Deletadas: " + program.deletes);
+                            program.cursorTop = 7;
+                            Console.Clear();
                         }
-                        program.Log();
+                        //Mantenho todas as normas na lista para em seguida processar o delete ('D') no dataset
+                        normas_ch.Add(norma.ch_norma);
+                        ///As normas que não forem processadas ficam nessa lista para em seguida, se o parametro -f (force) tiver sido passado,
+                        ///serem marcadas como 'D' no dataset
+                        program.CompareRegisters(norma, normas_lexml);
+                        Console.SetCursorPosition(0, 0);
+                        Console.WriteLine("Comparando Update e Insert");
+                        Console.WriteLine("Normas Lexml: " + total_lexml);
+                        Console.WriteLine("Normas SINJ: " + normas_ch.Count);
+                        Console.WriteLine("Normas Inseridas: " + program.inserts);
+                        Console.WriteLine("Normas Atualizadas: " + program.updates);
                     }
-                    //Incremente 1000 no offset para pesquisar os próximos 1000
-                    pesquisa.offset = (Convert.ToInt64(pesquisa.offset) + Convert.ToInt64(length_page)).ToString();
+                    program.Log();
                 }
 
                 normas_ch.Sort();
@@ -117,12 +122,7 @@ namespace Sinj_MetaMiner.ConsoleApp
                             program._sb_error.AppendLine(DateTime.Now + ": " + norma_lexml.id_registro_item + " não deletou (cd_status = 'D')...");
                         }
                     }
-                    Console.SetCursorPosition(0, 0);
-                    Console.WriteLine("Comparando Update e Insert");
-                    Console.WriteLine("Normas Lexml: " + total_lexml);
-                    Console.WriteLine("Normas SINJ: " + normas_ch.Count);
-                    Console.WriteLine("Normas Inseridas: " + program.inserts);
-                    Console.WriteLine("Normas Atualizadas: " + program.updates);
+                    Console.SetCursorPosition(0, 5);
                     Console.WriteLine("Normas Deletadas: " + program.deletes);
                 }
 
@@ -147,25 +147,25 @@ namespace Sinj_MetaMiner.ConsoleApp
         {
             try
             {
-                var sinj_metaminerRn = new SINJ_MetaMinerRN();//Valida se a norma possui os campos necessários para ser anexada no lexml
-                sinj_metaminerRn.ValidarAuxMetadadoLexml(norma);
-                var auxMetadadoLexml = sinj_metaminerRn.GetAuxMetadadoLexml(norma);
+                //Valida se a norma possui os campos necessários para ser anexada no lexml
+                _sinj_metaminerRn.ValidarAuxMetadadoLexml(norma);
+                var auxMetadadoLexml = _sinj_metaminerRn.GetAuxMetadadoLexml(norma);
                 try
                 {
-                    sinj_metaminerRn.ValidarTxMetadadoXml(norma);
-                    var id_lexml = sinj_metaminerRn.GerarIdLexml(norma);
+                    _sinj_metaminerRn.ValidarTxMetadadoXml(norma);
+                    var id_lexml = _sinj_metaminerRn.GerarIdLexml(norma);
                     var filtered_normas = normas_lexml.Where<NormaLexml>(nl => nl.id_registro_item == id_lexml);
                     if (filtered_normas.Count() > 0)
                     {
                         var norma_lexml = filtered_normas.First();
-                        if (_force_full || sinj_metaminerRn.ItIsToUpgrade(norma, norma_lexml))
+                        if (_force_full || _sinj_metaminerRn.ItIsToUpgrade(norma, norma_lexml))
                         {
                             norma_lexml.cd_status = "N";
                             norma_lexml.cd_validacao = "I";
                             norma_lexml.ts_registro_gmt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                            norma_lexml.tx_metadado_xml = sinj_metaminerRn.GetTxMetadadoXml(norma, auxMetadadoLexml);
+                            norma_lexml.tx_metadado_xml = _sinj_metaminerRn.GetTxMetadadoXml(norma, auxMetadadoLexml);
                             _sb_info.AppendLine(DateTime.Now + ": UPDATING => " + norma_lexml.id_registro_item);
-                            if (sinj_metaminerRn.AtualizarDoc(norma_lexml.id_registro_item, norma_lexml) > 0)
+                            if (_sinj_metaminerRn.AtualizarDoc(norma_lexml.id_registro_item, norma_lexml) > 0)
                             {
                                 updates++;
                             }
@@ -182,9 +182,9 @@ namespace Sinj_MetaMiner.ConsoleApp
                         norma_lexml.cd_status = "N";
                         norma_lexml.cd_validacao = "I";
                         norma_lexml.ts_registro_gmt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        norma_lexml.tx_metadado_xml = sinj_metaminerRn.GetTxMetadadoXml(norma, auxMetadadoLexml);
+                        norma_lexml.tx_metadado_xml = _sinj_metaminerRn.GetTxMetadadoXml(norma, auxMetadadoLexml);
                         _sb_info.AppendLine(DateTime.Now + ": INSERTING => " + norma_lexml.id_registro_item);
-                        if (sinj_metaminerRn.InserirDoc(norma_lexml) > 0)
+                        if (_sinj_metaminerRn.InserirDoc(norma_lexml) > 0)
                         {
                             inserts++;
                         }
@@ -198,24 +198,27 @@ namespace Sinj_MetaMiner.ConsoleApp
                 {
                     var mensagem = util.BRLight.Excecao.LerTodasMensagensDaExcecao(ex, false);
                     _sb_error.AppendLine(DateTime.Now + ": " + mensagem);
+                    Console.SetCursorPosition(0, ++cursorTop);
+                    Console.WriteLine("Erro: " + DateTime.Now + ": " + mensagem);
+                    Console.WriteLine("Stack: " + ex.StackTrace);
                 }
 
                 try
                 {
-                    sinj_metaminerRn.ValidarTxMetadadoXmlTxtAtlzdo(norma);
-                    var id_lexml_txtatlzdo = sinj_metaminerRn.GerarIdLexml(norma) + ";txtatlzdo";
+                    _sinj_metaminerRn.ValidarTxMetadadoXmlTxtAtlzdo(norma);
+                    var id_lexml_txtatlzdo = _sinj_metaminerRn.GerarIdLexml(norma) + ";txtatlzdo";
                     var filtered_normas_txtatlzdo = normas_lexml.Where<NormaLexml>(nl => nl.id_registro_item == id_lexml_txtatlzdo);
                     if (filtered_normas_txtatlzdo.Count() > 0)
                     {
                         var norma_lexml = filtered_normas_txtatlzdo.First();
-                        if (sinj_metaminerRn.ItIsToUpgrade(norma, norma_lexml))
+                        if (_sinj_metaminerRn.ItIsToUpgrade(norma, norma_lexml))
                         {
                             norma_lexml.cd_status = "N";
                             norma_lexml.cd_validacao = "I";
                             norma_lexml.ts_registro_gmt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                            norma_lexml.tx_metadado_xml = sinj_metaminerRn.GetTxMetadadoXmlTxtAtlzdo(norma, auxMetadadoLexml);
+                            norma_lexml.tx_metadado_xml = _sinj_metaminerRn.GetTxMetadadoXmlTxtAtlzdo(norma, auxMetadadoLexml);
                             _sb_info.AppendLine(DateTime.Now + ": UPDATING => " + norma_lexml.id_registro_item);
-                            if (sinj_metaminerRn.AtualizarDoc(norma_lexml.id_registro_item, norma_lexml) > 0)
+                            if (_sinj_metaminerRn.AtualizarDoc(norma_lexml.id_registro_item, norma_lexml) > 0)
                             {
                                 updates++;
                             }
@@ -233,9 +236,9 @@ namespace Sinj_MetaMiner.ConsoleApp
                         norma_lexml.cd_status = "N";
                         norma_lexml.cd_validacao = "I";
                         norma_lexml.ts_registro_gmt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        norma_lexml.tx_metadado_xml = sinj_metaminerRn.GetTxMetadadoXmlTxtAtlzdo(norma, auxMetadadoLexml);
+                        norma_lexml.tx_metadado_xml = _sinj_metaminerRn.GetTxMetadadoXmlTxtAtlzdo(norma, auxMetadadoLexml);
                         _sb_info.AppendLine(DateTime.Now + ": INSERTING => " + norma_lexml.id_registro_item);
-                        if (sinj_metaminerRn.InserirDoc(norma_lexml) > 0)
+                        if (_sinj_metaminerRn.InserirDoc(norma_lexml) > 0)
                         {
                             inserts++;
                         }
@@ -250,11 +253,17 @@ namespace Sinj_MetaMiner.ConsoleApp
                 {
                     var mensagem = util.BRLight.Excecao.LerTodasMensagensDaExcecao(ex, false);
                     _sb_error.AppendLine(DateTime.Now + ": " + mensagem);
+                    Console.SetCursorPosition(0, ++cursorTop);
+                    Console.WriteLine("Erro: " + DateTime.Now + ": " + mensagem);
+                    Console.WriteLine("Stack: " + ex.StackTrace);
                 }
             }
             catch(Exception ex){
                 var mensagem = util.BRLight.Excecao.LerTodasMensagensDaExcecao(ex, false);
                 _sb_error.AppendLine(DateTime.Now + ": " + mensagem);
+                Console.SetCursorPosition(0, ++cursorTop);
+                Console.WriteLine("Erro: " + DateTime.Now + ": " + mensagem);
+                Console.WriteLine("Stack: " + ex.StackTrace);
             }
         }
 

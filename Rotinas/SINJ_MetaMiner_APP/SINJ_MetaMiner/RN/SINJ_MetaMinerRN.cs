@@ -27,10 +27,10 @@ namespace SINJ_MetaMiner.RN
             return _ad.BuscarNormas(pesquisa);
         }
 
-        public DataSet BuscarLexml()
-        {
-            return _ad.BuscarLexml();
-        }
+        //public DataSet BuscarLexml()
+        //{
+        //    return _ad.BuscarLexml();
+        //}
 
         public List<NormaLexml> ConsultarLexml()
         {
@@ -41,11 +41,16 @@ namespace SINJ_MetaMiner.RN
         public bool ItIsToUpgrade(NormaOV norma, NormaLexml norma_lexml)
         {
             var ts_registro_gmt = Convert.ToDateTime(norma_lexml.ts_registro_gmt);
-            var dt_last_up = Convert.ToDateTime(norma._metadata.dt_doc);
-            if(!string.IsNullOrEmpty(norma._metadata.dt_last_up)){
-                dt_last_up = Convert.ToDateTime(norma._metadata.dt_last_up);
+            DateTime dt_alteracao;
+            bool itIsUpgrade = false;
+            foreach(var alteracao in norma.alteracoes){
+                dt_alteracao = Convert.ToDateTime(alteracao.dt_alteracao);
+                if(dt_alteracao > ts_registro_gmt){
+                    itIsUpgrade = true;
+                    break;
+                }
             }
-            return dt_last_up > ts_registro_gmt;
+            return itIsUpgrade;
         }
 
         public AuxMetadadoLexml GetAuxMetadadoLexml(NormaOV norma)
@@ -177,13 +182,13 @@ namespace SINJ_MetaMiner.RN
 
             tx_metadado_xml.AppendLine("<LexML xmlns=\"http://www.lexml.gov.br/oai_lexml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.lexml.gov.br/oai_lexml http://projeto.lexml.gov.br/esquemas/oai_lexml.xsd\">");
             tx_metadado_xml.AppendLine("    <Item formato=\"text/html\" idPublicador=\"" + auxMetadadoLexml.publisher_code + "\" tipo=\"metadado\">");
-            tx_metadado_xml.AppendLine("		http://www.tc.df.gov.br/SINJ/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma);
+            tx_metadado_xml.AppendLine("		http://www.sinj.df.gov.br/SINJ/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma);
             tx_metadado_xml.AppendLine("	</Item>");
             var fonte = GetFirstFonteWithFile(norma);
             if (fonte != null)
             {
                 tx_metadado_xml.AppendLine("    <Item formato=\"" + fonte.ar_fonte.mimetype + "\" idPublicador=\"" + auxMetadadoLexml.publisher_code + "\" tipo=\"conteudo\">");
-                tx_metadado_xml.AppendLine("		http://www.tc.df.gov.br/SINJ/Arquivo.ashx?id_fonte=" + fonte.ar_fonte.id_file);
+                tx_metadado_xml.AppendLine("		http://www.sinj.df.gov.br/SINJ/Download/" + Config.ValorChave("NmBaseNorma", true) + "/" + fonte.ar_fonte.id_file + "/" + fonte.ar_fonte.filename);
                 tx_metadado_xml.AppendLine("	</Item>");
             }
             tx_metadado_xml.AppendLine("	<DocumentoIndividual>" + auxMetadadoLexml.xml_tag_individual + "</DocumentoIndividual>");
@@ -225,7 +230,7 @@ namespace SINJ_MetaMiner.RN
             tx_metadado_xml.AppendLine("<LexML xmlns=\"http://www.lexml.gov.br/oai_lexml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.lexml.gov.br/oai_lexml http://projeto.lexml.gov.br/esquemas/oai_lexml.xsd\">");
 
             tx_metadado_xml.AppendLine("    <Item formato=\"" + norma.ar_atualizado.mimetype + "\" idPublicador=\"" + auxMetadadoLexml.publisher_code + "\" tipo=\"conteudo\">");
-            tx_metadado_xml.AppendLine("		http://www.tc.df.gov.br/SINJ/Arquivo.ashx?id_norma_consolidado=" + norma.ch_norma);
+            tx_metadado_xml.AppendLine("		http://www.sinj.df.gov.br/SINJ/Norma/" + norma.ch_norma + "/" + norma.getNameFileArquivoVigente());
             tx_metadado_xml.AppendLine("	</Item>");
 
             tx_metadado_xml.AppendLine("	<DocumentoIndividual>" + auxMetadadoLexml.xml_tag_individual + "@multivigente;texto.atualizado~texto;pt-br</DocumentoIndividual>");
@@ -385,10 +390,10 @@ namespace SINJ_MetaMiner.RN
             return "oai:" + norma.nm_orgao_cadastrador.ToLower() + ".tc.df.gov.br:sinj/" + norma.ch_norma;
         }
 
-        public void AtualizarLexml(DataSet dataset_lexml)
-        {
-            _ad.AtualizarLexml(dataset_lexml);
-        }
+        //public void AtualizarLexml(DataSet dataset_lexml)
+        //{
+        //    _ad.AtualizarLexml(dataset_lexml);
+        //}
 
         public int InserirDoc(NormaLexml norma_lexml)
         {

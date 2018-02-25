@@ -2948,7 +2948,7 @@ function DetalhesNorma(data, highlight) {
                 $('#div_efeito_decisao').hide();
             }
             if (IsNotNullOrEmpty(data.url_referencia)) {
-                $('#ds_url_acompanhamento').html('<a href="' + data.url_referencia + '" target="_blank">' + data.url_referencia + '</a>');
+                $('#div_url_acompanhamento H4').html('ADI TJDFT - Para acompanhar <a href="' + data.url_referencia + '" target="_blank">clique aqui</a>');
             } else {
                 $('#div_url_acompanhamento').hide();
             }

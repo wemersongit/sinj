@@ -8,6 +8,7 @@ using neo.BRLightREST;
 using util.BRLight;
 using TCDF.Sinj.Log;
 using TCDF.Sinj.OV;
+using System.Text;
 
 namespace TCDF.Sinj.Portal.Web
 {
@@ -30,27 +31,6 @@ namespace TCDF.Sinj.Portal.Web
                 {
                     if (!string.IsNullOrEmpty(_id_file))
                     {
-                        //if (_nm_base == "norma")
-                        //{
-                        //    _nm_base = "sinj_norma";
-                        //    //nesse contexto o id_file é na verdade ch_norma
-                        //    var normaOv = new NormaRN().Doc(_id_file);
-
-                        //    if (!string.IsNullOrEmpty(normaOv.ar_atualizado.id_file))
-                        //    {
-                        //        _id_file = normaOv.ar_atualizado.id_file;
-                        //    }
-                        //    else
-                        //    {
-                        //        foreach (var fonte in normaOv.fontes)
-                        //        {
-                        //            if (!string.IsNullOrEmpty(fonte.ar_fonte.id_file))
-                        //            {
-                        //                _id_file = fonte.ar_fonte.id_file;
-                        //            }
-                        //        }
-                        //    }
-                        //}
                         var docRn = new Doc(_nm_base);
                         var docOv = docRn.doc(_id_file);
                         if (docOv.id_file != null)
@@ -58,17 +38,46 @@ namespace TCDF.Sinj.Portal.Web
                             var file = docRn.download(_id_file);
                             if (file != null && file.Length > 0)
                             {
-                                //var log_arquivo = new LogDownload
-                                //{
-                                //    arquivo = new ArquivoOV { filename = docOv.filename, filesize = docOv.filesize, id_file = docOv.id_file, mimetype = docOv.mimetype }
-                                //};
-                                //LogOperacao.gravar_operacao("DWN", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-                                Response.Clear();
-                                Response.ContentType = docOv.mimetype;
-                                Response.AppendHeader("Content-Length", file.Length.ToString());
-                                Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
-                                Response.BinaryWrite(file);
-                                Response.Flush();
+                                var log_arquivo = new LogDownload
+                                {
+                                    arquivo = new ArquivoOV { filename = docOv.filename, filesize = docOv.filesize, id_file = docOv.id_file, mimetype = docOv.mimetype }
+                                };
+                                LogOperacao.gravar_operacao("DWN", log_arquivo, "", "");
+
+                                if (_nm_base == "sinj_norma" || _nm_base == "sinj_arquivo_versionado_norma")
+                                {
+
+                                    var msg = Encoding.UTF8.GetString(file);
+                                    if (msg.IndexOf("<h1 epigrafe") > -1)
+                                    {
+                                        msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
+                                    }
+                                    else
+                                    {
+                                        Encoding wind1252 = Encoding.GetEncoding(1252);
+                                        Encoding utf8 = Encoding.UTF8;
+                                        byte[] wind1252Bytes = file;
+                                        byte[] utfBytes = Encoding.Convert(wind1252, utf8, wind1252Bytes);
+                                        msg = utf8.GetString(utfBytes);
+                                    }
+
+
+                                    div_texto.InnerHtml = msg;
+                                }
+                                else if (_nm_base == "sinj_arquivo" && docOv.mimetype.IndexOf("html") > -1)
+                                {
+                                    var msg = Encoding.UTF8.GetString(file);
+                                    div_texto.InnerHtml = msg;
+                                }
+                                else
+                                {
+                                    Response.Clear();
+                                    Response.ContentType = docOv.mimetype;
+                                    Response.AppendHeader("Content-Length", file.Length.ToString());
+                                    Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
+                                    Response.BinaryWrite(file);
+                                    Response.Flush();
+                                }
                             }
                             else
                             {

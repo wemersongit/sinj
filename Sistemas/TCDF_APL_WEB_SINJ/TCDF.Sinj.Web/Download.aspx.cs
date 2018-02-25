@@ -34,27 +34,6 @@ namespace TCDF.Sinj.Web
                 {
                     if (!string.IsNullOrEmpty(_id_file))
                     {
-                        //if (_nm_base == "norma")
-                        //{
-                        //    _nm_base = "sinj_norma";
-                        //    //nesse contexto o id_file é na verdade ch_norma
-                        //    var normaOv = new NormaRN().Doc(_id_file);
-
-                        //    if (!string.IsNullOrEmpty(normaOv.ar_atualizado.id_file))
-                        //    {
-                        //        _id_file = normaOv.ar_atualizado.id_file;
-                        //    }
-                        //    else
-                        //    {
-                        //        foreach (var fonte in normaOv.fontes)
-                        //        {
-                        //            if (!string.IsNullOrEmpty(fonte.ar_fonte.id_file))
-                        //            {
-                        //                _id_file = fonte.ar_fonte.id_file;
-                        //            }
-                        //        }
-                        //    }
-                        //}
                         var docRn = new Doc(_nm_base);
                         var docOv = docRn.doc(_id_file);
                         if (docOv.id_file != null)
