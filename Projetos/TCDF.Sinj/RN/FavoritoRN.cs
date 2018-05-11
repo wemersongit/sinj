@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-using TCDF.Sinj.ESUtil;
+using TCDF.Sinj.ES;
 using TCDF.Sinj.AD;
 
 namespace TCDF.Sinj.RN

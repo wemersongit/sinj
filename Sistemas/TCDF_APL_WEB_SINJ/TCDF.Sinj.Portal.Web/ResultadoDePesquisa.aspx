@@ -17,10 +17,10 @@
                 <a href="javascript:void(0);" onclick="javascript:RelatorioPDF();" title="Salvar planilha" id="a_relatorio"><img alt="xls" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_xls_p.png"/></a>
             </div>
             <form id="form_highlight" name="form_highlight" method="post" action="#" onsubmit="return fn_submit_highlight()">
-                <div id="tabs_pesquisa" class="tabs_datatable"></div>
+                <div id="tabs_pesquisa" class="tabs_datatable both"></div>
                 <input type="hidden" name="highlight" id="highlight" value="" />
+                </div>
             </form>
-
         </div>
     </div>
     <form id="form_relatorio" name="form_relatorio" action="./RelatorioDePesquisa.aspx" method="post" target="iframe_relatorio"></form>

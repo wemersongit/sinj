@@ -75,9 +75,12 @@
     <Compile Include="AD\TipoDeRelacaoAD.cs" />
     <Compile Include="AD\UsuarioAD.cs" />
     <Compile Include="AD\VocabularioAD.cs" />
-    <Compile Include="ESUtil\AD.cs" />
-    <Compile Include="ESUtil\Doc.cs" />
-    <Compile Include="ESUtil\Model.cs" />
+    <Compile Include="ES\AD.cs" />
+    <Compile Include="ES\DiarioBuscaEs.cs" />
+    <Compile Include="ES\Doc.cs" />
+    <Compile Include="ES\Model.cs" />
+    <Compile Include="ES\NormaBuscaEs.cs" />
+    <Compile Include="ES\UtilBuscaEs.cs" />
     <Compile Include="Excecoes.cs" />
     <Compile Include="LB.cs" />
     <Compile Include="Log\AD\log_acessoAD.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="OV\ExcluidoOV.cs" />
     <Compile Include="OV\GrupoTipoDeNormaEnum.cs" />
     <Compile Include="OV\HistoricoDePesquisaOV.cs" />
+    <Compile Include="ES\BuscaEs.cs" />
     <Compile Include="OV\OrgaoCadastradorOV.cs" />
     <Compile Include="OV\PerfilOV.cs" />
     <Compile Include="OV\NotifiquemeOV.cs" />
@@ -119,7 +123,7 @@
     <Compile Include="OV\InteressadoOV.cs" />
     <Compile Include="OV\NormaOV.cs" />
     <Compile Include="OV\OrgaoOV.cs" />
-    <Compile Include="OV\PesquisaSinjOV.cs" />
+    <Compile Include="OV\PesquisaSinj.cs" />
     <Compile Include="OV\ProcuradorOV.cs" />
     <Compile Include="OV\RelatorOV.cs" />
     <Compile Include="OV\RequerenteOV.cs" />
@@ -138,7 +142,7 @@
     <Compile Include="OV\UsuarioOV.cs" />
     <Compile Include="OV\VideOV.cs" />
     <Compile Include="OV\VocabularioOV.cs" />
-    <Compile Include="ES.cs" />
+    <Compile Include="ES\ES.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RN\AmbitoRN.cs" />
     <Compile Include="RN\ArquivoVersionadoNormaRN.cs" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-using TCDF.Sinj.ESUtil;
+using TCDF.Sinj.ES;
 
 namespace TCDF.Sinj.AD
 {
@@ -170,7 +170,7 @@ namespace TCDF.Sinj.AD
             var query = "";
             var url_es = MontarUrl(context);
             query = MontarConsulta(context);
-            return new ES().PesquisarDocs<T>(query, url_es);
+            return new ESAd().PesquisarDocs<T>(query, url_es);
         }
 
         public string PesquisarTotalEs(HttpContext context)

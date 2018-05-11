@@ -55,9 +55,9 @@ var _columns_norma_es = [
 	        if (!IsNotNullOrEmpty(window.aHighlight)) {
 	            aHighlight = [];
 	        }
-	        aHighlight.push({ highlight: full.highlight, nm_base: 'sinj_norma', doc: full.fields.partial[0]._metadata.id_doc, action: './DetalhesDeNorma.aspx?id_norma=' + full.fields.partial[0].ch_norma });
-	        return '<a valor="sinj_norma_' + full.fields.partial[0]._metadata.id_doc + '" title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(\'sinj_norma_' + full.fields.partial[0]._metadata.id_doc + '\');"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /></a>';
-	        //        return '<input class="check_cesta" type="checkbox" value="sinj_norma_' + full.fields.partial[0]._metadata.id_doc + '" />';
+	        aHighlight.push({ highlight: full.highlight, nm_base: 'sinj_norma', doc: full._source._metadata.id_doc, action: './DetalhesDeNorma.aspx?id_norma=' + full._source.ch_norma });
+	        return '<a valor="sinj_norma_' + full._source._metadata.id_doc + '" title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(\'sinj_norma_' + full._source._metadata.id_doc + '\');"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /></a>';
+	        //        return '<input class="check_cesta" type="checkbox" value="sinj_norma_' + full._source._metadata.id_doc + '" />';
 	    }
 	},
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Relevância", "sWidth": "", "sClass": "grid-cell ws", "mData": "_score", "visible": false,
@@ -67,31 +67,31 @@ var _columns_norma_es = [
 	},
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo e Número", "sWidth": "", "sClass": "grid-cell ws nm_tipo_norma nr_norma", "mData": "nm_tipo_norma", "visible": false,
 	    "mRender": function (data, type, full) {
-	        return '<button title="Detalhes" name="btn" type="submit" title="Detalhes" class="link" onclick="javascript:doc_clicked=' + full.fields.partial[0]._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2>' + full.fields.partial[0].nm_tipo_norma + " " + full.fields.partial[0].nr_norma + '</H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>';
+	        return '<button title="Detalhes" name="btn" type="submit" title="Detalhes" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2>' + full._source.nm_tipo_norma + " " + full._source.nr_norma + '</H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>';
 	    }
 	},
 	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Assinatura", "sWidth": "", "sClass": "grid-cell ws dt_assinatura", "mData": "dt_assinatura", "visible": false,
 	    "mRender": function (data, type, full) {
-	        return full.fields.partial[0].dt_assinatura;
+	        return full._source.dt_assinatura;
 	    }
 	},
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Origem", "sWidth": "", "sClass": "grid-cell ws sg_orgao", "mData": "origens", "bSortable": false, "visible": false,
 	    "mRender": function (data, type, full) {
 	        var origens = "";
-	        for (var i = 0; i < full.fields.partial[0].origens.length; i++) {
-	            origens += (origens != "" ? "<br/>" : "") + '<a href="javascript:void(0)" onclick="javascript:CriarModalDescricaoOrigem(\'' + full.fields.partial[0].origens[i].ch_orgao + '\')">' + full.fields.partial[0].origens[i].sg_orgao + '</a>';
+	        for (var i = 0; i < full._source.origens.length; i++) {
+	            origens += (origens != "" ? "<br/>" : "") + '<a href="javascript:void(0)" onclick="javascript:CriarModalDescricaoOrigem(\'' + full._source.origens[i].ch_orgao + '\')">' + full._source.origens[i].sg_orgao + '</a>';
 	        }
 	        return origens;
 	    }
 	},
 	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Ementa", "sWidth": "", "sClass": "grid-cell ws ds_ementa max-w-30-pc", "mData": "ds_ementa", "bSortable": false, "visible": false,
 	    "mRender": function (data, type, full) {
-	        return full.fields.partial[0].ds_ementa;
+	        return full._source.ds_ementa;
 	    }
 	},
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Situação", "sWidth": "", "sClass": "center ws nm_situacao", "mData": "nm_situacao", "visible": false,
 	    "mRender": function (data, type, full) {
-	        return full.fields.partial[0].nm_situacao;
+	        return full._source.nm_situacao;
 	    }
 	},
 	{ "indice": 5, "isControl": false, "standard_view": true, "sTitle": "Texto Integral", "sWidth": "10%", "sClass": "left ws all", "bSortable": false, "visible": false,
@@ -99,16 +99,16 @@ var _columns_norma_es = [
 	        var id_file = "";
 	        var links = "";
 	        var medida = "";
-	        if (IsNotNullOrEmpty(full.fields.partial[0].ar_atualizado, 'id_file')) {
-	            id_file = full.fields.partial[0].ar_atualizado.id_file;
-	            medida = '<br/><b>' + (full.fields.partial[0].ar_atualizado.filesize / 1024).toFixed(0) + ' KB</b><br/>';
+	        if (IsNotNullOrEmpty(full._source.ar_atualizado, 'id_file')) {
+	            id_file = full._source.ar_atualizado.id_file;
+	            medida = '<br/><b>' + (full._source.ar_atualizado.filesize / 1024).toFixed(0) + ' KB</b><br/>';
 	        }
-	        else if (IsNotNullOrEmpty(full.fields.partial[0].fontes) && full.fields.partial[0].fontes.length > 0 && IsNotNullOrEmpty(full.fields.partial[0].fontes[0].ar_fonte, 'id_file')) {
-	            id_file = full.fields.partial[0].fontes[0].ar_fonte.id_file;
-	            medida = '<br/><b>' + (full.fields.partial[0].fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB</b><br/>';
+	        else if (IsNotNullOrEmpty(full._source.fontes) && full._source.fontes.length > 0 && IsNotNullOrEmpty(full._source.fontes[0].ar_fonte, 'id_file')) {
+	            id_file = full._source.fontes[0].ar_fonte.id_file;
+	            medida = '<br/><b>' + (full._source.fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB</b><br/>';
 	        }
 	        if (IsNotNullOrEmpty(id_file)) {
-	            links = '<a title="baixar arquivo" target="_blank" href="./BaixarArquivoNorma.aspx?id_norma=' + full.fields.partial[0].ch_norma + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" /></a>';
+	            links = '<a title="baixar arquivo" target="_blank" href="./BaixarArquivoNorma.aspx?id_norma=' + full._source.ch_norma + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" /></a>';
 	            if (_aplicacao == "CADASTRO") {
 	                links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" /></a>';
 	            }
@@ -122,12 +122,12 @@ var _columns_norma_es = [
 	        var html = '<div class="table w-100-pc">';
 	        html += '<div class="line">' +
                 '<div class="column">' +
-	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full.fields.partial[0]._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full.fields.partial[0].nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full.fields.partial[0].nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full.fields.partial[0].dt_assinatura + ' <span class="st_norma nm_situacao">' + full.fields.partial[0].nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
+	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
 	            '</div>' +
             '</div>';
 	        var origens = "";
-	        for (var i = 0; i < full.fields.partial[0].origens.length; i++) {
-	            origens += (origens != "" ? "<br/>" : "") + full.fields.partial[0].origens[i].sg_orgao + ' - ' + full.fields.partial[0].origens[i].nm_orgao;
+	        for (var i = 0; i < full._source.origens.length; i++) {
+	            origens += (origens != "" ? "<br/>" : "") + full._source.origens[i].sg_orgao + ' - ' + full._source.origens[i].nm_orgao;
 	        }
 	        html += '<div class="line">' +
                 '<div class="column w-10-pc">' +
@@ -142,24 +142,24 @@ var _columns_norma_es = [
 	                '<label>Ementa:</label>' +
 	            '</div>' +
                 '<div class="column w-90-pc text-justify ds_ementa">' +
-	                full.fields.partial[0].ds_ementa +
+	                full._source.ds_ementa +
 	            '</div>' +
             '</div>';
 
 	        var id_file = "";
-	        var nm_file = getTitleNorma(full.fields.partial[0]);
+	        var nm_file = getTitleNorma(full._source);
 	        var links = "";
 	        var url_file = '';
 	        var medida = "";
-	        if (IsNotNullOrEmpty(full.fields.partial[0].ar_atualizado, 'id_file')) {
-	            id_file = full.fields.partial[0].ar_atualizado.id_file;
-	            url_file = './Norma/' + full.fields.partial[0].ch_norma + '/' + nm_file;
-	            medida = '<b>(' + (full.fields.partial[0].ar_atualizado.filesize / 1024).toFixed(0) + ' KB)</b>';
+	        if (IsNotNullOrEmpty(full._source.ar_atualizado, 'id_file')) {
+	            id_file = full._source.ar_atualizado.id_file;
+	            url_file = './Norma/' + full._source.ch_norma + '/' + nm_file;
+	            medida = '<b>(' + (full._source.ar_atualizado.filesize / 1024).toFixed(0) + ' KB)</b>';
 	        }
-	        else if (IsNotNullOrEmpty(full.fields.partial[0].fontes) && full.fields.partial[0].fontes.length > 0 && IsNotNullOrEmpty(full.fields.partial[0].fontes[0].ar_fonte, 'id_file')) {
-	            id_file = full.fields.partial[0].fontes[0].ar_fonte.id_file;
-	            url_file = './Norma/' + full.fields.partial[0].ch_norma + '/' + nm_file;
-	            medida = '<b>(' + (full.fields.partial[0].fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB)</b>';
+	        else if (IsNotNullOrEmpty(full._source.fontes) && full._source.fontes.length > 0 && IsNotNullOrEmpty(full._source.fontes[0].ar_fonte, 'id_file')) {
+	            id_file = full._source.fontes[0].ar_fonte.id_file;
+	            url_file = './Norma/' + full._source.ch_norma + '/' + nm_file;
+	            medida = '<b>(' + (full._source.fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB)</b>';
 	        }
 	        if (IsNotNullOrEmpty(url_file)) {
 	            links = '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" width="20px" /> ' + medida + '</a>';
@@ -186,19 +186,19 @@ var _columns_norma_es = [
 var _columns_norma_favoritos = _columns_norma_es.slice(0);
 _columns_norma_favoritos[0] = { "indice": 0, "isControl": true, "standard_view": true, "sTitle": ' ', "sWidth": "30px", "sClass": "grid-cell ws", "mData": "", "bSortable": false,
         "mRender": function (data, type, full) {
-            return '<div class="button_favoritos_' + full.fields.partial[0].ch_norma + '" style="width:30px;"><a href="javascript:void(0);" title="Remover da lista de favoritos" onclick="javascript:RemoverFavoritos(\'.button_favoritos_' + full.fields.partial[0].ch_norma + '\',\'norma_' + full.fields.partial[0].ch_norma + '\');" ><img alt="*" src="' + _urlPadrao + '/Imagens/ico_del_fav.png" /></a></div>';
+            return '<div class="button_favoritos_' + full._source.ch_norma + '" style="width:30px;"><a href="javascript:void(0);" title="Remover da lista de favoritos" onclick="javascript:RemoverFavoritos(\'.button_favoritos_' + full._source.ch_norma + '\',\'norma_' + full._source.ch_norma + '\');" ><img alt="*" src="' + _urlPadrao + '/Imagens/ico_del_fav.png" /></a></div>';
     }
 };
 _columns_norma_favoritos[8].mRender = function (data, type, full) {
     var html = '<div class="table w-100-pc">';
 	html += '<div class="line">' +
         '<div class="column">' +
-	        '<H2><a title="Detalhes" class="clear" href="./DetalhesDeNorma.aspx?id_norma=' + full.fields.partial[0].ch_norma + '"><span class="nm_tipo_norma">' + full.fields.partial[0].nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full.fields.partial[0].nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full.fields.partial[0].dt_assinatura + ' <span class="st_norma nm_situacao">' + full.fields.partial[0].nm_situacao + '</span> <img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </a></H2>' +
+	        '<H2><a title="Detalhes" class="clear" href="./DetalhesDeNorma.aspx?id_norma=' + full._source.ch_norma + '"><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span> <img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </a></H2>' +
 	    '</div>' +
     '</div>';
 	var origens = "";
-	for (var i = 0; i < full.fields.partial[0].origens.length; i++) {
-	    origens += (origens != "" ? "<br/>" : "") + full.fields.partial[0].origens[i].sg_orgao + ' - ' + full.fields.partial[0].origens[i].nm_orgao;
+	for (var i = 0; i < full._source.origens.length; i++) {
+	    origens += (origens != "" ? "<br/>" : "") + full._source.origens[i].sg_orgao + ' - ' + full._source.origens[i].nm_orgao;
 	}
 	html += '<div class="line">' +
         '<div class="column w-10-pc">' +
@@ -213,24 +213,24 @@ _columns_norma_favoritos[8].mRender = function (data, type, full) {
 	        '<label>Ementa:</label>' +
 	    '</div>' +
         '<div class="column w-90-pc text-justify ds_ementa">' +
-	        full.fields.partial[0].ds_ementa +
+	        full._source.ds_ementa +
 	    '</div>' +
     '</div>';
 
 	var id_file = "";
-	var nm_file = getTitleNorma(full.fields.partial[0]);
+	var nm_file = getTitleNorma(full._source);
 	var links = "";
 	var url_file = '';
 	var medida = "";
-	if (IsNotNullOrEmpty(full.fields.partial[0].ar_atualizado, 'id_file')) {
-	    id_file = full.fields.partial[0].ar_atualizado.id_file;
-	    url_file = './Norma/' + full.fields.partial[0].ch_norma + '/' + nm_file;
-	    medida = '<b>(' + (full.fields.partial[0].ar_atualizado.filesize / 1024).toFixed(0) + ' KB)</b>';
+	if (IsNotNullOrEmpty(full._source.ar_atualizado, 'id_file')) {
+	    id_file = full._source.ar_atualizado.id_file;
+	    url_file = './Norma/' + full._source.ch_norma + '/' + nm_file;
+	    medida = '<b>(' + (full._source.ar_atualizado.filesize / 1024).toFixed(0) + ' KB)</b>';
 	}
-	else if (IsNotNullOrEmpty(full.fields.partial[0].fontes) && full.fields.partial[0].fontes.length > 0 && IsNotNullOrEmpty(full.fields.partial[0].fontes[0].ar_fonte, 'id_file')) {
-	    id_file = full.fields.partial[0].fontes[0].ar_fonte.id_file;
-	    url_file = './Norma/' + full.fields.partial[0].ch_norma + '/' + nm_file;
-	    medida = '<b>(' + (full.fields.partial[0].fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB)</b>';
+	else if (IsNotNullOrEmpty(full._source.fontes) && full._source.fontes.length > 0 && IsNotNullOrEmpty(full._source.fontes[0].ar_fonte, 'id_file')) {
+	    id_file = full._source.fontes[0].ar_fonte.id_file;
+	    url_file = './Norma/' + full._source.ch_norma + '/' + nm_file;
+	    medida = '<b>(' + (full._source.fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB)</b>';
 	}
 	if (IsNotNullOrEmpty(url_file)) {
 	    links = '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" width="20px" /> ' + medida + '</a>';
@@ -265,8 +265,8 @@ _columns_norma_cesta[0] = {
         if (!IsNotNullOrEmpty(window.aHighlight)) {
             aHighlight = [];
         }
-        aHighlight.push({ highlight: full.highlight, nm_base: 'sinj_norma', doc: full.fields.partial[0]._metadata.id_doc, action: './DetalhesDeNorma.aspx?id_norma=' + full.fields.partial[0].ch_norma });
-        return "<a title='Remover da Cesta' href='javascript:ExcluirDaCesta(\"sinj_norma_" + full.fields.partial[0]._metadata.id_doc + "\");' class='a_delete' ><img valign='absmiddle' alt='Excluir'  src='" + _urlPadrao + "/Imagens/ico_trash_p.png'  /></a>";
+        aHighlight.push({ highlight: full.highlight, nm_base: 'sinj_norma', doc: full._source._metadata.id_doc, action: './DetalhesDeNorma.aspx?id_norma=' + full._source.ch_norma });
+        return "<a title='Remover da Cesta' href='javascript:ExcluirDaCesta(\"sinj_norma_" + full._source._metadata.id_doc + "\");' class='a_delete' ><img valign='absmiddle' alt='Excluir'  src='" + _urlPadrao + "/Imagens/ico_trash_p.png'  /></a>";
     }
 };
 
@@ -343,14 +343,14 @@ var _columns_diario = [
 	}
 ];
 
-	var _columns_diario_es = [
+var _columns_diario_es = [
 	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "", "bSortable": false,
 	    "mRender": function (data, type, full) {
 	        if (!IsNotNullOrEmpty(window.aHighlight)) {
 	            aHighlight = [];
 	        }
-	        aHighlight.push({ highlight: full.highlight, nm_base: 'sinj_diario', doc: full.fields.partial[0]._metadata.id_doc, action: "./DetalhesDeDiario.aspx?id_doc=" + full.fields.partial[0]._metadata.id_doc });
-	        return '<a valor="sinj_diario_' + full.fields.partial[0]._metadata.id_doc + '" title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(\'sinj_diario_' + full.fields.partial[0]._metadata.id_doc + '\');"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /></a>';
+	        aHighlight.push({ highlight: full.highlight, nm_base: 'sinj_diario', doc: full._source._metadata.id_doc, action: "./DetalhesDeDiario.aspx?id_doc=" + full._source._metadata.id_doc });
+	        return '<a valor="sinj_diario_' + full._source._metadata.id_doc + '" title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(\'sinj_diario_' + full._source._metadata.id_doc + '\');"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /></a>';
 	    }
 	},
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Relevância", "sWidth": "", "sClass": "grid-cell ws", "mData": "_score", "visible": false,
@@ -360,22 +360,22 @@ var _columns_diario = [
 	},
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo", "sWidth": "", "sClass": "grid-cell ws nm_tipo_fonte", "mData": "nm_tipo_fonte", "visible": false,
 	    "mRender": function (data, type, full) {
-	        return full.fields.partial[0].nm_tipo_fonte;
+	        return full._source.nm_tipo_fonte;
 	    }
 	},
 	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Número", "sWidth": "", "sClass": "grid-cell ws nr_diario", "mData": "nr_diario", "visible": false,
 	    "mRender": function (data, type, full) {
-	        return full.fields.partial[0].nr_diario + (IsNotNullOrEmpty(full.fields.partial[0].cr_diario) ? " " + full.fields.partial[0].cr_diario : "");
+	        return full._source.nr_diario + (IsNotNullOrEmpty(full._source.cr_diario) ? " " + full._source.cr_diario : "");
 	    }
 	},
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Seção", "sWidth": "", "sClass": "grid-cell ws secao_diario", "mData": "secao_diario", "visible": false,
 	    "mRender": function (data, type, full) {
-	        return getVal(full.fields.partial[0].secao_diario);
+	        return getVal(full._source.secao_diario);
 	    }
 	},
 	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Data de Publicação", "sWidth": "", "sClass": "grid-cell ws dt_assinatura", "mData": "dt_assinatura", "visible": false,
 	    "mRender": function (data, type, full) {
-	        return full.fields.partial[0].dt_assinatura;
+	        return full._source.dt_assinatura;
 	    }
 	},
 	{ "indice": 5, "isControl": false, "standard_view": true, "sTitle": "Texto Integral", "sWidth": "", "sClass": "left ws all", "mData": "", "bSortable": false, "visible": false,
@@ -387,9 +387,9 @@ var _columns_diario = [
     { "indice": 6, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "left ws", "bSortable": false,
         "mRender": function (data, type, full) {
             var html = '<div class="table w-100-pc">';
-            var buttonTitle = '<H2><span class="nm_tipo_fonte nr_diario dt_assinatura dt_assinatura_text nm_diferencial_edicao nm_tipo_edicao nm_diferencial_suplemento secao_diario">' + montarDescricaoDiario(full.fields.partial[0]) + '</span></H2>';
+            var buttonTitle = '<H2><span class="nm_tipo_fonte nr_diario dt_assinatura dt_assinatura_text nm_diferencial_edicao nm_tipo_edicao nm_diferencial_suplemento secao_diario">' + montarDescricaoDiario(full._source) + '</span></H2>';
             if (_aplicacao == "CADASTRO") {
-                buttonTitle = '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full.fields.partial[0]._metadata.id_doc + ';base_clicked=\'sinj_diario\'">' + buttonTitle + '<img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></button>';
+                buttonTitle = '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_diario\'">' + buttonTitle + '<img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></button>';
             }
             html += '<div class="line">' +
                 '<div class="column">' + buttonTitle + '</div>' +
@@ -400,26 +400,26 @@ var _columns_diario = [
             var links = "";
             var url_file = '';
             var medida = "";
-            if (IsNotNullOrEmpty(full.fields.partial[0], 'ar_diario.id_file')) {
-                id_file = full.fields.partial[0].ar_diario.id_file;
-                nm_file = full.fields.partial[0].ar_diario.filename;
-                url_file = './Diario/' + full.fields.partial[0].ch_diario + '/' + id_file + '/arq/' + nm_file;
+            if (IsNotNullOrEmpty(full._source, 'ar_diario.id_file')) {
+                id_file = full._source.ar_diario.id_file;
+                nm_file = full._source.ar_diario.filename;
+                url_file = './Diario/' + full._source.ch_diario + '/' + id_file + '/arq/' + nm_file;
                 campo_highlight = MontarHighlight(full.highlight, 'ar_diario.filetext');
-                medida = '<b>(' + (full.fields.partial[0].ar_diario.filesize / 1024).toFixed(0) + ' KB)</b>';
+                medida = '<b>(' + (full._source.ar_diario.filesize / 1024).toFixed(0) + ' KB)</b>';
 
                 links = '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /> ' + medida + '</a>';
                 if (_aplicacao == "CADASTRO") {
-                    links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoDiario.aspx?id_file=' + full.fields.partial[0].ar_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" height="20px" /></a>';
+                    links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoDiario.aspx?id_file=' + full._source.ar_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" height="20px" /></a>';
                 }
             }
             else {
                 campo_highlight = MontarHighlight(full.highlight, 'arquivos.arquivo_diario.filetext');
-                for (var i = 0; i < full.fields.partial[0].arquivos.length; i++) {
-                    var obj_arquivo = full.fields.partial[0].arquivos[i];
+                for (var i = 0; i < full._source.arquivos.length; i++) {
+                    var obj_arquivo = full._source.arquivos[i];
 
                     id_file = obj_arquivo.arquivo_diario.id_file;
                     nm_file = obj_arquivo.arquivo_diario.filename;
-                    url_file = './Diario/' + full.fields.partial[0].ch_diario + '/' + id_file + '/arq/' + i + '/' + nm_file;
+                    url_file = './Diario/' + full._source.ch_diario + '/' + id_file + '/arq/' + i + '/' + nm_file;
                     medida = '<b>(' + (obj_arquivo.arquivo_diario.filesize / 1024).toFixed(0) + ' KB)</b>';
 
                     links += '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /> ' + medida + '</a>';
@@ -498,7 +498,7 @@ var _columns_texto_diario = [
 var _columns_diario_cesta = _columns_diario_es.slice(0);
 _columns_diario_cesta[0] = { "indice": 0, "isControl": true, "standard_view": true, "sTitle": " ", "sWidth": "110px", "sClass": "center ws all", "mData": "", "bSortable": false,
     "mRender": function (data, type, full) {
-        return "<a title='Remover da Cesta' href='javascript:ExcluirDaCesta(\"sinj_diario_" + full.fields.partial[0]._metadata.id_doc + "\");' class='a_delete' ><img valign='absmiddle' alt='Excluir'  src='" + _urlPadrao + "/Imagens/ico_trash_p.png'  /></a>";
+        return "<a title='Remover da Cesta' href='javascript:ExcluirDaCesta(\"sinj_diario_" + full._source._metadata.id_doc + "\");' class='a_delete' ><img valign='absmiddle' alt='Excluir'  src='" + _urlPadrao + "/Imagens/ico_trash_p.png'  /></a>";
     }
 };
 

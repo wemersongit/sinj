@@ -72,13 +72,13 @@ namespace TCDF.Sinj.Portal.Web
                             title = normaOv.getDescricaoDaNorma();
                             if (docOv.mimetype.IndexOf("html") > -1)
                             {
-                                Page.Title = _title;
+                                Page.Title = title;
                                 HtmlMeta html_meta_keywords = new HtmlMeta();
                                 html_meta_keywords.Name = "keywords";
-                                html_meta_keywords.Content = "sinj, distrito, federal, df," + Page.Title;
+                                html_meta_keywords.Content = Page.Title + ",sinj,distrito,federal,df";
                                 HtmlMeta html_meta_description = new HtmlMeta();
                                 html_meta_description.Name = "description";
-                                html_meta_description.Content = "Arquivo de " + Page.Title + " disponibilizado pelo SINJ-DF (Sistema Integrado de Normas Jurídicas do Distrito Federal).";
+                                html_meta_description.Content = Page.Title + " - texto vigente disponibilizado pelo SINJ-DF (Sistema Integrado de Normas Jurídicas do Distrito Federal).";
 
                                 placeHolderHeader.Controls.Add(html_meta_keywords);
                                 placeHolderHeader.Controls.Add(html_meta_description);

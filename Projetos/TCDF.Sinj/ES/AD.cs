@@ -5,7 +5,7 @@ using System.Text;
 using util.BRLight;
 using neo.BRLightREST;
 
-namespace TCDF.Sinj.ESUtil
+namespace TCDF.Sinj.ES
 {
     internal class AD
     {

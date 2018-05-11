@@ -5,7 +5,7 @@ using System.Web;
 using util.BRLight;
 using Newtonsoft.Json;
 using TCDF.Sinj.Log;
-using TCDF.Sinj.ESUtil;
+using TCDF.Sinj.ES;
 
 namespace TCDF.Sinj.Web.ashx.Reindexacao
 {

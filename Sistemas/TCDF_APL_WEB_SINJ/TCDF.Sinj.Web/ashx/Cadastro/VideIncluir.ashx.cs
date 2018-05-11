@@ -154,6 +154,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             vide_alterador.ch_tipo_norma_vide = normaAlteradaOv.ch_tipo_norma;
                             vide_alterador.nm_tipo_norma_vide = normaAlteradaOv.nm_tipo_norma;
                             vide_alterador.nr_norma_vide = normaAlteradaOv.nr_norma;
+                            if (vide_alterador.nr_norma_vide == "0")
+                            {
+                                vide_alterador.nr_norma_vide = "";
+                            }
                             vide_alterador.dt_assinatura_norma_vide = normaAlteradaOv.dt_assinatura;
                             if (Convert.ToDateTime(normaAlteradaOv.dt_assinatura) > Convert.ToDateTime(normaAlteradoraOv.dt_assinatura))
                             {
@@ -230,6 +234,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 vide_alterada.ch_tipo_norma_vide = normaAlteradoraOv.ch_tipo_norma;
                                 vide_alterada.nm_tipo_norma_vide = normaAlteradoraOv.nm_tipo_norma;
                                 vide_alterada.nr_norma_vide = normaAlteradoraOv.nr_norma;
+                                if (vide_alterada.nr_norma_vide == "0")
+                                {
+                                    vide_alterada.nr_norma_vide = "";
+                                }
                                 vide_alterada.dt_assinatura_norma_vide = normaAlteradoraOv.dt_assinatura;
 
                                 vide_alterada.alinea_norma_vide = _alinea_norma_vide_alterada;
@@ -774,11 +782,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                                 if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
                                 {
-                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                                 }
                                 else
                                 {
-                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                                 }
                             }
                             else
@@ -790,11 +798,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                     ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
                                     if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
                                     {
-                                        replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s></p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                        replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s></p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                                     }
                                     else
                                     {
-                                        replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s> <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                        replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s> <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                                     }
                                 }
                             }
@@ -803,6 +811,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     if (Regex.Matches(texto, pattern).Count == 1)
                     {
                         texto = Regex.Replace(texto, pattern, replacement);
+                        //Resolve os bugs de <s><s>....
+                        texto = Regex.Replace(texto, "(<s>+)\\1+", "$1");
+                        texto = Regex.Replace(texto, "(</s>+)\\1+", "$1");
                         bAlterou = true;
                     }
                 }
@@ -943,11 +954,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             
                             if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
                             {
-                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                             }
                             else
                             {
-                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                             }
                         }
                         else
@@ -959,11 +970,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
                                 if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
                                 {
-                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s></p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s></p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                                 }
                                 else
                                 {
-                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value + "</s> <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s> <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                                 }
                             }
                         }
@@ -972,6 +983,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 if (Regex.Matches(texto, pattern).Count == 1)
                 {
                     texto = Regex.Replace(texto, pattern, replacement);
+                    //Resolve os bugs de <s><s>....
+                    texto = Regex.Replace(texto, "(<s>+)\\1+", "$1");
+                    texto = Regex.Replace(texto, "(</s>+)\\1+", "$1");
                     bAlterou = true;
                 }
                 if (!bAlterou)

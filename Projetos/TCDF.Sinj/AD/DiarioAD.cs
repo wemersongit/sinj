@@ -5,7 +5,7 @@ using util.BRLight;
 using System.Collections.Generic;
 using System;
 using System.Web;
-using TCDF.Sinj.ESUtil;
+using TCDF.Sinj.ES;
 
 namespace TCDF.Sinj.AD
 {
@@ -608,7 +608,20 @@ namespace TCDF.Sinj.AD
             var query = "";
             var url_es = MontarUrl(context);
             query = MontarConsulta(context);
-            return new ES().PesquisarDocs<DiarioOV>(query, url_es);
+            return new ESAd().PesquisarDocs<DiarioOV>(query, url_es);
+        }
+
+        public Result<DiarioOV> ConsultarEs(string query)
+        {
+            var url_es = new DocEs().GetUrlEs(_nm_base) + "/_search";
+            try
+            {
+                return _docEs.Pesquisar<DiarioOV>(query, url_es);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao pesquisar diários. url_es: " + url_es + ". query: " + query, ex);
+            }
         }
 
         public string PesquisarTotalEs(HttpContext context)
@@ -624,9 +637,23 @@ namespace TCDF.Sinj.AD
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao pesquisar Total. url_es: " + url_es + ". query: " + query, ex);
+                throw new Exception("Erro ao pesquisar total de diários. url_es: " + url_es + ". query: " + query, ex);
             }
         }
+
+        public string PesquisarTotalEs(string query)
+        {
+            var url_es = new DocEs().GetUrlEs(_nm_base) + "/_count";
+            try
+            {
+                return _docEs.CountEs(query, url_es);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao pesquisar total de diários. url_es: " + url_es + ". query: " + query, ex);
+            }
+        }
+
 
         #endregion
     }

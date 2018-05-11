@@ -212,17 +212,18 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
                 var nm_tipo_publicacao = '';
                 for (var i = 0; i < data.fontes.length; i++) {
                     nm_tipo_publicacao = data.fontes[i].nm_tipo_publicacao.toLowerCase();
-                    if (nm_tipo_publicacao == 'publicação' || nm_tipo_publicacao == 'pub') {
-                        ar_fonte = data.fontes[i].ar_fonte;
-                        iFonte = i;
-                        continue;
+                    if (IsNotNullOrEmpty(data.fontes[i].ar_fonte, 'id_file')) {
+                        if (nm_tipo_publicacao == 'publicação' || nm_tipo_publicacao == 'pub') {
+                            ar_fonte = data.fontes[i].ar_fonte;
+                            iFonte = i;
+                            continue;
+                        }
+                        if (nm_tipo_publicacao == 'republicação' || nm_tipo_publicacao == 'rep' || nm_tipo_publicacao == 'retificação' || nm_tipo_publicacao == 'ret') {
+                            ar_fonte = data.fontes[i].ar_fonte;
+                            iFonte = i;
+                            break;
+                        }
                     }
-                    if (nm_tipo_publicacao == 'republicação' || nm_tipo_publicacao == 'rep' || nm_tipo_publicacao == 'retificação' || nm_tipo_publicacao == 'ret') {
-                        ar_fonte = data.fontes[i].ar_fonte;
-                        iFonte = i;
-                        break;
-                    }
-                    //$('#arquivos_norma').append('<button class="clean" type="button" id_file="' + data.fontes[i].ar_fonte.id_file + '" filename="' + data.fontes[i].ar_fonte.filename + '" ch_norma="' + data.ch_norma + '" path="fontes/' + i + '" onclick="javascript:selecionarArquivoCaput(this)">' + data.fontes[i].ar_fonte.filename + ' <img src="' + _urlPadrao + '/Imagens/ico_check_p.png" /></button><br/>');
                 }
                 if (IsNotNullOrEmpty(ar_fonte, 'id_file')) {
                     $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma').append(ar_fonte.filename + ' <input type="checkbox" id_file="' + ar_fonte.id_file + '" filename="' + ar_fonte.filename + '" ch_norma="' + data.ch_norma + '" path="fontes/' + iFonte + '" ds_norma="' + getIdentificacaoDeNorma(data) + '" onchange="javascript:' + (id_button ? "selecionarArquivoCaputCopiar(\'" + id_button + "\', " : "selecionarArquivoCaput(") + 'this, \'' + nm_sufixo + '\')" style="vertical-align:middle;"><br/>');
@@ -231,7 +232,7 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
                     $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma input[type="checkbox"]').prop('checked', 'checked').change();
                 }
                 else {
-                    alert('Erro ao selecionar o arquivo de publicação da norma.');
+                    alert('Erro ao selecionar o arquivo de publicação da norma. Verifique se a norma possui arquivo em suas fontes de publicação e republicação.');
                 }
             }
             else {

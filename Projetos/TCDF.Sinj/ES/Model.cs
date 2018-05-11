@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TCDF.Sinj.ESUtil
+namespace TCDF.Sinj.ES
 {
     public class Result<T>
     {
@@ -12,6 +12,13 @@ namespace TCDF.Sinj.ESUtil
         public Shards _shards { get; set; }
         public Hits<T> hits { get; set; }
         public Dictionary<string, object> aggregations { get; set; }
+        public Dictionary<string, ResultFacet> facets { get; set; }
+    }
+
+    public class ResultFacet
+    {
+        public string _type { get; set; }
+        public ulong count { get; set; }
     }
 
     public class Aggregation

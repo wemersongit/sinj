@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using util.BRLight;
-using TCDF.Sinj.ESUtil;
+using TCDF.Sinj.ES;
 using System.Web;
 
 namespace TCDF.Sinj.RN
@@ -609,14 +609,15 @@ namespace TCDF.Sinj.RN
 
         #region ES
         
-        public Result<NormaOV> ConsultarEs(HttpContext context)
+
+        public Result<NormaOV> ConsultaEs(string query)
         {
-            return _normaAd.ConsultarEs(context);
+            return _normaAd.ConsultarEs(query);
         }
 
-        public string PesquisarTotalEs(HttpContext context)
+        public string PesquisarTotalEs(string query)
         {
-            return _normaAd.PesquisarTotalEs(context);
+            return _normaAd.PesquisarTotalEs(query);
         }
 
         #endregion

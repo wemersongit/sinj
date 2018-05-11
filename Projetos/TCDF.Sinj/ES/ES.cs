@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using TCDF.Sinj.OV;
-using TCDF.Sinj.ESUtil;
+using TCDF.Sinj.ES;
 using TCDF.Sinj.RN;
 using util.BRLight;
 
-namespace TCDF.Sinj
+namespace TCDF.Sinj.ES
 {
-    public class ES
+    public class ESAd
     {
         private DocEs _docEs;
 
-        public ES()
+        public ESAd()
         {
             _docEs = new DocEs();
         }

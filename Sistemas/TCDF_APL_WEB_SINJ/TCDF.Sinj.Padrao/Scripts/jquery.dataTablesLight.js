@@ -155,13 +155,20 @@ $(function () {
                     "stateLoadCallback": settings.fnStateLoadCallback
                 };
                 $.extend(tableOptions, options.jOptions);
-                var table = $("#" + settings.sIdTable).DataTable(tableOptions);
+                var tableLight = $("#" + settings.sIdTable).dataTable(tableOptions);
                 if (settings.bSelect) {
                     $('#' + settings.sIdTable + ' tbody').on('click', 'tr', function () {
-                        table.$('tr.selected').removeClass('selected');
+                        tableLight.$('tr.selected').removeClass('selected');
                         $(this).addClass('selected');
                     });
                 }
+                $("#" + settings.sIdTable + "_filter input").unbind().bind('keyup', function (e) {
+                    if (e.keyCode == 13) {
+                        $(e.target).blur();
+                    }
+                }).bind('blur', function (e) {
+                    tableLight.fnFilter(this.value);
+                });
             });
         }
     })(jQuery);

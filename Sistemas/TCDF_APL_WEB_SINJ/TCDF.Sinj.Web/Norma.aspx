@@ -51,11 +51,11 @@
             var pAfter = null;
             var aOrder = [];
             for (; i < length; i++) {
-                if ($('a', aP[i]).length == 1 && $('a', aP[i]).text().toLowerCase().indexOf('legislação correlata') == 0) {
-                    $('a', aP[i]).attr('show', '1').attr('leco', 'leco');
-                    aOrder.push({ 'text': $('a', aP[i]).text(), 'href': $('a', aP[i]).attr('href') });
+                if ($('a[href]', aP[i]).length == 1 && $('a[href]', aP[i]).text().toLowerCase().indexOf('legislação correlata') == 0) {
+                    $('a[href]', aP[i]).attr('show', '1').attr('leco', 'leco');
+                    aOrder.push({ 'text': $('a[href]', aP[i]).text(), 'href': $('a[href]', aP[i]).attr('href') });
                     if (i >= 3) {
-                        $('a', aP[i]).attr('show', '0');
+                        $('a[href]', aP[i]).attr('show', '0');
                         pAfter = aP[i];
                     }
                 }
@@ -71,18 +71,18 @@
                 o.href = aOrder[i].href;
             });
             if (pAfter != null && $('a[show="0"]').length > 3) {
-                $('a[show="0"]').hide();
+                $('a[show="0"]').closest('p').hide();
                 $('<p id="p_show"><a href="javascript:void(0);" onclick="exibirLinks()">Exibir mais...</a></p>').insertAfter($(pAfter));
                 $('<p id="p_hide" style="display:none"><a href="javascript:void(0);" onclick="esconderLinks()">Exibir menos...</a></p>').insertAfter($(pAfter));
             }
         }
         function exibirLinks() {
-            $('a[show="0"]').show();
+            $('a[show="0"]').closest('p').show();
             $('#p_hide').show();
             $('#p_show').hide();
         }
         function esconderLinks() {
-            $('a[show="0"]').hide();
+            $('a[show="0"]').closest('p').hide();
             $('#p_hide').hide();
             $('#p_show').show();
         }
@@ -158,7 +158,7 @@
 </head>
 <body>
     <div id="div_norma">
-        <a href="<%= ResolveUrl("~/") %>" title="Visitar o SINJ-DF - Sistema Integrado de Normas Jurídicas do DF"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj_10_anos.png" alt="SINJ-DF" /></a>
+        <a href="<%= ResolveUrl("~/") %>" title="Visitar o SINJ-DF - Sistema Integrado de Normas Jurídicas do DF"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="SINJ-DF" /></a>
         <div class="control">
             <div class="compilado">
                 <a href="javascript:void(0)" onclick="javascript:exibirAlteracoes(this);">

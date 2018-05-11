@@ -105,7 +105,7 @@ namespace TCDF.Sinj.OV
                     }
                     foreach (var fonte in fontes)
                     {
-                        if (!string.IsNullOrEmpty(fonte.ar_fonte.id_file) && (fonte.nm_tipo_publicacao.Equals("republicação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("retificação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("ret", StringComparison.InvariantCultureIgnoreCase)))
+                        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.id_file) && (fonte.nm_tipo_publicacao.Equals("republicação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("retificação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("ret", StringComparison.InvariantCultureIgnoreCase)))
                         {
                             id_file = fonte.ar_fonte.id_file;
                         }
@@ -159,7 +159,7 @@ namespace TCDF.Sinj.OV
                     }
                     foreach (var fonte in fontes)
                     {
-                        if (!string.IsNullOrEmpty(fonte.ar_fonte.filename) && (fonte.nm_tipo_publicacao.Equals("republicação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase)))
+                        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.filename) && (fonte.nm_tipo_publicacao.Equals("republicação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase)))
                         {
                             name_file = fonte.ar_fonte.filename;
                         }

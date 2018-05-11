@@ -14,8 +14,8 @@ $(document).ready(function () {
                 '<li nm="sinj_diario"><a class="aba" href="#div_resultado_diario" onclick="javascript:ClicarAba(\'sinj_diario\');">Diários <span id="total_sinj_diario" class="total"></span></a></li>' +
                 '<li nm="cesta"><a class="aba" href="#div_cesta" onclick="javascript:ClicarAba(\'cesta\');">Cesta <span id="total_cesta"></span> <img alt="cesta" style="height:14px; width:16px;" src="' + _urlPadrao + '/Imagens/ico_basket_p.png" /></a></li>' +
             '</ul>' +
-            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_norma" class="sort_datatable" >Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div></div>' +
-            '<div id="div_resultado_diario" class="result_datatable"><div id="div_sort_diario" class="sort_datatable">Ordenar por <select table="datatable_diarios" name="select_order_diario" onchange="javascript:selectOrder(\'datatable_diarios\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo (A-Z)</option><option value="2,desc">Tipo (Z-A)</option><option value="3,asc">Menor Número</option><option value="3,desc">Maior Número</option><option value="4,asc">Menor Seção</option><option value="4,desc">Maior Seção</option><option value="5,asc">Mais Antigos</option><option value="5,desc">Mais Recentes</option></select></div><div id="div_aggregations_diario" class="agg_datatable">' + montarFiltro("sinj_diario") + '</div><div id="div_datatable_diario" class="table_datatable"></div></div>' +
+            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_sinj_norma" class="sort_datatable" style="display:none;" >Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div><div id="div_sugestoes_sinj_norma"></div></div>' +
+            '<div id="div_resultado_diario" class="result_datatable"><div id="div_sort_sinj_diario" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_diarios" name="select_order_diario" onchange="javascript:selectOrder(\'datatable_diarios\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo (A-Z)</option><option value="2,desc">Tipo (Z-A)</option><option value="3,asc">Menor Número</option><option value="3,desc">Maior Número</option><option value="4,asc">Menor Seção</option><option value="4,desc">Maior Seção</option><option value="5,asc">Mais Antigos</option><option value="5,desc">Mais Recentes</option></select></div><div id="div_aggregations_diario" class="agg_datatable">' + montarFiltro("sinj_diario") + '</div><div id="div_datatable_diario" class="table_datatable"></div><div id="div_sugestoes_sinj_diario"></div></div>' +
             '<div id="div_cesta">' +
                 '<ul>' +
                     '<a href="javascript:void(0);" onclick="javascript:RelatorioPDF();" class="fr" title="Salvar planilha"><img alt="xls" src="' + _urlPadrao + '/Imagens/ico_xls_p.png"/></a>' +
@@ -35,7 +35,7 @@ $(document).ready(function () {
                 '<li nm="sinj_norma"><a class="aba" href="#div_resultado_norma" onclick="javascript:ClicarAba(\'sinj_norma\');">Normas <span id="total_sinj_norma" class="total"></span></a></li>' +
                 '<li nm="cesta"><a class="aba" href="#div_cesta" onclick="javascript:ClicarAba(\'cesta\');">Cesta</a></li>' +
             '</ul>' +
-            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_norma" class="sort_datatable">Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div></div>' +
+            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_sinj_norma" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div><div id="div_sugestoes_sinj_norma"></div></div>' +
             '<div id="div_cesta">' +
                 '<ul>' +
                     '<li nm="cesta_norma"><a class="a" href="#div_cesta_norma" onclick="javascript:ClicarAba(\'cesta_norma\')">Normas</a></li>' +
@@ -52,7 +52,7 @@ $(document).ready(function () {
                 '<li nm="sinj_diario"><a class="aba" href="#div_resultado_diario" onclick="javascript:ClicarAba(\'sinj_diario\');">Diários <span id="total_sinj_diario" class="total"></span></a></li>' +
                 '<li nm="cesta"><a class="aba" href="#div_cesta" onclick="javascript:ClicarAba(\'cesta\');">Cesta</a></li>' +
             '</ul>' +
-            '<div id="div_resultado_diario" class="result_datatable"><div id="div_sort_diario" class="sort_datatable">Ordenar por <select table="datatable_diarios" name="select_order_diario" onchange="javascript:selectOrder(\'datatable_diarios\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo (A-Z)</option><option value="2,desc">Tipo (Z-A)</option><option value="3,asc">Menor Número</option><option value="3,desc">Maior Número</option><option value="4,asc">Menor Seção</option><option value="4,desc">Maior Seção</option><option value="5,asc">Mais Antigos</option><option value="5,desc">Mais Recentes</option></select></div><div id="div_aggregations_diario" class="agg_datatable">' + montarFiltro("sinj_diario") + '</div><div id="div_datatable_diario" class="table_datatable"></div></div>' +
+            '<div id="div_resultado_diario" class="result_datatable"><div id="div_sort_sinj_diario" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_diarios" name="select_order_diario" onchange="javascript:selectOrder(\'datatable_diarios\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo (A-Z)</option><option value="2,desc">Tipo (Z-A)</option><option value="3,asc">Menor Número</option><option value="3,desc">Maior Número</option><option value="4,asc">Menor Seção</option><option value="4,desc">Maior Seção</option><option value="5,asc">Mais Antigos</option><option value="5,desc">Mais Recentes</option></select></div><div id="div_aggregations_diario" class="agg_datatable">' + montarFiltro("sinj_diario") + '</div><div id="div_datatable_diario" class="table_datatable"></div>' + (tipo_pesquisa == "diario" ? '<div id="div_sugestoes_sinj_diario"></div>' : '') + '</div>' +
             '<div id="div_cesta">' +
                 '<ul>' +
                     '<li nm="cesta_diario"><a class="a" href="#div_cesta_diario" onclick="javascript:ClicarAba(\'cesta_diario\')">Diários</a></li>' +
@@ -69,7 +69,7 @@ $(document).ready(function () {
                 '<li nm="sinj_norma"><a class="aba" href="#div_resultado_norma" onclick="javascript:ClicarAba(\'sinj_norma\');">Normas <span id="total_sinj_norma" class="total"></span></a></li>' +
                 '<li nm="cesta"><a class="aba" href="#div_cesta" onclick="javascript:ClicarAba(\'cesta\');">Cesta</a></li>' +
             '</ul>' +
-            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_norma" class="sort_datatable">Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div></div>' +
+            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_sinj_norma" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div><div id="div_sugestoes_sinj_norma"></div></div>' +
         //            '<div id="div_resultado_norma"><button type="button" class="filtro" onclick="javascript:MostrarFiltros(\'sinj_norma\');"><img alt="filtro" src="' + _urlPadrao + '/Imagens/ico_filter_p.png" /> Refinar pesquisa</button><div id="div_datatable_norma"></div></div>' +
             '<div id="div_cesta">' +
                 '<ul>' +
@@ -83,42 +83,70 @@ $(document).ready(function () {
     }
     ConsultarTotal(nm_base_aux_total);
     ConsultarTotalCesta();
-
-    //Abrir a ultima aba selecionada ante de mudar de página
-    var nm_li_click = '';
-    var sAbaCookie = $.cookie("Tabs_" + document.location.pathname);
-    if (IsNotNullOrEmpty(sAbaCookie)) {
-        var sBack_history_aux = $.cookie('back_history_aux_tab');
-        if (IsNotNullOrEmpty(sBack_history_aux)) {
-            var oBack_history_aux = JSON.parse(sBack_history_aux);
-            if (IsNotNullOrEmpty(oBack_history_aux, 'referrer') && oBack_history_aux.referrer == document.location.pathname) {
-                nm_li_click = sAbaCookie;
-            }
-            $.removeCookie('back_history_aux_tab', { path: '/' });
-        }
-        $.removeCookie("Tabs_" + document.location.pathname, { path: document.location.pathname });
-    }
-    if (IsNotNullOrEmpty(nm_li_click)) {
-        if (nm_li_click == "cesta_norma" || nm_li_click == "cesta_diario") {
-            $('li[nm="cesta"] a').click();
-        }
-        nm_aba = nm_li_click;
-    }
-
-    $('li[nm="' + nm_aba + '"] a').click();
-
-
 });
+
+function sugerirBuscas(nm_base) {
+    var sucesso = function (data) {
+        var nm_by_total = '';
+        if (IsNotNullOrEmpty(data, 'result')) {
+            
+        }
+    }
+    $.ajaxlight({
+        sUrl: './ashx/Consulta/SugestoesConsulta.ashx?bbusca_sugestoes=' + nm_base,
+        oData: parseURL(window.location.href).aoData,
+        sType: "POST",
+        fnError: null,
+        bAsync: true,
+        fnSuccess: sucesso
+    });
+    console.log('sugerirBuscas')
+}
 
 function ConsultarTotal(nm_base) {
     var sucesso = function (data) {
+        var nm_by_total = '';
         if (IsNotNullOrEmpty(data, 'counts')) {
+
             var paramCountsToHistory = '';
             for (var i = 0; i < data.counts.length; i++) {
-                $('#total_' + data.counts[i].nm_base).text(data.counts[i].count.count);
-                paramCountsToHistory += (paramCountsToHistory != "" ? "&" : "") + "total=" + JSON.stringify({ nm_base: data.counts[i].nm_base, ds_base: data.counts[i].ds_base, nr_total: data.counts[i].count.count });
+                $('#total_' + data.counts[i].nm_base).text(data.counts[i].count);
+                paramCountsToHistory += (paramCountsToHistory != "" ? "&" : "") + "total=" + JSON.stringify({ nm_base: data.counts[i].nm_base, ds_base: data.counts[i].ds_base, nr_total: data.counts[i].count });
+                if (!IsNotNullOrEmpty(nm_by_total) && data.counts[i].count > 0) {
+                    nm_by_total = data.counts[i].nm_base;
+                }
             }
             SalvarConsultaNoHistorico(paramCountsToHistory);
+        }
+
+        //Abrir a ultima aba selecionada ante de mudar de página
+        var nm_li_click = '';
+        var sAbaCookie = $.cookie("Tabs_" + document.location.pathname);
+        if (IsNotNullOrEmpty(sAbaCookie)) {
+            var sBack_history_aux = $.cookie('back_history_aux_tab');
+            if (IsNotNullOrEmpty(sBack_history_aux)) {
+                var oBack_history_aux = JSON.parse(sBack_history_aux);
+                if (IsNotNullOrEmpty(oBack_history_aux, 'referrer') && oBack_history_aux.referrer == document.location.pathname) {
+                    nm_li_click = sAbaCookie;
+                }
+                $.removeCookie('back_history_aux_tab', { path: '/' });
+            }
+            $.removeCookie("Tabs_" + document.location.pathname, { path: document.location.pathname });
+        }
+        if (IsNotNullOrEmpty(nm_li_click)) {
+            if (nm_li_click == "cesta_norma" || nm_li_click == "cesta_diario") {
+                $('li[nm="cesta"] a').click();
+            }
+            $('li[nm="' + nm_li_click + '"] a').click();
+        }
+        else if (IsNotNullOrEmpty(nm_by_total)) {
+            if (nm_by_total == "cesta_norma" || nm_by_total == "cesta_diario") {
+                $('li[nm="cesta"] a').click();
+            }
+            $('li[nm="' + nm_by_total + '"] a').click();
+        }
+        else {
+            $('a', $('li[nm]')[0]).click();
         }
     };
     var inicio = function () {
@@ -130,7 +158,7 @@ function ConsultarTotal(nm_base) {
         }
     }
     $.ajaxlight({
-        sUrl: './ashx/Datatable/ResultadoDePesquisaDatatable.ashx?exibir_total=1' + (IsNotNullOrEmpty(nm_base) ? '&bbusca=' + nm_base : ''),
+        sUrl: './ashx/Consulta/TotalConsulta.ashx' + (IsNotNullOrEmpty(nm_base) ? '?bbusca=' + nm_base : ''),
         oData: parseURL(window.location.href).aoData,
         sType: "POST",
         fnError: null,
@@ -141,6 +169,13 @@ function ConsultarTotal(nm_base) {
 }
 
 function ClicarAba(nm_base) {
+    var total = $('#total_' + nm_base).text();
+    if (parseInt(total) <= 0) {
+        sugerirBuscas(nm_base);
+        $('#div_sugestoes_' + nm_base).html();
+        return;
+    }
+    $('#div_sort_' + nm_base).show();
     $.cookie("Tabs_" + document.location.pathname, nm_base, { path: document.location.pathname });
     var tipo_pesquisa = GetParameterValue('tipo_pesquisa');
     if (nm_base == "sinj_norma") {
@@ -171,7 +206,7 @@ function ClicarAba(nm_base) {
         }
     }
     else if (nm_base == "cesta_norma") {
-        $('#a_relatorio').show();
+        $('#a_relatorio').hide();
         if ($('#datatable_cesta_norma').length <= 0) {
             $('#div_cesta_norma').dataTablesLight({
                 sAjaxUrl: './ashx/Datatable/CestaPesquisaDatatable.ashx?tipo_pesquisa=cesta&bbusca=cesta&b=sinj_norma&cesta=' + $.cookie('sinj_basket'),
@@ -183,7 +218,7 @@ function ClicarAba(nm_base) {
         }
     }
     else if (nm_base == "cesta_diario") {
-        $('#a_relatorio').show();
+        $('#a_relatorio').hide();
         $('#div_cesta_diario').dataTablesLight({
             sAjaxUrl: './ashx/Datatable/CestaPesquisaDatatable.ashx?tipo_pesquisa=cesta&bbusca=cesta&b=sinj_diario&cesta=' + $.cookie('sinj_basket'),
             aoColumns: _columns_diario_cesta,
@@ -200,7 +235,7 @@ function PesquisarDatatable(nm_base, filtros) {
         var col = sort[0];
         var order = sort[1];
         var table = $('#div_datatable_norma').dataTablesLight({
-            sAjaxUrl: './ashx/Datatable/ResultadoDePesquisaDatatable.ashx' + window.location.search + (IsNotNullOrEmpty(filtros) ? '&' + filtros : ''),
+            sAjaxUrl: './ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx' + window.location.search + (IsNotNullOrEmpty(filtros) ? '&' + filtros : ''),
             data: [{ "name": "bbusca", "value": nm_base}],
             aoColumns: _columns_norma_es,
             responsive: null,
@@ -226,7 +261,7 @@ function PesquisarDatatable(nm_base, filtros) {
         var col = sort[0];
         var order = sort[1];
         $('#div_datatable_diario').dataTablesLight({
-            sAjaxUrl: './ashx/Datatable/ResultadoDePesquisaDatatable.ashx' + window.location.search + (IsNotNullOrEmpty(filtros) ? '&' + filtros : ''),
+            sAjaxUrl: './ashx/Datatable/ResultadoDePesquisaDiarioDatatable.ashx' + window.location.search + (IsNotNullOrEmpty(filtros) ? '&' + filtros : ''),
             data: [{ "name": "bbusca", "value": nm_base}],
             aoColumns: _columns_diario_es,
             responsive: null,
@@ -518,12 +553,7 @@ function tratarFiltros(jFiltro) {
     if (IsNotNullOrEmpty(aFiltros)) {
         for (var i = 0; i < aFiltros.length; i++) {
             $('.filtrados_' + nm_base).append('<button type="button" id="button_' + nm_base + '_' + aFiltros[i].campo + '" class="clean" title="Remover o filtro \'' + aFiltros[i].valor + '\'." campo="' + aFiltros[i].campo + '" valor="' + aFiltros[i].valor + '" onclick="javascript:removerFiltro(\'' + nm_base + '\',\'' + aFiltros[i].campo + '\');">' + aFiltros[i].valor + '<img alt="filtrar" src="' + _urlPadrao + '/Imagens/ico_fechar.png" height="12px" width="12px" /></button>');
-            if (aFiltros[i].campo.indexOf("ano_") == 0) {
-                filtros += (filtros != '' ? '&' : '') + 'filtro=' + aFiltros[i].campo.replace('ano_', 'dt_') + ':[01/01/' + aFiltros[i].valor + ' TO 31/12/' + aFiltros[i].valor + ']';
-            }
-            else {
-                filtros += (filtros != '' ? '&' : '') + 'filtro=' + aFiltros[i].campo + ':(\\"' + aFiltros[i].valor + '\\")';
-            }
+            filtros += (filtros != '' ? '&' : '') + 'filtro=' + aFiltros[i].campo + ':' + aFiltros[i].valor;
         }
         $('.table_filtrados_' + nm_base).show();
     }
@@ -546,12 +576,7 @@ function getsFiltrados(nm_base) {
     var filtrados = $('.filtrados_' + nm_base + ' button');
     if (filtrados.length > 0) {
         for (var i = 0; i < filtrados.length; i++) {
-            if (filtrados[i].getAttribute('campo').indexOf("ano_") == 0) {
-                filtros += (filtros != '' ? '&' : '') + 'filtro=' + filtrados[i].getAttribute('campo').replace('ano_', 'dt_') + ':[01/01/' + filtrados[i].getAttribute('valor') + ' TO 31/12/' + filtrados[i].getAttribute('valor') + ']';
-            }
-            else {
-                filtros += (filtros != '' ? '&' : '') + 'filtro=' + filtrados[i].getAttribute('campo') + ':(\\"' + filtrados[i].getAttribute('valor') + '\\")';
-            }
+            filtros += (filtros != '' ? '&' : '') + 'filtro=' + filtrados[i].getAttribute('campo') + ':' + filtrados[i].getAttribute('valor');
         }
     }
     return filtros;

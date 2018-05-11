@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using util.BRLight;
 using TCDF.Sinj.Log;
+using TCDF.Sinj.ES;
 
 namespace TCDF.Sinj.Portal.Web.ashx.Exclusao
 {
@@ -22,11 +23,11 @@ namespace TCDF.Sinj.Portal.Web.ashx.Exclusao
             {
                 if (!string.IsNullOrEmpty(_id_doc))
                 {
-                    new ES().DeletarDoc("", Config.ValorChave("URLElasticSearchHistoricoDePesquisa", true) + "/" +_id_doc);
+                    new ESAd().DeletarDoc("", Config.ValorChave("URLElasticSearchHistoricoDePesquisa", true) + "/" +_id_doc);
                 }
                 else if (!string.IsNullOrEmpty(_chave))
                 {
-                    new ES().DeletarDoc("{\"query\":{\"query_string\":{\"query\":\"chave:"+_chave+"\"}}}", Config.ValorChave("URLElasticSearchHistoricoDePesquisa", true) + "/_query");
+                    new ESAd().DeletarDoc("{\"query\":{\"query_string\":{\"query\":\"chave:" + _chave + "\"}}}", Config.ValorChave("URLElasticSearchHistoricoDePesquisa", true) + "/_query");
                 }
                 sRetorno = "{\"success_message\":\"Histórico excluído com sucesso\"}";
             }

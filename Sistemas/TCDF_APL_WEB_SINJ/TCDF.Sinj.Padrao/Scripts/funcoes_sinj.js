@@ -2736,6 +2736,9 @@ function DetalhesNorma(data, highlight) {
                 var ano = "";
                 for (var i = 0; i < data.vides.length; i++) {
                     ano = "";
+                    if(data.vides[i].nr_norma_vide == "0"){
+                        data.vides[i].nr_norma_vide = "";
+                    }
                     if (IsNotNullOrEmpty(data.vides[i].dt_assinatura_norma_vide)) {
                         var split = data.vides[i].dt_assinatura_norma_vide.split('/');
                         if (split.length == 3) {

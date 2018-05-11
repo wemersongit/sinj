@@ -119,6 +119,7 @@ namespace TCDF.Sinj.RN
             query.limit = "1";
             query.literal = "ch_orgao='" + ch_orgao + "'";
             orgaoOv = Consultar(query).results[0];
+            query.limit = null;
             if (orgaoOv.ch_cronologia.Count > 0)
             {
                 query.literal = "";
@@ -131,7 +132,6 @@ namespace TCDF.Sinj.RN
 
                     }
                 }
-                query.limit = null;
                 query.literal += (query.literal != "" ? " OR " : "") + "ch like '" + ch_orgao + ".%' OR ch like '%." + ch_orgao + ".%')";
                 return Consultar(query).results;
             }
@@ -140,6 +140,49 @@ namespace TCDF.Sinj.RN
                 query.literal = string.Format("id_doc=ANY(select id_doc from (select id_doc, unnest(ch_cronologia) ch) x where ch='{0}' OR ch like '%.{0}' OR ch like '{0}.%')", ch_orgao);
                 return Consultar(query).results;                
             }
+        }
+
+        public List<OrgaoOV> BuscarTodaHierarquiaEmQualquerEpoca(string ch_orgao, string ch_hierarquia)
+        {
+            OrgaoOV orgaoOv = new OrgaoOV();
+            Pesquisa query = new Pesquisa();
+            query.limit = "1";
+            query.literal = "ch_orgao='" + ch_orgao + "'";
+            orgaoOv = Consultar(query).results[0];
+            query.limit = null;
+            if (orgaoOv.ch_cronologia.Count > 0)
+            {
+                query.literal = "";
+                foreach (var ch_crono in orgaoOv.ch_cronologia)
+                {
+                    var split_ch_crono = ch_crono.Split('.');
+                    foreach (var ch_orgao_cronologico in split_ch_crono)
+                    {
+                        query.literal += (query.literal != "" ? " OR " : "id_doc=ANY(select id_doc from (select id_doc, unnest(ch_cronologia) ch) x where ") + "ch_orgao = '" + ch_orgao_cronologico + "'";
+
+                    }
+                }
+                query.literal += (query.literal != "" ? " OR " : "") + "ch like '" + ch_orgao + ".%' OR ch like '%." + ch_orgao + ".%')";
+            }
+            else
+            {
+                query.literal = string.Format("id_doc=ANY(select id_doc from (select id_doc, unnest(ch_cronologia) ch) x where ch='{0}' OR ch like '%.{0}' OR ch like '{0}.%')", ch_orgao);
+            }
+
+            var query_hierarquia = "";
+            var ch_hierarquia_split = ch_hierarquia.Split('.');
+            foreach (var chave in ch_hierarquia_split)
+            {
+                query_hierarquia += (!string.IsNullOrEmpty(query_hierarquia) ? " OR " : "") + "ch_orgao='" + chave + "'";
+            }
+            query_hierarquia += (!string.IsNullOrEmpty(query_hierarquia) ? " OR " : "") + "Upper(ch_hierarquia) like '" + ch_orgao.ToUpper() + ".%' OR Upper(ch_hierarquia) like '%." + ch_orgao.ToUpper() + ".%'";
+
+            if (!string.IsNullOrEmpty(query_hierarquia))
+            {
+                query.literal += " OR " + query_hierarquia;
+            }
+
+            return Consultar(query).results;
         }
 
         //public List<OrgaoOV> BuscarOrgaosDaCronologia(string ch_orgao)

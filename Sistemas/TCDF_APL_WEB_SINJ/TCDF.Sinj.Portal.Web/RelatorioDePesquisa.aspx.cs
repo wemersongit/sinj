@@ -10,6 +10,7 @@ using TCDF.Sinj.RN;
 using System.IO;
 using System.Text;
 using TCDF.Sinj.Log;
+using TCDF.Sinj.ES;
 
 namespace TCDF.Sinj.Portal.Web
 {
@@ -90,7 +91,7 @@ namespace TCDF.Sinj.Portal.Web
                         }
                         else if (_tp == "es")
                         {
-                            var es = new ES();
+                            var es = new ESAd();
                             var result_norma = es.RelatorioDocs<NormaOV>(base.Context, sessao_usuario, _bbusca);
                             foreach (var hit in result_norma)
                             {
@@ -167,7 +168,7 @@ namespace TCDF.Sinj.Portal.Web
                         else if (_tp == "es")
                         {
 
-                            var es = new ES();
+                            var es = new ESAd();
                             var result_diario = es.RelatorioDocs<DiarioOV>(base.Context, sessao_usuario, _bbusca);
                             foreach (var hit in result_diario)
                             {
@@ -201,7 +202,7 @@ namespace TCDF.Sinj.Portal.Web
                 else if (_bbusca == "cesta")
                 {
                     var _base = Request["b"];
-                    var es = new ES();
+                    var es = new ESAd();
                     try
                     {
                         if (_base == "sinj_norma")

@@ -7,8 +7,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="O SINJ é uma ferramenta que possibilita a pesquisa de leis, portarias, decretos e outras normas jurídicas e atos do Executivo e Legislativo do DF." />
     <meta name="keywords" content="sinj, decreto, lei, resolução, portaria, distrito federal" />
-    <meta name="robots" content="index" />
-    <meta name="googlebot" content="index" />
+    <meta name="robots" content="index,follow" />
+    <meta name="googlebot" content="index,follow" />
     <%--<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />--%>
 
     <link rel="stylesheet" type="text/css" href=<%= TCDF.Sinj.Util._urlPadrao %>/Jquery-ui/jquery-ui.min.css />
@@ -128,7 +128,7 @@
                     <span id="span_versao"></span>
                 </div>
                 <div class="logo">
-                    <a href="./" title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj_10_anos.png" alt="sinj" /></a>
+                    <a href="./" title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="sinj" /></a>
                 </div>
                 <div class="top-bottom">                    
                     <div class="top-bottom-left">

@@ -6,6 +6,8 @@ using TCDF.Sinj.Log;
 using util.BRLight;
 using TCDF.Sinj.OV;
 using TCDF.Sinj.RN;
+using TCDF.Sinj.ES;
+using TCDF.Sinj.AD;
 
 namespace TCDF.Sinj.Portal.Web.ashx.Datatable
 {
@@ -30,7 +32,14 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
                 var _base = context.Request["b"];
                 if (_base == "norma")
                 {
-                    var result_norma = favoritoRn.ConsultarEs<NormaOV>(context);
+                    var notifiquemeRn = new NotifiquemeRN();
+                    var sessaoNotifiquemeOv = notifiquemeRn.LerSessaoNotifiquemeOv();
+                    var notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
+                    SentencaPesquisaFavoritosOV sentencaOv = new SentencaPesquisaFavoritosOV();
+                    sentencaOv.@base = _base;
+                    sentencaOv.favoritos = notifiquemeOv.favoritos.ToArray();
+                    var query = new NormaBuscaEs().MontarBusca(sentencaOv).GetQuery();
+                    Result<NormaOV> result_norma = new NormaAD().ConsultarEs(query);
                     datatable_result = new { aaData = result_norma.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_norma.hits.total };
                 }
                 json_resultado = Newtonsoft.Json.JsonConvert.SerializeObject(datatable_result);

@@ -7,7 +7,7 @@ using TCDF.Sinj.RN;
 using util.BRLight;
 using neo.BRLightREST;
 using TCDF.Sinj.Log;
-using TCDF.Sinj.ESUtil;
+using TCDF.Sinj.ES;
 
 namespace TCDF.Sinj.Web.ashx.Cadastro
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using util.BRLight;
 
-namespace TCDF.Sinj.ESUtil
+namespace TCDF.Sinj.ES
 {
     public class DocEs
     {

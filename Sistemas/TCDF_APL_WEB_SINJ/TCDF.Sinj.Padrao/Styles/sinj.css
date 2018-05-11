@@ -227,6 +227,7 @@ span.attention {font-size:10px;color:#990000}
 .text-justify {text-align:justify !important;}
 .bold {font-weight:bold;}
 .mleft {margin-left:0px !important;}
+.both {clear:both;}
 .mauto {margin:auto;}
 .mtop25 {margin-top:25px;}
 .max-w-20-pc {width:20% !important;}
@@ -377,6 +378,10 @@ div.div-filtros .header_filtro, div.div-filtros .header_filtrando{display:block;
 div.div-filtros button{display:block; width:100%; text-align:left; padding: 3px 0px; font-weight:normal; margin-top:2px;}
 div.div-filtros button img {float:right;}
 div.div-filtros a {text-decoration:none; color: #046635}
+
+div.sugestoes>table { min-width: 300px; }
+
+
 
 /*table_generated_json*/
 table.table_generated_json{ font-size:13px; width:100%; border-spacing:2px; background-color:#CCC; border-color:#EEE; border-width:2px; border-style:solid;}
