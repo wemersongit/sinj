@@ -33,6 +33,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     var _orgao = context.Request.Form.GetValues("orgao");
 
+
+                    var _st_vacatio_legis = context.Request["st_vacatio_legis"];
+                    var _dt_inicio_vigencia = context.Request["dt_inicio_vigencia"];
+
                     var _nm_apelido = context.Request["nm_apelido"];
                     var _ds_ementa = context.Request["ds_ementa"];
                     var _ds_observacao = context.Request["ds_observacao"];
@@ -104,7 +108,15 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     {
                         throw new PermissionException("Usuário não tem permissão para editar " + (nm_tipo_norma != "" ? nm_tipo_norma : "esse tipo de ato") + ".");
                     }
-                    
+
+                    normaOv.st_vacatio_legis = _st_vacatio_legis == "1";
+                    normaOv.dt_inicio_vigencia = "";
+                    if (normaOv.st_vacatio_legis)
+                    {
+                        normaOv.dt_inicio_vigencia = _dt_inicio_vigencia;
+                    }
+
+
                     normaOv.origens = new List<Orgao>();
                     if (_orgao != null)
                     {

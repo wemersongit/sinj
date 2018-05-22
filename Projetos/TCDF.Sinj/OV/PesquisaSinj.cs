@@ -46,11 +46,11 @@ namespace TCDF.Sinj.OV
     }
     public class SentencaPesquisaAvancadaNormaOV : SentencaPesquisaSinjOV
     {
+        public string[] ch_tipo_norma { get; set; }
         public string[] argumentos { get; set; }
     }
     public class SentencaPesquisaDiretaDiarioOV : SentencaPesquisaSinjOV
     {
-        public string all { get; set; }
         public string ds_norma { get; set; }
         public string ch_tipo_fonte { get; set; }
         public string nm_tipo_fonte { get; set; }
@@ -82,6 +82,7 @@ namespace TCDF.Sinj.OV
     public class SentencaPesquisaNotifiquemeDiarioOV : SentencaPesquisaSinjOV
     {
         public string ch_tipo_fonte { get; set; }
+        public string nm_tipo_fonte { get; set; }
         public string filetext { get; set; }
         public string in_exata { get; set; }
     }

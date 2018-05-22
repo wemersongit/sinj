@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CadastrarNotifiqueme.aspx" />
+    <Content Include="captcha.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DesativarNormaPush.aspx" />
     <Content Include="DetalhesDeNorma.aspx" />
@@ -119,6 +120,9 @@
     </Compile>
     <Compile Include="ashx\Autocomplete\VocabularioAutocomplete.ashx.cs">
       <DependentUpon>VocabularioAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\FaleConoscoMensagemIncluir.ashx.cs">
+      <DependentUpon>FaleConoscoMensagemIncluir.ashx</DependentUpon>
     </Compile>
     <Compile Include="ashx\Cadastro\HistoricoDePesquisaIncluir.ashx.cs">
       <DependentUpon>HistoricoDePesquisaIncluir.ashx</DependentUpon>
@@ -229,6 +233,13 @@
       <DependentUpon>CadastrarNotifiqueme.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="captcha.aspx.cs">
+      <DependentUpon>captcha.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="captcha.aspx.designer.cs">
+      <DependentUpon>captcha.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -260,6 +271,9 @@
     </Compile>
     <Compile Include="Download.aspx.designer.cs">
       <DependentUpon>Download.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FaleConosco.aspx.designer.cs">
+      <DependentUpon>FaleConosco.aspx</DependentUpon>
     </Compile>
     <Compile Include="Favoritos.aspx.cs">
       <DependentUpon>Favoritos.aspx</DependentUpon>
@@ -485,5 +499,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\Consulta\SugestoesConsulta.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Cadastro\FaleConoscoMensagemIncluir.ashx" />
   </ItemGroup>
 </Project>

@@ -272,8 +272,9 @@ namespace TCDF.Sinj.ES
                 {
                     buscaDireta.proximitySearchValue = 5;
                 }
-                buscaDireta.searchValue = textoConsultado;
             }
+            buscaDireta.searchValue = textoConsultado;
+            buscaDireta.fields.Add(new SearchableField() { name = "arquivos.arquivo_diario.filetext" });
             if (!string.IsNullOrEmpty(sentencaOv.ch_tipo_fonte))
             {
                 buscaDireta.filtersToQueryFiltered.Add(
@@ -336,6 +337,8 @@ namespace TCDF.Sinj.ES
                 buscaDireta.aggregation = MontarAggregation();
                 buscaDireta.highlight.fields.Add(new FieldHighlight() { name = "arquivos.arquivo_diario.filetext", fragments = 8, fragmentSize = 150, noMatchSize = 300 });
                 buscaDireta.highlight.fields.Add(new FieldHighlight() { name = "ar_diario.filetext", fragments = 8, fragmentSize = 150, noMatchSize = 300 });
+                buscaDireta.highlight.preTag = "_pre_tag_highlight_";
+                buscaDireta.highlight.postTag = "_post_tag_highlight_";
                 buscaDireta.from = sentencaOv.iDisplayStart;
                 buscaDireta.size = sentencaOv.iDisplayLength;
             }

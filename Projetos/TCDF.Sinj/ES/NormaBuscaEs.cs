@@ -34,6 +34,33 @@ namespace TCDF.Sinj.ES
             }
             buscaAvancada.fields = MontarSearchableFields();
 
+            if (sentencaOv.ch_tipo_norma != null)
+            {
+                var filterIntervalo = new FilterQueryFiltered()
+                {
+                    connector = TypeConnector.AND
+                };
+                
+                foreach (var ch in sentencaOv.ch_tipo_norma)
+                {
+                    if (ch.Equals("todas")) continue;
+
+                    filterIntervalo.filtersToQueryFiltered.Add(
+                        new FilterQueryFiltered()
+                        {
+                            name = "ch_tipo_norma",
+                            value = ch,
+                            @operator = TypeOperator.equal,
+                            connector = TypeConnector.OR
+                        }
+                    );
+                }
+                if (filterIntervalo.filtersToQueryFiltered.Count > 0)
+                {
+                    buscaAvancada.filtersToQueryFiltered.Add(filterIntervalo);
+                }
+            }
+
             if (sentencaOv.argumentos != null)
             {
                 var queryHighlight = new Dictionary<string, string>();
@@ -99,7 +126,7 @@ namespace TCDF.Sinj.ES
                                 );
                             }
 
-                            if (sentencaOv.isCount)
+                            if (!sentencaOv.isCount)
                             {
                                 if (queryHighlight.ContainsKey(_ch_campo))
                                 {
@@ -249,7 +276,7 @@ namespace TCDF.Sinj.ES
                     }
                 }
 
-                if (sentencaOv.isCount)
+                if (!sentencaOv.isCount)
                 {
                     if (!string.IsNullOrEmpty(buscaAvancada.searchFilter))
                     {
@@ -269,7 +296,7 @@ namespace TCDF.Sinj.ES
                 }
 
                 new UtilBuscaEs().MontarFiltroBuscaDireta(sentencaOv.filtros, buscaAvancada);
-                if (sentencaOv.isCount)
+                if (!sentencaOv.isCount)
                 {
                     foreach (var item in queryHighlight)
                     {
@@ -719,6 +746,8 @@ namespace TCDF.Sinj.ES
             sourceInclude.Add("dt_assinatura");
             sourceInclude.Add("ds_ementa");
             sourceInclude.Add("nm_situacao");
+            sourceInclude.Add("dt_inicio_vigencia");
+            sourceInclude.Add("st_vacatio_legis");
             return sourceInclude;
         }
         

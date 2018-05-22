@@ -232,7 +232,7 @@ function selecionarTodos(element) {
 }
 
 function preencherEmail() {
-    $('#div_notificacao').messagelight("destroy");
+    $('.notify').messagelight("destroy");
     var checkeds_push = $('.check_push:checked');
     if (checkeds_push.length > 0) {
         $('#form_email input[name="email"]').remove();

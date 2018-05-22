@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AD\AmbitoAD.cs" />
     <Compile Include="AD\ArquivoVersionadoNormaAD.cs" />
+    <Compile Include="AD\FaleConoscoAD.cs" />
     <Compile Include="AD\SINJ_ArquivoAD.cs" />
     <Compile Include="AD\AutoriaAD.cs" />
     <Compile Include="AD\CestaAD.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="OV\DiarioOV.cs" />
     <Compile Include="OV\EmailOV.cs" />
     <Compile Include="OV\ExcluidoOV.cs" />
+    <Compile Include="OV\FaleConoscoOV.cs" />
     <Compile Include="OV\GrupoTipoDeNormaEnum.cs" />
     <Compile Include="OV\HistoricoDePesquisaOV.cs" />
     <Compile Include="ES\BuscaEs.cs" />
@@ -146,6 +148,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RN\AmbitoRN.cs" />
     <Compile Include="RN\ArquivoVersionadoNormaRN.cs" />
+    <Compile Include="RN\FaleConoscoRN.cs" />
     <Compile Include="RN\SINJ_ArquivoRN.cs" />
     <Compile Include="RN\AutoriaRN.cs" />
     <Compile Include="RN\CestaRN.cs" />

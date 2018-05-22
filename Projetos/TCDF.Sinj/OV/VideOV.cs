@@ -32,6 +32,7 @@ namespace TCDF.Sinj.OV
         //Dados da outra Norma
         public string dt_publicacao_fonte_norma_vide { get; set; }
         public string ch_norma_vide { get; set; }
+        public string dt_inicio_vigencia_norma_vide {get;set;}
         public string ch_tipo_norma_vide { get; set; }
         public string nm_tipo_norma_vide { get; set; }
         public string nr_norma_vide { get; set; }

@@ -18,6 +18,7 @@
     </script>
     <style type="text/css">
         #sg_hierarquia_nm_vigencia{z-index:10005;}
+        #div_modal_importar_arquivo table thead th.nm_arquivo {width:250px;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
@@ -624,6 +625,30 @@
                                     <div class="column w-70-pc">
                                         <div class="cell w-80-pc">
                                             <input id="dt_assinatura" name="dt_assinatura" type="text" value="" class="w-20-pc date" disabled="true" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Vacatio Legis:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="st_vacatio_legis" name="st_vacatio_legis" type="checkbox" value="1" onclick="selecionarVacatioLegis();" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line dt_inicio_vigencia" style="display:none;">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Data Início Vigência*:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="dt_inicio_vigencia" name="dt_inicio_vigencia" type="text" value="" class="w-20-pc date" obrigatorio="não" label="Data Início Vigência" />
                                         </div>
                                     </div>
                                 </div>

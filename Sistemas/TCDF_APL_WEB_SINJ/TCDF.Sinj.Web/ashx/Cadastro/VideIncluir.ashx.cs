@@ -9,6 +9,7 @@ using TCDF.Sinj.RN;
 using System.Text.RegularExpressions;
 using TCDF.Sinj.Web.ashx.Arquivo;
 using neo.BRLightREST;
+using System.Globalization;
 
 namespace TCDF.Sinj.Web.ashx.Cadastro
 {
@@ -239,6 +240,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                     vide_alterada.nr_norma_vide = "";
                                 }
                                 vide_alterada.dt_assinatura_norma_vide = normaAlteradoraOv.dt_assinatura;
+                                if (normaAlteradoraOv.st_vacatio_legis && !string.IsNullOrEmpty(normaAlteradoraOv.dt_inicio_vigencia)){
+                                    vide_alterada.dt_inicio_vigencia_norma_vide = normaAlteradoraOv.dt_inicio_vigencia;
+                                }
 
                                 vide_alterada.alinea_norma_vide = _alinea_norma_vide_alterada;
                                 vide_alterada.anexo_norma_vide = _anexo_norma_vide_alterada;
@@ -263,8 +267,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                 {
                                     sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
-                                    VerificarDispositivosESalvarOsTextosAntigosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada, sessao_usuario.nm_login_usuario);
-                                    VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada);
+                                    if (!normaAlteradoraOv.st_vacatio_legis || string.IsNullOrEmpty(normaAlteradoraOv.dt_inicio_vigencia) || Convert.ToDateTime(normaAlteradoraOv.dt_inicio_vigencia, new CultureInfo("pt-BR")) <= DateTime.Now)
+                                    {
+                                        VerificarDispositivosESalvarOsTextosAntigosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada, sessao_usuario.nm_login_usuario);
+                                        VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada);
+                                    }
                                 }
                                 else
                                 {

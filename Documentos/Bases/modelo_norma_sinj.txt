@@ -73,6 +73,34 @@
         },
         {
             "field":{
+                "name":"st_vacatio_legis",
+                "datatype":"Boolean",
+                "required":false,
+                "alias":"Vacatio Legis",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Indica vacatio legis, ou seja, se a norma possui uma data para entrar em vigor."
+            }
+        },
+        {
+            "field":{
+                "name":"dt_inicio_vigencia",
+                "datatype":"Date",
+                "required":false,
+                "alias":"Data Início Vigência",
+                "multivalued":false,
+                "indices":[
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description":"Data na qual a norma entra em vigência."
+            }
+        },
+        {
+            "field":{
                 "name":"cr_norma",
                 "datatype":"Text",
                 "required":false,
@@ -510,17 +538,17 @@
             }
         },
         {
-            "field":{
-                "name":"st_vigor_vide",
-                "datatype":"Boolean",
-                "required":false,
-                "alias":"Vides Aguardando Vigor",
-                "multivalued":false,
-                "indices":[
+            "field": {
+                "name": "st_vigor_vide",
+                "datatype": "Boolean",
+                "required": false,
+                "alias": "Vides Aguardando Vigor",
+                "multivalued": false,
+                "indices": [
                     "Textual",
                     "Ordenado"
                 ],
-                "description":"Indica que a norma possui uma ou mais vides aguardando a entrada de vigor da publicação da norma alteradora."
+                "description": "Indica que a norma possui uma ou mais vides aguardando a entrada de vigor da publicação da norma alteradora. Não estou usando esse campo e não consegui excluir"
             }
         },
         {
@@ -1320,6 +1348,19 @@
                                 "Textual"
                             ],
                             "description":"Data da assinatura da outra norma."
+                        }
+                    },
+                    {
+                        "field":{
+                            "name":"dt_inicio_vigencia_norma_vide",
+                            "datatype":"Date",
+                            "required":false,
+                            "alias":"Data Início Vigência",
+                            "multivalued":false,
+                            "indices":[
+                                "Textual"
+                            ],
+                            "description":"Data na qual a norma alteradora entra em vigência."
                         }
                     },
                     {

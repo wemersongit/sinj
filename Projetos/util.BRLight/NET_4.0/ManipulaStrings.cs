@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
 
 namespace util.BRLight
 {
@@ -120,6 +121,14 @@ namespace util.BRLight
             // não possuir o separador informado, retorna o valor do texto serializado informado como parâmetro dentro 
             // de um array unidimensional, com apenas uma casa.
             return new [] { textoSerializado };
+        }
+
+        public static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

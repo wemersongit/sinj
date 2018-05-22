@@ -1270,6 +1270,11 @@ function PreencherNormaEdicao() {
                     $('#cr_norma').val(data.cr_norma);
                     $('#nr_sequencial').val(data.nr_sequencial);
                     $('#dt_assinatura').val(data.dt_assinatura);
+                    
+                    $('#st_vacatio_legis').prop('checked',data.st_vacatio_legis);
+                    $('#dt_inicio_vigencia').val(data.dt_inicio_vigencia);
+                    selecionarVacatioLegis();
+
                     $('#id_ambito').val(data.id_ambito);
                     $('#ds_ementa').val(data.ds_ementa);
                     $('#ds_observacao').val(data.ds_observacao);
@@ -2071,4 +2076,16 @@ function recuperarArquivo(id_form) {
         }
     }
     return fnSalvarForm(id_form, sucesso);
+}
+
+function selecionarVacatioLegis(){
+    if($('#st_vacatio_legis').prop('checked')){
+        $('#dt_inicio_vigencia').attr('obrigatorio','sim');
+        $('div.dt_inicio_vigencia').show();
+    }
+    else{
+        $('#dt_inicio_vigencia').val('');
+        $('#dt_inicio_vigencia').attr('obrigatorio','não');
+        $('div.dt_inicio_vigencia').hide();
+    }
 }

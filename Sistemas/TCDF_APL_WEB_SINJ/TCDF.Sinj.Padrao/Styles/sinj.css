@@ -70,7 +70,7 @@ div.top div.top-bottom div.top-bottom-right div.user div.data-user span {font-si
 #div_user_notifiqueme{position:absolute; right:10px; bottom:15px; color: #FFF;}*/
 .menu{float:left; font-size:13px; border-top:2px solid; border-bottom:2px solid; position: relative; width: 100%; z-index: 100;}
 .ul-menu { float:left; font-size:13px; list-style:none; }
-.ul-menu li{ position:relative; float:left; width: 120px; }
+.ul-menu li{ position:relative; float:left; }
 .ul-menu li a{text-decoration:none; padding:10px 15px; display:block;}
 .ul-menu li ul{ position:absolute; top:30px; left:0; display:none; z-index:9999; }
 .ul-menu li:hover > ul, .menu li.over > ul{display:block;}
@@ -133,6 +133,7 @@ div.menu-suspenso li ul li a:hover{border-top:1px solid; border-bottom:1px solid
 ----------------------------------------------------------*/
 div.table { clear:both; margin-left:auto; margin-right:auto; display:table;}
 div.table div.line { width: 100%; display:table-row;}
+div.table div.line.even { width: 100%; display:table-row; background:#fff;}
 div.table div.head { width: 100%; display:table-row;}
 div.table div.head div.title { text-align:center; float: left; display:table-column; padding-top:10px; color:#38953F; background:#EEE;}
 div.table div.column { text-align:left; float: left; display:table-column; padding-top:10px;}
@@ -169,7 +170,8 @@ div.control{width:90%; margin:auto;padding:7px 0px;}
 .div-light-button a:hover, a.button:hover, button:hover{border:1px solid #999;}
 button.filtro{margin:1px; cursor:pointer; border-radius: 4px; padding:3px; vertical-align: middle; background: url('../Imagens/bg_button.jpg');}
 button.pesquisa{width:100px; margin:10px; cursor:pointer; border-radius: 8px; padding:3px; display: table-cell; vertical-align: middle; background: url('../Imagens/bg_button.jpg');}
-button.clean{background: none;border: none;padding: 2px; margin:1px;}
+button.clean{background: none;border: none;padding: 2px; margin:0px;}
+button.selected{background: #CCC; color: #38953F; font-weight: bold;}
 /*button img {width:20px; height:20px;}
 img.add {background: url('../Imagens/ui-icons_a6a90d_256x240.png') no-repeat 2px -190px;}
 img.cancel {background: url('../Imagens/ico_delete_p.png') no-repeat;}
@@ -368,6 +370,7 @@ span.helper { display: inline-block; height: 100%; vertical-align: middle;}
 .agg_datatable.no_agg {display:none;}
 .tabs_datatable {border:none;}
 h2 span.st_norma {color:#009900;}
+.sugestoes {width:60%;}
 
 
 div.div-filtros div.line{margin-top: 0px;}
@@ -381,7 +384,18 @@ div.div-filtros a {text-decoration:none; color: #046635}
 
 div.sugestoes>table { min-width: 300px; }
 
+/*Fale Conosco*/
+div.fale_conosco{position:fixed; bottom:0; right:0; background:#F9F9F9; z-index:101;}
+div.fale_conosco.closed {width:200px;}
+div.fale_conosco.closed .topo img.min {display:none;}
+div.fale_conosco .topo {background:#38953F; color: #FFF;font-size: 14px; font-weight: bold; text-align: center; width: 100%;}
+div.fale_conosco .topo img {float: right;}
+div.fale_conosco.closed .corpo {display:none;}
+div.fale_conosco.opened .corpo {width:500px; padding:15px;}
+div.fale_conosco.opened .corpo H2 {font-size:14px; color:#38953F;}
+div.fale_conosco.opened .corpo .loading_capctha {text-align:center;height: 40px;}
 
+div.fale_conosco.opened .topo img.max {display:none;}
 
 /*table_generated_json*/
 table.table_generated_json{ font-size:13px; width:100%; border-spacing:2px; background-color:#CCC; border-color:#EEE; border-width:2px; border-style:solid;}

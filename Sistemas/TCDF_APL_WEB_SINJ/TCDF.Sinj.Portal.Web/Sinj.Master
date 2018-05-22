@@ -45,6 +45,7 @@
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/columns_datatables.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/platform.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/tooltip.js"></script>
+    <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_fale_conosco.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
 
 	<link rel="shortcut icon" type="image/x-icon" href=<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/favicon.png />
 
@@ -113,8 +114,21 @@
 
             $('[data-toggle="tooltip"]').tooltip({ container: "#div_tooltip", trigger: "hover" });
 
+            $('#nr_cpf_fale_conosco').attr('onKeypress', 'mascara(this,mcpf)');
+            generateCaptcha();
+
         });
-        
+
+        function clickTopoFaleConosco() {
+            if ($('#div_fale_conosco').hasClass('closed')) {
+                $('#div_fale_conosco').removeClass('closed');
+                $('#div_fale_conosco').addClass('opened');
+            }
+            else {
+                $('#div_fale_conosco').addClass('closed');
+                $('#div_fale_conosco').removeClass('opened');
+            }
+        }
     </script>
     <asp:ContentPlaceHolder ID="Head" runat="server">
     </asp:ContentPlaceHolder>
@@ -192,6 +206,93 @@
                 <div class="content">
                     <asp:ContentPlaceHolder ID="Body" runat="server">
                     </asp:ContentPlaceHolder>
+                </div>
+                <div id="div_fale_conosco" class="fale_conosco closed">
+                    <button type="button" class="clean topo" onclick="clickTopoFaleConosco()">Fale Conosco <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_min.png" class="min"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_max.png" class="max"></button>
+                    <div class="corpo">
+                        <form id="form_fale_conosco" name="form_fale_conosco" method="post" action="#" onsubmit="return enviarMsgFaleConosco('form_fale_conosco');">
+                            <div class="table">
+                                <div class="head">
+                                    <div>
+                                        <h2>Como podemos te ajudar?</h2>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column">
+                                        <div class="cell fl">
+                                            Dúvidas, informações, sugestões e/ou críticas? Preencha o nosso formulário online e entraremos em contato através do seu e-mail.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column">
+                                        <div class="cell fl">
+                                            <label>*Nome:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-100-pc">
+							            <input label="Nome" obrigatorio="sim" id="nm_user_fale_conosco" name="nm_user" type="text" value="" class="w-60-pc" placeholder="Digite seu nome" />
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column">
+                                        <div class="cell fl">
+                                            <label>*E-mail:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-100-pc">
+							            <input label="E-mail" obrigatorio="sim" specials="email" id="ds_email_fale_conosco" name="ds_email" type="text" value="" class="w-60-pc" placeholder="Digite seu e-mail" />
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column">
+                                        <div class="cell fl">
+                                            <label>*Assunto:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-100-pc">
+                                        <select id="ds_assunto_fale_conosco" name="ds_assunto" obrigatorio="sim" label="Assunto">
+                                            <option value="">Escolha um assunto...</option>
+                                            <option value="Dúvida">Dúvida</option>
+                                            <option value="Sugestão">Sugestão</option>
+                                            <option value="Crítica">Crítica</option>
+                                            <option value="Elogio">Elogio</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column">
+                                        <div class="cell fl">
+                                            <label>*Mensagem:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-100-pc">
+                                        <textarea label="Mensagem" obrigatorio="sim" id="ds_msg_fale_conosco" name="ds_msg" class="w-80-pc" rows="5" placeholder="Escreva aqui a sua mensagem" ></textarea>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column">
+                                        <div class="cell fl">
+                                            <label>*Digite os caracteres da imagem:</label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="column w-100-pc">
+                                            <div id="div_captcha_loading" class="loading_capctha" style="display:none;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/loading003300.gif" width="25" /></div>
+                                            <div id="div_captcha" class="column"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column w-100-pc text-center">
+                                        <button>
+                                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_check.png" width="20px" height="20" /> Enviar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

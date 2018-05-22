@@ -3,11 +3,13 @@ using TCDF.Sinj.RN;
 using util.BRLight;
 using TCDF.Sinj.OV;
 using System.Collections.Generic;
+using neo.BRLightREST;
 
 namespace TCDF.Sinj.Web
 {
     public partial class Sinj : System.Web.UI.MasterPage
     {
+        protected static ulong totalNovos = 0;
         private static SessaoUsuarioOV oSessaoUsuario;
         private static SessaoNotifiquemeOV oSessaoNotifiqueme;
         protected override void OnInit(EventArgs e)
@@ -250,6 +252,7 @@ namespace TCDF.Sinj.Web
                 oSessaoNotifiqueme = null;
             }
 
+            totalNovos = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo'" }).result_count;
         }
         private bool ValidarMenuPorGrupo(string li)
         {
@@ -282,6 +285,7 @@ namespace TCDF.Sinj.Web
                 , "  var _user = ", (oSessaoUsuario != null) ? JSON.Serialize<SessaoUsuarioOV>(oSessaoUsuario) : "null", ";"
                 , "  var _notifiqueme = ", (oSessaoNotifiqueme != null) ? JSON.Serialize<SessaoNotifiquemeOV>(oSessaoNotifiqueme) : "null", ";"
                 , "  var _nm_cookie_push = '", util.BRLight.Util.GetVariavel("NmCookiePush"), "';"
+                , "  var _nr_total_novos_chamados = '", totalNovos, "';"
                 , "  try { "
                 , "     if (!(((typeof (JSON) !== 'undefined') && (typeof (JSON.stringify) === 'function') && (typeof (JSON.parse) === 'function'))) || (/MSIE [567]/.test(navigator.userAgent))) {"
                 , "        var s = document.createElement('script');"

@@ -117,6 +117,25 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div id="line_dt_inicio_vigencia" class="line">
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc mauto">
+                                <div class="w-90-pc mauto">
+                                    <label>Vacatio Legis:</label>
+                                </div>
+                            </div>
+                        </div><br />
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc">
+                                <div class="w-90-pc mauto value" style="text-align:justify;" print="sim" print-type="linha" print-label="Vacatio Legis">
+                                    Em vigor a partir de <span id="span_dt_inicio_vigencia" class="dt_inicio_vigencia"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line_bottom"></div>
+                    </div>
+
                     <div class="line">
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc mauto">

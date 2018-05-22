@@ -263,6 +263,19 @@
                     },
                     "format":"dd/MM/yyyy"
                 },
+                "dt_inicio_vigencia":{
+                    "type":"date",
+                    "fields":{
+                        "dt_inicio_vigencia_text":{
+                            "type":"string"
+                        },
+                        "dt_inicio_vigencia_untouched":{
+                            "type":"date",
+                            "format":"dd/MM/yyyy"
+                        }
+                    },
+                    "format":"dd/MM/yyyy"
+                },
                 "dt_autuacao":{
                     "type":"date",
                     "fields":{
@@ -525,7 +538,7 @@
                 "st_pendencia":{
                     "type":"boolean"
                 },
-                "st_vigor_vide":{
+                "st_vacatio_legis":{
                     "type":"boolean"
                 },
                 "url_referencia":{

@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="FaleConosco.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.FaleConosco" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-	
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <div class="divIdentificadorDePagina">
@@ -8,7 +8,7 @@
 	</div>
     <div class="form">
         <div id="div_contato" class="loaded">
-            <fieldset class="w-80-pc">
+            <fieldset class="w-50-pc">
                 <div class="mauto table">
                     <div class="line">
                         <div class="column w-30-pc">

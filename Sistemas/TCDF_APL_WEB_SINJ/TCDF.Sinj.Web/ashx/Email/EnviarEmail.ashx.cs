@@ -31,20 +31,7 @@ namespace TCDF.Sinj.Web.ashx.Email
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
 
-                if (_emails.Length <= 0){
-                    throw new DocValidacaoException("Nenhum destinatário selecionado.");
-                }
-                else if(string.IsNullOrEmpty(_assunto)){
-                    throw new DocValidacaoException("Assunto em branco.");
-                }
-                else if(string.IsNullOrEmpty(_mensagem)){
-                    throw new DocValidacaoException("Mensagem em branco.");
-                }
-                else
-                {
-                    new EmailRN().EnviaEmail("SINJ Notifica", _emails, _assunto, false, _mensagem);
-                    sRetorno = "{\"success_message\": \"E-mail enviado com sucesso.\"}";
-                }
+                sRetorno = EnviarEmails(_emails, _assunto, _mensagem);
 
                 var logEmail = new LogEmail();
                 logEmail.emails = _emails;
@@ -78,6 +65,30 @@ namespace TCDF.Sinj.Web.ashx.Email
             }
             context.Response.ContentType = "application/json";
             context.Response.Write(sRetorno);
+        }
+
+        public string EnviarEmails(string[] emails, string assunto, string mensagem)
+        {
+            var sRetorno = "";
+            if (emails.Length <= 0)
+            {
+                throw new DocValidacaoException("Nenhum destinatário selecionado.");
+            }
+            else if (string.IsNullOrEmpty(assunto))
+            {
+                throw new DocValidacaoException("Assunto em branco.");
+            }
+            else if (string.IsNullOrEmpty(mensagem))
+            {
+                throw new DocValidacaoException("Mensagem em branco.");
+            }
+            else
+            {
+                new EmailRN().EnviaEmail("SINJ Notifica", emails, assunto, false, mensagem);
+                sRetorno = "{\"success_message\": \"E-mail enviado com sucesso.\"}";
+            }
+
+            return sRetorno;
         }
 
         public bool IsReusable

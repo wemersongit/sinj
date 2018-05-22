@@ -28,7 +28,16 @@ namespace TCDF.Sinj
     }
     public class DocDuplicateKeyException : ApplicationException
     {
-        public DocDuplicateKeyException(string mensagem): base(mensagem)
+        public DocDuplicateKeyException(string mensagem)
+            : base(mensagem)
+        {
+
+        }
+    }
+    public class DocDuplicateKeyControlException : ApplicationException
+    {
+        public DocDuplicateKeyControlException()
+            : base()
         {
 
         }

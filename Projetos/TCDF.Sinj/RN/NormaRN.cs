@@ -8,6 +8,7 @@ using System;
 using util.BRLight;
 using TCDF.Sinj.ES;
 using System.Web;
+using System.Globalization;
 
 namespace TCDF.Sinj.RN
 {
@@ -278,7 +279,7 @@ namespace TCDF.Sinj.RN
                     }
                     if (decisoes_ordenadas_por_data.Count > 0)
                     {
-                        decisoes_ordenadas_por_data = decisoes_ordenadas_por_data.OrderBy(d => Convert.ToDateTime(d.dt_decisao)).ToList();
+                        decisoes_ordenadas_por_data = decisoes_ordenadas_por_data.OrderBy(d => Convert.ToDateTime(d.dt_decisao, new CultureInfo("pt-BR"))).ToList();
                     }
                     else
                     {
@@ -452,8 +453,15 @@ namespace TCDF.Sinj.RN
             var vides_que_afetam_a_norma = vides.Where<Vide>(v => v.in_norma_afetada).ToList<Vide>();
 
             var i_revigoracao = 0;
+
             foreach (var vide in vides_que_afetam_a_norma)
             {
+                //verifica se a norma alteradora entrou em vigencia (vacatio legis)
+                if (!string.IsNullOrEmpty(vide.dt_inicio_vigencia_norma_vide) && Convert.ToDateTime(vide.dt_inicio_vigencia_norma_vide, new CultureInfo("pt-BR")) > DateTime.Now)
+                {
+                    continue;
+                }
+
                 var relacao = relacoes.results.Where<TipoDeRelacaoOV>(tdr => tdr.ch_tipo_relacao == vide.ch_tipo_relacao).First<TipoDeRelacaoOV>();
                 int importanciaDaVez = relacao.nr_importancia;
 

@@ -18,7 +18,7 @@ var _columns_norma = [
 			return origens;
 		}
 	},
-	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Ementa", "sWidth": "", "sClass": "grid-cell ws ds_ementa", "mData": "ds_ementa", "bSortable": false },
+	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Ementa", "sWidt": "", "sClass": "grid-cell ws ds_ementa", "mData": "ds_ementa", "bSortable": false },
 	{ "indice": 4, "isControl": false, "stadnard_view": true, "sTitle": "Situação", "sWidth": "", "sClass": "center ws nm_situacao", "mData": "nm_situacao" },
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Texto Integral", "sWidth": "110px", "sClass": "center ws all", "bSortable": false,
 	    "mRender": function (data, type, full) {
@@ -125,6 +125,16 @@ var _columns_norma_es = [
 	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
 	            '</div>' +
             '</div>';
+	        if (full._source.st_vacatio_legis && IsNotNullOrEmpty(full._source.dt_inicio_vigencia)) {
+	            html += '<div class="line">' +
+                    '<div class="column w-10-pc">' +
+	                    '<label>Vacatio Legis:</label>' +
+	                '</div>' +
+                    '<div class="column w-90-pc text-justify">' +
+	                    'Em vigor a partir de <span class="dt_inicio_vigencia">' + full._source.dt_inicio_vigencia + '</span>' +
+	                '</div>' +
+                '</div>';
+	        }
 	        var origens = "";
 	        for (var i = 0; i < full._source.origens.length; i++) {
 	            origens += (origens != "" ? "<br/>" : "") + full._source.origens[i].sg_orgao + ' - ' + full._source.origens[i].nm_orgao;
@@ -137,6 +147,7 @@ var _columns_norma_es = [
 	                origens +
 	            '</div>' +
             '</div>';
+
 	        html += '<div class="line">' +
                 '<div class="column w-10-pc">' +
 	                '<label>Ementa:</label>' +
@@ -182,8 +193,7 @@ var _columns_norma_es = [
 	    }
 	}
 ];
-
-var _columns_norma_favoritos = _columns_norma_es.slice(0);
+var _columns_norma_favoritos = $.extend(true, [], _columns_norma_es);
 _columns_norma_favoritos[0] = { "indice": 0, "isControl": true, "standard_view": true, "sTitle": ' ', "sWidth": "30px", "sClass": "grid-cell ws", "mData": "", "bSortable": false,
         "mRender": function (data, type, full) {
             return '<div class="button_favoritos_' + full._source.ch_norma + '" style="width:30px;"><a href="javascript:void(0);" title="Remover da lista de favoritos" onclick="javascript:RemoverFavoritos(\'.button_favoritos_' + full._source.ch_norma + '\',\'norma_' + full._source.ch_norma + '\');" ><img alt="*" src="' + _urlPadrao + '/Imagens/ico_del_fav.png" /></a></div>';
@@ -196,6 +206,16 @@ _columns_norma_favoritos[8].mRender = function (data, type, full) {
 	        '<H2><a title="Detalhes" class="clear" href="./DetalhesDeNorma.aspx?id_norma=' + full._source.ch_norma + '"><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span> <img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </a></H2>' +
 	    '</div>' +
     '</div>';
+	if (full._source.st_vacatio_legis && IsNotNullOrEmpty(full._source.dt_inicio_vigencia)) {
+	    html += '<div class="line">' +
+            '<div class="column w-10-pc">' +
+	            '<label>Vacatio Legis:</label>' +
+	        '</div>' +
+            '<div class="column w-90-pc text-justify">' +
+	            'Em vigor a partir de <span class="dt_inicio_vigencia">' + full._source.dt_inicio_vigencia + '</span>' +
+	        '</div>' +
+        '</div>';
+	}
 	var origens = "";
 	for (var i = 0; i < full._source.origens.length; i++) {
 	    origens += (origens != "" ? "<br/>" : "") + full._source.origens[i].sg_orgao + ' - ' + full._source.origens[i].nm_orgao;
@@ -252,7 +272,7 @@ _columns_norma_favoritos[8].mRender = function (data, type, full) {
 	return html;
 }
 
-var _columns_norma_cesta = _columns_norma_es.slice(0);
+var _columns_norma_cesta = $.extend(true, [], _columns_norma_es);
 _columns_norma_cesta[0] = {
     "indice": 0,
     "isControl": false,
@@ -387,7 +407,7 @@ var _columns_diario_es = [
     { "indice": 6, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "left ws", "bSortable": false,
         "mRender": function (data, type, full) {
             var html = '<div class="table w-100-pc">';
-            var buttonTitle = '<H2><span class="nm_tipo_fonte nr_diario dt_assinatura dt_assinatura_text nm_diferencial_edicao nm_tipo_edicao nm_diferencial_suplemento secao_diario">' + montarDescricaoDiario(full._source) + '</span></H2>';
+            var buttonTitle = '<H2>' + montarSpanDescricaoDiario(full._source) + '</H2>';
             if (_aplicacao == "CADASTRO") {
                 buttonTitle = '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_diario\'">' + buttonTitle + '<img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></button>';
             }
@@ -495,7 +515,7 @@ var _columns_texto_diario = [
     }
 ];
 
-var _columns_diario_cesta = _columns_diario_es.slice(0);
+var _columns_diario_cesta = $.extend(true, [], _columns_diario_es);
 _columns_diario_cesta[0] = { "indice": 0, "isControl": true, "standard_view": true, "sTitle": " ", "sWidth": "110px", "sClass": "center ws all", "mData": "", "bSortable": false,
     "mRender": function (data, type, full) {
         return "<a title='Remover da Cesta' href='javascript:ExcluirDaCesta(\"sinj_diario_" + full._source._metadata.id_doc + "\");' class='a_delete' ><img valign='absmiddle' alt='Excluir'  src='" + _urlPadrao + "/Imagens/ico_trash_p.png'  /></a>";
@@ -1407,8 +1427,8 @@ var _columns_norma_associada_vocabulario = [
 	},
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "60px", "sClass": "grid-cell ws all", "mData": "", "bSortable": false,
 	    "mRender": function (data, type, full) {
-	        var detalhes = "<a href='./ResultadoDePesquisa.aspx?" + window.unescape(full._source.consulta) + "' title='Pesquisar'><img valign='absmiddle' alt='pesquisar' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a>";
-	        var editar = "<a href='./Pesquisas.aspx?" + full._source.consulta + "' title='Editar'><img valign='absmiddle' alt='editar' src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' /></a>";
+	        var detalhes = "<a href='./ResultadoDePesquisa.aspx?" + window.unescape(full._source.consulta).replaceAll('#','%23') + "' title='Pesquisar'><img valign='absmiddle' alt='pesquisar' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a>";
+	        var editar = "<a href='./Pesquisas.aspx?" + window.unescape(full._source.consulta).replaceAll('#', '%23') + "' title='Editar'><img valign='absmiddle' alt='editar' src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' /></a>";
 	        return detalhes + "&nbsp;" + editar;
 	    }
 	}
@@ -1552,7 +1572,7 @@ var _columns_lixeira = [
 ];
 
 var _columns_arquivos = [
-    { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Nome", "sWidth": "", "sClass": "grid-cell ws left", "mData": "nm_arquivo", "sorting": "desc",
+    { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Nome", "sWidth": "", "sClass": "grid-cell ws left nm_arquivo", "mData": "nm_arquivo", "sorting": "desc",
         "mRender": function (data, type, full) {
             var html = '';
             if (full.nr_tipo_arquivo == 0) {
@@ -1573,7 +1593,7 @@ var _columns_arquivos = [
                 else if (full.ar_arquivo.mimetype.indexOf('image/') == 0) {
                     ico = '<img src="./Download/sinj_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename + '" alt="' + full.nm_arquivo + '" style="max-width:50px;max-height:30px;" />';
                 }
-                html = '<div class="div_arq" chave="' + full.ch_arquivo + '">' + ico + ' ' + full.nm_arquivo + '.' + tipo + '</div>';
+                html = '<div class="div_arq" chave="' + full.ch_arquivo + '" style="word-break: break-all;">' + ico + ' ' + full.nm_arquivo + '.' + tipo + '</div>';
             }
             return html;
         }
@@ -1674,6 +1694,32 @@ var _columns_arquivos_versionados = [
             var bt_download = '<a target="_blank" href="./Download/sinj_arquivo_versionado_norma/' + full.ar_arquivo_versionado.id_file + '/' + full.ar_arquivo_versionado.filename + '" title="Baixar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_download.png" alt="download" /></a>';
             var bt_recovery = '&nbsp;<a target="_blank" href="javascript:void(0);" onclick="javascript:selecionarDocumentoRecuperar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
             return bt_download + bt_recovery;
+        }
+    }
+];
+
+var _columns_fale_conosco = [
+    { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Data e Hora", "sWidth": "20%", "sClass": "grid-cell ws center", "mData": "dt_inclusao" },
+    { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Nome", "sWidth": "", "sClass": "grid-cell ws center", "mData": "nm_user" },
+    { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Status", "sWidth": "", "sClass": "grid-cell ws center", "mData": "st_atendimento" },
+    { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "E-mail", "sWidth": "", "sClass": "grid-cell ws center", "mData": "ds_email" },
+    { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Assunto", "sWidth": "", "sClass": "grid-cell ws center", "mData": "ds_assunto" },
+    { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Mensagem", "sWidth": "", "sClass": "grid-cell ws center", "mData": "ds_msg" },
+    { "indice": 3, "isControl": true, "bSortable": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "grid-cell ws left", "mData": "",
+        "mRender": function (data, type, full) {
+            var btDetalhes = '<a title="Visualizar detalhes desse chamado" href="./DetalhesDeFaleConosco.aspx?ch_chamado='+full.ch_chamado+'"><img src="' + _urlPadrao + '/Imagens/ico_loupe_fit.png"/></a>&nbsp;';
+            var btReceber = "";
+            var btFinalizar = "";
+            var btResponder = "";
+            if (full.st_atendimento == "Novo") {
+                btReceber = '<button title="Receber esse chamado" class="clean" ch_chamado="' + full.ch_chamado + '" onclick="receberChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_check_p.png"/></button>&nbsp;';
+            }
+            if (full.st_atendimento != "Finalizado") {
+                btFinalizar = '<button title="Finalizar esse chamado" class="clean" ch_chamado="' + full.ch_chamado + '" onclick="finalizarChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_close.png"/></button>&nbsp;';
+            }
+            btResponder = '<button title="Enviar um e-mail para esse usuário" class="clean" ch_chamado="' + full.ch_chamado + '" ds_email="' + full.ds_email + '" onclick="responderChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_email_p.png"/></button>&nbsp;';
+
+            return btDetalhes + btReceber + btResponder + btFinalizar;
         }
     }
 ];

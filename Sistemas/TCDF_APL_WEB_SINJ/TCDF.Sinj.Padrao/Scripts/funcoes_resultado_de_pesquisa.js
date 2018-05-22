@@ -14,8 +14,8 @@ $(document).ready(function () {
                 '<li nm="sinj_diario"><a class="aba" href="#div_resultado_diario" onclick="javascript:ClicarAba(\'sinj_diario\');">Diários <span id="total_sinj_diario" class="total"></span></a></li>' +
                 '<li nm="cesta"><a class="aba" href="#div_cesta" onclick="javascript:ClicarAba(\'cesta\');">Cesta <span id="total_cesta"></span> <img alt="cesta" style="height:14px; width:16px;" src="' + _urlPadrao + '/Imagens/ico_basket_p.png" /></a></li>' +
             '</ul>' +
-            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_sinj_norma" class="sort_datatable" style="display:none;" >Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div><div id="div_sugestoes_sinj_norma"></div></div>' +
-            '<div id="div_resultado_diario" class="result_datatable"><div id="div_sort_sinj_diario" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_diarios" name="select_order_diario" onchange="javascript:selectOrder(\'datatable_diarios\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo (A-Z)</option><option value="2,desc">Tipo (Z-A)</option><option value="3,asc">Menor Número</option><option value="3,desc">Maior Número</option><option value="4,asc">Menor Seção</option><option value="4,desc">Maior Seção</option><option value="5,asc">Mais Antigos</option><option value="5,desc">Mais Recentes</option></select></div><div id="div_aggregations_diario" class="agg_datatable">' + montarFiltro("sinj_diario") + '</div><div id="div_datatable_diario" class="table_datatable"></div><div id="div_sugestoes_sinj_diario"></div></div>' +
+            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_sinj_norma" class="sort_datatable" style="display:none;" >Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div><div id="div_sugestoes_sinj_norma" class="sugestoes" style="display:none;">A sua pesquisa não encontrou Normas, mas achamos que as sugestões abaixo podem ajudar a encontrar o que procura:<div id="datatable_sugestoes_sinj_norma"></div></div></div>' +
+            '<div id="div_resultado_diario" class="result_datatable"><div id="div_sort_sinj_diario" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_diarios" name="select_order_diario" onchange="javascript:selectOrder(\'datatable_diarios\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo (A-Z)</option><option value="2,desc">Tipo (Z-A)</option><option value="3,asc">Menor Número</option><option value="3,desc">Maior Número</option><option value="4,asc">Menor Seção</option><option value="4,desc">Maior Seção</option><option value="5,asc">Mais Antigos</option><option value="5,desc">Mais Recentes</option></select></div><div id="div_aggregations_diario" class="agg_datatable">' + montarFiltro("sinj_diario") + '</div><div id="div_datatable_diario" class="table_datatable"></div><div id="div_sugestoes_sinj_diario" class="sugestoes" style="display:none;">A sua pesquisa não encontrou Diários, mas achamos que as sugestões abaixo podem ajudar a encontrar o que procura:<div id="datatable_sugestoes_sinj_diario"></div></div></div>' +
             '<div id="div_cesta">' +
                 '<ul>' +
                     '<a href="javascript:void(0);" onclick="javascript:RelatorioPDF();" class="fr" title="Salvar planilha"><img alt="xls" src="' + _urlPadrao + '/Imagens/ico_xls_p.png"/></a>' +
@@ -35,7 +35,7 @@ $(document).ready(function () {
                 '<li nm="sinj_norma"><a class="aba" href="#div_resultado_norma" onclick="javascript:ClicarAba(\'sinj_norma\');">Normas <span id="total_sinj_norma" class="total"></span></a></li>' +
                 '<li nm="cesta"><a class="aba" href="#div_cesta" onclick="javascript:ClicarAba(\'cesta\');">Cesta</a></li>' +
             '</ul>' +
-            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_sinj_norma" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div><div id="div_sugestoes_sinj_norma"></div></div>' +
+            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_sinj_norma" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div><div id="div_sugestoes_sinj_norma" class="sugestoes" style="display:none;">A sua pesquisa não encontrou Normas, mas achamos que as sugestões abaixo podem ajudar a encontrar o que procura:<div id="datatable_sugestoes_sinj_norma"></div></div></div>' +
             '<div id="div_cesta">' +
                 '<ul>' +
                     '<li nm="cesta_norma"><a class="a" href="#div_cesta_norma" onclick="javascript:ClicarAba(\'cesta_norma\')">Normas</a></li>' +
@@ -52,7 +52,7 @@ $(document).ready(function () {
                 '<li nm="sinj_diario"><a class="aba" href="#div_resultado_diario" onclick="javascript:ClicarAba(\'sinj_diario\');">Diários <span id="total_sinj_diario" class="total"></span></a></li>' +
                 '<li nm="cesta"><a class="aba" href="#div_cesta" onclick="javascript:ClicarAba(\'cesta\');">Cesta</a></li>' +
             '</ul>' +
-            '<div id="div_resultado_diario" class="result_datatable"><div id="div_sort_sinj_diario" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_diarios" name="select_order_diario" onchange="javascript:selectOrder(\'datatable_diarios\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo (A-Z)</option><option value="2,desc">Tipo (Z-A)</option><option value="3,asc">Menor Número</option><option value="3,desc">Maior Número</option><option value="4,asc">Menor Seção</option><option value="4,desc">Maior Seção</option><option value="5,asc">Mais Antigos</option><option value="5,desc">Mais Recentes</option></select></div><div id="div_aggregations_diario" class="agg_datatable">' + montarFiltro("sinj_diario") + '</div><div id="div_datatable_diario" class="table_datatable"></div>' + (tipo_pesquisa == "diario" ? '<div id="div_sugestoes_sinj_diario"></div>' : '') + '</div>' +
+            '<div id="div_resultado_diario" class="result_datatable"><div id="div_sort_sinj_diario" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_diarios" name="select_order_diario" onchange="javascript:selectOrder(\'datatable_diarios\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo (A-Z)</option><option value="2,desc">Tipo (Z-A)</option><option value="3,asc">Menor Número</option><option value="3,desc">Maior Número</option><option value="4,asc">Menor Seção</option><option value="4,desc">Maior Seção</option><option value="5,asc">Mais Antigos</option><option value="5,desc">Mais Recentes</option></select></div><div id="div_aggregations_diario" class="agg_datatable">' + montarFiltro("sinj_diario") + '</div><div id="div_datatable_diario" class="table_datatable"></div><div id="div_sugestoes_sinj_diario" class="sugestoes" style="display:none;">A sua pesquisa não encontrou Diários, mas achamos que as sugestões abaixo podem ajudar a encontrar o que procura:<div id="datatable_sugestoes_sinj_diario"></div></div></div>' +
             '<div id="div_cesta">' +
                 '<ul>' +
                     '<li nm="cesta_diario"><a class="a" href="#div_cesta_diario" onclick="javascript:ClicarAba(\'cesta_diario\')">Diários</a></li>' +
@@ -69,7 +69,7 @@ $(document).ready(function () {
                 '<li nm="sinj_norma"><a class="aba" href="#div_resultado_norma" onclick="javascript:ClicarAba(\'sinj_norma\');">Normas <span id="total_sinj_norma" class="total"></span></a></li>' +
                 '<li nm="cesta"><a class="aba" href="#div_cesta" onclick="javascript:ClicarAba(\'cesta\');">Cesta</a></li>' +
             '</ul>' +
-            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_sinj_norma" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div><div id="div_sugestoes_sinj_norma"></div></div>' +
+            '<div id="div_resultado_norma" class="result_datatable"><div id="div_sort_sinj_norma" class="sort_datatable" style="display:none;">Ordenar por <select table="datatable_normas" name="select_order_norma" onchange="javascript:selectOrder(\'datatable_normas\',this);"><option value="1,asc">Menor Relevância</option><option value="1,desc" selected="selected">Maior Relevância</option><option value="2,asc">Tipo e Número (A-Z)</option><option value="2,desc">Tipo e Número (Z-A)</option><option value="3,asc">Mais Antigos</option><option value="3,desc">Mais Recentes</option></select></div><div id="div_aggregations_norma" class="agg_datatable">' + montarFiltro("sinj_norma") + '</div><div id="div_datatable_norma" class="table_datatable"></div><div id="div_sugestoes_sinj_norma" class="sugestoes" style="display:none;">A sua pesquisa não encontrou Normas, mas achamos que as sugestões abaixo podem ajudar a encontrar o que procura:<div id="datatable_sugestoes_sinj_norma"></div></div></div>' +
         //            '<div id="div_resultado_norma"><button type="button" class="filtro" onclick="javascript:MostrarFiltros(\'sinj_norma\');"><img alt="filtro" src="' + _urlPadrao + '/Imagens/ico_filter_p.png" /> Refinar pesquisa</button><div id="div_datatable_norma"></div></div>' +
             '<div id="div_cesta">' +
                 '<ul>' +
@@ -87,9 +87,32 @@ $(document).ready(function () {
 
 function sugerirBuscas(nm_base) {
     var sucesso = function (data) {
-        var nm_by_total = '';
-        if (IsNotNullOrEmpty(data, 'result')) {
-            
+        var sugestoes_columns = [
+	        { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Pesquisa", "sWidth": "80%", "sClass": "grid-cell ws", "mData": "ds_sugestao",
+	            "mRender": function (data, type, full) {
+	                return '<a title="Pesquisar por ' + data + '" href="./ResultadoDePesquisa?' + window.unescape(full.params_sugestao).replaceAll('#', '%23') + '" >' + data + ' <img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
+	            }
+	        },
+	        { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Registros", "sWidth": "", "sClass": "grid-cell ws center", "mData": "count" },
+	        { "indice": 3, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "grid-cell ws", "mData": "nr_termos", "visible": false }
+        ];
+	    $("#div_sugestoes_" + nm_base).show();
+        if (IsNotNullOrEmpty(data, 'sugestoes')) {
+            $("#datatable_sugestoes_" + nm_base).dataTablesLight({
+                responsive: null,
+                bPaginate: false,
+                bInfo: false,
+                bSorting: false,
+                "sIdTable": "table_sugestoes" + nm_base,
+                "aoData": data.sugestoes,
+                "bServerSide": false,
+                "aoColumns": sugestoes_columns,
+                "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+                "aaSorting": []
+            });
+        }
+        else {
+            $("#div_sugestoes_" + nm_base).html("A sua pesquisa não encontrou " + data.ds_base + ".");
         }
     }
     $.ajaxlight({
@@ -97,10 +120,11 @@ function sugerirBuscas(nm_base) {
         oData: parseURL(window.location.href).aoData,
         sType: "POST",
         fnError: null,
+        fnBeforeSend: gInicio,
+        fnComplete: gComplete,
         bAsync: true,
         fnSuccess: sucesso
     });
-    console.log('sugerirBuscas')
 }
 
 function ConsultarTotal(nm_base) {
@@ -172,7 +196,6 @@ function ClicarAba(nm_base) {
     var total = $('#total_' + nm_base).text();
     if (parseInt(total) <= 0) {
         sugerirBuscas(nm_base);
-        $('#div_sugestoes_' + nm_base).html();
         return;
     }
     $('#div_sort_' + nm_base).show();

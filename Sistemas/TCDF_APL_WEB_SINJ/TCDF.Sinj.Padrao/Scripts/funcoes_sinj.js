@@ -2192,6 +2192,125 @@ function verifica_data(txtDate) {
         return false;
     }
 }
+function isCPF(sequencia) {
+    seq = retira_mascara(sequencia);
+
+    var exp = new RegExp("11111111111|22222222222|33333333333|44444444444|55555555555|66666666666|77777777777|88888888888|99999999999|00000000191|19100000000");
+    if (exp.test(seq))
+        return false;
+
+    soma = 0;
+    multiplicador = 2;
+    for (f = seq.length - 3; f >= 0; f--) {
+        soma += seq.substring(f, f + 1) * multiplicador;
+        multiplicador++;
+    }
+    resto = soma % 11;
+    digito = (resto == 1 || resto == 0) ? 0 : 11 - resto;
+    if (digito != seq.substring(seq.length - 2, seq.length - 1)) {
+        return false;
+    }
+    soma = 0;
+    multiplicador = 2;
+    for (f = seq.length - 2; f >= 0; f--) {
+        soma += seq.substring(f, f + 1) * multiplicador;
+        multiplicador++;
+    }
+    resto = soma % 11;
+    digito = (resto == 1 || resto == 0) ? 0 : 11 - resto;
+    if (digito != seq.substring(seq.length - 1, seq.length)) {
+        return false;
+    }
+    return true;
+}
+
+function isCNPJ(sequencia) {
+    seq = retira_mascara(sequencia);
+    soma = 0;
+    multiplicador = 2;
+    for (f = seq.length - 3; f >= 0; f--) {
+        soma += seq.substring(f, f + 1) * multiplicador;
+        if (multiplicador < 9) {
+            multiplicador++;
+        } else {
+            multiplicador = 2;
+        }
+    }
+    resto = soma % 11;
+    digito = (resto == 1 || resto == 0) ? 0 : 11 - resto;
+    return !(digito != seq.substring(seq.length - 2, seq.length - 1));
+
+    soma = 0;
+    multiplicador = 2;
+    for (f = seq.length - 2; f >= 0; f--) {
+        soma += seq.substring(f, f + 1) * multiplicador;
+        if (multiplicador < 9) {
+            multiplicador++;
+        } else {
+            multiplicador = 2;
+        }
+    }
+    resto = soma % 11;
+    digito = (resto == 1 || resto == 0) ? 0 : 11 - resto ;
+    return !(digito != seq.substring(seq.length - 1, seq.length));
+}
+function isDateTime(txtDate) {
+    var txtDate = txtDate.replaceAll(" ", "");   
+    if (IsNotNullOrEmpty(txtDate)) {
+        if (txtDate.length == 18) {
+
+            var getHour = txtDate.substring(txtDate.length - 8, txtDate.length);
+            var getDate = txtDate.substring(0, 10);
+
+            var arrayHour = getHour.split(':');
+            var arrayDate = getDate.split('/');
+
+            if (arrayHour.length == 3 && arrayDate.length == 3) {
+                if (verifica_data(getDate) && Verifica_Hora(getHour)) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }            
+            return false;
+        }
+        else {
+            return false;
+        } 
+    }   
+}
+
+function isEmail(s) {
+    var sLength = s.length;
+    var denied_chars = new Array(" ", "\n", "\t", "\r", "%", "$", "#", "!", "~", "`", "^", "&", "*", "(", ")", "=", "+", "{", "}", "[", "]", ",", ";", ":", "'", "\"", "?", "<", ">", "/", "\\", "|");
+    if (s.indexOf("@") == -1) return false;
+    if (s.indexOf("@") != s.lastIndexOf("@")) return false;
+    for (var z = 0; z < denied_chars.length; z++) {
+        if (s.indexOf(denied_chars[z]) != -1) return false;
+    }
+    if (s.indexOf(".") == -1) return false;
+    if (s.indexOf("..") != -1) return false;
+    if ((s.charAt(sLength - 1) == ".") || (s.charAt(sLength - 1) == "_")) return false;
+
+    return true;
+}
+
+
+function retira_mascara(cpf_cnpj) {
+    return cpf_cnpj.replace(/\./g, '').replace(/-/g, '').replace(/\//g, '').replaceAll(" ", "")
+}
+
+function compara_data(data1, type, data2 ) {
+    var tbl_dt_1 = data1.split("/"),
+        tbl_dt_2 = data2.split("/"),
+        dt_1 = (tbl_dt_1[2] + tbl_dt_1[1] + tbl_dt_1[0]),
+        dt_2 = (tbl_dt_2[2] + tbl_dt_2[1] + tbl_dt_2[0]);
+    return (eval("(" + dt_1 + " " + type + " " + dt_2 + ")"));
+}
+//================================================//
+
+
 
 function CriarModalDescricaoOrigem(ch_orgao) {
     $('#modal_descricao_origem').modallight({
@@ -2680,6 +2799,14 @@ function DetalhesNorma(data, highlight) {
             if (data.st_pendencia) {
                 $('#div_pendencia').html('<label id="label_pendencia"> Norma pendente de revisão </label> <br/>' +
                     '<span id="span_ds_pendencia">' + GetText(data.ds_pendencia) + '</span>');
+            }
+
+            if(data.st_vacatio_legis){
+                $('#span_dt_inicio_vigencia').text(data.dt_inicio_vigencia);
+                $('#line_dt_inicio_vigencia').show();
+            }
+            else{
+                $('#line_dt_inicio_vigencia').hide();
             }
 
             $('#div_ds_ementa').html(data.ds_ementa);
@@ -3558,6 +3685,30 @@ function montarDescricaoDiario(oJson_diario) {
                         oJson_diario.dt_assinatura;
 }
 
+function montarSpanDescricaoDiario(oJson_diario) {
+    var span = '<span class="nm_tipo_fonte">' + oJson_diario.nm_tipo_fonte + ' </span>';
+    span += '<span class="nr_diario">' + oJson_diario.nr_diario + ' </span>';
+    if (IsNotNullOrEmpty(oJson_diario.cr_diario)) {
+        span += '<span class="cr_diario">' + oJson_diario.cr_diario + ' </span>';
+    }
+    if(IsNotNullOrEmpty(oJson_diario.nm_tipo_edicao) && oJson_diario.nm_tipo_edicao != 'Normal' || IsNotNullOrEmpty(oJson_diario.nm_diferencial_edicao)){
+        span += '<span>, Edição </span><span class="nm_tipo_edicao">' + oJson_diario.nm_tipo_edicao + '</span>';
+        if (IsNotNullOrEmpty(oJson_diario.nm_diferencial_edicao)) {
+            span += '<span class="nm_diferencial_edicao"> ' + oJson_diario.nm_diferencial_edicao + '</span>';
+        }
+    }
+    if (oJson_diario.st_suplemento) {
+        span += '<span>, Suplemento</span>';
+        if (IsNotNullOrEmpty(oJson_diario.nm_diferencial_suplemento)) {
+            span += '<span class="nm_diferencial_suplemento"> ' + oJson_diario.nm_diferencial_suplemento + '</span>';
+        }
+    }
+    if (IsNotNullOrEmpty(oJson_diario.secao_diario)) {
+        span += '<span class="secao_diario">, ' + oJson_diario.secao_diario + '</span>';
+    }
+    span += '<span> de </span><span class="dt_assinatura">' + oJson_diario.dt_assinatura + '</span>';
+    return span;;
+}
 
 /*Funções para marcação de caput de arquivos de norma
 ================================================*/
@@ -3849,4 +4000,27 @@ function SalvarConsultaNoHistorico(counts, search) {
         });
     }
     return false;
+}
+
+/*captcha*/
+function generateCaptcha() {
+	$.ajaxlight({
+	    sUrl: './captcha.aspx',
+	    sType: "GET",
+	    fnError: null,
+	    sDataType: "html",
+	    bAsync: true,
+	    fnBeforeSend: function () {
+	        $('#div_captcha_loading').show();
+	        $('#div_captcha').hide();
+	    },
+	    fnComplete: function () {
+	        $('#div_captcha').show();
+	        $('#div_captcha_loading').hide();
+
+	    },
+	    fnSuccess: function (data) {
+	        $('#div_captcha').html(data);
+	    }
+	});
 }

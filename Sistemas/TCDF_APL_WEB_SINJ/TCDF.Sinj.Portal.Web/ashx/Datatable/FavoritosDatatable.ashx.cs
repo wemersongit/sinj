@@ -27,7 +27,6 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
             try
             {
 
-                var favoritoRn = new FavoritoRN();
                 object datatable_result = null;
                 var _base = context.Request["b"];
                 if (_base == "norma")

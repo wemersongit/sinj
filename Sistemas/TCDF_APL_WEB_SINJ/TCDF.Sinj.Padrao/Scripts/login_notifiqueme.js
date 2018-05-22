@@ -5,6 +5,8 @@
 function MontarUsuarioNotifiqueme() {
     if (IsNotNullOrEmpty(_notifiqueme, 'email_usuario_push')) {
         $('#div_user_notifiqueme').html(_notifiqueme.email_usuario_push + ', <a style="text-decoration:none; color:#FFF; font-weight:bold;" href="javascript:void(0);" onclick="javascript:DeslogarNotifiqueme();" title="Sair do Notifique-me" >sair</a>');
+        $('#nm_user_fale_conosco').val(_notifiqueme.nm_usuario_push);
+        $('#ds_email_fale_conosco').val(_notifiqueme.email_usuario_push);
     }
     else {
         $('#div_user_notifiqueme').html('');

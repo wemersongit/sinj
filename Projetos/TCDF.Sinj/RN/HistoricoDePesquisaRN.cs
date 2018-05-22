@@ -33,7 +33,7 @@ namespace TCDF.Sinj.RN
                 pesquisa.argumentos.Add(new ArgumentoOV { campo = "all", operador = "igual", valor = pesquisaGeral.all });
                 consulta += pesquisaGeral.all;
             }
-            pesquisa.consulta = HttpUtility.UrlEncode(consulta);
+            pesquisa.consulta = consulta;
         }
 
         public void MontarPesquisa(SentencaPesquisaDiretaNormaOV pesquisaDireta, HistoricoDePesquisaOV historicoDePesquisa)
@@ -58,6 +58,11 @@ namespace TCDF.Sinj.RN
                 historicoDePesquisa.ds_historico += (historicoDePesquisa.ds_historico != "" ? " E " : "") + "Número=" + pesquisaDireta.nr_norma;
                 historicoDePesquisa.argumentos.Add(new ArgumentoOV { campo = "Número", operador = "igual", valor = pesquisaDireta.nr_norma, conector = (historicoDePesquisa.ds_historico != "" ? " E " : "") });
                 consulta += "&nr_norma=" + pesquisaDireta.nr_norma;
+            }
+            if (!string.IsNullOrEmpty(pesquisaDireta.norma_sem_numero) && pesquisaDireta.norma_sem_numero.Equals("true"))
+            {
+                historicoDePesquisa.ds_historico += (historicoDePesquisa.ds_historico != "" ? " E " : "") + "Número=Sem Número";
+                consulta += "&norma_sem_numero=" + pesquisaDireta.norma_sem_numero;
             }
             if (!string.IsNullOrEmpty(pesquisaDireta.ano_assinatura))
             {
@@ -92,7 +97,7 @@ namespace TCDF.Sinj.RN
                 consulta += "&sg_hierarquia_nm_vigencia=" + pesquisaDireta.nm_orgao;
             }
 
-            historicoDePesquisa.consulta = HttpUtility.UrlEncode(consulta);
+            historicoDePesquisa.consulta = consulta;
             historicoDePesquisa.ds_historico = "(Pesquisa de Normas) " + historicoDePesquisa.ds_historico;
             historicoDePesquisa.nm_tipo_pesquisa = "Pesquisa de Normas";
         }
@@ -106,12 +111,6 @@ namespace TCDF.Sinj.RN
                 pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Norma=" + pesquisaDireta.ds_norma;
                 pesquisa.argumentos.Add(new ArgumentoOV { campo = "Norma", operador = "igual", valor = pesquisaDireta.ds_norma, conector = (pesquisa.ds_historico != "" ? " E " : "") });
                 consulta += "&ds_norma=" + pesquisaDireta.ds_norma;
-            }
-            if (!string.IsNullOrEmpty(pesquisaDireta.all))
-            {
-                pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Qualquer Campo=" + pesquisaDireta.all;
-                pesquisa.argumentos.Add(new ArgumentoOV { campo = "Qualquer Campo", operador = "igual", valor = pesquisaDireta.all, conector = (pesquisa.ds_historico != "" ? " E " : "") });
-                consulta += "&all=" + pesquisaDireta.all;
             }
             if (!string.IsNullOrEmpty(pesquisaDireta.nm_tipo_fonte))
             {
@@ -185,9 +184,36 @@ namespace TCDF.Sinj.RN
                 }
                 consulta += "&op_dt_assinatura=" + pesquisaDireta.op_dt_assinatura;
             }
-            pesquisa.consulta = HttpUtility.UrlEncode(consulta);
+            pesquisa.consulta = consulta;
             pesquisa.ds_historico = "(Pesquisa de Diário) " + pesquisa.ds_historico;
             pesquisa.nm_tipo_pesquisa = "Pesquisa de Diário";
+        }
+
+        public void MontarPesquisa(SentencaPesquisaNotifiquemeDiarioOV pesquisaDireta, HistoricoDePesquisaOV pesquisa)
+        {
+            var consulta = "tipo_pesquisa=notifiqueme";
+            pesquisa.ds_historico = "";
+            if (!string.IsNullOrEmpty(pesquisaDireta.nm_tipo_fonte))
+            {
+                pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Tipo=" + pesquisaDireta.nm_tipo_fonte;
+                pesquisa.argumentos.Add(new ArgumentoOV { campo = "Tipo", operador = "igual", valor = pesquisaDireta.nm_tipo_fonte, conector = (pesquisa.ds_historico != "" ? " E " : "") });
+                consulta += "&nm_tipo_fonte=" + pesquisaDireta.nm_tipo_fonte;
+                consulta += "&ch_tipo_fonte=" + pesquisaDireta.ch_tipo_fonte;
+            }
+            if (!string.IsNullOrEmpty(pesquisaDireta.filetext))
+            {
+                pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Texto=" + pesquisaDireta.filetext;
+                pesquisa.argumentos.Add(new ArgumentoOV { campo = "Texto", operador = "igual", valor = pesquisaDireta.filetext, conector = (pesquisa.ds_historico != "" ? " E " : "") });
+                consulta += "&filetext=" + pesquisaDireta.filetext;
+            }
+            if (!string.IsNullOrEmpty(pesquisaDireta.in_exata))
+            {
+                pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Busca=" + (pesquisaDireta.in_exata.Equals("1") ? "Exata" : "Aproximada");
+                consulta += "&in_exata=" + pesquisaDireta.in_exata;
+            }
+            pesquisa.consulta = consulta;
+            pesquisa.ds_historico = "(Pesquisa de Diário - Notifique-me) " + pesquisa.ds_historico;
+            pesquisa.nm_tipo_pesquisa = "Pesquisa de Diário - Notifique-me";
         }
 
         public void MontarPesquisa(SentencaPesquisaDiretorioDiarioOV pesquisaDiretorio, HistoricoDePesquisaOV pesquisa)
@@ -213,7 +239,7 @@ namespace TCDF.Sinj.RN
                 pesquisa.argumentos.Add(new ArgumentoOV { campo = "Mês", operador = "igual", valor = pesquisaDiretorio.mes, conector = (pesquisa.ds_historico != "" ? " E " : "") });
                 consulta += "&mes=" + pesquisaDiretorio.mes;
             }
-            pesquisa.consulta = HttpUtility.UrlEncode(consulta);
+            pesquisa.consulta = consulta;
             pesquisa.ds_historico = "(Pesquisa de Diário - Diretório) " + pesquisa.ds_historico;
             pesquisa.nm_tipo_pesquisa = "Pesquisa de Diário - Diretório";   
         }
@@ -253,13 +279,22 @@ namespace TCDF.Sinj.RN
                     consulta += "&dt_assinatura_inicio=" + pesquisaTexto.dt_assinatura_inicio;
                 }
             }
-            pesquisa.consulta = HttpUtility.UrlEncode(consulta);
+            pesquisa.consulta = consulta;
             pesquisa.ds_historico = "(Pesquisa de Diário - Texto) " + pesquisa.ds_historico;
             pesquisa.nm_tipo_pesquisa = "Pesquisa de Diário - Texto";
         }
 
         public void MontarPesquisa(SentencaPesquisaAvancadaNormaOV pesquisaAvancada, HistoricoDePesquisaOV pesquisa)
         {
+            var consulta = "tipo_pesquisa=avancada";
+            if (pesquisaAvancada.ch_tipo_norma != null)
+            {
+                foreach (var ch in pesquisaAvancada.ch_tipo_norma)
+                {
+                    consulta += "&ch_tipo_norma="+ch;
+                    pesquisa.argumentos.Add(new ArgumentoOV { campo = "ch_tipo_norma", operador = "igual a", valor = ch, conector = "E" });
+                }
+            }
             if (pesquisaAvancada.argumentos != null)
             {
                 var argumento_split = new string[0];
@@ -271,7 +306,9 @@ namespace TCDF.Sinj.RN
                 var i = 1;
                 foreach (var argumento in pesquisaAvancada.argumentos)
                 {
+                    consulta += "&argumento=" + argumento;
                     argumento_split = argumento.Split('#');
+
                     if (argumento_split.Length == 8)
                     {
                         _nm_campo = argumento_split[2];
@@ -281,9 +318,11 @@ namespace TCDF.Sinj.RN
                         pesquisa.ds_historico += _nm_campo + " " + _nm_operador + " " + _nm_valor + (i < pesquisaAvancada.argumentos.Length ? " " + _conector + " " : "");
                         pesquisa.argumentos.Add(new ArgumentoOV { campo = _nm_campo, operador = _nm_operador, valor = _nm_valor, conector = (i < pesquisaAvancada.argumentos.Length ? _conector : "") });
                         i++;
+
                     }
                 }
             }
+            pesquisa.consulta = consulta;
             pesquisa.ds_historico = "(Pesquisa Avançada) " + pesquisa.ds_historico;
             pesquisa.nm_tipo_pesquisa = "Pesquisa Avançada";
         }

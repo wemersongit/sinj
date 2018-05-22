@@ -32,6 +32,8 @@ namespace TCDF.Sinj.OV
         public string nr_norma { get; set; }
         public int nr_sequencial { get; set; }
         public string dt_assinatura { get; set; }
+        public bool st_vacatio_legis { get; set; }
+        public string dt_inicio_vigencia { get; set; }
         public string cr_norma { get; set; }
         public int id_ambito { get; set; }
         public string nm_ambito { get; set; }
@@ -79,7 +81,7 @@ namespace TCDF.Sinj.OV
         public List<Decisao> decisoes { get; set; }
         public List<Indexacao> indexacoes { get; set; }
         public int in_vides { get { return vides.Count; } }
-        public bool st_vigor_vide { get; set; }
+        
         public List<Vide> vides { get; set; }
 
         public string nm_login_usuario_cadastro { get; set; }

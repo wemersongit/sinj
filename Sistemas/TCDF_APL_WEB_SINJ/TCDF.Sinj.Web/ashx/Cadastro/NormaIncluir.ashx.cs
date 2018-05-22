@@ -39,6 +39,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var nr_sequencial = 0;
 
                 var _dt_assinatura = context.Request["dt_assinatura"];
+
+                var _st_vacatio_legis = context.Request["st_vacatio_legis"];
+                var _dt_inicio_vigencia = context.Request["dt_inicio_vigencia"];
+
                 var _id_ambito = context.Request["id_ambito"];
                 var id_ambito = 0;
 
@@ -113,7 +117,13 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     normaOv.nr_sequencial = nr_sequencial;
                 }
                 normaOv.dt_assinatura = _dt_assinatura;
-                normaOv.dt_assinatura = _dt_assinatura;
+
+                normaOv.st_vacatio_legis = _st_vacatio_legis == "1";
+                if (normaOv.st_vacatio_legis)
+                {
+                    normaOv.dt_inicio_vigencia = _dt_inicio_vigencia;
+                }
+
                 if (int.TryParse(_id_ambito, out id_ambito))
                 {
                     normaOv.id_ambito = id_ambito;

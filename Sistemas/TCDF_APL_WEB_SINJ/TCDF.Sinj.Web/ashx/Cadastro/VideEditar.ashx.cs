@@ -10,6 +10,7 @@ using TCDF.Sinj.Web.ashx.Arquivo;
 using System.Text.RegularExpressions;
 using neo.BRLightREST;
 using TCDF.Sinj.Web.ashx.Exclusao;
+using System.Globalization;
 
 namespace TCDF.Sinj.Web.ashx.Cadastro
 {
@@ -311,6 +312,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                                     videAlterado.nm_tipo_relacao = nm_tipo_relacao_pos_verificacao;
                                                     videAlterado.ds_texto_relacao = ds_texto_para_alterador_pos_verificacao; //Exemplo: Revogado Totalmente
 
+                                                    if (normaAlteradoraOv.st_vacatio_legis && !string.IsNullOrEmpty(normaAlteradoraOv.dt_inicio_vigencia))
+                                                    {
+                                                        videAlterado.dt_inicio_vigencia_norma_vide = normaAlteradoraOv.dt_inicio_vigencia;
+                                                    }
+
                                                     videAlterado.alinea_norma_vide = _alinea_norma_vide_alterada;
                                                     videAlterado.anexo_norma_vide = _anexo_norma_vide_alterada;
                                                     videAlterado.artigo_norma_vide = _artigo_norma_vide_alterada;
@@ -334,8 +340,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                                     if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                                     {
                                                         sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\"}";
-                                                        VerificarDispositivosDesfazerEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, videAlterador, videAlterado, videAlteradorDesfazer, videAlteradoDesfazer, nm_situacao_anterior, sessao_usuario.nm_login_usuario);
-                                                        
+                                                        if (!normaAlteradoraOv.st_vacatio_legis || string.IsNullOrEmpty(normaAlteradoraOv.dt_inicio_vigencia) || Convert.ToDateTime(normaAlteradoraOv.dt_inicio_vigencia, new CultureInfo("pt-BR")) <= DateTime.Now)
+                                                        {
+                                                            VerificarDispositivosDesfazerEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, videAlterador, videAlterado, videAlteradorDesfazer, videAlteradoDesfazer, nm_situacao_anterior, sessao_usuario.nm_login_usuario);
+                                                        }
                                                     }
                                                     else
                                                     {
