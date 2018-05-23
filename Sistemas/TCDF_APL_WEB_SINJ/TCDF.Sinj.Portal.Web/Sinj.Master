@@ -208,7 +208,7 @@
                     </asp:ContentPlaceHolder>
                 </div>
                 <div id="div_fale_conosco" class="fale_conosco closed">
-                    <button type="button" class="clean topo" onclick="clickTopoFaleConosco()">Fale Conosco <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_min.png" class="min"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_max.png" class="max"></button>
+                    <button type="button" class="clean topo" onclick="clickTopoFaleConosco()">Fale Conosco <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_min.png" class="min"/><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_max.png" class="max"/></button>
                     <div class="corpo">
                         <form id="form_fale_conosco" name="form_fale_conosco" method="post" action="#" onsubmit="return enviarMsgFaleConosco('form_fale_conosco');">
                             <div class="table">
@@ -220,7 +220,7 @@
                                 <div class="line">
                                     <div class="column">
                                         <div class="cell fl">
-                                            Preencha os campos para dirimir dúvidas, registrar elogios, críticas e dar sugestões.
+                                            Preencha os campos para dirimir dúvidas, registrar elogios, críticas e sugestões.
                                         </div>
                                     </div>
                                 </div>
