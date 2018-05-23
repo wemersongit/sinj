@@ -220,7 +220,7 @@
                                 <div class="line">
                                     <div class="column">
                                         <div class="cell fl">
-                                            Dúvidas, informações, sugestões e/ou críticas? Preencha o nosso formulário online e entraremos em contato através do seu e-mail.
+                                            Preencha os campos para dirimir dúvidas, registrar elogios, críticas e dar sugestões.
                                         </div>
                                     </div>
                                 </div>
@@ -287,6 +287,9 @@
                                     <div class="column w-100-pc text-center">
                                         <button>
                                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_check.png" width="20px" height="20" /> Enviar
+                                        </button>
+                                        <button type="button" onclick="clickTopoFaleConosco()">
+                                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_close.png" width="20px" height="20" /> Fechar
                                         </button>
                                     </div>
                                 </div>

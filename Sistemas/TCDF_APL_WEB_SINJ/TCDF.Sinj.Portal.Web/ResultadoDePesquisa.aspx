@@ -3,6 +3,9 @@
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.highlight.js"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_norma.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_resultado_de_pesquisa.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>    
+    <script type="text/javascript">
+        var date_now = '<%= DateTime.Now.ToString("dd/MM/yyyy") %>';
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <div>

@@ -125,13 +125,13 @@ var _columns_norma_es = [
 	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
 	            '</div>' +
             '</div>';
-	        if (full._source.st_vacatio_legis && IsNotNullOrEmpty(full._source.dt_inicio_vigencia)) {
+	        if (full._source.st_vacatio_legis && IsNotNullOrEmpty(full._source.dt_inicio_vigencia) && convertStringToDateTime(full._source.dt_inicio_vigencia) < convertStringToDateTime(date_now)) {
 	            html += '<div class="line">' +
                     '<div class="column w-10-pc">' +
 	                    '<label>Vacatio Legis:</label>' +
 	                '</div>' +
                     '<div class="column w-90-pc text-justify">' +
-	                    'Em vigor a partir de <span class="dt_inicio_vigencia">' + full._source.dt_inicio_vigencia + '</span>' +
+	                    'Entrará em vigor a partir de <span class="dt_inicio_vigencia">' + full._source.dt_inicio_vigencia + '</span>' +
 	                '</div>' +
                 '</div>';
 	        }

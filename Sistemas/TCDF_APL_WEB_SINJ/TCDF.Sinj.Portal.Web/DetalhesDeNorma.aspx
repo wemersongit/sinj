@@ -15,6 +15,7 @@
         var json_norma = <%= json_norma != "" ? json_norma : "\"\"" %>;
         var highlight = <%= !string.IsNullOrEmpty(highlight) ? highlight : "\"\"" %>;
         var success_message = "<%= success_message %>";
+        var date_now = '<%= DateTime.Now.ToString("dd/MM/yyyy") %>';
 
         $(document).ready(function () {
         	cookies_aux = ['back_history_aux_datatable','back_history_aux_filtros','back_history_aux_tab'];
@@ -116,6 +117,25 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div id="line_dt_inicio_vigencia" class="line">
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc mauto">
+                                <div class="w-90-pc mauto">
+                                    <label>Vacatio Legis:</label>
+                                </div>
+                            </div>
+                        </div><br />
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc">
+                                <div class="w-90-pc mauto value" style="text-align:justify;" print="sim" print-type="linha" print-label="Vacatio Legis">
+                                    Entrará em vigor a partir de <span id="span_dt_inicio_vigencia" class="dt_inicio_vigencia"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line_bottom"></div>
+                    </div>
+
                     <div class="line">
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc mauto">
