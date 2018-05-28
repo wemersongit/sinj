@@ -11,6 +11,23 @@
                 }
                 else if (IsNotNullOrEmpty(data, 'success_message')) {
                     notificar('#' + id_form, data.success_message, 'success');
+                    ShowDialog({
+                        id_element: "modal_notificacao_success",
+                        sTitle: "Sucesso",
+                        sContent: data.success_message,
+                        sType: "success",
+                        oButtons: [{
+                            text: "Ok",
+                            click: function () {
+                                $(this).dialog('close');
+                            }
+                        }],
+                        fnClose: function () {
+                            closeFaleConosco();
+                            form_fale_conosco.reset();
+                            generateCaptcha();
+                        }
+                    });
                 }
                 else {
                     notificar('#' + id_form, 'Erro ao enviar. Tente mais tarde.', 'error');

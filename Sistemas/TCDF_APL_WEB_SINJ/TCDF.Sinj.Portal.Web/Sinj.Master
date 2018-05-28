@@ -125,9 +125,12 @@
                 $('#div_fale_conosco').addClass('opened');
             }
             else {
-                $('#div_fale_conosco').addClass('closed');
-                $('#div_fale_conosco').removeClass('opened');
+                closeFaleConosco();
             }
+        }
+        function closeFaleConosco() {
+            $('#div_fale_conosco').addClass('closed');
+            $('#div_fale_conosco').removeClass('opened');
         }
     </script>
     <asp:ContentPlaceHolder ID="Head" runat="server">

@@ -1704,22 +1704,18 @@ var _columns_fale_conosco = [
     { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Status", "sWidth": "", "sClass": "grid-cell ws center", "mData": "st_atendimento" },
     { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "E-mail", "sWidth": "", "sClass": "grid-cell ws center", "mData": "ds_email" },
     { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Assunto", "sWidth": "", "sClass": "grid-cell ws center", "mData": "ds_assunto" },
-    { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Mensagem", "sWidth": "", "sClass": "grid-cell ws center", "mData": "ds_msg" },
     { "indice": 3, "isControl": true, "bSortable": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "grid-cell ws left", "mData": "",
         "mRender": function (data, type, full) {
-            var btDetalhes = '<a title="Visualizar detalhes desse chamado" href="./DetalhesDeFaleConosco.aspx?ch_chamado='+full.ch_chamado+'"><img src="' + _urlPadrao + '/Imagens/ico_loupe_fit.png"/></a>&nbsp;';
-            var btReceber = "";
-            var btFinalizar = "";
-            var btResponder = "";
-            if (full.st_atendimento == "Novo") {
-                btReceber = '<button title="Receber esse chamado" class="clean" ch_chamado="' + full.ch_chamado + '" onclick="receberChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_check_p.png"/></button>&nbsp;';
-            }
-            if (full.st_atendimento != "Finalizado") {
-                btFinalizar = '<button title="Finalizar esse chamado" class="clean" ch_chamado="' + full.ch_chamado + '" onclick="finalizarChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_close.png"/></button>&nbsp;';
-            }
-            btResponder = '<button title="Enviar um e-mail para esse usuário" class="clean" ch_chamado="' + full.ch_chamado + '" ds_email="' + full.ds_email + '" onclick="responderChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_email_p.png"/></button>&nbsp;';
 
-            return btDetalhes + btReceber + btResponder + btFinalizar;
+//            if (full.st_atendimento == "Novo") {
+//                btReceber = '<button title="Receber esse chamado" class="clean" ch_chamado="' + full.ch_chamado + '" onclick="receberChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_check_p.png"/></button>&nbsp;';
+//            }
+//            if (full.st_atendimento != "Finalizado") {
+//                btFinalizar = '<button title="Finalizar esse chamado" class="clean" ch_chamado="' + full.ch_chamado + '" onclick="finalizarChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_close.png"/></button>&nbsp;';
+//            }
+//            btResponder = '<button title="Enviar um e-mail para esse usuário" class="clean" ch_chamado="' + full.ch_chamado + '" ds_email="' + full.ds_email + '" onclick="responderChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_email_p.png"/></button>&nbsp;';
+
+            return '<a title="Visualizar detalhes desse chamado" href="./DetalhesDeFaleConosco.aspx?ch_chamado='+full.ch_chamado+'"><img src="' + _urlPadrao + '/Imagens/ico_loupe_fit.png"/></a>';
         }
     }
 ];
