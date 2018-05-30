@@ -37,7 +37,9 @@ namespace TCDF.Sinj.Web.ashx.Email
 
                 var emails = new string[] { faleConosco.ds_email };
 
-                sRetorno = new EnviarEmail().EnviarEmails(emails, mensagem.ds_assunto_resposta, mensagem.ds_msg_resposta);
+                var link = util.BRLight.Util.GetVariavel("URLSinjPortal", true) + "/?ch_chamado_fale_conosco=" + faleConosco.ch_chamado + "&ds_email_fale_conosco=" + faleConosco.ds_email + "&nm_user_fale_conosco=" + faleConosco.nm_user + "&ds_assunto_fale_conosco=" + faleConosco.ds_assunto;
+
+                sRetorno = new EnviarEmail().EnviarEmails(emails, mensagem.ds_assunto_resposta, true, mensagem.ds_msg_resposta + "<br/><a target='_blank' href='" + link + "'>Responder essa mensagem</a>");
 
                 mensagem.dt_resposta = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
                 mensagem.nm_login_usuario_resposta = sessao_usuario.nm_login_usuario;

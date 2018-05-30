@@ -21,40 +21,26 @@
                         else if (IsNotNullOrEmpty(data,'nm_login_usuario_atendimento') && data.nm_login_usuario_atendimento == _user.nm_login_usuario) {
                             if (data.st_atendimento == "Recebido") {
                                 $('#div_buttons').append('<button title="Finalizar esse chamado" ch_chamado="' + data.ch_chamado + '" onclick="finalizarChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_close.png"/> Finalizar</button>');
-                                
                             }
-                            $('#div_buttons').append('<button title="Enviar um e-mail para esse usuário" ch_chamado="' + data.ch_chamado + '" ds_email="' + data.ds_email + '" onclick="responderChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_email_p.png"/> Responder</button>');
+                            $('#div_buttons').append('<button title="Enviar um e-mail para esse usuário" ch_chamado="' + data.ch_chamado + '" ds_email="' + data.ds_email + '" ds_assunto="' + data.ds_assunto + '" onclick="responderChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_email_p.png"/> Responder</button>');
                         }
 
                         $('#span_nm_usuario_atendimento').text(getVal(data.nm_usuario_atendimento) + ' - ');
                         $('#span_dt_recebido').text(getVal(data.dt_recebido));
                         $('#div_dt_finalizado').text(getVal(data.dt_finalizado));
                         if (IsNotNullOrEmpty(data.mensagens)) {
-                            var line = "";
-                            var oddEven = "";
+                            
                             for (var i = 0; i < data.mensagens.length; i++) {
-                                oddEven = i % 2 == 0 ? "even" : "odd";
-                                line += '<div class="line ' + oddEven + '">';
-                                line += '<div class="column w-30-pc"><div class="cell fr"><label>Assunto:</label></div></div>';
-                                line += '<div class="column w-60-pc"><div class="cell w-60-pc">' + data.mensagens[i].ds_assunto_resposta + '</div></div>';
-                                line += '</div>'
-
-                                line += '<div class="line ' + oddEven + '">';
-                                line += '<div class="column w-30-pc"><div class="cell fr"><label>Mensagem:</label></div></div>';
-                                line += '<div class="column w-60-pc"><div class="cell w-60-pc">' + data.mensagens[i].ds_msg_resposta + '</div></div>';
-                                line += '</div>'
-
-                                line += '<div class="line ' + oddEven + '">';
-                                line += '<div class="column w-30-pc"><div class="cell fr"><label>Usuário:</label></div></div>';
-                                line += '<div class="column w-60-pc"><div class="cell w-60-pc">' + data.mensagens[i].nm_usuario_resposta + '</div></div>';
-                                line += '</div>'
-
-                                line += '<div class="line ' + oddEven + '">';
-                                line += '<div class="column w-30-pc"><div class="cell fr"><label>Data:</label></div></div>';
-                                line += '<div class="column w-60-pc"><div class="cell w-60-pc">' + data.mensagens[i].dt_resposta + '</div></div>';
-                                line += '</div>'
+                                $("#div_mensagens").dataTablesLight({
+                                    bServerSide: false,
+                                    bPaginate: false,
+                                    bInfo: false,
+                                    aaSorting: [[0, "asc"]],
+                                    aoData: data.mensagens,
+                                    aoColumns: _columns_fale_conosco_atendimento_historico,
+                                    sIdTable: 'datatable_fale_conosco_atendimento_historico'
+                                });
                             }
-                            $('#div_mensagens').html(line);
                         }
                     }
                 };
@@ -141,11 +127,11 @@
         }
         function responderChamado(el) {
             var ch_chamado = $(el).attr('ch_chamado');
+            var ds_assunto = $(el).attr('ds_assunto');
             $('.notify').messagelight("destroy");
             if (IsNotNullOrEmpty(ch_chamado)) {
-                $('#form_email input[name="email"]').remove();
-                $('#form_email').append('<input type="hidden" name="ch_chamado" value="' + ch_chamado + '" />');
-
+                $('#form_email input[name="ch_chamado"]').val(ch_chamado);
+                $('#form_email input[name="assunto"]').val("Resposta - SINJ - " + ds_assunto);
                 if ($("#modal_email").hasClass('ui-dialog-content')) {
                     $('#modal_email').modallight("open");
                 }
@@ -154,15 +140,17 @@
                         sTitle: "E-mail",
                         sType: "default",
                         oButtons: [
-                        { html: '<img alt="send" src="' + _urlPadrao + '/Imagens/ico_email_p.png" />Enviar', click:
-                            function () {
-                                enviarEmail();
-                            }
-                        },
-                        { html: '<img alt="clear" src="' + _urlPadrao + '/Imagens/ico_eraser_p.png" />Limpar', click: function () { $(this).dialog('close'); } }
-                    ],
+                            { html: '<img alt="send" src="' + _urlPadrao + '/Imagens/ico_email_p.png" />Enviar', click:
+                                function () {
+                                    enviarEmail();
+                                }
+                            },
+                            { html: '<img alt="clear" src="' + _urlPadrao + '/Imagens/ico_eraser_p.png" />Limpar', click: function () { $(this).dialog('close'); } }
+                        ],
                         sWidth: 500
                     });
+
+                    $('#form_email textarea[name="mensagem"]').focus();
                 }
             }
         }
@@ -320,10 +308,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="line">
-                        <h2 class="text-center">Mensagens</h2>
-                        <div class="column w-100-pc">
-                            <div id="div_mensagens" class="table w-90-pc"></div>
+                    <div class=" table mauto fale_conosco_atendimento">
+                        <div class="line">
+                            <div class="column w-100-pc">
+                                <div class="cell w-100-pc">
+                                    <div id="div_mensagens" class="table w-90-pc"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -333,6 +324,7 @@
     <div id="modal_email" style="display:none;">
         <form id="form_email" name="formEmail" action="#" method="post">
             <div id="div_notificacao_email" class="notify" style="display:none;"></div>
+            <input type="hidden" name="ch_chamado" value="" />
             <div id="div_email">
                 <div class="mauto table w-100-pc">
                     <div class="line">

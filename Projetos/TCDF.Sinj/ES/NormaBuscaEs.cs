@@ -321,9 +321,18 @@ namespace TCDF.Sinj.ES
             var buscaGeral = new BuscaGeralEs();
             if (!string.IsNullOrEmpty(sentencaOv.all))
             {
+                var auxAll = "";
+                if (sentencaOv.all.IndexOf("\"") < 0)
+                {
+                    auxAll = "\\\"" + sentencaOv.all + "\\\"";
+                }
                 sentencaOv.all = new DocEs().TratarCaracteresReservadosDoEs(sentencaOv.all);
                 if (!string.IsNullOrEmpty(sentencaOv.all))
                 {
+                    if (auxAll != "")
+                    {
+                        sentencaOv.all = "((" + sentencaOv.all + ") OR (" + auxAll + "))";
+                    }
                     buscaGeral.searchValue = sentencaOv.all;
                 }
             }
@@ -769,7 +778,6 @@ namespace TCDF.Sinj.ES
             highlight.fields.Add(new FieldHighlight() { query = query, name = "nm_pessoa_fisica_e_juridica" });
             highlight.fields.Add(new FieldHighlight() { query = query, name = "fontes.ar_fonte.filetext" });
             highlight.fields.Add(new FieldHighlight() { query = query, name = "ar_atualizado.filetext" });
-            highlight.fields.Add(new FieldHighlight() { query = query, name = "ds_observacao" });
             return highlight;
         }
     }

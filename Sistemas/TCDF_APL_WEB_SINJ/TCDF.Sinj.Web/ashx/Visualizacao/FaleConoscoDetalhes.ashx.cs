@@ -20,7 +20,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
             var sRetorno = "";
             var _ch_chamado = context.Request["ch_chamado"];
             ulong id_doc = 0;
-            var autoriaRn = new FaleConoscoRN();
+            var faleConoscoRn = new FaleConoscoRN();
             var sAction = "FLC.VIS";
             SessaoUsuarioOV sessao_usuario = null;
             try
@@ -28,7 +28,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
                 sessao_usuario = Util.ValidarSessao();
                 if (!string.IsNullOrEmpty(_ch_chamado))
                 {
-                    var faleConoscoOv = autoriaRn.Doc(_ch_chamado);
+                    var faleConoscoOv = faleConoscoRn.Doc(_ch_chamado);
 
                     sRetorno = JSON.Serialize<FaleConoscoOV>(faleConoscoOv);
 

@@ -110,7 +110,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     }
 
                     normaOv.st_vacatio_legis = _st_vacatio_legis == "1";
-                    normaOv.dt_inicio_vigencia = "";
+                    normaOv.dt_inicio_vigencia = null;
                     if (normaOv.st_vacatio_legis)
                     {
                         normaOv.dt_inicio_vigencia = _dt_inicio_vigencia;

@@ -397,6 +397,24 @@ div.fale_conosco.opened .corpo .loading_capctha {text-align:center;height: 40px;
 
 div.fale_conosco.opened .topo img.max {display:none;}
 
+/*Notifique-me*/
+div.table.fale_conosco_atendimento {width:700px !important;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr{height:80px;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td.mensagens{ background: #FFF; border:none;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user{ }
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.ds_msg{padding: 0px 15px 0px 0px; border-radius: 4px; position:relative; width: 300px; float:right;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.ds_msg>div.msg{background-color: #DDD;padding: 15px;width: 90%; text-align: left;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.ds_msg>div.tooltip-arrow{right:0; position: absolute; border-color: transparent; border-style: solid; top:20px; margin-top:-5px; border-width: 5px 5px 5px; border-left: 10px solid #DDD;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.dt_inclusao{width: 150px; float:right;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.dt_inclusao>div.dt{background: #DDD; -moz-border-radius:20px; -webkit-border-radius:20px; border-radius:20px; text-align: center; padding: 10px; width: 80%; margin: auto; position: relative;}
+
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj{ }
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.ds_msg{padding: 0px 0px 0px 15px; border-radius: 4px; position:relative; width: 300px; float:left;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.ds_msg>div.msg{background-color: #DDD;padding: 15px;width: 90%; text-align: left;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.ds_msg>div.tooltip-arrow{left:0; position: absolute; border-color: transparent; border-style: solid; top:20px; margin-top:-5px; border-width: 5px 5px 5px; border-right: 10px solid #DDD;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.dt_inclusao{width: 150px; float:left;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.dt_inclusao>div.dt{background: #DDD; -moz-border-radius:20px; -webkit-border-radius:20px; border-radius:20px; text-align: center; padding: 10px; width: 80%; margin: auto; position: relative;}
+
 /*table_generated_json*/
 table.table_generated_json{ font-size:13px; width:100%; border-spacing:2px; background-color:#CCC; border-color:#EEE; border-width:2px; border-style:solid;}
 table.table_generated_json tr { height:25px; background-color:#FFF; margin-top:2px;}

@@ -31,7 +31,7 @@ namespace TCDF.Sinj.Web.ashx.Email
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
 
-                sRetorno = EnviarEmails(_emails, _assunto, _mensagem);
+                sRetorno = EnviarEmails(_emails, _assunto, false, _mensagem);
 
                 var logEmail = new LogEmail();
                 logEmail.emails = _emails;
@@ -67,7 +67,7 @@ namespace TCDF.Sinj.Web.ashx.Email
             context.Response.Write(sRetorno);
         }
 
-        public string EnviarEmails(string[] emails, string assunto, string mensagem)
+        public string EnviarEmails(string[] emails, string assunto, bool html, string mensagem)
         {
             var sRetorno = "";
             if (emails.Length <= 0)
@@ -84,7 +84,7 @@ namespace TCDF.Sinj.Web.ashx.Email
             }
             else
             {
-                new EmailRN().EnviaEmail("SINJ Notifica", emails, assunto, false, mensagem);
+                new EmailRN().EnviaEmail("SINJ Notifica", emails, assunto, html, mensagem);
                 sRetorno = "{\"success_message\": \"E-mail enviado com sucesso.\"}";
             }
 

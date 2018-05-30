@@ -329,7 +329,8 @@ var _columns_diario = [
 	},
 	{ "indice": 2, "sDefaultContent": "", "isControl": false, "standard_view": true, "sTitle": "Seção", "sWidth": "", "sClass": "grid-cell ws secao_diario", "mData": "secao_diario" },
     { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo de Edição", "sWidth": "15%", "sClass": "grid-cell ws nm_tipo_edicao", "mData": "nm_tipo_edicao" },
-    { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Diferencial Edição", "sWidth": "", "sClass": "grid-cell ws nm_diferencial_edicao", "mData": "nm_diferencial_edicao" },
+    { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Diferencial Edição", "sDefaultContent": "", "sWidth": "", "sClass": "grid-cell ws nm_diferencial_edicao", "mData": "nm_diferencial_edicao", "bSortable": false },
+	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Sumplemento", "sDefaultContent": "", "sWidth": "", "sClass": "grid-cell ws nm_diferencial_suplemento", "mData": "nm_diferencial_suplemento", "bSortable": false },
 	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Data de Assinatura", "sWidth": "", "sClass": "grid-cell ws dt_assinatura", "mData": "dt_assinatura", "sorting": "desc" },
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Pendente", "sWidth": "", "sClass": "center ws st_pendente", "mData": "st_pendente",
 	    "mRender": function (data) {
@@ -1258,6 +1259,52 @@ var _columns_notifiqueme_criacao_normas_monitoradas = [
 			return "<a href='javascript:void(0);' onclick='javascript:EditarCriacaoNormaMonitorada(event, \"" + sCriacao_normas_monitoradas + "\", \"" + full.ch_criacao_norma_monitorada + "\")' title='editar monitoramento' ><img src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' alt='editar' /></a>&nbsp;" +
 				"<a href='javascript:void(0);' onclick='javascript:CriarModalConfirmacaoRemoverCriacaoNormaMonitorada(event, \"" + full.ch_criacao_norma_monitorada + "\")' title='excluir monitoramento'><img src='" + _urlPadrao + "/Imagens/ico_delete_p.png' alt='delete' /></a><div class='loading-p' style='display:none'></div>";
 		}
+	}
+];
+
+var _columns_fale_conosco_atendimento = [
+	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Data", "sClass": "grid-cell ws", "sWidth": "150px", "mData": "dt_inclusao" },
+    { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Assunto", "sClass": "grid-cell ws center", "mData": "ds_assunto" },
+    { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Mensagem", "sClass": "grid-cell ws center", "mData": "ds_msg",
+        "mRender": function (data, type, full) {
+            if (data.length > 100) {
+                data = data.substring(0, 100);
+            }
+            return data;
+        }
+    },
+	{ "indice": 3, "isControl": false, "standard_view": true, "sClass": "grid-cell ws center all", "bSortable": false, "mData": "ch_chamado",
+	    "mRender": function (data, type, full) {
+	        return "<a href='javascript:void(0);' onclick='abrirChamado(\""+data+"\")' title='Exibir' ><img src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' alt='abrir' /></a>";
+	    }
+	}
+];
+
+	var _columns_fale_conosco_atendimento_historico = [
+	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Histórico de mensagens", "sClass": "grid-cell ws mensagens", "mData": "dt_resposta",
+	    "mRender": function (data, type, full) {
+	        var html = "";
+	        if (_aplicacao.toUpperCase() == "CADASTRO") {
+	            if (IsNotNullOrEmpty(full.nm_login_usuario_resposta)) {
+	                html = "<div class='msg_sinj'><div class='dt_inclusao'><div class='dt'>" + data + "</div></div>" +
+	                "<div class='ds_msg'><div class='tooltip-arrow'></div>" +
+                        "<div class='msg'>" +
+                            "<label>Mensagem: </label>" + full.ds_msg_resposta + "<br/>" +
+                            "<label>Usuário SINJ: </label>" + full.nm_usuario_resposta + "<br/>" +
+                        "</div>" +
+                    "</div></div>";
+	            }
+	            else {
+	                html = "<div class='msg_user'><div class='dt_inclusao'><div class='dt'>" + data + "</div></div>" +
+	                "<div class='ds_msg'><div class='tooltip-arrow'></div><div class='msg'>" + full.ds_msg_resposta + "</div></div></div>";
+	            }
+	        }
+	        else {
+	            html = "<div class='" + (IsNotNullOrEmpty(full.nm_login_usuario_resposta) ? 'msg_sinj' : 'msg_user') + "'><div class='dt_inclusao'><div class='dt'>" + data + "</div></div>" +
+	            "<div class='ds_msg'><div class='tooltip-arrow'></div><div class='msg'>" + full.ds_msg_resposta + "</div></div></div>";
+	        }
+	        return html;
+	    }
 	}
 ];
 

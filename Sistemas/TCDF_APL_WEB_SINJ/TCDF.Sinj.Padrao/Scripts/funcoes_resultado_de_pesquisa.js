@@ -113,6 +113,7 @@ function sugerirBuscas(nm_base) {
         }
         else {
             $("#div_sugestoes_" + nm_base).html("A sua pesquisa não encontrou " + data.ds_base + ".");
+
         }
     }
     $.ajaxlight({
@@ -136,9 +137,9 @@ function ConsultarTotal(nm_base) {
             for (var i = 0; i < data.counts.length; i++) {
                 $('#total_' + data.counts[i].nm_base).text(data.counts[i].count);
                 paramCountsToHistory += (paramCountsToHistory != "" ? "&" : "") + "total=" + JSON.stringify({ nm_base: data.counts[i].nm_base, ds_base: data.counts[i].ds_base, nr_total: data.counts[i].count });
-                if (!IsNotNullOrEmpty(nm_by_total) && data.counts[i].count > 0) {
-                    nm_by_total = data.counts[i].nm_base;
-                }
+//                if (!IsNotNullOrEmpty(nm_by_total) && data.counts[i].count > 0) {
+//                    nm_by_total = data.counts[i].nm_base;
+//                }
             }
             SalvarConsultaNoHistorico(paramCountsToHistory);
         }
@@ -163,12 +164,12 @@ function ConsultarTotal(nm_base) {
             }
             $('li[nm="' + nm_li_click + '"] a').click();
         }
-        else if (IsNotNullOrEmpty(nm_by_total)) {
-            if (nm_by_total == "cesta_norma" || nm_by_total == "cesta_diario") {
-                $('li[nm="cesta"] a').click();
-            }
-            $('li[nm="' + nm_by_total + '"] a').click();
-        }
+//        else if (IsNotNullOrEmpty(nm_by_total)) {
+//            if (nm_by_total == "cesta_norma" || nm_by_total == "cesta_diario") {
+//                $('li[nm="cesta"] a').click();
+//            }
+//            $('li[nm="' + nm_by_total + '"] a').click();
+//        }
         else {
             $('a', $('li[nm]')[0]).click();
         }

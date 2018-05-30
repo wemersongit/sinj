@@ -116,7 +116,6 @@
 
             $('#nr_cpf_fale_conosco').attr('onKeypress', 'mascara(this,mcpf)');
             generateCaptcha();
-
         });
 
         function clickTopoFaleConosco() {
@@ -214,6 +213,7 @@
                     <button type="button" class="clean topo" onclick="clickTopoFaleConosco()">Fale Conosco <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_min.png" class="min"/><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_max.png" class="max"/></button>
                     <div class="corpo">
                         <form id="form_fale_conosco" name="form_fale_conosco" method="post" action="#" onsubmit="return enviarMsgFaleConosco('form_fale_conosco');">
+						    <input id="ch_chamado_fale_conosco" name="ch_chamado" type="hidden" value="" />
                             <div class="table">
                                 <div class="head">
                                     <div>

@@ -26,25 +26,49 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                     throw new DocValidacaoException("Os caracteres não correspondem com os da imagem.");
                 }
 
+                var _ch_chamado = context.Request["ch_chamado"];
                 var _nm_user = context.Request["nm_user"];
                 var _ds_email = context.Request["ds_email"];
-                var _nr_cpf = context.Request["nr_cpf"];
                 var _ds_assunto = context.Request["ds_assunto"];
                 var _ds_msg = context.Request["ds_msg"];
 
                 var faleConosco = new FaleConoscoOV();
-                faleConosco.nm_user = _nm_user;
-                faleConosco.ds_email = _ds_email;
-                faleConosco.ds_assunto = _ds_assunto;
-                faleConosco.ds_msg = _ds_msg;
-                faleConosco.dt_inclusao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
-                if (new FaleConoscoRN().Incluir(faleConosco) > 0)
+                if (!string.IsNullOrEmpty(_ch_chamado))
                 {
-                    sRetorno = "{\"success_message\": \"Mensagem enviada com sucesso.\"}";
+                    faleConosco = new FaleConoscoRN().Doc(_ch_chamado);
+                    if (!string.IsNullOrEmpty(faleConosco.ch_chamado))
+                    {
+                        var msg = new FaleConoscoMensagemResposta();
+                        msg.ds_assunto_resposta = _ds_assunto;
+                        msg.ds_msg_resposta = _ds_msg;
+                        msg.dt_resposta = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
+                        faleConosco.mensagens.Add(msg);
+                        faleConosco.st_atendimento = "Novo";
+                        if (new FaleConoscoRN().Atualizar(faleConosco._metadata.id_doc, faleConosco))
+                        {
+                            sRetorno = "{\"success_message\": \"Mensagem enviada com sucesso.\", \"msg\": " + JSON.Serialize<FaleConoscoMensagemResposta>(msg) + "}";
+                        }
+                        else
+                        {
+                            throw new Exception("Erro ao enviar mensagem. Tente novamente mais tarde.");
+                        }
+                    }
                 }
                 else
                 {
-                    throw new Exception("Erro ao enviar mensagem. Tente novamente mais tarde.");
+                    faleConosco.nm_user = _nm_user;
+                    faleConosco.ds_email = _ds_email;
+                    faleConosco.ds_assunto = _ds_assunto;
+                    faleConosco.ds_msg = _ds_msg;
+                    faleConosco.dt_inclusao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
+                    if (new FaleConoscoRN().Incluir(faleConosco) > 0)
+                    {
+                        sRetorno = "{\"success_message\": \"Mensagem enviada com sucesso.\"}";
+                    }
+                    else
+                    {
+                        throw new Exception("Erro ao enviar mensagem. Tente novamente mais tarde.");
+                    }
                 }
             }
             catch (Exception ex)

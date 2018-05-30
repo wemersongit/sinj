@@ -65,7 +65,7 @@ namespace TCDF.Sinj.AD
             }
             catch (Exception ex)
             {
-                if (ex.Message.IndexOf("duplicate key") > -1 || ex.Message.IndexOf("duplicar valor da chave") > -1)
+                if (ex.InnerException != null && (ex.InnerException.Message.IndexOf("duplicate key") > -1 || ex.InnerException.Message.IndexOf("duplicar valor da chave") > -1))
                 {
                     throw new DocDuplicateKeyException("Registro j&aacute; existente na base de dados!!!");
                 }
@@ -81,7 +81,7 @@ namespace TCDF.Sinj.AD
             }
             catch (Exception ex)
             {
-                if (ex.Message.IndexOf("duplicate key") > -1 || ex.Message.IndexOf("duplicar valor da chave") > -1)
+                if (ex.InnerException != null && (ex.InnerException.Message.IndexOf("duplicate key") > -1 || ex.InnerException.Message.IndexOf("duplicar valor da chave") > -1))
                 {
                     throw new DocDuplicateKeyException("Registro j&aacute; existente na base de dados!!!");
                 }
