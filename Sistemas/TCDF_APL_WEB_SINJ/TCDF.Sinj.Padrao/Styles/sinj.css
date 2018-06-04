@@ -360,6 +360,7 @@ span.helper { display: inline-block; height: 100%; vertical-align: middle;}
 #div_list_arq{border-left:1px solid #DDD;border-top:1px solid #DDD;}
 
 /*Resultado de Pesquisa*/
+div.tabs_datatable span.total.destaque { padding: 4px; background-color: #38953f; color: #FFF; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font-size: 11px; }
 .result_datatable {position:relative;}
 .sort_datatable {position: absolute; left: 300px; padding: 5px;}
 .sort_datatable.no_agg {left:0px;}
@@ -385,7 +386,7 @@ div.div-filtros a {text-decoration:none; color: #046635}
 div.sugestoes>table { min-width: 300px; }
 
 /*Fale Conosco*/
-div.fale_conosco{position:fixed; bottom:0; right:0; background:#F9F9F9; z-index:101;}
+div.fale_conosco{position:fixed; bottom:0; right:0; background:#F9F9F9; z-index:101; width: 500px;}
 div.fale_conosco.closed {width:200px;}
 div.fale_conosco.closed .topo img.min {display:none;}
 div.fale_conosco .topo {background:#38953F; color: #FFF;font-size: 14px; font-weight: bold; text-align: center; width: 100%;}

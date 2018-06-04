@@ -57,6 +57,7 @@
   <ItemGroup>
     <Content Include="CadastrarNotifiqueme.aspx" />
     <Content Include="captcha.aspx" />
+    <Content Include="Contatos.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DesativarNormaPush.aspx" />
     <Content Include="DetalhesDeNorma.aspx" />
@@ -73,7 +74,6 @@
     <Content Include="ResultadoDePesquisa.aspx" />
     <Content Include="Notifiqueme.aspx" />
     <Content Include="LoginNotifiqueme.aspx" />
-    <Content Include="FaleConosco.aspx" />
     <Content Include="RecriarSenhaNotifiqueme.aspx" />
     <Content Include="robots.txt" />
     <Content Include="sitemap.txt" />
@@ -240,6 +240,13 @@
     <Compile Include="captcha.aspx.designer.cs">
       <DependentUpon>captcha.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Contatos.aspx.cs">
+      <DependentUpon>Contatos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contatos.aspx.designer.cs">
+      <DependentUpon>Contatos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -271,9 +278,6 @@
     </Compile>
     <Compile Include="Download.aspx.designer.cs">
       <DependentUpon>Download.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="FaleConosco.aspx.designer.cs">
-      <DependentUpon>FaleConosco.aspx</DependentUpon>
     </Compile>
     <Compile Include="Favoritos.aspx.cs">
       <DependentUpon>Favoritos.aspx</DependentUpon>
@@ -326,10 +330,6 @@
     </Compile>
     <Compile Include="LoginNotifiqueme.aspx.cs">
       <DependentUpon>LoginNotifiqueme.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FaleConosco.aspx.cs">
-      <DependentUpon>FaleConosco.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RecriarSenhaNotifiqueme.aspx.cs">

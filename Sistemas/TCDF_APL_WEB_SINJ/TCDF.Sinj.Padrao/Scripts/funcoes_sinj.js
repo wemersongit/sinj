@@ -1722,7 +1722,13 @@ function mcep(v) {
 function mtel(v) {
     v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
     v = v.replace(/^(\d\d)(\d)/g, "($1) $2") //Coloca parênteses em volta dos dois primeiros dígitos
-    v = v.replace(/(\d{4})(\d)/, "$1-$2") //Coloca hífen entre o quarto e o quinto dígitos
+    if(v.length > 13){
+        v = v.substring(0,14);
+        v = v.replace(/(\d{5})(\d)/, "$1-$2")
+    }
+    else{
+        v = v.replace(/(\d{4})(\d)/, "$1-$2") //Coloca hífen entre o quarto e o quinto dígitos
+    }
     return v
 }
 
@@ -2801,8 +2807,13 @@ function DetalhesNorma(data, highlight) {
                     '<span id="span_ds_pendencia">' + GetText(data.ds_pendencia) + '</span>');
             }
 
-            if(data.st_vacatio_legis){
-                $('#span_dt_inicio_vigencia').text(data.dt_inicio_vigencia);
+            if(data.st_vacatio_legis && IsNotNullOrEmpty(data.dt_inicio_vigencia) && convertStringToDateTime(data.dt_inicio_vigencia) > convertStringToDateTime(date_now)){
+                if(IsNotNullOrEmpty(data.ds_vacatio_legis)){
+                    $('#div_ds_vacatio_legis').html(data.ds_vacatio_legis);
+                }
+                else{
+                    $('#span_dt_inicio_vigencia').text(data.dt_inicio_vigencia);
+                }
                 $('#line_dt_inicio_vigencia').show();
             }
             else{

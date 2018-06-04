@@ -5,23 +5,15 @@
         $(document).ready(function () {
             montarPaginaDePesquisa();
 
-            var msg = {
-                ch_chamado_fale_conosco: '<%= Request["ch_chamado_fale_conosco"] %>',
-                ds_email_fale_conosco: '<%= Request["ds_email_fale_conosco"] %>',
-                nm_user_fale_conosco: '<%= Request["nm_user_fale_conosco"] %>',
-                ds_assunto_fale_conosco: '<%= Request["ds_assunto_fale_conosco"] %>'
-            };
-            if (IsNotNullOrEmpty(msg, 'ch_chamado_fale_conosco')) {
-                $('#ch_chamado_fale_conosco').val(msg.ch_chamado_fale_conosco);
-                if (IsNotNullOrEmpty(msg, 'ds_email_fale_conosco')) {
-                    $('#ds_email_fale_conosco').val(msg.ds_email_fale_conosco);
-                }
-                if (IsNotNullOrEmpty(msg, 'nm_user_fale_conosco')) {
-                    $('#nm_user_fale_conosco').val(msg.nm_user_fale_conosco);
-                }
-                if (IsNotNullOrEmpty(msg, 'ds_assunto_fale_conosco')) {
-                    $('#ds_assunto_fale_conosco option[value="' + msg.ds_assunto_fale_conosco + '"]').prop("selected", true);
-                }
+            var _ch_chamado_fale_conosco = '<%= Request["ch_chamado_fale_conosco"] %>';
+            var _ds_assunto_fale_conosco = '<%= Request["ds_assunto_fale_conosco"] %>';
+
+            if (IsNotNullOrEmpty(_ch_chamado_fale_conosco)) {
+                $('#ch_chamado_fale_conosco').val(_ch_chamado_fale_conosco);
+                $('#div_fale_conosco h2').text("Resposta do E-mail - " + _ds_assunto_fale_conosco);
+                $('#div_fale_conosco div.resposta').hide();
+                $('#div_fale_conosco div.resposta input[obrigatorio]').attr('obrigatorio', 'não');
+                $('#div_fale_conosco div.resposta select[obrigatorio]').attr('obrigatorio', 'não');
                 clickTopoFaleConosco();
                 $('#ds_msg_fale_conosco').focus();
             }

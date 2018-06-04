@@ -101,6 +101,19 @@
         },
         {
             "field":{
+                "name":"ds_vacatio_legis",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Descrição Vacatio Legis",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Armazena uma descrição referente ao vacatio legis. Será exibido no lugar da data de vigencia."
+            }
+        },
+        {
+            "field":{
                 "name":"cr_norma",
                 "datatype":"Text",
                 "required":false,

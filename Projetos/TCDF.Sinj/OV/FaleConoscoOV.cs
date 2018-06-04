@@ -18,6 +18,7 @@ namespace TCDF.Sinj.OV
         public string ds_email { get; set; }
         public string ds_assunto { get; set; }
         public string ds_msg { get; set; }
+        public string nr_telefone { get; set; }
         public string dt_inclusao { get; set; }
         //Novo, Recebido, Finalizado
         public string st_atendimento { get; set; }

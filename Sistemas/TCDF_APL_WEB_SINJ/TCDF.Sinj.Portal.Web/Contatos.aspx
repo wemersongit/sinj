@@ -1,10 +1,9 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="FaleConosco.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.FaleConosco" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Contatos.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Contatos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <div class="divIdentificadorDePagina">
-	    <label>.: Fale Conosco </label>
+	    <label>.: Contatos </label>
 	</div>
     <div class="form">
         <div id="div_contato" class="loaded">

@@ -22,6 +22,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
             Pesquisa pesquisa = new Pesquisa();
             var _sSearch = context.Request.Params["sSearch"];
             var _st_atendimento = context.Request.Params["st_atendimento"];
+            var _ds_assunto = context.Request.Params["ds_assunto"];
             string iDisplayLength = context.Request["iDisplayLength"];
             string iDisplayStart = context.Request["iDisplayStart"];
             string sEcho = context.Request.Params["sEcho"];
@@ -48,6 +49,10 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                 if (!string.IsNullOrEmpty(_st_atendimento))
                 {
                     query += (!string.IsNullOrEmpty(query) ? " AND " : "") + "st_atendimento='" + _st_atendimento + "'";
+                }
+                if (!string.IsNullOrEmpty(_ds_assunto))
+                {
+                    query += (!string.IsNullOrEmpty(query) ? " AND " : "") + "ds_assunto='" + _ds_assunto + "'";
                 }
                 if (!string.IsNullOrEmpty(_sSearch))
                 {

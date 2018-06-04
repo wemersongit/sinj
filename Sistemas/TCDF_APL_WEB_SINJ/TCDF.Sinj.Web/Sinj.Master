@@ -233,11 +233,12 @@
                                         <li runat="server" id="li_sessoes">  <a title="Sessões" class="lnkmenu" id="aSessoes"   href="./ResultadoDePesquisaSessao.aspx?app=sistema" >Sessões</a></li>
                                     </ul>
                                 </li>
-                                <li runat="server" id="li_relatorio">  <a title="Relatório" class="lnkmenu" id="aRelatorio"     href="./Relatorio.aspx" >Relat&oacute;rios</a>  </li>
-                                <li id="li_contato">    <a title="Fale Conosco"             class="lnkmenu" id="aContato"       href="./FaleConosco">Fale Conosco (<%= totalNovos %>)</a>      </li>
-                                <li id="li_historico">  <a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a>      </li>
-                                <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a>      </li>
-                                <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a>      </li>
+                                <li runat="server" id="li_relatorio"><a title="Relatório" class="lnkmenu" id="aRelatorio"     href="./Relatorio.aspx" >Relat&oacute;rios</a></li>
+                                <li id="li_fale_conosco"><a title="Fale Conosco"             class="lnkmenu" id="aContato"       href="./FaleConosco">Fale Conosco (<%= totalNovos %>)</a></li>
+                                <li id="li_historico"><a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a></li>
+                                <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a></li>
+                                <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a></li>
+                                <li id="li_contatos"><a title="Contatos"             class="lnkmenu" id="aContatos"       href="./Contatos">Contatos</a></li>
                             </ul>
                             <div id="div_user_notifiqueme" >
                             </div>

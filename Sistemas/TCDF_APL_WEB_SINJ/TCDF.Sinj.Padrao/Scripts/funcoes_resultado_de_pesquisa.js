@@ -135,11 +135,14 @@ function ConsultarTotal(nm_base) {
 
             var paramCountsToHistory = '';
             for (var i = 0; i < data.counts.length; i++) {
-                $('#total_' + data.counts[i].nm_base).text(data.counts[i].count);
+                if (data.counts[i].count > 0) {
+                    $('#total_' + data.counts[i].nm_base).addClass('destaque');
+                    $('#total_' + data.counts[i].nm_base).text(data.counts[i].count);
+                }
                 paramCountsToHistory += (paramCountsToHistory != "" ? "&" : "") + "total=" + JSON.stringify({ nm_base: data.counts[i].nm_base, ds_base: data.counts[i].ds_base, nr_total: data.counts[i].count });
-//                if (!IsNotNullOrEmpty(nm_by_total) && data.counts[i].count > 0) {
-//                    nm_by_total = data.counts[i].nm_base;
-//                }
+                //                if (!IsNotNullOrEmpty(nm_by_total) && data.counts[i].count > 0) {
+                //                    nm_by_total = data.counts[i].nm_base;
+                //                }
             }
             SalvarConsultaNoHistorico(paramCountsToHistory);
         }
@@ -164,12 +167,12 @@ function ConsultarTotal(nm_base) {
             }
             $('li[nm="' + nm_li_click + '"] a').click();
         }
-//        else if (IsNotNullOrEmpty(nm_by_total)) {
-//            if (nm_by_total == "cesta_norma" || nm_by_total == "cesta_diario") {
-//                $('li[nm="cesta"] a').click();
-//            }
-//            $('li[nm="' + nm_by_total + '"] a').click();
-//        }
+        //        else if (IsNotNullOrEmpty(nm_by_total)) {
+        //            if (nm_by_total == "cesta_norma" || nm_by_total == "cesta_diario") {
+        //                $('li[nm="cesta"] a').click();
+        //            }
+        //            $('li[nm="' + nm_by_total + '"] a').click();
+        //        }
         else {
             $('a', $('li[nm]')[0]).click();
         }
@@ -493,13 +496,13 @@ function ConsultarTotalCesta() {
             }
         }
         $('#total_cesta').text(total);
-        $('#total_cesta_norma').text(total_norma);
-        $('#total_cesta_diario').text(total_diario);
+        $('#total_cesta_norma').text(total_norma > 0 ? total_norma : '');
+        $('#total_cesta_diario').text(total_diario > 0 ? total_diario : '');
     }
     else {
-        $('#total_cesta').text('0');
-        $('#total_cesta_norma').text('0');
-        $('#total_cesta_diario').text('0');
+        $('#total_cesta').text();
+        $('#total_cesta_norma').text();
+        $('#total_cesta_diario').text();
     }
 }
 

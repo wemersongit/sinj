@@ -19,16 +19,42 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
         {
             var sRetorno = "";
             var _k = context.Request["k"];
-            var _ds_captcha = context.Request["ds_captcha"];
+            var _tipoDeVerificacao = context.Request["tpv"];
+
+
             try
             {
-                if(string.IsNullOrEmpty(_ds_captcha) || !_k.Equals(Criptografia.CalcularHashMD5(_ds_captcha.ToUpper(), true))){
-                    throw new DocValidacaoException("Os caracteres não correspondem com os da imagem.");
+                if (_tipoDeVerificacao.Equals("g"))
+                {
+                    var _gRecaptchaResponse = context.Request["g-recaptcha-response"];
+                    if (string.IsNullOrEmpty(_gRecaptchaResponse))
+                    {
+                        throw new DocValidacaoException("Não é um robô? Então clique na caixa 'Não sou um robô' para verificarmos.");
+                    }
+                    var secretKeyRecaptcha = util.BRLight.Util.GetVariavel("secretKeyRecaptcha");
+                    var dic = new Dictionary<string, object>();
+                    dic.Add("secret",secretKeyRecaptcha);
+                    dic.Add("response",_gRecaptchaResponse);
+                    var response = new REST("https://www.google.com/recaptcha/api/siteverify", HttpVerb.POST, dic).GetResponse();
+                    var dicResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(response);
+                    if (!dicResponse.ContainsKey("success") || !bool.Parse(dicResponse["success"].ToString()))
+                    {
+                        throw new DocValidacaoException("Não é um robô? Então clique na caixa 'Não sou um robô' para verificarmos.");
+                    }
+                }
+                else
+                {
+                    var _ds_captcha = context.Request["ds_captcha"];
+                    if (string.IsNullOrEmpty(_ds_captcha) || !_k.Equals(Criptografia.CalcularHashMD5(_ds_captcha.ToUpper(), true)))
+                    {
+                        throw new DocValidacaoException("Os caracteres não correspondem com os da imagem.");
+                    }
                 }
 
                 var _ch_chamado = context.Request["ch_chamado"];
                 var _nm_user = context.Request["nm_user"];
                 var _ds_email = context.Request["ds_email"];
+                var _nr_telefone = context.Request["nr_telefone"];
                 var _ds_assunto = context.Request["ds_assunto"];
                 var _ds_msg = context.Request["ds_msg"];
 
@@ -58,6 +84,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                 {
                     faleConosco.nm_user = _nm_user;
                     faleConosco.ds_email = _ds_email;
+                    faleConosco.nr_telefone = _nr_telefone;
                     faleConosco.ds_assunto = _ds_assunto;
                     faleConosco.ds_msg = _ds_msg;
                     faleConosco.dt_inclusao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");

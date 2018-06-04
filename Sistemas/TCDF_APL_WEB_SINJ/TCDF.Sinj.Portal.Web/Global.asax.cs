@@ -92,7 +92,7 @@ namespace TCDF.Sinj.Portal.Web
             routes.MapPageRoute("Pesquisas", "Pesquisas.aspx", "~/Default.aspx");
 
             routes.MapPageRoute("Captcha", "Captcha", "~/captcha.aspx", false, new RouteValueDictionary(), new RouteValueDictionary { { "keywords", ".*" } });
-            routes.MapPageRoute("FaleConosco", "FaleConosco", "~/FaleConosco.aspx");
+            routes.MapPageRoute("Contatos", "Contatos", "~/Contatos.aspx");
             routes.MapPageRoute("HistoricoDePesquisa", "HistoricoDePesquisa", "~/HistoricoDePesquisa.aspx");
             routes.MapPageRoute("Notifiqueme", "Notifiqueme", "~/Notifiqueme.aspx");
             routes.MapPageRoute("Favoritos", "Favoritos", "~/Favoritos.aspx");

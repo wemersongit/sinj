@@ -81,6 +81,7 @@
     <Content Include="CadastrarVocabulario.aspx" />
     <Content Include="CamposTabelados.aspx" />
     <Content Include="Configuracao.aspx" />
+    <Content Include="Contatos.aspx" />
     <Content Include="DetalhesDeAcesso.aspx" />
     <Content Include="DetalhesDeAutoria.aspx" />
     <Content Include="DetalhesDeErroExtracao.aspx" />
@@ -1049,6 +1050,13 @@
     <Compile Include="Configuracao.aspx.cs">
       <DependentUpon>Configuracao.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contatos.aspx.cs">
+      <DependentUpon>Contatos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contatos.aspx.designer.cs">
+      <DependentUpon>Contatos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

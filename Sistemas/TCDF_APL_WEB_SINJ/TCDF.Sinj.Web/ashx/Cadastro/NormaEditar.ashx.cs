@@ -35,6 +35,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
 
                     var _st_vacatio_legis = context.Request["st_vacatio_legis"];
+                    var _ds_vacatio_legis = context.Request["ds_vacatio_legis"];
                     var _dt_inicio_vigencia = context.Request["dt_inicio_vigencia"];
 
                     var _nm_apelido = context.Request["nm_apelido"];
@@ -111,9 +112,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     normaOv.st_vacatio_legis = _st_vacatio_legis == "1";
                     normaOv.dt_inicio_vigencia = null;
+                    normaOv.ds_vacatio_legis = null;
                     if (normaOv.st_vacatio_legis)
                     {
                         normaOv.dt_inicio_vigencia = _dt_inicio_vigencia;
+                        normaOv.ds_vacatio_legis = _ds_vacatio_legis;
                     }
 
 

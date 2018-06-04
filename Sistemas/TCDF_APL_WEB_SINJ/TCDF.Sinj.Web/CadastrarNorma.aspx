@@ -640,7 +640,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="line dt_inicio_vigencia" style="display:none;">
+                                <div class="line line_vacatio_legis" style="display:none;">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">
                                             <label>Data Início Vigência*:</label>
@@ -649,6 +649,18 @@
                                     <div class="column w-70-pc">
                                         <div class="cell w-80-pc">
                                             <input id="dt_inicio_vigencia" name="dt_inicio_vigencia" type="text" value="" class="w-20-pc date" obrigatorio="não" label="Data Início Vigência" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line line_vacatio_legis" style="display:none;">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Descrição Vacatio Legis:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <textarea id="ds_vacatio_legis" name="ds_vacatio_legis" value="" cols="100" rows="10" style="width:80%; max-width:100%;"></textarea>
                                         </div>
                                     </div>
                                 </div>

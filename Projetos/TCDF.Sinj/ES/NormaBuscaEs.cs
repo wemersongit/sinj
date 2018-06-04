@@ -757,6 +757,7 @@ namespace TCDF.Sinj.ES
             sourceInclude.Add("nm_situacao");
             sourceInclude.Add("dt_inicio_vigencia");
             sourceInclude.Add("st_vacatio_legis");
+            sourceInclude.Add("ds_vacatio_legis");
             return sourceInclude;
         }
         

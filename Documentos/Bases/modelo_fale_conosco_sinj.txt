@@ -60,13 +60,27 @@
         },
         {
             "field": {
+                "name": "nr_telefone",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Telefone",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Telefone do usuário."
+            }
+        },
+        {
+            "field": {
                 "name": "ds_assunto",
                 "datatype": "Text",
                 "required": true,
                 "alias": "Assunto",
                 "multivalued": false,
                 "indices": [
-                    "Textual"
+                    "Textual",
+                    "Ordenado"
                 ],
                 "description": "Assunto da mensagem."
             }

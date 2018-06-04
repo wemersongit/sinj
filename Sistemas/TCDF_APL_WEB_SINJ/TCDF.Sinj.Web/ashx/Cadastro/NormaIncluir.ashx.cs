@@ -41,6 +41,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var _dt_assinatura = context.Request["dt_assinatura"];
 
                 var _st_vacatio_legis = context.Request["st_vacatio_legis"];
+                var _ds_vacatio_legis = context.Request["ds_vacatio_legis"];
                 var _dt_inicio_vigencia = context.Request["dt_inicio_vigencia"];
 
                 var _id_ambito = context.Request["id_ambito"];
@@ -122,6 +123,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 if (normaOv.st_vacatio_legis)
                 {
                     normaOv.dt_inicio_vigencia = _dt_inicio_vigencia;
+                    normaOv.ds_vacatio_legis = _ds_vacatio_legis;
                 }
 
                 if (int.TryParse(_id_ambito, out id_ambito))

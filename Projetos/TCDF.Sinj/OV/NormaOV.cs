@@ -34,6 +34,7 @@ namespace TCDF.Sinj.OV
         public string dt_assinatura { get; set; }
         public bool st_vacatio_legis { get; set; }
         public string dt_inicio_vigencia { get; set; }
+        public string ds_vacatio_legis { get; set; }
         public string cr_norma { get; set; }
         public int id_ambito { get; set; }
         public string nm_ambito { get; set; }
