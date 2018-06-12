@@ -11,6 +11,7 @@ using util.BRLight;
 using TCDF.Sinj.OV;
 using System.Web.UI.HtmlControls;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace TCDF.Sinj.Web
 {
@@ -63,7 +64,7 @@ namespace TCDF.Sinj.Web
                                 html_meta_keywords.Content = "sinj, distrito, federal, df," + Page.Title;
                                 HtmlMeta html_meta_description = new HtmlMeta();
                                 html_meta_description.Name = "description";
-                                html_meta_description.Content = "Arquivo de " + Page.Title + " disponibilizado pelo SINJ-DF (Sistema Integrado de Normas Jurídicas do Distrito Federal).";
+                                html_meta_description.Content = !string.IsNullOrEmpty(normaOv.ds_ementa) ? normaOv.ds_ementa : "Arquivo de " + Page.Title + " disponibilizado pelo SINJ-DF (Sistema Integrado de Normas Jurídicas do Distrito Federal).";
                                 placeHolderHeader.Controls.Add(html_meta_keywords);
                                 placeHolderHeader.Controls.Add(html_meta_description);
 
@@ -71,6 +72,7 @@ namespace TCDF.Sinj.Web
                                 if (msg.IndexOf("<h1 epigrafe") > -1 || msg.IndexOf("<p linkname") > -1)
                                 {
                                     msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
+                                    msg = Regex.Replace(msg, "<html>.*<body>|</body></html>", String.Empty);
                                 }
                                 else
                                 {

@@ -9,6 +9,7 @@ using util.BRLight;
 using TCDF.Sinj.ES;
 using System.Web;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace TCDF.Sinj.RN
 {
@@ -595,7 +596,1371 @@ namespace TCDF.Sinj.RN
             }
             return true;
         }
-	
+
+        #region Vide
+
+        public void VerificarDispositivosESalvarOsTextosAntigosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado, string nm_login_usuario)
+        {
+            //Se possuir dispositivo nas duas normas
+            if (videAlterador.caput_norma_vide != null && videAlterado.caput_norma_vide != null && videAlterador.caput_norma_vide.caput != null && videAlterado.caput_norma_vide.caput != null && videAlterador.caput_norma_vide.caput.Length > 0 && videAlterado.caput_norma_vide.caput.Length > 0)
+            {
+                SalvarTextoAntigoDaNorma(normaAlteradora, videAlterador, nm_login_usuario);
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlterado, nm_login_usuario);
+            }
+            //Se possuir dispositivo na norma alterada
+            else if (videAlterado.caput_norma_vide != null && videAlterado.caput_norma_vide.caput != null && videAlterado.caput_norma_vide.caput.Length > 0)
+            {
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlterado, nm_login_usuario);
+            }
+            //Se possuir dispositivo na norma alteradora
+            else if (videAlterador.caput_norma_vide != null && videAlterador.caput_norma_vide.caput != null && videAlterador.caput_norma_vide.caput.Length > 0)
+            {
+                SalvarTextoAntigoDaNorma(normaAlteradora, videAlterador, nm_login_usuario);
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlterado, nm_login_usuario);
+            }
+            //Se não possuir dispositivo nas normas. Tem que verificar se não tem o dispositivo informado manualmente, pois se tem não aplica a alteração no arquivo
+            else if (!videAlterado.possuiDispositivoInformadoManualmente())
+            {
+                SalvarTextoAntigoDaNorma(normaAlteradora, videAlterador, nm_login_usuario);
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlterado, nm_login_usuario);
+            }
+        }
+
+        /// <summary>
+        /// Inserir alteração nos dispositivos do arquivo da norma alterada.
+        /// </summary>
+        /// <param name="normaAlteradora"></param>
+        /// <param name="chNorma_alterada"></param>
+        /// <param name="caputNormaVideAlterada"></param>
+        public void SalvarTextoAntigoDaNorma(NormaOV norma, Vide vide, string nm_login_usuario)
+        {
+            var arquivoVersionadoRn = new ArquivoVersionadoNormaRN();
+
+            var fileNorma = norma.getFileArquivoVigente();
+
+            if (fileNorma.id_file != null)
+            {
+
+                var byteFileNorma = Download(fileNorma.id_file);
+
+                if (byteFileNorma != null)
+                {
+                    var sRetornoFileNomra = arquivoVersionadoRn.AnexarArquivo(new FileParameter(byteFileNorma, fileNorma.filename, fileNorma.mimetype));
+                    var retornoFileNomra = JSON.Deserializa<ArquivoOV>(sRetornoFileNomra);
+                    if (retornoFileNomra.id_file != null)
+                    {
+                        var arquivoVersionado = new ArquivoVersionadoNormaOV()
+                        {
+                            ch_norma = norma.ch_norma,
+                            ch_vide = vide.ch_vide,
+                            norma = norma,
+                            ar_arquivo_versionado = retornoFileNomra,
+                            dt_arquivo_versionado = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"),
+                            nm_login_usuario = nm_login_usuario
+
+                        };
+                        arquivoVersionadoRn.Incluir(arquivoVersionado);
+                    }
+                }
+            }
+        }
+
+        public void VerificarDispositivosEAlterarOsTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado)
+        {
+            //Se possuir dispositivo nas duas normas
+            if (videAlterador.caput_norma_vide != null && videAlterado.caput_norma_vide != null && videAlterador.caput_norma_vide.caput != null && videAlterado.caput_norma_vide.caput != null && videAlterador.caput_norma_vide.caput.Length > 0 && videAlterado.caput_norma_vide.caput.Length > 0)
+            {
+                IncluirAlteracaoComDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlterador.caput_norma_vide, videAlterado.caput_norma_vide);
+            }
+            //Se possuir dispositivo na norma alterada
+            else if (videAlterado.caput_norma_vide != null && videAlterado.caput_norma_vide.caput != null && videAlterado.caput_norma_vide.caput.Length > 0)
+            {
+                IncluirAlteracaoComDispositivoAlteradoNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlterado.caput_norma_vide);
+            }
+            //Se possuir dispositivo na norma alteradora
+            else if (videAlterador.caput_norma_vide != null && videAlterador.caput_norma_vide.caput != null && videAlterador.caput_norma_vide.caput.Length > 0)
+            {
+                IncluirAlteracaoComDispositivoAlteradorNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlterador.caput_norma_vide);
+            }
+            //Se não possuir dispositivo nas normas. Tem que verificar se não tem o dispositivo informado manualmente, pois se tem não aplica a alteração no arquivo
+            else if (!videAlterado.possuiDispositivoInformadoManualmente())
+            {
+                IncluirAlteracaoSemDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlterado);
+            }
+        }
+
+        /// <summary>
+        /// Inserir alteração nos dispositivos dos arquivos das normas alteradora e alterada
+        /// </summary>
+        /// <param name="ch_norma_alteradora"></param>
+        /// <param name="ch_norma_alterada"></param>
+        /// <param name="caput_norma_vide_alteradora"></param>
+        /// <param name="caput_norma_vide_alterada"></param>
+        /// <param name="_caput_texto_novo"></param>
+        public void IncluirAlteracaoComDispositivosNosArquivosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Caput caput_norma_vide_alteradora, Caput caput_norma_vide_alterada)
+        {
+            var upload = new UtilArquivoHtml();
+            var pesquisa = new Pesquisa();
+
+            var arquivo_norma_vide_alteradora = CriarLinkNoTextoDaNormaAlteradora(caput_norma_vide_alteradora, caput_norma_vide_alterada);
+            if (!string.IsNullOrEmpty(arquivo_norma_vide_alteradora))
+            {
+                var retorno_file_alteradora = upload.AnexarHtml(arquivo_norma_vide_alteradora, caput_norma_vide_alteradora.filename, "sinj_norma");
+
+                if (retorno_file_alteradora.IndexOf("id_file") > -1)
+                {
+                    PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retorno_file_alteradora, null);
+                }
+            }
+            var arquivo_norma_vide_alterada = AlterarDispositivosDaNormaAlterada(caput_norma_vide_alterada, caput_norma_vide_alteradora);
+            if (!string.IsNullOrEmpty(arquivo_norma_vide_alterada))
+            {
+                var retorno_file_alterada = upload.AnexarHtml(arquivo_norma_vide_alterada, caput_norma_vide_alterada.filename, "sinj_norma");
+                if (retorno_file_alterada.IndexOf("id_file") > -1)
+                {
+                    PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retorno_file_alterada, null);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserir alteração nos dispositivos do arquivo da norma alterada.
+        /// </summary>
+        /// <param name="normaAlteradora"></param>
+        /// <param name="chNorma_alterada"></param>
+        /// <param name="caputNormaVideAlterada"></param>
+        public void IncluirAlteracaoComDispositivoAlteradoNosArquivosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Caput caputNormaVideAlterada)
+        {
+            var upload = new UtilArquivoHtml();
+            var pesquisa = new Pesquisa();
+
+            var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
+
+            var arquivoNormaVideAlterada = AlterarDispositivosDaNormaAlterada(caputNormaVideAlterada, normaAlteradora);
+            if (!string.IsNullOrEmpty(arquivoNormaVideAlterada))
+            {
+                var retorno_file_alterada = upload.AnexarHtml(arquivoNormaVideAlterada, caputNormaVideAlterada.filename, "sinj_norma");
+                if (retorno_file_alterada.IndexOf("id_file") > -1)
+                {
+                    PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retorno_file_alterada, null);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Insere a alteração no texto da norma alterada, não tem dispositivo alterado, então pode riscar o texto inteiro (quando é revogado, cancelado, etc) ou só cria um link (quando é LECO, Ratificação, etc).
+        /// </summary>
+        /// <param name="norma_alteradora"></param>
+        /// <param name="norma_alterada"></param>
+        /// <param name="caput_norma_vide_alterada"></param>
+        /// <param name="_ds_texto_para_alterador"></param>
+        public void IncluirAlteracaoComDispositivoAlteradorNosArquivosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Caput caputNormaVideAlterador)
+        {
+            var upload = new UtilArquivoHtml();
+            var pesquisa = new Pesquisa();
+
+            var id_file_norma_alterada = normaAlterada.getIdFileArquivoVigente();
+            var name_file_norma_alterada = normaAlterada.getNameFileArquivoVigente();
+
+            if (!string.IsNullOrEmpty(id_file_norma_alterada))
+            {
+                var aux_nm_situacao_alterada = normaAlterada.nm_situacao.ToLower();
+
+                var arquivo_norma_vide_alterada = "";
+
+                if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, caputNormaVideAlterador.ds_texto_para_alterador_aux))
+                {
+                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(normaAlteradora, id_file_norma_alterada, caputNormaVideAlterador);
+                }
+                else if (UtilVides.EhLegislacaoCorrelata(caputNormaVideAlterador.ds_texto_para_alterador_aux))
+                {
+                    arquivo_norma_vide_alterada = AcrescentarInformacaoNoTextoDaNormaAlterada(normaAlteradora, id_file_norma_alterada, caputNormaVideAlterador);
+                }
+
+                if (!string.IsNullOrEmpty(arquivo_norma_vide_alterada))
+                {
+                    var retorno_file_alterada = upload.AnexarHtml(arquivo_norma_vide_alterada, name_file_norma_alterada, "sinj_norma");
+
+                    if (retorno_file_alterada.IndexOf("id_file") > -1)
+                    {
+                        PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retorno_file_alterada, null);
+
+                        var arquivo_norma_vide_revogadora = CriarLinkNoTextoDaNormaAlteradora(caputNormaVideAlterador, normaAlterada.ch_norma, name_file_norma_alterada);
+                        if (!string.IsNullOrEmpty(arquivo_norma_vide_revogadora))
+                        {
+                            var retorno_file_alteradora = upload.AnexarHtml(arquivo_norma_vide_revogadora, caputNormaVideAlterador.filename, "sinj_norma");
+
+                            if (retorno_file_alteradora.IndexOf("id_file") > -1)
+                            {
+                                PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retorno_file_alteradora, null);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public void IncluirAlteracaoSemDispositivosNosArquivosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
+        {
+            var upload = new UtilArquivoHtml();
+            var pesquisa = new Pesquisa();
+
+            var idFileNormaAlteradora = normaAlteradora.getIdFileArquivoVigente();
+            var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
+
+            var if_file_norma_alterada = normaAlterada.getIdFileArquivoVigente();
+            var name_file_norma_alterada = normaAlterada.getNameFileArquivoVigente();
+
+            if (!string.IsNullOrEmpty(if_file_norma_alterada))
+            {
+                var aux_nm_situacao_alterada = normaAlterada.nm_situacao.ToLower();
+                var aux_ds_texto_alterador = videAlterado.ds_texto_relacao.ToLower();
+
+                var arquivo_norma_vide_alterada = "";
+
+                if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, aux_ds_texto_alterador))
+                {
+                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
+                }
+                else if (UtilVides.EhLegislacaoCorrelata(aux_ds_texto_alterador))
+                {
+                    arquivo_norma_vide_alterada = AcrescentarInformacaoNoTextoDaNormaAlterada(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
+                }
+
+                if (!string.IsNullOrEmpty(arquivo_norma_vide_alterada))
+                {
+                    var retorno_file_alterada = upload.AnexarHtml(arquivo_norma_vide_alterada, name_file_norma_alterada, "sinj_norma");
+
+                    if (retorno_file_alterada.IndexOf("id_file") > -1)
+                    {
+                        PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retorno_file_alterada, null);
+
+                        var arquivoNormaAlteradora = AcrescentarInformacaoNoTextoDaNormaAlteradora(normaAlterada, idFileNormaAlteradora, aux_ds_texto_alterador);
+                        if (!string.IsNullOrEmpty(arquivoNormaAlteradora))
+                        {
+                            var retornoFileAlteradora = upload.AnexarHtml(arquivoNormaAlteradora, nameFileNormaAlteradora, "sinj_norma");
+
+                            if (retornoFileAlteradora.IndexOf("id_file") > -1)
+                            {
+                                PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Alterar o texto da norma alteradora para criar um link para o dispositivo da norma alterada
+        /// </summary>
+        /// <param name="_caput_alteradora"></param>
+        /// <param name="_caput_alterada"></param>
+        /// <returns></returns>
+        public string CriarLinkNoTextoDaNormaAlteradora(Caput _caput_alteradora, Caput _caput_alterada)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var texto = htmlFile.GetHtmlFile(_caput_alteradora.id_file, "sinj_norma", null);
+            return CriarLinkNoTextoDaNormaAlteradora(texto, _caput_alteradora, _caput_alterada);
+        }
+
+        public string CriarLinkNoTextoDaNormaAlteradora(string texto, Caput _caput_alteradora, Caput _caput_alterada)
+        {
+            var pattern_caput = "";
+            switch (_caput_alterada.nm_relacao_aux)
+            {
+                case "acrescimo":
+                    pattern_caput = _caput_alterada.caput[0] + "_add_0";
+                    break;
+                case "renumeração":
+                    pattern_caput = _caput_alterada.caput[0] + "_renum";
+                    break;
+                case "revogação":
+                    pattern_caput = _caput_alterada.caput[0] + "_replaced";
+                    break;
+                default:
+                    pattern_caput = _caput_alterada.caput[0];
+                    break;
+            }
+            var pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)<a(.*?)>" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "</a>(.*?)</p>";
+            if (Regex.Matches(texto, pattern).Count == 0)
+            {
+                pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "(.*?)</p>";
+                if (Regex.Matches(texto, pattern).Count == 1)
+                {
+                    var replacement = "$1$2" + "<a href=\"(_link_sistema_)Norma/" + _caput_alterada.ch_norma + '/' + _caput_alterada.filename + "#" + pattern_caput + "\">" + _caput_alteradora.link + "</a>" + "$3</p>";
+                    texto = Regex.Replace(texto, pattern, replacement);
+                }
+                else
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
+        public string CriarLinkNoTextoDaNormaAlteradora(Caput _caput_revogadora, string ch_norma_revogada, string name_file_norma_revogada)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var texto = htmlFile.GetHtmlFile(_caput_revogadora.id_file, "sinj_norma", null);
+            return CriarLinkNoTextoDaNormaAlteradora(texto, _caput_revogadora, ch_norma_revogada, name_file_norma_revogada);
+        }
+
+        public string CriarLinkNoTextoDaNormaAlteradora(string texto, Caput _caput_alteradora, string ch_norma_alterada, string name_file_norma_alterada)
+        {
+            var pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)<a(.*?)>" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "</a>(.*?)</p>";
+            if (Regex.Matches(texto, pattern).Count == 0)
+            {
+                pattern = "(<p.+?linkname=\"" + _caput_alteradora.caput[0] + "\".*?>)(.*?)" + UtilVides.EscapeCharsInToPattern(_caput_alteradora.link) + "(.*?)</p>";
+                if (Regex.Matches(texto, pattern).Count == 1)
+                {
+                    var replacement = "$1$2" + "<a href=\"(_link_sistema_)Norma/" + ch_norma_alterada + '/' + name_file_norma_alterada + "\">" + _caput_alteradora.link + "</a>" + "$3</p>";
+                    texto = Regex.Replace(texto, pattern, replacement);
+                }
+                else
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
+        /// <summary>
+        /// Faz a alteração no dispositivo da norma alterada e com link para o dispositivo da norma alteradora
+        /// </summary>
+        /// <param name="_caput_alterada"></param>
+        /// <param name="_caput_alteradora"></param>
+        /// <returns></returns>
+        public string AlterarDispositivosDaNormaAlterada(Caput _caput_alterada, Caput _caput_alteradora)
+        {
+            var texto = "";
+            if (_caput_alterada.caput.Length == _caput_alterada.texto_antigo.Length)
+            {
+                var htmlFile = new UtilArquivoHtml();
+                texto = htmlFile.GetHtmlFile(_caput_alterada.id_file, "sinj_norma", null);
+                texto = AlterarDispositivosDaNormaAlterada(texto, _caput_alterada, _caput_alteradora);
+            }
+            return texto;
+        }
+
+        /// <summary>
+        /// Recupera o texto da norma alterada e faz alterações nos seus dispositivos. As alterações possuem links para o dispositivo do texto da norma alteradora.
+        /// </summary>
+        /// <param name="texto"></param>
+        /// <param name="_caput_alterada"></param>
+        /// <param name="_caput_alteradora"></param>
+        /// <returns></returns>
+        public string AlterarDispositivosDaNormaAlterada(string texto, Caput _caput_alterada, Caput _caput_alteradora)
+        {
+            if (_caput_alterada.caput.Length == _caput_alterada.texto_antigo.Length)
+            {
+                var pattern = "";
+                var replacement = "";
+                var ds_link_alterador = "";
+                var bAlterou = false;
+                for (var i = 0; i < _caput_alterada.caput.Length; i++)
+                {
+                    switch (_caput_alterada.nm_relacao_aux)
+                    {
+                        case "acrescimo":
+                            var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
+                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?)(replaced_by=\".*?\")(.*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
+                            replacement = "$1" + _caput_alterada.caput[i] + "$2$3$4$5";
+                            //É necessário verificar a existencia do atributo replaced_by no paragrafo antes se aplicar o regex.
+                            //Quando tem o parametro replaced_by tem que evitar acrescentá-lo nos paragrafos que estão sendo acrescidos.
+                            if (Regex.Matches(texto, pattern).Count == 1)
+                            {
+                                for (var j = 0; j < texto_novo_splited.Length; j++)
+                                {
+                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                                    replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2$4<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                }
+                            }
+                            else
+                            {
+                                pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
+                                replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
+                                for (var j = 0; j < texto_novo_splited.Length; j++)
+                                {
+                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                                    replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                }
+                            }
+                            break;
+                        case "renumeração":
+                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?(<a class=\"link_vide\".+?</a>)</p>";
+                            if (Regex.Matches(texto, pattern).Count == 1)
+                            {
+                                replacement = "$1" + _caput_alterada.caput[i] + "_renum$2<a name=\"" + _caput_alterada.caput[i] + "_renum\"></a>" + _caput_alterada.texto_novo[i] + " $3 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                            }
+                            else
+                            {
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>";
+                                if (Regex.Matches(texto, pattern).Count == 1)
+                                {
+                                    replacement = "$1" + _caput_alterada.caput[i] + "_renum$2<a name=\"" + _caput_alterada.caput[i] + "_renum\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                }
+                            }
+                            break;
+                        case "revigoração":
+                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i].Replace("_replaced", "")) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                            pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "\".*?)replaced_by=\"(.*?)\"(.*?)<s>(.*?)</s>(.*?)</p>";
+                            replacement = "$1replaced_by_disabled=\"$2\"$3$4$5 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                            if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
+                            {
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)replaced_by=\"(.*?)\"(.*?>)(.*?)(<a.+?name=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?></a>)(.*?)</p>";
+                                replacement = "$1" + _caput_alterada.caput[i] + "$2replaced_by=\"$3\"$4$5$6" + _caput_alterada.caput[i] + "$7$8</p>\r\n$1" + _caput_alterada.caput[i].Replace("_replaced", "") + "$2replaced_by_disabled=\"$3\"$4<a name=\"" + _caput_alterada.caput[i].Replace("_replaced", "") + "\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                            }
+                            break;
+                        case "prorrogação":
+                        case "ratificação":
+                        case "regulamentação":
+                        case "ressalva":
+                        case "recepção":
+                        case "legislação correlata":
+                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                            if (_caput_alterada.nm_relacao_aux == "legislação correlata")
+                            {
+                                ds_link_alterador = "(Legislação correlata - " + _caput_alteradora.ds_norma + ")";
+                            }
+                            pattern = "(<p.+?linkname=\"" + _caput_alterada.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?)</p>";
+                            replacement = "$1 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                            break;
+                        default:
+                            //verifica primeiro quantas vezes o paragrafo já foi alterado
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(_replaced.*?\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "_replaced.*?\".*?></a>)(.*?)</p>";
+                            var matches = Regex.Matches(texto, pattern);
+                            var iReplaceds = matches.Count;
+
+                            //em seguida usa-se o pattern para pegar o paragrafo que está sendo alterado, e se estiver sendo alterado pela segunda vez já vai possuir class='link_vide'
+                            //sendo assim deve-se manter os links do mesmo e inserir links novo no proximo vigente
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)( <a class=\"link_vide\".*?</a>)</p>";
+                            matches = Regex.Matches(texto, pattern);
+                            if (matches.Count > 0)
+                            {
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+
+                                var sReplaced = "_replaced";
+                                for (var j = 0; j < iReplaceds; j++)
+                                {
+                                    sReplaced += "_replaced";
+                                }
+
+                                if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
+                                {
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                }
+                                else
+                                {
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                }
+                            }
+                            else
+                            {
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)</p>";
+                                matches = Regex.Matches(texto, pattern);
+                                if (matches.Count == 1)
+                                {
+                                    ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
+                                    if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
+                                    {
+                                        replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s></p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                    }
+                                    else
+                                    {
+                                        replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + _caput_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s> <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                    if (Regex.Matches(texto, pattern).Count == 1)
+                    {
+                        texto = Regex.Replace(texto, pattern, replacement);
+                        //Resolve os bugs de <s><s>....
+                        texto = Regex.Replace(texto, "(<s>+)\\1+", "$1");
+                        texto = Regex.Replace(texto, "(</s>+)\\1+", "$1");
+                        bAlterou = true;
+                    }
+                }
+                if (!bAlterou)
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
+        /// <summary>
+        /// Recupera o texto da norma alterada e faz alterações nos seus dispositivos. Não possui link para para o dispositivo da norma alteradora porém aponta para o arquivo, ou detalhes, da norma alteradora
+        /// </summary>
+        /// <param name="_caput_alterada"></param>
+        /// <param name="_caput_alteradora"></param>
+        /// <returns></returns>
+        public string AlterarDispositivosDaNormaAlterada(Caput _caput_alterada, NormaOV norma_alteradora)
+        {
+            var texto = "";
+            if (_caput_alterada.caput.Length == _caput_alterada.texto_antigo.Length)
+            {
+                var htmlFile = new UtilArquivoHtml();
+                texto = htmlFile.GetHtmlFile(_caput_alterada.id_file, "sinj_norma", null);
+                texto = AlterarDispositivosDaNormaAlterada(texto, _caput_alterada, norma_alteradora);
+            }
+            return texto;
+        }
+
+        /// <summary>
+        /// Faz a alterações nos dispositivos do texto da norma alterada e com link para o arquivo, ou detalhes, da norma alteradora
+        /// </summary>
+        /// <param name="texto"></param>
+        /// <param name="_caput_alterada"></param>
+        /// <param name="_caput_alteradora"></param>
+        /// <returns></returns>
+        public string AlterarDispositivosDaNormaAlterada(string texto, Caput _caput_alterada, NormaOV norma_alteradora)
+        {
+            var name_file_norma_alteradora = norma_alteradora.getNameFileArquivoVigente();
+            var ds_norma_alteradora = norma_alteradora.getDescricaoDaNorma();
+
+            var bAlterou = false;
+
+            var pattern = "";
+            var replacement = "";
+            var ds_link_alterador = "";
+            //define o link da norma alteradora, se possui name_file_norma_alteradora então a norma tem arquivo se não então para o detalhes da norma
+            var aux_href = !string.IsNullOrEmpty(name_file_norma_alteradora) ? ("(_link_sistema_)Norma/" + norma_alteradora.ch_norma + '/' + name_file_norma_alteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + norma_alteradora.ch_norma;
+            for (var i = 0; i < _caput_alterada.caput.Length; i++)
+            {
+                switch (_caput_alterada.nm_relacao_aux)
+                {
+                    case "acrescimo":
+                        var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
+                        pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?)(replaced_by=\".*?\")(.*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
+                        replacement = "$1" + _caput_alterada.caput[i] + "$2$3$4$5";
+                        //É necessário verificar a existencia do atributo replaced_by no paragrafo antes se aplicar o regex.
+                        //Quando tem o parametro replaced_by tem que evitar acrescentá-lo nos paragrafos que estão sendo acrescidos.
+                        if (Regex.Matches(texto, pattern).Count == 1)
+                        {
+                            for (var j = 0; j < texto_novo_splited.Length; j++)
+                            {
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
+                                replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2$4<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                            }
+                        }
+                        else
+                        {
+                            pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
+                            replacement = "$1" + _caput_alterada.caput[i] + "$2$3";
+                            for (var j = 0; j < texto_novo_splited.Length; j++)
+                            {
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoTexto(texto_novo_splited[j]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
+                                replacement += "\r\n$1" + _caput_alterada.caput[i] + "_add_" + j + "$2<a name=\"" + _caput_alterada.caput[i] + "_add_" + j + "\"></a>" + texto_novo_splited[j] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                            }
+                        }
+
+                        break;
+                    case "renumeração":
+                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
+                        pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?(<a class=\"link_vide\".+?</a>)</p>";
+                        if (Regex.Matches(texto, pattern).Count == 1)
+                        {
+                            replacement = "$1" + _caput_alterada.caput[i] + "_renum$2<a name=\"" + _caput_alterada.caput[i] + "_renum\"></a>" + _caput_alterada.texto_novo[i] + " $3 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                        }
+                        else
+                        {
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>";
+                            if (Regex.Matches(texto, pattern).Count == 1)
+                            {
+                                replacement = "$1" + _caput_alterada.caput[i] + "_renum$2<a name=\"" + _caput_alterada.caput[i] + "_renum\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                            }
+                        }
+                        break;
+                    case "revigoração":
+                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i].Replace("_replaced", "")) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
+                        pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "\".*?)replaced_by=\"(.*?)\"(.*?)<s>(.*?)</s>(.*?)</p>";
+                        replacement = "$1replaced_by_disabled=\"$2\"$3$4$5 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                        if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
+                        {
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)replaced_by=\"(.*?)\"(.*?>)(.*?)(<a.+?name=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?></a>)(.*?)</p>";
+                            replacement = "$1" + _caput_alterada.caput[i] + "$2replaced_by=\"$3\"$4$5$6" + _caput_alterada.caput[i] + "$7$8</p>\r\n$1" + _caput_alterada.caput[i].Replace("_replaced", "") + "$2replaced_by_disabled=\"$3\"$4<a name=\"" + _caput_alterada.caput[i].Replace("_replaced", "") + "\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                        }
+                        break;
+                    case "prorrogação":
+                    case "ratificação":
+                    case "regulamentação":
+                    case "ressalva":
+                    case "recepção":
+                    case "legislação correlata":
+                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
+                        if (_caput_alterada.nm_relacao_aux == "legislação correlata")
+                        {
+                            ds_link_alterador = "(Legislação correlata - " + ds_norma_alteradora + ")";
+                        }
+                        pattern = "(<p.+?linkname=\"" + _caput_alterada.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?)</p>";
+                        replacement = "$1 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                        break;
+                    default:
+                        //verifica primeiro quantas vezes o paragrafo já foi alterado
+                        pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(_replaced.*?\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "_replaced.*?\".*?></a>)(.*?)</p>";
+                        var matches = Regex.Matches(texto, pattern);
+                        var iReplaceds = matches.Count;
+
+                        //em seguida usa-se o pattern para pegar o paragrafo que está sendo alterado, e se estiver sendo alterado pela segunda vez já vai possuir class='link_vide'
+                        //sendo assim deve-se manter os links do mesmo e inserir links novo no proximo vigente
+                        pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)( <a class=\"link_vide\".*?</a>)</p>";
+                        matches = Regex.Matches(texto, pattern);
+                        if (matches.Count > 0)
+                        {
+                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
+
+                            var sReplaced = "_replaced";
+                            for (var j = 0; j < iReplaceds; j++)
+                            {
+                                sReplaced += "_replaced";
+                            }
+
+                            if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
+                            {
+                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s>" + matches[0].Groups[6].Value + "</p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                            }
+                            else
+                            {
+                                replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + sReplaced + "\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + sReplaced + "\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s>" + matches[0].Groups[6].Value + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                            }
+                        }
+                        else
+                        {
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>)(.*?)</p>";
+                            matches = Regex.Matches(texto, pattern);
+                            if (matches.Count == 1)
+                            {
+                                ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
+                                if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
+                                {
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s></p>\r\n" + matches[0].Groups[1].Value + _caput_alterada.caput[i] + matches[0].Groups[2].Value + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + matches[0].Groups[4].Value + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                                }
+                                else
+                                {
+                                    replacement = matches[0].Groups[1].Value + _caput_alterada.caput[i] + "_replaced\" replaced_by=\"" + norma_alteradora.ch_norma + matches[0].Groups[2].Value + "<s>" + matches[0].Groups[3].Value.Replace("<s>", "").Replace("</s>", "") + "<a name=\"" + _caput_alterada.caput[i] + "_replaced\"></a>" + matches[0].Groups[5].Value.Replace("<s>", "").Replace("</s>", "") + "</s> <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                                }
+                            }
+                        }
+                        break;
+                }
+                if (Regex.Matches(texto, pattern).Count == 1)
+                {
+                    texto = Regex.Replace(texto, pattern, replacement);
+                    //Resolve os bugs de <s><s>....
+                    texto = Regex.Replace(texto, "(<s>+)\\1+", "$1");
+                    texto = Regex.Replace(texto, "(</s>+)\\1+", "$1");
+                    bAlterou = true;
+                }
+                if (!bAlterou)
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
+        public string AlterarTextoCompletoDaNormaAlterada(NormaOV norma_alteradora, string id_file_norma_alterada, Caput _caput_alteradora)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var texto = htmlFile.GetHtmlFile(id_file_norma_alterada, "sinj_norma", null);
+            return AlterarTextoCompletoDaNormaAlterada(texto, norma_alteradora, _caput_alteradora);
+        }
+
+        public string AlterarTextoCompletoDaNormaAlterada(string texto, NormaOV norma_alteradora, Caput _caput_alteradora)
+        {
+            var htmlFile = new UtilArquivoHtml();
+
+            var pattern1 = "(?!<p.+replaced_by=.+>)(<p.+?>)(.+?)</p>";
+            Regex rx1 = new Regex(pattern1);
+
+            var pattern2 = "(<h1.+?epigrafe=.+?>.+?</h1>)";
+            Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+
+            if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+            {
+                var replacement1 = "$1<s>$2</s></p>";
+                var replacement2 = "$1\r\n<p style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                texto = rx1.Replace(texto, replacement1);
+                texto = rx2.Replace(texto, replacement2);
+            }
+            else
+            {
+                texto = "";
+            }
+            return texto;
+        }
+
+        public string AlterarTextoCompletoDaNormaAlterada(NormaOV norma_alteradora, string id_file_norma_alterada, string ds_texto_alterador)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var texto = htmlFile.GetHtmlFile(id_file_norma_alterada, "sinj_norma", null);
+            return AlterarTextoCompletoDaNormaAlterada(texto, norma_alteradora, ds_texto_alterador);
+        }
+
+        public string AlterarTextoCompletoDaNormaAlterada(string texto, NormaOV norma_alteradora, string ds_texto_alterador)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            //ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros
+            var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)(.+?)</p>";
+            var replacement1 = "$1<s>$2</s></p>";
+
+            var name_file_norma_alteradora = norma_alteradora.getNameFileArquivoVigente();
+            var ds_norma_alteradora = norma_alteradora.getDescricaoDaNorma();
+
+            var aux_href = !string.IsNullOrEmpty(name_file_norma_alteradora) ? ("(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + name_file_norma_alteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + norma_alteradora.ch_norma;
+
+            var pattern2 = "(<h1.+?epigrafe=.+?>.+?</h1>)";
+            var replacement2 = "$1\r\n<p style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + ds_texto_alterador + " pelo(a) " + ds_norma_alteradora + ")</a></p>";
+
+            if (Regex.Matches(texto, pattern1).Count > 0 || Regex.Matches(texto, pattern2).Count == 1)
+            {
+                texto = Regex.Replace(texto, pattern1, replacement1);
+                texto = Regex.Replace(texto, pattern2, replacement2);
+            }
+            else
+            {
+                texto = "";
+            }
+
+            return texto;
+        }
+
+        public string AcrescentarInformacaoNoTextoDaNormaAlterada(NormaOV norma_alteradora, string id_file_norma_alterada, Caput _caput_alteradora)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var texto = htmlFile.GetHtmlFile(id_file_norma_alterada, "sinj_norma", null);
+            return AcrescentarInformacaoNoTextoDaNormaAlterada(texto, norma_alteradora, _caput_alteradora);
+        }
+
+        public string AcrescentarInformacaoNoTextoDaNormaAlterada(string texto, NormaOV norma_alteradora, Caput _caput_alteradora)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
+            if (Regex.Matches(texto, pattern).Count == 1)
+            {
+                var replacement = "$1\r\n<p><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                if (_caput_alteradora.ds_texto_para_alterador_aux == "legislação correlata")
+                {
+                    replacement = "<p><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >Legislação correlata - " + _caput_alteradora.ds_norma + "</a></p>\r\n$1";
+                }
+                texto = Regex.Replace(texto, pattern, replacement);
+            }
+            else
+            {
+                texto = "";
+            }
+            return texto;
+        }
+
+        public string AcrescentarInformacaoNoTextoDaNormaAlterada(NormaOV normaAlteradora, string idFileNormaAlterada, string dsTextoRelacao)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+            var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
+
+            var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
+            var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
+
+            var aux_href = !string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma;
+
+
+            if (Regex.Matches(texto, pattern).Count == 1)
+            {
+
+                var replacement = "$1\r\n<p><a href=\"" + aux_href + "\" >(" + dsTextoRelacao + " pelo(a) " + dsNormaAlteradora + ")</a></p>";
+                if (dsTextoRelacao == "legislação correlata")
+                {
+                    replacement = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlteradora + "</a></p>\r\n$1";
+                }
+                texto = Regex.Replace(texto, pattern, replacement);
+            }
+            else
+            {
+                texto = "";
+            }
+            return texto;
+        }
+
+        public string AcrescentarInformacaoNoTextoDaNormaAlteradora(NormaOV normaAlterada, string idFileNormaAlteradora, string dsTextoRelacao)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var texto = "";
+            if (dsTextoRelacao == "legislação correlata")
+            {
+                texto = htmlFile.GetHtmlFile(idFileNormaAlteradora, "sinj_norma", null);
+                var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
+
+                var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
+                var dsNormaAlterada = normaAlterada.getDescricaoDaNorma();
+
+                var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
+
+                if (Regex.Matches(texto, pattern).Count == 1)
+                {
+                    var replacement = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n$1";
+
+                    texto = Regex.Replace(texto, pattern, replacement);
+                }
+                else
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
+        /// <summary>
+        /// Verifica se as normas possuem alterações nos seus respectivos arquivos html, provenientes dos vides que estão sendo desfeitos
+        /// </summary>
+        /// <param name="normaAlteradora"></param>
+        /// <param name="normaAlterada"></param>
+        /// <param name="videAlteradorDesfazer"></param>
+        /// <param name="videAlteradoDesfazer"></param>
+        /// <param name="nmSituacaoAnterior"></param>
+        /// <returns>Contém os novos id_file dos respectivos arquivos alterados e salvos novamente</returns>
+        public Dictionary<string, string> VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlteradorDesfazer, Vide videAlteradoDesfazer, string nmSituacaoAnterior, string nm_login_usuario)
+        {
+            var dictionaryIdFiles = new Dictionary<string, string>();
+            if (videAlteradorDesfazer.caput_norma_vide != null && videAlteradoDesfazer.caput_norma_vide != null && videAlteradorDesfazer.caput_norma_vide.caput != null &&
+                videAlteradoDesfazer.caput_norma_vide.caput != null && videAlteradorDesfazer.caput_norma_vide.caput.Length > 0 && videAlteradoDesfazer.caput_norma_vide.caput.Length > 0)
+            {
+                SalvarTextoAntigoDaNorma(normaAlteradora, videAlteradorDesfazer, nm_login_usuario);
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlteradoDesfazer, nm_login_usuario);
+                dictionaryIdFiles = RemoverAlteracaoComDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer.caput_norma_vide, videAlteradoDesfazer.caput_norma_vide);
+            }
+            else if (videAlteradoDesfazer.caput_norma_vide != null && videAlteradoDesfazer.caput_norma_vide.caput != null && videAlteradoDesfazer.caput_norma_vide.caput.Length > 0)
+            {
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlteradoDesfazer, nm_login_usuario);
+                dictionaryIdFiles = RemoverAlteracaoComDispositivoAlteradoNosArquivosDasNormas(normaAlterada, normaAlteradora, videAlteradoDesfazer.caput_norma_vide);
+            }
+            else if (videAlteradorDesfazer.caput_norma_vide != null && videAlteradorDesfazer.caput_norma_vide.caput != null && videAlteradorDesfazer.caput_norma_vide.caput.Length > 0)
+            {
+                SalvarTextoAntigoDaNorma(normaAlteradora, videAlteradorDesfazer, nm_login_usuario);
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlteradoDesfazer, nm_login_usuario);
+                dictionaryIdFiles = RemoverAlteracaoComDispositivoAlteradorNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer.caput_norma_vide, nmSituacaoAnterior);
+            }
+            else
+            {
+                SalvarTextoAntigoDaNorma(normaAlteradora, videAlteradorDesfazer, nm_login_usuario);
+                SalvarTextoAntigoDaNorma(normaAlterada, videAlteradoDesfazer, nm_login_usuario);
+                dictionaryIdFiles = RemoverAlteracaoSemDispositivosNosArquivosDasNormas(normaAlteradora, normaAlterada, videAlteradoDesfazer, nmSituacaoAnterior);
+            }
+            return dictionaryIdFiles;
+        }
+
+        /// <summary>
+        /// Remove as alterações nos arquivos das normas (Alterdora e Alterada) e em seguida insere as novas alterações
+        /// </summary>
+        /// <param name="normaAlteradora"></param>
+        /// <param name="normaAlterada"></param>
+        /// <param name="caputAlterador"></param>
+        /// <param name="caputAlterado"></param>
+        /// <param name="caputAlteradorDesfazer"></param>
+        /// <param name="caputAlteradoDesfazer"></param>
+        public Dictionary<string, string> RemoverAlteracaoComDispositivosNosArquivosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Caput caputAlteradorDesfazer, Caput caputAlteradoDesfazer)
+        {
+            var upload = new UtilArquivoHtml();
+            var pesquisa = new Pesquisa();
+            var listOp = new List<opMode<object>>();
+
+            var dictionaryIdFiles = new Dictionary<string, string>();
+
+            var arquivoNormaAlteradora = RemoverLinkNoTextoDaNormaAlteradora(normaAlteradora, caputAlteradorDesfazer, caputAlteradoDesfazer);
+            if (arquivoNormaAlteradora != "")
+            {
+                var retornoFileAlteradora = upload.AnexarHtml(arquivoNormaAlteradora, normaAlteradora.ar_atualizado.filename, "sinj_norma");
+                var oFileAlteradora = JSON.Deserializa<ArquivoOV>(retornoFileAlteradora);
+                if (!string.IsNullOrEmpty(oFileAlteradora.id_file))
+                {
+                    if (PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null) == "UPDATED")
+                    {
+                        dictionaryIdFiles.Add("id_file_alterador", oFileAlteradora.id_file);
+                    }
+                }
+            }
+
+            listOp = new List<opMode<object>>();
+            var arquivoNormaAlterada = RemoverAlteracaoNoTextoDaNormaAlterada(normaAlterada, caputAlteradoDesfazer, caputAlteradorDesfazer);
+            if (arquivoNormaAlterada != "")
+            {
+                var retornoFileAlterada = upload.AnexarHtml(arquivoNormaAlterada, normaAlterada.ar_atualizado.filename, "sinj_norma");
+                var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
+                if (!string.IsNullOrEmpty(oFileAlterada.id_file))
+                {
+                    if (PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
+                    {
+                        dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
+                    }
+                }
+            }
+            return dictionaryIdFiles;
+        }
+
+        public Dictionary<string, string> RemoverAlteracaoComDispositivoAlteradorNosArquivosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Caput caputAlteradorDesfazer, string nmSituacaoAnterior)
+        {
+            var pesquisa = new Pesquisa();
+            var upload = new UtilArquivoHtml();
+            var listOp = new List<opMode<object>>();
+
+            var dictionaryIdFiles = new Dictionary<string, string>();
+
+            var arquivoNormaVideAlteradora = RemoverLinkNoTextoDaNormaAlteradora(normaAlteradora, caputAlteradorDesfazer, normaAlterada.ch_norma);
+
+            if (arquivoNormaVideAlteradora != "")
+            {
+                var retornoFileAlteradora = upload.AnexarHtml(arquivoNormaVideAlteradora, normaAlteradora.ar_atualizado.filename, "sinj_norma");
+                var oFileAlteradora = JSON.Deserializa<ArquivoOV>(retornoFileAlteradora);
+                if (!string.IsNullOrEmpty(oFileAlteradora.id_file))
+                {
+                    if (PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null) == "UPDATED")
+                    {
+                        dictionaryIdFiles.Add("id_file_alterador", oFileAlteradora.id_file);
+                    }
+                }
+            }
+
+            var auxDsTextoParaAlterador = caputAlteradorDesfazer.ds_texto_para_alterador_aux;
+            var auxNmSituacaoAlterada = normaAlterada.nm_situacao.ToLower();
+            var auxNmSituacaoAnterior = nmSituacaoAnterior.ToLower();
+
+            var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
+            var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
+            if (!string.IsNullOrEmpty(idFileNormaAlterada))
+            {
+                var arquivoNormaVideAlterada = "";
+
+                //Se a situação da norma foi alterada pela remoção do vide em questão, então não deve alterar o texto, pois essa alteração afeta o texto inteiro
+                if (auxNmSituacaoAlterada != auxNmSituacaoAnterior && ((auxNmSituacaoAnterior == "revogado" && auxDsTextoParaAlterador == "revogado") ||
+                    (auxNmSituacaoAnterior == "anulado" && auxDsTextoParaAlterador == "anulado") ||
+                    (auxNmSituacaoAnterior == "extinta" && auxDsTextoParaAlterador == "extinta") ||
+                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlterador == "declarado inconstitucional") ||
+                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlterador == "julgada procedente") ||
+                    (auxNmSituacaoAnterior == "cancelada" && auxDsTextoParaAlterador == "cancelada") ||
+                    (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlterador == "suspenso totalmente")))
+                {
+                    arquivoNormaVideAlterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlterador);
+                }
+                else if (auxDsTextoParaAlterador == "ratificado" ||
+                    auxDsTextoParaAlterador == "reeditado" ||
+                    auxDsTextoParaAlterador == "regulamentado" ||
+                    auxDsTextoParaAlterador == "prorrogado" ||
+                    auxDsTextoParaAlterador == "legislação correlata")
+                {
+                    arquivoNormaVideAlterada = RemoverInformacaoNoTextoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlterador);
+                }
+
+                if (arquivoNormaVideAlterada != "")
+                {
+                    var retornoFileAlterada = upload.AnexarHtml(arquivoNormaVideAlterada, nameFileNormaAlterada, "sinj_norma");
+                    var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
+                    if (!string.IsNullOrEmpty(oFileAlterada.id_file))
+                    {
+                        if (PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
+                        {
+                            dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
+                        }
+                    }
+                }
+            }
+            return dictionaryIdFiles;
+        }
+
+        public Dictionary<string, string> RemoverAlteracaoComDispositivoAlteradoNosArquivosDasNormas(NormaOV normaAlterada, NormaOV normaAlteradora, Caput caputAlteradoDesfazer)
+        {
+            var upload = new UtilArquivoHtml();
+            var pesquisa = new Pesquisa();
+
+            var dictionaryIdFiles = new Dictionary<string, string>();
+
+            var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
+
+            var arquivoNormaVideAlterada = RemoverAlteracaoNoTextoDaNormaAlterada(normaAlterada, normaAlteradora, caputAlteradoDesfazer);
+            if (!string.IsNullOrEmpty(arquivoNormaVideAlterada))
+            {
+                var retornoFileAlterada = upload.AnexarHtml(arquivoNormaVideAlterada, caputAlteradoDesfazer.filename, "sinj_norma");
+                var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
+                if (!string.IsNullOrEmpty(oFileAlterada.id_file))
+                {
+                    if (PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
+                    {
+                        dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
+                    }
+                }
+            }
+            return dictionaryIdFiles;
+        }
+
+        public Dictionary<string, string> RemoverAlteracaoSemDispositivosNosArquivosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlteradoDesfazer, string nmSituacaoAnterior)
+        {
+            var upload = new UtilArquivoHtml();
+            var pesquisa = new Pesquisa();
+
+            var dictionaryIdFiles = new Dictionary<string, string>();
+
+            var idFileNormaAlteradora = normaAlteradora.getIdFileArquivoVigente();
+            var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
+
+            var if_file_norma_alterada = normaAlterada.getIdFileArquivoVigente();
+            var name_file_norma_alterada = normaAlterada.getNameFileArquivoVigente();
+
+            if (!string.IsNullOrEmpty(if_file_norma_alterada))
+            {
+                var aux_nm_situacao_alterada = nmSituacaoAnterior.ToLower();
+                var aux_ds_texto_alterador = videAlteradoDesfazer.ds_texto_relacao.ToLower();
+
+                var arquivo_norma_vide_alterada = "";
+
+                if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, aux_ds_texto_alterador))
+                {
+                    arquivo_norma_vide_alterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, if_file_norma_alterada, aux_ds_texto_alterador);
+                }
+                else if (UtilVides.EhLegislacaoCorrelata(aux_ds_texto_alterador))
+                {
+                    arquivo_norma_vide_alterada = RemoverInformacaoNoTextoDaNormaAlterada(normaAlteradora.ch_norma, if_file_norma_alterada, aux_ds_texto_alterador);
+                }
+
+                if (!string.IsNullOrEmpty(arquivo_norma_vide_alterada))
+                {
+                    var retornoFileAlterada = upload.AnexarHtml(arquivo_norma_vide_alterada, name_file_norma_alterada, "sinj_norma");
+                    var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
+                    if (!string.IsNullOrEmpty(oFileAlterada.id_file))
+                    {
+                        if (PathPut(normaAlterada._metadata.id_doc, "ar_atualizado", retornoFileAlterada, null) == "UPDATED")
+                        {
+                            dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
+                        }
+
+                        var arquivoNormaAlteradora = RemoverInformacaoNoTextoDaNormaAlteradora(normaAlterada, idFileNormaAlteradora, aux_ds_texto_alterador);
+                        if (!string.IsNullOrEmpty(arquivoNormaAlteradora))
+                        {
+                            var retornoFileAlteradora = upload.AnexarHtml(arquivoNormaAlteradora, nameFileNormaAlteradora, "sinj_norma");
+
+                            var oFileAlteradora = JSON.Deserializa<ArquivoOV>(retornoFileAlteradora);
+                            if (!string.IsNullOrEmpty(oFileAlteradora.id_file))
+                            {
+                                if (PathPut(normaAlteradora._metadata.id_doc, "ar_atualizado", retornoFileAlteradora, null) == "UPDATED")
+                                {
+                                    dictionaryIdFiles.Add("id_file_alterador", oFileAlteradora.id_file);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return dictionaryIdFiles;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="normaAlteradora"></param>
+        /// <param name="caputAlteradora"></param>
+        /// <param name="caputAlterada"></param>
+        /// <returns></returns>
+        public string RemoverLinkNoTextoDaNormaAlteradora(NormaOV normaAlteradora, Caput caputAlteradora, Caput caputAlterada)
+        {
+            var arquivo_norma_vide_alteradora = "";
+            //Na teoria se uma norma tem vide com dispositivos o ar_atualizado.id_file não deveria ser vazio, mas em alguns casos tem surgido essa anomalia devido à alguma falha na inclusão do vide com dispositivos
+            //Até o momento foi percebido que quando um dispositivo selecionado possui quebra de linha, <br/>, o sistema não consegue aplicar o Regex da alteração.
+            if (!string.IsNullOrEmpty(normaAlteradora.ar_atualizado.id_file))
+            {
+                var htmlFile = new UtilArquivoHtml();
+                arquivo_norma_vide_alteradora = htmlFile.GetHtmlFile(normaAlteradora.ar_atualizado.id_file, "sinj_norma", null);
+
+                var pattern_caput = "";
+                switch (caputAlterada.nm_relacao_aux)
+                {
+                    case "acrescimo":
+                        pattern_caput = caputAlterada.caput[0] + "_add_0";
+                        break;
+                    case "renumeração":
+                        pattern_caput = caputAlterada.caput[0] + "_renum";
+                        break;
+                    case "revogação":
+                        pattern_caput = caputAlterada.caput[0] + "_replaced";
+                        break;
+                    default:
+                        pattern_caput = caputAlterada.caput[0];
+                        break;
+                }
+                var pattern = "(<p.+?linkname=\"" + caputAlteradora.caput[0] + "\".*?>)(.*?)<a href=\"\\(_link_sistema_\\)Norma/" + caputAlterada.ch_norma + '/' + caputAlterada.filename + "#" + pattern_caput + "\">" + UtilVides.EscapeCharsInToPattern(caputAlteradora.link) + "</a>(.*?)</p>";
+                var matches = Regex.Matches(arquivo_norma_vide_alteradora, pattern);
+                if (matches.Count == 1)
+                {
+                    var replacement = matches[0].Groups[1].Value + matches[0].Groups[2].Value + caputAlteradora.link + matches[0].Groups[3].Value + "</p>";
+                    arquivo_norma_vide_alteradora = Regex.Replace(arquivo_norma_vide_alteradora, pattern, replacement);
+                }
+                else
+                {
+                    arquivo_norma_vide_alteradora = "";
+                }
+            }
+            return arquivo_norma_vide_alteradora;
+        }
+
+        public string RemoverLinkNoTextoDaNormaAlteradora(NormaOV normaAlteradora, Caput caputAlteradoraDesfazer, string chNormaAlterada)
+        {
+            var arquivo_norma_vide_alteradora = "";
+            //Na teoria se uma norma tem vide com dispositivos o ar_atualizado.id_file não deveria ser vazio, mas em alguns casos tem surgido essa anomalia devido à alguma falha na inclusão do vide com dispositivos
+            //Até o momento foi percebido que quando um dispositivo selecionado possui quebra de linha, <br/>, o sistema não consegue aplicar o Regex da alteração.
+            if (!string.IsNullOrEmpty(normaAlteradora.ar_atualizado.id_file))
+            {
+                var htmlFile = new UtilArquivoHtml();
+                arquivo_norma_vide_alteradora = htmlFile.GetHtmlFile(normaAlteradora.ar_atualizado.id_file, "sinj_norma", null);
+                var pattern = "(<p.+?linkname=\"" + caputAlteradoraDesfazer.caput[0] + "\".*?>)(.*?)<a href=\"\\(_link_sistema_\\)Norma/" + chNormaAlterada + "/.+?\">" + UtilVides.EscapeCharsInToPattern(caputAlteradoraDesfazer.link) + "</a>(.*?)</p>";
+                var matches = Regex.Matches(arquivo_norma_vide_alteradora, pattern);
+                if (matches.Count == 1)
+                {
+                    var replacement = matches[0].Groups[1].Value + matches[0].Groups[2].Value + caputAlteradoraDesfazer.link + matches[0].Groups[3].Value + "</p>";
+                    arquivo_norma_vide_alteradora = Regex.Replace(arquivo_norma_vide_alteradora, pattern, replacement);
+                }
+                else
+                {
+                    arquivo_norma_vide_alteradora = "";
+                }
+            }
+            return arquivo_norma_vide_alteradora;
+        }
+
+        public string RemoverAlteracaoNoTextoDaNormaAlterada(NormaOV norma_alterada, Caput caputAlteradoDesfazer, Caput _caput_alteradora_desfazer)
+        {
+            var texto = "";
+            //Na teoria se uma norma tem vide com dispositivos o ar_atualizado.id_file não deveria ser vazio, mas em alguns casos tem surgido essa anomalia devido à alguma falha na inclusão do vide com dispositivos
+            //Até o momento foi percebido que quando um dispositivo selecionado possui quebra de linha, <br/>, o sistema não consegue aplicar o Regex da alteração.
+            if (caputAlteradoDesfazer.caput.Length == caputAlteradoDesfazer.texto_antigo.Length && !string.IsNullOrEmpty(norma_alterada.ar_atualizado.id_file))
+            {
+                texto = new UtilArquivoHtml().GetHtmlFile(norma_alterada.ar_atualizado.id_file, "sinj_norma", null);
+                var bAlterou = false;
+                var pattern = "";
+                var replacement = "";
+                var ds_link_alterador = "";
+                for (var i = 0; i < caputAlteradoDesfazer.caput.Length; i++)
+                {
+                    switch (caputAlteradoDesfazer.nm_relacao_aux)
+                    {
+                        case "acrescimo":
+                            pattern = "<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "_add_.+?\".*?>.*? <a class=\"link_vide\".*?>.+?</a></p>";
+                            replacement = "";
+                            break;
+                        case "renumeração":
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*?pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_renum(\".*?>.*?<a.+?name=\")" + caputAlteradoDesfazer.caput[i] + "_renum(\".*?></a>.*?)" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.texto_novo[i]) + "(.*?) <a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2" + caputAlteradoDesfazer.caput[i] + "$3" + caputAlteradoDesfazer.texto_antigo[i] + "$4$5</p>";
+                            break;
+                        case "revigoração":
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*?pelo\\(a\\) .+?\\)";
+                            pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "\".*?)replaced_by_disabled=\"(.*?)\"(.*?)(<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?)( <a class=\"link_vide\".*?>.*?)<a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1replaced_by=\"$2\"$3<s>$4</s>$5$6</p>";
+                            if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
+                            {
+                                pattern = "<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i].Replace("_replaced", "") + "\".*?replaced_by_disabled=\".*?\".*?</p>";
+                                replacement = "";
+                            }
+                            break;
+                        case "prorrogação":
+                        case "ratificação":
+                        case "regulamentação":
+                        case "ressalva":
+                        case "recepção":
+                        case "legislação correlata":
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
+                            if (caputAlteradoDesfazer.nm_relacao_aux == "legislação correlata")
+                            {
+                                ds_link_alterador = "\\(Legislação correlata - " + _caput_alteradora_desfazer.ds_norma + "\\)";
+                            }
+                            pattern = "(<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1$2</p>";
+                            break;
+                        default:
+                            ds_link_alterador = "\\(.*?" + UtilVides.getRelacaoParaTextoAlterador(caputAlteradoDesfazer.ds_texto_para_alterador_aux, true) + "pelo\\(a\\) " + _caput_alteradora_desfazer.ds_norma + "\\)";
+                            if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
+                            {
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_replaced.*?(\".*?)replaced_by=\"" + _caput_alteradora_desfazer.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "_replaced.*?\".*?></a>(.*?)</s>(.*?)</p>\r\n<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?>.*?" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.texto_novo[i]) + ".*? <a class=\"link_vide\".*?>.+?</a></p>";
+                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a id=\"" + caputAlteradoDesfazer.caput[i] + "\" name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6</p>";
+                            }
+                            else
+                            {
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_replaced.*?(\".*?)replaced_by=\"" + _caput_alteradora_desfazer.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "_replaced.*?\".*?></a>(.*?)</s>(.*?) <a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
+                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a id=\"" + caputAlteradoDesfazer.caput[i] + "\" name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6$7</p>";
+                            }
+                            break;
+                    }
+                    var teste = Regex.Matches(texto, pattern).Count;
+                    if (Regex.Matches(texto, pattern).Count == 1 || (caputAlteradoDesfazer.nm_relacao_aux == "acrescimo" && Regex.Matches(texto, pattern).Count > 1))
+                    {
+                        texto = Regex.Replace(texto, pattern, replacement);
+                        bAlterou = true;
+                    }
+                }
+                if (!bAlterou)
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
+        public string RemoverAlteracaoNoTextoDaNormaAlterada(NormaOV normaAlterada, NormaOV normaAlteradora, Caput caputAlteradoDesfazer)
+        {
+            var texto = "";
+            //Na teoria se uma norma tem vide com dispositivos o ar_atualizado.id_file não deveria ser vazio, mas em alguns casos tem surgido essa anomalia devido à alguma falha na inclusão do vide com dispositivos
+            //Até o momento foi percebido que quando um dispositivo selecionado possui quebra de linha, <br/>, o sistema não consegue aplicar o Regex da alteração.
+            if (!string.IsNullOrEmpty(normaAlterada.ar_atualizado.id_file))
+            {
+                texto = new UtilArquivoHtml().GetHtmlFile(normaAlterada.ar_atualizado.id_file, "sinj_norma", null);
+
+                var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
+                var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
+
+                var pattern = "";
+                var replacement = "";
+                var ds_link_alterador = "";
+                //define o link da norma alteradora, se possui nameFileNormaAlteradora então a norma tem arquivo se não então o link é para os detalhes da norma
+                var aux_href = UtilVides.EscapeCharsInToPattern(!string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + '/' + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma);
+
+                var bAlterou = false;
+
+                for (var i = 0; i < caputAlteradoDesfazer.caput.Length; i++)
+                {
+                    switch (caputAlteradoDesfazer.nm_relacao_aux)
+                    {
+                        case "acrescimo":
+                            pattern = "<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "_add_.+?\".*?>.*? <a class=\"link_vide\".*?>.+?</a></p>";
+                            replacement = "";
+                            break;
+                        case "renumeração":
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) .+?\\)";
+                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_renum(\".*?>.*?<a.+?name=\")" + caputAlteradoDesfazer.caput[i] + "_renum(\".*?></a>.*?)" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.texto_novo[i]) + "(.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2" + caputAlteradoDesfazer.caput[i] + "$3" + caputAlteradoDesfazer.texto_antigo[i] + "$4$5</p>";
+                            break;
+                        case "revigoração":
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) .+?\\)";
+                            pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "\".*?)replaced_by_disabled=\"(.*?)\"(.*?)(<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?)( <a class=\"link_vide\".*?>.*?)<a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1replaced_by=\"$2\"$3<s>$4</s>$5</p>";
+                            if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
+                            {
+                                pattern = "<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i].Replace("_replaced", "") + "\".*?replaced_by_disabled=\".*?\".*?</p>";
+                                replacement = "";
+                            }
+                            break;
+                        case "prorrogação":
+                        case "ratificação":
+                        case "regulamentação":
+                        case "ressalva":
+                        case "recepção":
+                        case "legislação correlata":
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) " + dsNormaAlteradora + "\\)";
+                            if (caputAlteradoDesfazer.nm_relacao_aux == "legislação correlata")
+                            {
+                                ds_link_alterador = "\\(Legislação correlata - " + dsNormaAlteradora + "\\)";
+                            }
+                            pattern = "(<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1$2</p>";
+                            break;
+                        default:
+                            ds_link_alterador = "\\(" + UtilVides.getRelacaoParaTextoAlterador(caputAlteradoDesfazer.ds_texto_para_alterador_aux, true) + "pelo\\(a\\) " + dsNormaAlteradora + "\\)";
+                            if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
+                            {
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_replaced(\".*?)replaced_by=\"" + normaAlteradora.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "_replaced\".*?></a>(.*?)</s>(.*?)</p>\r\n<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?>.*?" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.texto_novo[i]) + ".*? <a class=\"link_vide\".*?>.+?</a></p>";
+                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a id=\"" + caputAlteradoDesfazer.caput[i] + "\" name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6</p>";
+                            }
+                            else
+                            {
+                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "_replaced(\".*?)replaced_by=\"" + normaAlteradora.ch_norma + "\"(.*?)<s>(.*?)<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "_replaced\".*?></a>(.*?)</s>(.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
+                                replacement = "$1" + caputAlteradoDesfazer.caput[i] + "$2$3$4<a id=\"" + caputAlteradoDesfazer.caput[i] + "\" name=\"" + caputAlteradoDesfazer.caput[i] + "\"></a>" + caputAlteradoDesfazer.texto_antigo[i] + "$6$7</p>";
+                            }
+                            break;
+                    }
+                    var teste = Regex.Matches(texto, pattern).Count;
+                    if (Regex.Matches(texto, pattern).Count == 1 || (caputAlteradoDesfazer.nm_relacao_aux == "acrescimo" && Regex.Matches(texto, pattern).Count > 1))
+                    {
+                        texto = Regex.Replace(texto, pattern, replacement);
+                        bAlterou = true;
+                    }
+                }
+                if (!bAlterou)
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
+        public string RemoverAlteracaoNoTextoCompletoDaNormaAlterada(string chNormaAlteradora, string idFileNormaAlterada, string dsTextoParaAlterador)
+        {
+            var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+
+            var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+            Regex rx1 = new Regex(pattern1);
+
+            var pattern2 = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
+            Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+
+            if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+            {
+                var replacement1 = "$1$2</p>";
+                var replacement2 = "";
+                texto = rx1.Replace(texto, replacement1);
+                texto = rx2.Replace(texto, replacement2);
+            }
+            else
+            {
+                texto = "";
+            }
+            return texto;
+        }
+
+        public string RemoverInformacaoNoTextoDaNormaAlterada(string chNormaAlteradora, string idFileNormaAlterada, string dsTextoParaAlterador)
+        {
+            var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+            var pattern = "\r\n<p><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
+            if (dsTextoParaAlterador.ToLower() == "legislação correlata")
+            {
+                pattern = "<p><a.+?/" + chNormaAlteradora + "/.+?>Legislação correlata.+?</a></p>\r\n";
+            }
+            if (Regex.Matches(texto, pattern).Count == 1)
+            {
+                texto = Regex.Replace(texto, pattern, "");
+            }
+            else
+            {
+                texto = "";
+            }
+            return texto;
+        }
+
+        public string RemoverInformacaoNoTextoDaNormaAlteradora(NormaOV normaAlterada, string idFileNormaAlteradora, string dsTextoRelacao)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var texto = "";
+            if (dsTextoRelacao == "legislação correlata")
+            {
+                texto = htmlFile.GetHtmlFile(idFileNormaAlteradora, "sinj_norma", null);
+                //texto = RemoverInformacaoNoTextoDaNormaAlteradora(texto, normaAlterada, dsTextoRelacao);
+                var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
+                var dsNormaAlterada = normaAlterada.getDescricaoDaNorma();
+
+                var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
+
+                var pattern = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n";
+                if (Regex.Matches(texto, pattern).Count == 1)
+                {
+                    texto = Regex.Replace(texto, pattern, "");
+                }
+                else
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
+        #endregion
+
         #region Arquivo
 
         public string AnexarArquivo(util.BRLight.FileParameter fileParameter)

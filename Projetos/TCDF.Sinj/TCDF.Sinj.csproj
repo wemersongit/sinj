@@ -173,6 +173,7 @@
     <Compile Include="RN\TipoDePublicacaoRN.cs" />
     <Compile Include="RN\TipoDeRelacaoRN.cs" />
     <Compile Include="RN\UsuarioRN.cs" />
+    <Compile Include="UtilArquivoHtml.cs" />
     <Compile Include="RN\VocabularioRN.cs" />
     <Compile Include="RN\DiarioRN.cs" />
     <Compile Include="AD\DiarioAD.cs" />

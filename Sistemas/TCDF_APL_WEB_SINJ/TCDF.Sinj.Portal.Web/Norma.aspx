@@ -152,6 +152,7 @@
         .print{float:right;}
         .compilado{float:left;}
         body, p, h1{font-family:Tahoma;font-size:14px;}
+        p[nota=nota] {font-size:12px; border: 1px solid #777; padding: 5px;}
     </style>
 </head>
 <body>

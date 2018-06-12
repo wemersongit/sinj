@@ -425,7 +425,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         /// <param name="videAlteradoDesfazer"></param>
         private void VerificarDispositivosDesfazerEAlterarOsTextosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado, Vide videAlteradorDesfazer, Vide videAlteradoDesfazer, string nmSituacaoAnterior, string nm_login_usuario)
         {
-            var dictionaryFiles = new VideExcluir().VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior, nm_login_usuario);
+            var normaRn = new NormaRN();
+            var dictionaryFiles = normaRn.VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradora, normaAlterada, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior, nm_login_usuario);
 
 
             //Se possuir id_file_alterador a alteração implicou em um novo if_file para os arquivos, mesmo se não alterou os caputs podem estar utilizando id_file que não corresponde mais com o id_file da norma
@@ -460,8 +461,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     videAlterado.caput_norma_vide.id_file = normaAlterada.ar_atualizado.id_file;
                 }
             }
-            
-            new VideIncluir().VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradora, normaAlterada, videAlterador, videAlterado);
+
+            normaRn.VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradora, normaAlterada, videAlterador, videAlterado);
 
         }
 

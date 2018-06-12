@@ -38,7 +38,7 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                 {
                     sessao_usuario = Util.ValidarSessao();
                     var docOv = new Doc(_nm_base).doc(_id_file);
-                    var sArquivo = GetHtmlFile(_id_file, _nm_base, docOv);
+                    var sArquivo = new UtilArquivoHtml().GetHtmlFile(_id_file, _nm_base, docOv);
                     sArquivo = HttpUtility.UrlEncodeUnicode(sArquivo).Replace("+", "%20");
                     //sArquivo = HttpUtility.UrlEncode(sArquivo, Encoding.UTF8).Replace("+", "%20");
                     sRetorno = "{\"file\":" + JSON.Serialize<File>(docOv) + ",\"fileencoded\":\"" + sArquivo + "\"}";
@@ -70,37 +70,7 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
             return sRetorno;
         }
 
-        public string GetHtmlFile(string _id_file, string _nm_base, File docOv)
-        {
-            var sArquivo = "";
-            var docRn = new Doc(_nm_base);
-            if (docOv == null)
-            {
-                docOv = docRn.doc(_id_file);
-            }
-
-            if (docOv.id_file != null && docOv.mimetype == "text/html")
-            {
-                var file = docRn.download(_id_file);
-                if (file != null && file.Length > 0)
-                {
-                    sArquivo = Encoding.UTF8.GetString(file);
-                    //o editor de html (ckeditor) coloca o title dento do body autocomaticamente, então as tags e retorno só conteúdo do body, 
-                    sArquivo = Regex.Replace(sArquivo, "<html>.*<body>|</body></html>", String.Empty);
-                    sArquivo = HttpUtility.HtmlDecode(sArquivo);
-
-                }
-                else
-                {
-                    throw new FileNotFoundException("Arquivo não encontrado.");
-                }
-            }
-            else
-            {
-                throw new FileNotFoundException("Arquivo não encontrado.");
-            }
-            return sArquivo;
-        }
+        
 
         public bool IsReusable
         {

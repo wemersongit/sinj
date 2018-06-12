@@ -33,7 +33,13 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
 
             try
             {
-                sRetorno = AnexarHtml(_arquivo_text, _filename, _nm_base);
+                sessao_usuario = Util.ValidarSessao();
+                sRetorno = new UtilArquivoHtml().AnexarHtml(_arquivo_text, _filename, _nm_base);
+                var log_arquivo = new LogUpload
+                {
+                    arquivo = JSON.Deserializa<ArquivoOV>(sRetorno)
+                };
+                LogOperacao.gravar_operacao("HTML.INC", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
             }
             catch (ParametroInvalidoException ex)
             {
@@ -65,46 +71,7 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
             return sRetorno;
         }
 
-        public string AnexarHtml(string _arquivo_text,string _filename, string _nm_base)
-        {
-            string sRetorno = "";
-
-            SessaoUsuarioOV sessao_usuario = Util.ValidarSessao();
-
-            if (_filename.IndexOf(".htm") < 0 || _filename.IndexOf(".html") < 0)
-            {
-                _filename += ".html";
-            }
-
-            if (_arquivo_text.IndexOf("<head>") < 0)
-            {
-                _arquivo_text = "<html><head><title>" + _filename.Replace(".html", "") + "</title></head><body>" + _arquivo_text + "</body></html>";
-            }
-
-            var arquivo_bytes = System.Text.UnicodeEncoding.UTF8.GetBytes(_arquivo_text);
-
-
-            var fileParameter = new FileParameter(arquivo_bytes, _filename, "text/html");
-
-            try
-            {
-                var doc = new Doc(_nm_base);
-                var dicionario = new Dictionary<string, object>();
-                dicionario.Add("file", fileParameter);
-                sRetorno = doc.incluir(dicionario);
-                var log_arquivo = new LogUpload
-                {
-                    arquivo = JSON.Deserializa<ArquivoOV>(sRetorno)
-                };
-                LogOperacao.gravar_operacao("HTML.INC", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-            }
-            catch (Exception ex)
-            {
-                throw new FalhaOperacaoException("Não foi possível anexar o arquivo", ex);
-            }
-            
-            return sRetorno;
-        }
+        
 
 
 

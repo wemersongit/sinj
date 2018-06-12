@@ -3762,70 +3762,88 @@ function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
     $.each($('#' + id_div + ' p'), function (key_p, value_p) {
         try {
             var linkname = $(value_p).attr('linkname');
-            //O ckeditor tem um comportamento que causa erro na marcação do paragrafo. Quando estamos editando um texto que já foi bandeirado sempre
-            //que inserimos um novo paragrafo o ckeditor replica os atributos do paragrafo anterior duplicando o linkname, nesses casos o paragrafo não terá
-            //âncora então limpamos o linkname do paragrafo e geramos novamente;
-            if (IsNotNullOrEmpty(linkname) && $('p[linkname="' + linkname + '"]').length > 1 && $('a[name].linkname', value_p).length <= 0) {
-                $(value_p).attr('linkname', '');
-                linkname = '';
+            var nota = $(value_p).attr('nota');
+            var noindex = $(value_p).attr('noindex');
+            var epigrafe = $(value_p).attr('epigrafe');
+            if(!IsNotNullOrEmpty(epigrafe) && $(value_p)[0].hasAttribute('epigrafe')){
+                $(value_p).removeAttr('epigrafe');
             }
-            //Caso o usuário edite a ancora deve-se limpar o attr linkname do paragrafo
-            //e usar a class linkname como filtro para pegar somente as ancoras geradas no client-side caso contrario
-            //pode gerar conflito com as ancoras geradas no server-sice
-            else if(IsNotNullOrEmpty(linkname) && $('a[name]', value_p).length == 1 && !IsNotNullOrEmpty($('a[name]', value_p)[0].previousSibling) && $('a[name]', value_p).attr('name') != linkname){
-                $(value_p).attr('linkname', '');
-                linkname = '';
+            if(!IsNotNullOrEmpty(nota) && $(value_p)[0].hasAttribute('nota')){
+                $(value_p).removeAttr('nota');
             }
-            //Se o paragrafo já possuir o atributo linkname (atributo criado para o editor de links conseguir exibir os icones e fazer a funcionalidade de criar e editar ancoras),
-            //ele não deve ser mexido
-            if (!IsNotNullOrEmpty(linkname)) {
-                //se não tem conteúdo no paragrafo não há porquê tentar criar linkname e ancora
-                if ($.trim(value_p.textContent)) {
-                    //tenta criar o atributo linkname no paragrafo com base na primeira ancora dele
-                    if ($('a[id][name]', value_p).length == 1) {
-                        var value_a = $('a[id][name]', value_p)[0];
-                        if (value_a.textContent == '' && value_a.hasAttribute('id') && value_a.hasAttribute('name')) {
-                            linkname = value_a.getAttribute('name');
-                            $(value_p).attr('linkname', linkname);
-                            $(value_a).addClass('linkname');
-                        }
-                    }
-                    //se o procedimento anterior não conseguiu determinar um linkname então o paragrafo possui uma ancora criada pelo editor de links,
-                    //deve tentar criar uma ancora e um linkname com base no conteúdo do paragrafo (art_1, paragrafo_3, capitulo_2, capitulo_2_art_1_paragrafo_3, etc)
-                    if (!IsNotNullOrEmpty(linkname)) {
-                        var p_cloned = $(value_p).clone();
-                        $(p_cloned).find('a>sup').remove();
-                        linkname = generateLinkNameCaput($(p_cloned).text());
-                        var name = linkname;
-                        if (IsNotNullOrEmpty(linkname)) {
-                            if (IsNotNullOrEmpty(niveis)) {
-                                niveis = definirEstruturaCaput(linkname, niveis);
-                                name = niveis.join('_');
+            if(!IsNotNullOrEmpty(noindex) && $(value_p)[0].hasAttribute('noindex')){
+                $(value_p).removeAttr('noindex');
+            }
+            //Se o paragrafo for nota ele não precisa de linkname nem ancora e nunhuma outra marcação de paragrafo
+            if (!IsNotNullOrEmpty(nota)){
+                //O ckeditor tem um comportamento que causa erro na marcação do paragrafo. Quando estamos editando um texto que já foi bandeirado sempre
+                //que inserimos um novo paragrafo o ckeditor replica os atributos do paragrafo anterior duplicando o linkname, nesses casos o paragrafo não terá
+                //âncora então limpamos o linkname do paragrafo e geramos novamente;
+                if (IsNotNullOrEmpty(linkname) && $('p[linkname="' + linkname + '"]').length > 1 && $('a[name].linkname', value_p).length <= 0) {
+                    $(value_p).removeAttr('linkname', '');
+                    linkname = '';
+                }
+                //Caso o usuário edite a ancora deve-se limpar o attr linkname do paragrafo
+                //e usar a class linkname como filtro para pegar somente as ancoras geradas no client-side caso contrario
+                //pode gerar conflito com as ancoras geradas no server-sice
+                else if(IsNotNullOrEmpty(linkname) && $('a[name]', value_p).length == 1 && !IsNotNullOrEmpty($('a[name]', value_p)[0].previousSibling) && $('a[name]', value_p).attr('name') != linkname){
+                    $(value_p).attr('linkname', '');
+                    linkname = '';
+                }
+                //Se o paragrafo já possuir o atributo linkname (atributo criado para o editor de links conseguir exibir os icones e fazer a funcionalidade de criar e editar ancoras),
+                //ele não deve ser mexido
+                if (!IsNotNullOrEmpty(linkname) || !IsNotNullOrEmpty(nota)) {
+                    //se não tem conteúdo no paragrafo não há porquê tentar criar linkname e ancora
+                    if ($.trim(value_p.textContent)) {
+                        //tenta criar o atributo linkname no paragrafo com base na primeira ancora dele
+                        if ($('a[id][name]', value_p).length == 1) {
+                            var value_a = $('a[id][name]', value_p)[0];
+                            if (value_a.textContent == '' && value_a.hasAttribute('id') && value_a.hasAttribute('name')) {
+                                linkname = value_a.getAttribute('name');
+                                $(value_p).attr('linkname', linkname);
+                                $(value_a).addClass('linkname');
                             }
                         }
-                        else{
-                            name = 'txt_' + Guid('N');
+                        //se o procedimento anterior não conseguiu determinar um linkname então o paragrafo possui uma ancora criada pelo editor de links,
+                        //deve tentar criar uma ancora e um linkname com base no conteúdo do paragrafo (art_1, paragrafo_3, capitulo_2, capitulo_2_art_1_paragrafo_3, etc)
+                        if (!IsNotNullOrEmpty(linkname)) {
+                            var p_cloned = $(value_p).clone();
+                            $(p_cloned).find('a>sup').remove();
+                            linkname = generateLinkNameCaput($(p_cloned).text());
+                            var name = linkname;
+                            if (IsNotNullOrEmpty(linkname)) {
+                                if (IsNotNullOrEmpty(niveis)) {
+                                    niveis = definirEstruturaCaput(linkname, niveis);
+                                    name = niveis.join('_');
+                                }
+                            }
+                            else{
+                                name = 'txt_' + Guid('N');
+                            }
+                            //caso o linkname fique repetido cria-se um guid e adiciona a ela pois no novo requisito está previsto que todos os paragrafos devem possuir uma ancora
+                            if ($('#' + name).length > 0) {
+                                name = name + '_' + Guid('N');
+                            }
+                            //a class linkname na ancora auxilia identificar quando o linkname foi gerado no client-side
+                            //ajudando a diferenciar dos linknames gerados no server-side
+                            $(value_p).prepend('<a id="' + name + '" name="' + name + '" class="linkname"></a>');
+                            $(value_p).attr('linkname', name);
                         }
-                        //caso o linkname fique repetido cria-se um guid e adiciona a ela pois no novo requisito está previsto que todos os paragrafos devem possuir uma ancora
-                        if ($('#' + name).length > 0) {
-                            name = name + '_' + Guid('N');
-                        }
-                        //a class linkname na ancora auxilia identificar quando o linkname foi gerado no client-side
-                        //ajudando a diferenciar dos linknames gerados no server-side
-                        $(value_p).prepend('<a id="' + name + '" name="' + name + '" class="linkname"></a>');
-                        $(value_p).attr('linkname', name);
                     }
                 }
-            }
 
-            if (IsNotNullOrEmpty(linkname)) {
-                niveis = definirEstruturaCaput(linkname, niveis);
-                if (bEditorLinks) {
-                    $(value_p).prepend('<button class="buttontooltip clean" type="button" onclick="javascript:clickTooltip(this);"><img src="' + _urlPadrao + '/Imagens/ico_anchor_p.png" alt="editar" /></a>');
+                if (IsNotNullOrEmpty(linkname)) {
+                    niveis = definirEstruturaCaput(linkname, niveis);
+                    if (bEditorLinks) {
+                        $(value_p).prepend('<button class="buttontooltip clean" type="button" onclick="javascript:clickTooltip(this);"><img src="' + _urlPadrao + '/Imagens/ico_anchor_p.png" alt="editar" /></a>');
+                    }
+                }
+                else if ($.trim(value_p.textContent) && bEditorLinks) {
+                    $(value_p).prepend('<button class="buttontooltip clean" type="button" onclick="javascript:clickTooltip(this);"><img src="' + _urlPadrao + '/Imagens/ico_add_p.png" alt="editar" /></a>');
                 }
             }
-            else if ($.trim(value_p.textContent) && bEditorLinks) {
-                $(value_p).prepend('<button class="buttontooltip clean" type="button" onclick="javascript:clickTooltip(this);"><img src="' + _urlPadrao + '/Imagens/ico_add_p.png" alt="editar" /></a>');
+            else{
+                $(value_p).removeAttr('linkname');
             }
         }
         catch (ex) {
@@ -3940,21 +3958,70 @@ function configureCkeditor(){
     //CKEDITOR.config.extraPlugins = 'copyformatting';
     CKEDITOR.stylesSet.add('default',[
         {name:'Epígrafe', element: 'h1', attributes: {
-                epigrafe: 'epigrafe'
+                epigrafe: 'epigrafe',
+                nota: '',
+                noindex: ''
             },
             styles:{'font-weight':'bold', 'text-align':'center'}
         },
-        {name:'Retificação', element: 'p', styles:{'text-align':'right', 'color': '#FF0000'}},
-        {name:'Autoria', element: 'p', styles:{'text-align':'center', 'margin-top':'1px'}},
-        {name:'Ementa', element: 'p', styles:{'margin-left':'50%', 'text-align':'justify'}},
-        {name:'Corpo', element: 'p', styles:{'text-align':'justify'}},
-        {name:'Seção', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
-        {name:'Subseção', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}},
-        {name:'Assinatura', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
-        {name:'Cargo', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}},
-        {name:'Anexo', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
-        {name:'Subanexo', element: 'p', styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}}
+        {name:'Retificação', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'text-align':'right', 'color': '#FF0000'}},
+        {name:'Autoria', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'text-align':'center', 'margin-top':'1px'}},
+        {name:'Ementa', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'margin-left':'50%', 'text-align':'justify'}},
+        {name:'Corpo', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'text-align':'justify'}},
+        {name:'Nota', element: 'p', attributes: {
+                epigrafe: '',
+                nota: 'nota',
+                noindex: 'noindex'
+            },
+            styles:{'margin-left':'10%', 'margin-right':'10%', 'text-align':'justify'}},
+        {name:'Seção', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
+        {name:'Subseção', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}},
+        {name:'Assinatura', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
+        {name:'Cargo', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}},
+        {name:'Anexo', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'text-align':'center', 'font-weight': 'bold', 'margin-bottom': '0px'}},
+        {name:'Subanexo', element: 'p', attributes: {
+                epigrafe: '',
+                nota: '',
+                noindex: ''
+            }, styles:{'text-align':'center', 'font-weight': 'bold', 'margin-top': '0px'}}
     ]);
+
     CKEDITOR.on('dialogDefinition', function( ev ) {
         var dialogName = ev.data.name;
         var dialogDefinition = ev.data.definition;
@@ -3971,15 +4038,69 @@ function configureCkeditor(){
             target.get('height')['default'] = 600;
         }
     });
-    
+    CKEDITOR.addCss(
+        'p[noindex=noindex] {color: #777}\r\n'+
+        'p[nota=nota] {font-size:12px; border: 1px solid #777; padding: 5px;}\r\n'+
+        'body, p, h1{font-family:Tahoma;font-size:14px;}\r\n'
+    );
 }
 
 function loadCkeditor(id_textarea){
-    CKEDITOR.replace(id_textarea, {
+    var editor = CKEDITOR.replace(id_textarea, {
         disallowedContent: 'br',
         shiftEnterMode: CKEDITOR.ENTER_P,
-        extraAllowedContent: 'p[linkname,replaced_by,replaced_by_disabled];h[epigrafe];a(linkname,link_vide)',
+        extraAllowedContent: 'p[linkname,replaced_by,replaced_by_disabled,nota,noindex];h[epigrafe];a(linkname,link_vide);',
         filebrowserImageBrowseUrl: './Imagens.aspx'
+    });
+    editor.addCommand("noIndexCommand", { // create named command
+        exec: function(edt) {
+            var bIndex = true;
+            var element = element = CKEDITOR.instances['arquivo'].getSelection();
+            if(element){
+                var native = element.getNative();
+                if(native){
+                    var baseNode = native.baseNode;
+                    if(baseNode){
+                        var parentNode = baseNode.parentNode;
+                        if(parentNode){
+                            if(parentNode.hasAttribute('noindex')){
+                                parentNode.removeAttribute('noindex');
+                            }
+                            else{
+                                parentNode.setAttribute('noindex','noindex');
+                                bIndex = false;
+                            }
+                        }
+                    }
+                }
+            }
+            var message = 'O texto do parágrafo será indexado.';
+            var title = "Habilitado";
+            var type = "success";
+            if(!bIndex){
+                message = 'O texto do parágrafo não será indexado.';
+                title = "Desabilitado";
+                type = "alert";
+            }
+            ShowDialog({
+                id_element: "modal_notificacao_success",
+                sTitle: title,
+                sContent: message,
+                sType: type,
+                oButtons: [{
+                            text: "Ok",
+                            click: function() {
+                                $(this).dialog('close');
+                            }
+                        }]
+            });
+        }
+    });
+    editor.ui.addButton('SuperButton', { // add new button and bind our command
+        label: "Marcar/Desmarcar indexação do parágrafo selecionado.",
+        command: 'noIndexCommand',
+        toolbar: 'insert',
+        icon: _urlPadrao + '/Imagens/ico_noindex.png'
     });
 }
 

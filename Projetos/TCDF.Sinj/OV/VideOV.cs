@@ -3,6 +3,7 @@ using System.Data;
 using System.Text;
 using System.Linq;
 using neo.BRLightREST;
+using System.Text.RegularExpressions;
 
 namespace TCDF.Sinj.OV
 {
@@ -147,6 +148,220 @@ namespace TCDF.Sinj.OV
         //    }
         //    return caput3;
         //}
+    }
+
+    public class UtilVides
+    {
+        public static string EscapeCharsInToPattern(string text)
+        {
+            var aChars = new string[] { "(", ")", "$", ".", "?", "=" };
+            foreach (var aChar in aChars)
+            {
+                text = text.Replace(aChar, "\\" + aChar);
+            }
+            return text;
+        }
+
+        public static string gerarDescricaoDoCaput(string _caput)
+        {
+
+            var caput_splited = _caput.Split('_');
+            var last_caput = caput_splited.Last();
+            if (last_caput.IndexOf("art") == 0)
+            {
+                _caput = "Artigo ";
+            }
+            else if (last_caput.IndexOf("par") == 0)
+            {
+                _caput = "Parágrafo ";
+            }
+            else if (last_caput.IndexOf("inc") == 0)
+            {
+                _caput = "Inciso ";
+            }
+            else if (last_caput.IndexOf("ali") == 0)
+            {
+                _caput = "Alínea ";
+            }
+            else if (last_caput.IndexOf("let") == 0)
+            {
+                _caput = "Alínea ";
+            }
+            else
+            {
+                _caput = "";
+            }
+            return _caput;
+        }
+
+        public static string gerarDescricaoDoTexto(string texto)
+        {
+            var caput = "";
+            texto = texto.Trim().ToUpper();
+            if (texto.IndexOf(' ') >= 0)
+            {
+                caput = texto.Substring(0, texto.IndexOf(' '));
+            }
+            if (caput == "ART" || caput == "ART.")
+            {
+                caput = "Artigo ";
+            }
+            else if (caput == "PARAGRAFO" || caput == "PARÁGRAFO" || caput == "§")
+            {
+                caput = "Parágrafo ";
+            }
+            else if (ehInciso(caput))
+            {
+                caput = "Inciso ";
+            }
+            else if (ehAlinea(caput))
+            {
+                caput = "Alínea ";
+            }
+            else
+            {
+                caput = "";
+            }
+            return caput;
+        }
+
+        public static string getRelacaoParaTextoAlterador(string relacao, bool regexExcluir = false)
+        {
+            string ds = relacao;
+
+            var relacaoSplited = relacao.Split(' ');
+            if (!(relacaoSplited[0].Equals("veto", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("texto", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("denominação", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("legislação", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                if (relacaoSplited[0].EndsWith("o"))
+                {
+                    relacaoSplited[0] += regexExcluir ? ".*?" : "(a)";
+                }
+                else if (relacaoSplited[0].EndsWith("a"))
+                {
+                    relacaoSplited[0] += regexExcluir ? ".*?" : "(o)";
+                }
+                ds = string.Join<string>(" ", relacaoSplited);
+            }
+
+            return ds;
+        }
+
+        public static bool ehInciso(string termo)
+        {
+            var lastIndex = termo.IndexOf("-");
+            if (lastIndex > 0)
+            {
+                termo = termo.Substring(0, lastIndex);
+            }
+            return Regex.IsMatch(termo, "^[IVXLCDM]+$", RegexOptions.IgnoreCase);
+        }
+
+        public static bool ehAlinea(string termo)
+        {
+            var lastIndex = termo.IndexOf(")");
+            if (lastIndex < 0)
+            {
+                return false;
+            }
+            if (termo.Length == (lastIndex + 1))
+            {
+                termo = termo.Substring(0, lastIndex);
+                return Regex.IsMatch(termo, "^[a-z]+$", RegexOptions.IgnoreCase);
+            }
+            return false;
+        }
+
+        public static bool ehNum(string termo)
+        {
+            var lastIndex = termo.IndexOf(".");
+            if (lastIndex < 0)
+            {
+                return false;
+            }
+            if (termo.Length == (lastIndex + 1))
+            {
+                termo = termo.Substring(0, lastIndex);
+                int iTermo;
+                return int.TryParse(termo, out iTermo);
+            }
+            return false;
+        }
+
+        public static bool possuiDispositivo(Caput dispositivo)
+        {
+            return dispositivo != null && dispositivo.caput != null && dispositivo.caput.Length > 0;
+        }
+
+        public static bool ehDiferente(Caput a, Caput b)
+        {
+            var ehDiferente = false;
+            if (a.caput.Length != b.caput.Length)
+            {
+                ehDiferente = true;
+            }
+            else if (a.link != b.link)
+            {
+                ehDiferente = true;
+            }
+            else if (a.nm_relacao_aux != b.nm_relacao_aux)
+            {
+                ehDiferente = true;
+            }
+            else if (a.texto_novo != null)
+            {
+                for (var i = 0; i < a.caput.Length; i++)
+                {
+                    if (a.caput[i] != b.caput[i] || a.texto_novo[i] != b.texto_novo[i])
+                    {
+                        ehDiferente = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (var i = 0; i < a.caput.Length; i++)
+                {
+                    if (a.caput[i] != b.caput[i])
+                    {
+                        ehDiferente = true;
+                        break;
+                    }
+                }
+            }
+            return ehDiferente;
+        }
+
+        /// <summary>
+        /// Verifica, com base na situação e na descrição relação de vide, se o vide implica em alteração no texto completo da norma, e não somente em um dispositivo
+        /// </summary>
+        /// <param name="nmSituacaoAlterada"></param>
+        /// <param name="dsTextoParaAlterador"></param>
+        /// <returns></returns>
+        public static bool EhAlteracaoCompleta(string nmSituacaoAlterada, string dsTextoParaAlterador)
+        {
+            return (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
+                   (nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
+                   (nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
+                   (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
+                   (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
+                   (nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
+                   (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente");
+        }
+
+        /// <summary>
+        /// Verifica, com base na situação e na descrição relação de vide, se o vide implica somente em linkar as duas normas, não necessariamente precisa ser legislação correlata
+        /// </summary>
+        /// <param name="dsTextoParaAlterador"></param>
+        /// <returns></returns>
+        public static bool EhLegislacaoCorrelata(string dsTextoParaAlterador)
+        {
+            return dsTextoParaAlterador == "ratificado" ||
+                   dsTextoParaAlterador == "reeditado" ||
+                   dsTextoParaAlterador == "regulamentado" ||
+                   dsTextoParaAlterador == "prorrogado" ||
+                   dsTextoParaAlterador == "legislação correlata";
+        }
     }
 
 }

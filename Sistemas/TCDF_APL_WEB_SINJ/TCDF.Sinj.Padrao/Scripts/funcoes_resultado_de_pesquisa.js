@@ -86,11 +86,14 @@ $(document).ready(function () {
 });
 
 function sugerirBuscas(nm_base) {
+    if ($('#datatable_sugestoes_' + nm_base).html() != "") {
+        return;
+    }
     var sucesso = function (data) {
         var sugestoes_columns = [
 	        { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Pesquisa", "sWidth": "80%", "sClass": "grid-cell ws", "mData": "ds_sugestao",
 	            "mRender": function (data, type, full) {
-	                return '<a title="Pesquisar por ' + data + '" href="./ResultadoDePesquisa?' + window.unescape(full.params_sugestao).replaceAll('#', '%23') + '" >' + data + ' <img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
+	                return '<a title="Pesquisar por ' + data + '" href="./ResultadoDePesquisa?' + window.unescape(full.params_sugestao).replaceAll('#', '%23') + '&aba=' + nm_base + '" >' + data + ' <img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
 	            }
 	        },
 	        { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Registros", "sWidth": "", "sClass": "grid-cell ws center", "mData": "count" },
@@ -129,20 +132,19 @@ function sugerirBuscas(nm_base) {
 }
 
 function ConsultarTotal(nm_base) {
+    var abaClicar = GetParameterValue('aba');
     var sucesso = function (data) {
         var nm_by_total = '';
         if (IsNotNullOrEmpty(data, 'counts')) {
 
             var paramCountsToHistory = '';
             for (var i = 0; i < data.counts.length; i++) {
+                $('#total_' + data.counts[i].nm_base).text("");
                 if (data.counts[i].count > 0) {
                     $('#total_' + data.counts[i].nm_base).addClass('destaque');
                     $('#total_' + data.counts[i].nm_base).text(data.counts[i].count);
                 }
                 paramCountsToHistory += (paramCountsToHistory != "" ? "&" : "") + "total=" + JSON.stringify({ nm_base: data.counts[i].nm_base, ds_base: data.counts[i].ds_base, nr_total: data.counts[i].count });
-                //                if (!IsNotNullOrEmpty(nm_by_total) && data.counts[i].count > 0) {
-                //                    nm_by_total = data.counts[i].nm_base;
-                //                }
             }
             SalvarConsultaNoHistorico(paramCountsToHistory);
         }
@@ -167,12 +169,9 @@ function ConsultarTotal(nm_base) {
             }
             $('li[nm="' + nm_li_click + '"] a').click();
         }
-        //        else if (IsNotNullOrEmpty(nm_by_total)) {
-        //            if (nm_by_total == "cesta_norma" || nm_by_total == "cesta_diario") {
-        //                $('li[nm="cesta"] a').click();
-        //            }
-        //            $('li[nm="' + nm_by_total + '"] a').click();
-        //        }
+        else if (IsNotNullOrEmpty(abaClicar)) {
+            $('li[nm="' + abaClicar + '"] a').click();
+        }
         else {
             $('a', $('li[nm]')[0]).click();
         }
@@ -198,7 +197,7 @@ function ConsultarTotal(nm_base) {
 
 function ClicarAba(nm_base) {
     var total = $('#total_' + nm_base).text();
-    if (parseInt(total) <= 0) {
+    if (!IsNotNullOrEmpty(total) && nm_base.indexOf("cesta") < 0) {
         sugerirBuscas(nm_base);
         return;
     }
@@ -246,13 +245,15 @@ function ClicarAba(nm_base) {
     }
     else if (nm_base == "cesta_diario") {
         $('#a_relatorio').hide();
-        $('#div_cesta_diario').dataTablesLight({
-            sAjaxUrl: './ashx/Datatable/CestaPesquisaDatatable.ashx?tipo_pesquisa=cesta&bbusca=cesta&b=sinj_diario&cesta=' + $.cookie('sinj_basket'),
-            aoColumns: _columns_diario_cesta,
-            responsive: null,
-            sIdTable: 'datatable_cesta_diario',
-            aLengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]]
-        });
+        if ($('#datatable_cesta_diario').length <= 0) {
+            $('#div_cesta_diario').dataTablesLight({
+                sAjaxUrl: './ashx/Datatable/CestaPesquisaDatatable.ashx?tipo_pesquisa=cesta&bbusca=cesta&b=sinj_diario&cesta=' + $.cookie('sinj_basket'),
+                aoColumns: _columns_diario_cesta,
+                responsive: null,
+                sIdTable: 'datatable_cesta_diario',
+                aLengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]]
+            });
+        }
     }
 }
 

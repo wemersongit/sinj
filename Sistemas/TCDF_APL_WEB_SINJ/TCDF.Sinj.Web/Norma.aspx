@@ -7,6 +7,7 @@
     <meta name="googlebot" content="noindex,nofollow" />
     <meta http-equiv="Content-Language" content="pt-br" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" type="image/x-icon" href=<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/favicon.png />
     <title><%= !string.IsNullOrEmpty(title) ? title : "Arquivo da Norma" %></title>
     <asp:PlaceHolder runat="server" id="placeHolderHeader"></asp:PlaceHolder>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery-1.11.0.min.js"></script>
@@ -154,6 +155,7 @@
         .print{float:right;}
         .compilado{float:left;}
         body, p, h1{font-family:Tahoma;font-size:14px;}
+        p[nota=nota] {font-size:12px; border: 1px solid #777; padding: 5px;}
     </style>
 </head>
 <body>

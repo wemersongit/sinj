@@ -38,8 +38,8 @@ namespace TCDF.Sinj.Portal.Web
                 if (normaOv != null)
                 {
                     // Meta tags
-                    var ds_norma = normaOv.nm_tipo_norma + (!string.IsNullOrEmpty(normaOv.nr_norma) ? " Nº " + normaOv.nr_norma : "");
-                    Page.Title = ".:SINJ - " + ds_norma;
+                    var ds_norma = normaOv.getDescricaoDaNorma();
+                    Page.Title = ds_norma;
                     this.Header.Keywords = "sinj, distrito, federal, df," + normaOv.nm_tipo_norma;
                     this.Header.Description = normaOv.nm_tipo_norma + (!string.IsNullOrEmpty(normaOv.nr_norma) ? " Nº " + normaOv.nr_norma : "") + " publicada em " + normaOv.dt_assinatura + " por " + normaOv.origens[0].nm_orgao + ". " + normaOv.ds_ementa;
 
@@ -50,7 +50,7 @@ namespace TCDF.Sinj.Portal.Web
 
                     HtmlMeta html_meta_fb_description = new HtmlMeta();
                     html_meta_fb_description.Attributes.Add("property", "og:description");
-                    html_meta_fb_description.Content = this.Header.Description;
+                    html_meta_fb_description.Content = normaOv.ds_ementa;
 
                     HtmlMeta html_meta_fb_type = new HtmlMeta();
                     html_meta_fb_type.Attributes.Add("property", "og:type");
