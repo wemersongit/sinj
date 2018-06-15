@@ -277,8 +277,15 @@ namespace TCDF.Sinj
 
         public static string GetUriAndPath()
         {
-            return HttpContext.Current.Request.UrlReferrer.Scheme + "://" + HttpContext.Current.Request.UrlReferrer.Authority + (HttpContext.Current.Request.ApplicationPath != "/" ? HttpContext.Current.Request.ApplicationPath : "");
+            return GetUri() + (HttpContext.Current.Request.ApplicationPath != "/" ? HttpContext.Current.Request.ApplicationPath : "");
         }
+
+        public static string GetUri()
+        {
+            return HttpContext.Current.Request.UrlReferrer.Scheme + "://" + HttpContext.Current.Request.UrlReferrer.Authority;
+        }
+
+
 
         public static string GetInfoServerApp()
         {

@@ -19,6 +19,10 @@ namespace TCDF.Sinj.OV
         /// Esse campo funciona como um flag, é true apenas quando o tipo de relação é usada para Ações com outras normas;
         /// </summary>
         public bool in_relacao_de_acao { get; set; }
+        /// <summary>
+        /// Só permite selecionar na inclusão e edição de vides se for true
+        /// </summary>
+        public bool in_selecionavel { get; set; }
 
         public string nm_login_usuario_cadastro { get; set; }
         public string dt_cadastro { get; set; }

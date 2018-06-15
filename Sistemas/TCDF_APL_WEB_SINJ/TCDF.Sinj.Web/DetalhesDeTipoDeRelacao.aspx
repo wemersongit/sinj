@@ -93,6 +93,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="line">
+                        <div class="column w-30-pc">
+                            <div class="cell fr">
+                                <label>Selecionável:</label>
+                            </div>
+                        </div>
+                        <div class="column w-70-pc">
+                            <div id="div_in_selecionavel" class="cell w-60-pc">
+                            </div>
+                        </div>
+                    </div>
 					<div class="line no-hide">
 	                    <div class="column w-100-pc">
 	                        <div class="cell w-100-pc text-center" style="background-color:#CCC;">

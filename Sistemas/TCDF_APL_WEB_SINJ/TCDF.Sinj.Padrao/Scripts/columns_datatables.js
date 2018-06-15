@@ -122,19 +122,11 @@ var _columns_norma_es = [
 	        var html = '<div class="table w-100-pc">';
 	        html += '<div class="line">' +
                 '<div class="column">' +
-	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
+	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + (full._source.nm_tipo_norma.toLowerCase() == "parecer normativo" ? "*" : "") + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
+                    (full._source.nm_tipo_norma.toLowerCase() == "parecer normativo" ? '<br/><span class="obs">*Data de Despacho do Governador</span>' : '') +
+                    (full._source.st_vacatio_legis && IsNotNullOrEmpty(full._source.dt_inicio_vigencia) && convertStringToDateTime(full._source.dt_inicio_vigencia) > convertStringToDateTime(date_now) ? '<br/><span class="obs">*'+(IsNotNullOrEmpty(full._source.ds_vacatio_legis) ? full._source.ds_vacatio_legis : 'Entrará em vigor a partir de <span class="dt_inicio_vigencia">' + full._source.dt_inicio_vigencia + '</span>')+'</span>' : '') +
 	            '</div>' +
             '</div>';
-	        if (full._source.st_vacatio_legis && IsNotNullOrEmpty(full._source.dt_inicio_vigencia) && convertStringToDateTime(full._source.dt_inicio_vigencia) > convertStringToDateTime(date_now)) {
-	            html += '<div class="line">' +
-                    '<div class="column w-10-pc">' +
-	                    '<label>Vacatio Legis:</label>' +
-	                '</div>' +
-                    '<div class="column w-90-pc text-justify">' +
-                        (IsNotNullOrEmpty(full._source.ds_vacatio_legis) ? full._source.ds_vacatio_legis : 'Entrará em vigor a partir de <span class="dt_inicio_vigencia">' + full._source.dt_inicio_vigencia + '</span>' ) +
-	                '</div>' +
-                '</div>';
-	        }
 	        var origens = "";
 	        for (var i = 0; i < full._source.origens.length; i++) {
 	            origens += (origens != "" ? "<br/>" : "") + full._source.origens[i].sg_orgao + ' - ' + full._source.origens[i].nm_orgao;

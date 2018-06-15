@@ -89,11 +89,12 @@
                     <div class="line">
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_identificacao" class="w-90-pc mauto word-no-break nr_norma nr_norma_text nm_tipo_norma dt_assinatura dt_assinatura_text value" style="font-size:18px;" print="sim" print-type="linha" print-label="Identificação">
+                                <div id="div_identificacao" class="w-90-pc mauto word-no-break nr_norma nr_norma_text nm_tipo_norma dt_assinatura dt_assinatura_text value" print="sim" print-type="linha" print-label="Identificação">
                                 </div>
                             </div>
                         </div>
                     </div>                    
+                    
                     <div id="div_url_acompanhamento" class="line dados-das-acoes">
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">

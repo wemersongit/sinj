@@ -10,6 +10,7 @@ namespace TCDF.Sinj.Web
     public partial class Sinj : System.Web.UI.MasterPage
     {
         protected static ulong totalNovos = 0;
+        protected static string nmOrgaoCadastrador = "";
         private static SessaoUsuarioOV oSessaoUsuario;
         private static SessaoNotifiquemeOV oSessaoNotifiqueme;
         protected override void OnInit(EventArgs e)
@@ -251,8 +252,9 @@ namespace TCDF.Sinj.Web
             {
                 oSessaoNotifiqueme = null;
             }
-
-            totalNovos = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo'" }).result_count;
+            nmOrgaoCadastrador = oSessaoUsuario.orgao_cadastrador.nm_orgao_cadastrador;
+            totalNovos = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo' AND nm_orgao_cadastrador_atribuido='" + nmOrgaoCadastrador + "'" }).result_count;
+            
         }
         private bool ValidarMenuPorGrupo(string li)
         {

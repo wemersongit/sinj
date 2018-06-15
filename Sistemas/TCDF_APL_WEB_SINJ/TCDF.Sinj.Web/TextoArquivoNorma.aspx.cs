@@ -83,20 +83,6 @@ namespace TCDF.Sinj.Web
                         }
                         div_texto.InnerHtml = texto;
                     }
-                    if (doc_full.id_doc != null && doc_full.id_doc != 0)
-                    {
-                        var norma = normaRn.Doc(doc_full.id_doc);
-                        var ds_norma = norma.nm_tipo_norma + (!string.IsNullOrEmpty(norma.nr_norma) ? " Nº " + norma.nr_norma : "") + " de " + norma.dt_assinatura;
-                        Page.Title = ds_norma;
-                        HtmlMeta html_meta_keywords = new HtmlMeta();
-                        html_meta_keywords.Name = "keywords";
-                        html_meta_keywords.Content = "sinj, distrito, federal, df," + norma.nm_tipo_norma;
-                        HtmlMeta html_meta_description = new HtmlMeta();
-                        html_meta_description.Name = "description";
-                        html_meta_description.Content = "Arquivo de " + ds_norma + " disponibilizado pelo SINJ.";
-                        placeHolderHeader.Controls.Add(html_meta_keywords);
-                        placeHolderHeader.Controls.Add(html_meta_description);
-                    }
                 }
             }
             catch (ParamDangerousException)

@@ -1,38 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="FaleConosco.aspx.cs" Inherits="TCDF.Sinj.Web.FaleConosco" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 		<script type="text/javascript">
+		    var _nm_orgao_cadastrador_atribuido = '<%= Request["nm_orgao_cadastrador_atribuido"] != null ? Request["nm_orgao_cadastrador_atribuido"] : "" %>';
+		    var _st_atendimento = '<%= Request["st_atendimento"] != null ? Request["st_atendimento"] : "" %>';
+		    var _ds_assunto = '<%= Request["ds_assunto"] != null ? Request["ds_assunto"] : "" %>';
+
 		    $(document).ready(function () {
-		        pesquisarChamados("Novo","");
+		        $('select[name=nm_orgao_cadastrador_atribuido] option[value=' + _nm_orgao_cadastrador_atribuido + ']').prop('selected', 'selected');
+		        $('select[name=st_atendimento] option[value=' + _st_atendimento + ']').prop('selected', 'selected');
+		        $('select[name=ds_assunto] option[value=' + _ds_assunto + ']').prop('selected', 'selected');
+		        pesquisarChamados(_nm_orgao_cadastrador_atribuido, _st_atendimento, _ds_assunto);
+
 		    });
-		    function pesquisarChamados(st_atendimento, ds_assunto) {
-		        var htmlButtonsAssunto = '<div class="div_todos" style="margin-left:25px;">' +
-                            '<div style="border-bottom: 1px solid #CCC;">' +
-                                '<button style="padding:10px" class="clean Crítica w-100-pc" onclick="pesquisarChamados(\'' + st_atendimento + '\', \'Crítica\')">Críticas</button>' +
-                            '</div>' +
-                            '<div style="border-bottom: 1px solid #CCC;">'+
-                                    '<button style="padding:10px" class="clean Dúvida w-100-pc" onclick="pesquisarChamados(\'' + st_atendimento + '\', \'Dúvida\')">Dúvidas</button>' +
-                            '</div>' +
-                            '<div style="border-bottom: 1px solid #CCC;">' +
-                                '<button style="padding:10px" class="clean Elogio w-100-pc" onclick="pesquisarChamados(\'' + st_atendimento + '\', \'Elogio\')">Elogios</button>' +
-                            '</div>' +
-                            '<div style="border-bottom: 1px solid #CCC;">'+
-                                '<button style="padding:10px" class="clean Sugestão w-100-pc" onclick="pesquisarChamados(\'' + st_atendimento + '\', \'Sugestão\')">Sugestões</button>' +
-                            '</div>'+
-                        '</div>';
-                var targetAppend = st_atendimento;
-                var classSelecionar = st_atendimento;
-
-                if (IsNotNullOrEmpty(ds_assunto)) {
-                    classSelecionar = ds_assunto;
-                }
-
-                $('div.div_todos').remove();
-                $('button.' + targetAppend).closest('div.div_button').append(htmlButtonsAssunto);
-
-                $('button').removeClass('selected');
-                $('button.' + classSelecionar).addClass('selected');
+		    function pesquisarChamados(nm_orgao_cadastrador_atribuido, st_atendimento, ds_assunto) {
+		        
                 $("#div_datatable_fale_conosco").dataTablesLight({
-		            sAjaxUrl: "./ashx/Datatable/FaleConoscoDatatable.ashx?st_atendimento=" + (st_atendimento == 'Todos' ? '' : st_atendimento )+ "&ds_assunto=" + ds_assunto,
+                    sAjaxUrl: "./ashx/Datatable/FaleConoscoDatatable.ashx?nm_orgao_cadastrador_atribuido=" + nm_orgao_cadastrador_atribuido + "&st_atendimento=" + st_atendimento + "&ds_assunto=" + ds_assunto,
 		            aoColumns: _columns_fale_conosco,
 		            sIdTable: 'datatable_fale_conosco',
 		            bFilter: true,
@@ -48,35 +31,78 @@
 	    <label>.: Fale Conosco </label>
 	</div>
     <div class="form">
-        <div id="div_contato" class="loaded mauto table w-80-pc">
+        <div id="div_contato" >
+            <div class="table">
                 <div class="line">
-                    <div class="column" style="width:150px;">
-                        <div class="div_button">
-                            <div class="w-90-pc" style="border-bottom: 1px solid #CCC;border-top: 1px solid #CCC;">
-                                <button style="padding:10px" class="clean w-100-pc Novo" onclick="pesquisarChamados('Novo', '')">Novos</button>
-                            </div>
-                        </div>
-                        <div class="div_button">
-                            <div class="w-90-pc" style="border-bottom: 1px solid #CCC;">
-                                <button style="padding:10px" class="clean w-100-pc Recebido" onclick="pesquisarChamados('Recebido', '')">Recebidos</button>
-                            </div>
-                        </div>
-                        <div class="div_button">
-                            <div class="w-90-pc" style="border-bottom: 1px solid #CCC;">
-                                <button style="padding:10px" class="clean w-100-pc Finalizado" onclick="pesquisarChamados('Finalizado', '')">Finalizados</button>
-                            </div>
-                        </div>
-                        <div class="div_button">
-                            <div class="w-90-pc" style="border-bottom: 1px solid #CCC;">
-                                <button style="padding:10px" class="clean w-100-pc Todos" onclick="pesquisarChamados('Todos', '')">Todos</button>
-                            </div>
-                        </div>
-                        
+                    <div class="column w-400-px"">
+                        <form id="form_fale_conosco" name="form_fale_conosco" action="" method="get">
+                            <fieldset style="margin-top:0px">
+                                <div class="table">
+                                    <div class="line">
+                                        <div class="column w-50-pc">
+                                            <div class="cell fr">
+                                                <label>Atribuído para o Órgão:</label>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <select name="nm_orgao_cadastrador_atribuido" class="w-100-px">
+                                                <option value="">Todos</option>
+                                                <option value="CLDF">CLDF</option>
+                                                <option value="SEPLAG">SEPLAG</option>
+                                                <option value="PGDF">PGDF</option>
+                                                <option value="TCDF">TCDF</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="line">
+                                        <div class="column w-50-pc">
+                                            <div class="cell fr">
+                                                <label>Status:</label>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <select name="st_atendimento" class="w-100-px">
+                                                <option value="">Todos</option>
+                                                <option value="Novo">Novo</option>
+                                                <option value="Recebido">Recebido</option>
+                                                <option value="Finalizado">Finalizado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="line">
+                                        <div class="column w-50-pc">
+                                            <div class="cell fr">
+                                                <label>Assunto:</label>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <select name="ds_assunto" class="w-100-px">
+                                                <option value="">Todos</option>
+                                                <option value="Dúvida">Dúvida</option>
+                                                <option value="Sugestão">Sugestão</option>
+                                                <option value="Crítica">Crítica</option>
+                                                <option value="Elogio">Elogio</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="line">
+                                        <div class="column w-100-pc">
+                                            <div class="text-center">
+                                                <button>
+                                                    <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico-lupa-p_green.png" alt="ok" width="15px" height="15px"/>  Pesquisar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
                     </div>
-                    <div class="column w-80-pc" style="padding-bottom: 5px;">
-                        <div style="border-top: 1px solid #CCC;" id="div_datatable_fale_conosco"></div>
+                    <div class="column">
+                        <div style="border-top: 1px solid #CCC;" id="div_datatable_fale_conosco" class="mauto"></div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 </asp:Content>

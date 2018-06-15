@@ -15,6 +15,15 @@ namespace TCDF.Sinj.Portal.Web
             {
                 Response.Redirect("./", true);
             }
+            try
+            {
+                var sessaoPush = TCDF.Sinj.Util.ValidarSessaoPush();
+                
+            }
+            catch
+            {
+                Response.Redirect("./LoginNotifiqueme?p=Favoritos&message=Realize login para visualizar seus favoritos.&type=alert", true);
+            }
         }
     }
 }

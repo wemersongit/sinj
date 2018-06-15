@@ -21,7 +21,7 @@ namespace TCDF.Sinj.Portal.Web
 			}
 			catch
 			{
-				Response.Redirect("./LoginNotifiqueme.aspx",true);
+				Response.Redirect("./LoginNotifiqueme",true);
 			}
 		}
 	}

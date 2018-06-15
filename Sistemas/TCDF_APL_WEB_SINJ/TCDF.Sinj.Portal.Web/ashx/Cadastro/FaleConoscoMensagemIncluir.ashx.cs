@@ -57,6 +57,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                 var _nr_telefone = context.Request["nr_telefone"];
                 var _ds_assunto = context.Request["ds_assunto"];
                 var _ds_msg = context.Request["ds_msg"];
+                var _print = context.Request["print"];
 
                 var faleConosco = new FaleConoscoOV();
                 if (!string.IsNullOrEmpty(_ch_chamado))
@@ -82,6 +83,8 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                 }
                 else
                 {
+                    faleConosco.ds_url_pagina = context.Request.UrlReferrer.AbsoluteUri;
+                    faleConosco.print = _print;
                     faleConosco.nm_user = _nm_user;
                     faleConosco.ds_email = _ds_email;
                     faleConosco.nr_telefone = _nr_telefone;

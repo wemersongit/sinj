@@ -207,7 +207,7 @@ img.error_3 {background: url('../Imagens/ico_error_3_p.png') no-repeat;}*/
 
 /*Auxiliares
 ----------------------------------------------------------*/
-.divIdentificadorDePagina {width: 100%; margin-top:10px;}
+.divIdentificadorDePagina {width: 100%;}
 .divIdentificadorDePagina label { margin-left:50px; font-size: 23px; font-weight: bold; font-family: Trebuchet MS, Verdana, Arial; color: #38953F;}
 span.attention {font-size:10px;color:#990000}
 .scroll-y {OVERFLOW-Y:scroll;}
@@ -308,6 +308,8 @@ span.attention {font-size:10px;color:#990000}
 .w-5-pc {	width: 5% !important; }
 
 /*Normas*/
+span.obs{ color:#CC0000; font-weight: bold;}
+#div_identificacao H1, #div_identificacao H2 {font-size:18px;}
 #div_identificacao H1, #div_identificacao H2, #button_identificacao H1, #button_identificacao H2 {display:inline;}
 .label_norma_vide_alterada {color:#555 !important;}
 tbody td a:link {color: #333;}
@@ -360,7 +362,7 @@ span.helper { display: inline-block; height: 100%; vertical-align: middle;}
 #div_list_arq{border-left:1px solid #DDD;border-top:1px solid #DDD;}
 
 /*Resultado de Pesquisa*/
-div.tabs_datatable span.total.destaque { padding: 4px; background-color: #38953f; color: #FFF; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font-size: 11px; }
+div.tabs_datatable span.total.destaque { padding: 4px; background-color: #CC0000; color: #FFF; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font-size: 11px; }
 .result_datatable {position:relative;}
 .sort_datatable {position: absolute; left: 300px; padding: 5px;}
 .sort_datatable.no_agg {left:0px;}
@@ -395,8 +397,8 @@ div.fale_conosco.closed .corpo {display:none;}
 div.fale_conosco.opened .corpo {width:500px; padding:15px;}
 div.fale_conosco.opened .corpo H2 {font-size:14px; color:#38953F;}
 div.fale_conosco.opened .corpo .loading_capctha {text-align:center;height: 40px;}
-
 div.fale_conosco.opened .topo img.max {display:none;}
+span.nr_total_novos { padding: 3px 6px; background-color: #CC0000; color: #FFF; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 12px; font-size: 11px; font-weight: bold;}
 
 /*Notifique-me*/
 div.table.fale_conosco_atendimento {width:700px !important;}
@@ -521,6 +523,8 @@ a[data-toggle="tooltip"] {text-decoration: none;}
 /*Jquery Helper*/
 .ui-autocomplete{ max-height: 250px; width:30%; overflow-y: auto; overflow-x: hidden;}
 .ui-dialog{overflow:visible;}
+ul.ui-widget-header .ui-state-default { background: #FFF; font-weight: bold;}
+th.ui-state-default { background: none !important; font-weight: bold;}
 
 /*Datatable auxiliar*/
 .dataTables_wrapper .ui-widget-header{background:none; border:none; color:#333;}

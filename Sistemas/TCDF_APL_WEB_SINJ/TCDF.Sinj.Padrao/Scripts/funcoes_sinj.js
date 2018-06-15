@@ -2697,8 +2697,8 @@ function AjaxDetalhesDeNorma(highlight, id_doc) {
     });
 }
 
-function getIdentificacaoDeNorma(jNorma) {
-    return jNorma.nm_tipo_norma + " " + (jNorma.nr_norma != '0' ? jNorma.nr_norma : "") + " de " + jNorma.dt_assinatura;
+function getIdentificacaoDeNorma(jNorma, bAvisoParacerNormativo) {
+    return jNorma.nm_tipo_norma + " " + (jNorma.nr_norma != '0' ? jNorma.nr_norma : "") + " de " + jNorma.dt_assinatura + (bAvisoParacerNormativo && jNorma.nm_tipo_norma.toLowerCase() == "parecer normativo" ? '*' : '');
 }
 
 function getTitleNorma(jNorma) {
@@ -2759,7 +2759,7 @@ function DetalhesNorma(data, highlight) {
                 }
             }
 
-            $('#div_identificacao').html("<H1 identificacao>" + getIdentificacaoDeNorma(data) + "</H1> <H2 situacao style='color:#009900;'>" + data.nm_situacao + "</H2>");
+            $('#div_identificacao').html("<H1 identificacao>" + getIdentificacaoDeNorma(data,true) + "</H1> <H2 situacao style='color:#009900;'>" + data.nm_situacao + "</H2>" + (data.nm_tipo_norma.toLowerCase() == "parecer normativo" ? '<br/><span class="obs">*Data de Despacho do Governador</span>' : '') + (data.st_vacatio_legis && IsNotNullOrEmpty(data.dt_inicio_vigencia) && convertStringToDateTime(data.dt_inicio_vigencia) > convertStringToDateTime(date_now) ? '<br/><span class="obs">*'+(IsNotNullOrEmpty(data.ds_vacatio_legis) ? data.ds_vacatio_legis : 'Entrará em vigor a partir de <span class="dt_inicio_vigencia">' + data.dt_inicio_vigencia + '</span>')+'</span>' : ''));
             //$('#button_identificacao').html("<H1 identificacao>" + data.nm_tipo_norma + " " + (data.nr_norma != '0' ? data.nr_norma : "") + " de " + data.dt_assinatura + "</H1> <H2 situacao style='color:#009900;'>" + data.nm_situacao + "</H2> <img src=" + _urlPadrao + "/Imagens/ico_link.png alt='link' />");
 
             exibirBotaoCesta('sinj_norma_'+data._metadata.id_doc)
@@ -3844,6 +3844,9 @@ function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
             }
             else{
                 $(value_p).removeAttr('linkname');
+                if($(value_p).text().trim().length > 0 && $(value_p).text().toLowerCase().trim().indexOf('nota') != 0){
+                    $(value_p).html('<b>Nota:</b> ' + $(value_p).html())
+                }
             }
         }
         catch (ex) {
@@ -3955,7 +3958,6 @@ function configureCkeditor(){
     CKEDITOR.config.width = '100%';
     CKEDITOR.config.height = 400;
     CKEDITOR.config.pasteFilter = 'p[linkname]; a[!href]';
-    //CKEDITOR.config.extraPlugins = 'copyformatting';
     CKEDITOR.stylesSet.add('default',[
         {name:'Epígrafe', element: 'h1', attributes: {
                 epigrafe: 'epigrafe',
@@ -4135,7 +4137,7 @@ function SalvarConsultaNoHistorico(counts, search) {
 }
 
 /*captcha*/
-function generateCaptcha() {
+function generateCaptcha(id_conatiner_captcha) {
 	$.ajaxlight({
 	    sUrl: './captcha.aspx',
 	    sType: "GET",
@@ -4143,16 +4145,16 @@ function generateCaptcha() {
 	    sDataType: "html",
 	    bAsync: true,
 	    fnBeforeSend: function () {
-	        $('#div_captcha_loading').show();
-	        $('#div_captcha').hide();
+	        $('#' + id_conatiner_captcha + ' .captcha_loading').show();
+	        $('#' + id_conatiner_captcha + ' .captcha').hide();
 	    },
 	    fnComplete: function () {
-	        $('#div_captcha').show();
-	        $('#div_captcha_loading').hide();
+	        $('#' + id_conatiner_captcha + ' .captcha').show();
+	        $('#' + id_conatiner_captcha + ' .captcha_loading').hide();
 
 	    },
 	    fnSuccess: function (data) {
-	        $('#div_captcha').html(data);
+	        $('#' + id_conatiner_captcha + ' .captcha').html(data);
 	    }
 	});
 }

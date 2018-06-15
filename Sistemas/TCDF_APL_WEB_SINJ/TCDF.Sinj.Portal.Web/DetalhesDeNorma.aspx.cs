@@ -58,7 +58,7 @@ namespace TCDF.Sinj.Portal.Web
 
                     HtmlMeta html_meta_fb_image = new HtmlMeta();
                     html_meta_fb_image.Attributes.Add("property", "og:image");
-                    html_meta_fb_image.Content = Util._urlPadrao + "/Imagens/favicon.png";
+                    html_meta_fb_image.Content = Util.GetUri() + Util._urlPadrao + "/Imagens/favicon.png";
 
                     placeHolderHeader.Controls.Add(html_meta_fb_title);
                     placeHolderHeader.Controls.Add(html_meta_fb_description);

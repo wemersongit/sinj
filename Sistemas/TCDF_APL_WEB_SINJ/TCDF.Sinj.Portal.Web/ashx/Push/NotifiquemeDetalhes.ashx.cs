@@ -24,23 +24,12 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
             NotifiquemeOV notifiquemeOv = null;
             try
             {
-                var sessaoNotifiquemeOv = notifiquemeRn.LerSessaoNotifiquemeOv();
-                notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
-                id_doc = notifiquemeOv._metadata.id_doc;
+                notifiquemeOv = getNotifiqueme();
                 if (notifiquemeOv != null)
                 {
+                    id_doc = notifiquemeOv._metadata.id_doc;
                     notifiquemeOv.senha_usuario_push = null;
-                    var chamados = new FaleConoscoRN().Consultar(new Pesquisa() { limit = null, literal = "ds_email='" + notifiquemeOv.email_usuario_push + "'" });
-                    if (chamados != null && chamados.results.Count > 0)
-                    {
-                        var notifiquemeFaleConoscoOv = new NotifiquemeFaleConoscoOV(notifiquemeOv);
-                        notifiquemeFaleConoscoOv.chamados = chamados.results;
-                        sRetorno = JSON.Serialize<NotifiquemeFaleConoscoOV>(notifiquemeFaleConoscoOv);
-                    }
-                    else
-                    {
-                        sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
-                    }
+                    sRetorno = JSON.Serialize<NotifiquemeOV>(notifiquemeOv);
                 }
                 else
                 {
@@ -72,6 +61,15 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
             context.Response.End();
         }
 
+        public NotifiquemeOV getNotifiqueme()
+        {
+            var notifiquemeRn = new NotifiquemeRN();
+            var sessaoNotifiquemeOv = notifiquemeRn.LerSessaoNotifiquemeOv();
+            NotifiquemeOV notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
+            return notifiquemeOv;
+            
+        }
+
         public bool IsReusable
         {
             get
@@ -79,22 +77,5 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                 return false;
             }
         }
-    }
-
-    public class NotifiquemeFaleConoscoOV : NotifiquemeOV
-    {
-        public NotifiquemeFaleConoscoOV(NotifiquemeOV notifiqueme)
-        {
-            base._metadata = notifiqueme._metadata;
-            base.criacao_normas_monitoradas = notifiqueme.criacao_normas_monitoradas;
-            base.email_usuario_push = notifiqueme.email_usuario_push;
-            base.favoritos = notifiqueme.favoritos;
-            base.nm_usuario_push = notifiqueme.nm_usuario_push;
-            base.normas_monitoradas = notifiqueme.normas_monitoradas;
-            base.st_push = notifiqueme.st_push;
-            base.termos_diarios_monitorados = notifiqueme.termos_diarios_monitorados;
-            chamados = new List<FaleConoscoOV>();
-        }
-        public List<FaleConoscoOV> chamados { get; set; }
     }
 }

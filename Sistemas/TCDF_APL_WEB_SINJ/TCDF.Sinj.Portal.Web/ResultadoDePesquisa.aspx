@@ -9,12 +9,16 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <div>
-        <div class="divIdentificadorDePagina">
-	        <label>.: Resultado de Pesquisa</label>
+        <div class="divIdentificadorDePagina table w-100-pc">
+            <div class="line">
+                <div class="column w-30-pc">
+                    <label>.: Resultado de Pesquisa</label>    
+                </div>
+                <div class="column w-70-pc">
+                    <div id="div_ds_pesquisa" style="text-align:right;"> <span id="span_ds_historico"></span> </div>    
+                </div>
+            </div>
 	    </div>
-        <div class="w-100-pc">
-            <div id="div_ds_pesquisa" class="w-70-pc mauto" style="margin-left:30%;"> <span id="span_ds_historico"></span> </div>    
-        </div>
         <div>
             <div style="height:32px; text-align:right;">
                 <a href="javascript:void(0);" onclick="javascript:RelatorioPDF();" title="Salvar planilha" id="a_relatorio"><img alt="xls" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_xls_p.png"/></a>

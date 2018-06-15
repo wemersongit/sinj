@@ -39,7 +39,30 @@ namespace TCDF.Sinj.Web.ashx.Email
 
                 var link = util.BRLight.Util.GetVariavel("URLSinjPortal", true) + "/?ch_chamado_fale_conosco=" + faleConosco.ch_chamado + "&ds_email_fale_conosco=" + faleConosco.ds_email + "&nm_user_fale_conosco=" + faleConosco.nm_user + "&ds_assunto_fale_conosco=" + faleConosco.ds_assunto;
 
-                sRetorno = new EnviarEmail().EnviarEmails(emails, mensagem.ds_assunto_resposta, true, mensagem.ds_msg_resposta + "<br/><a target='_blank' href='" + link + "'>Responder essa mensagem</a>");
+                var sHtml = "<br/><br/>Para responder essa mensagem, <a target='_blank' href='" + link + "'>clique aqui</a>";
+
+                if (faleConosco.mensagens.Count > 0)
+                {
+                    sHtml += "<br/><br/><h3>Mensagens anteriores</h3>";
+                    foreach (var msg in faleConosco.mensagens)
+                    {
+                        if (!string.IsNullOrEmpty(msg.nm_login_usuario_resposta))
+                        {
+                            sHtml += "<br/>Em <b>" + msg.dt_resposta + "</b>, <b>" + msg.nm_usuario_resposta + "</b> escreveu:";
+                            sHtml += "<br/>" + msg.ds_msg_resposta;
+                            sHtml += "<br/>";
+                        }
+                        else
+                        {
+                            sHtml += "<br/>Em <b>" + msg.dt_resposta + "</b>, <b>" + faleConosco.nm_user + "</b> escreveu:";
+                            sHtml += "<br/>" + msg.ds_msg_resposta;
+                            sHtml += "<br/>";
+                        }
+                    }
+                }
+
+
+                sRetorno = new EnviarEmail().EnviarEmails(emails, mensagem.ds_assunto_resposta, true, mensagem.ds_msg_resposta + sHtml);
 
                 mensagem.dt_resposta = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
                 mensagem.nm_login_usuario_resposta = sessao_usuario.nm_login_usuario;

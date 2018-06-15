@@ -73,6 +73,46 @@
         },
         {
             "field": {
+                "name": "nm_orgao_cadastrador_atribuido",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Atribuído para",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do órgão cadastrador para qual o chamado foi atribuído."
+            }
+        },
+        {
+            "field": {
+                "name": "print",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Print base64",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Print da tela em string base 64"
+            }
+        },
+        {
+            "field": {
+                "name": "ds_url_pagina",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Página",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Url da página da qual foi incluída o chamado."
+            }
+        },
+        {
+            "field": {
                 "name": "ds_assunto",
                 "datatype": "Text",
                 "required": true,

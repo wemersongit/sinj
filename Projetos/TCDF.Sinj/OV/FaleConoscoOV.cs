@@ -22,10 +22,14 @@ namespace TCDF.Sinj.OV
         public string dt_inclusao { get; set; }
         //Novo, Recebido, Finalizado
         public string st_atendimento { get; set; }
+        public string nm_orgao_cadastrador_atribuido { get; set; }
         public string dt_recebido { get; set; }
         public string dt_finalizado { get; set; }
         public string nm_login_usuario_atendimento { get; set; }
         public string nm_usuario_atendimento { get; set; }
+        public string print { get; set; }
+        public string ds_url_pagina { get; set; }
+
         public List<FaleConoscoMensagemResposta> mensagens { get; set; }
     }
 

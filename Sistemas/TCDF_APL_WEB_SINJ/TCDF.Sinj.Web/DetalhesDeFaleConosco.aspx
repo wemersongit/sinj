@@ -14,11 +14,21 @@
                         $('#div_ds_assunto').text(getVal(data.ds_assunto));
                         $('#div_ds_msg').text(getVal(data.ds_msg));
                         $('#div_dt_inclusao').text(getVal(data.dt_inclusao));
+                        $('#div_nm_orgao_cadastrador_atribuido').text(getVal(data.nm_orgao_cadastrador_atribuido));
                         $('#div_st_atendimento').text(getVal(data.st_atendimento));
+                        $('#a_ds_url_pagina').text(getVal(data.ds_url_pagina));
+                        $('#a_ds_url_pagina').attr('href',getVal(data.ds_url_pagina));
+                        if (IsNotNullOrEmpty(data.print)) {
+                            $('#img_print').attr('src', data.print);
+                            $('div.line.print').show();
+                        }
                         if (data.st_atendimento == "Novo") {
                             $('#div_buttons').append('<button title="Receber esse chamado" ch_chamado="' + data.ch_chamado + '" onclick="receberChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_check_p.png"/> Receber</button>');
+                            if (!IsNotNullOrEmpty(data.nm_orgao_cadastrador_atribuido)) {
+                                $('#div_buttons').append('<button title="Atibuir para algum Órgão Cadastrador" ch_chamado="' + data.ch_chamado + '" onclick="selecionarOrgaoAtribuir(this);"><img src="' + _urlPadrao + '/Imagens/ico_atribuir_p.png"/> Atribuir</button>');
+                            }
                         }
-                        else if (IsNotNullOrEmpty(data,'nm_login_usuario_atendimento') && data.nm_login_usuario_atendimento == _user.nm_login_usuario) {
+                        else if (IsNotNullOrEmpty(data, 'nm_login_usuario_atendimento') && data.nm_login_usuario_atendimento == _user.nm_login_usuario) {
                             if (data.st_atendimento == "Recebido") {
                                 $('#div_buttons').append('<button title="Finalizar esse chamado" ch_chamado="' + data.ch_chamado + '" onclick="finalizarChamado(this);"><img src="' + _urlPadrao + '/Imagens/ico_close.png"/> Finalizar</button>');
                             }
@@ -29,7 +39,7 @@
                         $('#span_dt_recebido').text(getVal(data.dt_recebido));
                         $('#div_dt_finalizado').text(getVal(data.dt_finalizado));
                         if (IsNotNullOrEmpty(data.mensagens)) {
-                            
+
                             for (var i = 0; i < data.mensagens.length; i++) {
                                 $("#div_mensagens").dataTablesLight({
                                     bServerSide: false,
@@ -55,6 +65,75 @@
                 });
             }
         });
+        function selecionarOrgaoAtribuir(el) {
+            $('#form_orgao_atribuir input[name=ch_chamado]').val(el.getAttribute('ch_chamado'));
+            if ($("#modal_orgao_atribuir").hasClass('ui-dialog-content')) {
+                $('#modal_orgao_atribuir').modallight("open");
+            }
+            else {
+                $('#modal_orgao_atribuir').modallight({
+                    sTitle: "Atribuir para um Órgão",
+                    sType: "default",
+                    oButtons: [
+                            { html: '<img alt="send" src="' + _urlPadrao + '/Imagens/ico_atribuir_p.png" />Atribuir', click:
+                                function () {
+                                    $('#form_orgao_atribuir').submit();
+                                }
+                            },
+                            { html: '<img alt="clear" src="' + _urlPadrao + '/Imagens/ico_close.png" />Cancelar', click: function () { $(this).dialog('close'); } }
+                        ],
+                    sWidth: 500
+                });
+
+                $('#form_email textarea[name="mensagem"]').focus();
+            }
+        }
+        function submitOrgaoAtribuir(form) {
+            try {
+                Validar(form);
+                var sucesso = function (data) {
+                    gComplete();
+                    if (IsNotNullOrEmpty(data, 'error_message')) {
+                        notificar('#'+form, data.error_message, 'error');
+                    }
+                    else if (IsNotNullOrEmpty(data, 'success_message')) {
+                        $('#modal_orgao_atribuir').modallight("close");
+                        ShowDialog({
+                            id_element: "modal_notificacao_success",
+                            sTitle: "Sucesso",
+                            sContent: data.success_message,
+                            sType: "success",
+                            oButtons: [{
+                                text: "Ok",
+                                click: function () {
+                                    $(this).dialog('close');
+                                }
+                            }],
+                            fnClose: function () {
+                                location.reload();
+                            }
+                        });
+                    }
+                    else {
+                        notificar('#' + form, 'O sistema não retornou uma mensagem de confirmação.', 'alert');
+                    }
+                }
+                $.ajaxlight({
+                    bAsync: true,
+                    sUrl: "./ashx/Cadastro/FaleConoscoEditar.ashx",
+                    sType: "POST",
+                    fnSuccess: sucesso,
+                    sFormId: form,
+                    fnBeforeSubmit: gInicio,
+                    iTimeout: 120000
+                });
+
+            }
+            catch (ex) {
+                notificar('#'+form, ex, 'error');
+            }
+            return false;
+        }
         function receberChamado(el) {
             var ch_chamado = $(el).attr('ch_chamado');
             $.ajaxlight({
@@ -85,7 +164,7 @@
                         notificar('#div_chamado', 'Erro ao receber chamado.', 'error');
                     }
                 },
-                fnBeforeSubmit: gInicio,
+                fnBeforeSend: gInicio,
                 fnComplete: gComplete,
                 bAsync: true
             });
@@ -120,7 +199,7 @@
                         notificar('#div_chamado', 'Erro ao finalizar chamado.', 'error');
                     }
                 },
-                fnBeforeSubmit: gInicio,
+                fnBeforeSend: gInicio,
                 fnComplete: gComplete,
                 bAsync: true
             });
@@ -277,6 +356,17 @@
                     <div class="line">
                         <div class="column w-30-pc">
                             <div class="cell fr">
+                                <label>Órgão atribuído:</label>
+                            </div>
+                        </div>
+                        <div class="column w-70-pc">
+                            <div id="div_nm_orgao_cadastrador_atribuido" class="cell w-60-pc">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <div class="column w-30-pc">
+                            <div class="cell fr">
                                 <label>Status:</label>
                             </div>
                         </div>
@@ -308,6 +398,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="line">
+                        <div class="column w-30-pc">
+                            <div class="cell fr">
+                                <label>Página:</label>
+                            </div>
+                        </div>
+                        <div class="column w-70-pc">
+                            <div class="cell w-60-pc">
+                                <a id="a_ds_url_pagina" href="" target="_blank"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line print" style="displa:none;">
+                        <div class="column w-100-pc text-center" style="background: #FFF;">
+                            <img id="img_print" src="" width="700" />
+                        </div>
+                    </div>
                     <div class=" table mauto fale_conosco_atendimento">
                         <div class="line">
                             <div class="column w-100-pc">
@@ -330,7 +437,7 @@
                     <div class="line">
                         <div class="column w-20-pc">
                             <div class="cell fr">
-                                <label>Assunto:</label>
+                                <label>Assunto*:</label>
                             </div>
                         </div>
                         <div class="column w-70-pc">
@@ -342,13 +449,39 @@
                     <div class="line">
                         <div class="column w-20-pc">
                             <div class="cell fr">
-                                <label>Mensagem:</label>
+                                <label>Mensagem*:</label>
                             </div>
                         </div>
                         <div class="column w-70-pc">
                             <div class="cell w-100-pc">
                                 <textarea label="Mensagem" obrigatorio="sim" id="mensagem" name="mensagem" class="w-90-pc" rows="15" cols="50"></textarea>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="modal_orgao_atribuir" style="display:none;">
+        <form id="form_orgao_atribuir" name="formOrgaoAtribuir" action="#" method="post" onsubmit="return submitOrgaoAtribuir('form_orgao_atribuir')">
+            <div class="notify" style="display:none;"></div>
+            <input type="hidden" name="ch_chamado" value="" />
+            <div class="mauto table w-100-pc">
+                <div class="line">
+                    <div class="column w-40-pc">
+                        <div class="cell fr">
+                            <label>Órgão Cadastrador*:</label>
+                        </div>
+                    </div>
+                    <div class="column w-60-pc">
+                        <div class="cell w-100-pc">
+                            <select name="nm_orgao_cadastrador_atribuido" class="w-100-px" obrigatorio="sim" label="Órgão Cadastrador">
+                                <option value=""></option>
+                                <option value="CLDF">CLDF</option>
+                                <option value="SEPLAG">SEPLAG</option>
+                                <option value="PGDF">PGDF</option>
+                                <option value="TCDF">TCDF</option>
+                            </select>
                         </div>
                     </div>
                 </div>

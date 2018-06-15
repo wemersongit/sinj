@@ -25,6 +25,7 @@ function LogarNotifiqueme() {
                 $.cookie(_nm_cookie_push, JSON.stringify(neoLightBasePush), { expires: 10000, path: '/' });
                 //Talvez a linha abaixo seja desnecessaria, ja que isso esta sendo feito no aspx
                 var redirecionar_notifiqueme = GetParameterValue("redirecionar_notifiqueme");
+                var p = GetParameterValue("p");
                 var back = GetParameterValue("back");
                 var addFav = GetParameterValue("addfav");
                 var _ch = GetParameterValue("ch");
@@ -44,6 +45,9 @@ function LogarNotifiqueme() {
                         iTimeout: 40000
                     });
                     top.document.location.href = redirecionar_notifiqueme;
+                }
+                else if (IsNotNullOrEmpty(p)) {
+                    top.document.location.href = './' + p;
                 }
                 else if (addFav == "1" && IsNotNullOrEmpty(_ch)) {
 
@@ -71,7 +75,7 @@ function LogarNotifiqueme() {
                     });
                 }
                 else {
-                    top.document.location.href = "./Notifiqueme.aspx";
+                    top.document.location.href = "./Notifiqueme";
                 }
             } else {
                 $('.loaded').show();
@@ -95,16 +99,12 @@ function LogarNotifiqueme() {
                 }
             }
         };
-        var beforeSubmit = function () {
-            $('.loading').show();
-            $('.loaded').hide();
-        };
         $.ajaxlight({
             sUrl: './ashx/Push/NotifiquemeLogin.ashx',
             sType: "POST",
             sFormId: "form_login_notifiqueme",
             fnSuccess: success,
-            fnBeforeSubmit: beforeSubmit,
+            fnBeforeSubmit: gInicio(),
             bAsync: true
         });
     }

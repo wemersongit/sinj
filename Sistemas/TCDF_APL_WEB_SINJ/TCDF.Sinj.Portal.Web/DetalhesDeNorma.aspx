@@ -54,7 +54,7 @@
             <div id="div_notificacao_norma" class="notify w-90-pc mauto" style="display:none;"></div>
             <fieldset class="w-90-pc">
                 <div class="mauto table">
-                    <div class="w-100-pc fl" style="margin-top:10px;">
+                    <div class="w-90-pc mauto" style="margin-top:10px;">
                         <div id="div_redes_sociais" class="fl">
                             <ul>
                                 <li>
@@ -88,7 +88,7 @@
                     <div class="line">
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_identificacao" class="w-90-pc mauto word-no-break nr_norma nr_norma_text nm_tipo_norma dt_assinatura dt_assinatura_text value" style="font-size:18px;">
+                                <div id="div_identificacao" class="w-90-pc mauto word-no-break nr_norma nr_norma_text nm_tipo_norma dt_assinatura dt_assinatura_text value">
                                 </div>
                             </div>
                         </div>

@@ -93,7 +93,19 @@
                             </div>
                             <div class="column w-70-pc">
                                 <div class="cell w-60-pc">
-                                    <input id="in_relacao_de_acao" name="in_relacao_de_acao" type="checkbox" value="true" />
+                                    <input id="in_relacao_de_acao" name="in_relacao_de_acao" type="checkbox" value="1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="column w-30-pc">
+                                <div class="cell fr">
+                                    <label>Selecionável:</label>
+                                </div>
+                            </div>
+                            <div class="column w-70-pc">
+                                <div class="cell w-60-pc">
+                                    <input id="in_selecionavel" name="in_selecionavel" type="checkbox" value="1" />
                                 </div>
                             </div>
                         </div>

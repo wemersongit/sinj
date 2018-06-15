@@ -17,77 +17,107 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
 
         public void ProcessRequest(HttpContext context)
         {
-            string sRetorno = "{\"void\":0}";
-            var _nm_usuario_push = context.Request["nm_usuario_push"];
-            var _email_usuario_push = context.Request["email_usuario_push"];
-            var _senha_usuario_push = context.Request["senha_usuario_push"];
-            var _captcha_send = context.Request["send"];
-            SessaoNotifiquemeOV sessao = null;
-            if(_captcha_send == "1"){
-                var action = "PORTAL_PUS.INC";
-                NotifiquemeOV notifiquemeOv = null;
-                try
-                {
-                    notifiquemeOv = new NotifiquemeOV();
-                    var email_usuario_push = _email_usuario_push.Split(',');
-                    var senha_usuario_push = _senha_usuario_push.Split(',');
-                    notifiquemeOv.nm_usuario_push = _nm_usuario_push;
-                    if (email_usuario_push.Length == 2)
-                    {
-                        if (email_usuario_push[0] != email_usuario_push[1])
-                        {
-                            throw new DocValidacaoException("E-mail Inválido. Confirme o E-mail");
-                        }
-                        notifiquemeOv.email_usuario_push = email_usuario_push[0];
-                    }
-                    if (senha_usuario_push.Length == 2)
-                    {
-                        if (senha_usuario_push[0] != senha_usuario_push[1])
-                        {
-                            throw new DocValidacaoException("Senha Inválida. Confirme a Senha");
-                        }
-                        notifiquemeOv.senha_usuario_push = Criptografia.CalcularHashMD5(senha_usuario_push[0], true);
-                    }
-                    var id_doc = new NotifiquemeRN().Incluir(notifiquemeOv);
-                    if (id_doc > 0)
-                    {
-                        sessao = new NotifiquemeRN().CriarSessao(notifiquemeOv, false);
-                        if (sessao != null)
-                        {
-                            sRetorno = "{\"id_doc_success\":" + id_doc + "}";
-                        }
+            string sRetorno = "";
+            var _k = context.Request["k"];
+            var _tipoDeVerificacao = context.Request["tpv"];
 
-                    }
-                    else
+            var action = "PORTAL_PUS.INC";
+            SessaoNotifiquemeOV sessao = null;
+            try
+            {
+                
+
+                var _nm_usuario_push = context.Request["nm_usuario_push"];
+                var _email_usuario_push = context.Request["email_usuario_push"];
+                var _senha_usuario_push = context.Request["senha_usuario_push"];
+
+                NotifiquemeOV notifiquemeOv = new NotifiquemeOV();
+                var email_usuario_push = _email_usuario_push.Split(',');
+                var senha_usuario_push = _senha_usuario_push.Split(',');
+                if (string.IsNullOrEmpty(_nm_usuario_push))
+                {
+                    throw new DocValidacaoException("Nome Inválido. Preencha o campo 'Nome'.");
+                }
+                if (email_usuario_push.Length != 2 || email_usuario_push[0] != email_usuario_push[1])
+                {
+                    throw new DocValidacaoException("E-mail Inválido. Confirme o E-mail");
+                }
+                if (senha_usuario_push.Length != 2 || senha_usuario_push[0] != senha_usuario_push[1])
+                {
+                    throw new DocValidacaoException("Senha Inválida. Confirme a Senha");
+                }
+
+                if (_tipoDeVerificacao.Equals("g"))
+                {
+                    var _gRecaptchaResponse = context.Request["g-recaptcha-response"];
+                    if (string.IsNullOrEmpty(_gRecaptchaResponse))
                     {
-                        sRetorno = "{\"error_message\": \"Erro ao criar conta do Notifique-me.\" }";
-                        throw new Exception("Erro ao criar conta do Notifique-me.");
+                        throw new DocValidacaoException("Não é um robô? Então clique na caixa 'Não sou um robô' para verificarmos.");
+                    }
+                    var secretKeyRecaptcha = util.BRLight.Util.GetVariavel("secretKeyRecaptcha");
+                    var dic = new Dictionary<string, object>();
+                    dic.Add("secret", secretKeyRecaptcha);
+                    dic.Add("response", _gRecaptchaResponse);
+                    var response = new REST("https://www.google.com/recaptcha/api/siteverify", HttpVerb.POST, dic).GetResponse();
+                    var dicResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(response);
+                    if (!dicResponse.ContainsKey("success") || !bool.Parse(dicResponse["success"].ToString()))
+                    {
+                        throw new DocValidacaoException("Não é um robô? Então clique na caixa 'Não sou um robô' para verificarmos.");
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    if (ex is PermissionException || ex is DocDuplicateKeyException || ex is SessionExpiredException || ex is DocValidacaoException)
+                    var _ds_captcha = context.Request["ds_captcha"];
+                    if (string.IsNullOrEmpty(_ds_captcha) || !_k.Equals(Criptografia.CalcularHashMD5(_ds_captcha.ToUpper(), true)))
                     {
-                        sRetorno = "{\"error_message\": \"" + ex.Message + "\"}";
+                        throw new DocValidacaoException("Os caracteres não correspondem com os da imagem.");
                     }
-                    else
-                    {
-                        sRetorno = Excecao.LerTodasMensagensDaExcecao(ex, false);
-                        context.Response.StatusCode = 500;
-                    }
-                    var erro = new ErroRequest
-                    {
-                        Pagina = context.Request.Path,
-                        RequestQueryString = context.Request.QueryString,
-                        MensagemDaExcecao = Excecao.LerTodasMensagensDaExcecao(ex, true),
-                        StackTrace = ex.StackTrace
-                    };
+                }
+
+                notifiquemeOv.nm_usuario_push = _nm_usuario_push;
+                notifiquemeOv.email_usuario_push = email_usuario_push[0];
+                notifiquemeOv.senha_usuario_push = Criptografia.CalcularHashMD5(senha_usuario_push[0], true);
+
+                var id_doc = new NotifiquemeRN().Incluir(notifiquemeOv);
+                if (id_doc > 0)
+                {
+                    sessao = new NotifiquemeRN().CriarSessao(notifiquemeOv, false);
                     if (sessao != null)
                     {
-                        LogErro.gravar_erro(action, erro, sessao.nm_usuario_push, sessao.email_usuario_push);
+                        sRetorno = "{\"id_doc_success\":" + id_doc + "}";
                     }
+
+                }
+                else
+                {
+                    throw new Exception("Erro ao criar conta do Notifique-me.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex is PermissionException || ex is DocDuplicateKeyException || ex is SessionExpiredException || ex is DocValidacaoException)
+                {
+                    sRetorno = "{\"error_message\": \"" + ex.Message + "\"}";
+                }
+                else
+                {
+                    sRetorno = Excecao.LerTodasMensagensDaExcecao(ex, false);
+                    context.Response.StatusCode = 500;
+                }
+                var erro = new ErroRequest
+                {
+                    Pagina = context.Request.Path,
+                    RequestQueryString = context.Request.QueryString,
+                    MensagemDaExcecao = Excecao.LerTodasMensagensDaExcecao(ex, true),
+                    StackTrace = ex.StackTrace
+                };
+                if (sessao != null)
+                {
+                    LogErro.gravar_erro(action, erro, sessao.nm_usuario_push, sessao.email_usuario_push);
                 }
             }
+
             context.Response.Write(sRetorno);
             context.Response.End();
         }

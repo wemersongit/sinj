@@ -10,12 +10,17 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <div>
-        <div class="divIdentificadorDePagina">
-	        <label>.: Resultado de Pesquisa</label>
+        <div class="divIdentificadorDePagina table w-100-pc">
+            <div class="line">
+                <div class="column w-30-pc">
+                    <label>.: Resultado de Pesquisa</label>    
+                </div>
+                <div class="column w-70-pc">
+                    <div id="div_ds_pesquisa" style="text-align:right;"> <span id="span_ds_historico"></span> </div>    
+                </div>
+            </div>
 	    </div>
-        <div class="w-100-pc">
-            <div id="div_ds_pesquisa" class="w-70-pc mauto" style="margin-left:30%;"> <span id="span_ds_historico"></span> </div>    
-        </div>
+        
         <div id="modal_texto" style="display:none;">
             <div class="loading" style="display:none;"></div>
             <div class="notify" style="display:none;"></div>

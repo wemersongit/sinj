@@ -39,7 +39,6 @@ div.menu-suspenso li a{color:#036735; background-color:transparent; }
 div.menu-suspenso li a:hover{background-color: #CCCCCC}
 
 /*TABLELESS*/
-div.table div.column div.cell table{ background-color: #AAA;}
 div.table div.column div.cell table caption{ background-color: #D1D1D1; color: #000000; }
 div.table div.column div.cell > table tr th { background-color: #F0F0F0; color:#38953F; }
 div.table div.column div.cell > table tr td { background-color: #FFF;}

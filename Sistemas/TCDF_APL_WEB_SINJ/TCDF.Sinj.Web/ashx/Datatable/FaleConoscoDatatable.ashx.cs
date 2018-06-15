@@ -21,6 +21,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
             var json_resultado = "";
             Pesquisa pesquisa = new Pesquisa();
             var _sSearch = context.Request.Params["sSearch"];
+            var _nm_orgao_cadastrador_atribuido = context.Request.Params["nm_orgao_cadastrador_atribuido"];
             var _st_atendimento = context.Request.Params["st_atendimento"];
             var _ds_assunto = context.Request.Params["ds_assunto"];
             string iDisplayLength = context.Request["iDisplayLength"];
@@ -46,6 +47,10 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisa.order_by.asc = new[] { _sColOrder };
                 }
                 var query = "";
+                if (!string.IsNullOrEmpty(_nm_orgao_cadastrador_atribuido))
+                {
+                    query += (!string.IsNullOrEmpty(query) ? " AND " : "") + "nm_orgao_cadastrador_atribuido='" + _nm_orgao_cadastrador_atribuido + "'";
+                }
                 if (!string.IsNullOrEmpty(_st_atendimento))
                 {
                     query += (!string.IsNullOrEmpty(query) ? " AND " : "") + "st_atendimento='" + _st_atendimento + "'";

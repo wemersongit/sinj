@@ -37,8 +37,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var nr_importancia = 0;
                     int.TryParse(_nr_importancia, out nr_importancia);
                     var _in_relacao_de_acao = context.Request["in_relacao_de_acao"];
-                    var in_relacao_de_acao = false;
-                    bool.TryParse(_in_relacao_de_acao, out in_relacao_de_acao);
+                    var _in_selecionavel = context.Request["in_selecionavel"];
 
 
                     TipoDeRelacaoRN tipoDeRelacaoRn = new TipoDeRelacaoRN();
@@ -49,7 +48,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     tipoDeRelacaoOv.ds_texto_para_alterador = _ds_texto_para_alterador;
                     tipoDeRelacaoOv.ds_texto_para_alterado = _ds_texto_para_alterado;
                     tipoDeRelacaoOv.nr_importancia = nr_importancia;
-                    tipoDeRelacaoOv.in_relacao_de_acao = in_relacao_de_acao;
+                    tipoDeRelacaoOv.in_relacao_de_acao = _in_relacao_de_acao == "1";
+                    tipoDeRelacaoOv.in_selecionavel = _in_selecionavel == "1";
 
                     tipoDeRelacaoOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"), nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                     if (tipoDeRelacaoRn.Atualizar(id_doc, tipoDeRelacaoOv))

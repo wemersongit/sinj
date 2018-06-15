@@ -20,6 +20,7 @@
                     $('#ds_texto_para_alterado').val(data.ds_texto_para_alterado);
                     $('#nr_importancia').val(data.nr_importancia);
                     $('#in_relacao_de_acao').prop("checked", data.in_relacao_de_acao);
+                    $('#in_selecionavel').prop("checked", data.in_selecionavel);
                 }
             }
         };
@@ -73,6 +74,7 @@ function DetalhesTipoDeRelacao() {
                     $('#div_ds_texto_para_alterado').text(data.ds_texto_para_alterado);
                     $('#div_nr_importancia').text(data.nr_importancia);
                     $('#div_in_relacao_de_acao').text(data.in_relacao_de_acao ? "sim" : "não");
+                    $('#div_in_selecionavel').text(data.in_selecionavel ? "sim" : "não");
                 }
             }
         };

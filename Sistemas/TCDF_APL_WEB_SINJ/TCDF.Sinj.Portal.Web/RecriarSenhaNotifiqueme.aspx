@@ -1,71 +1,28 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="RecriarSenhaNotifiqueme.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.RecriarSenhaNotifiqueme" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-    <link rel="stylesheet" type="text/css" href="<%= TCDF.Sinj.Util._urlPadrao %>/Captcha/css/epicaptcha.css" />
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/login_notifiqueme.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
-    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Captcha/js/epicaptcha.js"></script>
+    
+    <script src='https://www.google.com/recaptcha/api.js?onload=onLoadCaptchaCriarContaCallback' async defer></script>
+
     <script type="text/javascript" language="javascript">
+        var onLoadCaptchaCriarContaCallback = function () {
+            $('#div_captcha_recriar_senha').remove();
+            $('#form_recriar_senha input[name=tpv]').val('g');
+        }
         $(document).ready(function () {
             $('#button_resetar').click(function () {
                 document.getElementById("form_recriar_senha").reset();
                 location.reload();
             });
-            $('#button_salvar_senha').click(function () {
+            generateCaptcha('div_captcha_recriar_senha');
+        });
+        function enviarRecriarSenhaNotifiqueme() {
+            try {
+                Validar("form_recriar_senha");
                 var sucesso = function (data) {
                     gComplete();
-                    if (IsNotNullOrEmpty(data)) {
-                        if (data.error_message != null && data.error_message != "") {
-                            $('#form_nova_senha .notify').messagelight({
-                                sTitle: "Erro",
-                                sContent: data.error_message,
-                                sType: "error",
-                                sWidth: "",
-                                iTime: null,
-                                fnClose: function () {
-                                    if (IsNotNullOrEmpty(data.DocNotFoundException) && data.DocNotFoundException) {
-                                        document.location.href = "./RecriarSenhaNotifiqueme.aspx";
-                                    }
-                                }
-                            });
-                        }
-                        else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
-                            $('#form_nova_senha .notify').modallight({
-                                sTitle: "Sucesso",
-                                sContent: "Senha alterada com sucesso.",
-                                sType: "success",
-                                oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
-                                fnClose: function () {
-                                    document.location.href = "./Notifiqueme.aspx";
-                                }
-                            });
-                        }
-                        else {
-                            $('#form_nova_senha .notify').messagelight({
-                                sTitle: "Erro",
-                                sContent: "Erro ao alterar senha.",
-                                sType: "error",
-                                sWidth: "",
-                                iTime: null
-                            });
-                        }
-                    }
-                };
-                return fnSalvar('form_nova_senha', 'SAL', sucesso);
-            });
-            var sucesso_captcha = function (data) {
-                gComplete();
-                if (IsNotNullOrEmpty(data)) {
-                    $('#form_recriar_senha .loading').hide();
-                    $('#form_recriar_senha .loaded').show();
-                    if (data.error_message != null && data.error_message != "") {
-                        $('#form_recriar_senha .notify').modallight({
-                            sTitle: "Erro",
-                            sContent: data.error_message,
-                            sType: "error",
-                            oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
-                            fnClose: function () {
-                                $(this).dialog("destroy");
-                            }
-                        });
+                    if (IsNotNullOrEmpty(data, 'error_message')) {
+                        notificar('#form_recriar_senha', data.error_message, 'error');
                     }
                     else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
                         $('#form_recriar_senha .notify').modallight({
@@ -74,19 +31,71 @@
                             sType: "success",
                             oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
                             fnClose: function () {
-                                document.location.href = "./LoginNotifiqueme.aspx";
+                                document.location.href = "./LoginNotifiqueme";
                             }
                         });
                     }
                 }
+                $.ajaxlight({
+                    sFormId: "form_recriar_senha",
+                    sUrl: './ashx/Push/NotifiquemeEnviarRecriarSenha.ashx',
+                    sType: "POST",
+                    fnSuccess: sucesso,
+                    fnBeforeSubmit: gInicio,
+                    fnComplete: gComplete,
+                    bAsync: true
+                });
+
+            } catch (ex) {
+                notificar('#form_recriar_senha', ex, 'error');
+                $("html, body").animate({
+                    scrollTop: 0
+                }, "slow");
             }
-            $("#captcha").Epicaptcha({
-                buttonID: "button_confirmar",
-                theFormID: "form_recriar_senha",
-                submitUrl: "./ashx/Push/NotifiquemeEnviarRecriarSenha.ashx",
-                fnSuccess: sucesso_captcha
-            });
-        });
+            return false;
+        }
+
+        function recriarSenhaNotifiqueme() {
+            try {
+                Validar("form_nova_senha");
+
+                var sucesso = function (data) {
+                    gComplete();
+                    if ((IsNotNullOrEmpty(data, 'error_message'))) {
+                        notificar('#form_nova_senha', data.error_message, 'error');
+                    }
+                    else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
+                        $('#form_nova_senha .notify').modallight({
+                            sTitle: "Sucesso",
+                            sContent: "Senha alterada com sucesso.",
+                            sType: "success",
+                            oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
+                            fnClose: function () {
+                                document.location.href = "./Notifiqueme";
+                            }
+                        });
+                    }
+                    else {
+                        notificar('#form_nova_senha', "Ocorreu um interno no servidor ao tentar alterar senha.", 'error');
+                    }
+                };
+                $.ajaxlight({
+                    sFormId: "form_nova_senha",
+                    sUrl: './ashx/Push/NotifiquemeRecriarSenha.ashx',
+                    sType: "POST",
+                    fnSuccess: sucesso,
+                    fnBeforeSubmit: gInicio,
+                    fnComplete: gComplete,
+                    bAsync: true
+                });
+            } catch (ex) {
+                notificar('#form_nova_senha', ex, 'error');
+                $("html, body").animate({
+                    scrollTop: 0
+                }, "slow");
+            }
+            return false;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
@@ -97,11 +106,13 @@
     </div>
     <div class="form">
         <div id="div_form_recriar_senha" runat="server">
-            <form id="form_recriar_senha" name="formRecriarSenha" method="post" action="#">
+            <form id="form_recriar_senha" name="formRecriarSenha" method="post" action="#" onsubmit="return enviarRecriarSenhaNotifiqueme();">
+                <input name="tpv" type="hidden" value="c" />
                 <div id="div_recriar_senha">
                     <fieldset class="w-60-pc">
                         <legend>Recriar Senha</legend>
                         <div class="mauto table">
+                            <div class="notify" style="display:none;"></div>
                             <div class="line">
                                 <div id="div_info_recriar_senha" runat="server" class="column w-100-pc" style="text-align:center;">
                                     Informe seu email para confirmação.
@@ -119,35 +130,47 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="line">
-                                <div class="column w-30-pc">
+                            <div id="div_captcha_recriar_senha" class="line">
+                                <div class="column w-30-pc" style="padding-top:15px;">
                                     <div class="cell fr">
-                                        <label>Validação de Segurança:</label>
+                                        <label>*Digite os caracteres da imagem:</label>
                                     </div>
                                 </div>
                                 <div class="column w-70-pc">
-                                    <div class="cell" style="margin-left:25px;">
-                                        <div id="captcha" class="mauto word-no-break text-center"></div>
-                                    </div>
+                                    <div class="loading_capctha" style="display:none;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/loading003300.gif" width="25" /></div>
+                                    <div class="captcha"></div>
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="column w-30-pc">
+                                </div>
+                                <div class="column w-70-pc">
+                                    <div class="g-recaptcha" data-sitekey="6LfzvVwUAAAAAHh_0bcm-_RFp7Xmn0fsf2QKLhWX"></div>
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="column w-100-pc text-center">
+                                    <button>
+                                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_check.png" /> Enviar
+                                    </button>
+                                    <button id="button_resetar" type="reset">
+                                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_close.png" /> Cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div style="width:220px; margin:auto;" class="loaded">
-                            <button type="button" id="button_confirmar">Confirmar</button>
-                            <button type="button" id="button_resetar">Limpar</button>
-                        </div>
                     </fieldset>
                 </div>
-                <div class="notify" style="display:none;"></div>
-                <div class="loading" style="display:none;"></div>
             </form>
         </div>
         <div id="div_form_nova_senha" runat="server">
-            <form id="form_nova_senha" name="formNovaSenha" method="post" action="#">
+            <form id="form_nova_senha" name="formNovaSenha" method="post" action="#"onsubmit="return recriarSenhaNotifiqueme();">
+                <input type="hidden" name="recriar" value="<%= Request["recriar"] %>" />
                 <div id="div_nova_senha" class="loaded">
                     <fieldset class="w-60-pc">
                         <legend>Recriar Senha</legend>
                         <div class="mauto table">
+                            <div class="notify" style="display:none;"></div>
                             <div class="line">
                                 <div class="column w-30-pc">
                                     <div class="cell fr">
@@ -172,19 +195,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div style="width:220px; margin:auto;" class="loaded">
-                            <button id="button_salvar_senha">
-                                <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" />Salvar
-                            </button>
-                            <button type="reset">
-                                <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_eraser_p.png" />Limpar
-                            </button>
+                            <div class="line">
+                                <div class="column w-100-pc text-center">
+                                    <button>
+                                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_check.png" /> Salvar
+                                    </button>
+                                    <button type="reset">
+                                        <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_close.png" /> Cancelar
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
-                <div class="notify" style="display:none;"></div>
-                <div class="loading" style="display:none;"></div>
             </form>
         </div>
     </div>

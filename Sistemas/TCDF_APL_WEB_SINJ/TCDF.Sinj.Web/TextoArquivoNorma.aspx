@@ -3,14 +3,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head>
     <title>Texto do Arquivo da Norma</title>
-    <asp:PlaceHolder runat="server" id="placeHolderHeader"></asp:PlaceHolder>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Language" content="pt-br" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/favicon.png" />
+
+
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/platform.js"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.printElement.js"></script>
 
-    <link rel="stylesheet" type="text/css" href=<%= TCDF.Sinj.Util._urlPadrao %>/Styles/sinj.css?<%= TCDF.Sinj.Util.MostrarVersao() %> />
+    <link rel="stylesheet" type="text/css" href="<%= TCDF.Sinj.Util._urlPadrao %>/Styles/sinj.css?<%= TCDF.Sinj.Util.MostrarVersao() %>" />
 
     <script type="text/javascript" language="javascript">
         function Print() {

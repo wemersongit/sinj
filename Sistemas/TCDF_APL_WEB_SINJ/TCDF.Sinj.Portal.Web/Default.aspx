@@ -14,7 +14,7 @@
                 $('#div_fale_conosco div.resposta').hide();
                 $('#div_fale_conosco div.resposta input[obrigatorio]').attr('obrigatorio', 'não');
                 $('#div_fale_conosco div.resposta select[obrigatorio]').attr('obrigatorio', 'não');
-                clickTopoFaleConosco();
+                clickTopoFaleConosco(_ch_chamado_fale_conosco);
                 $('#ds_msg_fale_conosco').focus();
             }
         });

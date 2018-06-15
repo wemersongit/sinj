@@ -5,9 +5,7 @@
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_notifiqueme.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_norma.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>    
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/sessao_notifiqueme.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
-    <script type="text/javascript">
-        var _chamados = [];
-    </script>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <div class="divIdentificadorDePagina">
@@ -26,7 +24,6 @@
                 <li><a href="#tab_notificar_acompanhar_diario">Acompanhar inclusão de Diários</a></li>
                 <li><a href="#tab_notificar_cadastro_normas">Acompanhar inclusão de Normas</a></li>
                 <li><a href="#tab_notificar_edicao_normas">Acompanhar alteração de Normas</a></li>
-                <li><a href="#tab_fale_conosco_atendimento">Fale Conosco - Atendimento</a></li>
                 <li><a href="#tab_atualizar_meus_dados">Alterar meus dados</a></li>
             </ul>
             <div id="tab_notificar_acompanhar_diario" class="form">
@@ -219,30 +216,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
-                </div>
-            </div>
-            <div id="tab_fale_conosco_atendimento" class="form">
-                <div id="div_fale_conosco_atendimento">
-                    <fieldset class="w-90-pc">
-                        <div class="mauto table w-90-pc">
-                            <div class="notify" style="display: none;"></div>
-                            <p><br />Acompanhe as conversas realizadas através do nosso canal de atendimento.</p>
-                        </div>
-                        <div class="mauto table w-90-pc">
-                            <div class="line">
-                                <div class="column w-100-pc">
-                                    <div class="cell w-100-pc">
-                                        Lista de atendimentos
-                                        <div id="div_datatable_fale_conosco_atendimento">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="div_detalhes_fale_conosco_atendimento" class="mauto table fale_conosco_atendimento">
                         </div>
                     </fieldset>
                 </div>

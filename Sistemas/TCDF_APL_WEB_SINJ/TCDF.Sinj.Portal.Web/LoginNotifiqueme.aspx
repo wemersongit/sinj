@@ -8,6 +8,8 @@
             });
 
             var redirecionar_notifiqueme = GetParameterValue("redirecionar_notifiqueme");
+            var p = GetParameterValue("p");
+
             var _message = GetParameterValue("message");
             var _type = GetParameterValue("type");
             if (IsNotNullOrEmpty(_message) && IsNotNullOrEmpty(_type)) {
@@ -17,9 +19,13 @@
                     iTime: null
                 });
             }
-			if (IsNotNullOrEmpty(redirecionar_notifiqueme)){
-				NotificarAoCriar(redirecionar_notifiqueme);
-			}
+            if (IsNotNullOrEmpty(redirecionar_notifiqueme)) {
+                NotificarAoCriar(redirecionar_notifiqueme);
+            }
+            if (p == "FaleConosco") {
+                $('div.divIdentificadorDePagina label').text('.: Fale Conosco');
+            }
+            $('#a_cadastrar_notifiqueme').attr('href', $('#a_cadastrar_notifiqueme').attr('href') + document.location.search);
         });
     </script>
 </asp:Content>
@@ -45,8 +51,8 @@
                         </div>
                         <div class="line">
                             <div class="column w-100-pc">
-                                <div class="cell w-100-pc">
-                                    <p>Este é o serviço de notificação (PUSH) do sistema SINJ. Receba e-mails notificando sobre as criações e alterações de normas e criação de diários oficiais contendo um texto de seu interesse.</p>
+                                <div id="div_descricao_servico" class="cell w-100-pc">
+                                    <p>Este é o serviço de notificação (PUSH) e atendimento (Fale Conosco) do sistema SINJ. Receba e-mails notificando sobre as criações e alterações de normas e criação de diários oficiais contendo um texto de seu interesse.</p><p>Acompanhe o histórico das suas mensagens enviadas pelo Serviço de atendimento 'Fale Conosco'.</p>
                                 </div>
                             </div>
                         </div>
@@ -91,9 +97,9 @@
                         <div class="line">
                             <div class="column w-100-pc">
                                 <div class="cell fr">
-                                    <a href="./RecriarSenhaNotifiqueme.aspx" title="Recuperar Senha">Esqueceu sua senha?</a>
+                                    <a href="./RecriarSenhaNotifiqueme" title="Criar uma senha nova">Esqueceu sua senha?</a>
                                     <br />
-                                    <a id="a_cadastrar_notifiqueme" href="./CadastrarNotifiqueme.aspx" title="Criar uma conta">Não tem login?</a>
+                                    <a id="a_cadastrar_notifiqueme" href="./CriarContaNotifiqueme" title="Criar uma conta">Não tem login?</a>
                                 </div>
                             </div>
                         </div>

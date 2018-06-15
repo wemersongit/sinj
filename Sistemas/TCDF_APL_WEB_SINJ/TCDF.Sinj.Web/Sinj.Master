@@ -234,7 +234,7 @@
                                     </ul>
                                 </li>
                                 <li runat="server" id="li_relatorio"><a title="Relatório" class="lnkmenu" id="aRelatorio"     href="./Relatorio.aspx" >Relat&oacute;rios</a></li>
-                                <li id="li_fale_conosco"><a title="Fale Conosco"             class="lnkmenu" id="aContato"       href="./FaleConosco">Fale Conosco (<%= totalNovos %>)</a></li>
+                                <li id="li_fale_conosco"><a title="Fale Conosco"             class="lnkmenu" id="aContato"       href="./FaleConosco?nm_orgao_cadastrador_atribuido=<%= nmOrgaoCadastrador %>&st_atendimento=Novo">Fale Conosco <span class="nr_total_novos"><%= (totalNovos > 0 ? totalNovos.ToString() : "") %></span></a></li>
                                 <li id="li_historico"><a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a></li>
                                 <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a></li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a></li>

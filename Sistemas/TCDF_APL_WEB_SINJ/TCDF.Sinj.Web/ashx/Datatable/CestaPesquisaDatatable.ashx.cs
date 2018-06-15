@@ -6,6 +6,8 @@ using TCDF.Sinj.Log;
 using util.BRLight;
 using TCDF.Sinj.OV;
 using TCDF.Sinj.RN;
+using TCDF.Sinj.ES;
+using TCDF.Sinj.AD;
 
 namespace TCDF.Sinj.Web.ashx.Datatable
 {
@@ -33,16 +35,21 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                 CestaRN cestaRn = new CestaRN();
                 object datatable_result = null;
                 var _base = context.Request["b"];
+                SentencaPesquisaCestaOV sentencaOv = new SentencaPesquisaCestaOV();
+                sentencaOv.@base = _base;
+                sentencaOv.cesta = context.Request["cesta"];
                 if (_base == "sinj_norma")
                 {
                     sAction = "CST.NOR";
-                    var result_norma = cestaRn.ConsultarEs<NormaOV>(context);
+                    var query = new NormaBuscaEs().MontarBusca(sentencaOv).GetQuery();
+                    Result<NormaOV> result_norma = new NormaAD().ConsultarEs(query);
                     datatable_result = new { aaData = result_norma.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_norma.hits.total };
                 }
                 else if (_base == "sinj_diario")
                 {
                     sAction = "CST.DIO";
-                    var result_diario = cestaRn.ConsultarEs<DiarioOV>(context);
+                    var query = new DiarioBuscaEs().MontarBusca(sentencaOv).GetQuery();
+                    Result<DiarioOV> result_diario = new DiarioAD().ConsultarEs(query);
                     datatable_result = new { aaData = result_diario.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_diario.hits.total };
                 }
                 json_resultado = Newtonsoft.Json.JsonConvert.SerializeObject(datatable_result);
