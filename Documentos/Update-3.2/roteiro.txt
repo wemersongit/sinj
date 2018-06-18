@@ -1,0 +1,9 @@
+1. Gerar pacote e enviar ao servidor;
+2. Colocar nginx em manutenção;
+3. Criar a base fale_conosco;
+4. Atualizar base norma;
+5. Parar uwsgi;
+6. Atualizar mapping norma;
+7. Iniciar uwsgi;
+8. Rodar publicar.sh
+9. Publicar Rotina AtualizarVacatioLegis
