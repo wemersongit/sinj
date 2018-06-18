@@ -19,7 +19,6 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
         public void ProcessRequest(HttpContext context)
         {
             string sRetorno = "";
-            var _k = context.Request["k"];
             var _tipoDeVerificacao = context.Request["tpv"];
 
             var _email_usuario_push = context.Request["email_usuario_push"];
@@ -35,28 +34,13 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                     if (_tipoDeVerificacao.Equals("g"))
                     {
                         var _gRecaptchaResponse = context.Request["g-recaptcha-response"];
-                        if (string.IsNullOrEmpty(_gRecaptchaResponse))
-                        {
-                            throw new DocValidacaoException("Não é um robô? Então clique na caixa 'Não sou um robô' para verificarmos.");
-                        }
-                        var secretKeyRecaptcha = util.BRLight.Util.GetVariavel("secretKeyRecaptcha");
-                        var dic = new Dictionary<string, object>();
-                        dic.Add("secret", secretKeyRecaptcha);
-                        dic.Add("response", _gRecaptchaResponse);
-                        var response = new REST("https://www.google.com/recaptcha/api/siteverify", HttpVerb.POST, dic).GetResponse();
-                        var dicResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(response);
-                        if (!dicResponse.ContainsKey("success") || !bool.Parse(dicResponse["success"].ToString()))
-                        {
-                            throw new DocValidacaoException("Não é um robô? Então clique na caixa 'Não sou um robô' para verificarmos.");
-                        }
+                        new ValidaCaptcha().ValidarCaptchaGoogle(_gRecaptchaResponse);
                     }
                     else
                     {
                         var _ds_captcha = context.Request["ds_captcha"];
-                        if (string.IsNullOrEmpty(_ds_captcha) || !_k.Equals(Criptografia.CalcularHashMD5(_ds_captcha.ToUpper(), true)))
-                        {
-                            throw new DocValidacaoException("Os caracteres não correspondem com os da imagem.");
-                        }
+                        var _k = context.Request["k"];
+                        new ValidaCaptcha().ValidarCaptcha(_ds_captcha, _k);
                     }
 
                     var email = new EmailRN();

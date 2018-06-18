@@ -10,9 +10,9 @@ using TCDF.Sinj.OV;
 using TCDF.Sinj.RN;
 using util.BRLight;
 using TCDF.Sinj.Log;
-using TCDF.Sinj.ESUtil;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using TCDF.Sinj.ES;
 
 namespace SINJ_PUSH_APP
 {
@@ -559,7 +559,7 @@ namespace SINJ_PUSH_APP
                                     }
                                     sFilters += "]}";
                                     sQuery = "{\"size\": " + countDiarios + ", \"_source\":{\"exclude\":[\"*.filetext\"]},\"query\": {\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + textoConsultado + "\"}}" + sFilters + "}},\"highlight\":{\"pre_tags\":[\"<span style='background:#FFFF55; font-weight:bold;'>\"],\"post_tags\":[\"</span>\"],\"fields\":{\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150}}}}";
-                                    var diarios = new ES().PesquisarDocs<DiarioOV>(sQuery, url_es);
+                                    var diarios = new TCDF.Sinj.ES.ESAd().PesquisarDocs<DiarioOV>(sQuery, url_es);
                                     if (diarios.hits.hits.Count > 0)
                                     {
                                         var email = new EmailRN();

@@ -76,6 +76,7 @@
     <Compile Include="AD\TipoDeRelacaoAD.cs" />
     <Compile Include="AD\UsuarioAD.cs" />
     <Compile Include="AD\VocabularioAD.cs" />
+    <Compile Include="CertificateValidation.cs" />
     <Compile Include="ES\AD.cs" />
     <Compile Include="ES\DiarioBuscaEs.cs" />
     <Compile Include="ES\Doc.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="AD\DiarioAD.cs" />
     <Compile Include="RN\EmailRN.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="ValidaCaptcha.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

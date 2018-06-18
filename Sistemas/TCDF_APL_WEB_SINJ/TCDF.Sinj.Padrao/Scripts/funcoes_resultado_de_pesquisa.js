@@ -514,9 +514,9 @@ function ConsultarTotalCesta() {
     }
     else {
         $('#total_cesta').removeClass('destaque');
-        $('#total_cesta').text();
-        $('#total_cesta_norma').text();
-        $('#total_cesta_diario').text();
+        $('#total_cesta').text('');
+        $('#total_cesta_norma').text('');
+        $('#total_cesta_diario').text('');
     }
 }
 
