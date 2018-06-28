@@ -496,7 +496,7 @@ namespace TCDF.Sinj.RN
                     }
                 }
                 // SUSTAÇÃO TOTAL               3 (*8)
-                if (relacao.nm_tipo_relacao.ToLower() == "sustação total")
+                if (relacao.nm_tipo_relacao.ToLower() == "sustação" || relacao.nm_tipo_relacao.ToLower() == "sustação total")
                 {
                     if (!EhModificacaoTotal(vide))
                     {
@@ -1272,14 +1272,14 @@ namespace TCDF.Sinj.RN
             return texto;
         }
 
-        public string AlterarTextoCompletoDaNormaAlterada(NormaOV norma_alteradora, string id_file_norma_alterada, Caput _caput_alteradora)
+        public string AlterarTextoCompletoDaNormaAlterada(NormaOV normaAlteradora, string id_file_norma_alterada, Caput _caput_alteradora)
         {
             var htmlFile = new UtilArquivoHtml();
             var texto = htmlFile.GetHtmlFile(id_file_norma_alterada, "sinj_norma", null);
-            return AlterarTextoCompletoDaNormaAlterada(texto, norma_alteradora, _caput_alteradora);
+            return AlterarTextoCompletoDaNormaAlterada(texto, normaAlteradora, _caput_alteradora);
         }
 
-        public string AlterarTextoCompletoDaNormaAlterada(string texto, NormaOV norma_alteradora, Caput _caput_alteradora)
+        public string AlterarTextoCompletoDaNormaAlterada(string texto, NormaOV normaAlteradora, Caput _caput_alteradora)
         {
             var htmlFile = new UtilArquivoHtml();
 
@@ -1287,7 +1287,7 @@ namespace TCDF.Sinj.RN
             //replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
             //não pode mexer nesses dispositivos que já foram alterados
             //e a nota é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma
-            var pattern1 = "(?!<p.+replaced_by=.+>)(<p.+?>)(.+?)</p>";
+            var pattern1 = "(?!<p.+(?:replaced_by=|nota=|ch_norma_alteracao_completa=|ch_norma_info=).+>)(<p.+?>)(.+?)</p>";
             Regex rx1 = new Regex(pattern1);
 
             var pattern2 = "(<h1.+?epigrafe=.+?>.+?</h1>)";
@@ -1296,7 +1296,7 @@ namespace TCDF.Sinj.RN
             if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
             {
                 var replacement1 = "$1<s>$2</s></p>";
-                var replacement2 = "$1\r\n<p style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
                 texto = rx1.Replace(texto, replacement1);
                 texto = rx2.Replace(texto, replacement2);
             }
@@ -1329,16 +1329,21 @@ namespace TCDF.Sinj.RN
                 var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
                 texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
                 var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
-                var pattern2 = "(<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>\r\n)";
+                var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(revogado.+?\\)</a></p>)";
+                var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>)";
 
                 Regex rx1 = new Regex(pattern1);
-                Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+                Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
+                if (rx2.Matches(texto).Count <= 0)
+                {
+                    rx2 = new Regex(pattern2b, RegexOptions.Singleline);
+                }
 
                 if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
                 {
                     var replacement1 = "$1$2</p>";
                     //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
-                    var replacement2 = "$1<p style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + caputAlteradora.filename + "#" + caputAlteradora.caput[0] + "\" >(" + caputAlteradora.ds_texto_para_alterador_aux + " pelo(a) " + caputAlteradora.ds_norma + ")</a></p>\r\n";
+                    var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + caputAlteradora.filename + "#" + caputAlteradora.caput[0] + "\" >(" + caputAlteradora.ds_texto_para_alterador_aux + " pelo(a) " + caputAlteradora.ds_norma + ")</a></p>\r\n";
                     texto = rx1.Replace(texto, replacement1);
                     texto = rx2.Replace(texto, replacement2);
                 }
@@ -1376,16 +1381,21 @@ namespace TCDF.Sinj.RN
                 var aux_href = !string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma;
                 texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
                 var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
-                var pattern2 = "(<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>\r\n)";
+                var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(.+?\\)</a></p>)";
+                var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(.+?\\)</a></p>)";
+
 
                 Regex rx1 = new Regex(pattern1);
-                Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
-
+                Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
+                if (rx2.Matches(texto).Count <= 0)
+                {
+                    rx2 = new Regex(pattern2b, RegexOptions.Singleline);
+                }
                 if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
                 {
                     var replacement1 = "$1$2</p>";
                     //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
-                    var replacement2 = "$1<p style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
+                    var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
                     texto = rx1.Replace(texto, replacement1);
                     texto = rx2.Replace(texto, replacement2);
                 }
@@ -1411,7 +1421,7 @@ namespace TCDF.Sinj.RN
             //replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
             //não pode mexer nesses dispositivos que já foram alterados
             //e a nota é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma
-            var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)(.+?)</p>";
+            var pattern1 = "(?!<p.+(?:replaced_by=|nota=|ch_norma_alteracao_completa=|ch_norma_info=).+>)(<p.+?>)(.+?)</p>";
             var replacement1 = "$1<s>$2</s></p>";
 
             var name_file_norma_alteradora = norma_alteradora.getNameFileArquivoVigente();
@@ -1420,7 +1430,7 @@ namespace TCDF.Sinj.RN
             var aux_href = !string.IsNullOrEmpty(name_file_norma_alteradora) ? ("(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + name_file_norma_alteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + norma_alteradora.ch_norma;
 
             var pattern2 = "(<h1.+?epigrafe=.+?>.+?</h1>)";
-            var replacement2 = "$1\r\n<p style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + ds_texto_alterador + " pelo(a) " + ds_norma_alteradora + ")</a></p>";
+            var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + norma_alteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + ds_texto_alterador + " pelo(a) " + ds_norma_alteradora + ")</a></p>";
 
             if (Regex.Matches(texto, pattern1).Count > 0 || Regex.Matches(texto, pattern2).Count == 1)
             {
@@ -1442,16 +1452,16 @@ namespace TCDF.Sinj.RN
             return AcrescentarInformacaoNoTextoDaNormaAlterada(texto, norma_alteradora, _caput_alteradora);
         }
 
-        public string AcrescentarInformacaoNoTextoDaNormaAlterada(string texto, NormaOV norma_alteradora, Caput _caput_alteradora)
+        public string AcrescentarInformacaoNoTextoDaNormaAlterada(string texto, NormaOV normaAlteradora, Caput _caput_alteradora)
         {
             var htmlFile = new UtilArquivoHtml();
             var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
             if (Regex.Matches(texto, pattern).Count == 1)
             {
-                var replacement = "$1\r\n<p><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
+                var replacement = "$1\r\n<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
                 if (_caput_alteradora.ds_texto_para_alterador_aux == "legislação correlata")
                 {
-                    replacement = "<p><a href=\"(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >Legislação correlata - " + _caput_alteradora.ds_norma + "</a></p>\r\n$1";
+                    replacement = "<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >Legislação correlata - " + _caput_alteradora.ds_norma + "</a></p>\r\n$1";
                 }
                 texto = Regex.Replace(texto, pattern, replacement);
             }
@@ -1477,10 +1487,10 @@ namespace TCDF.Sinj.RN
             if (Regex.Matches(texto, pattern).Count == 1)
             {
 
-                var replacement = "$1\r\n<p><a href=\"" + aux_href + "\" >(" + dsTextoRelacao + " pelo(a) " + dsNormaAlteradora + ")</a></p>";
+                var replacement = "$1\r\n<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"" + aux_href + "\" >(" + dsTextoRelacao + " pelo(a) " + dsNormaAlteradora + ")</a></p>";
                 if (dsTextoRelacao == "legislação correlata")
                 {
-                    replacement = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlteradora + "</a></p>\r\n$1";
+                    replacement = "<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlteradora + "</a></p>\r\n$1";
                 }
                 texto = Regex.Replace(texto, pattern, replacement);
             }
@@ -1507,7 +1517,7 @@ namespace TCDF.Sinj.RN
 
                 if (Regex.Matches(texto, pattern).Count == 1)
                 {
-                    var replacement = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n$1";
+                    var replacement = "<p ch_norma_info=\"" + normaAlterada.ch_norma + "\"><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n$1";
 
                     texto = Regex.Replace(texto, pattern, replacement);
                 }
@@ -1651,7 +1661,8 @@ namespace TCDF.Sinj.RN
                      auxNmSituacaoAlteradaAtual == "inconstitucional" ||
                      auxNmSituacaoAlteradaAtual == "inconstitucional" ||
                      auxNmSituacaoAlteradaAtual == "cancelada" ||
-                     auxNmSituacaoAlteradaAtual == "suspenso"))
+                     auxNmSituacaoAlteradaAtual == "suspenso" ||
+                     auxNmSituacaoAlteradaAtual == "sustado"))
                 {
                     arquivoNormaVideAlterada = RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlteradorAnterior);
                 }
@@ -1661,7 +1672,8 @@ namespace TCDF.Sinj.RN
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "declarado inconstitucional") ||
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "julgada procedente") ||
                     (auxNmSituacaoAnterior == "cancelada" && auxDsTextoParaAlteradorAnterior == "cancelada") ||
-                    (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlteradorAnterior == "suspenso totalmente")))
+                    (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlteradorAnterior == "suspenso totalmente") ||
+                    (auxNmSituacaoAnterior == "sustado" && auxDsTextoParaAlteradorAnterior == "sustado")))
                 {
                     arquivoNormaVideAlterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlteradorAnterior);
                 }
@@ -1742,7 +1754,8 @@ namespace TCDF.Sinj.RN
                      auxNmSituacaoAtual == "inconstitucional" ||
                      auxNmSituacaoAtual == "inconstitucional" ||
                      auxNmSituacaoAtual == "cancelada" ||
-                     auxNmSituacaoAtual == "suspenso"))
+                     auxNmSituacaoAtual == "suspenso" ||
+                     auxNmSituacaoAtual == "sustado"))
                 {
                     arquivoNormaVideAlterada = RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoAlteradorDesfazer);
                 }
@@ -2054,16 +2067,23 @@ namespace TCDF.Sinj.RN
         {
             var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
 
-            //ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros
-            //replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
+            //ignora os paragrafos com atributos 'replaced_by', 'nota', 'ch_norma_alteracao_completa' ou 'ch_norma_info', aceitando todos os outros
+            //1.replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
             //não pode mexer nesses dispositivos que já foram alterados
-            //e a nota é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma
-            var pattern1 = "(?!<p.+replaced_by=.+>)(<p.+?>)(.+?)</p>";
+            //2.nota é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma
+            //3.ch_norma_alteracao_completa é usado em links que quando há revogação, sustação, etc., vides de alteração completa
+            //4.ch_norma_info é usado em links por exemplo leco
+            var pattern1 = "(?!<p.+(?:replaced_by=|nota=|ch_norma_alteracao_completa=|ch_norma_info=).+>)(<p.+?>)(.+?)</p>";
             Regex rx1 = new Regex(pattern1);
 
-            var pattern2 = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
-            Regex rx2 = new Regex(pattern2);
+            var pattern2a = "\r\n<p.+?ch_norma_alteracao_completa=\"" + chNormaAlteradora + "\".*?><a.+?>\\(.+?\\)</a></p>";
+            var pattern2b = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
 
+            Regex rx2 = new Regex(pattern2a);
+            if (rx2.Matches(texto).Count <= 0)
+            {
+                rx2 = new Regex(pattern2b);
+            }
             if (rx2.Matches(texto).Count == 1 || rx1.Matches(texto).Count > 0)
             {
                 var replacement2 = "";
@@ -2081,10 +2101,22 @@ namespace TCDF.Sinj.RN
         public string RemoverInformacaoNoTextoDaNormaAlterada(string chNormaAlteradora, string idFileNormaAlterada, string dsTextoParaAlterador)
         {
             var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
-            var pattern = "\r\n<p><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
+            var pattern = "";
             if (dsTextoParaAlterador.ToLower() == "legislação correlata")
             {
-                pattern = "<p><a.+?/" + chNormaAlteradora + "/.+?>Legislação correlata.+?</a></p>\r\n";
+                pattern = "<p.+?ch_norma_info=\"" + chNormaAlteradora + "\".*?><a.+?>Legislação correlata.+?</a></p>\r\n";
+                if (Regex.Matches(texto, pattern).Count <= 0)
+                {
+                    pattern = "<p.*?><a.+?/" + chNormaAlteradora + "/.+?>Legislação correlata.+?</a></p>\r\n";
+                }
+            }
+            else
+            {
+                pattern = "\r\n<p.+?ch_norma_info=\"" + chNormaAlteradora + "\".*?><a.+?>\\(.+?\\)</a></p>";
+                if (Regex.Matches(texto, pattern).Count <= 0)
+                {
+                    pattern = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(.+?\\)</a></p>";
+                }
             }
             if (Regex.Matches(texto, pattern).Count == 1)
             {
@@ -2110,7 +2142,12 @@ namespace TCDF.Sinj.RN
 
                 var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
 
-                var pattern = "<p><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n";
+                var pattern = "<p.+?ch_norma_info=\"" + normaAlterada.ch_norma + "\".*?><a.+?>Legislação correlata.+?</a></p>\r\n";
+                if (Regex.Matches(texto, pattern).Count <= 0)
+                {
+                    pattern = "<p.*?><a href=\"" + aux_href + "\" >Legislação correlata.+?</a></p>\r\n";
+
+                }
                 if (Regex.Matches(texto, pattern).Count == 1)
                 {
                     texto = Regex.Replace(texto, pattern, "");

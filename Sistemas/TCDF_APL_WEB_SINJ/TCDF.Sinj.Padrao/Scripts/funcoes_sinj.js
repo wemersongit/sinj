@@ -4038,7 +4038,7 @@ function loadCkeditor(id_textarea){
     var editor = CKEDITOR.replace(id_textarea, {
         disallowedContent: 'br',
         shiftEnterMode: CKEDITOR.ENTER_P,
-        extraAllowedContent: 'p[linkname,replaced_by,replaced_by_disabled,nota,noindex];h[epigrafe];a(linkname,link_vide);',
+        extraAllowedContent: 'p[linkname,replaced_by,ch_norma_alteracao_completa,ch_norma_info,replaced_by_disabled,nota,noindex];h[epigrafe];a(linkname,link_vide);',
         filebrowserImageBrowseUrl: './Imagens.aspx'
     });
     editor.addCommand("noIndexCommand", { // create named command
