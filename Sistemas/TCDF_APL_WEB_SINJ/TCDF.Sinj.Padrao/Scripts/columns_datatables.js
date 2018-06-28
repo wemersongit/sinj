@@ -399,14 +399,10 @@ var _columns_diario_es = [
 	},
     { "indice": 6, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "left ws", "bSortable": false,
         "mRender": function (data, type, full) {
-            var html = '<div class="table w-100-pc">';
             var buttonTitle = '<H2>' + montarSpanDescricaoDiario(full._source) + '</H2>';
             if (_aplicacao == "CADASTRO") {
                 buttonTitle = '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_diario\'">' + buttonTitle + '<img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></button>';
             }
-            html += '<div class="line">' +
-                '<div class="column">' + buttonTitle + '</div>' +
-            '</div>';
             var campo_highlight = '';
             var id_file = "";
             var nm_file = "";
@@ -448,15 +444,18 @@ var _columns_diario_es = [
                 campo_highlight = campo_highlight.replace(/## img.* ##/g, '').replace(/##/g, '');
             }
 
-            html += '<div class="line">' +
+            var html = '<div class="table w-100-pc">'+
+                '<div class="line">' +
                     '<div class="column w-80-pc">' +
-	                    campo_highlight +
+                        buttonTitle +
+	                    (campo_highlight.indexOf("<span class='highlight'>") > -1 ? '<br/>' + campo_highlight : '') +
 	                '</div>' +
                     '<div class="column w-20-pc"><div>' +
 	                    '<label>Texto Integral:</label><br/>' +
 	                    links +
-	                '</div></div>' +
-                '</div>';
+	                '</div>' +
+                '</div>' +
+            '</div>';
             return html;
         }
     }

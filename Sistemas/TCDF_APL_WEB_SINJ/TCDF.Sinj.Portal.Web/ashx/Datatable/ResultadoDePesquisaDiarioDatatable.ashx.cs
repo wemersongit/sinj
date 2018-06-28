@@ -19,11 +19,8 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
 
         public void ProcessRequest(HttpContext context)
         {
-            var sAction = "";
+            var sAction = Util.GetEnumDescription(AcoesDoUsuario.dio_pes);
             string sRetorno = "";
-            string _outras_buscas = context.Request["outras_buscas"];
-            string _relatorio = context.Request["relatorio"];
-            string _bbusca = context.Request["bbusca"];
 
             var _iDisplayLength = context.Request["iDisplayLength"];
             ulong iDisplayLength = 0;
@@ -33,9 +30,15 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
 
 
             string _tipo_pesquisa = context.Request["tipo_pesquisa"];
-            string _sSearch = context.Request["sSearch"];
-            string _sFiltrar = context.Request["filtrar"];
-            string _all = context.Request["all"];
+
+            if (!string.IsNullOrEmpty(_iDisplayStart))
+            {
+                iDisplayStart = ulong.Parse(_iDisplayStart);
+            }
+            if (!string.IsNullOrEmpty(_iDisplayLength))
+            {
+                iDisplayLength = ulong.Parse(_iDisplayLength);
+            }
 
             var sentencaOrdenamento = MontarOrdenamento(context);
 
@@ -87,7 +90,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
                 }
 
                 Result<DiarioOV> result_diario = new DiarioAD().ConsultarEs(query);
-                sAction = Util.GetEnumDescription(AcoesDoUsuario.dio_pes);
+                
                 var datatable_result = new { aaData = result_diario.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_diario.hits.total, result_diario.aggregations };
                 sRetorno = Newtonsoft.Json.JsonConvert.SerializeObject(datatable_result);
 

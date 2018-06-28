@@ -49,6 +49,8 @@
     <title>.:: SINJ-DF - Sistema Integrado de Normas Jurídicas do DF ::.</title>
     <script type="text/javascript">
 
+        var dateTimeServer = new Date('<%=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")%>');
+
         function fAdaptive() {
             if ($('div.right-top').offset().left < $('div.logo').width()) {
                 $('div.right-top').addClass('mobile');
@@ -64,7 +66,7 @@
             }
         }
         $(document).ready(function () {
-
+            setInterval(incrementTime, 1000);
             if (IsNotNullOrEmpty(_user, 'nm_usuario')) {
                 $('#litNmUsuario').text(_user.nm_usuario);
                 $('#menuLogin').hide();
@@ -128,12 +130,23 @@
 
             $('[data-toggle="tooltip"]').tooltip({ container: "#div_tooltip", trigger: "hover" });
         });
+        function incrementTime() {
+            dateTimeServer.setSeconds(dateTimeServer.getSeconds() + 1);
+            var h = [dateTimeServer.getHours(), dateTimeServer.getMinutes(), dateTimeServer.getSeconds()]
+            for (var i = 0; i < h.length; i++ ) {
+                if(h[i] < 10){
+                    h[i] = '0' + h[i];
+                }
+            }
+            $('span.timeUser').text(h[0] + ':' + h[1] + ':' + h[2]);
+        }
+
         
     </script>
     <asp:ContentPlaceHolder ID="Head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body class="master">
+<body class="master cad">
 	<% Response.Write("<!--[if lte IE 9]><script>alert('Esse site não é compatível com o seu navegador. <br/>Atualize seu navegador ou instale um mais moderno.');</script><![endif]-->"); %>
     <div class="page">
         <div id="div_top" class="top">
@@ -177,7 +190,8 @@
                             </div>
                             <div class="data-user">
                                 <label id="litNmUsuario"></label><br />
-                                <span class="dateUser"> <%=DateTime.Now.ToString("dd \\d\\e MMMM \\d\\e yyyy") %></span>
+                                <span class="dateUser"> <%=DateTime.Now.ToString("dd \\d\\e MMMM \\d\\e yyyy") %>,</span>
+                                <span class="timeUser"></span>
                             </div>
                             <div class="setting-user">
                                 <a href="./Configuracao.aspx" title="Configurações"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/none.png" class="setting" alt="Config" /></a>
@@ -234,7 +248,7 @@
                                     </ul>
                                 </li>
                                 <li runat="server" id="li_relatorio"><a title="Relatório" class="lnkmenu" id="aRelatorio"     href="./Relatorio.aspx" >Relat&oacute;rios</a></li>
-                                <li id="li_fale_conosco"><a title="Fale Conosco"             class="lnkmenu" id="aContato"       href="./FaleConosco?nm_orgao_cadastrador_atribuido=<%= nmOrgaoCadastrador %>&st_atendimento=Novo">Fale Conosco<%= (totalNovos > 0 ? " <span class=\"nr_total_novos\">" + totalNovos.ToString() + "</span>" : "")%></a></li>
+                                <li id="li_fale_conosco"><a title="Fale Conosco"             class="lnkmenu" id="aContato"       href="./FaleConosco?st_atendimento=Novo">Fale Conosco<%= (totalNovos > 0 ? " <span class=\"nr_total_novos\">" + totalNovos.ToString() + "</span>" : "")%></a></li>
                                 <li id="li_historico"><a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a></li>
                                 <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a></li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a></li>
@@ -247,7 +261,7 @@
                 </div>
             </div>
         </div>
-        <div id="div_body" class="body">
+        <div id="div_body" class="body cad">
             <div class="inner-body">
                 <div id="div_communication" st="0" title="manutencao1" style="display:none; font-size:14px; font-family: Trebuchet MS, Verdana, Arial; text-align: center; background-color: #EEE; width:650px; margin:auto;">
                     <button class="clean" onclick="closeCommunication();" title="Fechar o comunicado" style="float:right; padding:0px; font-weight: bold; background: #DDD; width: 15px; height: 15px; border-radius:0px;">x</button>

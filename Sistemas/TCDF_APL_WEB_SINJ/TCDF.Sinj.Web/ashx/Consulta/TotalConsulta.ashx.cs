@@ -81,6 +81,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaDireta.norma_sem_numero = context.Request["norma_sem_numero"];
                     pesquisaDireta.ano_assinatura = context.Request["ano_assinatura"];
                     pesquisaDireta.ch_orgao = context.Request["ch_orgao"];
+                    pesquisaDireta.ch_hierarquia = context.Request["ch_hierarquia"];
                     pesquisaDireta.nm_orgao = context.Request["sg_hierarquia_nm_vigencia"];
                     pesquisaDireta.origem_por = context.Request["origem_por"];
                     pesquisaDireta.ch_termos = context.Request.Params.GetValues("ch_termo");

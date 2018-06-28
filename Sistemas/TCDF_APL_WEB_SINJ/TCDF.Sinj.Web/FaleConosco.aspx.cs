@@ -7,38 +7,19 @@ using System.Web.UI.WebControls;
 using TCDF.Sinj.OV;
 using TCDF.Sinj.Log;
 using util.BRLight;
+using TCDF.Sinj.RN;
+using neo.BRLightREST;
 
 namespace TCDF.Sinj.Web
 {
     public partial class FaleConosco : System.Web.UI.Page
     {
-
+        protected string nmOrgaoCadastrador;
+        protected ulong totalNovosOrgao;
         protected void Page_Load(object sender, EventArgs e)
         {
-            SessaoUsuarioOV sessao_usuario = null;
-            try
-            {
-                sessao_usuario = Util.ValidarSessao();
-            }
-            catch (SessionExpiredException)
-            {
-                Response.Redirect("./Login.aspx?cd=1", true);
-            }
-            catch (Exception ex)
-            {
-                Response.Redirect("./Erro.aspx", true);
-                var erro = new ErroRequest
-                {
-                    Pagina = Request.Path,
-                    RequestQueryString = Request.QueryString,
-                    MensagemDaExcecao = Excecao.LerTodasMensagensDaExcecao(ex, true),
-                    StackTrace = ex.StackTrace
-                };
-                if (sessao_usuario != null)
-                {
-                    LogErro.gravar_erro("FaleConosco", erro, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-                }
-            }
+            nmOrgaoCadastrador = Sinj.oSessaoUsuario.orgao_cadastrador.nm_orgao_cadastrador;
+            totalNovosOrgao = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo' AND nm_orgao_cadastrador_atribuido='" + nmOrgaoCadastrador + "'" }).result_count;
         }
     }
 }

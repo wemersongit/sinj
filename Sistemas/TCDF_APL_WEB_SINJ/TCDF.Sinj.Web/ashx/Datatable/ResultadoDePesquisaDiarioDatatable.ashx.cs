@@ -21,7 +21,6 @@ namespace TCDF.Sinj.Web.ashx.Datatable
         {
             var sAction = Util.GetEnumDescription(AcoesDoUsuario.dio_pes);
             string sRetorno = "";
-            string _bbusca = context.Request["bbusca"];
 
             var _iDisplayLength = context.Request["iDisplayLength"];
             ulong iDisplayLength = 0;
@@ -31,6 +30,15 @@ namespace TCDF.Sinj.Web.ashx.Datatable
             SessaoUsuarioOV sessao_usuario = null;
 
             string _tipo_pesquisa = context.Request["tipo_pesquisa"];
+
+            if (!string.IsNullOrEmpty(_iDisplayStart))
+            {
+                iDisplayStart = ulong.Parse(_iDisplayStart);
+            }
+            if (!string.IsNullOrEmpty(_iDisplayLength))
+            {
+                iDisplayLength = ulong.Parse(_iDisplayLength);
+            }
 
             var sentencaOrdenamento = MontarOrdenamento(context);
 

@@ -20,7 +20,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
 
         public void ProcessRequest(HttpContext context)
         {
-            var sAction = "";
+            var sAction = Util.GetEnumDescription(AcoesDoUsuario.nor_pes);
             string sRetorno = "";
 
             var _iDisplayLength = context.Request["iDisplayLength"];
@@ -95,7 +95,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
 
                 Result<NormaOV> result_norma = new NormaAD().ConsultarEs(query);
 
-                sAction = Util.GetEnumDescription(AcoesDoUsuario.nor_pes);
+                
                 var datatable_result = new { aaData = result_norma.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_norma.hits.total, result_norma.aggregations };
                 sRetorno = Newtonsoft.Json.JsonConvert.SerializeObject(datatable_result);
 

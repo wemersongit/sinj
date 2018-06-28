@@ -373,8 +373,8 @@
                                         <div id="loading_tipos_de_norma" class="loading-p" style="display:none;"></div>
                                         <div id="div_tipos_de_norma"  style="max-height:100px; overflow-y:scroll; display:none;padding-left:5px;"></div>
                                     </fieldset>
-                                    <div class="loaded">
-                                        <button type="submit" id="button_pesquisa_avancada" class="pesquisa fr">
+                                    <div class="loaded text-right" style="margin-bottom: 30px;">
+                                        <button type="submit" id="button_pesquisa_avancada" class="pesquisa">
                                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico-lupa-p_green.png" />
                                         </button>
                                     </div>

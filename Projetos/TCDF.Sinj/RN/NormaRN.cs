@@ -597,7 +597,7 @@ namespace TCDF.Sinj.RN
             return true;
         }
 
-        #region Vide
+        #region Vide Arquivos Incluir Alteração
 
         public void VerificarDispositivosESalvarOsTextosAntigosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado, string nm_login_usuario)
         {
@@ -767,8 +767,12 @@ namespace TCDF.Sinj.RN
                 var aux_nm_situacao_alterada = normaAlterada.nm_situacao.ToLower();
 
                 var arquivo_norma_vide_alterada = "";
-
-                if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, caputNormaVideAlterador.ds_texto_para_alterador_aux))
+                //se a situação não é revogado e a relação de vide é revigorado deve desfazer as alterações da revogação
+                if (aux_nm_situacao_alterada != "revogado" && caputNormaVideAlterador.ds_texto_para_alterador_aux == "revigorado")
+                {
+                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRevigorada(normaAlteradora, normaAlterada, caputNormaVideAlterador);
+                }
+                else if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, caputNormaVideAlterador.ds_texto_para_alterador_aux))
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(normaAlteradora, id_file_norma_alterada, caputNormaVideAlterador);
                 }
@@ -819,7 +823,12 @@ namespace TCDF.Sinj.RN
 
                 var arquivo_norma_vide_alterada = "";
 
-                if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, aux_ds_texto_alterador))
+                //se a situação não é revogado e a relação de vide é revigorado deve desfazer as alterações da revogação
+                if (aux_nm_situacao_alterada != "revogado" && aux_ds_texto_alterador == "revigorado")
+                {
+                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRevigorada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
+                }
+                else if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, aux_ds_texto_alterador))
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
                 }
@@ -1274,6 +1283,10 @@ namespace TCDF.Sinj.RN
         {
             var htmlFile = new UtilArquivoHtml();
 
+            //ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros
+            //replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
+            //não pode mexer nesses dispositivos que já foram alterados
+            //e a nota é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma
             var pattern1 = "(?!<p.+replaced_by=.+>)(<p.+?>)(.+?)</p>";
             Regex rx1 = new Regex(pattern1);
 
@@ -1294,6 +1307,96 @@ namespace TCDF.Sinj.RN
             return texto;
         }
 
+        public string AlterarTextoCompletoDaNormaRevigorada(NormaOV normaAlteradora, NormaOV normaAlterada, Caput caputAlteradora)
+        {
+            var texto = "";
+            Vide videDaRevogacao = null;
+            //seleciona o último vide da revogação que na ação da revigoração vai ser desfeito.
+            //é necessário saber a chave da norma que revogou para inserir o link da revigoração após o paragrafo da revogação
+            foreach (var vide in normaAlterada.vides)
+            {
+                if (vide.nm_tipo_relacao.Equals("REVOGAÇÃO") && vide.in_norma_afetada && (vide.caput_norma_vide == null || vide.caput_norma_vide.caput == null || vide.caput_norma_vide.caput.Length == 0))
+                {
+                    if (videDaRevogacao == null || (!string.IsNullOrEmpty(vide.dt_assinatura_norma_vide) && !vide.possuiDispositivoInformadoManualmente() && Convert.ToDateTime(vide.dt_assinatura_norma_vide, new CultureInfo("pt-BR")) > Convert.ToDateTime(videDaRevogacao.dt_assinatura_norma_vide, new CultureInfo("pt-BR"))))
+                    {
+                        videDaRevogacao = util.BRLight.objHelp.Clone<Vide>(vide);
+                    }
+                }
+            }
+            if (videDaRevogacao != null)
+            {
+                var htmlFile = new UtilArquivoHtml();
+                var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
+                texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+                var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+                var pattern2 = "(<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>\r\n)";
+
+                Regex rx1 = new Regex(pattern1);
+                Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+
+                if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+                {
+                    var replacement1 = "$1$2</p>";
+                    //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
+                    var replacement2 = "$1<p style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + caputAlteradora.filename + "#" + caputAlteradora.caput[0] + "\" >(" + caputAlteradora.ds_texto_para_alterador_aux + " pelo(a) " + caputAlteradora.ds_norma + ")</a></p>\r\n";
+                    texto = rx1.Replace(texto, replacement1);
+                    texto = rx2.Replace(texto, replacement2);
+                }
+                else
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
+        public string AlterarTextoCompletoDaNormaRevigorada(NormaOV normaAlteradora, NormaOV normaAlterada, string dsTextoAlterador)
+        {
+            var texto = "";
+            Vide videDaRevogacao = null;
+            //seleciona o último vide da revogação que na ação da revigoração vai ser desfeito.
+            //é necessário saber a chave da norma que revogou para inserir o link da revigoração após o paragrafo da revogação
+            foreach (var vide in normaAlterada.vides)
+            {
+                if (vide.nm_tipo_relacao.Equals("REVOGAÇÃO") && vide.in_norma_afetada && (vide.caput_norma_vide == null || vide.caput_norma_vide.caput == null || vide.caput_norma_vide.caput.Length == 0))
+                {
+                    if (videDaRevogacao == null || (!string.IsNullOrEmpty(vide.dt_assinatura_norma_vide) && !vide.possuiDispositivoInformadoManualmente() && Convert.ToDateTime(vide.dt_assinatura_norma_vide, new CultureInfo("pt-BR")) > Convert.ToDateTime(videDaRevogacao.dt_assinatura_norma_vide, new CultureInfo("pt-BR"))))
+                    {
+                        videDaRevogacao = util.BRLight.objHelp.Clone<Vide>(vide);
+                    }
+                }
+            }
+            if (videDaRevogacao != null)
+            {
+                var htmlFile = new UtilArquivoHtml();
+                var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
+                var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
+                var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
+
+                var aux_href = !string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma;
+                texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+                var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+                var pattern2 = "(<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>\r\n)";
+
+                Regex rx1 = new Regex(pattern1);
+                Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+
+                if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+                {
+                    var replacement1 = "$1$2</p>";
+                    //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
+                    var replacement2 = "$1<p style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
+                    texto = rx1.Replace(texto, replacement1);
+                    texto = rx2.Replace(texto, replacement2);
+                }
+                else
+                {
+                    texto = "";
+                }
+            }
+            return texto;
+        }
+
         public string AlterarTextoCompletoDaNormaAlterada(NormaOV norma_alteradora, string id_file_norma_alterada, string ds_texto_alterador)
         {
             var htmlFile = new UtilArquivoHtml();
@@ -1305,6 +1408,9 @@ namespace TCDF.Sinj.RN
         {
             var htmlFile = new UtilArquivoHtml();
             //ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros
+            //replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
+            //não pode mexer nesses dispositivos que já foram alterados
+            //e a nota é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma
             var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)(.+?)</p>";
             var replacement1 = "$1<s>$2</s></p>";
 
@@ -1412,6 +1518,10 @@ namespace TCDF.Sinj.RN
             }
             return texto;
         }
+
+        # endregion
+
+        #region Vide Arquivos Remover Alteração
 
         /// <summary>
         /// Verifica se as normas possuem alterações nos seus respectivos arquivos html, provenientes dos vides que estão sendo desfeitos
@@ -1523,8 +1633,8 @@ namespace TCDF.Sinj.RN
                 }
             }
 
-            var auxDsTextoParaAlterador = caputAlteradorDesfazer.ds_texto_para_alterador_aux;
-            var auxNmSituacaoAlterada = normaAlterada.nm_situacao.ToLower();
+            var auxDsTextoParaAlteradorAnterior = caputAlteradorDesfazer.ds_texto_para_alterador_aux;
+            var auxNmSituacaoAlteradaAtual = normaAlterada.nm_situacao.ToLower();
             var auxNmSituacaoAnterior = nmSituacaoAnterior.ToLower();
 
             var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
@@ -1534,23 +1644,34 @@ namespace TCDF.Sinj.RN
                 var arquivoNormaVideAlterada = "";
 
                 //Se a situação da norma foi alterada pela remoção do vide em questão, então não deve alterar o texto, pois essa alteração afeta o texto inteiro
-                if (auxNmSituacaoAlterada != auxNmSituacaoAnterior && ((auxNmSituacaoAnterior == "revogado" && auxDsTextoParaAlterador == "revogado") ||
-                    (auxNmSituacaoAnterior == "anulado" && auxDsTextoParaAlterador == "anulado") ||
-                    (auxNmSituacaoAnterior == "extinta" && auxDsTextoParaAlterador == "extinta") ||
-                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlterador == "declarado inconstitucional") ||
-                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlterador == "julgada procedente") ||
-                    (auxNmSituacaoAnterior == "cancelada" && auxDsTextoParaAlterador == "cancelada") ||
-                    (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlterador == "suspenso totalmente")))
+                if (auxNmSituacaoAlteradaAtual != auxNmSituacaoAnterior && auxDsTextoParaAlteradorAnterior == "revigorado" &&
+                    (auxNmSituacaoAlteradaAtual == "revogado" ||
+                     auxNmSituacaoAlteradaAtual == "anulado" ||
+                     auxNmSituacaoAlteradaAtual == "extinta" ||
+                     auxNmSituacaoAlteradaAtual == "inconstitucional" ||
+                     auxNmSituacaoAlteradaAtual == "inconstitucional" ||
+                     auxNmSituacaoAlteradaAtual == "cancelada" ||
+                     auxNmSituacaoAlteradaAtual == "suspenso"))
                 {
-                    arquivoNormaVideAlterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlterador);
+                    arquivoNormaVideAlterada = RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlteradorAnterior);
                 }
-                else if (auxDsTextoParaAlterador == "ratificado" ||
-                    auxDsTextoParaAlterador == "reeditado" ||
-                    auxDsTextoParaAlterador == "regulamentado" ||
-                    auxDsTextoParaAlterador == "prorrogado" ||
-                    auxDsTextoParaAlterador == "legislação correlata")
+                else if (auxNmSituacaoAlteradaAtual != auxNmSituacaoAnterior && ((auxNmSituacaoAnterior == "revogado" && auxDsTextoParaAlteradorAnterior == "revogado") ||
+                    (auxNmSituacaoAnterior == "anulado" && auxDsTextoParaAlteradorAnterior == "anulado") ||
+                    (auxNmSituacaoAnterior == "extinta" && auxDsTextoParaAlteradorAnterior == "extinta") ||
+                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "declarado inconstitucional") ||
+                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "julgada procedente") ||
+                    (auxNmSituacaoAnterior == "cancelada" && auxDsTextoParaAlteradorAnterior == "cancelada") ||
+                    (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlteradorAnterior == "suspenso totalmente")))
                 {
-                    arquivoNormaVideAlterada = RemoverInformacaoNoTextoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlterador);
+                    arquivoNormaVideAlterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlteradorAnterior);
+                }
+                else if (auxDsTextoParaAlteradorAnterior == "ratificado" ||
+                    auxDsTextoParaAlteradorAnterior == "reeditado" ||
+                    auxDsTextoParaAlteradorAnterior == "regulamentado" ||
+                    auxDsTextoParaAlteradorAnterior == "prorrogado" ||
+                    auxDsTextoParaAlteradorAnterior == "legislação correlata")
+                {
+                    arquivoNormaVideAlterada = RemoverInformacaoNoTextoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlteradorAnterior);
                 }
 
                 if (arquivoNormaVideAlterada != "")
@@ -1604,28 +1725,39 @@ namespace TCDF.Sinj.RN
             var idFileNormaAlteradora = normaAlteradora.getIdFileArquivoVigente();
             var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
 
-            var if_file_norma_alterada = normaAlterada.getIdFileArquivoVigente();
+            var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
             var name_file_norma_alterada = normaAlterada.getNameFileArquivoVigente();
 
-            if (!string.IsNullOrEmpty(if_file_norma_alterada))
+            if (!string.IsNullOrEmpty(idFileNormaAlterada))
             {
-                var aux_nm_situacao_alterada = nmSituacaoAnterior.ToLower();
-                var aux_ds_texto_alterador = videAlteradoDesfazer.ds_texto_relacao.ToLower();
+                var auxNmSituacaoAnterior = nmSituacaoAnterior.ToLower();
+                var auxDsTextoAlteradorDesfazer = videAlteradoDesfazer.ds_texto_relacao.ToLower();
+                var auxNmSituacaoAtual = normaAlterada.nm_situacao.ToLower();
 
-                var arquivo_norma_vide_alterada = "";
-
-                if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, aux_ds_texto_alterador))
+                var arquivoNormaVideAlterada = "";
+                if (auxNmSituacaoAtual != auxNmSituacaoAnterior && auxDsTextoAlteradorDesfazer == "revigorado" &&
+                    (auxNmSituacaoAtual == "revogado" ||
+                     auxNmSituacaoAtual == "anulado" ||
+                     auxNmSituacaoAtual == "extinta" ||
+                     auxNmSituacaoAtual == "inconstitucional" ||
+                     auxNmSituacaoAtual == "inconstitucional" ||
+                     auxNmSituacaoAtual == "cancelada" ||
+                     auxNmSituacaoAtual == "suspenso"))
                 {
-                    arquivo_norma_vide_alterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, if_file_norma_alterada, aux_ds_texto_alterador);
+                    arquivoNormaVideAlterada = RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoAlteradorDesfazer);
                 }
-                else if (UtilVides.EhLegislacaoCorrelata(aux_ds_texto_alterador))
+                else if (UtilVides.EhAlteracaoCompleta(auxNmSituacaoAnterior, auxDsTextoAlteradorDesfazer))
                 {
-                    arquivo_norma_vide_alterada = RemoverInformacaoNoTextoDaNormaAlterada(normaAlteradora.ch_norma, if_file_norma_alterada, aux_ds_texto_alterador);
+                    arquivoNormaVideAlterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoAlteradorDesfazer);
+                }
+                else if (UtilVides.EhLegislacaoCorrelata(auxDsTextoAlteradorDesfazer))
+                {
+                    arquivoNormaVideAlterada = RemoverInformacaoNoTextoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoAlteradorDesfazer);
                 }
 
-                if (!string.IsNullOrEmpty(arquivo_norma_vide_alterada))
+                if (!string.IsNullOrEmpty(arquivoNormaVideAlterada))
                 {
-                    var retornoFileAlterada = upload.AnexarHtml(arquivo_norma_vide_alterada, name_file_norma_alterada, "sinj_norma");
+                    var retornoFileAlterada = upload.AnexarHtml(arquivoNormaVideAlterada, name_file_norma_alterada, "sinj_norma");
                     var oFileAlterada = JSON.Deserializa<ArquivoOV>(retornoFileAlterada);
                     if (!string.IsNullOrEmpty(oFileAlterada.id_file))
                     {
@@ -1634,7 +1766,7 @@ namespace TCDF.Sinj.RN
                             dictionaryIdFiles.Add("id_file_alterado", oFileAlterada.id_file);
                         }
 
-                        var arquivoNormaAlteradora = RemoverInformacaoNoTextoDaNormaAlteradora(normaAlterada, idFileNormaAlteradora, aux_ds_texto_alterador);
+                        var arquivoNormaAlteradora = RemoverInformacaoNoTextoDaNormaAlteradora(normaAlterada, idFileNormaAlteradora, auxDsTextoAlteradorDesfazer);
                         if (!string.IsNullOrEmpty(arquivoNormaAlteradora))
                         {
                             var retornoFileAlteradora = upload.AnexarHtml(arquivoNormaAlteradora, nameFileNormaAlteradora, "sinj_norma");
@@ -1894,6 +2026,10 @@ namespace TCDF.Sinj.RN
         {
             var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
 
+            //ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros
+            //replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser desfeita deve ser a que
+            //feita no texto completo, e não as que foram feitas nos dispositivos (parcialidade)
+            //e a nota é só um texto inserido pelos cadastradores de texto e não faz parte do texto da norma
             var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
             Regex rx1 = new Regex(pattern1);
 
@@ -1906,6 +2042,34 @@ namespace TCDF.Sinj.RN
                 var replacement2 = "";
                 texto = rx1.Replace(texto, replacement1);
                 texto = rx2.Replace(texto, replacement2);
+            }
+            else
+            {
+                texto = "";
+            }
+            return texto;
+        }
+
+        public string RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(string chNormaAlteradora, string idFileNormaAlterada, string dsTextoParaAlterador)
+        {
+            var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+
+            //ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros
+            //replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
+            //não pode mexer nesses dispositivos que já foram alterados
+            //e a nota é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma
+            var pattern1 = "(?!<p.+replaced_by=.+>)(<p.+?>)(.+?)</p>";
+            Regex rx1 = new Regex(pattern1);
+
+            var pattern2 = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
+            Regex rx2 = new Regex(pattern2);
+
+            if (rx2.Matches(texto).Count == 1 || rx1.Matches(texto).Count > 0)
+            {
+                var replacement2 = "";
+                texto = rx2.Replace(texto, replacement2);
+                var replacement1 = "$1<s>$2</s></p>";
+                texto = rx1.Replace(texto, replacement1);
             }
             else
             {

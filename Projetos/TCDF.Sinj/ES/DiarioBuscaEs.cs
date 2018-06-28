@@ -43,21 +43,21 @@ namespace TCDF.Sinj.ES
                 buscaGeral.size = sentencaOv.iDisplayLength;
             }
             buscaGeral.fields = MontarSearchableFields();
-            FilterQueryString filterQueryString;
-            if (sentencaOv.filtros != null)
-            {
-                string[] filtroSplited;
-                foreach (var _filtro in sentencaOv.filtros)
-                {
-                    filtroSplited = _filtro.Split(':');
-                    filterQueryString = new FilterQueryString() { name = filtroSplited[0], value = filtroSplited[1] };
-                    if (filterQueryString.name.IndexOf("ano_") == 0)
-                    {
-                        filterQueryString.isYear = true;
-                    }
-                    buscaGeral.filtersToQueryString.Add(filterQueryString);
-                }
-            }
+            new UtilBuscaEs().MontarFiltroBuscaGeral(sentencaOv.filtros, buscaGeral);
+            //if (sentencaOv.filtros != null)
+            //{
+            //    string[] filtroSplited;
+            //    foreach (var _filtro in sentencaOv.filtros)
+            //    {
+            //        filtroSplited = _filtro.Split(':');
+            //        filterQueryString = new FilterQueryString() { name = filtroSplited[0], value = filtroSplited[1] };
+            //        if (filterQueryString.name.IndexOf("ano_") == 0)
+            //        {
+            //            filterQueryString.isYear = true;
+            //        }
+            //        buscaGeral.filtersToQueryString.Add(filterQueryString);
+            //    }
+            //}
 
             return buscaGeral;
         }

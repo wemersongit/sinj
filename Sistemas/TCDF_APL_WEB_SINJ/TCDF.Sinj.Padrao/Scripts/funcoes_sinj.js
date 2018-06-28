@@ -2807,19 +2807,6 @@ function DetalhesNorma(data, highlight) {
                     '<span id="span_ds_pendencia">' + GetText(data.ds_pendencia) + '</span>');
             }
 
-            if(data.st_vacatio_legis && IsNotNullOrEmpty(data.dt_inicio_vigencia) && convertStringToDateTime(data.dt_inicio_vigencia) > convertStringToDateTime(date_now)){
-                if(IsNotNullOrEmpty(data.ds_vacatio_legis)){
-                    $('#div_ds_vacatio_legis').html(data.ds_vacatio_legis);
-                }
-                else{
-                    $('#span_dt_inicio_vigencia').text(data.dt_inicio_vigencia);
-                }
-                $('#line_dt_inicio_vigencia').show();
-            }
-            else{
-                $('#line_dt_inicio_vigencia').hide();
-            }
-
             $('#div_ds_ementa').html(data.ds_ementa);
             $('#div_nm_tipo_edicao').html(data.nm_tipo_edicao);
             if (IsNotNullOrEmpty(data.ds_observacao)) {
@@ -3698,7 +3685,7 @@ function montarDescricaoDiario(oJson_diario) {
 
 function montarSpanDescricaoDiario(oJson_diario) {
     var span = '<span class="nm_tipo_fonte">' + oJson_diario.nm_tipo_fonte + ' </span>';
-    span += '<span class="nr_diario">' + oJson_diario.nr_diario + ' </span>';
+    span += '<span class="nr_diario nr_diario_text">' + oJson_diario.nr_diario + ' </span>';
     if (IsNotNullOrEmpty(oJson_diario.cr_diario)) {
         span += '<span class="cr_diario">' + oJson_diario.cr_diario + ' </span>';
     }
@@ -3717,7 +3704,7 @@ function montarSpanDescricaoDiario(oJson_diario) {
     if (IsNotNullOrEmpty(oJson_diario.secao_diario)) {
         span += '<span class="secao_diario">, ' + oJson_diario.secao_diario + '</span>';
     }
-    span += '<span> de </span><span class="dt_assinatura">' + oJson_diario.dt_assinatura + '</span>';
+    span += '<span> de </span><span class="dt_assinatura dt_assinatura_text">' + oJson_diario.dt_assinatura + '</span>';
     return span;;
 }
 
@@ -4137,7 +4124,7 @@ function SalvarConsultaNoHistorico(counts, search) {
 }
 
 /*captcha*/
-function generateCaptcha(id_conatiner_captcha) {
+var generateCaptcha = function(id_container_captcha) {
 	$.ajaxlight({
 	    sUrl: './captcha.aspx',
 	    sType: "GET",
@@ -4145,16 +4132,16 @@ function generateCaptcha(id_conatiner_captcha) {
 	    sDataType: "html",
 	    bAsync: true,
 	    fnBeforeSend: function () {
-	        $('#' + id_conatiner_captcha + ' .captcha_loading').show();
-	        $('#' + id_conatiner_captcha + ' .captcha').hide();
+	        $('#' + id_container_captcha + ' .captcha_loading').show();
+	        $('#' + id_container_captcha + ' .captcha').hide();
 	    },
 	    fnComplete: function () {
-	        $('#' + id_conatiner_captcha + ' .captcha').show();
-	        $('#' + id_conatiner_captcha + ' .captcha_loading').hide();
+	        $('#' + id_container_captcha + ' .captcha').show();
+	        $('#' + id_container_captcha + ' .captcha_loading').hide();
 
 	    },
 	    fnSuccess: function (data) {
-	        $('#' + id_conatiner_captcha + ' .captcha').html(data);
+	        $('#' + id_container_captcha + ' .captcha').html(data);
 	    }
 	});
 }

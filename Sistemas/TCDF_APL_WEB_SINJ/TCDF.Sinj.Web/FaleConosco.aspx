@@ -10,7 +10,7 @@
 		        $('select[name=st_atendimento] option[value=' + _st_atendimento + ']').prop('selected', 'selected');
 		        $('select[name=ds_assunto] option[value=' + _ds_assunto + ']').prop('selected', 'selected');
 		        pesquisarChamados(_nm_orgao_cadastrador_atribuido, _st_atendimento, _ds_assunto);
-
+		        
 		    });
 		    function pesquisarChamados(nm_orgao_cadastrador_atribuido, st_atendimento, ds_assunto) {
 		        
@@ -99,7 +99,23 @@
                         </form>
                     </div>
                     <div class="column">
-                        <div style="border-top: 1px solid #CCC;" id="div_datatable_fale_conosco" class="mauto"></div>
+                        <%
+                            if (totalNovosOrgao > 0)
+                            {
+                        %>
+                        <div class="line">
+                            <div class="column w-100-pc">
+                                <a title="Listar os chamados novos atribuídos ao seu Órgão" class="button" id="aFiltarOrgaoUsuario" href="./FaleConosco?nm_orgao_cadastrador_atribuido=<%= nmOrgaoCadastrador %>&st_atendimento=Novo">Atribuídos para <%= nmOrgaoCadastrador%> <b>(<%= totalNovosOrgao%>)</b></a>
+                            </div>
+                        </div>
+                        <%
+                            }
+                        %>
+                        <div class="line">
+                            <div class="column w-100-pc">
+                                <div style="border-top: 1px solid #CCC;" id="div_datatable_fale_conosco" class="mauto"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -13,17 +13,14 @@ namespace TCDF.Sinj.Web
     public partial class CadastrarNorma : System.Web.UI.Page
     {
         protected bool isAdmin;
-        protected SessaoUsuarioOV sessao_usuario;
         protected string situacoes;
         protected void Page_Load(object sender, EventArgs e)
         {
             var action = AcoesDoUsuario.nor_inc;
-            sessao_usuario = null;
             try
             {
-                sessao_usuario = Util.ValidarSessao();
-                Util.ValidarUsuario(sessao_usuario, action);
-                isAdmin = Util.IsSuperAdmin(sessao_usuario);
+                Util.ValidarUsuario(Sinj.oSessaoUsuario, action);
+                isAdmin = Util.IsSuperAdmin(Sinj.oSessaoUsuario);
                 if (isAdmin)
                 {
                     situacoes = Util.GetSituacoes();
@@ -47,9 +44,9 @@ namespace TCDF.Sinj.Web
                     MensagemDaExcecao = Excecao.LerTodasMensagensDaExcecao(ex, true),
                     StackTrace = ex.StackTrace
                 };
-                if (sessao_usuario != null)
+                if (Sinj.oSessaoUsuario != null)
                 {
-                    LogErro.gravar_erro(Util.GetEnumDescription(action), erro, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
+                    LogErro.gravar_erro(Util.GetEnumDescription(action), erro, Sinj.oSessaoUsuario.nm_usuario, Sinj.oSessaoUsuario.nm_login_usuario);
                 }
             }
         }

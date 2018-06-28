@@ -35,7 +35,7 @@ namespace SINJ_Atualiza_VacatioLegis
             var program = new Program();
             try
             {
-                if (Convert.ToBoolean(Config.ValorChave("MonitorarPush", true)))
+                if (Convert.ToBoolean(Config.ValorChave("AtualizarVacatioLegis", true)))
                 {
                     program.AtualizarVacatioLegis();
                 }
@@ -54,9 +54,9 @@ namespace SINJ_Atualiza_VacatioLegis
             this._sb_info.AppendLine("INÍCIO SINJ_AtualizaVacatioLegis - " + DateTime.Now);
             Pesquisa pesquisa_norma = new Pesquisa();
             NormaRN normaRn = new NormaRN();
-            pesquisa_norma.literal = string.Format("st_vacatio_legis AND dt_inicio_vigor::date <= '{0}'", DateTime.Now.ToString("dd/MM/yyyy"));
+            pesquisa_norma.literal = string.Format("st_vacatio_legis AND dt_inicio_vigencia::date <= '{0}'", DateTime.Now.ToString("dd/MM/yyyy"));
             pesquisa_norma.limit = null;
-            pesquisa_norma.order_by = new Order_By() { asc = new string[] { "dt_assinatura::abstime" } };
+            pesquisa_norma.order_by = new Order_By() { asc = new string[] { "dt_assinatura::date" } };
             var resultNormas = normaRn.Consultar(pesquisa_norma);
             this._sb_info.AppendLine(DateTime.Now + " - Literal => " + pesquisa_norma.literal);
             this._sb_info.AppendLine(DateTime.Now + " - Total de normas => " + resultNormas.results.Count);

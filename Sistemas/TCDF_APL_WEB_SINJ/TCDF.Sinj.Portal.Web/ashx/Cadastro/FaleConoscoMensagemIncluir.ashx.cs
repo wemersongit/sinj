@@ -49,6 +49,17 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                     faleConosco = new FaleConoscoRN().Doc(_ch_chamado);
                     if (!string.IsNullOrEmpty(faleConosco.ch_chamado))
                     {
+                        if (faleConosco.mensagens != null && faleConosco.mensagens.Count > 0)
+                        {
+                            if (string.IsNullOrEmpty(faleConosco.mensagens.Last().nm_login_usuario_resposta))
+                            {
+                                var dtUltimaResposta = Convert.ToDateTime(faleConosco.mensagens.Last().dt_resposta);
+                                if (dtUltimaResposta.AddMinutes(10) > DateTime.Now)
+                                {
+                                    throw new DocDuplicateKeyControlException();
+                                }
+                            }
+                        }
                         var msg = new FaleConoscoMensagemResposta();
                         msg.ds_assunto_resposta = _ds_assunto;
                         msg.ds_msg_resposta = _ds_msg;

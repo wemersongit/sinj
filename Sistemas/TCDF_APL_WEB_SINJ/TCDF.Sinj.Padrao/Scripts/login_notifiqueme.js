@@ -78,8 +78,7 @@ function LogarNotifiqueme() {
                     top.document.location.href = "./Notifiqueme";
                 }
             } else {
-                $('.loaded').show();
-                $('.loading').hide();
+                gComplete();
                 if (data.error_message != null) {
                     $('#div_notificacao_login_notifiqueme').messagelight({
                         sTitle: "Erro",

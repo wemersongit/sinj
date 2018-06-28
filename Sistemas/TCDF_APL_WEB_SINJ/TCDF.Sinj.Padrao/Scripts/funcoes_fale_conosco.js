@@ -1,6 +1,7 @@
 ﻿var fnSuccessFaleConosco = function (data) {
     if (IsNotNullOrEmpty(data, 'error_message')) {
         notificar('#form_fale_conosco', data.error_message, 'error');
+        generateCaptcha();
     }
     else if (IsNotNullOrEmpty(data, 'success_message')) {
         ShowDialog({
@@ -16,8 +17,13 @@
             }],
             fnClose: function () {
                 closeFaleConosco();
-                form_fale_conosco.reset();
-                generateCaptcha();
+                if ($('#ch_chamado_fale_conosco').val() != "") {
+                    document.location.href = './';
+                }
+                else {
+                    form_fale_conosco.reset();
+                    generateCaptcha();
+                }
             }
         });
     }

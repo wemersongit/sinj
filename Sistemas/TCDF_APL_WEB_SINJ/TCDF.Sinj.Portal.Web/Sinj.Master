@@ -57,6 +57,9 @@
         var onLoadCaptchaCallback = function () {
             $('#div_captcha').remove();
             $('#form_fale_conosco input[name=tpv]').val('g');
+            generateCaptcha = function (id_container_captcha) {
+                grecaptcha.reset();
+            }
         }
         function fAdaptive() {
             if ($('div.right-top').offset().left < $('div.logo').width()) {

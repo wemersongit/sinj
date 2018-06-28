@@ -9,9 +9,8 @@ namespace TCDF.Sinj.Web
 {
     public partial class Sinj : System.Web.UI.MasterPage
     {
-        protected static ulong totalNovos = 0;
-        protected static string nmOrgaoCadastrador = "";
-        private static SessaoUsuarioOV oSessaoUsuario;
+        public static ulong totalNovos { get; set; }
+        public static SessaoUsuarioOV oSessaoUsuario { get; set; }
         private static SessaoNotifiquemeOV oSessaoNotifiqueme;
         protected override void OnInit(EventArgs e)
         {
@@ -252,8 +251,7 @@ namespace TCDF.Sinj.Web
             {
                 oSessaoNotifiqueme = null;
             }
-            nmOrgaoCadastrador = oSessaoUsuario.orgao_cadastrador.nm_orgao_cadastrador;
-            totalNovos = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo' AND nm_orgao_cadastrador_atribuido='" + nmOrgaoCadastrador + "'" }).result_count;
+            totalNovos = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo'" }).result_count;
             
         }
         private bool ValidarMenuPorGrupo(string li)
@@ -287,7 +285,7 @@ namespace TCDF.Sinj.Web
                 , "  var _user = ", (oSessaoUsuario != null) ? JSON.Serialize<SessaoUsuarioOV>(oSessaoUsuario) : "null", ";"
                 , "  var _notifiqueme = ", (oSessaoNotifiqueme != null) ? JSON.Serialize<SessaoNotifiquemeOV>(oSessaoNotifiqueme) : "null", ";"
                 , "  var _nm_cookie_push = '", util.BRLight.Util.GetVariavel("NmCookiePush"), "';"
-                , "  var _nr_total_novos_chamados = '", totalNovos, "';"
+                , "  var _nr_total_novos_chamados = ", totalNovos, ";"
                 , "  try { "
                 , "     if (!(((typeof (JSON) !== 'undefined') && (typeof (JSON.stringify) === 'function') && (typeof (JSON.parse) === 'function'))) || (/MSIE [567]/.test(navigator.userAgent))) {"
                 , "        var s = document.createElement('script');"
