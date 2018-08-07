@@ -152,8 +152,11 @@
                     <div class="line">
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <table class="w-60-pc mauto" style="text-align:center;">
+                                <table class="w-100-pc mauto grupos" style="text-align:center;">
                                     <thead>
+                                        <tr>
+                                            <th colspan="6">Permissões de Cadastro</th>
+                                        </tr>
                                         <tr>
                                             <th>Formulários / Ações</th>
                                             <th>Cadastrar</th>
@@ -161,7 +164,6 @@
                                             <th>Pesquisar</th>
                                             <th>Visualizar</th>
                                             <th>Excluir</th>
-                                            <th>Gerenciar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -172,7 +174,6 @@
                                             <td id="nor_pes" ></td>
                                             <td id="nor_vis" ></td>
                                             <td id="nor_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Diário Oficial</th>
@@ -181,7 +182,6 @@
                                             <td id="dio_pes" ></td>
                                             <td id="dio_vis" ></td>
                                             <td id="dio_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Tipo de Fonte</th>
@@ -190,7 +190,6 @@
                                             <td id="tdf_pes" ></td>
                                             <td id="tdf_vis" ></td>
                                             <td id="tdf_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Tipo de Norma</th>
@@ -199,7 +198,6 @@
                                             <td id="tdn_pes" ></td>
                                             <td id="tdn_vis" ></td>
                                             <td id="tdn_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Tipo de Publicação</th>
@@ -208,7 +206,6 @@
                                             <td id="tdp_pes" ></td>
                                             <td id="tdp_vis" ></td>
                                             <td id="tdp_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Tipo de Diário</th>
@@ -217,7 +214,6 @@
                                             <td id="tdd_pes" ></td>
                                             <td id="tdd_vis" ></td>
                                             <td id="tdd_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Interessado</th>
@@ -226,7 +222,6 @@
                                             <td id="int_pes" ></td>
                                             <td id="int_vis" ></td>
                                             <td id="int_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Situação</th>
@@ -235,7 +230,6 @@
                                             <td id="sit_pes" ></td>
                                             <td id="sit_vis" ></td>
                                             <td id="sit_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Tipo de Relação</th>
@@ -244,7 +238,6 @@
                                             <td id="tdr_pes" ></td>
                                             <td id="tdr_vis" ></td>
                                             <td id="tdr_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Autoria</th>
@@ -253,7 +246,6 @@
                                             <td id="aut_pes" ></td>
                                             <td id="aut_vis" ></td>
                                             <td id="aut_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Requerente</th>
@@ -262,7 +254,6 @@
                                             <td id="rqe_pes" ></td>
                                             <td id="rqe_vis" ></td>
                                             <td id="rqe_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Requerido</th>
@@ -271,7 +262,6 @@
                                             <td id="rqi_pes" ></td>
                                             <td id="rqi_vis" ></td>
                                             <td id="rqi_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Relator</th>
@@ -280,7 +270,6 @@
                                             <td id="rel_pes" ></td>
                                             <td id="rel_vis" ></td>
                                             <td id="rel_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Procurador</th>
@@ -289,7 +278,6 @@
                                             <td id="pro_pes" ></td>
                                             <td id="pro_vis" ></td>
                                             <td id="pro_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Órgão</th>
@@ -298,7 +286,6 @@
                                             <td id="org_pes" ></td>
                                             <td id="org_vis" ></td>
                                             <td id="org_exc" ></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
                                             <th>Vocabulário</th>
@@ -307,7 +294,6 @@
                                             <td id="voc_pes" ></td>
                                             <td id="voc_vis" ></td>
                                             <td id="voc_exc" ></td>
-                                            <td id="voc_ger" ></td>
                                         </tr>
                                         <tr>
                                             <th>Usuário</th>
@@ -316,57 +302,163 @@
                                             <td id="usr_pes" ></td>
                                             <td id="usr_vis" ></td>
                                             <td id="usr_exc" ></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Configuração</th>
-                                            <td></td>
-                                            <td id="cfg_edt"></td>
-                                            <td></td>
-                                            <td id="cfg_vis"></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Relatório</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td id="rio_pes" ></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <table id="grupos_auditoria" class="w-60-pc mauto" style="text-align:center;">
-                                    <thead>
-                                        <tr>
-                                            <th>Formulários / Ações</th>
-                                            <th>Erros</th>
-                                            <th>Acessos</th>
-                                            <th>Operações</th>
-                                            <th>Pesquisa</th>
-                                            <th>Sessões</th>
-                                            <th>Lixeira</th>
-                                            <th>Push</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>Auditoria</th>
-                                            <td id="aud_err"></td>
-                                            <td id="aud_ace"></td>
-                                            <td id="aud_ope"></td>
-                                            <td id="aud_pes"></td>
-                                            <td id="aud_ses"></td>
-                                            <td id="aud_lix"></td>
-                                            <td id="aud_pus"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+                    <div class="line">
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc">
+                                <table class="grupos mauto w-100-pc text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Permissões Especiais</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="line">
+                        <div class="column w-25-pc">
+                            <div class="cell w-100-pc">
+                                <table class="grupos mauto grupos w-200-px text-center">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Auditoria</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>Erros</th>
+                                            <td id="aud_err"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Acessos</th>
+                                            <td id="aud_ace"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Operações</th>
+                                            <td id="aud_ope"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Pesquisas</th>
+                                            <td id="aud_pes"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Sessões</th>
+                                            <td id="aud_ses"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Lixeira</th>
+                                            <td id="aud_lix"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Push</th>
+                                            <td id="aud_pus"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="column w-25-pc">
+                            <div class="cell w-100-pc">
+                                <div class="line">
+                                    <div class="column w-100-pc">
+                                        <div class="cell w-100-pc">
+                                            <table class="grupos w-200-px mauto text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2">Configurações</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Editar</th>
+                                                        <td id="cfg_edt"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Visualizar</th>
+                                                        <td id="cfg_vis"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column w-100-pc">
+                                        <div class="cell w-100-pc">
+                                            <table class="grupos w-200-px mauto text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2">Vocabulário</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Gerenciar</th>
+                                                        <td id="voc_ger"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                    
+                            </div>
+                        </div>
+                            
+                        <div class="column w-25-pc">
+                            <div class="cell w-100-pc">
+                                <div class="line">
+                                    <div class="column w-100-pc">
+                                        <div class="cell w-100-pc">
+                                            <table class="grupos w-200-px mauto text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2">Relatórios</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Pesquisar</th>
+                                                        <td id="rio_pes"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="column w-100-pc">
+                                        <div class="cell w-100-pc">
+                                            <table class="grupos w-200-px mauto text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2">Normas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Forçar Situação</th>
+                                                        <td id="nor_fst"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 					<div class="line no-hide">
 	                    <div class="column w-100-pc">
 	                        <div class="cell w-100-pc text-center" style="background-color:#CCC;">

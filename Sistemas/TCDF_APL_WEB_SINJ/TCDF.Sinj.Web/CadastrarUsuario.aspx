@@ -160,10 +160,13 @@
                             </div>
                         </div>
                         <div class="line">
-                            <div class="column w-90-pc">
+                            <div class="column w-100-pc">
                                 <div class="cell w-100-pc">
-                                    <table id="grupos" class="grupos" class="w-60-pc mauto" style="text-align:center; margin:auto;">
+                                    <table id="grupos" class="grupos w-100-pc mauto text-center"">
                                         <thead>
+                                            <tr>
+                                                <th colspan="6">Definir Permissões de Cadastro</th>
+                                            </tr>
                                             <tr>
                                                 <th>Formulários / Ações</th>
                                                 <th>Cadastrar</th>
@@ -171,7 +174,6 @@
                                                 <th>Pesquisar</th>
                                                 <th>Visualizar</th>
                                                 <th>Excluir</th>
-                                                <th>Gerenciar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -182,7 +184,6 @@
                                                 <td><input type="checkbox" id="nor_pes" name="grupos" title="Pesquisar Normas" value="NOR.PES" /></td>
                                                 <td><input type="checkbox" id="nor_vis" name="grupos" title="Visualizar Normas" value="NOR.VIS" /></td>
                                                 <td><input type="checkbox" id="nor_exc" name="grupos" title="Excluir Normas" value="NOR.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Diário Oficial</th>
@@ -191,7 +192,6 @@
                                                 <td><input type="checkbox" id="dio_pes" name="grupos" title="Pesquisar Diário Oficial" value="DIO.PES" /></td>
                                                 <td><input type="checkbox" id="dio_vis" name="grupos" title="Visualizar Diário Oficial" value="DIO.VIS" /></td>
                                                 <td><input type="checkbox" id="dio_exc" name="grupos" title="Excluir Diário Oficial" value="DIO.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Tipo de Fonte</th>
@@ -200,7 +200,6 @@
                                                 <td><input type="checkbox" id="tdf_pes" name="grupos" title="Pesquisar Tipo de Fonte" value="TDF.PES" /></td>
                                                 <td><input type="checkbox" id="tdf_vis" name="grupos" title="Visualizar Tipo de Fonte" value="TDF.VIS" /></td>
                                                 <td><input type="checkbox" id="tdf_exc" name="grupos" title="Excluir Tipo de Fonte" value="TDF.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Tipo de Norma</th>
@@ -209,7 +208,6 @@
                                                 <td><input type="checkbox" id="tdn_pes" name="grupos" title="Pesquisar Tipo de Norma" value="TDN.PES" /></td>
                                                 <td><input type="checkbox" id="tdn_vis" name="grupos" title="Visualizar Tipo de Norma" value="TDN.VIS" /></td>
                                                 <td><input type="checkbox" id="tdn_exc" name="grupos" title="Excluir Tipo de Norma" value="TDN.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Tipo de Diário</th>
@@ -218,7 +216,6 @@
                                                 <td><input type="checkbox" id="tdd_pes" name="grupos" title="Pesquisar Tipo de Diário" value="TDD.PES" /></td>
                                                 <td><input type="checkbox" id="tdd_vis" name="grupos" title="Visualizar Tipo de Diário" value="TDD.VIS" /></td>
                                                 <td><input type="checkbox" id="tdd_exc" name="grupos" title="Excluir Tipo de Diário" value="TDD.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Tipo de Publicação</th>
@@ -227,7 +224,6 @@
                                                 <td><input type="checkbox" id="tdp_pes" name="grupos" title="Pesquisar Tipo de Publicação" value="TDP.PES" /></td>
                                                 <td><input type="checkbox" id="tdp_vis" name="grupos" title="Visualizar Tipo de Publicação" value="TDP.VIS" /></td>
                                                 <td><input type="checkbox" id="tdp_exc" name="grupos" title="Excluir Tipo de Publicação" value="TDP.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Interessado</th>
@@ -236,7 +232,6 @@
                                                 <td><input type="checkbox" id="int_pes" name="grupos" title="Pesquisar Interessado" value="INT.PES" /></td>
                                                 <td><input type="checkbox" id="int_vis" name="grupos" title="Visualizar Interessado" value="INT.VIS" /></td>
                                                 <td><input type="checkbox" id="int_exc" name="grupos" title="Excluir Interessado" value="INT.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Situação</th>
@@ -245,7 +240,6 @@
                                                 <td><input type="checkbox" id="sit_pes" name="grupos" title="Pesquisar Situação" value="SIT.PES" /></td>
                                                 <td><input type="checkbox" id="sit_vis" name="grupos" title="Visualizar Situação" value="SIT.VIS" /></td>
                                                 <td><input type="checkbox" id="sit_exc" name="grupos" title="Excluir Situação" value="SIT.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Tipo de Relação</th>
@@ -254,7 +248,6 @@
                                                 <td><input type="checkbox" id="tdr_pes" name="grupos" title="Pesquisar Tipo de Relação" value="TDR.PES" /></td>
                                                 <td><input type="checkbox" id="tdr_vis" name="grupos" title="Visualizar Tipo de Relação" value="TDR.VIS" /></td>
                                                 <td><input type="checkbox" id="tdr_exc" name="grupos" title="Excluir Tipo de Relação" value="TDR.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Autoria</th>
@@ -263,7 +256,6 @@
                                                 <td><input type="checkbox" id="aut_pes" name="grupos" title="Pesquisar Autoria" value="AUT.PES" /></td>
                                                 <td><input type="checkbox" id="aut_vis" name="grupos" title="Visualizar Autoria" value="AUT.VIS" /></td>
                                                 <td><input type="checkbox" id="aut_exc" name="grupos" title="Excluir Autoria" value="AUT.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Requerente</th>
@@ -272,7 +264,6 @@
                                                 <td><input type="checkbox" id="rqe_pes" name="grupos" title="Pesquisar Requerente" value="RQE.PES" /></td>
                                                 <td><input type="checkbox" id="rqe_vis" name="grupos" title="Visualizar Requerente" value="RQE.VIS" /></td>
                                                 <td><input type="checkbox" id="rqe_exc" name="grupos" title="Excluir Requerente" value="RQE.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Requerido</th>
@@ -281,7 +272,6 @@
                                                 <td><input type="checkbox" id="rqi_pes" name="grupos" title="Pesquisar Requerido" value="RQI.PES" /></td>
                                                 <td><input type="checkbox" id="rqi_vis" name="grupos" title="Visualizar Requerido" value="RQI.VIS" /></td>
                                                 <td><input type="checkbox" id="rqi_exc" name="grupos" title="Excluir Requerido" value="RQI.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Relator</th>
@@ -290,7 +280,6 @@
                                                 <td><input type="checkbox" id="rel_pes" name="grupos" title="Pesquisar Relator" value="REL.PES" /></td>
                                                 <td><input type="checkbox" id="rel_vis" name="grupos" title="Visualizar Relator" value="REL.VIS" /></td>
                                                 <td><input type="checkbox" id="rel_exc" name="grupos" title="Excluir Relator" value="REL.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Procurador</th>
@@ -299,7 +288,6 @@
                                                 <td><input type="checkbox" id="pro_pes" name="grupos" title="Pesquisar Procurador" value="PRO.PES" /></td>
                                                 <td><input type="checkbox" id="pro_vis" name="grupos" title="Visualizar Procurador" value="PRO.VIS" /></td>
                                                 <td><input type="checkbox" id="pro_exc" name="grupos" title="Excluir Procurador" value="PRO.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Órgão</th>
@@ -308,7 +296,6 @@
                                                 <td><input type="checkbox" id="org_pes" name="grupos" title="Pesquisar Órgão" value="ORG.PES" /></td>
                                                 <td><input type="checkbox" id="org_vis" name="grupos" title="Visualizar Órgão" value="ORG.VIS" /></td>
                                                 <td><input type="checkbox" id="org_exc" name="grupos" title="Excluir Órgão" value="ORG.EXC" /></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>Vocabulário</th>
@@ -317,7 +304,6 @@
                                                 <td><input type="checkbox" id="voc_pes" name="grupos" title="Pesquisar Vocabulário" value="VOC.PES" /></td>
                                                 <td><input type="checkbox" id="voc_vis" name="grupos" title="Visualizar Vocabulário" value="VOC.VIS" /></td>
                                                 <td><input type="checkbox" id="voc_exc" name="grupos" title="Excluir Vocabulário" value="VOC.EXC" /></td>
-                                                <td><input type="checkbox" id="voc_ger" name="grupos" title="Gerenciar Vocabulário" value="VOC.GER" /></td>
                                             </tr>
                                             <tr>
                                                 <th>Usuário</th>
@@ -326,56 +312,161 @@
                                                 <td><input type="checkbox" id="usr_pes" name="grupos" title="Pesquisar Usuário" value="USR.PES" /></td>
                                                 <td><input type="checkbox" id="usr_vis" name="grupos" title="Visualizar Usuário" value="USR.VIS" /></td>
                                                 <td><input type="checkbox" id="usr_exc" name="grupos" title="Excluir Usuário" value="USR.EXC" /></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Configuração</th>
-                                                <td></td>
-                                                <td><input type="checkbox" id="cfg_edt" name="grupos" title="Editar Configuração" value="CFG.EDT" /></td>
-                                                <td></td>
-                                                <td><input type="checkbox" id="cfg_vis" name="grupos" title="Visualizar Configuração" value="CFG.VIS" /></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Relatório</th>
-                                                <td></td>
-                                                <td></td>
-                                                <td><input type="checkbox" id="rio_pes" name="grupos" title="Pesquisar Relatório" value="RIO.PES" /></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table id="grupos_auditoria" class="grupos" class="w-60-pc mauto" style="text-align:center; margin:auto;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="column w-100-pc">
+                                <div class="cell w-100-pc">
+                                    <table class="grupos mauto w-100-pc text-center">
                                         <thead>
                                             <tr>
-                                                <th>Formulários / Ações</th>
-                                                <th>Erros</th>
-                                                <th>Acessos</th>
-                                                <th>Operações</th>
-                                                <th>Pesquisa</th>
-                                                <th>Sessões</th>
-                                                <th>Lixeira</th>
-                                                <th>Push</th>
+                                                <th>Definir Permissões Especiais</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="column w-25-pc">
+                                <div class="cell w-100-pc">
+                                    <table class="grupos mauto w-200-px text-center">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">Auditoria</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th>Auditoria</th>
+                                                <th>Erros</th>
                                                 <td><input type="checkbox" id="aud_err" name="grupos" title="Erros" value="AUD.ERR" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Acessos</th>
                                                 <td><input type="checkbox" id="aud_ace" name="grupos" title="Acessos" value="AUD.ACE" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Operações</th>
                                                 <td><input type="checkbox" id="aud_ope" name="grupos" title="Operações" value="AUD.OPE" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Pesquisas</th>
                                                 <td><input type="checkbox" id="aud_pes" name="grupos" title="Pesquisas" value="AUD.PES" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Sessões</th>
                                                 <td><input type="checkbox" id="aud_ses" name="grupos" title="Sessões" value="AUD.SES" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Lixeira</th>
                                                 <td><input type="checkbox" id="aud_lix" name="grupos" title="Lixeira" value="AUD.LIX" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Push</th>
                                                 <td><input type="checkbox" id="aud_pus" name="grupos" title="Push" value="AUD.PUS" /></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                            <div class="column w-25-pc">
+                                <div class="cell w-100-pc">
+                                    <div class="line">
+                                        <div class="column w-100-pc">
+                                            <div class="cell w-100-pc">
+                                                <table class="grupos w-200-px mauto text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="2">Configurações</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Editar</th>
+                                                            <td><input type="checkbox" id="cfg_edt" name="grupos" title="Editar Configuração" value="CFG.EDT" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Visualizar</th>
+                                                            <td><input type="checkbox" id="cfg_vis" name="grupos" title="Visualizar Configuração" value="CFG.VIS" /></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="line">
+                                        <div class="column w-100-pc">
+                                            <div class="cell w-100-pc">
+                                                <table class="grupos w-200-px mauto text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="2">Vocabulário</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Gerenciar</th>
+                                                            <td><input type="checkbox" id="voc_ger" name="grupos" title="Gerenciar Vocabulário" value="VOC.GER" /></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="column w-25-pc">
+                                <div class="cell w-100-pc">
+                                    <div class="line">
+                                        <div class="column w-100-pc">
+                                            <div class="cell w-100-pc">
+                                                <table class="grupos w-200-px mauto text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="2">Relatórios</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Pesquisar</th>
+                                                            <td><input type="checkbox" id="rio_pes" name="grupos" title="Pesquisar Relatório" value="RIO.PES" /></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="line">
+                                        <div class="column w-100-pc">
+                                            <div class="cell w-100-pc">
+                                                <table class="grupos w-200-px mauto text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="2">Normas</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Forçar Situação</th>
+                                                            <td><input type="checkbox" id="nor_fst" name="grupos" title="Forçar situação da norma" value="NOR.FST" /></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div id="div_buttons_usuario" style="width:220px; margin:auto;" class="loaded">

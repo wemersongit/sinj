@@ -2,6 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_pesquisas.js"></script>
     <script type="text/javascript">
+//        $(window).bind("pageshow", function () {
+//            $('#form_pesquisa_norma')[0].reset();
+//            $('#form_pesquisa_diario')[0].reset();
+//        })
         $(document).ready(function () {
             montarPaginaDePesquisa();
 
@@ -74,7 +78,7 @@
                                             </div>
                                             <div id="div_autocomplete_tipo_norma" class="column w-80-pc">
                                                 <input id="ch_tipo_norma" name="ch_tipo_norma" type="hidden" value="" />
-                                                <input id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_norma"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe o tipo de norma que deseja pesquisar. Ex: decreto, portaria, lei.' style="padding:3px;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
+                                                <input autocomplete="off" id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_norma"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe o tipo de norma que deseja pesquisar. Ex: decreto, portaria, lei.' style="padding:3px;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
                                             </div>
                                         </div>
                                         <div class="line">
@@ -106,7 +110,7 @@
                                             </div>
                                             <div id="div_autocomplete_assunto" class="column w-80-pc">
                                                 <input id="ch_termo_assunto" type="hidden" value="" />
-                                                <input id="nm_termo_assunto" type="text" value="" class="w-80-pc" onblur="javascript:AdicionarAssunto()"= /><a title="Listar" id="a_assunto"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe as palavras-chave do assunto da norma. Ex.: “Leite materno”.' style="padding:3px;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
+                                                <input autocomplete="off" id="nm_termo_assunto" type="text" value="" class="w-80-pc" onblur="javascript:AdicionarAssunto()"= /><a title="Listar" id="a_assunto"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe as palavras-chave do assunto da norma. Ex.: “Leite materno”.' style="padding:3px;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
                                             </div>
                                         </div>
                                         <div id="line_assuntos" class="line">
@@ -130,7 +134,7 @@
                                                 <div id="div_autocomplete_origem" class="cell w-100-pc">
                                                     <input id="ch_orgao" name="ch_orgao" type="hidden" value="" />
                                                     <input id="ch_hierarquia" name="ch_hierarquia" type="hidden" value="" />
-                                                    <input id="sg_hierarquia_nm_vigencia" name="sg_hierarquia_nm_vigencia" type="text" value="" class="w-80-pc" onblur="javascript:SelecionarOrigem();" /><a title="Listar" id="a_origem"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe o órgão que elaborou a norma.' style="padding:3px;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
+                                                    <input autocomplete="off" id="sg_hierarquia_nm_vigencia" name="sg_hierarquia_nm_vigencia" type="text" value="" class="w-80-pc" onblur="javascript:SelecionarOrigem();" /><a title="Listar" id="a_origem"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe o órgão que elaborou a norma.' style="padding:3px;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -183,7 +187,7 @@
                                             </div>
                                             <div id="div_autocomplete_tipo_fonte" class="column w-60-pc">
                                                 <input id="ch_tipo_fonte" name="ch_tipo_fonte" type="hidden" value="" />
-                                                <input id="nm_tipo_fonte" name="nm_tipo_fonte" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_fonte"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe em qual diário deseja pesquisar. Ex: DODF, DOCL, DJe.' style="padding:3px;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
+                                                <input autocomplete="off" id="nm_tipo_fonte" name="nm_tipo_fonte" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_fonte"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe em qual diário deseja pesquisar. Ex: DODF, DOCL, DJe.' style="padding:3px;"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
                                             </div>
                                         </div>
                                         <div class="line">
@@ -194,7 +198,7 @@
                                             </div>
                                             <div id="div_autocomplete_tipo_edicao" class="column w-60-pc">
                                                 <input id="ch_tipo_edicao" name="ch_tipo_edicao" type="hidden" value="" />
-                                                <input id="nm_tipo_edicao" name="nm_tipo_edicao" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_edicao"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe em qual tipo de Edição deseja pesquisar.'>&nbsp;<img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
+                                                <input autocomplete="off" id="nm_tipo_edicao" name="nm_tipo_edicao" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_edicao"></a><a href="javascript:void(0);" data-toggle="tooltip" title='Informe em qual tipo de Edição deseja pesquisar.'>&nbsp;<img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_help.png" alt="info" width="12px" height="12px" /></a>
                                             </div>
                                         </div>
                                         <div class="line">

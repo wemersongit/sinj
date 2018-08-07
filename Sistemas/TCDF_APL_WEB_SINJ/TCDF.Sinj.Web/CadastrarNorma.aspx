@@ -737,7 +737,7 @@
                         <fieldset>
                             <legend>Dados Gerais</legend>
                             <div class="mauto table">
-                            <% if (isAdmin)
+                            <% if (TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_fst))
                                { %>
                                 <div class="line">
                                     <div class="column w-22-pc">

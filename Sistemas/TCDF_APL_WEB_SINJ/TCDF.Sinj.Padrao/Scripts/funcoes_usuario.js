@@ -87,7 +87,7 @@ function DetalhesUsuario() {
                     $('#checkbox_st_usuario').prop('checked',data.st_usuario);
                     $('#div_nm_perfil').text(GetText(data.nm_perfil));
                     for (var i = 0; i < data.grupos.length; i++) {
-                        $('td#' + data.grupos[i].replace('.', '_').toLowerCase()).text("X");
+                        $('td#' + data.grupos[i].replace('.', '_').toLowerCase()).html('<img alt="sim" src="'+_urlPadrao+'/Imagens/ico_check_p.png" />');
                     }
                 }
             }

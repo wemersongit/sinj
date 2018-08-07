@@ -211,10 +211,20 @@ namespace TCDF.Sinj
 
         public static void ValidarUsuario(SessaoUsuarioOV usuario_session, AcoesDoUsuario action)
         {
-            if (!new UsuarioRN().ValidarPermissao(usuario_session.nm_login_usuario, GetEnumDescription(action)))
+            if (!UsuarioTemPermissao(usuario_session, action))
             {
                 throw new PermissionException("Usuário sem permissão.");
             }
+        }
+
+        public static bool UsuarioTemPermissao(SessaoUsuarioOV usuario_session, AcoesDoUsuario action)
+        {
+            var ch_grupo = GetEnumDescription(action);
+            if (usuario_session.grupos.IndexOf(ch_grupo) > -1)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static SessaoUsuarioOV ValidarAcessoNasPaginas(System.Web.UI.Page page, AcoesDoUsuario action)
@@ -415,6 +425,8 @@ namespace TCDF.Sinj
         nor_pes,
         [Description("NOR.VIS")]
         nor_vis,
+        [Description("NOR.FST")]
+        nor_fst,
         //Diario
         [Description("DIO.INC")]
         dio_inc,

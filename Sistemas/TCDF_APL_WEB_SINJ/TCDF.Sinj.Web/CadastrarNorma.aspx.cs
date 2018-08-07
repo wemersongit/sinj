@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using TCDF.Sinj.Log;
 using util.BRLight;
 using TCDF.Sinj.OV;
+using TCDF.Sinj.RN;
 
 namespace TCDF.Sinj.Web
 {
@@ -25,6 +26,7 @@ namespace TCDF.Sinj.Web
                 {
                     situacoes = Util.GetSituacoes();
                 }
+
             }
             catch (SessionExpiredException)
             {
