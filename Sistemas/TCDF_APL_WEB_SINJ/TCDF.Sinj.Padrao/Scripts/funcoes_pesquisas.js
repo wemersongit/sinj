@@ -268,7 +268,7 @@ function SelecionarOrigem() {
 }
 
 function SelecionarOperadorPesquisaAvancada() {
-    if ($('#type').val() == 'date' || $('#type').val() == 'number') {
+    if ($('#type').val() == 'date' || $('#type').val() == 'datetime' || $('#type').val() == 'number') {
         if ($('#ch_operador').val() == 'intervalo') {
             $('#div_valor').html('<input id="ch_valor" value="" class="w-30-pc" type="text">&nbsp;até&nbsp;<input id="ch_valor_2" value="" class="w-30-pc" type="text">');
         }
@@ -276,7 +276,7 @@ function SelecionarOperadorPesquisaAvancada() {
             $('#div_valor').html('<input id="ch_valor" value="" class="w-30-pc" type="text">');
         }
     }
-    if ($('#type').val() == 'date') {
+    if ($('#type').val() == 'date' || $('#type').val() == 'datetime') {
         inicializarDatePicker({ element: $('#div_valor input') });
     }
 }
@@ -424,7 +424,7 @@ function AdicionarArgumento() {
     if (type == 'autocomplete') {
         nm_valor = $('#nm_valor').val();
     }
-    else if ((type == 'date' || type == 'number') && ch_operador == 'intervalo') {
+    else if ((type == 'date' || type == 'datetime' || type == 'number') && ch_operador == 'intervalo') {
         ch_valor = $('#ch_valor').val() + "," + $('#ch_valor_2').val();
         nm_valor = $('#ch_valor').val() + " até " + $('#ch_valor_2').val();
     }

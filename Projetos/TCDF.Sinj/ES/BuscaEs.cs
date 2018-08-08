@@ -200,6 +200,7 @@ namespace TCDF.Sinj.ES
                     {
                         switch (filter.type)
                         {
+                            case TypeFilter.datetime:
                             case TypeFilter.date:
                             case TypeFilter.num:
                                 sFilter = GetRangeFilter(filter);
