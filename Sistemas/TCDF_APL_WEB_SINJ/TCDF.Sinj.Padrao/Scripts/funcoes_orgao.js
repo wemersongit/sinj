@@ -932,6 +932,7 @@ function CriarModalConfirmacaoAtualizarOrigemDasNormas(ch_orgao, sg_orgao, nm_or
 
 function SalvarOrgao(id_form) {
     var success = function (data) {
+        gComplete();
         if (IsNotNullOrEmpty(data)) {
             if (IsNotNullOrEmpty(data, 'error_message')) {
                 $('#div_notificacao_orgao').messagelight({
