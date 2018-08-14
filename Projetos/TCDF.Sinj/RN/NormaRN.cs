@@ -300,6 +300,9 @@ namespace TCDF.Sinj.RN
                         case TipoDeDecisaoEnum.MeritoProcedente:
                             situacaoOv = situacaoRn.Doc("julgadoprocedente");
                             break;
+                        case TipoDeDecisaoEnum.MeritoParcialmenteProcedente:
+                            situacaoOv = situacaoRn.Doc("julgadoparcialmenteprocedente");
+                            break;
                         case TipoDeDecisaoEnum.Extinta:
                             situacaoOv = situacaoRn.Doc("extinta");
                             break;

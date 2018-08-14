@@ -38,6 +38,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Autocomplete
                 {
                     sQuery = "Upper(nm_tipo_norma) like'%" + _texto.ToUpper() + "%'";
                 }
+                sQuery += (sQuery != "" ? " AND " : "") + "nm_tipo_norma!='ADO' AND nm_tipo_norma!='AIL' AND nm_tipo_norma!='ADPF' AND nm_tipo_norma!='ADC'";
             }
             if(!string.IsNullOrEmpty(_chaves)){
                 var sQueryChaves = "";

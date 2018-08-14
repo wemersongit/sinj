@@ -421,6 +421,7 @@
                                 <option value="0" >Liminar Deferida</option>
                                 <option value="1" >Liminar Indeferida</option>
                                 <option value="2" >Mérito Procedente</option>
+                                <option value="6" >Mérito Parcialmente Procedente</option>
                                 <option value="3" >Mérito Improcedente</option>
                                 <option value="4" >Extinta</option>
                                 <option value="5" >Ajuizado</option>

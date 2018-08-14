@@ -15,6 +15,8 @@ namespace TCDF.Sinj.OV
         [Description("Extinta")]
         Extinta,
         [Description("Ajuizado")]
-        Ajuizado
+        Ajuizado,
+        [Description("Mérito Parcialmente Procedente")]
+        MeritoParcialmenteProcedente
     }
 }
