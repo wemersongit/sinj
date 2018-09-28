@@ -62,6 +62,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                 {
                     SentencaPesquisaDiretaDiarioOV pesquisaDireta = new SentencaPesquisaDiretaDiarioOV();
                     pesquisaDireta.ds_norma = context.Request["ds_norma"];
+                    Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                     pesquisaDireta.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                     pesquisaDireta.nm_tipo_fonte = context.Request["nm_tipo_fonte"];
                     pesquisaDireta.ch_tipo_edicao = context.Request["ch_tipo_edicao"];
@@ -76,6 +77,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                 else if (_tipo_pesquisa == "notifiqueme")
                 {
                     SentencaPesquisaNotifiquemeDiarioOV pesquisaNotifiqueme = new SentencaPesquisaNotifiquemeDiarioOV();
+                    Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                     pesquisaNotifiqueme.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                     pesquisaNotifiqueme.nm_tipo_fonte = context.Request["nm_tipo_fonte"];
                     pesquisaNotifiqueme.filetext = context.Request["filetext"];
@@ -85,6 +87,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                 else if (_tipo_pesquisa == "diretorio_diario")
                 {
                     SentencaPesquisaDiretorioDiarioOV pesquisaDiretorio = new SentencaPesquisaDiretorioDiarioOV();
+                    Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                     pesquisaDiretorio.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                     pesquisaDiretorio.nm_tipo_fonte = context.Request["nm_tipo_fonte"];
                     pesquisaDiretorio.ano = context.Request["ano"];
@@ -94,6 +97,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                 else if (_tipo_pesquisa == "texto_diario")
                 {
                     SentencaPesquisaTextoDiarioOV pesquisaTexto = new SentencaPesquisaTextoDiarioOV();
+                    Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                     pesquisaTexto.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                     pesquisaTexto.nm_tipo_fonte = context.Request["nm_tipo_fonte"];
                     pesquisaTexto.filetext = context.Request["filetext"];

@@ -163,7 +163,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         {
             string _id_doc = context.Request["id_doc"];
             ulong id_doc = 0;
-            ulong.TryParse(_id_doc, out id_doc);
+            id_doc = ulong.Parse(_id_doc);
             string _nm_arquivo = context.Request["nm_arquivo"];
             string _ds_arquivo = context.Request["ds_arquivo"];
             string _json_file = context.Request["json_file"];

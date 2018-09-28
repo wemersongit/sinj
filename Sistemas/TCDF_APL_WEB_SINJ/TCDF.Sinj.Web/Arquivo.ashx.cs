@@ -9,21 +9,20 @@ using TCDF.Sinj.OV;
 
 namespace TCDF.Sinj.Web
 {
-	
-	public class Arquivo : System.Web.IHttpHandler
-	{
-	
-		public void ProcessRequest (HttpContext context)
-		{
-			var _id_norma = context.Request ["id_norma_consolidado"];
-			NormaOV normaOv = null;
 
-			try
-			{
-				if (!string.IsNullOrEmpty(_id_norma))
+    public class Arquivo : System.Web.IHttpHandler
+    {
+
+        public void ProcessRequest (HttpContext context)
+        {
+            var _id_norma = context.Request["id_norma_consolidado"];
+            NormaOV normaOv = null;
+            try
+            {
+                if (!string.IsNullOrEmpty(_id_norma))
                 {
                     Util.rejeitarInject(_id_norma);
-					normaOv = new NormaRN().Doc(_id_norma);
+                    normaOv = new NormaRN().Doc(_id_norma);
                     var nm_file = "";
 
                     if (!string.IsNullOrEmpty(normaOv.ar_atualizado.id_file))
@@ -50,25 +49,25 @@ namespace TCDF.Sinj.Web
                     {
                         throw new Exception("Arquivo não encontrado.");
                     }
-				}
+                }
             }
             catch (ParamDangerousException)
             {
                 context.Response.Clear();
                 context.Response.Write("<html><head></head><body><div style=\"color:#990000; width:500px; margin:auto; text-align:center;\">Erro ao obter arquivo.<br/><br/>Nossa equipe resolverá o problema, você pode tentar mais tarde ou entrar em contato conosco.</div></body></html>");
             }
-			catch (Exception Ex)
-			{
-				context.Response.Clear();
+            catch (Exception Ex)
+            {
+                context.Response.Clear();
                 context.Response.Write("<html><head></head><body><div style=\"color:#990000; width:500px; margin:auto; text-align:center;\">" + util.BRLight.Excecao.LerInnerException(Ex, true) + "<br/><br/>Nossa equipe resolverá o problema, você pode tentar mais tarde ou entrar em contato conosco.</div></body></html>");
-			}
-		}
+            }
+        }
 
-		public bool IsReusable {
-			get {
-				return false;
-			}
-		}
-	}
+        public bool IsReusable {
+            get {
+                return false;
+            }
+        }
+    }
 }
-	
+    

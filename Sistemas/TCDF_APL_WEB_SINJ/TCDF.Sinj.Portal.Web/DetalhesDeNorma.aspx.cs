@@ -29,10 +29,12 @@ namespace TCDF.Sinj.Portal.Web
             {
                 if (!string.IsNullOrEmpty(_id_norma))
                 {
+                    Util.rejeitarInject(_id_norma);
                     normaOv = new NormaRN().Doc(_id_norma);
                 }
                 else if (!string.IsNullOrEmpty(_id_doc))
                 {
+                    Util.rejeitarInject(_id_doc);
                     normaOv = new NormaRN().Doc(ulong.Parse(_id_doc));
                 }
                 if (normaOv != null)

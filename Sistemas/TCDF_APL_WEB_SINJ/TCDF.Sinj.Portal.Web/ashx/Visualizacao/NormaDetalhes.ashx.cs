@@ -42,6 +42,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Visualizacao
                 }
                 else if (!string.IsNullOrEmpty(_ch_norma))
                 {
+                    Util.rejeitarInject(_ch_norma);
                     normaOv = normaRn.Doc(_ch_norma);
                 }
                 else

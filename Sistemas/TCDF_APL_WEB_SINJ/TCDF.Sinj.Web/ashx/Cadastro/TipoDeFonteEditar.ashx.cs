@@ -35,7 +35,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     TipoDeFonteRN tipoDeFonteRn = new TipoDeFonteRN();
                     tipoDeFonteOv = tipoDeFonteRn.Doc(id_doc);
 
-					if (tipoDeFonteOv.nm_tipo_fonte == _nm_tipo_fonte && tipoDeFonteOv.ds_tipo_fonte == _ds_tipo_fonte)
+                    if (tipoDeFonteOv.nm_tipo_fonte == _nm_tipo_fonte && tipoDeFonteOv.ds_tipo_fonte == _ds_tipo_fonte)
                     {
                         throw new Exception("Nenhuma alteração foi feita. id_doc:" + id_doc);
                     }

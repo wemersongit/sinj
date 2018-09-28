@@ -1332,8 +1332,18 @@ namespace TCDF.Sinj.RN
                 var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
                 texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
                 var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
-                var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(revogado.+?\\)</a></p>)";
-                var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>)";
+
+                var pattern2a = "";
+                var pattern2b = "";
+                try
+                {
+                    pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(revogado.+?\\)</a></p>)";
+                    pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>)";
+                }
+                catch (Exception ex)
+                {
+
+                }
 
                 Regex rx1 = new Regex(pattern1);
                 Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
@@ -1374,37 +1384,93 @@ namespace TCDF.Sinj.RN
                     }
                 }
             }
+            //if (videDaRevogacao != null)
+            //{
+            //    var htmlFile = new UtilArquivoHtml();
+            //    var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
+            //    var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
+            //    var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
+
+            //    var aux_href = !string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma;
+            //    texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+            //    var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+
+            //    var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(.+?\\)</a></p>)";
+            //    var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(.+?\\)</a></p>)";
+            //    Regex rx1 = new Regex(pattern1);
+            //    Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
+            //    if (rx2.Matches(texto).Count <= 0)
+            //    {
+            //        rx2 = new Regex(pattern2b, RegexOptions.Singleline);
+            //    }
+            //    if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+            //    {
+            //        var replacement1 = "$1$2</p>";
+            //        //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
+            //        var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
+            //        texto = rx1.Replace(texto, replacement1);
+            //        texto = rx2.Replace(texto, replacement2);
+            //    }
+            //    else
+            //    {
+            //        texto = "";
+            //    }
+            //}
             if (videDaRevogacao != null)
             {
                 var htmlFile = new UtilArquivoHtml();
                 var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
                 var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
-                var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
+
+                // BUG: Por alguma razão o valor de "normaAlteradora.ch_norma" não está sendo registrado, 
+                // entretanto esse valor é necessário para remover o "header" "(revogado pelo(a) Lei 2803 de 24/10/2001)" 
+                // ("< p ch_norma_alteracao_completa = \"50759\" style = \"text-align:center;\" >< a href = \"/Norma/50759/Lei_2803.html\" > (revogado pelo(a) Lei 2803 de 24 / 10 / 2001)</ a ></ p >")
+                // ! By Questor
 
                 var aux_href = !string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma;
                 texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
-                var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
-                var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(.+?\\)</a></p>)";
-                var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(.+?\\)</a></p>)";
-
-
-                Regex rx1 = new Regex(pattern1);
-                Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
-                if (rx2.Matches(texto).Count <= 0)
+                if (videDaRevogacao.caput_norma_vide_outra != null)
                 {
-                    rx2 = new Regex(pattern2b, RegexOptions.Singleline);
-                }
-                if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
-                {
-                    var replacement1 = "$1$2</p>";
-                    //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
-                    var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
-                    texto = rx1.Replace(texto, replacement1);
-                    texto = rx2.Replace(texto, replacement2);
+                    var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
+                    var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+                    var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(.+?\\)</a></p>)";
+                    var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(.+?\\)</a></p>)";
+                    Regex rx1 = new Regex(pattern1);
+                    Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
+                    if (rx2.Matches(texto).Count <= 0)
+                    {
+                        rx2 = new Regex(pattern2b, RegexOptions.Singleline);
+                    }
+                    if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+                    {
+                        var replacement1 = "$1$2</p>";
+                        //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
+                        var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
+                        texto = rx1.Replace(texto, replacement1);
+                        texto = rx2.Replace(texto, replacement2);
+                    }
+                    else
+                    {
+                        texto = "";
+                    }
                 }
                 else
                 {
-                    texto = "";
+                    var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+                    Regex rx1 = new Regex(pattern1);
+                    var pattern2 = "\r\n<p.*?><a.+?/" + normaAlteradora.ch_norma + "/.+?>\\(" + dsTextoAlterador + ".+?\\)</a></p>";
+                    Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+                    if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+                    {
+                        var replacement1 = "$1$2</p>";
+                        var replacement2 = "";
+                        texto = rx1.Replace(texto, replacement1);
+                        texto = rx2.Replace(texto, replacement2);
+                    }
+                    else
+                    {
+                        texto = "";
+                    }
                 }
             }
             return texto;

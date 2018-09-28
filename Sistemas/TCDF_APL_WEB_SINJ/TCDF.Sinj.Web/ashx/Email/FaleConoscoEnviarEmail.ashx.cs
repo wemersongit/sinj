@@ -33,6 +33,7 @@ namespace TCDF.Sinj.Web.ashx.Email
                 sessao_usuario = Util.ValidarSessao();
                 var faleConoscoRn = new FaleConoscoRN();
 
+                Util.rejeitarInject(_ch_chamado);
                 var faleConosco = faleConoscoRn.Doc(_ch_chamado);
 
                 var emails = new string[] { faleConosco.ds_email };

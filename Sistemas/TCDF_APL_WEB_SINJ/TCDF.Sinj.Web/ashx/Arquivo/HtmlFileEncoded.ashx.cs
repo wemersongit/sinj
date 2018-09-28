@@ -37,6 +37,7 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                 if (!string.IsNullOrEmpty(_id_file))
                 {
                     sessao_usuario = Util.ValidarSessao();
+                    Util.rejeitarInject(_id_file);
                     var docOv = new Doc(_nm_base).doc(_id_file);
                     var sArquivo = new UtilArquivoHtml().GetHtmlFile(_id_file, _nm_base, docOv);
                     sArquivo = HttpUtility.UrlEncodeUnicode(sArquivo).Replace("+", "%20");

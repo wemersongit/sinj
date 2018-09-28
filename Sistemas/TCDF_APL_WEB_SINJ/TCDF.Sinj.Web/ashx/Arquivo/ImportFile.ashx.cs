@@ -43,6 +43,7 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                     sAction += "." + _nm_base_origem + "." + _nm_base_destino;
                     sessao_usuario = Util.ValidarSessao();
 
+                    Util.rejeitarInject(_id_file);
                     var docRn = new Doc(_nm_base_origem);
                     var docOv = docRn.doc(_id_file);
 

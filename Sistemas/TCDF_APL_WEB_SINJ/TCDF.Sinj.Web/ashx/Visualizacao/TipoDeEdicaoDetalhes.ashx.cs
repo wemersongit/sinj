@@ -20,7 +20,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
             var sRetorno = "";
             var _id_doc = context.Request["id_doc"];
             var _ch_tipo_edicao = context.Request["ch_tipo_edicao"];
-			
+            
             ulong id_doc = 0;
             var tipoDeEdicaoRn = new TipoDeEdicaoRN();
             TipoDeEdicaoOV tipoDeEdicaoOv = null;

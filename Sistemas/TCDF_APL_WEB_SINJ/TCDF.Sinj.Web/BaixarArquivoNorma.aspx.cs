@@ -56,7 +56,7 @@ namespace TCDF.Sinj.Web
                         if (doc.id_doc != null && doc.id_doc != 0)
                         {
                             normaOv = new NormaRN().Doc(doc.id_doc);
-						}
+                        }
                     }
                     else
                     {

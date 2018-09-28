@@ -46,6 +46,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Cadastro
                 var faleConosco = new FaleConoscoOV();
                 if (!string.IsNullOrEmpty(_ch_chamado))
                 {
+                    Util.rejeitarInject(_ch_chamado);
                     faleConosco = new FaleConoscoRN().Doc(_ch_chamado);
                     if (!string.IsNullOrEmpty(faleConosco.ch_chamado))
                     {
