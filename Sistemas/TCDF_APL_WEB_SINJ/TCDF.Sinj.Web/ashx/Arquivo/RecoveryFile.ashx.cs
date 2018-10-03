@@ -32,6 +32,8 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                     sessao_usuario = Util.ValidarSessao();
 
                     var docRn = new Doc("sinj_arquivo_versionado_norma");
+
+                    Util.rejeitarInject(_id_file);
                     var docOv = docRn.doc(_id_file);
 
                     if (docOv.id_file != null)

@@ -42,10 +42,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _ds_ementa = context.Request["ds_ementa"];
                     var _ds_observacao = context.Request["ds_observacao"];
                     var _ds_pendencia = context.Request["ds_pendencia"];
-					var _st_destaque = context.Request["st_destaque"];
-					var st_destaque = false;
-					var _st_pendencia = context.Request["st_pendencia"];
-					var st_pendencia = false;
+                    var _st_destaque = context.Request["st_destaque"];
+                    var st_destaque = false;
+                    var _st_pendencia = context.Request["st_pendencia"];
+                    var st_pendencia = false;
 
                     var _interessado = context.Request.Form.GetValues("interessado");
                     var _requerente = context.Request.Form.GetValues("requerente");
@@ -82,7 +82,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     
                     var _autoria = context.Request.Form.GetValues("autoria"); 
 
-              	    NormaRN normaRn = new NormaRN();
+                      NormaRN normaRn = new NormaRN();
                     normaOv = normaRn.Doc(id_doc);
 
                     var podeEditar = false;
@@ -128,15 +128,15 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             normaOv.origens.Add(util.BRLight.JSON.Deserializa<Orgao>(_orgao[i]));
                         }
                     }
-                    					
-					normaOv.nm_pessoa_fisica_e_juridica = new List<String>();
-					if (_nm_nome != null)
-					{
-						for (var i = 0; i < _nm_nome.Length; i++)
-						{
-							normaOv.nm_pessoa_fisica_e_juridica.Add(_nm_nome[i]);
-						}
-					}
+                                        
+                    normaOv.nm_pessoa_fisica_e_juridica = new List<String>();
+                    if (_nm_nome != null)
+                    {
+                        for (var i = 0; i < _nm_nome.Length; i++)
+                        {
+                            normaOv.nm_pessoa_fisica_e_juridica.Add(_nm_nome[i]);
+                        }
+                    }
 
                     normaOv.autorias = new List<Autoria>();
                     if (_autoria != null)
@@ -209,25 +209,25 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     normaOv.nm_apelido = _nm_apelido;
                     normaOv.ds_ementa = _ds_ementa;
-				    normaOv.ds_observacao = _ds_observacao;
-				    normaOv.ds_pendencia = _ds_pendencia;
+                    normaOv.ds_observacao = _ds_observacao;
+                    normaOv.ds_pendencia = _ds_pendencia;
 
-					if(!string.IsNullOrEmpty(_st_pendencia) && bool.TryParse(_st_pendencia, out st_pendencia))
-					{
-						normaOv.st_pendencia = st_pendencia;
-					}
-					else 
-					{
-						normaOv.st_pendencia = st_pendencia;
-					}
-					if(!string.IsNullOrEmpty(_st_destaque) && bool.TryParse(_st_destaque, out st_destaque))
-					{
-						normaOv.st_destaque = st_destaque;
-					}
-					else 
-					{
-						normaOv.st_destaque = st_destaque;
-					}
+                    if(!string.IsNullOrEmpty(_st_pendencia) && bool.TryParse(_st_pendencia, out st_pendencia))
+                    {
+                        normaOv.st_pendencia = st_pendencia;
+                    }
+                    else 
+                    {
+                        normaOv.st_pendencia = st_pendencia;
+                    }
+                    if(!string.IsNullOrEmpty(_st_destaque) && bool.TryParse(_st_destaque, out st_destaque))
+                    {
+                        normaOv.st_destaque = st_destaque;
+                    }
+                    else 
+                    {
+                        normaOv.st_destaque = st_destaque;
+                    }
                     normaOv.fontes = new List<Fonte>();
                     if (_fonte != null)
                     {
@@ -250,26 +250,26 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         normaOv.ar_acao = JSON.Deserializa<ArquivoOV>(_json_arquivo_texto_acao);
                     }
 
-					normaOv.indexacoes = new List<Indexacao> ();
-	                if (_indexacao != null)
-	                {
-	                    Indexacao indexacao_da_norma;
-	                    for (var i = 0; i < _indexacao.Length; i++)
-	                    {
-	                        indexacao_da_norma = new Indexacao();
-	                        var indexacao_split = _indexacao[i].Split('|');
-	
-	                        for (var k = 0; k < indexacao_split.Length; k++)
-	                        {
-	                            var termos_split = indexacao_split[k].Split('#');
-	                            indexacao_da_norma.vocabulario.Add(new Vocabulario { ch_termo = termos_split[0], ch_tipo_termo = termos_split[1], nm_termo = termos_split[2] });
-	                        }
-	                        if (indexacao_da_norma != null && indexacao_da_norma.vocabulario != null && indexacao_da_norma.vocabulario.Count > 0)
-	                        {
-	                            normaOv.indexacoes.Add(indexacao_da_norma);
-	                        } 
-	                    }
-	                }
+                    normaOv.indexacoes = new List<Indexacao> ();
+                    if (_indexacao != null)
+                    {
+                        Indexacao indexacao_da_norma;
+                        for (var i = 0; i < _indexacao.Length; i++)
+                        {
+                            indexacao_da_norma = new Indexacao();
+                            var indexacao_split = _indexacao[i].Split('|');
+    
+                            for (var k = 0; k < indexacao_split.Length; k++)
+                            {
+                                var termos_split = indexacao_split[k].Split('#');
+                                indexacao_da_norma.vocabulario.Add(new Vocabulario { ch_termo = termos_split[0], ch_tipo_termo = termos_split[1], nm_termo = termos_split[2] });
+                            }
+                            if (indexacao_da_norma != null && indexacao_da_norma.vocabulario != null && indexacao_da_norma.vocabulario.Count > 0)
+                            {
+                                normaOv.indexacoes.Add(indexacao_da_norma);
+                            } 
+                        }
+                    }
 
                     normaOv.decisoes = new List<Decisao>();
                     if (_decisao != null)

@@ -36,6 +36,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
                 }
                 else if (!string.IsNullOrEmpty(_ch_tipo_norma))
                 {
+                    Util.rejeitarInject(_ch_tipo_norma);
                     tipoDeNormaOv = tipoDeNormaRn.Doc(_ch_tipo_norma);
                 }
                 else

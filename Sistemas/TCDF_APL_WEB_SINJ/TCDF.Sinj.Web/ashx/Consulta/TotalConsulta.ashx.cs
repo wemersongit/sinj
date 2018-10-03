@@ -120,6 +120,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                 case "diario":
                     SentencaPesquisaDiretaDiarioOV pesquisaDireta = new SentencaPesquisaDiretaDiarioOV();
                     pesquisaDireta.ds_norma = context.Request["ds_norma"];
+                    Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                     pesquisaDireta.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                     pesquisaDireta.ch_tipo_edicao = context.Request["ch_tipo_edicao"];
                     pesquisaDireta.nr_diario = context.Request["nr_diario"];
@@ -133,6 +134,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     break;
                 case "notifiqueme":
                     SentencaPesquisaNotifiquemeDiarioOV pesquisaNotifiqueme = new SentencaPesquisaNotifiquemeDiarioOV();
+                    Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                     pesquisaNotifiqueme.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                     pesquisaNotifiqueme.filetext = context.Request["filetext"];
                     pesquisaNotifiqueme.in_exata = context.Request["in_exata"];
@@ -142,6 +144,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     break;
                 case "texto_diario":
                     SentencaPesquisaTextoDiarioOV pesquisaTexto = new SentencaPesquisaTextoDiarioOV();
+                    Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                     pesquisaTexto.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                     pesquisaTexto.filetext = context.Request["filetext"];
                     pesquisaTexto.intervalo = context.Request["intervalo"];

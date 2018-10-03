@@ -97,8 +97,8 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
             query.limit = null;
             query.literal = string.Format("ch_lista_superior='{0}'", vocabularioDetalhado.ch_termo);
             var result = new VocabularioRN().Consultar(query);
-			vocabularioDetalhado.sublistas = new List<Vocabulario_Lista> ();
-			vocabularioDetalhado.itens = new List<Vocabulario_Lista> ();
+            vocabularioDetalhado.sublistas = new List<Vocabulario_Lista> ();
+            vocabularioDetalhado.itens = new List<Vocabulario_Lista> ();
 
             foreach (var termo in result.results)
             {
@@ -113,7 +113,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
             }
             if (!string.IsNullOrEmpty(vocabularioDetalhado.ch_lista_superior))
             {
-				vocabularioDetalhado.lista = new Vocabulario_Lista ();
+                vocabularioDetalhado.lista = new Vocabulario_Lista ();
                 var lista_superior = new VocabularioRN().Doc(vocabularioDetalhado.ch_lista_superior);
                 vocabularioDetalhado.lista.ch_termo = lista_superior.ch_termo;
                 vocabularioDetalhado.lista.nm_termo = lista_superior.nm_termo;

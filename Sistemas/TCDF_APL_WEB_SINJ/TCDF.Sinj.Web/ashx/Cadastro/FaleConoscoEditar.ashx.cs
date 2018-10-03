@@ -27,7 +27,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 sessao_usuario = Util.ValidarSessao();
                 var faleConoscoRn = new FaleConoscoRN();
-
+                Util.rejeitarInject(_ch_chamado);
                 var faleConosco = faleConoscoRn.Doc(_ch_chamado);
                 if (!string.IsNullOrEmpty(_nm_orgao_cadastrador_atribuido) || !string.IsNullOrEmpty(_st_atendimento))
                 {

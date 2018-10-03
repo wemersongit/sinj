@@ -1,0 +1,13 @@
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/TCDF.Sinj.dll
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/TCDF.Sinj.pdb
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/neo.BRLightREST.dll
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/neo.BRLightSession.dll
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/Newtonsoft.Json.dll
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/util.BRLight.dll
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/Newtonsoft.Json.pdb
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/Newtonsoft.Json.xml
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Release/TCDF.Sinj.csprojAssemblyReference.cache
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Release/TCDF.Sinj.csproj.CoreCompileInputs.cache
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Release/TCDF.Sinj.csproj.CopyComplete
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Release/TCDF.Sinj.dll
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Release/TCDF.Sinj.pdb

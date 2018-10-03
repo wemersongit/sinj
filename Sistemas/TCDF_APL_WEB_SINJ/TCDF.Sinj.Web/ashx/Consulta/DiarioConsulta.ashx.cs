@@ -27,7 +27,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
             {
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
-                
+
+                Util.rejeitarInject(_ch_tipo_fonte);
                 util.BRLight.Params.CheckNotNullOrEmpty("Tipo de Fonte", _ch_tipo_fonte);
                 util.BRLight.Params.CheckNotNullOrEmpty("Data de Publicação", _dt_assinatura);
                 

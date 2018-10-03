@@ -206,6 +206,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                         SentencaPesquisaDiretaDiarioOV sentencaPesquisaDiretaDiarioOv = new SentencaPesquisaDiretaDiarioOV();
                         sentencaPesquisaDiretaDiarioOv.isCount = true;
                         sentencaPesquisaDiretaDiarioOv.ds_norma = context.Request["ds_norma"];
+                        Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                         sentencaPesquisaDiretaDiarioOv.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                         sentencaPesquisaDiretaDiarioOv.nm_tipo_fonte = context.Request["nm_tipo_fonte"];
                         sentencaPesquisaDiretaDiarioOv.ch_tipo_edicao = context.Request["ch_tipo_edicao"];
@@ -235,6 +236,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                     {
                         SentencaPesquisaNotifiquemeDiarioOV sentencaPesquisaNotifiquemeDiarioOv = new SentencaPesquisaNotifiquemeDiarioOV();
                         sentencaPesquisaNotifiquemeDiarioOv.isCount = true;
+                        Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                         sentencaPesquisaNotifiquemeDiarioOv.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                         sentencaPesquisaNotifiquemeDiarioOv.nm_tipo_fonte = context.Request["nm_tipo_fonte"];
                         sentencaPesquisaNotifiquemeDiarioOv.in_exata = context.Request["in_exata"];

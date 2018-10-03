@@ -28,6 +28,8 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
                 sessao_usuario = Util.ValidarSessao();
                 if (!string.IsNullOrEmpty(_ch_chamado))
                 {
+
+                    Util.rejeitarInject(_ch_chamado);
                     var faleConoscoOv = faleConoscoRn.Doc(_ch_chamado);
 
                     sRetorno = JSON.Serialize<FaleConoscoOV>(faleConoscoOv);

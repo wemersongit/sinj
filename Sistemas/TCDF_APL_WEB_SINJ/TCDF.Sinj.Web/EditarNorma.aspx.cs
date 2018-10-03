@@ -39,6 +39,7 @@ namespace TCDF.Sinj.Web
                 }
                 else if (!string.IsNullOrEmpty(_ch_norma))
                 {
+                    Util.rejeitarInject(_ch_norma);
                     normaOv = normaRn.Doc(_ch_norma);
                 }
                 if (normaOv != null)

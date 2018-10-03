@@ -13,14 +13,14 @@ using System.Web.UI.HtmlControls;
 
 namespace TCDF.Sinj.Portal.Web
 {
-	public partial class TextoArquivoDiario : System.Web.UI.Page
-	{
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			var _id_file = Request["id_file"];
-			try
-			{
-				if (!string.IsNullOrEmpty(_id_file))
+    public partial class TextoArquivoDiario : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            var _id_file = Request["id_file"];
+            try
+            {
+                if (!string.IsNullOrEmpty(_id_file))
                 {
                     Util.rejeitarInject(_id_file);
                     var diarioRn = new DiarioRN();
@@ -34,11 +34,11 @@ namespace TCDF.Sinj.Portal.Web
                     {
                         throw new Exception("Arquivo não encontrado.");
                     }
-					if (json_doc.IndexOf("\"filetext\": null") > -1)
-					{
-						throw new Exception("O texto do arquivo não foi extraído.");
-					}
-					var doc_full = JSON.Deserializa<ArquivoFullOV>(json_doc);
+                    if (json_doc.IndexOf("\"filetext\": null") > -1)
+                    {
+                        throw new Exception("O texto do arquivo não foi extraído.");
+                    }
+                    var doc_full = JSON.Deserializa<ArquivoFullOV>(json_doc);
                     if (doc_full.mimetype.IndexOf("/htm") > -1)
                     {
                         var texto = Regex.Replace(doc_full.filetext, "\\<[^\\>]*\\>", string.Empty);
@@ -62,18 +62,18 @@ namespace TCDF.Sinj.Portal.Web
                         placeHolderHeader.Controls.Add(html_meta_keywords);
                         placeHolderHeader.Controls.Add(html_meta_description);
                     }
-				}
+                }
             }
             catch (ParamDangerousException)
             {
                 div_texto.InnerHtml = "Erro ao obter arquivo.<br/><br/>Nossa equipe resolverá o problema, você pode tentar mais tarde ou entrar em contato conosco.";
                 a_print.Visible = false;
             }
-			catch (Exception Ex)
-			{
+            catch (Exception Ex)
+            {
                 div_texto.InnerHtml = util.BRLight.Excecao.LerInnerException(Ex, true) + "<br/><br/>Nossa equipe resolverá o problema, você pode tentar mais tarde ou entrar em contato conosco.";
-				a_print.Visible = false;
-			}
-		}
-	}
+                a_print.Visible = false;
+            }
+        }
+    }
 }

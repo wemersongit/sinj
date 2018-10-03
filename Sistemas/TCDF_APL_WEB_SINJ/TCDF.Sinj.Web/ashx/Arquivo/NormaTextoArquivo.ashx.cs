@@ -20,6 +20,8 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
             {
                 if (!string.IsNullOrEmpty(_id_file))
                 {
+
+                    Util.rejeitarInject(_id_file);
                     var json_doc = new NormaRN().GetDoc(_id_file);
 
                     if (json_doc.IndexOf("\"status\": 500") > -1)

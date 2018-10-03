@@ -13,9 +13,9 @@ using TCDF.Sinj.OV;
 
 namespace TCDF.Sinj.Portal.Web
 {
-	public partial class BaixarArquivoNorma : System.Web.UI.Page
-	{
-		protected void Page_Load(object sender, EventArgs e)
+    public partial class BaixarArquivoNorma : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
         {
             var _id_file = Request["id_file"];
             var _id_norma = Request["id_norma"];
@@ -37,7 +37,6 @@ namespace TCDF.Sinj.Portal.Web
                 //recuperar o nome do arquivo e redirecionar para página de downloads
                 if (!string.IsNullOrEmpty(_id_norma))
                 {
-
                     Util.rejeitarInject(_id_norma);
                     normaOv = new NormaRN().Doc(_id_norma);
                 }
@@ -112,6 +111,6 @@ namespace TCDF.Sinj.Portal.Web
                 Response.Clear();
                 Response.Write("<html><head></head><body><div id=\"div_erro\" style=\"color:#990000; width:500px; margin:auto; text-align:center;\">" + util.BRLight.Excecao.LerInnerException(Ex, true) + "<br/><br/>Nossa equipe resolverá o problema, você pode tentar mais tarde ou entrar em contato conosco.</div></body></html>");
             }
-		}
-	}
+        }
+    }
 }

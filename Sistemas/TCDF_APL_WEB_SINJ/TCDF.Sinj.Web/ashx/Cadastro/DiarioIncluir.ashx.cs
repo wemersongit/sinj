@@ -45,14 +45,15 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var st_suplemento = false;
                 var _nm_diferencial_suplemento = context.Request["nm_diferencial_suplemento"];
 
-				var _st_pendente = context.Request["st_pendente"];
+                var _st_pendente = context.Request["st_pendente"];
                 var st_pendente = false;
                 var _ds_pendencia = context.Request["ds_pendencia"];
-				
+                
                 var _nr_arquivos = context.Request.Form.GetValues("nr_arquivos");
-					
+                    
                 DiarioRN diarioRn = new DiarioRN();
                 diarioOv = new DiarioOV();
+                Util.rejeitarInject(_ch_tipo_fonte);
                 diarioOv.ch_tipo_fonte = _ch_tipo_fonte;
                 diarioOv.nm_tipo_fonte = _nm_tipo_fonte;
                 diarioOv.ch_tipo_edicao = _ch_tipo_edicao;
@@ -60,7 +61,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 diarioOv.nm_diferencial_edicao = _nm_diferencial_edicao;
                 diarioOv.nr_diario = nr_diario;
                 diarioOv.cr_diario = _cr_diario;
-				diarioOv.secao_diario = "";
+                diarioOv.secao_diario = "";
                 if (_secoes_diario != null)
                 {
                     for (var i = 0; i < _secoes_diario.Length; i++ )
@@ -68,7 +69,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         diarioOv.secao_diario += (diarioOv.secao_diario != "" ? (i < (_secoes_diario.Length - 1) ? ", " : " e ") : "") + _secoes_diario[i];
                     }
                 }
-				diarioOv.dt_assinatura = _dt_assinatura;
+                diarioOv.dt_assinatura = _dt_assinatura;
 
                 bool.TryParse(_st_suplemento, out st_suplemento);
                 diarioOv.st_suplemento = st_suplemento;

@@ -20,7 +20,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
             var sRetorno = "";
             var _id_doc = context.Request["id_doc"];
             var _ch_tipo_fonte = context.Request["ch_tipo_fonte"];
-			
+            
             ulong id_doc = 0;
             var tipoDeFonteRn = new TipoDeFonteRN();
             TipoDeFonteOV tipoDeFonteOv = null;
@@ -36,6 +36,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
                 }
                 else if (!string.IsNullOrEmpty(_ch_tipo_fonte))
                 {
+                    Util.rejeitarInject(_ch_tipo_fonte);
                     tipoDeFonteOv = tipoDeFonteRn.Doc(_ch_tipo_fonte);
                 }
                 else

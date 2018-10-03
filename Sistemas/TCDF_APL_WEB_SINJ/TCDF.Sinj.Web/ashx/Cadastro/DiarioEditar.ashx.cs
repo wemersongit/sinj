@@ -36,7 +36,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _ch_tipo_edicao = context.Request["ch_tipo_edicao"];
                     var _nm_tipo_edicao = context.Request["nm_tipo_edicao"];
                     var _nm_diferencial_edicao = context.Request["nm_diferencial_edicao"];
-               	    var _nr_diario = context.Request["nr_diario"];
+                       var _nr_diario = context.Request["nr_diario"];
                     int nr_diario = 0;
                     if (!int.TryParse(_nr_diario, out nr_diario))
                     {
@@ -52,7 +52,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     var _st_pendente = context.Request["st_pendente"];
                     var st_pendente = false;
-					var _ds_pendencia = context.Request["ds_pendencia"];
+                    var _ds_pendencia = context.Request["ds_pendencia"];
 
                     var _uuid_arquivo_diario = context.Request["uuid_arquivo_diario"];
                     var _mimetype_arquivo_diario = context.Request["mimetype_arquivo_diario"];
@@ -61,8 +61,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _filename_arquivo_diario = context.Request["filename_arquivo_diario"];
                     var _nr_arquivos = context.Request.Form.GetValues("nr_arquivos");
 
-              	    DiarioRN diarioRn = new DiarioRN();
-                    diarioOv = diarioRn.Doc(id_doc);                                  
+                    DiarioRN diarioRn = new DiarioRN();
+                    diarioOv = diarioRn.Doc(id_doc);
+                    Util.rejeitarInject(_ch_tipo_fonte);
                     diarioOv.ch_tipo_fonte = _ch_tipo_fonte;
                     diarioOv.nm_tipo_fonte = _nm_tipo_fonte;
                     diarioOv.ch_tipo_edicao = _ch_tipo_edicao;
@@ -78,7 +79,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             diarioOv.secao_diario += (diarioOv.secao_diario != "" ? (i < (_secoes_diario.Length - 1) ? ", " : " e ") : "") + _secoes_diario[i];
                         }
                     }
-					diarioOv.dt_assinatura = _dt_assinatura;
+                    diarioOv.dt_assinatura = _dt_assinatura;
 
                     bool.TryParse(_st_suplemento, out st_suplemento);
                     diarioOv.st_suplemento = st_suplemento;
@@ -93,8 +94,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     bool.TryParse(_st_pendente, out st_pendente);
                     diarioOv.st_pendente = st_pendente;
-					if(st_pendente)
-					{
+                    if(st_pendente)
+                    {
                         diarioOv.ds_pendencia = _ds_pendencia;
                     }
                     else

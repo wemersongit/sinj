@@ -36,6 +36,7 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
                 }
                 else if (!string.IsNullOrEmpty(_ch_tipo_publicacao))
                 {
+                    Util.rejeitarInject(_ch_tipo_publicacao);
                     tipoDePublicacaoOv = tipoDePublicacaoRn.Doc(_ch_tipo_publicacao);
                 }
                 else

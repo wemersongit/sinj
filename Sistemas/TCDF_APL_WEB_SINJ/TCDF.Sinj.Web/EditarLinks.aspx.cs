@@ -30,6 +30,7 @@ namespace TCDF.Sinj.Web
                 {
                     sessao_usuario = Util.ValidarSessao();
                     var docRn = new Doc(_nm_base);
+                    Util.rejeitarInject(_id_file);
                     var docOv = docRn.doc(_id_file);
 
                     if (docOv.id_file != null && docOv.mimetype == "text/html")
@@ -45,6 +46,7 @@ namespace TCDF.Sinj.Web
                             LogOperacao.gravar_operacao(Util.GetEnumDescription(action) + ".HTML.VIS", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
                             div_conteudo_arquivo.InnerHtml = sArquivo;
                             id_file.Value = _id_file;
+                            Util.rejeitarInject(_id_doc);
                             id_doc.Value = _id_doc;
                             nm_arquivo.Value = docOv.filename.Replace(".html","");
 

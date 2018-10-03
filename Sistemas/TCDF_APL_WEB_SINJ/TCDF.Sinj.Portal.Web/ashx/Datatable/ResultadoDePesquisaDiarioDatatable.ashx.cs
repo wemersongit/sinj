@@ -63,6 +63,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
                         break;
                     case "notifiqueme":
                         SentencaPesquisaNotifiquemeDiarioOV pesquisaNotifiqueme = new SentencaPesquisaNotifiquemeDiarioOV();
+                        Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                         pesquisaNotifiqueme.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                         pesquisaNotifiqueme.filetext = context.Request["filetext"];
                         pesquisaNotifiqueme.in_exata = context.Request["in_exata"];
@@ -75,6 +76,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
                     case "diario":
                         SentencaPesquisaDiretaDiarioOV pesquisaDireta = new SentencaPesquisaDiretaDiarioOV();
                         pesquisaDireta.filtros = context.Request.Params.GetValues("filtro");
+                        Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
                         pesquisaDireta.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
                         pesquisaDireta.ch_tipo_edicao = context.Request["ch_tipo_edicao"];
                         pesquisaDireta.nr_diario = context.Request["nr_diario"];

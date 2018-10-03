@@ -17,8 +17,9 @@ namespace TCDF.Sinj.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             var _id_file = Request["id_file"];
-            
+
             try
             {
                 var oKeywords = Request.RequestContext.RouteData.Values["keywords"];
@@ -61,47 +62,47 @@ namespace TCDF.Sinj.Web
                             placeHolderHeader.Controls.Add(html_meta_keywords);
                             placeHolderHeader.Controls.Add(html_meta_description);
                         }
-						if (doc.mimetype.IndexOf("html")>-1)
-						{
-							var msg = "";
-							var encoding_documento = "windows-1252"; //isso deverá ser preenchido dinamicamente
+                        if (doc.mimetype.IndexOf("html")>-1)
+                        {
+                            var msg = "";
+                            var encoding_documento = "windows-1252"; //isso deverá ser preenchido dinamicamente
 
-							// Esse switch receberá todas possiveís opçoes de encoding do HTML
-							// Isso acontecerá para que a conversão de Encoding seja dinâmica
-							switch (encoding_documento)
-							{
-							case "windows-1252":
-								Encoding wind1252 = Encoding.GetEncoding(1252);  
-								Encoding utf8 = Encoding.UTF8;
-								byte[] wind1252Bytes = documento;
-								byte[] utfBytes = Encoding.Convert(wind1252, utf8, wind1252Bytes);
-								msg = utf8.GetString(utfBytes);
-								break;
+                            // Esse switch receberá todas possiveís opçoes de encoding do HTML
+                            // Isso acontecerá para que a conversão de Encoding seja dinâmica
+                            switch (encoding_documento)
+                            {
+                            case "windows-1252":
+                                Encoding wind1252 = Encoding.GetEncoding(1252);  
+                                Encoding utf8 = Encoding.UTF8;
+                                byte[] wind1252Bytes = documento;
+                                byte[] utfBytes = Encoding.Convert(wind1252, utf8, wind1252Bytes);
+                                msg = utf8.GetString(utfBytes);
+                                break;
 
-							case "utf-8":
-								msg = Encoding.UTF8.GetString(documento);
-								break;
-							}
+                            case "utf-8":
+                                msg = Encoding.UTF8.GetString(documento);
+                                break;
+                            }
 
-							div_texto.InnerHtml = msg;
-						}
-						else
-						{
-							if (documento != null && documento.Length > 0)
-							{
-								Response.Clear();
-								Response.SetCookie(new HttpCookie("fileDownload", "true") { Path = "/" });
-								Response.ContentType = doc.mimetype;
-								Response.AppendHeader("Content-Length", documento.Length.ToString());
-								Response.AppendHeader("Content-Disposition", "inline; filename=\"" + doc.filename + "\"");
-								Response.BinaryWrite(documento);
-								Response.Flush();
-							}
-							else
-							{
-								throw new Exception("Arquivo não encontrado.");
-							}
-						}
+                            div_texto.InnerHtml = msg;
+                        }
+                        else
+                        {
+                            if (documento != null && documento.Length > 0)
+                            {
+                                Response.Clear();
+                                Response.SetCookie(new HttpCookie("fileDownload", "true") { Path = "/" });
+                                Response.ContentType = doc.mimetype;
+                                Response.AppendHeader("Content-Length", documento.Length.ToString());
+                                Response.AppendHeader("Content-Disposition", "inline; filename=\"" + doc.filename + "\"");
+                                Response.BinaryWrite(documento);
+                                Response.Flush();
+                            }
+                            else
+                            {
+                                throw new Exception("Arquivo não encontrado.");
+                            }
+                        }
                     }
                     else
                     {
