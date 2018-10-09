@@ -69,7 +69,7 @@ namespace TCDF.Sinj.RN
             //GerarRankeamentoDeNorma(normaOv);
             
             normaOv.ch_norma = Guid.NewGuid().ToString("N");
-            normaOv.st_nova = true;
+			normaOv.st_nova = true;
             return _normaAd.Incluir(normaOv);
         }
 
@@ -87,19 +87,19 @@ namespace TCDF.Sinj.RN
             var tipoDeNorma = new TipoDeNormaRN().Doc(normaOv.ch_tipo_norma);
             if (string.IsNullOrEmpty(normaOv.ch_tipo_norma) || string.IsNullOrEmpty(normaOv.nm_tipo_norma))
             {
-                throw new DocValidacaoException("Tipo de Norma não informado.");
+				throw new DocValidacaoException("Tipo de Norma não informado.");
             }
             if (normaOv.origens == null || normaOv.origens.Count <= 0)
             {
-                throw new DocValidacaoException("Origem não informada.");
+				throw new DocValidacaoException("Origem não informada.");
             }
             if (string.IsNullOrEmpty(normaOv.dt_assinatura))
             {
-                throw new DocValidacaoException("Data de assinatura não informada.");
+				throw new DocValidacaoException("Data de assinatura não informada.");
             }
             if (normaOv.id_ambito <= 0 || string.IsNullOrEmpty(normaOv.nm_ambito))
             {
-                throw new DocValidacaoException("Âmbito invállido.");
+				throw new DocValidacaoException("Âmbito invállido.");
             }
             if (!tipoDeNorma.in_conjunta && normaOv.origens.Count > 1)
             {
@@ -149,15 +149,15 @@ namespace TCDF.Sinj.RN
             normaOv.ch_para_nao_duplicacao = chaves;
             GerarRankeamentoDeNorma(normaOv, tipoDeNorma);
         }
-        
-        public bool Atualizar(ulong id_doc, NormaOV normaOv)
+		
+		public bool Atualizar(ulong id_doc, NormaOV normaOv)
         {
             ValidarGerarChaveEAuxDeRankeamentoDaNorma(normaOv);
             if (!normaOv.st_situacao_forcada)
             {
                 DefinirSituacaoDaNorma(normaOv, false);
             }
-            normaOv.st_atualizada = true;
+			normaOv.st_atualizada = true;
 
             return _normaAd.Atualizar(id_doc, normaOv);
         }
@@ -453,12 +453,10 @@ namespace TCDF.Sinj.RN
             var situacoes = new SituacaoRN().Consultar(pesquisa);
             int importanciaFinal = Int32.MaxValue;
             bool existeRevigoracao = false;
-            bool existeRepristinacao = false;
             bool ajuizado = false;
             var vides_que_afetam_a_norma = vides.Where<Vide>(v => v.in_norma_afetada).ToList<Vide>();
 
             var i_revigoracao = 0;
-            // var i_repristinacao = 0;
 
             foreach (var vide in vides_que_afetam_a_norma)
             {
@@ -492,7 +490,7 @@ namespace TCDF.Sinj.RN
                         importanciaDaVez = 8;
                     }
                 }
-                // Julgada Procedente            6(*8)
+                // Julgada Procedente			6(*8)
                 if (relacao.nm_tipo_relacao.ToLower() == "julgada procedente")
                 {
                     if (!EhModificacaoTotal(vide))
@@ -508,7 +506,7 @@ namespace TCDF.Sinj.RN
                         importanciaDaVez = 8;
                     }
                 }
-                // ANULAÇÃO                        4 (*8)
+                // ANULAÇÃO		    		    4 (*8)
                 if (relacao.nm_tipo_relacao.ToLower() == "anulação")
                 {
                     if (!EhModificacaoTotal(vide))
@@ -517,8 +515,8 @@ namespace TCDF.Sinj.RN
                     }
                 }
 
-                // REVOGAÇÃO                    2 (*8)
-                // REVOGAÇÃO TOTAL              2 (*8)
+                // REVOGAÇÃO		            2 (*8)
+                // REVOGAÇÃO TOTAL				2 (*8)
                 //Caso seja uma revogação ou revogação total
                 if (relacao.nm_tipo_relacao.ToLower() == "revogação" || relacao.nm_tipo_relacao.ToLower() == "revogação total")
                 {
@@ -540,22 +538,11 @@ namespace TCDF.Sinj.RN
                                     existeRevigoracao = true;
                                     break;
                                 }
-                                var relacao_repristinacao = relacoes.results.Where<TipoDeRelacaoOV>(tdr => tdr.ch_tipo_relacao == vides_que_afetam_a_norma[i].ch_tipo_relacao).First<TipoDeRelacaoOV>();
-                                if ((relacao_repristinacao.nm_tipo_relacao.ToLower() == "repristinação" || relacao_repristinacao.nm_tipo_relacao.ToLower() == "repristinação total"))
-                                {
-                                    existeRepristinacao = true;
-                                    break;
-                                }
                             }
                         }
                         if (existeRevigoracao)
                         {
                             existeRevigoracao = false;
-                            importanciaDaVez = 8;
-                        }
-                        if (existeRepristinacao)
-                        {
-                            existeRepristinacao = false;
                             importanciaDaVez = 8;
                         }
                     }
@@ -564,6 +551,12 @@ namespace TCDF.Sinj.RN
                         importanciaDaVez = 8;
                     }
                 }
+
+                //if ((relacao.nm_tipo_relacao.ToLower() == "revigoração" || relacao.nm_tipo_relacao.ToLower() == "revigoração total") && EhModificacaoTotal(vide))
+                //{
+                //    existeRevigoracao = true;
+                //}
+
                 if (importanciaDaVez < importanciaFinal)
                 {
                     importanciaFinal = importanciaDaVez;
@@ -782,10 +775,6 @@ namespace TCDF.Sinj.RN
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRevigorada(normaAlteradora, normaAlterada, caputNormaVideAlterador);
                 }
-                else if (aux_nm_situacao_alterada != "revogado" && caputNormaVideAlterador.ds_texto_para_alterador_aux == "repristinado")
-                {
-                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRepristinada(normaAlteradora, normaAlterada, caputNormaVideAlterador);
-                }
                 else if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, caputNormaVideAlterador.ds_texto_para_alterador_aux))
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(normaAlteradora, id_file_norma_alterada, caputNormaVideAlterador);
@@ -841,10 +830,6 @@ namespace TCDF.Sinj.RN
                 if (aux_nm_situacao_alterada != "revogado" && aux_ds_texto_alterador == "revigorado")
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRevigorada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
-                }
-                else if (aux_nm_situacao_alterada != "revogado" && aux_ds_texto_alterador == "repristinado")
-                {
-                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRepristinada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
                 }
                 else if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, aux_ds_texto_alterador))
                 {
@@ -1040,16 +1025,6 @@ namespace TCDF.Sinj.RN
                                 replacement = "$1" + _caput_alterada.caput[i] + "$2replaced_by=\"$3\"$4$5$6" + _caput_alterada.caput[i] + "$7$8</p>\r\n$1" + _caput_alterada.caput[i].Replace("_replaced", "") + "$2replaced_by_disabled=\"$3\"$4<a name=\"" + _caput_alterada.caput[i].Replace("_replaced", "") + "\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
                             }
                             break;
-                        case "repristinação":
-                            ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i].Replace("_replaced", "")) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + _caput_alteradora.ds_norma + ")";
-                            pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "\".*?)replaced_by=\"(.*?)\"(.*?)<s>(.*?)</s>(.*?)</p>";
-                            replacement = "$1replaced_by_disabled=\"$2\"$3$4$5 <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
-                            if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
-                            {
-                                pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)replaced_by=\"(.*?)\"(.*?>)(.*?)(<a.+?name=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?></a>)(.*?)</p>";
-                                replacement = "$1" + _caput_alterada.caput[i] + "$2replaced_by=\"$3\"$4$5$6" + _caput_alterada.caput[i] + "$7$8</p>\r\n$1" + _caput_alterada.caput[i].Replace("_replaced", "") + "$2replaced_by_disabled=\"$3\"$4<a name=\"" + _caput_alterada.caput[i].Replace("_replaced", "") + "\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"(_link_sistema_)Norma/" + _caput_alteradora.ch_norma + '/' + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\">" + ds_link_alterador + "</a></p>";
-                            }
-                            break;
                         case "prorrogação":
                         case "ratificação":
                         case "regulamentação":
@@ -1222,16 +1197,6 @@ namespace TCDF.Sinj.RN
                             replacement = "$1" + _caput_alterada.caput[i] + "$2replaced_by=\"$3\"$4$5$6" + _caput_alterada.caput[i] + "$7$8</p>\r\n$1" + _caput_alterada.caput[i].Replace("_replaced", "") + "$2replaced_by_disabled=\"$3\"$4<a name=\"" + _caput_alterada.caput[i].Replace("_replaced", "") + "\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                         }
                         break;
-                    case "repristinação":
-                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i].Replace("_replaced", "")) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
-                        pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "\".*?)replaced_by=\"(.*?)\"(.*?)<s>(.*?)</s>(.*?)</p>";
-                        replacement = "$1replaced_by_disabled=\"$2\"$3$4$5 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
-                        if (!string.IsNullOrEmpty(_caput_alterada.texto_novo[i]))
-                        {
-                            pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?)replaced_by=\"(.*?)\"(.*?>)(.*?)(<a.+?name=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(\".*?></a>)(.*?)</p>";
-                            replacement = "$1" + _caput_alterada.caput[i] + "$2replaced_by=\"$3\"$4$5$6" + _caput_alterada.caput[i] + "$7$8</p>\r\n$1" + _caput_alterada.caput[i].Replace("_replaced", "") + "$2replaced_by_disabled=\"$3\"$4<a name=\"" + _caput_alterada.caput[i].Replace("_replaced", "") + "\"></a>" + _caput_alterada.texto_novo[i] + " <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
-                        }
-                        break;
                     case "prorrogação":
                     case "ratificação":
                     case "regulamentação":
@@ -1349,9 +1314,8 @@ namespace TCDF.Sinj.RN
         {
             var texto = "";
             Vide videDaRevogacao = null;
-
-            // NOTE: Seleciona o último vide da revogação que na ação da revigoração vai ser desfeito. É necessário saber a chave da 
-            // norma que revogou para inserir o link da revigoração após o paragrafo da revogação. By Questor
+            //seleciona o último vide da revogação que na ação da revigoração vai ser desfeito.
+            //é necessário saber a chave da norma que revogou para inserir o link da revigoração após o paragrafo da revogação
             foreach (var vide in normaAlterada.vides)
             {
                 if (vide.nm_tipo_relacao.Equals("REVOGAÇÃO") && vide.in_norma_afetada && (vide.caput_norma_vide == null || vide.caput_norma_vide.caput == null || vide.caput_norma_vide.caput.Length == 0))
@@ -1362,19 +1326,25 @@ namespace TCDF.Sinj.RN
                     }
                 }
             }
-
             if (videDaRevogacao != null)
             {
                 var htmlFile = new UtilArquivoHtml();
                 var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
                 texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
                 var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+
                 var pattern2a = "";
                 var pattern2b = "";
-                // pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(revogado.+?\\)</a></p>)";
-                pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.ch_norma_vide + "\".*?><a.+?>\\(revogado.+?\\)</a></p>)";
-                // pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>)";
-                pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.ch_norma_vide + "/.+?>\\(revogado.+?\\)</a></p>)";
+                try
+                {
+                    pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(revogado.+?\\)</a></p>)";
+                    pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>)";
+                }
+                catch (Exception ex)
+                {
+
+                }
+
                 Regex rx1 = new Regex(pattern1);
                 Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
                 if (rx2.Matches(texto).Count <= 0)
@@ -1385,64 +1355,8 @@ namespace TCDF.Sinj.RN
                 if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
                 {
                     var replacement1 = "$1$2</p>";
-
-                    // NOTE: Acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....). By Questors
+                    //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
                     var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + caputAlteradora.filename + "#" + caputAlteradora.caput[0] + "\" >(" + caputAlteradora.ds_texto_para_alterador_aux + " pelo(a) " + caputAlteradora.ds_norma + ")</a></p>\r\n";
-
-                    texto = rx1.Replace(texto, replacement1);
-                    texto = rx2.Replace(texto, replacement2);
-                }
-                else
-                {
-                    texto = "";
-                }
-            }
-            return texto;
-        }
-
-        public string AlterarTextoCompletoDaNormaRepristinada(NormaOV normaAlteradora, NormaOV normaAlterada, Caput caputAlteradora)
-        {
-            var texto = "";
-            Vide videDaRevogacao = null;
-
-            // NOTE: Seleciona o último vide da revogação que na ação da revigoração vai ser desfeito. É necessário saber a chave 
-            // da norma que revogou para inserir o link da repristinação após o paragrafo da revogação. By Questor
-            foreach (var vide in normaAlterada.vides)
-            {
-                if (vide.nm_tipo_relacao.Equals("REVOGAÇÃO") && vide.in_norma_afetada && (vide.caput_norma_vide == null || vide.caput_norma_vide.caput == null || vide.caput_norma_vide.caput.Length == 0))
-                {
-                    if (videDaRevogacao == null || (!string.IsNullOrEmpty(vide.dt_assinatura_norma_vide) && !vide.possuiDispositivoInformadoManualmente() && Convert.ToDateTime(vide.dt_assinatura_norma_vide, new CultureInfo("pt-BR")) > Convert.ToDateTime(videDaRevogacao.dt_assinatura_norma_vide, new CultureInfo("pt-BR"))))
-                    {
-                        videDaRevogacao = util.BRLight.objHelp.Clone<Vide>(vide);
-                    }
-                }
-            }
-
-            if (videDaRevogacao != null)
-            {
-                var htmlFile = new UtilArquivoHtml();
-                var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
-                texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
-                var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
-                var pattern2a = "";
-                var pattern2b = "";
-                // pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(revogado.+?\\)</a></p>)";
-                pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.ch_norma_vide + "\".*?><a.+?>\\(revogado.+?\\)</a></p>)";
-                // pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(revogado.+?\\)</a></p>)";
-                pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.ch_norma_vide + "/.+?>\\(revogado.+?\\)</a></p>)";
-                Regex rx1 = new Regex(pattern1);
-                Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
-                if (rx2.Matches(texto).Count <= 0)
-                {
-                    rx2 = new Regex(pattern2b, RegexOptions.Singleline);
-                }
-                if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
-                {
-                    var replacement1 = "$1$2</p>";
-
-                    // NOTE: Acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....). By Questor
-                    var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + caputAlteradora.filename + "#" + caputAlteradora.caput[0] + "\" >(" + caputAlteradora.ds_texto_para_alterador_aux + " pelo(a) " + caputAlteradora.ds_norma + ")</a></p>\r\n";
-
                     texto = rx1.Replace(texto, replacement1);
                     texto = rx2.Replace(texto, replacement2);
                 }
@@ -1458,9 +1372,8 @@ namespace TCDF.Sinj.RN
         {
             var texto = "";
             Vide videDaRevogacao = null;
-
-            // NOTE: Seleciona o último vide da revogação que na ação da revigoração vai ser desfeito. É necessário saber a chave 
-            // da norma que revogou para inserir o link da revigoração após o paragrafo da revogação. By Questor
+            //seleciona o último vide da revogação que na ação da revigoração vai ser desfeito.
+            //é necessário saber a chave da norma que revogou para inserir o link da revigoração após o paragrafo da revogação
             foreach (var vide in normaAlterada.vides)
             {
                 if (vide.nm_tipo_relacao.Equals("REVOGAÇÃO") && vide.in_norma_afetada && (vide.caput_norma_vide == null || vide.caput_norma_vide.caput == null || vide.caput_norma_vide.caput.Length == 0))
@@ -1471,92 +1384,97 @@ namespace TCDF.Sinj.RN
                     }
                 }
             }
+            //if (videDaRevogacao != null)
+            //{
+            //    var htmlFile = new UtilArquivoHtml();
+            //    var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
+            //    var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
+            //    var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
 
+            //    var aux_href = !string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma;
+            //    texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+            //    var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+
+            //    var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(.+?\\)</a></p>)";
+            //    var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(.+?\\)</a></p>)";
+            //    Regex rx1 = new Regex(pattern1);
+            //    Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
+            //    if (rx2.Matches(texto).Count <= 0)
+            //    {
+            //        rx2 = new Regex(pattern2b, RegexOptions.Singleline);
+            //    }
+            //    if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+            //    {
+            //        var replacement1 = "$1$2</p>";
+            //        //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
+            //        var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
+            //        texto = rx1.Replace(texto, replacement1);
+            //        texto = rx2.Replace(texto, replacement2);
+            //    }
+            //    else
+            //    {
+            //        texto = "";
+            //    }
+            //}
             if (videDaRevogacao != null)
             {
                 var htmlFile = new UtilArquivoHtml();
                 var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
                 var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
+
+                // BUG: Por alguma razão o valor de "normaAlteradora.ch_norma" não está sendo registrado, 
+                // entretanto esse valor é necessário para remover o "header" "(revogado pelo(a) Lei 2803 de 24/10/2001)" 
+                // ("< p ch_norma_alteracao_completa = \"50759\" style = \"text-align:center;\" >< a href = \"/Norma/50759/Lei_2803.html\" > (revogado pelo(a) Lei 2803 de 24 / 10 / 2001)</ a ></ p >")
+                // ! By Questor
+
                 var aux_href = !string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma;
                 texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
-                var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
-                var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
-                // var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(.+?\\)</a></p>)";
-                // var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(.+?\\)</a></p>)";
-                var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.ch_norma_vide + "\".*?><a.+?>\\(.+?\\)</a></p>)";
-                var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.ch_norma_vide + "/.+?>\\(.+?\\)</a></p>)";
-                Regex rx1 = new Regex(pattern1);
-                Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
-                if (rx2.Matches(texto).Count <= 0)
-                {
-                    rx2 = new Regex(pattern2b, RegexOptions.Singleline);
-                }
-                if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
-                {
-                    var replacement1 = "$1$2</p>";
-
-                    // NOTE: Acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....). By Questor
-                    var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
-
-                    texto = rx1.Replace(texto, replacement1);
-                    texto = rx2.Replace(texto, replacement2);
-                }
-                else
-                {
-                    texto = "";
-                }
-            }
-            return texto;
-        }
-
-        public string AlterarTextoCompletoDaNormaRepristinada(NormaOV normaAlteradora, NormaOV normaAlterada, string dsTextoAlterador)
-        {
-            var texto = "";
-            Vide videDaRevogacao = null;
-
-            // NOTE: Seleciona o último vide da revogação que na ação da repristinação vai ser desfeito. É necessário saber a chave da norma 
-            // que revogou para inserir o link da repristinação após o paragrafo da revogação. By Questor
-            foreach (var vide in normaAlterada.vides)
-            {
-                if (vide.nm_tipo_relacao.Equals("REVOGAÇÃO") && vide.in_norma_afetada && (vide.caput_norma_vide == null || vide.caput_norma_vide.caput == null || vide.caput_norma_vide.caput.Length == 0))
-                {
-                    if (videDaRevogacao == null || (!string.IsNullOrEmpty(vide.dt_assinatura_norma_vide) && !vide.possuiDispositivoInformadoManualmente() && Convert.ToDateTime(vide.dt_assinatura_norma_vide, new CultureInfo("pt-BR")) > Convert.ToDateTime(videDaRevogacao.dt_assinatura_norma_vide, new CultureInfo("pt-BR"))))
+                // if (videDaRevogacao.caput_norma_vide_outra != null)
+                //if (videDaRevogacao.ch_norma_vide != null)
+                //{
+                    var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
+                    var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+                    // var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "\".*?><a.+?>\\(.+?\\)</a></p>)";
+                    // var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.caput_norma_vide_outra.ch_norma + "/.+?>\\(.+?\\)</a></p>)";
+                    var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.ch_norma_vide + "\".*?><a.+?>\\(.+?\\)</a></p>)";
+                    var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.ch_norma_vide + "/.+?>\\(.+?\\)</a></p>)";
+                    Regex rx1 = new Regex(pattern1);
+                    Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
+                    if (rx2.Matches(texto).Count <= 0)
                     {
-                        videDaRevogacao = util.BRLight.objHelp.Clone<Vide>(vide);
+                        rx2 = new Regex(pattern2b, RegexOptions.Singleline);
                     }
-                }
-            }
-            if (videDaRevogacao != null)
-            {
-                var htmlFile = new UtilArquivoHtml();
-                var idFileNormaAlterada = normaAlterada.getIdFileArquivoVigente();
-                var nameFileNormaAlteradora = normaAlteradora.getNameFileArquivoVigente();
-                var aux_href = !string.IsNullOrEmpty(nameFileNormaAlteradora) ? ("(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + nameFileNormaAlteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlteradora.ch_norma;
-                texto = htmlFile.GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
-                var dsNormaAlteradora = normaAlteradora.getDescricaoDaNorma();
-                var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
-                var pattern2a = "(\r\n<p.+?ch_norma_alteracao_completa=\"" + videDaRevogacao.ch_norma_vide + "\".*?><a.+?>\\(.+?\\)</a></p>)";
-                var pattern2b = "(\r\n<p.*?><a.+?/" + videDaRevogacao.ch_norma_vide + "/.+?>\\(.+?\\)</a></p>)";
-                Regex rx1 = new Regex(pattern1);
-                Regex rx2 = new Regex(pattern2a, RegexOptions.Singleline);
-                if (rx2.Matches(texto).Count <= 0)
-                {
-                    rx2 = new Regex(pattern2b, RegexOptions.Singleline);
-                }
-                if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
-                {
-                    var replacement1 = "$1$2</p>";
-
-                    // NOTE: Acrescenta abaixo do link, "(revogado pelo(a) ...)", o novo link, "(repristinado pelo(a) ...)". By Questor
-                    var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
-
-                    texto = rx1.Replace(texto, replacement1);
-                    texto = rx2.Replace(texto, replacement2);
-                }
-                else
-                {
-                    texto = "";
-                }
+                    if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+                    {
+                        var replacement1 = "$1$2</p>";
+                        //acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....)
+                        var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
+                        texto = rx1.Replace(texto, replacement1);
+                        texto = rx2.Replace(texto, replacement2);
+                    }
+                    else
+                    {
+                        texto = "";
+                    }
+                //}
+                //else
+                //{
+                //    var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+                //    Regex rx1 = new Regex(pattern1);
+                //    var pattern2 = "\r\n<p.*?><a.+?/" + normaAlteradora.ch_norma + "/.+?>\\(" + dsTextoAlterador + ".+?\\)</a></p>";
+                //    Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+                //    if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+                //    {
+                //        var replacement1 = "$1$2</p>";
+                //        var replacement2 = "";
+                //        texto = rx1.Replace(texto, replacement1);
+                //        texto = rx2.Replace(texto, replacement2);
+                //    }
+                //    else
+                //    {
+                //        texto = "";
+                //    }
+                //}
             }
             return texto;
         }
@@ -1807,10 +1725,8 @@ namespace TCDF.Sinj.RN
             {
                 var arquivoNormaVideAlterada = "";
 
-                // NOTE: Se a situação da norma foi alterada pela remoção do vide em questão, então não deve alterar o texto, pois essa alteração 
-                // afeta o texto inteiro. By Questor
-                if (auxNmSituacaoAlteradaAtual != auxNmSituacaoAnterior && 
-                    (auxDsTextoParaAlteradorAnterior == "revigorado" || auxDsTextoParaAlteradorAnterior == "repristinado") &&
+                //Se a situação da norma foi alterada pela remoção do vide em questão, então não deve alterar o texto, pois essa alteração afeta o texto inteiro
+                if (auxNmSituacaoAlteradaAtual != auxNmSituacaoAnterior && auxDsTextoParaAlteradorAnterior == "revigorado" &&
                     (auxNmSituacaoAlteradaAtual == "revogado" ||
                      auxNmSituacaoAlteradaAtual == "anulado" ||
                      auxNmSituacaoAlteradaAtual == "extinta" ||
@@ -1820,14 +1736,7 @@ namespace TCDF.Sinj.RN
                      auxNmSituacaoAlteradaAtual == "suspenso" ||
                      auxNmSituacaoAlteradaAtual == "sustado"))
                 {
-                    if (auxDsTextoParaAlteradorAnterior == "revigorado")
-                    {
-                        arquivoNormaVideAlterada = RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlteradorAnterior);
-                    }
-                    else if (auxDsTextoParaAlteradorAnterior == "repristinado")
-                    {
-                        arquivoNormaVideAlterada = RemoverRepristinacaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlteradorAnterior);
-                    }
+                    arquivoNormaVideAlterada = RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlteradorAnterior);
                 }
                 else if (auxNmSituacaoAlteradaAtual != auxNmSituacaoAnterior && ((auxNmSituacaoAnterior == "revogado" && auxDsTextoParaAlteradorAnterior == "revogado") ||
                     (auxNmSituacaoAnterior == "anulado" && auxDsTextoParaAlteradorAnterior == "anulado") ||
@@ -1910,8 +1819,7 @@ namespace TCDF.Sinj.RN
                 var auxNmSituacaoAtual = normaAlterada.nm_situacao.ToLower();
 
                 var arquivoNormaVideAlterada = "";
-                if (auxNmSituacaoAtual != auxNmSituacaoAnterior &&
-                    (auxDsTextoAlteradorDesfazer == "revigorado" || auxDsTextoAlteradorDesfazer == "repristinado") &&
+                if (auxNmSituacaoAtual != auxNmSituacaoAnterior && auxDsTextoAlteradorDesfazer == "revigorado" &&
                     (auxNmSituacaoAtual == "revogado" ||
                      auxNmSituacaoAtual == "anulado" ||
                      auxNmSituacaoAtual == "extinta" ||
@@ -1921,14 +1829,7 @@ namespace TCDF.Sinj.RN
                      auxNmSituacaoAtual == "suspenso" ||
                      auxNmSituacaoAtual == "sustado"))
                 {
-                    if (auxDsTextoAlteradorDesfazer == "revigorado")
-                    {
-                        arquivoNormaVideAlterada = RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoAlteradorDesfazer);
-                    }
-                    else if (auxDsTextoAlteradorDesfazer == "repristinado")
-                    {
-                        arquivoNormaVideAlterada = RemoverRepristinacaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoAlteradorDesfazer);
-                    }
+                    arquivoNormaVideAlterada = RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoAlteradorDesfazer);
                 }
                 else if (UtilVides.EhAlteracaoCompleta(auxNmSituacaoAnterior, auxDsTextoAlteradorDesfazer))
                 {
@@ -2077,16 +1978,6 @@ namespace TCDF.Sinj.RN
                                 replacement = "";
                             }
                             break;
-                        case "repristinação":
-                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*?pelo\\(a\\) .+?\\)";
-                            pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "\".*?)replaced_by_disabled=\"(.*?)\"(.*?)(<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?)( <a class=\"link_vide\".*?>.*?)<a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
-                            replacement = "$1replaced_by=\"$2\"$3<s>$4</s>$5$6</p>";
-                            if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
-                            {
-                                pattern = "<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i].Replace("_replaced", "") + "\".*?replaced_by_disabled=\".*?\".*?</p>";
-                                replacement = "";
-                            }
-                            break;
                         case "prorrogação":
                         case "ratificação":
                         case "regulamentação":
@@ -2173,16 +2064,6 @@ namespace TCDF.Sinj.RN
                                 replacement = "";
                             }
                             break;
-                        case "repristinação":
-                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) .+?\\)";
-                            pattern = "(<p.+?linkname=\"" + UtilVides.EscapeCharsInToPattern(caputAlteradoDesfazer.caput[i]) + "\".*?)replaced_by_disabled=\"(.*?)\"(.*?)(<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?)( <a class=\"link_vide\".*?>.*?)<a class=\"link_vide\".*?>" + ds_link_alterador + "</a>(.*?)</p>";
-                            replacement = "$1replaced_by=\"$2\"$3<s>$4</s>$5</p>";
-                            if (!string.IsNullOrEmpty(caputAlteradoDesfazer.texto_novo[i]))
-                            {
-                                pattern = "<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i].Replace("_replaced", "") + "\".*?replaced_by_disabled=\".*?\".*?</p>";
-                                replacement = "";
-                            }
-                            break;
                         case "prorrogação":
                         case "ratificação":
                         case "regulamentação":
@@ -2258,51 +2139,12 @@ namespace TCDF.Sinj.RN
         {
             var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
 
-            // NOTE: Ignora os paragrafos com atributos 'replaced_by', 'nota', 'ch_norma_alteracao_completa' ou 'ch_norma_info', 
-            // aceitando todos os outros.
-            // . "replaced_by" indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
-            // não pode mexer nesses dispositivos que já foram alterados;
-            // . "nota" é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma;
-            // . "ch_norma_alteracao_completa" é usado em links que quando há revogação, sustação, etc... (vides de alteração completa);
-            // . "ch_norma_info" é usado em links por exemplo "leco".
-
-            var pattern1 = "(?!<p.+(?:replaced_by=|nota=|ch_norma_alteracao_completa=|ch_norma_info=).+>)(<p.+?>)(.+?)</p>";
-            Regex rx1 = new Regex(pattern1);
-
-            var pattern2a = "\r\n<p.+?ch_norma_alteracao_completa=\"" + chNormaAlteradora + "\".*?><a.+?>\\(.+?\\)</a></p>";
-            var pattern2b = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
-
-            Regex rx2 = new Regex(pattern2a);
-            if (rx2.Matches(texto).Count <= 0)
-            {
-                rx2 = new Regex(pattern2b);
-            }
-            if (rx2.Matches(texto).Count == 1 || rx1.Matches(texto).Count > 0)
-            {
-                var replacement2 = "";
-                texto = rx2.Replace(texto, replacement2);
-                var replacement1 = "$1<s>$2</s></p>";
-                texto = rx1.Replace(texto, replacement1);
-            }
-            else
-            {
-                texto = "";
-            }
-            return texto;
-        }
-
-        public string RemoverRepristinacaoNoTextoCompletoDaNormaAlterada(string chNormaAlteradora, string idFileNormaAlterada, string dsTextoParaAlterador)
-        {
-            var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
-
-            // NOTE: Ignora os paragrafos com atributos 'replaced_by', 'nota', 'ch_norma_alteracao_completa' ou 'ch_norma_info', 
-            // aceitando todos os outros.
-            // . "replaced_by" indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
-            // não pode mexer nesses dispositivos que já foram alterados;
-            // . "nota" é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma;
-            // . "ch_norma_alteracao_completa" é usado em links que quando há revogação, sustação, etc... (vides de alteração completa);
-            // . "ch_norma_info" é usado em links por exemplo "leco".
-
+            //ignora os paragrafos com atributos 'replaced_by', 'nota', 'ch_norma_alteracao_completa' ou 'ch_norma_info', aceitando todos os outros
+            //1.replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita
+            //não pode mexer nesses dispositivos que já foram alterados
+            //2.nota é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma
+            //3.ch_norma_alteracao_completa é usado em links que quando há revogação, sustação, etc., vides de alteração completa
+            //4.ch_norma_info é usado em links por exemplo leco
             var pattern1 = "(?!<p.+(?:replaced_by=|nota=|ch_norma_alteracao_completa=|ch_norma_info=).+>)(<p.+?>)(.+?)</p>";
             Regex rx1 = new Regex(pattern1);
 

@@ -1,6 +1,6 @@
 ﻿<Properties StartupConfiguration="{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}|">
   <MonoDevelop.Ide.Workbench />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

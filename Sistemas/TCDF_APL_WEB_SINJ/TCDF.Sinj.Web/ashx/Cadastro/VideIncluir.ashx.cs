@@ -335,14 +335,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
         }
 
-        
-
-        
-
-        
-
-        
-
         public bool IsReusable
         {
             get
