@@ -1,13 +1,5 @@
-<Properties StartupConfiguration="{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}|">
-  <MonoDevelop.Ide.Workbench>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ_PORTAL" selected="True" />
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
+﻿<Properties StartupConfiguration="{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}|">
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
