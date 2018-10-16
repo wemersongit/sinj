@@ -8,24 +8,24 @@ using System.Text.RegularExpressions;
 namespace TCDF.Sinj.OV
 {
     /// <summary>
-    /// Replicar o vide em ambas as normas, n„o sÛ na norma afetada. Isso vai render um ganho na busca e na recuperaÁ„o.
+    /// Replicar o vide em ambas as normas, n√£o s√≥ na norma afetada. Isso vai render um ganho na busca e na recupera√ß√£o.
     /// Tratar os dados que cada uma vai exibir durante a persistencia no banco, ou seja, a norma afetada fica com o campos preenchidos
-    /// para na hora de exibir os vides j· estarem tratados os campos em ambas as normas.
+    /// para na hora de exibir os vides j√° estarem tratados os campos em ambas as normas.
     /// </summary>
     public class Vide
     {
         public string ch_vide { get; set; }
         public string ds_comentario_vide { get; set; }
         /// <summary>
-        /// Se verdadeiro ent„o a norma corrente È afetada pelo vide.
+        /// Se verdadeiro ent√£o a norma corrente √© afetada pelo vide.
         /// </summary>
         public bool in_norma_afetada { get; set; }
 
-        //Tipo de RelaÁ„o
+        //Tipo de Rela√ß√£o
         public string ch_tipo_relacao { get; set; }
         public string nm_tipo_relacao { get; set; }
         /// <summary>
-        /// Se a norma corrente for a afetada use o texto ds_texto_para_alterado, se n„o, use ds_texto_para_alterador, oriundos de de TipoDeRelacao
+        /// Se a norma corrente for a afetada use o texto ds_texto_para_alterado, se n√£o, use ds_texto_para_alterador, oriundos de de TipoDeRelacao
         /// </summary>
         public string ds_texto_relacao { get; set; }
         public bool in_relacao_de_acao { get; set; }
@@ -128,7 +128,7 @@ namespace TCDF.Sinj.OV
         //    }
         //    else if (caput == "par")
         //    {
-        //        caput3 = "Par·grafo";
+        //        caput3 = "Par√°grafo";
         //    }
         //    else if (caput == "inc")
         //    {
@@ -140,7 +140,7 @@ namespace TCDF.Sinj.OV
         //    }
         //    else if (caput == "aln")
         //    {
-        //        caput3 = "AlÌnea";
+        //        caput3 = "Al√≠nea";
         //    }
         //    if (!string.IsNullOrEmpty(caput3))
         //    {
@@ -173,7 +173,7 @@ namespace TCDF.Sinj.OV
             }
             else if (last_caput.IndexOf("par") == 0)
             {
-                _caput = "Par·grafo ";
+                _caput = "Par√°grafo ";
             }
             else if (last_caput.IndexOf("inc") == 0)
             {
@@ -181,11 +181,11 @@ namespace TCDF.Sinj.OV
             }
             else if (last_caput.IndexOf("ali") == 0)
             {
-                _caput = "AlÌnea ";
+                _caput = "Al√≠nea ";
             }
             else if (last_caput.IndexOf("let") == 0)
             {
-                _caput = "AlÌnea ";
+                _caput = "Al√≠nea ";
             }
             else
             {
@@ -206,9 +206,9 @@ namespace TCDF.Sinj.OV
             {
                 caput = "Artigo ";
             }
-            else if (caput == "PARAGRAFO" || caput == "PAR¡GRAFO" || caput == "ß")
+            else if (caput == "PARAGRAFO" || caput == "PAR√ÅGRAFO" || caput == "¬ß")
             {
-                caput = "Par·grafo ";
+                caput = "Par√°grafo ";
             }
             else if (ehInciso(caput))
             {
@@ -216,7 +216,7 @@ namespace TCDF.Sinj.OV
             }
             else if (ehAlinea(caput))
             {
-                caput = "AlÌnea ";
+                caput = "Al√≠nea ";
             }
             else
             {
@@ -230,7 +230,7 @@ namespace TCDF.Sinj.OV
             string ds = relacao;
 
             var relacaoSplited = relacao.Split(' ');
-            if (!(relacaoSplited[0].Equals("veto", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("texto", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("denominaÁ„o", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("legislaÁ„o", StringComparison.InvariantCultureIgnoreCase)))
+            if (!(relacaoSplited[0].Equals("veto", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("texto", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("denomina√ß√£o", StringComparison.InvariantCultureIgnoreCase) || relacaoSplited[0].Equals("legisla√ß√£o", StringComparison.InvariantCultureIgnoreCase)))
             {
                 if (relacaoSplited[0].EndsWith("o"))
                 {
@@ -333,7 +333,7 @@ namespace TCDF.Sinj.OV
         }
 
         /// <summary>
-        /// Verifica, com base na situaÁ„o e na descriÁ„o relaÁ„o de vide, se o vide implica em alteraÁ„o no texto completo da norma, e n„o somente em um dispositivo
+        /// Verifica, com base na situa√ß√£o e na descri√ß√£o rela√ß√£o de vide, se o vide implica em altera√ß√£o no texto completo da norma, e n√£o somente em um dispositivo
         /// </summary>
         /// <param name="nmSituacaoAlterada"></param>
         /// <param name="dsTextoParaAlterador"></param>
@@ -351,7 +351,7 @@ namespace TCDF.Sinj.OV
         }
 
         /// <summary>
-        /// Verifica, com base na situaÁ„o e na descriÁ„o relaÁ„o de vide, se o vide implica somente em linkar as duas normas, n„o necessariamente precisa ser legislaÁ„o correlata
+        /// Verifica, com base na situa√ß√£o e na descri√ß√£o rela√ß√£o de vide, se o vide implica somente em linkar as duas normas, n√£o necessariamente precisa ser legisla√ß√£o correlata
         /// </summary>
         /// <param name="dsTextoParaAlterador"></param>
         /// <returns></returns>
@@ -361,7 +361,7 @@ namespace TCDF.Sinj.OV
                    dsTextoParaAlterador == "reeditado" ||
                    dsTextoParaAlterador == "regulamentado" ||
                    dsTextoParaAlterador == "prorrogado" ||
-                   dsTextoParaAlterador == "legislaÁ„o correlata";
+                   dsTextoParaAlterador == "legisla√ß√£o correlata";
         }
     }
 

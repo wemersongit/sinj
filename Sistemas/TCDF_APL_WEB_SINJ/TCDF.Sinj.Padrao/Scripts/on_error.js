@@ -1,4 +1,4 @@
-﻿// necessário carregar: 'jquery-1.11.0.min.js', 'js.ashx', 'Feedback.js', scripts.js
+// necessário carregar: 'jquery-1.11.0.min.js', 'js.ashx', 'Feedback.js', scripts.js
 window.onerror = f_Projeta_Error;
 
 function f_Projeta_Error(sMsg, sUrl, sLine) {

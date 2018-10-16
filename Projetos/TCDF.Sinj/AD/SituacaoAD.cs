@@ -53,7 +53,7 @@ namespace TCDF.Sinj.AD
             {
                 return result.results[0];
             }
-            throw new Exception("Nenhum registro foi encontrada. … possÌvel que o mesma j· tenha sido excluÌdo.");
+            throw new Exception("Nenhum registro foi encontrada. √â poss√≠vel que o mesma j√° tenha sido exclu√≠do.");
         }
 
         internal string JsonReg(ulong id_doc)
@@ -76,7 +76,7 @@ namespace TCDF.Sinj.AD
             {
                 if ((ex.Message.IndexOf("duplicate key") > -1 || ex.Message.IndexOf("duplicar valor da chave") > -1 ) || (ex.InnerException != null && (ex.InnerException.Message.IndexOf("duplicate key") > -1 || ex.InnerException.Message.IndexOf("duplicar valor da chave") > -1)))
                 {
-                    throw new DocDuplicateKeyException("Registro j· existente na base de dados!!!");
+                    throw new DocDuplicateKeyException("Registro j√° existente na base de dados!!!");
                 }
                 throw ex;
             }
@@ -92,7 +92,7 @@ namespace TCDF.Sinj.AD
             {
                 if ((ex.Message.IndexOf("duplicate key") > -1 || ex.Message.IndexOf("duplicar valor da chave") > -1 ) || (ex.InnerException != null && (ex.InnerException.Message.IndexOf("duplicate key") > -1 || ex.InnerException.Message.IndexOf("duplicar valor da chave") > -1)))
                 {
-                    throw new DocDuplicateKeyException("Registro j· existente na base de dados!!!");
+                    throw new DocDuplicateKeyException("Registro j√° existente na base de dados!!!");
                 }
                 throw ex;
             }

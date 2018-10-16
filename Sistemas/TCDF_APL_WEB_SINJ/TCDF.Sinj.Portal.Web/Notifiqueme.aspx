@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true"
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true"
     CodeBehind="Notifiqueme.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Notifiqueme" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">

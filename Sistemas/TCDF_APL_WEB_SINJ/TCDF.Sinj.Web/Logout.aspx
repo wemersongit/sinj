@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterLogin.Master" AutoEventWireup="true" CodeBehind="Logout.aspx.cs" Inherits="TCDF.Sinj.Web.Logout" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/MasterLogin.Master" AutoEventWireup="true" CodeBehind="Logout.aspx.cs" Inherits="TCDF.Sinj.Web.Logout" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {

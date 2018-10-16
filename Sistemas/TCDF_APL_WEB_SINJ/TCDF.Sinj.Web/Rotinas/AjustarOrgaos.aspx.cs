@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using neo.BRLightREST;
 using TCDF.Sinj.RN;

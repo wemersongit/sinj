@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
     $('#div_autocomplete_usuario_cadastrador_modal').autocompletelight({
         sKeyDataName: "nm_login_usuario",
         sValueDataName: "nm_usuario",

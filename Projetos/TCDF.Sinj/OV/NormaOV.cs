@@ -63,7 +63,7 @@ namespace TCDF.Sinj.OV
         public string ch_tipo_norma { get; set; }
         public string nm_tipo_norma { get; set; }
         /// <summary>
-        /// O administrador do sistema pode escolher a situaÁ„o da norma e a mesma n„o È alterada pelos demais usu·rios e, principalmente, pelos vides
+        /// O administrador do sistema pode escolher a situa√ß√£o da norma e a mesma n√£o √© alterada pelos demais usu√°rios e, principalmente, pelos vides
         /// </summary>
         public bool st_situacao_forcada { get; set; }
         public string ch_situacao { get; set; }
@@ -77,7 +77,7 @@ namespace TCDF.Sinj.OV
         public List<Autoria> autorias { get; set; }
         public List<Fonte> fontes { get; set; }
         /// <summary>
-        /// Esse campo apenas È preenchido caso seja uma aÁ„o PGDF. (G2)
+        /// Esse campo apenas √© preenchido caso seja uma a√ß√£o PGDF. (G2)
         /// </summary>
         public List<Decisao> decisoes { get; set; }
         public List<Indexacao> indexacoes { get; set; }
@@ -100,6 +100,20 @@ namespace TCDF.Sinj.OV
             }
             else
             {
+                //if (fontes.Count > 0)
+                //{
+                //    if (fontes[0].ar_fonte != null && !string.IsNullOrEmpty(fontes[0].ar_fonte.id_file))
+                //    {
+                //        id_file = fontes[0].ar_fonte.id_file;
+                //    }
+                //    foreach (var fonte in fontes)
+                //    {
+                //        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.id_file) && (fonte.nm_tipo_publicacao.Equals("republica√ß√£o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("retifica√ß√£o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("ret", StringComparison.InvariantCultureIgnoreCase)))
+                //        {
+                //            id_file = fonte.ar_fonte.id_file;
+                //        }
+                //    }
+                //}
                 if (fontes.Count > 0)
                 {
                     if (fontes[0].ar_fonte != null && !string.IsNullOrEmpty(fontes[0].ar_fonte.id_file))
@@ -108,7 +122,32 @@ namespace TCDF.Sinj.OV
                     }
                     foreach (var fonte in fontes)
                     {
-                        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.id_file) && (fonte.nm_tipo_publicacao.Equals("republicaÁ„o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("retificaÁ„o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("ret", StringComparison.InvariantCultureIgnoreCase)))
+                        if (
+                            fonte.ar_fonte != null &&
+                            !string.IsNullOrEmpty(fonte.ar_fonte.id_file) &&
+                            (
+                                (String.Compare(
+                                    fonte.nm_tipo_publicacao,
+                                    "republica√ß√£o",
+                                    true) == 0
+                                ) ||
+                                (String.Compare(
+                                    fonte.nm_tipo_publicacao,
+                                    "rep",
+                                    true) == 0
+                                ) ||
+                                (String.Compare(
+                                    fonte.nm_tipo_publicacao,
+                                    "retifica√ß√£o",
+                                    true) == 0
+                                ) ||
+                                (String.Compare(
+                                    fonte.nm_tipo_publicacao,
+                                    "ret",
+                                    true) == 0
+                                )
+                            )
+                        )
                         {
                             id_file = fonte.ar_fonte.id_file;
                         }
@@ -135,7 +174,7 @@ namespace TCDF.Sinj.OV
                     }
                     foreach (var fonte in fontes)
                     {
-                        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.id_file) && !string.IsNullOrEmpty(fonte.nm_tipo_publicacao) && (fonte.nm_tipo_publicacao.Equals("republicaÁ„o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("retificaÁ„o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("ret", StringComparison.InvariantCultureIgnoreCase)))
+                        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.id_file) && !string.IsNullOrEmpty(fonte.nm_tipo_publicacao) && (fonte.nm_tipo_publicacao.Equals("republica√ß√£o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("retifica√ß√£o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("ret", StringComparison.InvariantCultureIgnoreCase)))
                         {
                             file = fonte.ar_fonte;
                         }
@@ -162,7 +201,7 @@ namespace TCDF.Sinj.OV
                     }
                     foreach (var fonte in fontes)
                     {
-                        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.filename) && (fonte.nm_tipo_publicacao.Equals("republicaÁ„o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase)))
+                        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.filename) && (fonte.nm_tipo_publicacao.Equals("republica√ß√£o", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase)))
                         {
                             name_file = fonte.ar_fonte.filename;
                         }

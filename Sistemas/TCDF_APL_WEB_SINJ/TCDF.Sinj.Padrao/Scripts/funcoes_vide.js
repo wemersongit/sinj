@@ -1,4 +1,4 @@
-﻿function ExpandirTabelaDeNormas() {
+function ExpandirTabelaDeNormas() {
     if ($('#a_selecionar_normas').hasClass('opened')) {
         $('#a_selecionar_normas').removeClass('opened');
         $('#a_selecionar_normas').addClass('closed');

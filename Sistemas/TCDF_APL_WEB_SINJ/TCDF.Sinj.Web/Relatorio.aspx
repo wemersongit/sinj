@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Relatorio.aspx.cs" Inherits="TCDF.Sinj.Web.Relatorio" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Relatorio.aspx.cs" Inherits="TCDF.Sinj.Web.Relatorio" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vocabulario.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_relatorio.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

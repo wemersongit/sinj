@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 using TCDF.Sinj.RN;
 
 namespace TCDF.Sinj.Web.ashx.Login

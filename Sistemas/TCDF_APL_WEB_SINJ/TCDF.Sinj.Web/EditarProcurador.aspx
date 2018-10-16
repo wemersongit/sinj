@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarProcurador.aspx.cs" Inherits="TCDF.Sinj.Web.EditarProcurador" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarProcurador.aspx.cs" Inherits="TCDF.Sinj.Web.EditarProcurador" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_procurador.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="RequerenteDatatable.ashx.cs" Class="TCDF.Sinj.Web.ashx.Datatable.RequerenteDatatable" %>
+<%@ WebHandler Language="C#" CodeBehind="RequerenteDatatable.ashx.cs" Class="TCDF.Sinj.Web.ashx.Datatable.RequerenteDatatable" %>

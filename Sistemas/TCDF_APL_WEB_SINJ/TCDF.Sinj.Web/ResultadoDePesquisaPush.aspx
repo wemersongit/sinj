@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="ResultadoDePesquisaPush.aspx.cs" Inherits="TCDF.Sinj.Web.ResultadoDePesquisaPush" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="ResultadoDePesquisaPush.aspx.cs" Inherits="TCDF.Sinj.Web.ResultadoDePesquisaPush" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_auditoria.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript">

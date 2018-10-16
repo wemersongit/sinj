@@ -1,4 +1,4 @@
-﻿using TCDF.Sinj.AD;
+using TCDF.Sinj.AD;
 using TCDF.Sinj.OV;
 using neo.BRLightREST;
 using System;

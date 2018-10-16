@@ -1,4 +1,4 @@
-﻿function montarPaginaDePesquisa() {
+function montarPaginaDePesquisa() {
     $('.accordion').accordion({
         animate: 300,
         heightStyle: "content"

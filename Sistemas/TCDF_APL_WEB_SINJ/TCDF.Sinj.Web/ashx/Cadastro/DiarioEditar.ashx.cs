@@ -40,7 +40,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     int nr_diario = 0;
                     if (!int.TryParse(_nr_diario, out nr_diario))
                     {
-                        throw new DocValidacaoException("Número inválido.");
+                        throw new DocValidacaoException("NÃºmero invÃ¡lido.");
                     }
                     var _cr_diario = context.Request["cr_diario"];
                     var _secoes_diario = context.Request.Form.GetValues("secao_diario");

@@ -1,4 +1,4 @@
-﻿// necessário carregar: 'jquery-1.11.0.min.js', ' jquery-ui-1.10.4.custom.min.js', 'scripts.js'
+// necessário carregar: 'jquery-1.11.0.min.js', ' jquery-ui-1.10.4.custom.min.js', 'scripts.js'
 /*==========================================================================================
 Arquivo js responsável por todos os autocomplete das paginas;
 Implementação:

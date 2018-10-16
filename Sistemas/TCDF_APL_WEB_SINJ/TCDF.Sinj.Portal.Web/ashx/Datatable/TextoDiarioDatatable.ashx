@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="TextoDiarioDatatable.ashx.cs" Class="TCDF.Sinj.Portal.Web.ashx.Datatable.TextoDiarioDatatable" %>
+<%@ WebHandler Language="C#" CodeBehind="TextoDiarioDatatable.ashx.cs" Class="TCDF.Sinj.Portal.Web.ashx.Datatable.TextoDiarioDatatable" %>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DesativarNormaPush.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.DesativarNormaPush" %>
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DesativarNormaPush.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.DesativarNormaPush" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript">
     <%

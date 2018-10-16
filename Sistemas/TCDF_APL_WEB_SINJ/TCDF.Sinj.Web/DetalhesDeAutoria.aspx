@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeAutoria.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeAutoria" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeAutoria.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeAutoria" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_autoria.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

@@ -1,4 +1,4 @@
-﻿// necessário carregar: 'jquery-1.11.0.min.js', ' jquery-ui-1.10.4.custom.min.js', 'script.js'  e 'js.ashx'
+// necessário carregar: 'jquery-1.11.0.min.js', ' jquery-ui-1.10.4.custom.min.js', 'script.js'  e 'js.ashx'
 $(function () {
     (function ($) {
         $.fn.modallight = function (options) {

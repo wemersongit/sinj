@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeTipoDeRelacao.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeTipoDeRelacao" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeTipoDeRelacao.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeTipoDeRelacao" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_tipo_de_relacao.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

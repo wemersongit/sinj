@@ -1,4 +1,4 @@
-﻿using util.BRLight;
+using util.BRLight;
 using TCDF.Sinj.Log.OV;
 using System;
 using TCDF.Sinj.Log.RN;

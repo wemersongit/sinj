@@ -1,4 +1,4 @@
-﻿
+
 function PreencherAutoriaEdicao() {
     var id_doc = GetParameterValue("id_doc");
     if (id_doc != "") {

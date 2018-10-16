@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Reindexacao.aspx.cs" Inherits="TCDF.Sinj.Web.Reindexacao" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Reindexacao.aspx.cs" Inherits="TCDF.Sinj.Web.Reindexacao" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript">
         <% Response.Write("var url_base_rest = \"" + util.BRLight.Config.ValorChave("URLBaseRest", true) + "\";");%>

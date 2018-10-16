@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Download.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Download" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Download.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Download" %>
 <!DOCTYPE html>
 <html>
 <head id="Head1" runat="server">

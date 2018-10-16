@@ -1,4 +1,4 @@
-﻿function ConstruirControlesDinamicos() {
+function ConstruirControlesDinamicos() {
     ConstruirOrgaosCadastradores();
     $('#div_autocomplete_tipo_norma').autocompletelight({
         sKeyDataName: "ch_tipo_norma",

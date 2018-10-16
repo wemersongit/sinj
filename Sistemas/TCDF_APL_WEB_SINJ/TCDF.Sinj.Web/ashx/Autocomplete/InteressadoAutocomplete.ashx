@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="InteressadoAutocomplete.ashx.cs" Class="TCDF.Sinj.Web.ashx.Autocomplete.InteressadoAutocomplete" %>
+<%@ WebHandler Language="C#" CodeBehind="InteressadoAutocomplete.ashx.cs" Class="TCDF.Sinj.Web.ashx.Autocomplete.InteressadoAutocomplete" %>

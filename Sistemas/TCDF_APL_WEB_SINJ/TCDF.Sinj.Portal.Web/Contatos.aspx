@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Contatos.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Contatos" %>
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Contatos.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Contatos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">

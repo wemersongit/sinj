@@ -21,7 +21,7 @@ namespace TCDF.Sinj.OV
         public string nm_diferencial_edicao { get; set; }
         public int nr_diario { get; set; }
         /// <summary>
-        /// Letra para conseguir cadastrar diario com o mesmo número.
+        /// Letra para conseguir cadastrar diario com o mesmo nÃºmero.
         /// </summary>
         public string cr_diario { get; set; }
         public string secao_diario { get; set; }
@@ -46,8 +46,8 @@ namespace TCDF.Sinj.OV
 
         public string getDescricaoDiario()
         {
-            return nm_tipo_fonte + " nº " + nr_diario + (!string.IsNullOrEmpty(cr_diario) ? " " + cr_diario : "") +
-                    ((!string.IsNullOrEmpty(nm_tipo_edicao) && nm_tipo_edicao != "Normal" || !string.IsNullOrEmpty(nm_diferencial_edicao)) ? ", Edição " + nm_tipo_edicao + (!string.IsNullOrEmpty(nm_diferencial_edicao) ? " " + nm_diferencial_edicao : "") : "") +
+            return nm_tipo_fonte + " nÂº " + nr_diario + (!string.IsNullOrEmpty(cr_diario) ? " " + cr_diario : "") +
+                    ((!string.IsNullOrEmpty(nm_tipo_edicao) && nm_tipo_edicao != "Normal" || !string.IsNullOrEmpty(nm_diferencial_edicao)) ? ", EdiÃ§Ã£o " + nm_tipo_edicao + (!string.IsNullOrEmpty(nm_diferencial_edicao) ? " " + nm_diferencial_edicao : "") : "") +
                     (st_suplemento ? ", Suplemento" + (!string.IsNullOrEmpty(nm_diferencial_suplemento) ? " " + nm_diferencial_suplemento : "") : "") +
                     " de " + dt_assinatura;
         }

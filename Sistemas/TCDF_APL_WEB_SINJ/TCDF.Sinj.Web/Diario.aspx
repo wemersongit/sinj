@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Diario.aspx.cs" Inherits="TCDF.Sinj.Web.Diario" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Diario.aspx.cs" Inherits="TCDF.Sinj.Web.Diario" %>
 <!DOCTYPE html>
 <html>
 <head>

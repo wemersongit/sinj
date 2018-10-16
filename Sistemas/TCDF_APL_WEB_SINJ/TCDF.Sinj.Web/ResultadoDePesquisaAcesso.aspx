@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="ResultadoDePesquisaAcesso.aspx.cs" Inherits="TCDF.Sinj.Web.ResultadoDePesquisaAcesso" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="ResultadoDePesquisaAcesso.aspx.cs" Inherits="TCDF.Sinj.Web.ResultadoDePesquisaAcesso" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript">
         

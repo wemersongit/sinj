@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="OrgaoExcluir.ashx.cs" Class="TCDF.Sinj.Web.ashx.Exclusao.OrgaoExcluir" %>
+<%@ WebHandler Language="C#" CodeBehind="OrgaoExcluir.ashx.cs" Class="TCDF.Sinj.Web.ashx.Exclusao.OrgaoExcluir" %>

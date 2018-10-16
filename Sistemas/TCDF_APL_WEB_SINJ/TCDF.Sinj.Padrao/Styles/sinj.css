@@ -557,7 +557,7 @@ table.dataTable tbody tr.even td.highlighted, table.dataTable tr.odd td.highligh
 .linha-destacada > td {background-color: #FAFD67 !important;}
 .hierarquia-destacada {font-weight: bold;}
 
-/*Texto ExtraÌdo */
+/*Texto Extra√≠do */
 #div_texto {font-size:initial; font-family:initial;}
 
 /*Responsividade SINJ Portal */
@@ -567,27 +567,27 @@ table.dataTable tbody tr.even td.highlighted, table.dataTable tr.odd td.highligh
 @media screen and (max-width:380px)
 {
     #div_top {position:fixed;top:0;} /* Topo Fixo */
-    #div_body {margin-top:30px;} /* EspaÁo para que o conte˙do nao fique abaixo do topo */
-    #div_top div.logo, #div_top div.top-bottom-right, #div_top div.right-top {display:none;} /* Elementos do topo que n„o devem aparecer */
+    #div_body {margin-top:30px;} /* Espa√ßo para que o conte√∫do nao fique abaixo do topo */
+    #div_top div.logo, #div_top div.top-bottom-right, #div_top div.right-top {display:none;} /* Elementos do topo que n√£o devem aparecer */
     #div_top div.top-bottom > div {min-width:0;} /* Reseta o estilo definido no estilo padrao */
     #div_top div.top-bottom {height:35px;}
-    #div_top .top-bottom-left {width:60%; display:flex;} /* A parte esquerda contÈm o icone do menu e o titulo. Os elementos s„o flex para ocuparem a mesma linha. */
+    #div_top .top-bottom-left {width:60%; display:flex;} /* A parte esquerda cont√©m o icone do menu e o titulo. Os elementos s√£o flex para ocuparem a mesma linha. */
     #div_top .top-bottom-left h2{display:none;} /* Esconde o titulo completo */
     #div_top .top-bottom-left h3{display:inherit; margin:7px auto; font-size:17px; font-family: Arial; color:#FFFFFF; z-index:2;} /* Titulo resumido (SINJ-DF) */
-    #div_menu_lateral_mobile {width:20%;} /* … o 'icone' de menu lateral */
-    #div_menu_lateral_mobile span {display:block; margin:auto; position:relative; width:60%; height: 4px; background: white; z-index:2;} /* S„o as linhas que formam o 'icone' de menu */
+    #div_menu_lateral_mobile {width:20%;} /* √â o 'icone' de menu lateral */
+    #div_menu_lateral_mobile span {display:block; margin:auto; position:relative; width:60%; height: 4px; background: white; z-index:2;} /* S√£o as linhas que formam o 'icone' de menu */
     #div_menu_lateral_mobile span:nth-child(1) {top:7px;} /* Posicionamento de cada um das linhas do span */
     #div_menu_lateral_mobile span:nth-child(2) {top:10px;}
     #div_menu_lateral_mobile span:nth-child(3) {top:13px;}
     
-    #div_top div.top-bottom-center{width:40%;margin:5px auto;} /* ContÈm a barra de pesquisa e a lupa */
+    #div_top div.top-bottom-center{width:40%;margin:5px auto;} /* Cont√©m a barra de pesquisa e a lupa */
     #div_top div.top-search{width:100%;}
     #div_top div.top-search input{width:80%;}
     
     /* Menu se torna uma gaveta lateral. Fica posicionado fora da tela */
     #div_top div.menu { width:160px; height:100%; position: fixed;  transform: translate(-160px,0); transition: transform 1s; z-index:1;} 
-    #div_top div.menu.open {transform: translate(0,0);} /* Quando tem essa classe, o menu È posicionado para dentro da tela */
-    #navPage {width:100%; margin-top:25px;} /* … o elemento <ul> do menu. O margin-top È para que haja espaÁo para o Ìcone no topo.  */
+    #div_top div.menu.open {transform: translate(0,0);} /* Quando tem essa classe, o menu √© posicionado para dentro da tela */
+    #navPage {width:100%; margin-top:25px;} /* √â o elemento <ul> do menu. O margin-top √© para que haja espa√ßo para o √≠cone no topo.  */
     #navPage li{width:100%;}
 } 
 

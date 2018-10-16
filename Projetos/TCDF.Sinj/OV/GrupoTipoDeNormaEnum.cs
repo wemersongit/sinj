@@ -8,34 +8,34 @@ namespace TCDF.Sinj.OV
     public enum GrupoTipoDeNormaEnum
     {
         /// <summary>
-        /// … verdadeiro para os tipos de norma que aparece o campo îAutoriaî pra ser preenchido e pesquisado
+        /// √â verdadeiro para os tipos de norma que aparece o campo ‚ÄùAutoria‚Äù pra ser preenchido e pesquisado
         /// </summary>
         [Description("Grupo1")]
         G1 = 0,
         /// <summary>
-        /// … verdadeiros para os tipos de norma que s„o especificas para aÁıes impetradas no PGDF que 
-        ///  podem interferir na vigÍncia de outras normas. Para estes tipos de 
-        ///  normas deve estar disponÌvel campos adicionais especÌficos e alteradas 
+        /// √â verdadeiros para os tipos de norma que s√£o especificas para a√ß√µes impetradas no PGDF que 
+        ///  podem interferir na vig√™ncia de outras normas. Para estes tipos de 
+        ///  normas deve estar dispon√≠vel campos adicionais espec√≠ficos e alteradas 
         ///  algumas regras de negocio para os campos comuns.
         /// </summary>
         [Description("Grupo2")]
         G2 = 1,
         /// <summary>
-        /// Trata exclusivamente do tipo DODF, pois esta parte do acervo n„o È uma 
+        /// Trata exclusivamente do tipo DODF, pois esta parte do acervo n√£o √© uma 
         ///  norma e tem por objetivo apenas disponibilizar o DO do DF para pesquisa.
-        /// O DODF n„o È ato, nem norma e nem aÁ„o.
+        /// O DODF n√£o √© ato, nem norma e nem a√ß√£o.
         /// </summary>
         [Description("Grupo3")]
         G3 = 2,
         /// <summary>
-        /// … verdadeiros para os tipos de norma que aparece o campo ìAutoriaî e ìInteressadoî pra ser 
-        ///  preenchido e pesquisado (exceto as aÁıes da PGDF).
+        /// √â verdadeiros para os tipos de norma que aparece o campo ‚ÄúAutoria‚Äù e ‚ÄúInteressado‚Äù pra ser 
+        ///  preenchido e pesquisado (exceto as a√ß√µes da PGDF).
         /// </summary>
         [Description("Grupo4")]
         G4 = 4,
         /// <summary>
         /// Indica os tipos de normas que podem ser cadastras no VIDES sem a 
-        ///  necessidade da norma vinculada j· estar cadastra no sistema.
+        ///  necessidade da norma vinculada j√° estar cadastra no sistema.
         /// </summary>
         [Description("Grupo5")]
         G5 = 8,

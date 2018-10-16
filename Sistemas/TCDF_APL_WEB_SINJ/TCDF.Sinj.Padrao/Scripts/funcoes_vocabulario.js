@@ -1,4 +1,4 @@
-﻿var _ch_termo = "";
+var _ch_termo = "";
 
 function PreencherVocabularioEdicao() {
     var id_doc = GetParameterValue("id_doc");

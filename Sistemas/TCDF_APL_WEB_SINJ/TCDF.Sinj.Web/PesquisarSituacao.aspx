@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarSituacao.aspx.cs" Inherits="TCDF.Sinj.Web.PesquisarSituacao" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarSituacao.aspx.cs" Inherits="TCDF.Sinj.Web.PesquisarSituacao" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_situacao.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
 

@@ -1,4 +1,4 @@
-﻿// necessário carregar:'jquery-1.11.0.min.js', 'js.ashx', 'jquery.cookie.js'
+// necessário carregar:'jquery-1.11.0.min.js', 'js.ashx', 'jquery.cookie.js'
 
 ////////////////////////////////////
 //Verificar sessão do Notifique-me//

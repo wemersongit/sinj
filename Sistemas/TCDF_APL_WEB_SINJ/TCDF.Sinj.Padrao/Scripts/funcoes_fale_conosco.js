@@ -1,4 +1,4 @@
-﻿var fnSuccessFaleConosco = function (data) {
+var fnSuccessFaleConosco = function (data) {
     if (IsNotNullOrEmpty(data, 'error_message')) {
         notificar('#form_fale_conosco', data.error_message, 'error');
         generateCaptcha();

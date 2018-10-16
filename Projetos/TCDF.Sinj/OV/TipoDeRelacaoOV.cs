@@ -16,11 +16,11 @@ namespace TCDF.Sinj.OV
         public int nr_importancia { get; set; }
 
         /// <summary>
-        /// Esse campo funciona como um flag, é true apenas quando o tipo de relação é usada para Ações com outras normas;
+        /// Esse campo funciona como um flag, Ã© true apenas quando o tipo de relaÃ§Ã£o Ã© usada para AÃ§Ãµes com outras normas;
         /// </summary>
         public bool in_relacao_de_acao { get; set; }
         /// <summary>
-        /// Só permite selecionar na inclusão e edição de vides se for true
+        /// SÃ³ permite selecionar na inclusÃ£o e ediÃ§Ã£o de vides se for true
         /// </summary>
         public bool in_selecionavel { get; set; }
 

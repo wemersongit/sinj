@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Imagens.aspx.cs" Inherits="TCDF.Sinj.Web.Imagens" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Imagens.aspx.cs" Inherits="TCDF.Sinj.Web.Imagens" %>
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarTipoDePublicacao.aspx.cs" Inherits="TCDF.Sinj.Web.PesquisarTipoDePublicacao" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarTipoDePublicacao.aspx.cs" Inherits="TCDF.Sinj.Web.PesquisarTipoDePublicacao" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_tipo_de_publicacao.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript">

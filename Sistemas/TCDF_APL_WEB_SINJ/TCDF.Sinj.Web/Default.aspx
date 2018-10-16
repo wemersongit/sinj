@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TCDF.Sinj.Web.Default" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TCDF.Sinj.Web.Default" %>
 <asp:Content ID="ContentHeader" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript"src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_pesquisas.js"></script>
     <script type="text/javascript">

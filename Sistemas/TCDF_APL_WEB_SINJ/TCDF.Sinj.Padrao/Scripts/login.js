@@ -1,4 +1,4 @@
-﻿function Logar() {
+function Logar() {
     try {
         Validar(form_login);
         if ($('#senha').val().length < 6) {

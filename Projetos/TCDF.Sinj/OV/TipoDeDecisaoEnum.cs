@@ -8,15 +8,15 @@ namespace TCDF.Sinj.OV
         LiminarDeferida,
         [Description("Liminar Indeferida")]
         LiminarIndeferida,
-        [Description("Mérito Procedente")]
+        [Description("MÃ©rito Procedente")]
         MeritoProcedente,
-        [Description("Mérito Improcedente")]
+        [Description("MÃ©rito Improcedente")]
         MeritoImprocedente,
         [Description("Extinta")]
         Extinta,
         [Description("Ajuizado")]
         Ajuizado,
-        [Description("Mérito Parcialmente Procedente")]
+        [Description("MÃ©rito Parcialmente Procedente")]
         MeritoParcialmenteProcedente
     }
 }

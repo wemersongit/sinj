@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="FaleConosco.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.FaleConosco" %>
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="FaleConosco.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.FaleConosco" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_fale_conosco.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/sessao_notifiqueme.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

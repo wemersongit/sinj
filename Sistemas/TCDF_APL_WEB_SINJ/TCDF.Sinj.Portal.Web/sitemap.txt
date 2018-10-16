@@ -1,4 +1,4 @@
-﻿http://www.sinj.df.gov.br/sinj/Pesquisas.aspx
+http://www.sinj.df.gov.br/sinj/Pesquisas.aspx
 http://www.sinj.df.gov.br/sinj/FaleConosco.aspx
 http://www.sinj.df.gov.br/sinj/ResultadoDePesquisa.aspx?tipo_pesquisa=norma&all=&ch_tipo_norma=10000000&nm_tipo_norma=ADC&nr_norma=&ano_assinatura=&ch_orgao=&ch_hierarquia=&sg_hierarquia_nm_vigencia=&origem_por=toda_a_hierarquia_em_qualquer_epoca
 http://www.sinj.df.gov.br/sinj/ResultadoDePesquisa.aspx?tipo_pesquisa=norma&all=&ch_tipo_norma=11000000&nm_tipo_norma=ADI&nr_norma=&ano_assinatura=&ch_orgao=&ch_hierarquia=&sg_hierarquia_nm_vigencia=&origem_por=toda_a_hierarquia_em_qualquer_epoca

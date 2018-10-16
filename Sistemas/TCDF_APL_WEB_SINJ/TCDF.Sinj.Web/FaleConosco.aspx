@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="FaleConosco.aspx.cs" Inherits="TCDF.Sinj.Web.FaleConosco" %>
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="FaleConosco.aspx.cs" Inherits="TCDF.Sinj.Web.FaleConosco" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 		<script type="text/javascript">
 		    var _nm_orgao_cadastrador_atribuido = '<%= Request["nm_orgao_cadastrador_atribuido"] != null ? Request["nm_orgao_cadastrador_atribuido"] : "" %>';

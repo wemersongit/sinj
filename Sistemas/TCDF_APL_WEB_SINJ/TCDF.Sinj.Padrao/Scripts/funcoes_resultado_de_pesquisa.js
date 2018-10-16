@@ -1,4 +1,4 @@
-﻿var doc_clicked = "";
+var doc_clicked = "";
 var id_file = "";
 var text = "";
 

@@ -1,4 +1,4 @@
-﻿/* funcoes_sinj.js
+/* funcoes_sinj.js
 ===========================================*/
 
 /*========================
@@ -2732,9 +2732,8 @@ function getTitleNorma(jNorma) {
     return ds;
 }
 
-
-
 function DetalhesNorma(data, highlight) {
+
     var bCadastro = _aplicacao == "CADASTRO";
     if (IsNotNullOrEmpty(data)) {
         if (IsNotNullOrEmpty(data.error_message)) {

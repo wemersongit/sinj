@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeNorma.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.DetalhesDeNorma" %>
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeNorma.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.DetalhesDeNorma" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <asp:PlaceHolder runat="server" id="placeHolderHeader"></asp:PlaceHolder>  
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.highlight.js"></script>
@@ -18,7 +18,7 @@
         var date_now = '<%= DateTime.Now.ToString("dd/MM/yyyy") %>';
 
         $(document).ready(function () {
-        	cookies_aux = ['back_history_aux_datatable','back_history_aux_filtros','back_history_aux_tab'];
+            cookies_aux = ['back_history_aux_datatable','back_history_aux_filtros','back_history_aux_tab'];
             DetalhesNorma(json_norma, highlight);
             if(IsNotNullOrEmpty(success_message)){
                 $('#div_norma .notify').messagelight({
@@ -44,8 +44,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <div class="w-100-pc">
         <div class="divIdentificadorDePagina fl">
-	        <label>.: Detalhes de Norma</label>
-	    </div>
+            <label>.: Detalhes de Norma</label>
+        </div>
     </div>
     <div id="div_controls" class="control cb">
     </div>

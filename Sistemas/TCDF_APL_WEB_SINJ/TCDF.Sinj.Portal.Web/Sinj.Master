@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Sinj.master.cs" Inherits="TCDF.Sinj.Portal.Web.Sinj" %>
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Sinj.master.cs" Inherits="TCDF.Sinj.Portal.Web.Sinj" %>
 <!DOCTYPE html>
 <html>
 <head runat="server">

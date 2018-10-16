@@ -1,4 +1,4 @@
-﻿
+
 function ExcluirDoHistorico(id) {
     $.ajaxlight({
         sUrl: './ashx/Exclusao/HistoricoDePesquisaExcluir.ashx?id=' + id,

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using util.BRLight;
 using TCDF.Sinj.OV;

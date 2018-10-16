@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarInteressado.aspx.cs" Inherits="TCDF.Sinj.Web.EditarInteressado" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarInteressado.aspx.cs" Inherits="TCDF.Sinj.Web.EditarInteressado" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_interessado.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Versao.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Versao" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Versao.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Versao" %>
 <!DOCTYPE html>
 <html>
 <head id="Head1" runat="server">

@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" Inherits="TCDF.Sinj.Web.Sinj" %>
+<%@ Master Language="C#" Inherits="TCDF.Sinj.Web.Sinj" %>
 <!DOCTYPE html>
 <html>
 <head>

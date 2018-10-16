@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="SituacaoDetalhes.ashx.cs" Class="TCDF.Sinj.Web.ashx.Visualizacao.SituacaoDetalhes" %>
+<%@ WebHandler Language="C#" CodeBehind="SituacaoDetalhes.ashx.cs" Class="TCDF.Sinj.Web.ashx.Visualizacao.SituacaoDetalhes" %>

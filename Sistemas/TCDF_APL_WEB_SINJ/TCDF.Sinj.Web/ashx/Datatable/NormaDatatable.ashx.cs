@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 using TCDF.Sinj.OV;
 using TCDF.Sinj.RN;
 using util.BRLight;

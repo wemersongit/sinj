@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeTipoDeFonte.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeTipoDeFonte" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeTipoDeFonte.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeTipoDeFonte" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_tipo_de_fonte.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

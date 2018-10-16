@@ -1,4 +1,4 @@
-﻿
+
 $(function () {
     (function ($) {
         $.loadScript = function (url, callback) {

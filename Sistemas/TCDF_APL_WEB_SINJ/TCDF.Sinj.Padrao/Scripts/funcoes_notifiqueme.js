@@ -1,4 +1,4 @@
-﻿var notifiquemeOv = null;
+var notifiquemeOv = null;
 $(document).ready(function () {
     $('.tabs').tabs();
     var sucesso = function (data) {

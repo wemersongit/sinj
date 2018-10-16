@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="ResultadoDePesquisaErroExtracao.aspx.cs" Inherits="TCDF.Sinj.Web.ResultadoDePesquisaErroExtracao" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="ResultadoDePesquisaErroExtracao.aspx.cs" Inherits="TCDF.Sinj.Web.ResultadoDePesquisaErroExtracao" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {

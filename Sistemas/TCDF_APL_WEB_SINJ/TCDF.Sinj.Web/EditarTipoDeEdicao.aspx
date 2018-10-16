@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarTipoDeEdicao.aspx.cs" Inherits="TCDF.Sinj.Web.EditarTipoDeEdicao" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarTipoDeEdicao.aspx.cs" Inherits="TCDF.Sinj.Web.EditarTipoDeEdicao" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_tipo_de_edicao.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

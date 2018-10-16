@@ -1,4 +1,4 @@
-﻿function DetalhesAcesso(data) {
+function DetalhesAcesso(data) {
     if (IsNotNullOrEmpty(data, 'error_message')) {
         $('#div_notificacao').messagelight({
             sContent: data.error_message,

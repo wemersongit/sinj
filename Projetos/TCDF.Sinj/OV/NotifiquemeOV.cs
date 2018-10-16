@@ -14,21 +14,21 @@ namespace TCDF.Sinj.OV
         }
 
         /// <summary>
-        /// Usado para login no push no caso de usu·rios n„o cadastrados no sistema, ou seja, n„o UsuarioOV
+        /// Usado para login no push no caso de usu√°rios n√£o cadastrados no sistema, ou seja, n√£o UsuarioOV
         /// </summary>
         public string email_usuario_push { get; set; }
 
         /// <summary>
-        /// Indentifica o nome do usu·rio (UsuarioOV ou n„o)
+        /// Indentifica o nome do usu√°rio (UsuarioOV ou n√£o)
         /// </summary>
         public string nm_usuario_push { get; set; }
 
         /// <summary>
-        /// Usado para login no push no caso de usu·rios n„o cadastrados no sistema, ou seja, n„o UsuarioOV
+        /// Usado para login no push no caso de usu√°rios n√£o cadastrados no sistema, ou seja, n√£o UsuarioOV
         /// </summary>
         public string senha_usuario_push { get; set; }
 
-        // ContÈm uma lista de chaves concatenadas com identificadores de base (norma ou diario). Ex.: norma_78993
+        // Cont√©m uma lista de chaves concatenadas com identificadores de base (norma ou diario). Ex.: norma_78993
         public List<string> favoritos { get; set; }
 
         public List<TermoDiarioMonitoradoPushOV> termos_diarios_monitorados { get; set; }
@@ -36,7 +36,7 @@ namespace TCDF.Sinj.OV
         public List<CriacaoDeNormaMonitoradaPushOV> criacao_normas_monitoradas { get; set; }
 
         /// <summary>
-        /// Indica se o usu·rio est· ativo ou n„o.
+        /// Indica se o usu√°rio est√° ativo ou n√£o.
         /// </summary>
         public bool st_push { get; set; }
     }

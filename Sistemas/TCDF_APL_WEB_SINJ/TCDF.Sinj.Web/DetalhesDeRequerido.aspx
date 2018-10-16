@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeRequerido.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeRequerido" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeRequerido.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeRequerido" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_requerido.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="UsuarioAutocomplete.ashx.cs" Class="TCDF.Sinj.Web.ashx.Autocomplete.UsuarioAutocomplete" %>
+<%@ WebHandler Language="C#" CodeBehind="UsuarioAutocomplete.ashx.cs" Class="TCDF.Sinj.Web.ashx.Autocomplete.UsuarioAutocomplete" %>

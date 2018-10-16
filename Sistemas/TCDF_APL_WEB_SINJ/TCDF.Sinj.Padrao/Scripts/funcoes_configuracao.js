@@ -1,4 +1,4 @@
-﻿function DetalhesConfiguracao() {
+function DetalhesConfiguracao() {
     if (IsNotNullOrEmpty(_user, 'nm_login_usuario')) {
         var sucesso = function (data) {
             if (IsNotNullOrEmpty(data)) {

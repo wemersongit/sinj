@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="CadastrarNotifiqueme.aspx.cs" Inherits="TCDF.Sinj.Web.CadastrarNotifiqueme" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="CadastrarNotifiqueme.aspx.cs" Inherits="TCDF.Sinj.Web.CadastrarNotifiqueme" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <link rel="stylesheet" type="text/css" href="<%= TCDF.Sinj.Util._urlPadrao %>/Captcha/css/epicaptcha.css?<%= TCDF.Sinj.Util.MostrarVersao() %>" />
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Captcha/js/epicaptcha.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

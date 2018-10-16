@@ -1,4 +1,4 @@
-﻿function excluirArquivo(el) {
+function excluirArquivo(el) {
     var chave = $(el).closest('tr.tr_arq').attr('chave');
     var sucesso = function (data) {
         $('#super_loading').hide();

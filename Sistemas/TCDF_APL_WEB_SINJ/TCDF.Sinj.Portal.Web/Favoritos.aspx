@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true"
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true"
     CodeBehind="Favoritos.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.Favoritos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">

@@ -1,4 +1,4 @@
-﻿
+
 
 function Notificar(ch_norma) {
     var sucesso = function (data) {

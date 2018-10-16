@@ -30,9 +30,9 @@ namespace TCDF.Sinj.OV
         public string ds_republicacao { get; set; }
         public ArquivoOV ar_fonte { get; set; }
         
-        //Representa a descriÁ„o do di·rio (DODF 155 EdiÁ„o Extra Suplemento 3 SeÁ„o 1 de 19/02/2001)
+        //Representa a descri√ß√£o do di√°rio (DODF 155 Edi√ß√£o Extra Suplemento 3 Se√ß√£o 1 de 19/02/2001)
         public string ds_diario { get; set; }
-        //Representa o json file do di·rio
+        //Representa o json file do di√°rio
         public ArquivoOV ar_diario { get; set; }
         
         public Fonte()

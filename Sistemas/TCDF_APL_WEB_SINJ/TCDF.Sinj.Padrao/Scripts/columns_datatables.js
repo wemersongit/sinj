@@ -1,4 +1,4 @@
-﻿function TratarCamposBooleanos(data) {
+function TratarCamposBooleanos(data) {
     return '<input type="checkbox" ' + (data ? 'checked="true"' : '') + ' disabled="disabled" />';
 }
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="RecriarSenhaNotifiqueme.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.RecriarSenhaNotifiqueme" %>
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="RecriarSenhaNotifiqueme.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.RecriarSenhaNotifiqueme" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/login_notifiqueme.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     

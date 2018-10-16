@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="captcha.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.captcha" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="captcha.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.captcha" %>
 <!DOCTYPE html>
 <html>
 <body>

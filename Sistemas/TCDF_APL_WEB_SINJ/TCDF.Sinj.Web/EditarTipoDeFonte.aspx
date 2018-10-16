@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarTipoDeFonte.aspx.cs" Inherits="TCDF.Sinj.Web.EditarTipoDeFonte" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarTipoDeFonte.aspx.cs" Inherits="TCDF.Sinj.Web.EditarTipoDeFonte" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_tipo_de_fonte.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

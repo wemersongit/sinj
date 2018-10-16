@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditarLinks.aspx.cs" Inherits="TCDF.Sinj.Web.EditarLinks" ClientIDMode="Static" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditarLinks.aspx.cs" Inherits="TCDF.Sinj.Web.EditarLinks" ClientIDMode="Static" %>
 <!DOCTYPE html>
 <html>
 <head>

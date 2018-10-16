@@ -1,4 +1,4 @@
-﻿function PreencherTipoDeRelacaoEdicao() {
+function PreencherTipoDeRelacaoEdicao() {
     var id_doc = GetParameterValue("id_doc");
     if (id_doc != "") {
         var sucesso = function (data) {

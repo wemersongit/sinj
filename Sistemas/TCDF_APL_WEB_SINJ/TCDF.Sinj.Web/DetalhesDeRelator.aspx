@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeRelator.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeRelator" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeRelator.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeRelator" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_relator.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

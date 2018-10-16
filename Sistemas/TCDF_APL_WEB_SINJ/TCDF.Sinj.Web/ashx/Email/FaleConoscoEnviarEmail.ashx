@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="FaleConoscoEnviarEmail.ashx.cs" Class="TCDF.Sinj.Web.ashx.Email.FaleConoscoEnviarEmail" %>
+<%@ WebHandler Language="C#" CodeBehind="FaleConoscoEnviarEmail.ashx.cs" Class="TCDF.Sinj.Web.ashx.Email.FaleConoscoEnviarEmail" %>

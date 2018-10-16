@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarTextoDiario.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.PesquisarTextoDiario" %>
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarTextoDiario.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.PesquisarTextoDiario" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {

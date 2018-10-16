@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EstatisticasDePesquisas.aspx.cs" Inherits="TCDF.Sinj.Web.EstatisticasDePesquisas" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EstatisticasDePesquisas.aspx.cs" Inherits="TCDF.Sinj.Web.EstatisticasDePesquisas" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <style type="text/css">
         table th, table td{padding:5px 0px;}

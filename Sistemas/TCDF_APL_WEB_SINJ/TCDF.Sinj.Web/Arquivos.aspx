@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Arquivos.aspx.cs" Inherits="TCDF.Sinj.Web.Arquivos" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Arquivos.aspx.cs" Inherits="TCDF.Sinj.Web.Arquivos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript"  src="<%= TCDF.Sinj.Util._urlPadrao %>/ckeditor/ckeditor.js"></script>
     <script type="text/javascript"  src="<%= TCDF.Sinj.Util._urlPadrao %>/ckeditor/adapters/jquery.js"></script>

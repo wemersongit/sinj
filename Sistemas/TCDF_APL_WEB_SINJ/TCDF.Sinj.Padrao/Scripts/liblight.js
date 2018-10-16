@@ -1,4 +1,4 @@
-﻿// necessário carregar:'jquery-1.11.0.min.js'
+// necessário carregar:'jquery-1.11.0.min.js'
 // 
 var file = window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) || "Default.aspx";
 

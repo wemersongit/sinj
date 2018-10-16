@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Notifiqueme.aspx.cs" Inherits="TCDF.Sinj.Web.Notifiqueme" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="Notifiqueme.aspx.cs" Inherits="TCDF.Sinj.Web.Notifiqueme" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_notifiqueme.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

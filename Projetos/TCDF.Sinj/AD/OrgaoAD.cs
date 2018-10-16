@@ -45,7 +45,7 @@ namespace TCDF.Sinj.AD
             {
                 return result.results[0];
             }
-            throw new Exception("Nenhum Ûrg„o foi encontrado. … possÌvel que o mesmo j· tenha sido excluÌdo.");
+            throw new Exception("Nenhum √≥rg√£o foi encontrado. √â poss√≠vel que o mesmo j√° tenha sido exclu√≠do.");
         }
 
         internal OrgaoOV Doc(ulong id_doc)
@@ -83,14 +83,14 @@ namespace TCDF.Sinj.AD
             {
                 if ((ex.Message.IndexOf("duplicate key") > -1 || ex.Message.IndexOf("duplicar valor da chave") > -1 ) || (ex.InnerException != null && (ex.InnerException.Message.IndexOf("duplicate key") > -1 || ex.InnerException.Message.IndexOf("duplicar valor da chave") > -1)))
                 {
-                    throw new DocDuplicateKeyException("Registro j· existente na base de dados!!!");
+                    throw new DocDuplicateKeyException("Registro j√° existente na base de dados!!!");
                 }
                 throw ex;
             }
         }
 
         /// <summary>
-        /// Atualiza um orgao e retorna true ou false indicando o sucesso da operaÁ„o
+        /// Atualiza um orgao e retorna true ou false indicando o sucesso da opera√ß√£o
         /// </summary>
         /// <param name="orgaoOv"></param>
         /// <returns></returns>
@@ -104,7 +104,7 @@ namespace TCDF.Sinj.AD
             {
                 if ((ex.Message.IndexOf("duplicate key") > -1 || ex.Message.IndexOf("duplicar valor da chave") > -1 ) || (ex.InnerException != null && (ex.InnerException.Message.IndexOf("duplicate key") > -1 || ex.InnerException.Message.IndexOf("duplicar valor da chave") > -1)))
                 {
-                    throw new DocDuplicateKeyException("Registro j· existente na base de dados!!!");
+                    throw new DocDuplicateKeyException("Registro j√° existente na base de dados!!!");
                 }
                 throw ex;
             }

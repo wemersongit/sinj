@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarVide.aspx.cs" Inherits="TCDF.Sinj.Web.EditarVide" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="EditarVide.aspx.cs" Inherits="TCDF.Sinj.Web.EditarVide" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript">

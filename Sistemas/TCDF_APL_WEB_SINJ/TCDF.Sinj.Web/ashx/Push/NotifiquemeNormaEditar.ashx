@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="NotifiquemeNormaEditar.ashx.cs" Class="TCDF.Sinj.Web.ashx.Push.NotifiquemeNormaEditar" %>
+<%@ WebHandler Language="C#" CodeBehind="NotifiquemeNormaEditar.ashx.cs" Class="TCDF.Sinj.Web.ashx.Push.NotifiquemeNormaEditar" %>

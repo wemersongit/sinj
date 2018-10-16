@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeNorma.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeNorma" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="DetalhesDeNorma.aspx.cs" Inherits="TCDF.Sinj.Web.DetalhesDeNorma" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.highlight.js"></script>
     <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_norma.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
@@ -16,7 +16,7 @@
         var date_now = '<%= DateTime.Now.ToString("dd/MM/yyyy") %>';
 
         $(document).ready(function () {
-        	cookies_aux = ['back_history_aux_datatable','back_history_aux_filtros','back_history_aux_tab'];
+            cookies_aux = ['back_history_aux_datatable','back_history_aux_filtros','back_history_aux_tab'];
             DetalhesNorma(data, highlight);
             if(IsNotNullOrEmpty(success_message)){
                 $('#div_norma .notify').messagelight({
@@ -39,8 +39,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <div class="w-100-pc">
         <div class="divIdentificadorDePagina fl">
-	        <label>.: Detalhes de Norma</label>
-	    </div>
+            <label>.: Detalhes de Norma</label>
+        </div>
     </div>
     <div id="div_controls" class="control cb">
     </div>
@@ -563,30 +563,30 @@
                         </div>
                         <div class="line_bottom"></div>
                     </div>
-					<div class="line no-hide">
-	                    <div class="column w-100-pc">
-	                        <div class="cell w-100-pc" >
+                    <div class="line no-hide">
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc" >
                                 <div class="w-90-pc mauto text-center" style="background-color:#CCC;">
-	                                <a href="javascript:void(0);" onclick="javascript:ExpandirDadosDeCadastro();" class="expansible closed" >Cadastro <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_arrow_down.png"/></a>
-	                        	    <div id="div_detalhes_cadastro" style="display:none;"> 
-									    <span id="span_nome_usuario_cadastro"></span>
-									    <span id="span_data_cadastro"> -  </span>
-								    </div>
+                                    <a href="javascript:void(0);" onclick="javascript:ExpandirDadosDeCadastro();" class="expansible closed" >Cadastro <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_arrow_down.png"/></a>
+                                    <div id="div_detalhes_cadastro" style="display:none;"> 
+                                        <span id="span_nome_usuario_cadastro"></span>
+                                        <span id="span_data_cadastro"> -  </span>
+                                    </div>
                                 </div>
-	                        </div>
-	                    </div>
-	                </div>
-					<div class="line no-hide">
-	                    <div class="column w-100-pc">
-	                        <div class="cell w-100-pc" >
-                                <div class="w-90-pc mauto text-center" style="background-color:#CCC;">
-	                                <a href="javascript:void(0);" onclick="javascript:ExpandirAlteracoes();" class="expansible closed" >Alterações <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_arrow_down.png"/></a>
-	                        	    <div id="div_alteracoes" style="display:none;"> 
-								    </div>
-	                            </div>
                             </div>
-	                    </div>
-	                </div>
+                        </div>
+                    </div>
+                    <div class="line no-hide">
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc" >
+                                <div class="w-90-pc mauto text-center" style="background-color:#CCC;">
+                                    <a href="javascript:void(0);" onclick="javascript:ExpandirAlteracoes();" class="expansible closed" >Alterações <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_arrow_down.png"/></a>
+                                    <div id="div_alteracoes" style="display:none;"> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </fieldset>
         </div>

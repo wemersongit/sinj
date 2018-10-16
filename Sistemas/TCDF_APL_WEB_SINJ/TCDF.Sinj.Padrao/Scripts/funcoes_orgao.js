@@ -1,4 +1,4 @@
-﻿
+
 // Dependências: liblight.js, validation.js, jquery.modalLight.js, jquery.ajaxLight.js
 //--------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarDiretorioDiario.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.PesquisarDiretorioDiario" %>
+<%@ Page Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarDiretorioDiario.aspx.cs" Inherits="TCDF.Sinj.Portal.Web.PesquisarDiretorioDiario" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <style type="text/css">
         #table_diarios td{padding:5px 0px;}

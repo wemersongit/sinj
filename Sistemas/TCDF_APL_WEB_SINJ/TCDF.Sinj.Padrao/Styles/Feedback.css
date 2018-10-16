@@ -1,4 +1,4 @@
-﻿/* Modal */
+/* Modal */
 div.ui-dialog-light { z-index:101 !important; }
 .ui-dialog-titlebar {padding: .4em 1em;position: relative;}
 .ui-dialog.alert .ui-dialog-titlebar {background:url('../Imagens/ui-bg_diagonals-thick_95_ffcc33_40x40.png') repeat-x;}

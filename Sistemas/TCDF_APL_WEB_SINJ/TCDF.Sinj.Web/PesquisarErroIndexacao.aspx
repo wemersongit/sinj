@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarErroIndexacao.aspx.cs" Inherits="TCDF.Sinj.Web.PesquisarErroIndexacao" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="PesquisarErroIndexacao.aspx.cs" Inherits="TCDF.Sinj.Web.PesquisarErroIndexacao" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {

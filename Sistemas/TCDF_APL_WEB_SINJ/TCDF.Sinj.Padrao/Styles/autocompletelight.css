@@ -1,4 +1,4 @@
-﻿.ui-autocomplete-loading { background: #ffffff url("../Imagens/loading-p.gif") right center no-repeat !important;}
+.ui-autocomplete-loading { background: #ffffff url("../Imagens/loading-p.gif") right center no-repeat !important;}
 .ui-autocomplete { background: Black; border-radius: 0px 0px 6px 6px; border-width: 1px; border-style: solid; max-height: 280px; overflow-y: auto; overflow-x: hidden; height: auto; font-size:14px; z-index:1002 !important; }
 .ui-autocompletelight-btn { background : url("../Imagens/ui-icons_a6a90d_256x240.png") no-repeat scroll -60px 5px #dddddd !important; padding: 0px !important;}
 .ui-autocomplete .ui-menu-item { font-size:13px; border-bottom: 1px solid #C4C4C4 !important;}
