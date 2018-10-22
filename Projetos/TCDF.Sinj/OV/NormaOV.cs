@@ -114,41 +114,27 @@ namespace TCDF.Sinj.OV
                 //        }
                 //    }
                 //}
-                if (fontes.Count > 0)
+                if (fontes != null && fontes.Count > 0)
                 {
-                    if (fontes[0].ar_fonte != null && !string.IsNullOrEmpty(fontes[0].ar_fonte.id_file))
-                    {
-                        id_file = fontes[0].ar_fonte.id_file;
-                    }
+                    DateTime date_now = new DateTime();
+                    DateTime latest_date = new DateTime();
                     foreach (var fonte in fontes)
                     {
+                        date_now = DateTime.ParseExact(fonte.dt_publicacao, "dd/MM/yyyy", null);
                         if (
-                            fonte.ar_fonte != null &&
-                            !string.IsNullOrEmpty(fonte.ar_fonte.id_file) &&
+                            fonte.ar_fonte != null && 
+                            !string.IsNullOrEmpty(
+                                fonte.ar_fonte.id_file
+                            ) && 
                             (
-                                (String.Compare(
-                                    fonte.nm_tipo_publicacao,
-                                    "republicação",
-                                    true) == 0
-                                ) ||
-                                (String.Compare(
-                                    fonte.nm_tipo_publicacao,
-                                    "rep",
-                                    true) == 0
-                                ) ||
-                                (String.Compare(
-                                    fonte.nm_tipo_publicacao,
-                                    "retificação",
-                                    true) == 0
-                                ) ||
-                                (String.Compare(
-                                    fonte.nm_tipo_publicacao,
-                                    "ret",
-                                    true) == 0
-                                )
+                                DateTime.Compare(
+                                    date_now, 
+                                    latest_date
+                                ) > 0
                             )
                         )
                         {
+                            latest_date = date_now;
                             id_file = fonte.ar_fonte.id_file;
                         }
                     }
@@ -168,14 +154,60 @@ namespace TCDF.Sinj.OV
             {
                 if (fontes != null && fontes.Count > 0)
                 {
-                    if (fontes[0].ar_fonte != null && !string.IsNullOrEmpty(fontes[0].ar_fonte.id_file))
-                    {
-                        file = fontes[0].ar_fonte;
-                    }
+                    //if (fontes[0].ar_fonte != null && !string.IsNullOrEmpty(fontes[0].ar_fonte.id_file))
+                    //{
+                    //    file = fontes[0].ar_fonte;
+                    //}
+                    //foreach (var fonte in fontes)
+                    //{
+                    //if (
+                    //    fonte.ar_fonte != null && 
+                    //    !string.IsNullOrEmpty(
+                    //        fonte.ar_fonte.id_file
+                    //    ) && 
+                    //    !string.IsNullOrEmpty(
+                    //        fonte.nm_tipo_publicacao
+                    //    ) && 
+                    //    (
+                    //        fonte.nm_tipo_publicacao.Equals(
+                    //            "republicação", 
+                    //            StringComparison.InvariantCultureIgnoreCase) || 
+                    //            fonte.nm_tipo_publicacao.Equals(
+                    //                "rep", 
+                    //                StringComparison.InvariantCultureIgnoreCase
+                    //            ) || 
+                    //            fonte.nm_tipo_publicacao.Equals(
+                    //                "retificação", 
+                    //                StringComparison.InvariantCultureIgnoreCase
+                    //            ) || 
+                    //            fonte.nm_tipo_publicacao.Equals(
+                    //                "ret", 
+                    //                StringComparison.InvariantCultureIgnoreCase
+                    //            )
+                    //    )
+                    //)
+                    //{
+                    //    file = fonte.ar_fonte;
+                    //}
+                    DateTime date_now = new DateTime();
+                    DateTime latest_date = new DateTime();
                     foreach (var fonte in fontes)
                     {
-                        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.id_file) && !string.IsNullOrEmpty(fonte.nm_tipo_publicacao) && (fonte.nm_tipo_publicacao.Equals("republicação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("retificação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("ret", StringComparison.InvariantCultureIgnoreCase)))
+                        date_now = DateTime.ParseExact(fonte.dt_publicacao, "dd/MM/yyyy", null);
+                        if (
+                            fonte.ar_fonte != null && 
+                            !string.IsNullOrEmpty(
+                                fonte.ar_fonte.id_file
+                            ) &&
+                            (
+                                DateTime.Compare(
+                                    date_now, 
+                                    latest_date
+                                ) > 0
+                            )
+                        )
                         {
+                            latest_date = date_now;
                             file = fonte.ar_fonte;
                         }
                     }
@@ -193,16 +225,51 @@ namespace TCDF.Sinj.OV
             }
             else
             {
-                if (fontes.Count > 0)
+                if (fontes != null && fontes.Count > 0)
                 {
-                    if (fontes[0].ar_fonte != null && !string.IsNullOrEmpty(fontes[0].ar_fonte.filename))
-                    {
-                        name_file = fontes[0].ar_fonte.filename;
-                    }
+                    //if (fontes[0].ar_fonte != null && !string.IsNullOrEmpty(fontes[0].ar_fonte.filename))
+                    //{
+                    //    name_file = fontes[0].ar_fonte.filename;
+                    //}
+                    //foreach (var fonte in fontes)
+                    //{
+                    //    if (
+                    //        fonte.ar_fonte != null && 
+                    //        !string.IsNullOrEmpty(fonte.ar_fonte.filename) && 
+                    //        (
+                    //            fonte.nm_tipo_publicacao.Equals(
+                    //                "republicação", 
+                    //                StringComparison.InvariantCultureIgnoreCase
+                    //            ) || 
+                    //            fonte.nm_tipo_publicacao.Equals(
+                    //                "rep", 
+                    //                StringComparison.InvariantCultureIgnoreCase
+                    //            )
+                    //        )
+                    //    )
+                    //    {
+                    //        name_file = fonte.ar_fonte.filename;
+                    //    }
+                    //}
+                    DateTime date_now = new DateTime();
+                    DateTime latest_date = new DateTime();
                     foreach (var fonte in fontes)
                     {
-                        if (fonte.ar_fonte != null && !string.IsNullOrEmpty(fonte.ar_fonte.filename) && (fonte.nm_tipo_publicacao.Equals("republicação", StringComparison.InvariantCultureIgnoreCase) || fonte.nm_tipo_publicacao.Equals("rep", StringComparison.InvariantCultureIgnoreCase)))
+                        date_now = DateTime.ParseExact(fonte.dt_publicacao, "dd/MM/yyyy", null);
+                        if (
+                            fonte.ar_fonte != null &&
+                            !string.IsNullOrEmpty(
+                                fonte.ar_fonte.id_file
+                            ) &&
+                            (
+                                DateTime.Compare(
+                                    date_now,
+                                    latest_date
+                                ) > 0
+                            )
+                        )
                         {
+                            latest_date = date_now;
                             name_file = fonte.ar_fonte.filename;
                         }
                     }
