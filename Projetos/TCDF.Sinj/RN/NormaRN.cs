@@ -990,7 +990,8 @@ namespace TCDF.Sinj.RN
                     switch (_caput_alterada.nm_relacao_aux)
                     {
                         case "acrescimo":
-                            var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
+                            // var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
+                            var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n').Where(x => !string.IsNullOrEmpty(x.Trim())).ToArray();
                             pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?)(replaced_by=\".*?\")(.*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
                             replacement = "$1" + _caput_alterada.caput[i] + "$2$3$4$5";
                             //É necessário verificar a existencia do atributo replaced_by no paragrafo antes se aplicar o regex.
@@ -1171,7 +1172,8 @@ namespace TCDF.Sinj.RN
                 switch (_caput_alterada.nm_relacao_aux)
                 {
                     case "acrescimo":
-                        var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
+                        // var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n');
+                        var texto_novo_splited = _caput_alterada.texto_novo[i].Split('\n').Where(x => !string.IsNullOrEmpty(x.Trim())).ToArray();
                         pattern = "(<p.+?linkname=\")" + _caput_alterada.caput[i] + "(\".*?)(replaced_by=\".*?\")(.*?>)(.*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?</p>)";
                         replacement = "$1" + _caput_alterada.caput[i] + "$2$3$4$5";
                         //É necessário verificar a existencia do atributo replaced_by no paragrafo antes se aplicar o regex.
