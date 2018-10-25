@@ -344,6 +344,7 @@ namespace TCDF.Sinj.OV
                    (nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
                    (nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
                    (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
+                   (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado(a) inconstitucional") ||
                    (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
                    (nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
                    (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente") ||

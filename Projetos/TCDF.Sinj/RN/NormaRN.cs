@@ -587,7 +587,17 @@ namespace TCDF.Sinj.RN
         private static bool EhModificacaoTotal(Vide vide)
         {
             //Se todos os campos estiverem vazios deve retornar TRUE pois trata-se de uma modificação total.
-            return string.IsNullOrEmpty(vide.alinea_norma_vide) && string.IsNullOrEmpty(vide.anexo_norma_vide) && string.IsNullOrEmpty(vide.artigo_norma_vide) && string.IsNullOrEmpty(vide.paragrafo_norma_vide) && string.IsNullOrEmpty(vide.inciso_norma_vide) && string.IsNullOrEmpty(vide.item_norma_vide) && (vide.caput_norma_vide == null || vide.caput_norma_vide.caput == null || vide.caput_norma_vide.caput.Length <= 0);
+            return string.IsNullOrEmpty(vide.alinea_norma_vide) && 
+                    string.IsNullOrEmpty(vide.anexo_norma_vide) && 
+                    string.IsNullOrEmpty(vide.artigo_norma_vide) && 
+                    string.IsNullOrEmpty(vide.paragrafo_norma_vide) && 
+                    string.IsNullOrEmpty(vide.inciso_norma_vide) && 
+                    string.IsNullOrEmpty(vide.item_norma_vide) && 
+                    (
+                        vide.caput_norma_vide == null || 
+                        vide.caput_norma_vide.caput == null || 
+                        vide.caput_norma_vide.caput.Length <= 0
+                    );
         }
 
         public bool RemoverVides(NormaOV normaOv)
@@ -1835,6 +1845,7 @@ namespace TCDF.Sinj.RN
                     (auxNmSituacaoAnterior == "anulado" && auxDsTextoParaAlteradorAnterior == "anulado") ||
                     (auxNmSituacaoAnterior == "extinta" && auxDsTextoParaAlteradorAnterior == "extinta") ||
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "declarado inconstitucional") ||
+                    (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "declarado(a) inconstitucional") ||
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "julgada procedente") ||
                     (auxNmSituacaoAnterior == "cancelada" && auxDsTextoParaAlteradorAnterior == "cancelada") ||
                     (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlteradorAnterior == "suspenso totalmente") ||

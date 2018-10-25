@@ -8,6 +8,7 @@
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/TCDF.Sinj.pdb
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/Newtonsoft.Json.pdb
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/Newtonsoft.Json.xml
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Debug/TCDF.Sinj.Web.csprojAssemblyReference.cache
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Debug/TCDF.Sinj.Web.csproj.CoreCompileInputs.cache
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Debug/TCDF.Sinj.Web.csproj.CopyComplete
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Debug/TCDF.Sinj.Web.dll
