@@ -1,5 +1,30 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/ashx/Arquivo/DiarioTextoArquivo.ashx.cs">
+    <Files>
+      <File FileName="TCDF.Sinj.Web/ashx/Arquivo/DiarioTextoArquivo.ashx.cs" Line="4" Column="18" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj" expanded="True">
+              <Node name="References" expanded="True" />
+            </Node>
+            <Node name="TCDF.Sinj.Web" expanded="True">
+              <Node name="References" expanded="True" />
+              <Node name="ashx" expanded="True">
+                <Node name="Arquivo" expanded="True">
+                  <Node name="DiarioTextoArquivo.ashx" expanded="True">
+                    <Node name="DiarioTextoArquivo.ashx.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
     <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>

@@ -53,6 +53,9 @@
     <Reference Include="TCDF.Sinj">
       <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
+    <Reference Include="Ude">
+      <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="CadastrarNotifiqueme.aspx" />
