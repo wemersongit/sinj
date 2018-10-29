@@ -73,10 +73,9 @@ namespace TCDF.Sinj.Web
                                 Response.Clear();
                                 Response.SetCookie(new HttpCookie("fileDownload", "true") { Path = "/" });
                                 Response.ContentType = doc.mimetype;
-                                byte[] utfBytes = Util.FileBytesInUTF8(documento);
-                                Response.AppendHeader("Content-Length", utfBytes.Length.ToString());
+                                Response.AppendHeader("Content-Length", documento.Length.ToString());
                                 Response.AppendHeader("Content-Disposition", "inline; filename=\"" + doc.filename + "\"");
-                                Response.BinaryWrite(utfBytes);
+                                Response.BinaryWrite(documento);
                                 Response.Flush();
                             }
                             else

@@ -1,17 +1,10 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/ashx/Arquivo/DiarioTextoArquivo.ashx.cs">
-    <Files>
-      <File FileName="TCDF.Sinj.Web/ashx/Arquivo/DiarioTextoArquivo.ashx.cs" Line="4" Column="18" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" expanded="True">
-              <Node name="References" expanded="True" />
-            </Node>
             <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="References" expanded="True" />
               <Node name="ashx" expanded="True">
                 <Node name="Arquivo" expanded="True">
                   <Node name="DiarioTextoArquivo.ashx" expanded="True">
@@ -19,6 +12,7 @@
                   </Node>
                 </Node>
               </Node>
+              <Node name="Diario.aspx" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -30,7 +24,7 @@
     <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint enabled="false" file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1334" column="1" />

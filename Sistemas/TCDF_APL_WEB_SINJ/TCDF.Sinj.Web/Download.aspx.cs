@@ -62,10 +62,9 @@ namespace TCDF.Sinj.Web
                                 else{
                                     Response.Clear();
                                     Response.ContentType = docOv.mimetype;
-                                    byte[] utfBytes = Util.FileBytesInUTF8(file);
-                                    Response.AppendHeader("Content-Length", utfBytes.Length.ToString());
+                                    Response.AppendHeader("Content-Length", file.Length.ToString());
                                     Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
-                                    Response.BinaryWrite(utfBytes);
+                                    Response.BinaryWrite(file);
                                     Response.Flush();
                                 }
                             }
