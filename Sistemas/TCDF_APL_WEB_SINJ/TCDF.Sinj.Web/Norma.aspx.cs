@@ -58,7 +58,6 @@ namespace TCDF.Sinj.Web
                         {
                             title = normaOv.getDescricaoDaNorma();
                             if(docOv.mimetype.IndexOf("html")>-1){
-                                //Page.Title = docOv.filename.Substring(0, docOv.filename.IndexOf(".") - 1);
                                 HtmlMeta html_meta_keywords = new HtmlMeta();
                                 html_meta_keywords.Name = "keywords";
                                 html_meta_keywords.Content = "sinj, distrito, federal, df," + Page.Title;
@@ -67,20 +66,11 @@ namespace TCDF.Sinj.Web
                                 html_meta_description.Content = !string.IsNullOrEmpty(normaOv.ds_ementa) ? normaOv.ds_ementa : "Arquivo de " + Page.Title + " disponibilizado pelo SINJ-DF (Sistema Integrado de Normas Jurídicas do Distrito Federal).";
                                 placeHolderHeader.Controls.Add(html_meta_keywords);
                                 placeHolderHeader.Controls.Add(html_meta_description);
-
-                                var msg = Encoding.UTF8.GetString(file);
+                                var msg = Util.FileBytesInUTF8String(file);
                                 if (msg.IndexOf("<h1 epigrafe") > -1 || msg.IndexOf("<p linkname") > -1)
                                 {
                                     msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
                                     msg = Regex.Replace(msg, "<html>.*<body>|</body></html>", String.Empty);
-                                }
-                                else
-                                {
-                                    Encoding wind1252 = Encoding.GetEncoding(1252);
-                                    Encoding utf8 = Encoding.UTF8;
-                                    byte[] wind1252Bytes = file;
-                                    byte[] utfBytes = Encoding.Convert(wind1252, utf8, wind1252Bytes);
-                                    msg = utf8.GetString(utfBytes);
                                 }
                                 div_texto.InnerHtml = msg;
                             }
@@ -92,9 +82,10 @@ namespace TCDF.Sinj.Web
                                 LogOperacao.gravar_operacao("NOR.DWN", log_arquivo, "", "");
                                 Response.Clear();
                                 Response.ContentType = docOv.mimetype;
-                                Response.AppendHeader("Content-Length", file.Length.ToString());
+                                byte[] utfBytes = Util.FileBytesInUTF8(file);
+                                Response.AppendHeader("Content-Length", utfBytes.Length.ToString());
                                 Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
-                                Response.BinaryWrite(file);
+                                Response.BinaryWrite(utfBytes);
                                 Response.Flush();
                             }
                         }

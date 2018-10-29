@@ -62,27 +62,7 @@ namespace TCDF.Sinj.Portal.Web
                         }
                         if (doc.mimetype.IndexOf("html")>-1)
                         {
-                            var msg = "";
-                            var encoding_documento = "windows-1252"; //isso deverá ser preenchido dinamicamente
-
-                            // Esse switch receberá todas possiveís opçoes de encoding do HTML
-                            // Isso acontecerá para que a conversão de Encoding seja dinâmica
-                            switch (encoding_documento)
-                            {
-                            case "windows-1252":
-                                Encoding wind1252 = Encoding.GetEncoding(1252);  
-                                Encoding utf8 = Encoding.UTF8;
-                                byte[] wind1252Bytes = documento;
-                                byte[] utfBytes = Encoding.Convert(wind1252, utf8, wind1252Bytes);
-                                msg = utf8.GetString(utfBytes);
-                                break;
-
-                            case "utf-8":
-                                msg = Encoding.UTF8.GetString(documento);
-                                break;
-                            }
-
-                            div_texto.InnerHtml = msg;
+                            div_texto.InnerHtml = Util.FileBytesInUTF8String(documento);
                         }
                         else
                         {
@@ -91,9 +71,10 @@ namespace TCDF.Sinj.Portal.Web
                                 Response.Clear();
                                 Response.SetCookie(new HttpCookie("fileDownload", "true") { Path = "/" });
                                 Response.ContentType = doc.mimetype;
-                                Response.AppendHeader("Content-Length", documento.Length.ToString());
+                                byte[] utfBytes = Util.FileBytesInUTF8(documento);
+                                Response.AppendHeader("Content-Length", utfBytes.Length.ToString());
                                 Response.AppendHeader("Content-Disposition", "inline; filename=\"" + doc.filename + "\"");
-                                Response.BinaryWrite(documento);
+                                Response.BinaryWrite(utfBytes);
                                 Response.Flush();
                             }
                             else

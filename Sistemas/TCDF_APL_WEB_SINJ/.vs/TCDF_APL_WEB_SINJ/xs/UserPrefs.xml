@@ -1,31 +1,10 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
+  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
+  </DisabledProjects>
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workbench>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="References" expanded="True" selected="True" />
-              <Node name="ashx" expanded="True">
-                <Node name="Arquivo" expanded="True">
-                  <Node name="DiarioTextoArquivo.ashx" expanded="True" />
-                </Node>
-                <Node name="Cadastro" expanded="True">
-                  <Node name="NormaEditar.ashx" expanded="True" />
-                  <Node name="VideEditar.ashx" expanded="True" />
-                  <Node name="VideIncluir.ashx" expanded="True" />
-                </Node>
-                <Node name="Exclusao" expanded="True">
-                  <Node name="VideExcluir.ashx" expanded="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
@@ -92,11 +71,12 @@
       <Breakpoint enabled="false" file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="500" column="1" />
       <Breakpoint enabled="false" file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" line="103" column="1" />
       <Breakpoint enabled="false" file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="498" column="1" />
+      <Breakpoint enabled="false" file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="79" column="1" />
+      <Breakpoint enabled="false" file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="85" column="1" />
+      <Breakpoint enabled="false" file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="83" column="1" />
+      <Breakpoint enabled="false" file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="84" column="1" />
+      <Breakpoint enabled="false" file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/UtilArquivoHtml.cs" line="37" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <DisabledProjects>
-    <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
-  </DisabledProjects>
 </Properties>

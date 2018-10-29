@@ -38,18 +38,16 @@ namespace TCDF.Sinj.Web
                         var file = docRn.download(_id_file);
                         if (file != null && file.Length > 0)
                         {
-                            var sArquivo = Encoding.UTF8.GetString(file);
-                            var log_arquivo = new LogDownload
+                            var log_arquivo = new LogDownload()
                             {
                                 arquivo = new ArquivoOV { filename = docOv.filename, filesize = docOv.filesize, id_file = docOv.id_file, mimetype = docOv.mimetype }
                             };
                             LogOperacao.gravar_operacao(Util.GetEnumDescription(action) + ".HTML.VIS", log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-                            div_conteudo_arquivo.InnerHtml = sArquivo;
+                            div_conteudo_arquivo.InnerHtml = Util.FileBytesInUTF8String(file);
                             id_file.Value = _id_file;
                             Util.rejeitarInject(_id_doc);
                             id_doc.Value = _id_doc;
                             nm_arquivo.Value = docOv.filename.Replace(".html","");
-
                         }
                         else
                         {

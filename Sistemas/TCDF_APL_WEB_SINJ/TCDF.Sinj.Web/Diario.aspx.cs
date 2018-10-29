@@ -9,6 +9,7 @@ using util.BRLight;
 using TCDF.Sinj.RN;
 using neo.BRLightREST;
 using TCDF.Sinj.Log;
+using System.Text;
 
 namespace TCDF.Sinj.Web
 {
@@ -89,9 +90,10 @@ namespace TCDF.Sinj.Web
                         LogOperacao.gravar_operacao("DIO.DWN", log_arquivo, "", "");
                         Response.Clear();
                         Response.ContentType = docOv.mimetype;
-                        Response.AppendHeader("Content-Length", file.Length.ToString());
+                        byte[] utfBytes = Util.FileBytesInUTF8(file);
+                        Response.AppendHeader("Content-Length", utfBytes.Length.ToString());
                         Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
-                        Response.BinaryWrite(file);
+                        Response.BinaryWrite(utfBytes);
                         Response.Flush();
                     }
                     else

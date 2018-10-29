@@ -7,7 +7,7 @@
     <title>Texto do Arquivo da Norma</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Language" content="pt-br" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="googlebot" content="noindex,nofollow" />
     

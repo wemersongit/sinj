@@ -6,6 +6,7 @@ using TCDF.Sinj.OV;
 using neo.BRLightREST;
 using util.BRLight;
 using TCDF.Sinj.Log;
+using System.Text;
 
 namespace TCDF.Sinj.Web.ashx.Arquivo
 {
@@ -30,31 +31,26 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                 if (!string.IsNullOrEmpty(_id_file) && !string.IsNullOrEmpty(_ch_norma))
                 {
                     sessao_usuario = Util.ValidarSessao();
-
                     var docRn = new Doc("sinj_arquivo_versionado_norma");
-
                     Util.rejeitarInject(_id_file);
                     var docOv = docRn.doc(_id_file);
-
                     if (docOv.id_file != null)
                     {
                         var file = docRn.download(_id_file);
                         if (file != null && file.Length > 0)
                         {
-                            var fileParameter = new FileParameter(file, docOv.filename, docOv.mimetype);
+                            var fileParameter = new FileParameter(Util.FileBytesInUTF8(file), docOv.filename, docOv.mimetype);
                             try
                             {
                                 var doc = new Doc("sinj_norma");
                                 var dicionario = new Dictionary<string, object>();
                                 dicionario.Add("file", fileParameter);
                                 sRetorno = doc.incluir(dicionario);
-
                                 var log_arquivo = new LogUpload
                                 {
                                     arquivo = JSON.Deserializa<ArquivoOV>(sRetorno)
                                 };
                                 LogOperacao.gravar_operacao(sAction, log_arquivo, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-
                             }
                             catch (Exception ex)
                             {

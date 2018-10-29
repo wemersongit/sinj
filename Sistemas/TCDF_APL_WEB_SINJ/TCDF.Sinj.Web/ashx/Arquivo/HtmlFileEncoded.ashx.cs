@@ -41,7 +41,6 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                     var docOv = new Doc(_nm_base).doc(_id_file);
                     var sArquivo = new UtilArquivoHtml().GetHtmlFile(_id_file, _nm_base, docOv);
                     sArquivo = HttpUtility.UrlEncodeUnicode(sArquivo).Replace("+", "%20");
-                    //sArquivo = HttpUtility.UrlEncode(sArquivo, Encoding.UTF8).Replace("+", "%20");
                     sRetorno = "{\"file\":" + JSON.Serialize<File>(docOv) + ",\"fileencoded\":\"" + sArquivo + "\"}";
                 }
             }

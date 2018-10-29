@@ -4,7 +4,7 @@
 <head id="Head1" runat="server">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Language" content="pt-br" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><%= !string.IsNullOrEmpty(title) ? title : "Arquivo da Norma" %></title>
     <asp:PlaceHolder runat="server" id="placeHolderHeader"></asp:PlaceHolder>
     <meta name="robots" content="index,follow" />

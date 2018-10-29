@@ -49,34 +49,23 @@ namespace TCDF.Sinj.Web
 
                                 if (_nm_base == "sinj_norma" || _nm_base == "sinj_arquivo_versionado_norma")
                                 {
-
-                                    var msg = Encoding.UTF8.GetString(file);
+                                    var msg = Util.FileBytesInUTF8String(file);
                                     if (msg.IndexOf("<h1 epigrafe") > -1)
                                     {
                                         msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
                                     }
-                                    else
-                                    {
-                                        Encoding wind1252 = Encoding.GetEncoding(1252);
-                                        Encoding utf8 = Encoding.UTF8;
-                                        byte[] wind1252Bytes = file;
-                                        byte[] utfBytes = Encoding.Convert(wind1252, utf8, wind1252Bytes);
-                                        msg = utf8.GetString(utfBytes);
-                                    }
-
-
                                     div_texto.InnerHtml = msg;
                                 }
                                 else if (_nm_base == "sinj_arquivo" && docOv.mimetype.IndexOf("html") > -1){
-                                    var msg = Encoding.UTF8.GetString(file);
-                                    div_texto.InnerHtml = msg;
+                                    div_texto.InnerHtml = Util.FileBytesInUTF8String(file);
                                 }
                                 else{
                                     Response.Clear();
                                     Response.ContentType = docOv.mimetype;
-                                    Response.AppendHeader("Content-Length", file.Length.ToString());
+                                    byte[] utfBytes = Util.FileBytesInUTF8(file);
+                                    Response.AppendHeader("Content-Length", utfBytes.Length.ToString());
                                     Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
-                                    Response.BinaryWrite(file);
+                                    Response.BinaryWrite(utfBytes);
                                     Response.Flush();
                                 }
                             }

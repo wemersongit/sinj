@@ -82,9 +82,10 @@ namespace TCDF.Sinj.Portal.Web
                         LogOperacao.gravar_operacao("DIO.DWN", log_arquivo, "", "");
                         Response.Clear();
                         Response.ContentType = docOv.mimetype;
-                        Response.AppendHeader("Content-Length", file.Length.ToString());
+                        byte[] utfBytes = Util.FileBytesInUTF8(file);
+                        Response.AppendHeader("Content-Length", utfBytes.Length.ToString());
                         Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
-                        Response.BinaryWrite(file);
+                        Response.BinaryWrite(utfBytes);
                         Response.Flush();
                     }
                     else

@@ -52,11 +52,16 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                         var file = docRn.download(_id_file);
                         if (file != null && file.Length > 0)
                         {
+                            file = Util.FileBytesInUTF8(file);
                             if (!string.IsNullOrEmpty(_ds_diario) && docOv.mimetype == "text/html")
                             {
-                                var sArquivo = Encoding.UTF8.GetString(file);
-                                //o editor de html (ckeditor) coloca o title dento do body autocomaticamente, então as tags e retorno só conteúdo do body, 
-                                sArquivo = HttpUtility.HtmlDecode(sArquivo);
+                                // NOTE: O editor de html (ckeditor) coloca o title dento do body 
+                                // autocomaticamente, então as tags e retorno só conteúdo do body. 
+                                // By Doug
+                                var sArquivo = HttpUtility.HtmlDecode(
+                                            Encoding.UTF8.GetString(file)
+                                        );
+
                                 if(sArquivo.IndexOf(texto_rodape) < 0){
                                     var pattern = "</body>";
                                     var replacement = "<p style=\"text-align:right\"><span style=\"color:#FF0000\">"+texto_rodape + _ds_diario + "</span></p></body>";

@@ -47,6 +47,9 @@
     <Reference Include="util.BRLight">
       <HintPath>..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>
+    <Reference Include="Ude">
+      <HintPath>..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AD\AmbitoAD.cs" />

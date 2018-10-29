@@ -3,6 +3,7 @@
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/neo.BRLightREST.dll
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/neo.BRLightSession.dll
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/Newtonsoft.Json.dll
+/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/Ude.dll
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/util.BRLight.dll
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/Newtonsoft.Json.pdb
 /home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/Newtonsoft.Json.xml

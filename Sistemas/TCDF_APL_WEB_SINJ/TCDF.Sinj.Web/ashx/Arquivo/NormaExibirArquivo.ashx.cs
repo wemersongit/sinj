@@ -38,38 +38,12 @@ namespace TCDF.Sinj.Web.ashx.Arquivo
                     {
                         var doc = JSON.Deserializa<ArquivoFullOV>(json_doc);
                         var arquivo = normaRn.Download(_id_file);
-                        var sArquivo = Encoding.UTF8.GetString(arquivo);
-                        if (sArquivo.IndexOf("charset=windows-1252") > -1)
-                        {
-                            Encoding wind1252 = Encoding.GetEncoding(1252);
-                            Encoding utf8 = Encoding.UTF8;
-                            byte[] utfBytes = Encoding.Convert(wind1252, utf8, arquivo);
-                            sArquivo = utf8.GetString(utfBytes);
-                        }
-                        sArquivo = HttpUtility.UrlEncode(sArquivo, System.Text.Encoding.Default).Replace("+","%20");
-                        //if (sArquivo.Length > 20000)
-                        //{
-                        //    StringBuilder sb = new StringBuilder();
-                        //    int loops = sArquivo.Length / 20000;
-                        //    for (int i = 0; i <= loops; i++)
-                        //    {
-                        //        if (i < loops)
-                        //        {
-                        //            sb.Append(System.Uri.EscapeDataString(sArquivo.Substring(20000 * i, 20000)));
-                        //        }
-                        //        else
-                        //        {
-                        //            sb.Append(System.Uri.EscapeDataString(sArquivo.Substring(20000 * i)));
-                        //        }
-                        //    }
-                        //    sArquivo = sb.ToString();
-                        //}
-                        //else
-                        //{
-                        //    sArquivo = System.Uri.EscapeUriString(sArquivo);
-                        //}
+                        var sArquivo = Util.FileBytesInUTF8String(arquivo);
+                        sArquivo = HttpUtility.UrlEncode(
+                                    sArquivo, 
+                                    System.Text.Encoding.Default
+                                ).Replace("+","%20");
                         sRetorno = "{\"filename\":\"" + doc.filename + "\",\"fileencoded\":\"" + sArquivo + "\"}";
-
                     }
                     else
                     {

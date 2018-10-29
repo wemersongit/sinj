@@ -28,7 +28,7 @@
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.autocompleteLight.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jMenu.jquery.min.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.modalLight.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
-    <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_sinj.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" charset="UTF-8"></script>
+    <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_sinj.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" charset="utf-8"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/dataTables.responsive.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.dataTablesLight.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

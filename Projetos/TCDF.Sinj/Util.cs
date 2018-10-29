@@ -9,11 +9,181 @@ using System.Web;
 using util.BRLight;
 using TCDF.Sinj.Log;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using Ude;
 
 namespace TCDF.Sinj
 {
     public class Util
     {
+
+        // NOTE: . By Questor
+        public static byte[] FileBytesInUTF8(byte[] fileBytes)
+        {
+            return Encoding.Convert(
+                    DetectEncoding(fileBytes),
+                    Encoding.UTF8, 
+                    fileBytes
+                );
+        }
+
+        // NOTE: . By Questor
+        public static string FileBytesInUTF8String(byte[] fileBytes)
+        {
+            return Encoding.UTF8.GetString(FileBytesInUTF8(fileBytes));
+        }
+
+        // NOTE: Método que verifica o "charset" que é utilizado por um arquivo 
+        // através de um array de bytes referente ao mesmo. By Questor
+        public static Encoding DetectEncoding(byte[] fileContent)
+        {
+            if (fileContent == null)
+                throw new Exception("O arquivo é inválido ou inexistente.");
+
+            MemoryStream memStream = new MemoryStream();
+            memStream.Write(fileContent, 0, fileContent.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            Ude.CharsetDetector cdet = new Ude.CharsetDetector();
+            using (memStream)
+            {
+                cdet.Feed(memStream);
+                cdet.DataEnd();
+
+                // NOTE: Adicionalmente você pode usar "cdet.Confidence" para 
+                // checar o nível de confiança da checagem feita pelo "Ude" 
+                // ("port of Mozilla Universal Charset Detector") que varia 
+                // entre '0.0~1.0'. By Questor
+                if (cdet.Charset == null)
+                {
+                    throw new Exception("O arquivo possui formato (\"charset\") inválido.");
+                }
+
+            }
+
+            int codePage;
+            switch (cdet.Charset)
+            {
+                case "UTF-8":
+                    // utf-8: Unicode (UTF-8)
+                    codePage = 65001;
+                    break;
+                case "IBM855":
+                    // IBM855: OEM Cyrillic
+                    codePage = 855;
+                    break;
+                case "IBM866":
+                    // cp866: Cyrillic (DOS)
+                    codePage = 866;
+                    break;
+                case "TIS620":
+                    // windows-874: Thai (Windows)
+                    codePage = 874;
+                    break;
+                case "Shift-JIS":
+                    // shift_jis: Japanese (Shift-JIS)
+                    codePage = 932;
+                    break;
+                case "Big-5":
+                    // big5: Chinese Traditional (Big5)
+                    codePage = 950;
+                    break;
+                case "UTF-16LE":
+                case "UTF-16BE":
+                    // utf-16: Unicode
+                    codePage = 1200;
+                    break;
+                case "windows-1251":
+                    // windows-1251: Cyrillic (Windows)
+                    codePage = 1251;
+                    break;
+                case "windows-1252":
+                    // Windows-1252: Western European (Windows)
+                    codePage = 1252;
+                    break;
+                case "windows-1253":
+                    // windows-1253: Greek (Windows)
+                    codePage = 1253;
+                    break;
+                case "windows-1255":
+                    // windows-1255: Hebrew (Windows)
+                    codePage = 1255;
+                    break;
+                case "x-mac-cyrillic":
+                    // x-mac-cyrillic: Cyrillic (Mac)
+                    codePage = 10007;
+                    break;
+                case "UTF-32LE":
+                    // utf-32: Unicode (UTF-32)
+                    codePage = 12000;
+                    break;
+                case "UTF-32BE":
+                case "X-ISO-10646-UCS-4-3412":
+                case "X-ISO-10646-UCS-4-2413":
+                    // utf-32BE: Unicode (UTF-32 Big endian)
+                    codePage = 12001;
+                    break;
+                case "ASCII":
+                    // us-ascii: US-ASCII
+                    codePage = 20127;
+                    break;
+                case "KOI8-R":
+                    // koi8-r: Cyrillic (KOI8-R)
+                    codePage = 20866;
+                    break;
+                case "ISO-8859-2":
+                    // iso-8859-2: Central European (ISO)
+                    codePage = 28592;
+                    break;
+                case "ISO-8859-5":
+                    // iso-8859-5: Cyrillic (ISO)
+                    codePage = 28595;
+                    break;
+                case "ISO-8859-7":
+                    // iso-8859-7: Greek (ISO)
+                    codePage = 28597;
+                    break;
+                case "ISO-8859-8":
+                    // iso-8859-8: Hebrew (ISO-Visual)
+                    codePage = 28598;
+                    break;
+                case "ISO-2022-JP":
+                    // iso-2022-jp: Japanese (JIS)
+                    codePage = 50220;
+                    break;
+                case "ISO-2022-KR":
+                    // iso-2022-kr: Korean (ISO)
+                    codePage = 50225;
+                    break;
+                case "ISO-2022-CN":
+                case "EUC-TW":
+                    // x-cp50227: Chinese Simplified (ISO-2022)
+                    codePage = 50227;
+                    break;
+                case "EUC-JP":
+                    // euc-jp: Japanese (EUC)
+                    codePage = 51932;
+                    break;
+                case "EUC-KR":
+                    // euc-kr: Korean (EUC)
+                    codePage = 51949;
+                    break;
+                case "HZ-GB-2312":
+                    // hz-gb-2312: Chinese Simplified (HZ)
+                    codePage = 52936;
+                    break;
+                case "gb18030":
+                    // GB18030: Chinese Simplified (GB18030)
+                    codePage = 54936;
+                    break;
+                default:
+                    throw new Exception("Não foi possível definir um formato (\"encoding\") adequado para o arquivo.");
+            }
+
+            return Encoding.GetEncoding(codePage);
+        }
+
         public static void rejeitarInject(string texto)
         {
             if (!string.IsNullOrEmpty(texto) && texto.IndexOfAny(new char[] { ';', '\'', '/', '*', '_' }) > -1)

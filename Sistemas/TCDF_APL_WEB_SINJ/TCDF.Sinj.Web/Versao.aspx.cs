@@ -74,8 +74,7 @@ namespace TCDF.Sinj.Web
                             if (docOv.mimetype.IndexOf("html") > -1)
                             {
                                 Page.Title = docOv.filename.Substring(0, docOv.filename.IndexOf(".") - 1);
-
-                                var msg = Encoding.UTF8.GetString(file);
+                                var msg = Util.FileBytesInUTF8String(file);
                                 msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
                                 div_texto.InnerHtml = msg;
                             }
@@ -88,9 +87,10 @@ namespace TCDF.Sinj.Web
                                 LogOperacao.gravar_operacao("NOR.DWN", log_arquivo, "", "");
                                 Response.Clear();
                                 Response.ContentType = docOv.mimetype;
-                                Response.AppendHeader("Content-Length", file.Length.ToString());
+                                byte[] utfBytes = Util.FileBytesInUTF8(file);
+                                Response.AppendHeader("Content-Length", utfBytes.Length.ToString());
                                 Response.AppendHeader("Content-Disposition", "inline; filename=\"" + docOv.filename + "\"");
-                                Response.BinaryWrite(file);
+                                Response.BinaryWrite(utfBytes);
                                 Response.Flush();
                             }
                         }
