@@ -17,7 +17,11 @@ function PreencherTipoDeNormaEdicao() {
                     $('#nm_tipo_norma').val(data.nm_tipo_norma);
                     $('#ds_tipo_norma').val(data.ds_tipo_norma);
                     for (var i = 0; i < data.sgs_tipo_norma.length; i++) {
-                        $('#div_siglas').preppend('<div><input name="sgs_tipo_norma" type="text" value="' + data.sgs_tipo_norma[i] + '" class="w-40-pc" /><button title="Remover sigla" class="link" onclick="delSigla(this)"><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" /></button><div>');
+                        $('#div_siglas').prepend(
+                            '<div><input name="sgs_tipo_norma" type="text" value="' + 
+                            data.sgs_tipo_norma[i] + 
+                            '" class="w-40-pc" /><button title="Remover sigla" class="link" onclick="delSigla(this)"><img src="' + 
+                            _urlPadrao + '/Imagens/ico_delete_p.png" /></button><div>');
                     }
                     for (var i = 0; i < data.orgaos_cadastradores.length; i++) {
                         $('#div_orgaos_cadastradores input[value="' + data.orgaos_cadastradores[i].id_orgao_cadastrador + '"]').prop("checked", true);
