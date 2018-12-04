@@ -23,8 +23,30 @@
                 location.reload();
             }
             else {
-                var regex = new RegExp(/revogado.*?pelo\(a\)/);
+
+                // NOTE: Essa funcionalidade faz com o que o texto alterado "se transforme" 
+                // em compilado (basicamente remove informações de vide), mas define 
+                // um comportamento diferenciado para para os parágrafos que contiverem 
+                // vides com os seguintes textos no link "revogado pelo(a)" ou 
+                // "declarado(a) inconstitucional pelo(a)". By Questor
+                var regex = undefined;
+                regex = new RegExp(/revogado.*?pelo\(a\)/);
                 $('p[replaced_by]:contains("revogado")').each(function (k, p) {
+                    if (regex.test($(p).text())) {
+                        var aLinkVide = $('a.link_vide', $(p));
+                        if (aLinkVide.length > 0) {
+                            var aTexto = $(aLinkVide[aLinkVide.length - 1]).text();
+                            if (regex.test(aTexto)) {
+                                var ds = generateDescriptionToParagraph($(p).text());
+                                $(p).text(ds + ' ');
+                                $(aLinkVide[aLinkVide.length - 1]).appendTo($(p));
+                                $(p).removeAttr('replaced_by');
+                            }
+                        }
+                    }
+                });
+                regex = new RegExp(/inconstitucional.*?pelo\(a\)/);
+                $('p[replaced_by]:contains("inconstitucional")').each(function (k, p) {
                     if (regex.test($(p).text())) {
                         var aLinkVide = $('a.link_vide', $(p));
                         if (aLinkVide.length > 0) {
@@ -43,6 +65,7 @@
                 $(el).text('Exibir Alterações');
             }
         }
+
         //Verifica os links de LECO, ordena e insere o link 'exibir mais...' e 'exibir menos...' caso exista mais de 3 links de LECO
         function verificarLinks() {
             var aP = $('#div_texto > p');
@@ -104,6 +127,7 @@
             }
             return ds;
         }
+
         function ehInciso(termo) {
             var lastIndex = termo.indexOf("-");
             if (lastIndex > 0) {
@@ -135,6 +159,7 @@
             }
             return false;
         }
+
         $(document).ready(function () {
             if ($('#div_erro').length > 0) {
                 $('#div_norma').hide();

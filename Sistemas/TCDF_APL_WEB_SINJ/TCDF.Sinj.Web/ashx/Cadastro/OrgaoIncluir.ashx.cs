@@ -9,12 +9,8 @@ using TCDF.Sinj.Log;
 
 namespace TCDF.Sinj.Web.ashx.Cadastro
 {
-    /// <summary>
-    /// Summary description for OrgaoIncluir
-    /// </summary>
     public class OrgaoIncluir : IHttpHandler
     {
-
         public void ProcessRequest(HttpContext context)
         {
             var sRetorno = "";
@@ -44,14 +40,14 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var _norma_inicio_vigencia = context.Request["norma_inicio_vigencia"];
                 var _norma_fim_vigencia = context.Request["norma_fim_vigencia"];
 
-				OrgaoRN orgaoRn = new OrgaoRN();
+                OrgaoRN orgaoRn = new OrgaoRN();
 
-				orgaoOv = new OrgaoOV();
+                orgaoOv = new OrgaoOV();
 
-				orgaoOv.nm_login_usuario_cadastro = sessao_usuario.nm_login_usuario;
-				orgaoOv.dt_cadastro = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
+                orgaoOv.nm_login_usuario_cadastro = sessao_usuario.nm_login_usuario;
+                orgaoOv.dt_cadastro = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
 
-                //Note: Cria chave ch_orgao aqui para poder tronar mais rápida a criação das chaves ch_hierarquia e ch_cronologia. Fazer no RN dá muito mais trabalho e mais idas ao banco :(
+                // NOTE: Cria chave ch_orgao aqui para poder tronar mais rápida a criação das chaves ch_hierarquia e ch_cronologia. Fazer no RN dá muito mais trabalho e mais idas ao banco :(
                 orgaoOv.ch_orgao = Guid.NewGuid().ToString("N");
                 orgaoOv.nm_orgao = _nm_orgao;
                 orgaoOv.sg_orgao = _sg_orgao;
@@ -73,7 +69,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 {
                     orgaoOv.dt_fim_vigencia = (Convert.ToDateTime(_dt_fim_vigencia)).ToString("dd'/'MM'/'yyyy");
                 }
-                ///Note: Cria chave e sigla hierarquica 
+
+                // NOTE: Cria chave e sigla hierarquica.
                 if (!string.IsNullOrEmpty(_ch_orgao_pai))
                 {
                     var orgao_pai = orgaoRn.Doc(_ch_orgao_pai);
@@ -100,9 +97,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     orgaoOv.nm_hierarquia = orgaoOv.nm_orgao;
                 }
 
-				var lista_chaves_anteriores = new List<string>();
+                var lista_chaves_anteriores = new List<string>();
 
-                ///Note: Cria chave e sigla cronologica
+                // NOTE: Cria chave e sigla cronologica.
                 if (!string.IsNullOrEmpty(_sOrgaos_anteriores))
                 {
                     var orgaos_anteriores = _sOrgaos_anteriores.Split(',');
@@ -119,7 +116,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         dt_inicio_vigencia = split[1];
                         dt_fim_vigencia = split[2];
                         var orgaoAnteriorOv = orgaoRn.Doc(chave);
-						lista_chaves_anteriores.Add(orgaoAnteriorOv.ch_orgao);
+                        lista_chaves_anteriores.Add(orgaoAnteriorOv.ch_orgao);
                         var bAtualizar = false;
                         if (!string.IsNullOrEmpty(dt_inicio_vigencia))
                         {
@@ -141,7 +138,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             orgaoAnteriorOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"), nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                             orgaoRn.Atualizar(orgaoAnteriorOv._metadata.id_doc, orgaoAnteriorOv);
                         }
-                        foreach(var chave_cronologica in orgaoAnteriorOv.ch_cronologia){
+                        foreach (var chave_cronologica in orgaoAnteriorOv.ch_cronologia)
+                        {
                             orgaoOv.ch_cronologia.Add(chave_cronologica + "." + orgaoOv.ch_orgao);
                         }
                     }
@@ -170,119 +168,127 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 }
 
                 var id_doc = orgaoRn.Incluir(orgaoOv);
-				var filhos_dt_fim_vigencia = context.Request.Form.GetValues("orgao_filho_dt_fim_vigencia");
-				var dt_fim_vigencia_index = 0;
+                var filhos_dt_fim_vigencia = context.Request.Form.GetValues("orgao_filho_dt_fim_vigencia");
+                var dt_fim_vigencia_index = 0;
 
-//				Essa lista receberá, para cada filho, os valores na seguinte ordem:
-//				 - chave do orgao filho anterior correspondente
-//				 - chave do orgao filho novo (o que esta sendo cadastrado no momento do loop)
-//				 - chave hierarquica do filho novo 
-//				 - sigla do filho novo
-//				Essa lista serve para armazenar dados necessários para fazer a
-//				correta atribuição desses valores, já que pode haver
-//				uma hierarquia imprevisivel (filhos, netos, bisnetos... etc)
-//				do orgao que esta sendo cadastrado pelo usuario
-				var lista_chaves_filhos = new List<string>();
+                // Essa lista receberá, para cada filho, os valores na seguinte ordem:
+                //  - chave do orgao filho anterior correspondente
+                //  - chave do orgao filho novo (o que esta sendo cadastrado no momento do loop)
+                //  - chave hierarquica do filho novo 
+                //  - sigla do filho novo
+                // Essa lista serve para armazenar dados necessários para fazer a
+                // correta atribuição desses valores, já que pode haver
+                // uma hierarquia imprevisivel (filhos, netos, bisnetos... etc)
+                // do orgao que esta sendo cadastrado pelo usuario
+                var lista_chaves_filhos = new List<string>();
                 var lista_filhos_errados = new List<string>();
                 var dt_fim_vigencia_rollback = "";
                 var st_orgao_rollback = false;
-				if (_orgao_filho != null && _orgao_filho.Length > 0)
-				{
-					OrgaoOV orgaoFilhoAnteriorOv;
-					OrgaoOV orgaoFilhoNovoOv;
+                if (_orgao_filho != null && _orgao_filho.Length > 0)
+                {
+                    OrgaoOV orgaoFilhoAnteriorOv;
+                    OrgaoOV orgaoFilhoNovoOv;
                     foreach (var _ch_orgao in _orgao_filho)
                     {
                         orgaoFilhoAnteriorOv = new OrgaoOV();
                         orgaoFilhoNovoOv = new OrgaoOV();
-						try{
-							orgaoFilhoAnteriorOv = orgaoRn.Doc(_ch_orgao);
-							orgaoFilhoNovoOv.ambito = orgaoFilhoAnteriorOv.ambito;
-							orgaoFilhoNovoOv.ch_cronologia = orgaoFilhoAnteriorOv.ch_cronologia;
-							orgaoFilhoNovoOv.sg_orgao = orgaoFilhoAnteriorOv.sg_orgao;
-							orgaoFilhoNovoOv.st_autoridade = false;
-							orgaoFilhoNovoOv.st_orgao = true;
-							orgaoFilhoNovoOv.dt_cadastro = orgaoOv.dt_cadastro;
-							orgaoFilhoNovoOv.ds_nota_de_escopo = orgaoFilhoAnteriorOv.ds_nota_de_escopo;
-							orgaoFilhoNovoOv.dt_inicio_vigencia = orgaoOv.dt_inicio_vigencia;
-							orgaoFilhoNovoOv.ch_orgao_anterior = new string[1];
-							orgaoFilhoNovoOv.ch_orgao_anterior[0] = _ch_orgao;
-							orgaoFilhoNovoOv.dt_inicio_vigencia = orgaoOv.dt_inicio_vigencia;
-							orgaoFilhoNovoOv.nm_orgao = orgaoFilhoAnteriorOv.nm_orgao;
-							orgaoFilhoNovoOv.nm_login_usuario_cadastro = orgaoOv.nm_login_usuario_cadastro;
+                        try
+                        {
+                            orgaoFilhoAnteriorOv = orgaoRn.Doc(_ch_orgao);
+                            orgaoFilhoNovoOv.ambito = orgaoFilhoAnteriorOv.ambito;
+                            orgaoFilhoNovoOv.ch_cronologia = orgaoFilhoAnteriorOv.ch_cronologia;
+                            orgaoFilhoNovoOv.sg_orgao = orgaoFilhoAnteriorOv.sg_orgao;
+                            orgaoFilhoNovoOv.st_autoridade = false;
+                            orgaoFilhoNovoOv.st_orgao = true;
+                            orgaoFilhoNovoOv.dt_cadastro = orgaoOv.dt_cadastro;
+                            orgaoFilhoNovoOv.ds_nota_de_escopo = orgaoFilhoAnteriorOv.ds_nota_de_escopo;
+                            orgaoFilhoNovoOv.dt_inicio_vigencia = orgaoOv.dt_inicio_vigencia;
+                            orgaoFilhoNovoOv.ch_orgao_anterior = new string[1];
+                            orgaoFilhoNovoOv.ch_orgao_anterior[0] = _ch_orgao;
+                            orgaoFilhoNovoOv.dt_inicio_vigencia = orgaoOv.dt_inicio_vigencia;
+                            orgaoFilhoNovoOv.nm_orgao = orgaoFilhoAnteriorOv.nm_orgao;
+                            orgaoFilhoNovoOv.nm_login_usuario_cadastro = orgaoOv.nm_login_usuario_cadastro;
 
-							orgaoFilhoNovoOv.orgaos_cadastradores = orgaoOv.orgaos_cadastradores;
+                            orgaoFilhoNovoOv.orgaos_cadastradores = orgaoOv.orgaos_cadastradores;
 
                             st_orgao_rollback = orgaoFilhoAnteriorOv.st_orgao;
                             dt_fim_vigencia_rollback = orgaoFilhoAnteriorOv.dt_fim_vigencia;
-							orgaoFilhoAnteriorOv.st_orgao = false;
-							orgaoFilhoAnteriorOv.dt_fim_vigencia = filhos_dt_fim_vigencia[dt_fim_vigencia_index];
-							dt_fim_vigencia_index += 1;
-							orgaoFilhoNovoOv.dt_inicio_vigencia = orgaoFilhoAnteriorOv.dt_fim_vigencia;
+                            orgaoFilhoAnteriorOv.st_orgao = false;
+                            orgaoFilhoAnteriorOv.dt_fim_vigencia = filhos_dt_fim_vigencia[dt_fim_vigencia_index];
+                            dt_fim_vigencia_index += 1;
+                            orgaoFilhoNovoOv.dt_inicio_vigencia = orgaoFilhoAnteriorOv.dt_fim_vigencia;
 
-							orgaoFilhoNovoOv.ch_orgao = Guid.NewGuid().ToString("N");
+                            orgaoFilhoNovoOv.ch_orgao = Guid.NewGuid().ToString("N");
 
-							lista_chaves_filhos.Add(orgaoFilhoAnteriorOv.ch_orgao);
-							lista_chaves_filhos.Add(orgaoFilhoNovoOv.ch_orgao);
+                            lista_chaves_filhos.Add(orgaoFilhoAnteriorOv.ch_orgao);
+                            lista_chaves_filhos.Add(orgaoFilhoNovoOv.ch_orgao);
 
-							//						Isso eh caso o filho sendo cadastrado eh um filho imediato do orgao
-							//						que esta sendo preenchido no cadastro (orgaoOv).
-							if (lista_chaves_anteriores.Contains(orgaoFilhoAnteriorOv.ch_orgao_pai)){
-								orgaoFilhoNovoOv.ch_orgao_pai = orgaoOv.ch_orgao;
-								orgaoFilhoNovoOv.ch_hierarquia = orgaoOv.ch_hierarquia + '.' + orgaoFilhoNovoOv.ch_orgao;
-								lista_chaves_filhos.Add(orgaoFilhoNovoOv.ch_hierarquia);
-								orgaoFilhoNovoOv.sg_hierarquia = orgaoOv.sg_hierarquia + '>' + orgaoFilhoNovoOv.sg_orgao;
-								lista_chaves_filhos.Add(orgaoFilhoNovoOv.sg_hierarquia);
+                            // Isso eh caso o filho sendo cadastrado eh um filho imediato do orgao
+                            // que esta sendo preenchido no cadastro (orgaoOv).
+                            if (lista_chaves_anteriores.Contains(orgaoFilhoAnteriorOv.ch_orgao_pai))
+                            {
+                                orgaoFilhoNovoOv.ch_orgao_pai = orgaoOv.ch_orgao;
+                                orgaoFilhoNovoOv.ch_hierarquia = orgaoOv.ch_hierarquia + '.' + orgaoFilhoNovoOv.ch_orgao;
+                                lista_chaves_filhos.Add(orgaoFilhoNovoOv.ch_hierarquia);
+                                orgaoFilhoNovoOv.sg_hierarquia = orgaoOv.sg_hierarquia + '>' + orgaoFilhoNovoOv.sg_orgao;
+                                lista_chaves_filhos.Add(orgaoFilhoNovoOv.sg_hierarquia);
 
-							}
-							//						Se nao for um filho imediato, ele precisa receber valores 
-							//						do orgao que eh o seu pai.
-							//						Esses valores estarao la lista_chaves_filhos
-							else{
-								string[] array_chaves_filhos = lista_chaves_filhos.ToArray();
-								int index_ch_pai = Array.IndexOf(array_chaves_filhos, orgaoFilhoAnteriorOv.ch_orgao_pai);
-								var ch_pai_novo = array_chaves_filhos[index_ch_pai+1];
-								orgaoFilhoNovoOv.ch_orgao_pai = ch_pai_novo;
-								var ch_hierarquia_pai = array_chaves_filhos[index_ch_pai+2];
-								orgaoFilhoNovoOv.ch_hierarquia = ch_hierarquia_pai + '.' + orgaoFilhoNovoOv.ch_orgao;
-								lista_chaves_filhos.Add(orgaoFilhoNovoOv.ch_hierarquia);
-								var sg_hierarquia_pai = array_chaves_filhos[index_ch_pai+3];
-								orgaoFilhoNovoOv.sg_hierarquia = sg_hierarquia_pai + ">" + orgaoFilhoNovoOv.sg_orgao;
-								lista_chaves_filhos.Add(orgaoFilhoNovoOv.sg_hierarquia);
-							}
+                            }
+                            // Se nao for um filho imediato, ele precisa receber valores 
+                            // do orgao que eh o seu pai.
+                            // Esses valores estarao la lista_chaves_filhos
+                            else
+                            {
+                                string[] array_chaves_filhos = lista_chaves_filhos.ToArray();
+                                int index_ch_pai = Array.IndexOf(array_chaves_filhos, orgaoFilhoAnteriorOv.ch_orgao_pai);
+                                var ch_pai_novo = array_chaves_filhos[index_ch_pai + 1];
+                                orgaoFilhoNovoOv.ch_orgao_pai = ch_pai_novo;
+                                var ch_hierarquia_pai = array_chaves_filhos[index_ch_pai + 2];
+                                orgaoFilhoNovoOv.ch_hierarquia = ch_hierarquia_pai + '.' + orgaoFilhoNovoOv.ch_orgao;
+                                lista_chaves_filhos.Add(orgaoFilhoNovoOv.ch_hierarquia);
+                                var sg_hierarquia_pai = array_chaves_filhos[index_ch_pai + 3];
+                                orgaoFilhoNovoOv.sg_hierarquia = sg_hierarquia_pai + ">" + orgaoFilhoNovoOv.sg_orgao;
+                                lista_chaves_filhos.Add(orgaoFilhoNovoOv.sg_hierarquia);
+                            }
 
                             orgaoRn.Atualizar(orgaoFilhoAnteriorOv._metadata.id_doc, orgaoFilhoAnteriorOv);
                             orgaoRn.Incluir(orgaoFilhoNovoOv);
-						}
-						catch{
+                        }
+                        catch (Exception ex)
+                        {
+                            // Response.Write(ex.Message);
                             if (orgaoFilhoAnteriorOv.dt_fim_vigencia != dt_fim_vigencia_rollback || orgaoFilhoAnteriorOv.st_orgao != st_orgao_rollback)
                             {
                                 orgaoFilhoAnteriorOv.dt_fim_vigencia = dt_fim_vigencia_rollback;
                                 orgaoFilhoAnteriorOv.st_orgao = st_orgao_rollback;
                                 orgaoRn.Atualizar(orgaoFilhoAnteriorOv._metadata.id_doc, orgaoFilhoAnteriorOv);
                             }
-							lista_filhos_errados.Add(orgaoFilhoNovoOv.nm_orgao);
-						}
-					}
-				}
-				if (id_doc > 0)
-				{
-					if (lista_filhos_errados != null && lista_filhos_errados.Count > 0){
-						var filhos_errados = "";
-						foreach (var filho_errado in lista_filhos_errados){
-							filhos_errados += (filhos_errados!= "" ? ", " : "") + filho_errado;
-						}
-						sRetorno = "{\"id_doc_success\":" + id_doc + "," +
-							"\"filhos_errados\":\""+ filhos_errados +"\" }";
-					}
-					else{
-						sRetorno = "{\"id_doc_success\":" + id_doc + "}";
-					}
-				}
-				else
-				{
-					sRetorno = "{\"error_message\": \"Erro ao cadastrar órgão.\" }";
-					throw new Exception("Erro ao incluir novo órgão.");
-				}
+                            lista_filhos_errados.Add(orgaoFilhoNovoOv.nm_orgao);
+                        }
+                    }
+                }
+                if (id_doc > 0)
+                {
+                    if (lista_filhos_errados != null && lista_filhos_errados.Count > 0)
+                    {
+                        var filhos_errados = "";
+                        foreach (var filho_errado in lista_filhos_errados)
+                        {
+                            filhos_errados += (filhos_errados != "" ? ", " : "") + filho_errado;
+                        }
+                        sRetorno = "{\"id_doc_success\":" + id_doc + "," +
+                        "\"filhos_errados\":\"" + filhos_errados + "\" }";
+                    }
+                    else
+                    {
+                        sRetorno = "{\"id_doc_success\":" + id_doc + "}";
+                    }
+                }
+                else
+                {
+                    sRetorno = "{\"error_message\": \"Erro ao cadastrar órgão.\" }";
+                    throw new Exception("Erro ao incluir novo órgão.");
+                }
 
                 var log_incluir = new LogIncluir<OrgaoOV>
                 {
@@ -301,11 +307,12 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     sRetorno = Excecao.LerTodasMensagensDaExcecao(ex, false);
                     context.Response.StatusCode = 500;
                 }
-                var erro = new ErroRequest {
-                        Pagina = context.Request.Path,
-                        RequestQueryString = context.Request.QueryString,
-                        MensagemDaExcecao = Excecao.LerTodasMensagensDaExcecao(ex, true),
-                        StackTrace = ex.StackTrace
+                var erro = new ErroRequest
+                {
+                    Pagina = context.Request.Path,
+                    RequestQueryString = context.Request.QueryString,
+                    MensagemDaExcecao = Excecao.LerTodasMensagensDaExcecao(ex, true),
+                    StackTrace = ex.StackTrace
                 };
                 if (sessao_usuario != null)
                 {
@@ -315,7 +322,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             context.Response.Write(sRetorno);
             context.Response.End();
         }
-
         public bool IsReusable
         {
             get
