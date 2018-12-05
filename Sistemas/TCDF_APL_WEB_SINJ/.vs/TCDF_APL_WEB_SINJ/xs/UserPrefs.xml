@@ -7,9 +7,7 @@
             <Node name="TCDF.Sinj.Web" expanded="True">
               <Node name="ashx" expanded="True">
                 <Node name="Cadastro" expanded="True">
-                  <Node name="OrgaoIncluir.ashx" expanded="True">
-                    <Node name="OrgaoIncluir.ashx.cs" selected="True" />
-                  </Node>
+                  <Node name="OrgaoIncluir.ashx" expanded="True" selected="True" />
                 </Node>
               </Node>
             </Node>
@@ -23,20 +21,22 @@
     <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EditarTipoDeNorma.aspx.cs" relfile="TCDF.Sinj.Web/EditarTipoDeNorma.aspx.cs" line="12" column="1" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/TipoDeNormaEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/TipoDeNormaEditar.ashx.cs" line="21" column="50" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/TipoDeNormaIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/TipoDeNormaIncluir.ashx.cs" line="20" column="1" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/TipoDeNormaRN.cs" line="10" column="1" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/OrgaoRN.cs" line="11" column="1" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="247" column="45" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="329" column="53" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="335" column="49" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="336" column="1" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="337" column="1" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="338" column="1" />
-    <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="341" column="1" />
+    <BreakpointStore>
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EditarTipoDeNorma.aspx.cs" relfile="TCDF.Sinj.Web/EditarTipoDeNorma.aspx.cs" line="12" column="1" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/TipoDeNormaEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/TipoDeNormaEditar.ashx.cs" line="21" column="50" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/TipoDeNormaIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/TipoDeNormaIncluir.ashx.cs" line="20" column="1" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/TipoDeNormaRN.cs" line="10" column="1" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/OrgaoRN.cs" line="11" column="1" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="247" column="45" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="329" column="53" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="335" column="49" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="336" column="1" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="337" column="1" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="338" column="1" />
+      <Breakpoint file="/home/eduardo/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/OrgaoEditar.ashx.cs" line="341" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
