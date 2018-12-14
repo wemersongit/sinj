@@ -484,6 +484,8 @@ namespace TCDF.Sinj.RN
                         ajuizado = false;
                     }
                 }
+
+
                 // Inconstitucional 6(*8)
                 if (relacao.nm_tipo_relacao.ToLower() == "inconstitucionalidade")
                 {
@@ -492,6 +494,16 @@ namespace TCDF.Sinj.RN
                         importanciaDaVez = 8;
                     }
                 }
+
+                // Suspensão 6(*8)
+                if (relacao.nm_tipo_relacao.ToLower() == "suspensão")
+                {
+                    if (!EhModificacaoTotal(vide))
+                    {
+                        importanciaDaVez = 8;
+                    }
+                }
+
                 // Julgada Procedente            6(*8)
                 if (relacao.nm_tipo_relacao.ToLower() == "julgada procedente")
                 {
@@ -519,7 +531,7 @@ namespace TCDF.Sinj.RN
 
                 // REVOGAÇÃO                    2 (*8)
                 // REVOGAÇÃO TOTAL              2 (*8)
-                //Caso seja uma revogação ou revogação total
+                // Caso seja uma revogação ou revogação total
                 if (relacao.nm_tipo_relacao.ToLower() == "revogação" || relacao.nm_tipo_relacao.ToLower() == "revogação total")
                 {
                     //Caso seja uma revogação parcial a importancia deve ser 8.
@@ -564,6 +576,7 @@ namespace TCDF.Sinj.RN
                         importanciaDaVez = 8;
                     }
                 }
+
                 if (importanciaDaVez < importanciaFinal)
                 {
                     importanciaFinal = importanciaDaVez;
@@ -855,6 +868,14 @@ namespace TCDF.Sinj.RN
                 else if (aux_nm_situacao_alterada != "revogado" && aux_ds_texto_alterador == "repristinado")
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRepristinada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
+                }
+                else if (aux_nm_situacao_alterada != "revogado" && aux_ds_texto_alterador == "repristinado")
+                {
+                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRepristinada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
+                }
+                else if (aux_nm_situacao_alterada == "suspenso" && aux_ds_texto_alterador == "suspenso(a) liminarmente")
+                {
+                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaSuspensa(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
                 }
                 else if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, aux_ds_texto_alterador))
                 {
@@ -1258,6 +1279,15 @@ namespace TCDF.Sinj.RN
                         pattern = "(<p.+?linkname=\"" + _caput_alterada.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?)</p>";
                         replacement = "$1 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
                         break;
+                    case "suspensão":
+                        ds_link_alterador = "(" + UtilVides.gerarDescricaoDoCaput(_caput_alterada.caput[i]) + UtilVides.getRelacaoParaTextoAlterador(_caput_alterada.ds_texto_para_alterador_aux) + " pelo(a) " + ds_norma_alteradora + ")";
+                        if (_caput_alterada.nm_relacao_aux == "suspensão")
+                        {
+                            ds_link_alterador = "(Suspenso(a) liminarmente - " + ds_norma_alteradora + ")";
+                        }
+                        pattern = "(<p.+?linkname=\"" + _caput_alterada.caput[i] + "\".*?<a.+?name=\"" + _caput_alterada.caput[i] + "\".*?></a>.*?)</p>";
+                        replacement = "$1 <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a></p>";
+                        break;
                     default:
                         //verifica primeiro quantas vezes o paragrafo já foi alterado
                         pattern = "(<p.+?linkname=\")" + UtilVides.EscapeCharsInToPattern(_caput_alterada.caput[i]) + "(_replaced.*?\".*?>)(.*?)(<a.+?name=\"" + _caput_alterada.caput[i] + "_replaced.*?\".*?></a>)(.*?)</p>";
@@ -1309,9 +1339,11 @@ namespace TCDF.Sinj.RN
                 if (Regex.Matches(texto, pattern).Count == 1)
                 {
                     texto = Regex.Replace(texto, pattern, replacement);
-                    //Resolve os bugs de <s><s>....
+
+                    // NOTE: Resolve os bugs de <s><s>... By Douguete
                     texto = Regex.Replace(texto, "(<s>+)\\1+", "$1");
                     texto = Regex.Replace(texto, "(</s>+)\\1+", "$1");
+
                     bAlterou = true;
                 }
                 if (!bAlterou)
@@ -1573,6 +1605,43 @@ namespace TCDF.Sinj.RN
             return texto;
         }
 
+        public string AlterarTextoCompletoDaNormaSuspensa(NormaOV norma_alteradora, string id_file_norma_alterada, string ds_texto_alterador)
+        {
+            var htmlFile = new UtilArquivoHtml();
+            var texto = htmlFile.GetHtmlFile(id_file_norma_alterada, "sinj_norma", null);
+            return AlterarTextoCompletoDaNormaSuspensa(texto, norma_alteradora, ds_texto_alterador);
+        }
+
+        public string AlterarTextoCompletoDaNormaSuspensa(string texto, NormaOV norma_alteradora, string ds_texto_alterador)
+        {
+            var htmlFile = new UtilArquivoHtml();
+
+            // NOTE: Ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros replaced_by indica que 
+            // um dispositivo especifico foi alterado por uma norma, então a alteração a ser feita não pode mexer nesses dispositivos 
+            // que já foram alterados a nota é só um texto inserido pelos cadastradores de texto e não fazer parte do texto da norma. 
+            // By Questor
+            var pattern1 = "(?!<p.+(?:replaced_by=|nota=|ch_norma_alteracao_completa=|ch_norma_info=).+>)(<p.+?>)(.+?)</p>";
+
+            var name_file_norma_alteradora = norma_alteradora.getNameFileArquivoVigente();
+            var ds_norma_alteradora = norma_alteradora.getDescricaoDaNorma();
+
+            var aux_href = !string.IsNullOrEmpty(name_file_norma_alteradora) ? ("(_link_sistema_)Norma/" + norma_alteradora.ch_norma + "/" + name_file_norma_alteradora) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + norma_alteradora.ch_norma;
+
+            var pattern2 = "(<h1.+?epigrafe=.+?>.+?</h1>)";
+            var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + norma_alteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + ds_texto_alterador + " pelo(a) " + ds_norma_alteradora + ")</a></p>";
+
+            if (Regex.Matches(texto, pattern1).Count > 0 || Regex.Matches(texto, pattern2).Count == 1)
+            {
+                texto = Regex.Replace(texto, pattern2, replacement2);
+            }
+            else
+            {
+                texto = "";
+            }
+
+            return texto;
+        }
+
         public string AlterarTextoCompletoDaNormaAlterada(NormaOV norma_alteradora, string id_file_norma_alterada, string ds_texto_alterador)
         {
             var htmlFile = new UtilArquivoHtml();
@@ -1629,6 +1698,15 @@ namespace TCDF.Sinj.RN
                 {
                     replacement = "<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >Legislação correlata - " + _caput_alteradora.ds_norma + "</a></p>\r\n$1";
                 }
+
+
+                //if (_caput_alteradora.ds_texto_para_alterador_aux == "suspenso(a) liminarmente")
+                //{
+                //    replacement = "<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >Suspensão - " + _caput_alteradora.ds_norma + "</a></p>\r\n$1";
+                //}
+
+
+
                 texto = Regex.Replace(texto, pattern, replacement);
             }
             else
@@ -1652,12 +1730,14 @@ namespace TCDF.Sinj.RN
 
             if (Regex.Matches(texto, pattern).Count == 1)
             {
-
                 var replacement = "$1\r\n<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"" + aux_href + "\" >(" + dsTextoRelacao + " pelo(a) " + dsNormaAlteradora + ")</a></p>";
                 if (dsTextoRelacao == "legislação correlata")
                 {
                     replacement = "<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlteradora + "</a></p>\r\n$1";
                 }
+                //else if (dsTextoRelacao == "suspenso(a) liminarmente") {
+                //    replacement = "<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"" + aux_href + "\" >Suspensão - " + dsNormaAlteradora + "</a></p>\r\n$1";
+                //}
                 texto = Regex.Replace(texto, pattern, replacement);
             }
             else
@@ -1684,14 +1764,30 @@ namespace TCDF.Sinj.RN
                 if (Regex.Matches(texto, pattern).Count == 1)
                 {
                     var replacement = "<p ch_norma_info=\"" + normaAlterada.ch_norma + "\"><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlterada + "</a></p>\r\n$1";
-
                     texto = Regex.Replace(texto, pattern, replacement);
-                }
-                else
-                {
+                } else {
                     texto = "";
                 }
-            }
+            } 
+            //else if (dsTextoRelacao == "suspenso(a) liminarmente") {
+            //    texto = htmlFile.GetHtmlFile(idFileNormaAlteradora, "sinj_norma", null);
+            //    var pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
+
+            //    var nameFileNormaAlterada = normaAlterada.getNameFileArquivoVigente();
+            //    var dsNormaAlterada = normaAlterada.getDescricaoDaNorma();
+
+            //    var aux_href = !string.IsNullOrEmpty(nameFileNormaAlterada) ? ("(_link_sistema_)Norma/" + normaAlterada.ch_norma + "/" + nameFileNormaAlterada) : "(_link_sistema_)DetalhesDeNorma.aspx?id_norma=" + normaAlterada.ch_norma;
+
+            //    if (Regex.Matches(texto, pattern).Count == 1)
+            //    {
+            //        var replacement = "<p ch_norma_info=\"" + normaAlterada.ch_norma + "\"><a href=\"" + aux_href + "\" >Suspensão - " + dsNormaAlterada + "</a></p>\r\n$1";
+            //        texto = Regex.Replace(texto, pattern, replacement);
+            //    }
+            //    else
+            //    {
+            //        texto = "";
+            //    }
+            //}
             return texto;
         }
 
@@ -1826,7 +1922,7 @@ namespace TCDF.Sinj.RN
                     (auxNmSituacaoAlteradaAtual == "revogado" ||
                      auxNmSituacaoAlteradaAtual == "anulado" ||
                      auxNmSituacaoAlteradaAtual == "extinta" ||
-                     auxNmSituacaoAlteradaAtual == "inconstitucional" ||
+                     // auxNmSituacaoAlteradaAtual == "inconstitucional" ||
                      auxNmSituacaoAlteradaAtual == "inconstitucional" ||
                      auxNmSituacaoAlteradaAtual == "cancelada" ||
                      auxNmSituacaoAlteradaAtual == "suspenso" ||
@@ -1848,7 +1944,9 @@ namespace TCDF.Sinj.RN
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "declarado(a) inconstitucional") ||
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "julgada procedente") ||
                     (auxNmSituacaoAnterior == "cancelada" && auxDsTextoParaAlteradorAnterior == "cancelada") ||
-                    (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlteradorAnterior == "suspenso totalmente") ||
+                    (auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlteradorAnterior == "suspenso(a) liminarmente") ||
+                    //(auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlteradorAnterior == "suspenso totalmente") ||
+                    //(auxNmSituacaoAnterior == "suspenso" && auxDsTextoParaAlteradorAnterior == "suspenso") ||
                     (auxNmSituacaoAnterior == "sustado" && auxDsTextoParaAlteradorAnterior == "sustado")))
                 {
                     arquivoNormaVideAlterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoParaAlteradorAnterior);
@@ -1929,7 +2027,7 @@ namespace TCDF.Sinj.RN
                      auxNmSituacaoAtual == "anulado" ||
                      auxNmSituacaoAtual == "extinta" ||
                      auxNmSituacaoAtual == "inconstitucional" ||
-                     auxNmSituacaoAtual == "inconstitucional" ||
+                     // auxNmSituacaoAtual == "inconstitucional" ||
                      auxNmSituacaoAtual == "cancelada" ||
                      auxNmSituacaoAtual == "suspenso" ||
                      auxNmSituacaoAtual == "sustado"))
@@ -2205,7 +2303,18 @@ namespace TCDF.Sinj.RN
                             ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) " + dsNormaAlteradora + "\\)";
                             if (caputAlteradoDesfazer.nm_relacao_aux == "legislação correlata")
                             {
-                                ds_link_alterador = "\\(Legislação correlata - " + dsNormaAlteradora + "\\)";
+                                // ds_link_alterador = "\\(Legislação correlata - " + dsNormaAlteradora + "\\)";
+                                ds_link_alterador = Regex.Escape("(Legislação correlata - " + dsNormaAlteradora + ")");
+                            }
+                            pattern = "(<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
+                            replacement = "$1$2</p>";
+                            break;
+                        case "suspensão":
+                            ds_link_alterador = "\\(.*?" + caputAlteradoDesfazer.ds_texto_para_alterador_aux + ".*pelo\\(a\\) " + dsNormaAlteradora + "\\)";
+                            if (caputAlteradoDesfazer.nm_relacao_aux == "suspensão")
+                            {
+                                ds_link_alterador = Regex.Escape("(Suspenso(a) liminarmente - " + dsNormaAlteradora + ")");
+                                // ds_link_alterador = "\\(Suspenso\\(a\\) liminarmente \\- ADI 8970\\-7 de 21\\/03\\/2017\\)";
                             }
                             pattern = "(<p.+?linkname=\"" + caputAlteradoDesfazer.caput[i] + "\".*?<a.+?name=\"" + caputAlteradoDesfazer.caput[i] + "\".*?></a>.*?) <a class=\"link_vide\" href=\"" + aux_href + "\">" + ds_link_alterador + "</a>(.*?)</p>";
                             replacement = "$1$2</p>";
@@ -2242,30 +2351,73 @@ namespace TCDF.Sinj.RN
         public string RemoverAlteracaoNoTextoCompletoDaNormaAlterada(string chNormaAlteradora, string idFileNormaAlterada, string dsTextoParaAlterador)
         {
             var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+            bool replacementOccurred = false;
 
-            //ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros
-            //replaced_by indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser desfeita deve ser a que
-            //feita no texto completo, e não as que foram feitas nos dispositivos (parcialidade)
-            //e a nota é só um texto inserido pelos cadastradores de texto e não faz parte do texto da norma
+            // NOTE: Essa regra serve para remover da parte inferior da "epígrafe" informação sobre a norma 
+            // ("chNormaAlteradora") que ensejou a alteração completa. By Questor
+            var pattern2a = "\r\n<p.+?ch_norma_alteracao_completa=\"" + chNormaAlteradora + "\".*?><a.+?>\\(.+?\\)</a></p>";
+
+            Regex rx0 = new Regex(pattern2a);
+            if (rx0.Matches(texto).Count == 1)
+            {
+                texto = rx0.Replace(texto, "");
+                replacementOccurred = true;
+            }
+
+            // NOTE: Ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros replaced_by 
+            // indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser desfeita deve ser 
+            // a que feita no texto completo, e não as que foram feitas nos dispositivos (parcialidade) e a nota é só um 
+            // texto inserido pelos cadastradores de texto e não faz parte do texto da norma. By Questor
             var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
-            Regex rx1 = new Regex(pattern1);
 
+            Regex rx1 = new Regex(pattern1);
             var pattern2 = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
             Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
-
             if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
             {
                 var replacement1 = "$1$2</p>";
                 var replacement2 = "";
                 texto = rx1.Replace(texto, replacement1);
                 texto = rx2.Replace(texto, replacement2);
+                replacementOccurred = true;
             }
-            else
+            if (!replacementOccurred)
             {
                 texto = "";
             }
             return texto;
         }
+
+        //public string RemoverAlteracaoNoTextoCompletoDaNormaAlterada(string chNormaAlteradora, string idFileNormaAlterada, string dsTextoParaAlterador)
+        //{
+
+        //    // TODO: A regra atual não está removendo as epígrafes. By Questor
+
+        //    var texto = new UtilArquivoHtml().GetHtmlFile(idFileNormaAlterada, "sinj_norma", null);
+
+        //    // NOTE: Ignora os paragrafos com atributos 'replaced_by' ou 'nota', aceitando todos os outros replaced_by 
+        //    // indica que um dispositivo especifico foi alterado por uma norma, então a alteração a ser desfeita deve ser 
+        //    // a que feita no texto completo, e não as que foram feitas nos dispositivos (parcialidade) e a nota é só um 
+        //    // texto inserido pelos cadastradores de texto e não faz parte do texto da norma. By Questor
+        //    var pattern1 = "(?!<p.+(?:replaced_by=|nota=).+>)(<p.+?>)<s>(.+?)</s></p>";
+        //    Regex rx1 = new Regex(pattern1);
+
+        //    var pattern2 = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(" + dsTextoParaAlterador + ".+?\\)</a></p>";
+        //    Regex rx2 = new Regex(pattern2, RegexOptions.Singleline);
+
+        //    if (rx1.Matches(texto).Count > 0 || rx2.Matches(texto).Count == 1)
+        //    {
+        //        var replacement1 = "$1$2</p>";
+        //        var replacement2 = "";
+        //        texto = rx1.Replace(texto, replacement1);
+        //        texto = rx2.Replace(texto, replacement2);
+        //    }
+        //    else
+        //    {
+        //        texto = "";
+        //    }
+        //    return texto;
+        //}
 
         public string RemoverRevigoracaoNoTextoCompletoDaNormaAlterada(string chNormaAlteradora, string idFileNormaAlterada, string dsTextoParaAlterador)
         {

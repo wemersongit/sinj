@@ -340,15 +340,40 @@ namespace TCDF.Sinj.OV
         /// <returns></returns>
         public static bool EhAlteracaoCompleta(string nmSituacaoAlterada, string dsTextoParaAlterador)
         {
+            //return (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
+                   //(nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
+                   //(nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
+                   //(nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
+                   //(nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado(a) inconstitucional") ||
+                   //(nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
+                   //(nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
+                   //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso(a) liminarmente") ||
+                   //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente") ||
+                   //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso") ||
+                   //(nmSituacaoAlterada == "sustado" && dsTextoParaAlterador == "sustado");
+            //bool maria = (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
+            //        (nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
+            //        (nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
+            //        (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
+            //        (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado(a) inconstitucional") ||
+            //        (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
+            //        (nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
+            //        (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso(a) liminarmente") ||
+            //        (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente") ||
+            //        (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso") ||
+            //        (nmSituacaoAlterada == "sustado" && dsTextoParaAlterador == "sustado");
+            //return maria;
             return (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
-                   (nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
-                   (nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
-                   (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
-                   (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado(a) inconstitucional") ||
-                   (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
-                   (nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
-                   (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente") ||
-                   (nmSituacaoAlterada == "sustado" && dsTextoParaAlterador == "sustado");
+                    (nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
+                    (nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
+                    (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
+                    (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado(a) inconstitucional") ||
+                    (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
+                    (nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
+                    (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso(a) liminarmente") ||
+                    //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente") ||
+                    //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso") ||
+                    (nmSituacaoAlterada == "sustado" && dsTextoParaAlterador == "sustado");
         }
 
         /// <summary>
@@ -363,6 +388,8 @@ namespace TCDF.Sinj.OV
                    dsTextoParaAlterador == "regulamentado" ||
                    dsTextoParaAlterador == "prorrogado" ||
                    dsTextoParaAlterador == "legislação correlata";
+                   // ||
+                   //dsTextoParaAlterador == "suspenso(a) liminarmente";
         }
     }
 
