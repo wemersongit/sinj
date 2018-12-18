@@ -209,6 +209,12 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             orgaoFilhoNovoOv.nm_orgao = orgaoFilhoAnteriorOv.nm_orgao;
                             orgaoFilhoNovoOv.nm_login_usuario_cadastro = orgaoOv.nm_login_usuario_cadastro;
 
+                            orgaoFilhoNovoOv.nm_hierarquia = orgaoOv.nm_hierarquia;
+                            /*Linha acima inserida para resolver a tarefa "http://redmine.brlight.net/issues/3388"
+                            *Foi verificado que ao atribuir os valores nos campos de cadastro, 
+                            *o campo de hierarquia retornava nulo devido a falta do atributo “orgaoFilhoNovoOv.nm_hierarquia”. byWemerson
+                            */
+
                             orgaoFilhoNovoOv.orgaos_cadastradores = orgaoOv.orgaos_cadastradores;
 
                             st_orgao_rollback = orgaoFilhoAnteriorOv.st_orgao;
