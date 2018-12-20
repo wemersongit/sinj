@@ -4,12 +4,13 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" selected="True" />
             <Node name="TCDF.Sinj.Web" expanded="True">
               <Node name="References" expanded="True" />
               <Node name="ashx" expanded="True">
-                <Node name="Arquivo" expanded="True">
-                  <Node name="DiarioTextoArquivo.ashx" expanded="True" />
+                <Node name="Autocomplete" expanded="True">
+                  <Node name="TipoDeNormaAutocomplete.ashx" expanded="True">
+                    <Node name="TipoDeNormaAutocomplete.ashx.cs" selected="True" />
+                  </Node>
                 </Node>
               </Node>
               <Node name="PesquisarNorma.aspx" expanded="True" />

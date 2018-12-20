@@ -37,7 +37,9 @@ namespace TCDF.Sinj.Web.ashx.Autocomplete
             {
                 if (_texto != "...")
                 {
-
+                    //Linha inseriada para quando o usuário digitar no campo tipo, 
+                    //da página CadastrarNorma.aspx, a busca retorna com a sujestão, 
+                    //mesmo se a mesma tiver acentos ou cedilha.
                     sQuery = string.Format("(TRANSLATE(Upper(nm_tipo_norma), " +
                     	"'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ'," +
                     	"'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" +
