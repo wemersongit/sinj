@@ -1,5 +1,8 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
+    <Files>
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="192" Column="16" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -8,12 +11,11 @@
               <Node name="References" expanded="True" />
               <Node name="ashx" expanded="True">
                 <Node name="Autocomplete" expanded="True">
-                  <Node name="TipoDeNormaAutocomplete.ashx" expanded="True">
-                    <Node name="TipoDeNormaAutocomplete.ashx.cs" selected="True" />
-                  </Node>
+                  <Node name="TipoDeNormaAutocomplete.ashx" expanded="True" />
                 </Node>
               </Node>
               <Node name="PesquisarNorma.aspx" expanded="True" />
+              <Node name="Sinj.Master" expanded="True" selected="True" />
             </Node>
           </Node>
         </State>

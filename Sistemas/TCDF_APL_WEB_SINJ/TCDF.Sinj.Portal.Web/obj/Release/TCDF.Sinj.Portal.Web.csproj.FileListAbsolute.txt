@@ -19,6 +19,7 @@
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/bin/util.BRLight.dll
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/bin/Newtonsoft.Json.pdb
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/bin/Newtonsoft.Json.xml
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/obj/Release/TCDF.Sinj.Portal.Web.csprojAssemblyReference.cache
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/obj/Release/TCDF.Sinj.Portal.Web.csproj.CoreCompileInputs.cache
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/obj/Release/TCDF.Sinj.Portal.Web.csproj.CopyComplete
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/obj/Release/TCDF.Sinj.Portal.Web.dll
