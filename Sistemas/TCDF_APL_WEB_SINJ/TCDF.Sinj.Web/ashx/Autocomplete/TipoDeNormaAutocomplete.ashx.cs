@@ -37,7 +37,16 @@ namespace TCDF.Sinj.Web.ashx.Autocomplete
             {
                 if (_texto != "...")
                 {
-                    sQuery = "Upper(nm_tipo_norma) like'%" + _texto.ToUpper() + "%'";
+
+                    sQuery = string.Format("(TRANSLATE(Upper(nm_tipo_norma), " +
+                    	"'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ'," +
+                    	"'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" +
+                    	" like TRANSLATE('%{0}%'," +
+                    	"'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ'," +
+                    	" 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" +
+                    	"or Upper(nm_tipo_norma) like'%" 
+                        + _texto.ToUpper() + "%')", _texto.ToUpper());
+
                 }
             }
             if (!string.IsNullOrEmpty(_chaves))

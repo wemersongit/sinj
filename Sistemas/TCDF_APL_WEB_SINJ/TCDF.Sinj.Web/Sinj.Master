@@ -44,7 +44,7 @@
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/platform.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/tooltip.js"></script>
 
-    <link rel="shortcut icon" type="image/x-icon" href=<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/favicon.png />
+    <link rel="shortcut icon" type="image/x-icon" href=<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/favicon.pngG />
 
     <title>.:: SINJ-DF - Sistema Integrado de Normas Jurídicas do DF ::.</title>
     <script type="text/javascript">
@@ -151,10 +151,10 @@
     <div class="page">
         <div id="div_top" class="top">
             <div class="art-top">
-                <div class="right-top">
+                <div class="right-top" style="display: none">
                     <span id="span_versao"></span>
                 </div>
-                <div class="logo">
+                <div class="logo" style="display: none">
                     <a href="./" title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="sinj" /></a>
                 </div>
                 <div class="top-bottom">
