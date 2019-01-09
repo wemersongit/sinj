@@ -50,6 +50,9 @@
     <Reference Include="Ude">
       <HintPath>..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
     </Reference>
+    <Reference Include="TCDF.Sinj">
+      <HintPath>..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AD\AmbitoAD.cs" />
