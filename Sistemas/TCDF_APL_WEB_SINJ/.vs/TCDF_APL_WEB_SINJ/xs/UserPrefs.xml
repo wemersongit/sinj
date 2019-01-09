@@ -1,4 +1,5 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/ES/BuscaEs.cs">
     <Files>
       <File FileName="TCDF.Sinj.Web/ashx/Consulta/TotalConsulta.ashx.cs" Line="87" Column="27" />
@@ -6,6 +7,9 @@
       <File FileName="../../Projetos/TCDF.Sinj/ES/BuscaEs.cs" Line="311" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
+=======
+  <MonoDevelop.Ide.Workbench />
+>>>>>>> 6b0183ee507d34340ee24ab1c377ab9262ad6afa
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="../../../TCDF.Sinj.Web/ashx/Consulta/TotalConsulta.ashx.cs" line="36" offsetX="1650" offsetY="693" expression="sRetorno" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
@@ -16,6 +20,7 @@
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
+<<<<<<< HEAD
     <BreakpointStore>
       <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/PesquisaSinj.cs" line="47" column="18" />
       <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/AD/DiarioAD.cs" line="304" column="1" />
@@ -66,6 +71,9 @@
       <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/BuscaEs.cs" line="321" column="1" />
       <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/BuscaEs.cs" line="282" column="1" />
     </BreakpointStore>
+=======
+    <BreakpointStore />
+>>>>>>> 6b0183ee507d34340ee24ab1c377ab9262ad6afa
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
