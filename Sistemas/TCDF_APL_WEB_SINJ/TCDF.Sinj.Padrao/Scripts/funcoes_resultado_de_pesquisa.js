@@ -439,6 +439,8 @@ function AdicionarNaCesta(id_doc, todas) {
     ConsultarTotalCesta();
 }
 
+
+
 function ExcluirDaCesta(doc) {
     var cookie_cesta = $.cookie('sinj_basket');
     if (IsNotNullOrEmpty(cookie_cesta)) {

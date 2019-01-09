@@ -1,28 +1,8 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
-    <Files>
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="192" Column="16" />
-    </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="ashx" expanded="True">
-                <Node name="Autocomplete" expanded="True">
-                  <Node name="TipoDeNormaAutocomplete.ashx" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="PesquisarNorma.aspx" expanded="True" />
-              <Node name="Sinj.Master" expanded="True" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="../../../TCDF.Sinj.Web/ashx/Consulta/TotalConsulta.ashx.cs" line="36" offsetX="1650" offsetY="693" expression="sRetorno" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
   <DisabledProjects>
     <String>../../../../../../Desktop/20181212.1/Projetos/neo.BRLightRest/neo.BRLightREST.csproj</String>
     <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
@@ -30,13 +10,7 @@
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/HistoricoDePesquisaRN.cs" line="13" column="1" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/TipoDeNormaRN.cs" line="42" column="29" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/AD/TipoDeNormaAD.cs" line="50" column="25" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/AD/TipoDeNormaAD.cs" line="10" column="1" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/TipoDeNormaOV.cs" line="7" column="18" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
