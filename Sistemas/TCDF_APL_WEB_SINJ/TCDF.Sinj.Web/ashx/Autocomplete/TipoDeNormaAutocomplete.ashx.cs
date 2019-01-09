@@ -37,7 +37,18 @@ namespace TCDF.Sinj.Web.ashx.Autocomplete
             {
                 if (_texto != "...")
                 {
-                    sQuery = "Upper(nm_tipo_norma) like'%" + _texto.ToUpper() + "%'";
+                    //Linha inseriada para quando o usuário digitar no campo tipo, 
+                    //da página CadastrarNorma.aspx, a busca retorna com a sujestão, 
+                    //mesmo se a mesma tiver acentos ou cedilha.
+                    sQuery = string.Format("(TRANSLATE(Upper(nm_tipo_norma), " +
+                    	"'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ'," +
+                    	"'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" +
+                    	" like TRANSLATE('%{0}%'," +
+                    	"'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ'," +
+                    	" 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" +
+                    	"or Upper(nm_tipo_norma) like'%" 
+                        + _texto.ToUpper() + "%')", _texto.ToUpper());
+
                 }
             }
             if (!string.IsNullOrEmpty(_chaves))

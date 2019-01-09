@@ -272,7 +272,6 @@ namespace TCDF.Sinj.AD
             var query_filtered = "";
             var filtersAnd = new List<string>();
             var filtersOr = new List<string>();
-            var ids = "";
             if (_tipo_pesquisa == "geral")
             {
                 fields = MontarCamposPesquisados();

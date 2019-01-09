@@ -36,7 +36,14 @@ namespace TCDF.Sinj.Portal.Web.ashx.Autocomplete
             {
                 if (_texto != "...")
                 {
-                    sQuery = "Upper(nm_tipo_norma) like'%" + _texto.ToUpper() + "%'";
+                    sQuery = string.Format("(TRANSLATE(Upper(nm_tipo_norma), " +
+                        "'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ'," +
+                        "'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" +
+                        " like TRANSLATE('%{0}%'," +
+                        "'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ'," +
+                        " 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" +
+                        "or Upper(nm_tipo_norma) like'%"
+                        + _texto.ToUpper() + "%')", _texto.ToUpper());
                 }
                 sQuery += (sQuery != "" ? " AND " : "") + "nm_tipo_norma!='ADO' AND nm_tipo_norma!='AIL' AND nm_tipo_norma!='ADPF' AND nm_tipo_norma!='ADC'";
             }

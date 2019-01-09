@@ -6,13 +6,7 @@
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ_PORTAL" expanded="True">
             <Node name="TCDF.Sinj.Portal.Web" expanded="True">
-              <Node name="ashx" expanded="True">
-                <Node name="Datatable" expanded="True">
-                  <Node name="FavoritosDatatable.ashx" expanded="True">
-                    <Node name="FavoritosDatatable.ashx.cs" selected="True" />
-                  </Node>
-                </Node>
-              </Node>
+              <Node name="References" selected="True" />
             </Node>
           </Node>
         </State>
@@ -20,7 +14,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
