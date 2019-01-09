@@ -1,8 +1,26 @@
 ﻿<Properties StartupConfiguration="{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}|">
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Portal.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ_PORTAL" expanded="True">
+            <Node name="TCDF.Sinj.Portal.Web" expanded="True">
+              <Node name="ashx" expanded="True">
+                <Node name="Datatable" expanded="True">
+                  <Node name="FavoritosDatatable.ashx" expanded="True">
+                    <Node name="FavoritosDatatable.ashx.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

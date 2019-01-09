@@ -39,9 +39,14 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                     var notifiquemeRn = new NotifiquemeRN();
                     var sessaoNotifiquemeOv = notifiquemeRn.LerSessaoNotifiquemeOv();
                     var notifiquemeOv = notifiquemeRn.Doc(sessaoNotifiquemeOv.email_usuario_push);
-                    SentencaPesquisaFavoritosOV sentencaOv = new SentencaPesquisaFavoritosOV();
-                    sentencaOv.@base = _base;
-                    sentencaOv.favoritos = notifiquemeOv.favoritos.ToArray();
+                    SentencaPesquisaFavoritosOV sentencaOv = new SentencaPesquisaFavoritosOV
+                    {
+                        filtros = context.Request.Params.GetValues("filtro"),
+                        iDisplayStart = Convert.ToUInt64(_iDisplayStart),
+                        iDisplayLength = Convert.ToUInt64(_iDisplayLength),
+                        @base = _base,
+                        favoritos = notifiquemeOv.favoritos.ToArray()
+                    };
                     var query = new NormaBuscaEs().MontarBusca(sentencaOv).GetQuery();
                     Result<NormaOV> result_norma = new NormaAD().ConsultarEs(query);
                     datatable_result = new { aaData = result_norma.hits.hits, sEcho = _sEcho, offset = _iDisplayStart, iTotalRecords = _iDisplayLength, iTotalDisplayRecords = result_norma.hits.total };
@@ -67,7 +72,6 @@ namespace TCDF.Sinj.Web.ashx.Datatable
             context.Response.Write(json_resultado);
             context.Response.End();
         }
-
         public bool IsReusable
         {
             get
