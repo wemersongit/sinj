@@ -134,8 +134,18 @@ namespace TCDF.Sinj.OV
                             )
                         )
                         {
-                            latest_date = date_now;
-                            id_file = fonte.ar_fonte.id_file;
+                            //Cod inserido para priorizar a visualizaçao da 
+                            //republicação mais recenteby Wemerson
+                            if (fonte.nm_tipo_publicacao.Equals("Republicação"))
+                            {
+                                latest_date = date_now;
+                                id_file = fonte.ar_fonte.id_file;
+                            }
+                            else
+                            {
+                               
+                                id_file = fonte.ar_fonte.id_file;
+                            }
                         }
                     }
                 }
