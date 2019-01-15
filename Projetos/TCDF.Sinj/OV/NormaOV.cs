@@ -82,7 +82,7 @@ namespace TCDF.Sinj.OV
         public List<Decisao> decisoes { get; set; }
         public List<Indexacao> indexacoes { get; set; }
         public int in_vides { get { return vides.Count; } }
-        
+
         public List<Vide> vides { get; set; }
 
         public string nm_login_usuario_cadastro { get; set; }
@@ -120,27 +120,29 @@ namespace TCDF.Sinj.OV
                     DateTime latest_date = new DateTime();
                     foreach (var fonte in fontes)
                     {
-                        date_now = DateTime.ParseExact(fonte.dt_publicacao, "dd/MM/yyyy", null);
+                        date_now = DateTime.ParseExact(
+                            fonte.dt_publicacao, "dd/MM/yyyy", null);
+                        //Pega a fonte mais recente. by Wemerson 
                         if (
-                            fonte.ar_fonte != null && 
-                            !string.IsNullOrEmpty(
-                                fonte.ar_fonte.id_file
-                            ) && 
-                            (
-                                DateTime.Compare(
-                                    date_now, 
-                                    latest_date
-                                ) > 0
-                            )
-                        )
+                            fonte.ar_fonte != null &&
+                            !string.IsNullOrEmpty(fonte.ar_fonte.id_file)
+                            && (DateTime.Compare(date_now, latest_date) > 0))
                         {
-                            //Cod inserido para priorizar a visualizaçao da 
-                            //republicação mais recenteby Wemerson
-                            if (fonte.nm_tipo_publicacao.Equals("Publicação"))
-                            {
-                                id_file = fonte.ar_fonte.id_file;
-                            }
-                            else
+                            latest_date = date_now;
+                            id_file = fonte.ar_fonte.id_file;
+                        }
+                        //Caso a data de Publicação e da Republicação
+                        //forem iguais quem tem a precedência é a Republicação. by Wemerson
+                        else
+                        {
+                            if (fonte.ar_fonte != null && !string.IsNullOrEmpty(
+                                fonte.ar_fonte.id_file)
+                                && (
+                                    DateTime.Compare(date_now, latest_date
+                                        ) == 0)
+                                && (
+                                    fonte.nm_tipo_publicacao.Equals(
+                                        "Republicação")))
                             {
                                 latest_date = date_now;
                                 id_file = fonte.ar_fonte.id_file;
@@ -204,13 +206,13 @@ namespace TCDF.Sinj.OV
                     {
                         date_now = DateTime.ParseExact(fonte.dt_publicacao, "dd/MM/yyyy", null);
                         if (
-                            fonte.ar_fonte != null && 
+                            fonte.ar_fonte != null &&
                             !string.IsNullOrEmpty(
                                 fonte.ar_fonte.id_file
                             ) &&
                             (
                                 DateTime.Compare(
-                                    date_now, 
+                                    date_now,
                                     latest_date
                                 ) > 0
                             )
@@ -289,7 +291,7 @@ namespace TCDF.Sinj.OV
 
         public string getPreposicaoNorma()
         {
-            var nm_tipo_norma = util.BRLight.ManipulaTexto.RetiraCaracteresEspeciais(this.nm_tipo_norma.ToLower(),true);
+            var nm_tipo_norma = util.BRLight.ManipulaTexto.RetiraCaracteresEspeciais(this.nm_tipo_norma.ToLower(), true);
             var prep = "por";
             var dictionary = new Dictionary<string, string>() {
                 {"adc","pela"},
@@ -376,15 +378,15 @@ namespace TCDF.Sinj.OV
             return nm_tipo_norma + " " + (!string.IsNullOrEmpty(nr_norma) || nr_norma != "0" ? nr_norma : "") + " de " + dt_assinatura;
         }
     }
-	
-	public class NormaDetalhada : NormaOV
-	{
-		public NormaDetalhada ()
-		{
-			origensOv = new List<OrgaoOV>();
-		}
+
+    public class NormaDetalhada : NormaOV
+    {
+        public NormaDetalhada()
+        {
+            origensOv = new List<OrgaoOV>();
+        }
         public List<OrgaoOV> origensOv { get; set; }
         public TipoDeNorma tipoDeNorma { get; set; }
         public string dt_controle_alteracao { get; set; }
-	}
+    }
 }
