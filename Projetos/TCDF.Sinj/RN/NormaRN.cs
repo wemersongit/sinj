@@ -280,7 +280,9 @@ namespace TCDF.Sinj.RN
                     }
                     if (decisoes_ordenadas_por_data.Count > 0)
                     {
-                        decisoes_ordenadas_por_data = decisoes_ordenadas_por_data.OrderBy(d => Convert.ToDateTime(d.dt_decisao, new CultureInfo("pt-BR"))).ToList();
+                        //Linha inserida para listar e "pegar" a ultima decisão. NormaRN.cs by Wemerson
+                        decisoes_ordenadas_por_data = normaOv.decisoes;
+                        //decisoes_ordenadas_por_data = decisoes_ordenadas_por_data.OrderBy(d => Convert.ToDateTime(d.dt_decisao, new CultureInfo("pt-BR"))).ToList();
                     }
                     else
                     {
