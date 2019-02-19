@@ -1742,6 +1742,29 @@ namespace TCDF.Sinj.RN
                 //}
                 texto = Regex.Replace(texto, pattern, replacement);
             }
+            else if (Regex.Matches(texto, pattern).Count != 1)
+            {
+
+                StringBuilder textoBuid = new StringBuilder();
+
+                textoBuid.Append("<h1 epigrafe=\"\"> </h1>").Append(texto);
+
+                texto = textoBuid.ToString();
+
+                Console.WriteLine("texto: " + texto);
+                pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
+
+                if (Regex.Matches(texto, pattern).Count == 1)
+                {
+                    var replacement = "$1\r\n<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"" + aux_href + "\" >(" + dsTextoRelacao + " pelo(a) " + dsNormaAlteradora + ")</a></p>";
+                    if (dsTextoRelacao == "legislação correlata")
+                    {
+                        replacement = "<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\"><a href=\"" + aux_href + "\" >Legislação correlata - " + dsNormaAlteradora + "</a></p>\r\n$1";
+                    }
+
+                    texto = Regex.Replace(texto, pattern, replacement);
+                }
+            }
             else
             {
                 texto = "";
