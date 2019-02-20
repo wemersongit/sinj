@@ -1,29 +1,31 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
     <Files>
-      <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" Line="273" Column="82" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1724" Column="40" />
+      <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" Line="334" Column="1" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="725" Column="1" />
       <File FileName="../../Projetos/TCDF.Sinj/UtilArquivoHtml.cs" Line="44" Column="14" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="154" Column="51" />
+      <File FileName="TCDF.Sinj.Web/ashx/Login/checkLogin.ashx.cs" Line="23" Column="14" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="154" Column="56" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" expanded="True" />
+            <Node name="TCDF.Sinj" expanded="True">
+              <Node name="RN" expanded="True" />
+            </Node>
             <Node name="TCDF.Sinj.Web" expanded="True">
+              <Node name="References" expanded="True" />
+              <Node name="ashx" expanded="True">
+                <Node name="Cadastro" expanded="True">
+                  <Node name="VideIncluir.ashx" expanded="True" />
+                </Node>
+                <Node name="Login" expanded="True">
+                  <Node name="checkLogin.ashx" expanded="True" />
+                </Node>
+              </Node>
               <Node name="Download.aspx" expanded="True" />
               <Node name="Sinj.Master" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True" selected="True">
-            <Node name="TCDF.Sinj" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="TCDF" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -45,6 +47,8 @@
       <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1773" column="9" />
       <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Sinj.Master" relfile="TCDF.Sinj.Web/Sinj.Master" line="154" column="51" />
       <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Sinj.Master" relfile="TCDF.Sinj.Web/Sinj.Master" line="157" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" line="273" column="50" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" line="308" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
