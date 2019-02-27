@@ -1289,7 +1289,7 @@ function PreencherNormaEdicao() {
                         //Atribui variáveis com os dados recebidos do objeto origensOv
                         var ch_orgao = data.origensOv[origem].ch_orgao;
                         var nm_orgao = data.origensOv[origem].nm_orgao;
-                        var sg_orgao = data.origensOv[origem].sg_orgao;
+                        var sg_orgao = data.origensOv[origem].sg_hierarquia;//Ao sair de uma edicao a hierarquia sumia. Troca da variavel "sg_orgao" pela "sg_hierarquia".
                         var sg_hierarquia = data.origensOv[origem].sg_hierarquia;
                         var nm_ambito = data.origensOv[origem].ambito.nm_ambito;
                         var dt_inicio_vigencia = data.origensOv[origem].dt_inicio_vigencia;
