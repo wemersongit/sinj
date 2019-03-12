@@ -7,34 +7,6 @@
       <File FileName="TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" Line="34" Column="71" />
       <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="291" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="ashx" expanded="True">
-                <Node name="Cadastro" expanded="True">
-                  <Node name="NormaEditar.ashx" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="Default.aspx" expanded="True" />
-              <Node name="EditarNorma.aspx" expanded="True" />
-              <Node name="Sinj.Master" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" expanded="True" />
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="References" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>

@@ -3567,30 +3567,72 @@ function abrirModalImportarArquivo(el) {
         }
     });
 
+
+    // $("#tbody_fontes").each(function () {
+    //    text = $($(this).children()[1]).text();
+    //    if (text === "Publicação") {
+    //         var ds_diario = $(this).find("[ds_diario]").attr("ds_diario")
+    //    }
+    // });
+
+
+    //Trecho de código inserido para que a data do rodapé sempre sejá a da
+    //publicação ou republicação se for o caso by Wemerson
+    //Código 1
+    var ds_diario = undefined;
+    //Entra na tabela tbody_fontes encontra a tr e busca o conteúdo
+    // na td de index 1. Verifica se é Republicação e caso seja
+    //atribui à ds_diario. by Wemerson
+    $("#tbody_fontes").find("tr").each(function (index) {
+        text = $($(this).children()[1]).text();
+        if (text === "Republicação") {
+             ds_diario = $(this).find("[ds_diario]").attr("ds_diario");
+        }
+     });
+    //Entra na tabela tbody_fontes encontra a tr e busca o conteúdo
+    // na td de index 1. Verifica se é Publicação e caso seja
+    //atribui à ds_diario. by Wemerson
+     if (ds_diario === undefined){
+         $("#tbody_fontes").find("tr").each(function (index) {
+             text = $($(this).children()[1]).text();
+             if (text === "Publicação") {
+                  ds_diario = $(this).find("[ds_diario]").attr("ds_diario")
+             }
+         });
+     }
+     
+
+
     //caso seja uma retificação, o descrição do diário que aparece no rodapé do texto importado deve ser a do último diário publicado ou republicado
-    var ds_diario = el.getAttribute('ds_diario');
-    var publicacao = "";
-    if(IsNotNullOrEmpty(el.getAttribute('publicacao'))){
-        publicacao = el.getAttribute('publicacao').toLowerCase();
-    }
-    if(publicacao == "retificação" || publicacao == "ret" || publicacao == ""){
-        var aPublicacoes = $('#tbody_fontes a[publicacao]');
-        var ds_diario_publicacao = '';
-        for(var i = 0; i < aPublicacoes.length; i++){
-            publicacao = aPublicacoes[i].getAttribute('publicacao').toLowerCase();
-            //caso ds_diario seja igual ao a[ds_diario] o laço deve interromper para pegar a descrição de um diário posterior ao da fonte que está sendo editada
-            if(ds_diario == aPublicacoes[i].getAttribute('ds_diario')){
-                break;
-            }
-            //vai pegando a descrição até sair do laço, pode percorrer todos os elementos do array, ou sair caso atinja o elemento cujo arquivo está sendo importado (comparando o ds_diario)
-            else if(publicacao == "publicação" || publicacao == "pub" || publicacao == "republicação" || publicacao == "rep"){
-                ds_diario_publicacao = aPublicacoes[i].getAttribute('ds_diario');
-            }
-        }
-        if(IsNotNullOrEmpty(ds_diario_publicacao)){
-            ds_diario = ds_diario_publicacao;
-        }
-    }
+    
+    //Trecho de código abaixo substituido pelo código acima (Código 1)
+        
+    // var ds_diario = el.getAttribute('ds_diario');
+    //var publicacao = "";
+    //if(IsNotNullOrEmpty(el.getAttribute('publicacao'))){
+    //    publicacao = el.getAttribute('publicacao').toLowerCase();
+    //}
+    //if(publicacao == "retificação" || publicacao == "ret" || publicacao == ""){
+    //    var aPublicacoes = $('#tbody_fontes a[publicacao]');
+    //    var ds_diario_publicacao = '';
+    //    for(var i = 0; i<aPublicacoes.length; i++){
+    //        publicacao = aPublicacoes[i].getAttribute('publicacao').toLowerCase();
+    //        //caso ds_diario seja igual ao a[ds_diario] o laço deve interromper para pegar a descrição de um diário posterior ao da fonte que está sendo editada
+    //        if(ds_diario == aPublicacoes[i].getAttribute('ds_diario')){
+    //            break;
+    //        }
+    //        //vai pegando a descrição até sair do laço, pode percorrer todos os elementos do array, ou sair caso atinja o elemento cujo arquivo está sendo importado (comparando o ds_diario)
+    //        else if(publicacao == "publicação" || publicacao == "pub" || publicacao == "republicação" || publicacao == "rep"){
+    //            ds_diario_publicacao = aPublicacoes[i].getAttribute('ds_diario');
+    //        }
+    //    }
+    //    if(IsNotNullOrEmpty(ds_diario_publicacao)){
+    //        ds_diario = ds_diario_publicacao;
+    //    }
+    //}
+
+
+
     if(IsNotNullOrEmpty(ds_diario)){
         //Foi solicitado que não exibisse a seção na descrição do diário no texto importado
         ds_diario = ds_diario.replace(/, seção 1, 2 e 3/i,'');
@@ -3600,7 +3642,6 @@ function abrirModalImportarArquivo(el) {
         ds_diario = ds_diario.replace(/, seção 1/i,'');
         ds_diario = ds_diario.replace(/, seção 2/i,'');
         ds_diario = ds_diario.replace(/, seção 3/i,'');
-
         $('#form_importar_arquivo input[name="ds_diario"]').val(ds_diario);
     }
     carregarArquivosProduzidos("arquivos_orgao_cadastrador");
