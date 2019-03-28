@@ -1742,6 +1742,8 @@ namespace TCDF.Sinj.RN
                 //}
                 texto = Regex.Replace(texto, pattern, replacement);
             }
+
+            //Caso o texto nao possua a epigrafe sera inseria para que possa ser criado o hyperlink no texto alterado. by Wemerson
             else if (Regex.Matches(texto, pattern).Count != 1)
             {
 
