@@ -241,7 +241,7 @@
                                                                 '</div>' +
                                                                 '<div class="column w-70-pc">' +
                                                                     '<div class="cell w-100-pc">' +
-<!--                                                                        '<button id="button_texto_antigo_' + j + '" type="button" class="clean" onclick="javascript:abrirSelecionarCaputCopiar(this);" title="Abre o texto da norma alteradora para copia e colar o texto novo no campo abaixo."><img src="' + _urlPadrao + '/Imagens/ico_copy.png" width="15px" /></button>' -->+
+                                                                        '<button id="button_texto_antigo_' + j + '" type="button" class="clean" onclick="javascript:abrirSelecionarCaputCopiar(this);" title="Abre o texto da norma alteradora para copia e colar o texto novo no campo abaixo."><img src="' + _urlPadrao + '/Imagens/ico_copy.png" width="15px" /></button>'+
                                                                         '<textarea name="texto_novo" class="w-95-pc" rows="5">' + data.vides[i].caput_norma_vide_outra.texto_novo[j] + '</textarea>' +
                                                                     '</div>' +
                                                                 '</div>' +
