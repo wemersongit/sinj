@@ -1,14 +1,25 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/RN/NormaRN.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/CadastrarVide.aspx">
     <Files>
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="146" Column="54" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1750" Column="63" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="54" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1749" Column="1" />
+      <File FileName="TCDF.Sinj.Web/EditarVide.aspx" Line="244" Column="267" />
+      <File FileName="TCDF.Sinj.Web/CadastrarVide.aspx" Line="18" Column="13" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj.Web" expanded="True">
+              <Node name="ashx" expanded="True" />
+              <Node name="CadastrarVide.aspx" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <DisabledProjects>
-    <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
-  </DisabledProjects>
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
