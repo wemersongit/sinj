@@ -210,7 +210,8 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
                 var ar_fonte = {};
                 var iFonte = 0;
                 var nm_tipo_publicacao = '';
-                for (var i = 0; i < data.fontes.length; i++) {
+                //Parte do codigo foi removido. Segundo o cliente, ao adicionar um vide o texto deve a ser utilizado deve ser a ultima fonte. by Wemerson/Xandinho
+                /*for (var i = 0; i < data.fontes.length; i++) {
                     nm_tipo_publicacao = data.fontes[i].nm_tipo_publicacao.toLowerCase();
                     if (IsNotNullOrEmpty(data.fontes[i].ar_fonte, 'id_file')) {
                         if (nm_tipo_publicacao == 'publicação' || nm_tipo_publicacao == 'pub') {
@@ -224,7 +225,10 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
                             break;
                         }
                     }
-                }
+                }*/
+                ar_fonte = data.fontes[data.fontes.length - 1].ar_fonte;//Adicionado para pegar o ultimo texto by Wemerson/Xandinho
+                iFonte = data.fontes.length - 1;//Adicionado para pegar o ultimo texto by Wemerson/Xandinho
+
                 if (IsNotNullOrEmpty(ar_fonte, 'id_file')) {
                     $('#div_cad_caput_' + nm_sufixo + ' div.arquivos_norma').append(ar_fonte.filename + ' <input type="checkbox" id_file="' + ar_fonte.id_file + '" filename="' + ar_fonte.filename + '" ch_norma="' + data.ch_norma + '" path="fontes/' + iFonte + '" ds_norma="' + getIdentificacaoDeNorma(data) + '" onchange="javascript:' + (id_button ? "selecionarArquivoCaputCopiar(\'" + id_button + "\', " : "selecionarArquivoCaput(") + 'this, \'' + nm_sufixo + '\')" style="vertical-align:middle;"><br/>');
                     $('#div_cad_vide').hide();
