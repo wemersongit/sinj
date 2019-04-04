@@ -271,6 +271,10 @@ function selecionarTexto(nm_sufixo, _a) {
     else{
         text = window.getSelection().toString();
         parentNode = window.getSelection().baseNode.parentNode;
+        //Condicao adicionada para verificar se e uma tag s
+        if(parentNode.localName == "s"){
+            parentNode = parentNode.parentNode;
+        }
     }
     if (text != '') {
         var linkname = parentNode.getAttribute('linkname');
@@ -283,7 +287,7 @@ function selecionarTexto(nm_sufixo, _a) {
             $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados input[name="caput_texto_' + linkname + '"]').remove();
             $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput" value="' + linkname + '" />');
             
-
+            //Linha de codigo alterada para capturar o valor mesmo se estiver entre aspas
             $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput_texto_' + linkname + '"  />');
             $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados input[name="caput_texto_' + linkname + '"]').val(text);
 
