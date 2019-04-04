@@ -282,7 +282,11 @@ function selecionarTexto(nm_sufixo, _a) {
             $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados input[name="caput"][value="' + linkname + '"]').remove();
             $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados input[name="caput_texto_' + linkname + '"]').remove();
             $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput" value="' + linkname + '" />');
-            $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput_texto_' + linkname + '" value="' + text + '" />');
+            
+
+            $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados').prepend('<input type="hidden" name="caput_texto_' + linkname + '"  />');
+            $('#div_cad_caput_' + nm_sufixo + ' div.div_caputs_selecionados input[name="caput_texto_' + linkname + '"]').val(text);
+
 
             selecionarCaput(nm_sufixo);
 
