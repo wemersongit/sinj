@@ -266,18 +266,21 @@ function selecionarTexto(nm_sufixo, _a) {
     var parentNode;
     if (IsNotNullOrEmpty(_a)) {
         text = _a.innerText;
-        parentNode = _a.parentNode;
+        //parentNode = _a.parentNode;
+        parentNode = $(_a.parentNode);
     }
     else{
         text = window.getSelection().toString();
-        parentNode = window.getSelection().baseNode.parentNode;
+        //parentNode = window.getSelection().baseNode.parentNode;
+        var elSelected = window.getSelection().baseNode;
+        parentNode = $(elSelected).parents('p[linkname]');
         //Condicao adicionada para verificar se e uma tag s
-        if(parentNode.localName == "s"){
+        /* if(parentNode.localName == "s"){
             parentNode = parentNode.parentNode;
-        }
+        } */
     }
     if (text != '') {
-        var linkname = parentNode.getAttribute('linkname');
+        var linkname = parentNode.attr('linkname');
         if ($('p[linkname="' + linkname + '"]').text().length < text.length) {
             alert('Erro! Não selecione mais de um parágrafo por vez.');
             return false;
