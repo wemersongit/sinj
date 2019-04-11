@@ -36,7 +36,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
                 var normaRn = new NormaRN();
-                if (!string.IsNullOrEmpty(_id_doc) && !string.IsNullOrEmpty(_ch_vide))
+                if (!string.IsNullOrEmpty(_id_doc) && !string.IsNullOrEmpty(_ch_vide))//5411fb4a685c42228124c070215fd38a
                 {
                     id_doc = ulong.Parse(_id_doc);
                     normaOv = normaRn.Doc(id_doc);
@@ -64,7 +64,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                                 {
                                     try
                                     {
-                                        normaAlteradaOv = normaRn.Doc(vide.ch_norma_vide);
+                                        normaAlteradaOv = normaRn.Doc(vide.ch_norma_vide);//pega a norma pela chave da vide
                                     }
                                     catch (DocNotFoundException)
                                     {
@@ -81,7 +81,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         Vide videAlteradorDesfazer = null;
                         if (iEnumVideAlteradorDesfazer.Count() > 0)
                         {
-                            videAlteradorDesfazer = iEnumVideAlteradorDesfazer.First();
+                            videAlteradorDesfazer = iEnumVideAlteradorDesfazer.First();//First() Retorna o primeiro elemento de uma sequência 
                         }
                         if (normaAlteradoraOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0 && videAlteradorDesfazer != null)
                         {
@@ -95,10 +95,12 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                                     Vide videAlteradoDesfazer = null;
                                     if (iEnumVideAlteradoDesfazer.Count() > 0)
                                     {
+                                        Console.WriteLine("Contagem "+ iEnumVideAlteradoDesfazer.Count());
                                         videAlteradoDesfazer = iEnumVideAlteradoDesfazer.First();
                                     }
                                     if (normaAlteradaOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide) > 0 && videAlteradoDesfazer != null)
                                     {
+                                        Console.WriteLine("Normaalteradao "+normaAlteradaOv.vides.RemoveAll(vd => vd.ch_vide == _ch_vide));
                                         var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
                                         var nmSituacaoAnterior = normaAlteradaOv.nm_situacao;
                                         normaAlteradaOv.ch_situacao = situacao.ch_situacao;

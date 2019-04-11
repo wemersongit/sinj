@@ -259,9 +259,19 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 normaAlteradaOv.vides.Add(vide_alterada);
                                 if (!normaAlteradaOv.st_situacao_forcada)
                                 {
+                                    var situacaoRn = new SituacaoRN();
+                                    var situacaoOv = new SituacaoOV { ch_situacao = normaAlteradaOv.ch_situacao, nm_situacao = normaAlteradaOv.nm_situacao };
                                     var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
-                                    normaAlteradaOv.ch_situacao = situacao.ch_situacao;
-                                    normaAlteradaOv.nm_situacao = situacao.nm_situacao;
+									//Cod inserido para trocar o nome da situação caso for revigorado ele voltara a ser "sem revogação expressa"
+                                    situacaoOv = situacaoRn.Doc("semrevogacaoexpressa");
+
+                                    if (_nm_tipo_relacao == "REVIGORAÇÃO")
+                                    {
+                                        normaAlteradaOv.ch_situacao = situacao.ch_situacao;
+                                        normaAlteradaOv.nm_situacao = situacaoOv.nm_situacao;
+                                    } else {
+                                        normaAlteradaOv.nm_situacao = situacao.nm_situacao;
+                                    }
                                 }
                                 normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                                 if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
