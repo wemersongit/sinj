@@ -162,6 +162,8 @@ function fnUploadEditorFile() {
     var id_form = $('#div_editor_file form').attr('id');
 
     $('#div_conteudo_arquivo').html($('#div_editor_file textarea[name="arquivo"]').val().replaceAll('&nbsp;', ' '));
+    var valor = 'div_conteudo_arquivo';
+    console.log(valor);
     inserirMarcacoesNosParagrafos('div_conteudo_arquivo', false);
     $('#div_editor_file textarea[name="arquivo"]').val(window.encodeURI($('#div_conteudo_arquivo').html()));
 
