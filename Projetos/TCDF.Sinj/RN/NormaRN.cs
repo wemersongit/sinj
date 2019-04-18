@@ -871,10 +871,10 @@ namespace TCDF.Sinj.RN
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRepristinada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
                 }
-                else if (aux_nm_situacao_alterada != "revogado" && aux_ds_texto_alterador == "repristinado")
-                {
-                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRepristinada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
-                }
+                //else if (aux_nm_situacao_alterada != "revogado" && aux_ds_texto_alterador == "repristinado")
+                //{
+                //    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRepristinada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
+                //}
                 else if (aux_nm_situacao_alterada == "suspenso" && aux_ds_texto_alterador == "suspenso(a) liminarmente")
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaSuspensa(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
@@ -1595,8 +1595,10 @@ namespace TCDF.Sinj.RN
 
                     // NOTE: Acrescenta abaixo do link, "(revogado pelo(a) ...)", o novo link, "(repristinado pelo(a) ...)". By Questor
                     var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
-
-                    texto = rx1.Replace(texto, replacement1);
+                    foreach(var vide in normaAlterada.vides)
+                    {
+                        texto = rx1.Replace(texto, replacement1);
+                    }
                     texto = rx2.Replace(texto, replacement2);
                 }
                 else
