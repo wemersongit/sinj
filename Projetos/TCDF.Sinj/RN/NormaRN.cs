@@ -1488,8 +1488,10 @@ namespace TCDF.Sinj.RN
 
                     // NOTE: Acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....). By Questor
                     var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + caputAlteradora.filename + "#" + caputAlteradora.caput[0] + "\" >(" + caputAlteradora.ds_texto_para_alterador_aux + " pelo(a) " + caputAlteradora.ds_norma + ")</a></p>\r\n";
-
-                    texto = rx1.Replace(texto, replacement1);
+                    foreach(var vide in normaAlterada.vides) //retira a hachura do texto by Wemerson
+                    {
+                        texto = rx1.Replace(texto, replacement1);
+                    }
                     texto = rx2.Replace(texto, replacement2);
                 }
                 else
@@ -1544,7 +1546,10 @@ namespace TCDF.Sinj.RN
                     // NOTE: Acrescenta abaixo do link, (revogado pelo(a) ....), o novo link, (revigorado pelo(a) ....). By Questor
                     var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + aux_href + "\" >(" + dsTextoAlterador + " pelo(a) " + dsNormaAlteradora + ")</a></p>\r\n";
 
-                    texto = rx1.Replace(texto, replacement1);
+                    foreach (var vide in normaAlterada.vides)//retira a hachura do texto by Wemerson
+                    {
+                        texto = rx1.Replace(texto, replacement1);
+                    }
                     texto = rx2.Replace(texto, replacement2);
                 }
                 else
