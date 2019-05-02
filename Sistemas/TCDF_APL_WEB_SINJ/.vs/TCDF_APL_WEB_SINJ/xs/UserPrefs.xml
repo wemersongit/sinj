@@ -2,20 +2,26 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs">
     <Files>
       <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" Line="353" Column="14" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="719" Column="1" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="35" />
-      <File FileName="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" Line="79" Column="22" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1868" Column="1" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="56" />
+      <File FileName="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" Line="190" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj" expanded="True">
+              <Node name="RN" expanded="True" />
+            </Node>
             <Node name="TCDF.Sinj.Web" expanded="True">
               <Node name="ashx" expanded="True">
                 <Node name="Exclusao" expanded="True">
                   <Node name="VideExcluir.ashx" expanded="True">
                     <Node name="VideExcluir.ashx.cs" selected="True" />
                   </Node>
+                </Node>
+                <Node name="Login" expanded="True">
+                  <Node name="checkLogin.ashx" expanded="True" />
                 </Node>
               </Node>
             </Node>
@@ -32,13 +38,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1612" column="14" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1605" column="23" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1601" column="26" />
       <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Sinj.Master" relfile="TCDF.Sinj.Web/Sinj.Master" line="157" column="53" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="718" column="13" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="816" column="46" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1374" column="15" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1843" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1859" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

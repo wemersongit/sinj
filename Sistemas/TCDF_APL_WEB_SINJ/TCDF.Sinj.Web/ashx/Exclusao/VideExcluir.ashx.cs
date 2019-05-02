@@ -77,12 +77,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     }
                     if (normaAlteradoraOv != null && normaAlteradoraOv.vides.Count > 0)
                     {
-                        //Excluir vide especifica
-                        if (_ch_vide == "108dd9bc43a247319faa6b40208ff790")
-                        {
-                            normaAlteradoraOv.vides[0].ch_vide = "108dd9bc43a247319faa6b40208ff790";
-                        }
-
                         var iEnumVideAlteradorDesfazer = normaAlteradoraOv.vides.Where(v => v.ch_vide == _ch_vide);
                         Vide videAlteradorDesfazer = null;
                         if (iEnumVideAlteradorDesfazer.Count() > 0)
