@@ -1,29 +1,22 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Arquivos.aspx">
     <Files>
-      <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" Line="353" Column="14" />
       <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1868" Column="1" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="56" />
-      <File FileName="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" Line="190" Column="1" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="35" />
+      <File FileName="TCDF.Sinj.Web/Arquivos.aspx" Line="11" Column="17" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" expanded="True">
-              <Node name="RN" expanded="True" />
-            </Node>
             <Node name="TCDF.Sinj.Web" expanded="True">
               <Node name="ashx" expanded="True">
-                <Node name="Exclusao" expanded="True">
-                  <Node name="VideExcluir.ashx" expanded="True">
-                    <Node name="VideExcluir.ashx.cs" selected="True" />
-                  </Node>
-                </Node>
+                <Node name="Exclusao" expanded="True" />
                 <Node name="Login" expanded="True">
                   <Node name="checkLogin.ashx" expanded="True" />
                 </Node>
               </Node>
+              <Node name="Arquivos.aspx" selected="True" />
             </Node>
           </Node>
         </State>

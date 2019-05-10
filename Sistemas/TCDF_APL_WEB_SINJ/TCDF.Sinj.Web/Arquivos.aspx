@@ -8,7 +8,7 @@
         window.onbeforeunload = function (e) {
             e = e || window.event;
 
-            if (document.activeElement.tagName !== 'A' && document.activeElement.tagName !== 'BUTTON') {
+            if (document.activeElement.tagName !== 'BUTTON') {
 
                 // For IE and Firefox prior to version 4
                 if (e) {
