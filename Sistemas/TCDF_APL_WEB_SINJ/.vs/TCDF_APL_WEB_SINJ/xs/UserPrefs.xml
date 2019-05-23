@@ -1,27 +1,9 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Arquivos.aspx">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/RN/NormaRN.cs">
     <Files>
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1868" Column="1" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="35" />
-      <File FileName="TCDF.Sinj.Web/Arquivos.aspx" Line="11" Column="17" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1400" Column="10" />
+      <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" Line="465" Column="37" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="ashx" expanded="True">
-                <Node name="Exclusao" expanded="True" />
-                <Node name="Login" expanded="True">
-                  <Node name="checkLogin.ashx" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="Arquivos.aspx" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
@@ -30,11 +12,7 @@
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Sinj.Master" relfile="TCDF.Sinj.Web/Sinj.Master" line="157" column="53" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1843" column="1" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1859" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
