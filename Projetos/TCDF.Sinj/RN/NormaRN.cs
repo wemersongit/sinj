@@ -2547,7 +2547,7 @@ namespace TCDF.Sinj.RN
                     pattern = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(.+?\\)</a></p>";
                 }
             }
-            if (Regex.Matches(texto, pattern).Count == 1)
+            if (Regex.Matches(texto, pattern).Count > 0)
             {
                 texto = Regex.Replace(texto, pattern, "");
             }
@@ -2577,7 +2577,7 @@ namespace TCDF.Sinj.RN
                     pattern = "<p.*?><a href=\"" + aux_href + "\" >Legislação correlata.+?</a></p>\r\n";
 
                 }
-                if (Regex.Matches(texto, pattern).Count == 1)
+                if (Regex.Matches(texto, pattern).Count > 0)
                 {
                     texto = Regex.Replace(texto, pattern, "");
                 }
