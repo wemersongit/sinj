@@ -622,7 +622,7 @@ namespace TCDF.Sinj.ES
         {
             List<SearchableField> fields = new List<SearchableField>();
 
-            fields.Add(new SearchableField() { name = "nm_tipo_norma", boost = 45 });
+            fields.Add(new SearchableField() { name = "nm_tipo_norma", boost = 60 });
             fields.Add(new SearchableField() { name = "nr_norma", boost = 2 });
             fields.Add(new SearchableField() { name = "dt_assinatura_text", boost = 2 });
             fields.Add(new SearchableField() { name = "rankeamentos", boost = 3 });
