@@ -1,16 +1,21 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
     <Files>
       <File FileName="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" Line="59" Column="23" />
-      <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="625" Column="84" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/RN/NormaRN.cs">
-    <Files>
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1400" Column="10" />
-      <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" Line="465" Column="37" />
->>>>>>> d510cef7cafc928e54b7558ed3e4b00f92ca2292
+      <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="631" Column="80" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="35" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj.Web" expanded="True">
+              <Node name="Sinj.Master" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
@@ -19,7 +24,6 @@
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-<<<<<<< HEAD
     <BreakpointStore>
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="707" column="1" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="705" column="1" />
@@ -31,9 +35,6 @@
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="625" column="69" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="653" column="63" />
     </BreakpointStore>
-=======
-    <BreakpointStore />
->>>>>>> d510cef7cafc928e54b7558ed3e4b00f92ca2292
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
