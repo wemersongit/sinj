@@ -1381,8 +1381,18 @@ namespace TCDF.Sinj.RN
             {
                 var replacement1 = "$1<s>$2</s></p>";
                 var replacement2 = "$1\r\n<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"(_link_sistema_)Norma/" + normaAlteradora.ch_norma + "/" + _caput_alteradora.filename + "#" + _caput_alteradora.caput[0] + "\" >(" + _caput_alteradora.ds_texto_para_alterador_aux + " pelo(a) " + _caput_alteradora.ds_norma + ")</a></p>";
-                texto = rx1.Replace(texto, replacement1);
-                texto = rx2.Replace(texto, replacement2);
+
+                var pattern = _caput_alteradora.ds_norma;
+
+                //Verifica se no texto contém o caput e se não existir, ele adiciona.
+                //Caso já contenha o caput ele ignora e retorna o texto sem adicionar o link novamente. By Wemerson
+                Regex verificaSeJaExisteOCaput = new Regex(pattern);
+                if (verificaSeJaExisteOCaput.Matches(texto).Count <= 0)
+                {
+                    texto = rx1.Replace(texto, replacement1);
+                    texto = rx2.Replace(texto, replacement2);
+                }
+
             }
             else
             {
@@ -2547,6 +2557,10 @@ namespace TCDF.Sinj.RN
                     pattern = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(.+?\\)</a></p>";
                 }
             }
+<<<<<<< HEAD
+=======
+            //Será retirado do texto o link se tiver mais de um link com o mesmo id_norma. by Wemerson
+>>>>>>> d510cef7cafc928e54b7558ed3e4b00f92ca2292
             if (Regex.Matches(texto, pattern).Count > 0)
             {
                 texto = Regex.Replace(texto, pattern, "");
@@ -2577,6 +2591,10 @@ namespace TCDF.Sinj.RN
                     pattern = "<p.*?><a href=\"" + aux_href + "\" >Legislação correlata.+?</a></p>\r\n";
 
                 }
+<<<<<<< HEAD
+=======
+                //Será retirado do texto o link se tiver mais de um link com o mesmo id_norma. by Wemerson
+>>>>>>> d510cef7cafc928e54b7558ed3e4b00f92ca2292
                 if (Regex.Matches(texto, pattern).Count > 0)
                 {
                     texto = Regex.Replace(texto, pattern, "");
