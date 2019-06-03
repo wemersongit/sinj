@@ -2557,10 +2557,9 @@ namespace TCDF.Sinj.RN
                     pattern = "\r\n<p.*?><a.+?/" + chNormaAlteradora + "/.+?>\\(.+?\\)</a></p>";
                 }
             }
-<<<<<<< HEAD
-=======
+
             //Será retirado do texto o link se tiver mais de um link com o mesmo id_norma. by Wemerson
->>>>>>> d510cef7cafc928e54b7558ed3e4b00f92ca2292
+
             if (Regex.Matches(texto, pattern).Count > 0)
             {
                 texto = Regex.Replace(texto, pattern, "");
@@ -2591,10 +2590,9 @@ namespace TCDF.Sinj.RN
                     pattern = "<p.*?><a href=\"" + aux_href + "\" >Legislação correlata.+?</a></p>\r\n";
 
                 }
-<<<<<<< HEAD
-=======
+
                 //Será retirado do texto o link se tiver mais de um link com o mesmo id_norma. by Wemerson
->>>>>>> d510cef7cafc928e54b7558ed3e4b00f92ca2292
+
                 if (Regex.Matches(texto, pattern).Count > 0)
                 {
                     texto = Regex.Replace(texto, pattern, "");

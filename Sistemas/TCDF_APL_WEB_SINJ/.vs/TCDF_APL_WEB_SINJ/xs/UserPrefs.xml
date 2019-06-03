@@ -1,17 +1,21 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/RN/NormaRN.cs">
     <Files>
       <File FileName="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" Line="59" Column="23" />
-      <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="631" Column="80" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="35" />
+      <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="624" Column="13" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="34" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="2563" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="Sinj.Master" selected="True" />
+            <Node name="TCDF.Sinj" expanded="True">
+              <Node name="RN" expanded="True">
+                <Node name="NormaRN.cs" selected="True" />
+              </Node>
             </Node>
+            <Node name="TCDF.Sinj.Web" expanded="True" />
           </Node>
         </State>
       </Pad>
