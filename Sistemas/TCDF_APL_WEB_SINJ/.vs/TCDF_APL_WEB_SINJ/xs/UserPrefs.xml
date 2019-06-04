@@ -1,25 +1,11 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/RN/NormaRN.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs">
     <Files>
       <File FileName="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" Line="59" Column="23" />
-      <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="624" Column="13" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="34" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="2563" Column="1" />
+      <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="607" Column="19" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="149" Column="26" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="2548" Column="18" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" expanded="True">
-              <Node name="RN" expanded="True">
-                <Node name="NormaRN.cs" selected="True" />
-              </Node>
-            </Node>
-            <Node name="TCDF.Sinj.Web" expanded="True" />
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
@@ -36,7 +22,6 @@
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="724" column="30" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="729" column="14" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="691" column="64" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="625" column="69" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="653" column="63" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
