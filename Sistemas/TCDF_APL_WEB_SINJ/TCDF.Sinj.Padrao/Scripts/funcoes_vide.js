@@ -274,7 +274,7 @@ function selecionarTexto(nm_sufixo, _a) {
         //parentNode = window.getSelection().baseNode.parentNode;
         var elSelected = window.getSelection().baseNode;
         parentNode = $(elSelected).parents('p[linkname]');
-        //Condicao adicionada para verificar se e uma tag s
+        //Condicao adicionada para verificar se e uma tag s. by wemerson
         /* if(parentNode.localName == "s"){
             parentNode = parentNode.parentNode;
         } */

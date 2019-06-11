@@ -20,6 +20,7 @@
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/util.BRLight.dll
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/Newtonsoft.Json.pdb
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Release/Newtonsoft.Json.xml
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Release/TCDF.Sinj.csprojAssemblyReference.cache
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Release/TCDF.Sinj.csproj.CoreCompileInputs.cache
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Release/TCDF.Sinj.csproj.CopyComplete
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Release/TCDF.Sinj.dll
