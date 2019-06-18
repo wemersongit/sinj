@@ -3,8 +3,23 @@
     <Files>
       <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="651" Column="53" />
       <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" Line="264" Column="97" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1152" Column="38" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1143" Column="78" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="22" Column="15" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj" expanded="True">
+              <Node name="RN" expanded="True">
+                <Node name="NormaRN.cs" selected="True" />
+              </Node>
+            </Node>
+            <Node name="TCDF.Sinj.Web" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
