@@ -254,9 +254,9 @@ function abrirSelecionarCaput(nm_sufixo, id_button) {
             sUrl: './ashx/Visualizacao/NormaDetalhes.ashx?id_norma=' + ch_norma,
             sType: "GET",
             fnSuccess: sucesso,
-            fnBeforeSend: gInicio,
+            /*fnBeforeSend: gInicio,*/
             bAsync: true,
-            iTimeout: 40000
+            iTimeout: 2000
         });
     }
 }
