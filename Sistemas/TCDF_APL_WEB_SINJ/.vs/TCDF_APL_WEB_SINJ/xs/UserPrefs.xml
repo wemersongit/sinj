@@ -6,6 +6,15 @@
       <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="467" Column="75" />
       <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="166" Column="34" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
