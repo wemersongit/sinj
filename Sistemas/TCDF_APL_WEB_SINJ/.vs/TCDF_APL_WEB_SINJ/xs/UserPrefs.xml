@@ -1,20 +1,14 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/RN/NormaRN.cs">
     <Files>
-      <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="651" Column="53" />
-      <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" Line="221" Column="51" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="467" Column="75" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="166" Column="34" />
+      <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" Line="283" Column="66" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1152" Column="72" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="162" Column="23" />
+      <File FileName="TCDF.Sinj.Web/Norma.aspx.cs" Line="29" Column="22" />
+      <File FileName="../../Projetos/TCDF.Sinj/AD/NormaAD.cs" Line="42" Column="1" />
+      <File FileName="../../Projetos/TCDF.Sinj/OV/NormaOV.cs" Line="126" Column="1" />
+      <File FileName="TCDF.Sinj.Web/ashx/Push/NotifiquemeCheckLogin.ashx.cs" Line="17" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" selected="True" />
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
@@ -23,7 +17,23 @@
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/NormaOV.cs" line="267" column="25" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/NormaOV.cs" line="204" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/NormaIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/NormaIncluir.ashx.cs" line="25" column="16" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/NormaOV.cs" line="94" column="23" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/AD/NormaAD.cs" line="42" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/AD/NormaAD.cs" line="49" column="14" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="24" column="16" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="45" column="44" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="41" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/AD/NormaAD.cs" line="37" column="16" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="75" column="37" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/NormaOV.cs" line="138" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/NormaOV.cs" line="126" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/NormaOV.cs" line="215" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="50" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
