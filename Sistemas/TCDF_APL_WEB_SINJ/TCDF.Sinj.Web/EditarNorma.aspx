@@ -397,7 +397,7 @@
                         <div id="div_autocomplete_termo_modal" class="cell w-100-pc">
                             <input id="ch_termo_modal" type="hidden" value="" />
                             <input id="ch_tipo_termo_modal" type="hidden" value="" />
-                            <input id="nm_termo_modal" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_termo"></a>
+                            <input autofocus id="nm_termo_modal" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_termo"></a>
                             <a href="javascript:void(0);" onclick="javascript:AdicionarTermo();"><img valign="absmiddle" alt="Adicionar" src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_add_p.png"  /></a>
                         </div>
                     </div>
