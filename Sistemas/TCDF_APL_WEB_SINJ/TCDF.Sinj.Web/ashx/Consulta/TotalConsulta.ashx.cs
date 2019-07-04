@@ -61,7 +61,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                 }
             }
             context.Response.ContentType = "application/json";
-            context.Response.Write(sRetorno);
+            context.Response.Write(sRetorno);//Aqui já foi "contada" as normas que est
             context.Response.End();
         }
 
@@ -76,6 +76,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                 case "norma":
                     SentencaPesquisaDiretaNormaOV pesquisaDireta = new SentencaPesquisaDiretaNormaOV();
                     pesquisaDireta.all = context.Request["all"];
+                    pesquisaDireta.all = pesquisaDireta.all.Replace(".", "");
                     pesquisaDireta.ch_tipo_norma = context.Request["ch_tipo_norma"];
                     pesquisaDireta.nr_norma = context.Request["nr_norma"];
                     pesquisaDireta.norma_sem_numero = context.Request["norma_sem_numero"];
@@ -100,6 +101,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                 default:
                     SentencaPesquisaGeralOV pesquisaGeral = new SentencaPesquisaGeralOV();
                     pesquisaGeral.all = context.Request["all"];
+                    pesquisaGeral.all = pesquisaGeral.all.Replace(".", "");
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new NormaBuscaEs().MontarBusca(pesquisaGeral);
                     query = buscaGeral.GetQuery();
@@ -158,6 +160,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                 default:
                     SentencaPesquisaGeralOV pesquisaGeral = new SentencaPesquisaGeralOV();
                     pesquisaGeral.all = context.Request["all"];
+                    pesquisaGeral.all = pesquisaGeral.all.Replace(".", "");
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new DiarioBuscaEs().MontarBusca(pesquisaGeral);
                     query = buscaGeral.GetQuery();

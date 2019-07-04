@@ -391,7 +391,7 @@
                     <div class="column w-30-pc">
                         <div class="cell fr">
                             <label>Termo:</label>
-                        </div>
+                        </div> 
                     </div>
                     <div class="column w-70-pc">
                         <div id="div_autocomplete_termo_modal" class="cell w-100-pc">

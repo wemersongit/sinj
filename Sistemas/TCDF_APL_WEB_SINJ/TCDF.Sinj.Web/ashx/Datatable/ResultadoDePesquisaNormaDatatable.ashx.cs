@@ -58,6 +58,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                     case "geral":
                         SentencaPesquisaGeralOV pesquisaGeral = new SentencaPesquisaGeralOV();
                         pesquisaGeral.all = context.Request["all"];
+                        pesquisaGeral.all = pesquisaGeral.all.Replace(".", "");//Código inserido para retirar o ponto da pesquisa
                         pesquisaGeral.filtros = context.Request.Params.GetValues("filtro");
                         pesquisaGeral.iDisplayStart = iDisplayStart;
                         pesquisaGeral.iDisplayLength = iDisplayLength;
@@ -67,6 +68,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                     case "norma":
                         SentencaPesquisaDiretaNormaOV pesquisaDireta = new SentencaPesquisaDiretaNormaOV();
                         pesquisaDireta.all = context.Request["all"];
+                        pesquisaDireta.all = pesquisaDireta.all.Replace(".", "");//Código inserido para retirar o ponto da pesquisa
                         pesquisaDireta.filtros = context.Request.Params.GetValues("filtro");
                         pesquisaDireta.ch_tipo_norma = context.Request["ch_tipo_norma"];
                         pesquisaDireta.nr_norma = context.Request["nr_norma"];
