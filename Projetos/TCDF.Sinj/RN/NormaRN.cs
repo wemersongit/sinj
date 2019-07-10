@@ -1146,10 +1146,12 @@ namespace TCDF.Sinj.RN
                             }
                             break;
                     }
+
+                    //Com dispositivo no alterador
                     if (Regex.Matches(texto, pattern).Count == 1)
                     {
                         // Código adicionado para resolver o problema com o '$' quebrando o texto. by Wemerson
-                        //replacement = replacement.Replace("R$", "R$ ");
+                        replacement = replacement.Replace("R$", "R$ ");
                         texto = Regex.Replace(texto, pattern, replacement);
 
                         //Resolve os bugs de <s><s>....
@@ -1341,16 +1343,17 @@ namespace TCDF.Sinj.RN
                         }
                         break;
                 }
+                //Sem dispositivo no alterador
                 if (Regex.Matches(texto, pattern).Count == 1)
                 {
-                    //texto = replacement.Replace("R$", "R$ ");
+                    // Código adicionado para resolver o problema com o '$' quebrando o texto. by Wemerson
+                    replacement = replacement.Replace("R$", "R$ ");
                     texto = Regex.Replace(texto, pattern, replacement);
 
                     // NOTE: Resolve os bugs de <s><s>... By Douguete
                     texto = Regex.Replace(texto, "(<s>+)\\1+", "$1");
                     texto = Regex.Replace(texto, "(</s>+)\\1+", "$1");
 
-                    // Código adicionado para resolver o problema com o '$' quebrando o texto. by Wemerson
 
                     bAlterou = true;
                 }
