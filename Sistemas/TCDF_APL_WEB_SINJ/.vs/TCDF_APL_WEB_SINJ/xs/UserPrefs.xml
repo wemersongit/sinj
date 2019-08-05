@@ -1,17 +1,24 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/RN/NormaRN.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs">
     <Files>
-      <File FileName="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" Line="90" Column="22" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="184" Column="35" />
-      <File FileName="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" Line="103" Column="41" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1349" Column="94" />
+      <File FileName="../../Projetos/TCDF.Sinj/ES/BuscaEs.cs" Line="471" Column="6" />
+      <File FileName="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" Line="66" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
             <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="References" selected="True" />
+              <Node name="ashx" expanded="True">
+                <Node name="Consulta" expanded="True">
+                  <Node name="TotalConsulta.ashx" expanded="True" />
+                </Node>
+                <Node name="Datatable" expanded="True">
+                  <Node name="ResultadoDePesquisaNormaDatatable.ashx" expanded="True">
+                    <Node name="ResultadoDePesquisaNormaDatatable.ashx.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>
@@ -26,9 +33,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1879" column="41" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1951" column="24" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1350" column="68" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" line="66" column="28" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/BuscaEs.cs" line="353" column="13" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

@@ -452,7 +452,7 @@ namespace TCDF.Sinj.ES
         public Agg()
         {
             type = TypeAggregation.terms;
-            size = 20;
+            size = 1000;//Quantidade de itens da lista de filtro na barra lateral esquerda pos pesquisa by Wemerson
             ordenamento = new Ordenamento() { campo = "_count", ordem = Ordem.desc };
         }
         public string name { get; set; }

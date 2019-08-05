@@ -1,6 +1,6 @@
 ﻿<Properties StartupConfiguration="{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}|">
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Portal.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/OV/NormaOV.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Portal.Web/Norma.aspx">
     <Files>
       <File FileName="TCDF.Sinj.Portal.Web/Norma.aspx" Line="22" Column="40" />
       <File FileName="TCDF.Sinj.Portal.Web/Sinj.Master" Line="166" Column="54" />
@@ -14,8 +14,8 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ_PORTAL" expanded="True">
-            <Node name="TCDF.Sinj" selected="True" />
             <Node name="TCDF.Sinj.Portal.Web" expanded="True">
+              <Node name="References" selected="True" />
               <Node name="Norma.aspx" expanded="True" />
             </Node>
           </Node>
