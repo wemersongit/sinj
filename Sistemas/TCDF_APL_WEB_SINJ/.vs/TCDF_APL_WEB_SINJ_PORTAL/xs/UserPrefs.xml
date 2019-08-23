@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}|">
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Portal.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Portal.Web/Norma.aspx">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Portal.Web/Sinj.Master">
     <Files>
       <File FileName="TCDF.Sinj.Portal.Web/Norma.aspx" Line="22" Column="40" />
-      <File FileName="TCDF.Sinj.Portal.Web/Sinj.Master" Line="166" Column="54" />
+      <File FileName="TCDF.Sinj.Portal.Web/Sinj.Master" Line="164" Column="51" />
       <File FileName="../../Projetos/TCDF.Sinj/OV/NormaOV.cs" Line="11" Column="62" />
       <File FileName="../../Projetos/TCDF.Sinj/AD/NormaAD.cs" Line="18" Column="1" />
       <File FileName="TCDF.Sinj.Portal.Web/Norma.aspx.cs" Line="58" Column="41" />

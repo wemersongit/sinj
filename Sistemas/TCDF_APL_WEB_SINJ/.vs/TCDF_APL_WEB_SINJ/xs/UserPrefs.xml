@@ -1,8 +1,9 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
     <Files>
       <File FileName="../../Projetos/TCDF.Sinj/ES/BuscaEs.cs" Line="471" Column="6" />
       <File FileName="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" Line="66" Column="1" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="157" Column="58" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,11 +15,10 @@
                   <Node name="TotalConsulta.ashx" expanded="True" />
                 </Node>
                 <Node name="Datatable" expanded="True">
-                  <Node name="ResultadoDePesquisaNormaDatatable.ashx" expanded="True">
-                    <Node name="ResultadoDePesquisaNormaDatatable.ashx.cs" selected="True" />
-                  </Node>
+                  <Node name="ResultadoDePesquisaNormaDatatable.ashx" expanded="True" />
                 </Node>
               </Node>
+              <Node name="Sinj.Master" selected="True" />
             </Node>
           </Node>
         </State>
