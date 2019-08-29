@@ -272,6 +272,13 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                     } else {
                                         normaAlteradaOv.nm_situacao = situacao.nm_situacao;
                                     }
+
+                                    //Cod inserido para adicionar a descrição de suspenso totalmente by wemerson
+                                    if (_nm_tipo_relacao == "SUSPENSÃO TOTAL")
+                                    {
+                                        normaAlteradaOv.nm_situacao = "Suspenso";
+                                        Console.WriteLine("Situação:"+normaAlteradaOv.nm_situacao);
+                                    }
                                 }
                                 normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                                 if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))

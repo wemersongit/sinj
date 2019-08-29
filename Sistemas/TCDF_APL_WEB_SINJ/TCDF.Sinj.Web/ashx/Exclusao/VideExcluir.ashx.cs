@@ -36,7 +36,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
                 var normaRn = new NormaRN();
-                if (!string.IsNullOrEmpty(_id_doc) && !string.IsNullOrEmpty(_ch_vide))//5411fb4a685c42228124c070215fd38a
+                if (!string.IsNullOrEmpty(_id_doc) && !string.IsNullOrEmpty(_ch_vide))
                 {
                     id_doc = ulong.Parse(_id_doc);
                     normaOv = normaRn.Doc(id_doc);
