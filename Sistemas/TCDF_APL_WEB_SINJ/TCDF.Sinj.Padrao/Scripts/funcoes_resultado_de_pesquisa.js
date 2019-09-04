@@ -287,6 +287,7 @@ function PesquisarDatatable(nm_base, filtros) {
                 montarAggregations(data, nm_base, apelidos);
             }
         });
+        // Caça o input lá aqui, e dá um .remove() nele, ou dá um .hide()
         
     }
     else if (nm_base == "sinj_diario") {

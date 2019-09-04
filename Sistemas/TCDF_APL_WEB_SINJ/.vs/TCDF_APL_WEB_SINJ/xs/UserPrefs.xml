@@ -1,32 +1,45 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
-    <Files>
-      <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" Line="275" Column="37" />
-      <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" Line="343" Column="57" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="83" Column="10" />
-      <File FileName="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" Line="75" Column="19" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="1" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
             <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="ashx" expanded="True" />
-              <Node name="EditarVide.aspx" expanded="True" />
-              <Node name="Sinj.Master" selected="True" />
+              <Node name="ashx" expanded="True">
+                <Node name="Consulta" expanded="True">
+                  <Node name="HistoricoDePesquisaConsulta.ashx" expanded="True" />
+                </Node>
+                <Node name="Datatable" expanded="True">
+                  <Node name="AcessoDatatable.ashx" expanded="True">
+                    <Node name="AcessoDatatable.ashx.cs" selected="True" />
+                  </Node>
+                  <Node name="ResultadoDePesquisaNormaDatatable.ashx" expanded="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
+  </DisabledProjects>
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" line="39" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" relfile="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" line="214" column="68" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" relfile="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" line="105" column="173" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" relfile="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" line="275" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" relfile="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" line="274" column="43" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" relfile="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" line="67" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

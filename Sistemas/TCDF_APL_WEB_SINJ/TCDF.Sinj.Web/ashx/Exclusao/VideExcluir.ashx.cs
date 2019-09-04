@@ -109,7 +109,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                                         if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                                         {
-                                            sRetorno = "{\"id_doc_success\":" + id_doc + "}";
+                                             sRetorno = "{\"id_doc_success\":" + id_doc + "}";
                                             normaRn.VerificarDispositivosEDesfazerAltercaoNosTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, videAlteradorDesfazer, videAlteradoDesfazer, nmSituacaoAnterior, sessao_usuario.nm_login_usuario);
                                         }
                                         else

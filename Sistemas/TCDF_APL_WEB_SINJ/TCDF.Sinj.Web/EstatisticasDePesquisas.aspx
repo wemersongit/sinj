@@ -11,7 +11,60 @@
             padding-right: 10px;
         }
     </style>
-    
+    <script>
+        $(document).ready(function () {
+            // NOTE: Lógica para fazer a ordenação por dd/MM/yyyy. by Dimmy
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "date-dia-pre": function (a) {
+                    var x;
+
+                    if ($.trim(a) !== '') {
+                        var frDatea = $.trim(a).split(' ');
+                        var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00, 00, 00];
+                        var frDatea2 = frDatea[0].split('/');
+                        x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + frTimea[2]) * 1;
+                    } else {
+                        x = Infinity;
+                    }
+
+                    return x;
+                },
+
+                "date-dia-asc": function (a, b) {
+                    return a - b;
+                },
+
+                "date-dia-desc": function (a, b) {
+                    return b - a;
+                }
+            });
+
+            // NOTE: Lógica para fazer a ordenação por MM/yyyy. by Dimmy
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "date-mes-pre": function (a) {
+                    var x;
+
+                    if ($.trim(a) !== '') {
+                        var frDatea = $.trim(a).split(' ');
+                        var frDatea2 = frDatea[0].split('/');
+                        x = frDatea2[1] + frDatea2[0];
+                    } else {
+                        x = Infinity;
+                    }
+
+                    return x;
+                },
+
+                "date-mes-asc": function (a, b) {
+                    return a - b;
+                },
+
+                "date-mes-desc": function (a, b) {
+                    return b - a;
+                }
+            });
+        });
+    </script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.printElement.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao%>/Scripts/html2canvas.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao%>/Scripts/jspdf.min.js"></script>
@@ -49,10 +102,11 @@
                 }
             ],
             "agg_dt_historico":[
-	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Período", "sWidth": "60%", "sClass": "grid-cell ws", "mData": "key"},
+	            { "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Período", "sWidth": "60%", "sClass": "grid-cell ws", "mData": "key", "sType": "date-dia"},
 	            { "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Quantidade", "sWidth": "", "sClass": "grid-cell ws center", "mData": "sum_value" },
 	            { "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Quantidade/Usuário", "sWidth": "", "sClass": "grid-cell ws center", "mData": "doc_count"},
 	            { "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Histórico", "sWidth": "40px", "sClass": "grid-cell ws center", "mData": "link", "bSortable": false, "mRender": function(data, type, full){
+                        
                         return '<a title="visualizar pesquisas" href="./ResultadoDePesquisaPesquisas.aspx?dt_historico='+full.key+'" ><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>';
                     }
                 }
@@ -153,6 +207,17 @@
         function listarAggs(id_form) {
             if (IsNotNullOrEmpty(id_form)) {
                 var nm_agg = document.forms[id_form].nm_agg.value;
+                
+                var agruparPor = $('#form_configuracoes_dt_historico').find('select[name=agrupar_dt]').val();
+                //Nota: Verificacao para adicionar paramentro ao sType by Dimmy
+                if (agruparPor.toLowerCase() === 'dia') {
+                    _columns_estatisticas.agg_dt_historico[0].sType = 'date-dia';
+                } else if (agruparPor.toLowerCase() === 'mes') {
+                     _columns_estatisticas.agg_dt_historico[0].sType = 'date-mes';
+                } else {
+                    delete _columns_estatisticas.agg_dt_historico[0].sType; 
+                }
+        
                 try {
                     var sucesso = function (data) {
                         if (IsNotNullOrEmpty(data, 'aggregations')) {
@@ -199,11 +264,15 @@
 
                                 $("#datatable_" + nm_agg).dataTablesLight({
                                     "sIdTable": "table_" + nm_agg,
-                                    "aoData":aoData,
+                                    // "columnDefs": [
+                                    //    { type: 'date-euro', targets: 0 }
+                                    // ],
+                                    "aoData": aoData,//[{key: "09/2019", doc_count: 7, sum_value: 56}],
                                     "bServerSide": false,
                                     "aoColumns":_columns_estatisticas[nm_agg],
                                     "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-                                    "aaSorting":[[1, "desc"]]
+                                    "useSortingDefault": false,
+                                    "aasorting": [[0, "desc"]]
                                 });
 
                                 $("#chart_" + nm_agg).show();
