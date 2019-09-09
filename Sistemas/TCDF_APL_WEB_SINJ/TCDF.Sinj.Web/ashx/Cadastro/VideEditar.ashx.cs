@@ -336,11 +336,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                                         normaAlteradaOv.ch_situacao = situacao.ch_situacao;
                                                         normaAlteradaOv.nm_situacao = situacao.nm_situacao;
                                                         //Cod inserido para adicionar a descrição de suspenso totalmente by wemerson
-                                                        if (nm_tipo_relacao_pos_verificacao == "SUSPENSÃO TOTAL")
+                                                        if (nm_tipo_relacao_pos_verificacao == "SUSPENSÃO TOTAL" || nm_tipo_relacao_pos_verificacao == "SUSPENSÃO")
                                                         {
                                                             normaAlteradaOv.nm_situacao = "Suspenso";
                                                         }
-
                                                     }
                                                     normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = normaAlteradoraOv.dt_cadastro, nm_login_usuario_alteracao = normaAlteradoraOv.nm_login_usuario_cadastro });
                                                     if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))

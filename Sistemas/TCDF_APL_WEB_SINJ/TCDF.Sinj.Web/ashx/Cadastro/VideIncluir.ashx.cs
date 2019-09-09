@@ -257,6 +257,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 vide_alterada.ds_comentario_vide = _ds_comentario_vide;
 
                                 normaAlteradaOv.vides.Add(vide_alterada);
+                                //Coloca o nome na situação
                                 if (!normaAlteradaOv.st_situacao_forcada)
                                 {
                                     var situacaoRn = new SituacaoRN();
@@ -274,10 +275,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                     }
 
                                     //Cod inserido para adicionar a descrição de suspenso totalmente by wemerson
-                                    if (_nm_tipo_relacao == "SUSPENSÃO TOTAL")
+                                    if (_nm_tipo_relacao == "SUSPENSÃO TOTAL" || nm_tipo_relacao_pos_verificacao == "SUSPENSÃO")
                                     {
                                         normaAlteradaOv.nm_situacao = "Suspenso";
-                                        Console.WriteLine("Situação:"+normaAlteradaOv.nm_situacao);
                                     }
                                 }
                                 normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });

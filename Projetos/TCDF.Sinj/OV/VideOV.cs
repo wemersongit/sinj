@@ -338,8 +338,12 @@ namespace TCDF.Sinj.OV
         /// <param name="nmSituacaoAlterada"></param>
         /// <param name="dsTextoParaAlterador"></param>
         /// <returns></returns>
+
+        /// Para hanchura completa
         public static bool EhAlteracaoCompleta(string nmSituacaoAlterada, string dsTextoParaAlterador)
         {
+            //int a = 1;
+
             //return (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
                    //(nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
                    //(nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
@@ -363,7 +367,8 @@ namespace TCDF.Sinj.OV
             //        (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso") ||
             //        (nmSituacaoAlterada == "sustado" && dsTextoParaAlterador == "sustado");
             //return maria;
-            return (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
+             return (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
+                    (dsTextoParaAlterador == "suspenso") || // Nota: linha alterada 
                     (nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
                     (nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
                     (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
@@ -373,7 +378,10 @@ namespace TCDF.Sinj.OV
                     (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso(a) liminarmente") ||
                     //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente") ||
                     //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso") ||
+                    (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso(a) totalmente") || //Nota: Paramentros adicionados para 'suspenso totalmente'
                     (nmSituacaoAlterada == "sustado" && dsTextoParaAlterador == "sustado");
+                     
+
         }
 
         /// <summary>
@@ -381,6 +389,8 @@ namespace TCDF.Sinj.OV
         /// </summary>
         /// <param name="dsTextoParaAlterador"></param>
         /// <returns></returns>
+
+        //Adicionar legislação correlata
         public static bool EhLegislacaoCorrelata(string dsTextoParaAlterador)
         {
             return dsTextoParaAlterador == "ratificado" ||

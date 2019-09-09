@@ -862,11 +862,21 @@ namespace TCDF.Sinj.RN
 
                 var arquivo_norma_vide_alterada = "";
 
+
+
                 //se a situação não é revogado e a relação de vide é revigorado deve desfazer as alterações da revogação
                 if (aux_nm_situacao_alterada != "revogado" && aux_ds_texto_alterador == "revigorado")
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRevigorada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
                 }
+
+                //Cod inserido para acrescenta abaixo to titulo na norma alterada o link da norma que suspendeu
+                else if (aux_nm_situacao_alterada == "suspenso" && aux_ds_texto_alterador == "suspenso(a) totalmente" && normaAlteradora.nm_tipo_norma == "ADI")
+                {
+                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaSuspensa(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
+                }
+
+
                 else if (aux_nm_situacao_alterada != "revogado" && aux_ds_texto_alterador == "repristinado")
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaRepristinada(normaAlteradora, normaAlterada, aux_ds_texto_alterador);
@@ -881,13 +891,16 @@ namespace TCDF.Sinj.RN
                 }
                 else if (UtilVides.EhAlteracaoCompleta(aux_nm_situacao_alterada, aux_ds_texto_alterador))
                 {
-                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
+                       arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
                 }
-                //Cod inserido para acrescenta abaixo to titulo na norma alterada o link da norma que suspendeu
+
+
                 else if (aux_nm_situacao_alterada == "suspenso" && aux_ds_texto_alterador == "suspenso(a) totalmente")
                 {
-                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaSuspensa(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
+                    arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
                 }
+
+
 
 
                 else if (UtilVides.EhLegislacaoCorrelata(aux_ds_texto_alterador))
@@ -1786,7 +1799,7 @@ namespace TCDF.Sinj.RN
 
                 texto = textoBuid.ToString();
 
-                Console.WriteLine("texto: " + texto);
+               
                 pattern = "(<h1.+?epigrafe=.+?>.+?</h1>)";
 
                 if (Regex.Matches(texto, pattern).Count == 1)
