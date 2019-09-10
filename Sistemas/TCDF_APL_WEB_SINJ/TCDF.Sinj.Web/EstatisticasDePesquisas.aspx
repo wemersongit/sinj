@@ -403,6 +403,7 @@
                                     <div class="column w-100-pc">
                                         <div class="filtro">
                                             <form id="form_configuracoes_pesquisas" name="form_configuracoes_pesquisas" method="POST" action="#" onsubmit="javascript:return listarAggs('form_configuracoes_pesquisas');">
+                                                <label>Quantidade: Total de pesquisas realizadas no sistema</label><br><label>Quantidade/Usuário: Total de usuários que pesquisaram no SINJ-DF</label>
                                                 <input type="hidden" name="nm_agg" value="agg_pesquisas" />
                                                 <div class="table mleft">
                                                     <div class="line">
@@ -498,6 +499,7 @@
                                     <div class="column w-100-pc">
                                         <div class="filtro">
                                             <form id="form_configuracoes_termos" name="form_configuracoes_termos" method="POST" action="#" onsubmit="javascript:return listarAggs('form_configuracoes_termos');">
+                                                <label>Quantidade: Total de pesquisas realizadas no sistema</label><br><label>Quantidade/Usuário: Total de usuários que pesquisaram no SINJ-DF</label>
                                                 <input type="hidden" name="nm_agg" value="agg_termos" />
                                                 <div class="table mleft">
                                                     <div class="line">
@@ -593,6 +595,7 @@
                                     <div class="column w-100-pc">
                                         <div class="filtro">
                                             <form id="form_configuracoes_tipos" name="form_configuracoes_tipos" method="POST" action="#" onsubmit="javascript:return listarAggs('form_configuracoes_tipos');">
+                                                <label>Quantidade: Total de pesquisas realizadas no sistema</label><br><label>Quantidade/Usuário: Total de usuários que pesquisaram no SINJ-DF</label>
                                                 <input type="hidden" name="nm_agg" value="agg_tipos" />
                                                 <div class="table mleft">
                                                     <div class="line">
@@ -688,6 +691,7 @@
                                     <div class="column w-100-pc">
                                         <div class="filtro">
                                             <form id="form_configuracoes_dt_historico" name="form_configuracoes_dt_historico" method="POST" action="#" onsubmit="javascript:return listarAggs('form_configuracoes_dt_historico');">
+                                                <label>Quantidade: Total de pesquisas realizadas no sistema</label><br><label>Quantidade/Usuário: Total de usuários que pesquisaram no SINJ-DF</label>
                                                 <input type="hidden" name="nm_agg" value="agg_dt_historico" />
                                                 <div class="table mleft">
                                                     <div class="line">
