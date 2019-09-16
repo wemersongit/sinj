@@ -4,26 +4,6 @@
       <File FileName="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" Line="602" Column="30" />
       <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="23" Column="5" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" expanded="True">
-              <Node name="AD" expanded="True" />
-            </Node>
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="ashx" expanded="True">
-                <Node name="Push" expanded="True">
-                  <Node name="NotifiquemeEnviarRecriarSenha.ashx" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="ResultadoDePesquisaPesquisas.aspx" expanded="True" />
-              <Node name="Sinj.Master" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
