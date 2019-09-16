@@ -10,17 +10,6 @@
       <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="23" Column="1" />
       <File FileName="../../Projetos/TCDF.Sinj/ES/AD.cs" Line="36" Column="14" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ_PORTAL" expanded="True">
-            <Node name="TCDF.Sinj.Portal.Web" expanded="True">
-              <Node name="References" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>

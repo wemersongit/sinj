@@ -637,6 +637,9 @@ function filtrar(nm_base, campo, valor) {
     var filtros = tratarFiltros(jFiltro);
     PesquisarDatatable(nm_base, filtros);
     $.cookie("Filtros_" + document.location.pathname, JSON.stringify(jFiltro), { path: document.location.pathname });
+    
+    adicionaEventoFiltroBuscaNorma();
+    adicionaEventoFiltroBuscaDiario();
 }
 
 function removerFiltro(nm_base, campo) {
