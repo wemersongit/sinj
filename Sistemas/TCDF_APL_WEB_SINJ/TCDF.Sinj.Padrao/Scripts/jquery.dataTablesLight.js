@@ -166,9 +166,9 @@ $(function () {
                     if (e.keyCode == 13) {
                         $(e.target).blur();
                     }
-                });/*.bind('blur', function (e) {
+                }).bind('blur', function (e) {
                     tableLight.fnFilter(this.value);
-                });*/
+                });
             });
         }
     })(jQuery);

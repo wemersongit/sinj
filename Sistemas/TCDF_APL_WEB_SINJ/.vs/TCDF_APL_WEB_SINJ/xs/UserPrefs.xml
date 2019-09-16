@@ -1,20 +1,10 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Padrao/Scripts/jquery.dataTablesLight.js">
     <Files>
       <File FileName="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" Line="602" Column="30" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="274" Column="19" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="276" Column="11" />
+      <File FileName="TCDF.Sinj.Padrao/Scripts/jquery.dataTablesLight.js" Line="171" Column="20" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="References" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
