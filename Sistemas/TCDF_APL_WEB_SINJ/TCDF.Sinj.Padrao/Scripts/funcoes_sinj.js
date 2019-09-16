@@ -12,6 +12,14 @@ $(document).ready(function(){
     if (st_communication == "1" && IsNotNullOrEmpty(title_communication) && !IsNotNullOrEmpty($.cookie(title_communication))) {
         $('#div_communication').show();
     }
+    
+    $('#form_highlight').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+        e.preventDefault();
+        return false;
+      }
+    });
 });
 function closeCommunication(){
     var title_communication = $('#div_communication').hide().attr('title');
@@ -2372,7 +2380,7 @@ function MontarHighlight(obj, sCampo) {
     return '';
 }
 
-function fn_submit_highlight() {
+function fn_submit_highlight() {    
     for (var i = 0; i < aHighlight.length; i++) {
         if (doc_clicked == aHighlight[i].doc && base_clicked == aHighlight[i].nm_base) {
             if (IsNotNullOrEmpty(id_file)) {

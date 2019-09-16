@@ -140,8 +140,6 @@
             }
             $('span.timeUser').text(h[0] + ':' + h[1] + ':' + h[2]);
         }
-
-        
     </script>
     <asp:ContentPlaceHolder ID="Head" runat="server">
     </asp:ContentPlaceHolder>
@@ -154,7 +152,7 @@
                 <div class="right-top">
                     <span id="span_versao"></span>
                 </div>
-                <div class="logo" style="display: none">
+                <div class="logo" style="display: block">
                     <a href="./" title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="sinj" /></a>
                 </div>
                 <div class="top-bottom">
@@ -286,5 +284,62 @@
     </span>
     <div id="super_loading" style="display:none;"><div class="block"></div><div class="wait"><img alt="carregando..." src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/loading003300.gif"  width="50px" height="50px"/><br />Aguarde...</div></div>
     <div id="div_tooltip"></div>
- </body>
+    <script type="text/javascript">
+        jQuery(document).ready(adicionaEventoFiltroBuscaNorma);
+        
+        function adicionaEventoFiltroBuscaNorma() {
+            if ($('#datatable_normas_filter').find("input[type='search']").is(':visible')) {
+                var campoSearchFiltroNorma = $('#datatable_normas_filter').find("input[type='search']");
+                
+                campoSearchFiltroNorma.on('input', (function(){
+                    var normas = $('#datatable_normas_wrapper').find('tbody .table');
+
+                    for(var i = 0; i < normas.length; i++) {
+                        var norma = $(normas[i]).parent().parent();
+                        var textoNorma = norma.text().replace('Origem:', '').replace('Ementa:', '').replace(/Texto Integral:(.*)/, '').toLowerCase();
+                        var textoDigitado = campoSearchFiltroNorma.val().toLowerCase();
+            
+                        if (textoNorma.includes(textoDigitado)) {
+                            norma.css('display', 'table-row');
+                        } else {
+                            norma.css('display', 'none');
+                        }
+                    }
+                }));
+            } else {
+               setTimeout(adicionaEventoFiltroBuscaNorma, 50);
+            }
+        };
+    </script> 
+        
+        <script type="text/javascript">
+            jQuery(document).ready(adicionaEventoFiltroBuscaDiario);
+            
+            function adicionaEventoFiltroBuscaDiario() {
+                if ($('#datatable_diarios_filter').find("input[type='search']").is(':visible')) {
+                    var campoSearchFiltroDiario = $('#datatable_diarios_filter').find("input[type='search']");
+                    
+                    campoSearchFiltroDiario.on('input', (function(){
+                        var diarios = $('#datatable_diarios_wrapper').find('tbody .table');
+
+                        for(var i = 0; i < diarios.length; i++) {
+                            var diario = $(diarios[i]).parent().parent();
+                            var textoDiario = diario.text().replace('Origem:', '').replace('Ementa:', '').replace(/Texto Integral:(.*)/, '').toLowerCase();
+                            var textoDigitado = campoSearchFiltroDiario.val().toLowerCase();
+                
+                            if (textoDiario.includes(textoDigitado)) {
+                                diario.css('display', 'table-row');
+                            } else {
+                                diario.css('display', 'none');
+                            }
+                        }
+                    }));
+                } else {
+                   setTimeout(adicionaEventoFiltroBuscaDiario, 50);
+                }
+            };
+        </script>
+        
+    </body>
 </html>
+
