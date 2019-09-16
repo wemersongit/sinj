@@ -140,8 +140,6 @@
             }
             $('span.timeUser').text(h[0] + ':' + h[1] + ':' + h[2]);
         }
-
-        
     </script>
     <asp:ContentPlaceHolder ID="Head" runat="server">
     </asp:ContentPlaceHolder>
@@ -286,5 +284,8 @@
     </span>
     <div id="super_loading" style="display:none;"><div class="block"></div><div class="wait"><img alt="carregando..." src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/loading003300.gif"  width="50px" height="50px"/><br />Aguarde...</div></div>
     <div id="div_tooltip"></div>
- </body>
+    
+        
+    </body>
 </html>
+
