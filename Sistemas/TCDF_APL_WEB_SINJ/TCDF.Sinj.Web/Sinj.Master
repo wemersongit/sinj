@@ -194,9 +194,9 @@
                             <div class="setting-user">
                                 <a href="./Configuracao.aspx" title="Configurações"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/none.png" class="setting" alt="Config" /></a>
                             </div>
-                            <%--<div class="basket-user">
+                            <!--<div class="basket-user">
                                 <a href="./Cesta.aspx" title="Visualizar Cesta"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_basket_p.png" alt="cesta" /><label id="label_total_cesta"></label></a>
-                            </div>--%>
+                            </div>-->
                         </div>
                     </div>
                     <form id="form_menu" runat="server">
@@ -285,6 +285,62 @@
     <div id="super_loading" style="display:none;"><div class="block"></div><div class="wait"><img alt="carregando..." src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/loading003300.gif"  width="50px" height="50px"/><br />Aguarde...</div></div>
     <div id="div_tooltip"></div>
     
+        <!-- -->
+        <script type="text/javascript">
+        
+        jQuery(document).ready(adicionaEventoFiltroBuscaNorma);
+        
+        function adicionaEventoFiltroBuscaNorma() {
+            if ($('#datatable_normas_filter').find("input[type='search']").is(':visible')) {
+                var campoSearchFiltroNorma = $('#datatable_normas_filter').find("input[type='search']");
+                
+                campoSearchFiltroNorma.on('input', (function(){
+                    var normas = $('#datatable_normas_wrapper').find('tbody .table');
+
+                    for(var i = 0; i < normas.length; i++) {
+                        var norma = $(normas[i]).parent().parent();
+                        var textoNorma = norma.text().replace('Origem:', '').replace('Ementa:', '').replace(/Texto Integral:(.*)/, '').toLowerCase().replace(/[áàâã]/g,'a').replace(/[éèê]/g,'e').replace(/[óòôõ]/g,'o').replace(/[úùû]/g,'u').replace(/[ç]/g,'c').replace(/[íì]/g,'i');
+                        var textoDigitado = campoSearchFiltroNorma.val().toLowerCase().replace(/[áàâã]/g,'a').replace(/[éèê]/g,'e').replace(/[óòôõ]/g,'o').replace(/[úùû]/g,'u').replace(/[ç]/g,'c').replace(/[íì]/g,'i');
+                        
+                        if (textoNorma.includes(textoDigitado)) {
+                            norma.css('display', 'table-row');
+                        } else {
+                            norma.css('display', 'none');
+                        }
+                    }
+                }));
+            } else {
+               setTimeout(adicionaEventoFiltroBuscaNorma, 50);
+            }
+        };
+    </script> 
+        
+        <script type="text/javascript">
+            jQuery(document).ready(adicionaEventoFiltroBuscaDiario);
+            
+            function adicionaEventoFiltroBuscaDiario() {
+                if ($('#datatable_diarios_filter').find("input[type='search']").is(':visible')) {
+                    var campoSearchFiltroDiario = $('#datatable_diarios_filter').find("input[type='search']");
+                    
+                    campoSearchFiltroDiario.on('input', (function(){
+                        var diarios = $('#datatable_diarios_wrapper').find('tbody .table');
+
+                        for(var i = 0; i < diarios.length; i++) {
+                            var diario = $(diarios[i]).parent().parent();
+                            var textoDiario = diario.text().replace('Origem:', '').replace('Ementa:', '').replace(/Texto Integral:(.*)/, '').toLowerCase().replace(/[áàâã]/g,'a').replace(/[éèê]/g,'e').replace(/[óòôõ]/g,'o').replace(/[úùû]/g,'u').replace(/[ç]/g,'c').replace(/[íì]/g,'i');
+                            var textoDigitado = campoSearchFiltroDiario.val().toLowerCase().replace(/[áàâã]/g,'a').replace(/[éèê]/g,'e').replace(/[óòôõ]/g,'o').replace(/[úùû]/g,'u').replace(/[ç]/g,'c').replace(/[íì]/g,'i');
+                            if (textoDiario.includes(textoDigitado)) {
+                                diario.css('display', 'table-row');
+                            } else {
+                                diario.css('display', 'none');
+                            }
+                        }
+                    }));
+                } else {
+                   setTimeout(adicionaEventoFiltroBuscaDiario, 50);
+                }
+            };
+        </script>
         
     </body>
 </html>

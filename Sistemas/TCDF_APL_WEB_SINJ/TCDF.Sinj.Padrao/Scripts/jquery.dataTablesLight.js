@@ -162,13 +162,22 @@ $(function () {
                         $(this).addClass('selected');
                     });
                 }
-                $("#" + settings.sIdTable + "_filter input").unbind().bind('keyup', function (e) {
+                //nota: Adicionado para que o filtro retornasse a pesquisa após a consulta
+                //Se for pesquisa de norma ou de diario o 'blur' não será acionado. Caso contrario será adicionado aos eventos by wemerson/jimmy
+                if("datatable_normas" === settings.sIdTable || "datatable_diarios" === settings.sIdTable){
+                  $("#" + settings.sIdTable + "_filter input").unbind().bind('keyup', function (e) {
+                    if (e.keyCode == 13) {
+                        $(e.target).blur();
+                    }});
+                } else {                  
+                    $("#" + settings.sIdTable + "_filter input").unbind().bind('keyup', function (e) {
                     if (e.keyCode == 13) {
                         $(e.target).blur();
                     }
-                }).bind('blur', function (e) {
-                    tableLight.fnFilter(this.value);
-                });
+                    }).bind('blur', function (e) {
+                        tableLight.fnFilter(this.value);
+                    });
+                }
             });
         }
     })(jQuery);

@@ -638,8 +638,8 @@ function filtrar(nm_base, campo, valor) {
     PesquisarDatatable(nm_base, filtros);
     $.cookie("Filtros_" + document.location.pathname, JSON.stringify(jFiltro), { path: document.location.pathname });
     
-    //adicionaEventoFiltroBuscaNorma();
-    //adicionaEventoFiltroBuscaDiario();
+    adicionaEventoFiltroBuscaNorma();
+    adicionaEventoFiltroBuscaDiario();
 }
 
 function removerFiltro(nm_base, campo) {

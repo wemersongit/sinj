@@ -1,10 +1,28 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Padrao/Scripts/jquery.dataTablesLight.js">
     <Files>
-      <File FileName="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" Line="602" Column="30" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="276" Column="11" />
-      <File FileName="TCDF.Sinj.Padrao/Scripts/jquery.dataTablesLight.js" Line="171" Column="20" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="291" Column="34" />
+      <File FileName="TCDF.Sinj.Padrao/Scripts/funcoes_resultado_de_pesquisa.js" Line="642" Column="5" />
+      <File FileName="TCDF.Sinj.Web/ResultadoDePesquisa.aspx" Line="1" Column="1" />
+      <File FileName="TCDF.Sinj.Padrao/Scripts/jquery.dataTablesLight.js" Line="172" Column="17" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj.Web" expanded="True">
+              <Node name="ashx" expanded="True">
+                <Node name="Autocomplete" expanded="True">
+                  <Node name="OrgaoAutocomplete.ashx" expanded="True" />
+                  <Node name="TipoDeNormaAutocomplete.ashx" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Sinj.Master" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
