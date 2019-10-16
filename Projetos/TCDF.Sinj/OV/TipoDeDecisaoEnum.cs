@@ -17,6 +17,8 @@ namespace TCDF.Sinj.OV
         [Description("Ajuizado")]
         Ajuizado,
         [Description("Mérito Parcialmente Procedente")]
-        MeritoParcialmenteProcedente
+        MeritoParcialmenteProcedente,
+        [Description("Prejudicada")]
+        Prejudicada
     }
 }

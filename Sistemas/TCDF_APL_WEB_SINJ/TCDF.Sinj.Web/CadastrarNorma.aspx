@@ -425,6 +425,7 @@
                                 <option value="3" >Mérito Improcedente</option>
                                 <option value="4" >Extinta</option>
                                 <option value="5" >Ajuizado</option>
+                                <option value="7" >Prejudicada</option>
                             </select>
                         </div>
                     </div>
