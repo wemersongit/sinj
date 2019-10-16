@@ -340,6 +340,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                                         {
                                                             normaAlteradaOv.nm_situacao = "Suspenso";
                                                         }
+                                                        if(nm_tipo_relacao_pos_verificacao == "INCONSTITUCIONALIDADE")
+                                                        {
+                                                            normaAlteradaOv.nm_situacao = "Inconstitucional";
+                                                        }
                                                     }
                                                     normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = normaAlteradoraOv.dt_cadastro, nm_login_usuario_alteracao = normaAlteradoraOv.nm_login_usuario_cadastro });
                                                     if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))

@@ -273,6 +273,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                     } else {
                                         normaAlteradaOv.nm_situacao = situacao.nm_situacao;
                                     }
+                                    if (nm_tipo_relacao_pos_verificacao == "INCONSTITUCIONALIDADE")
+                                    {
+                                        normaAlteradaOv.nm_situacao = "Inconstitucional";
+                                    }
 
                                     //Cod inserido para adicionar a descrição de suspenso totalmente by wemerson
                                     if (_nm_tipo_relacao == "SUSPENSÃO TOTAL" || nm_tipo_relacao_pos_verificacao == "SUSPENSÃO")

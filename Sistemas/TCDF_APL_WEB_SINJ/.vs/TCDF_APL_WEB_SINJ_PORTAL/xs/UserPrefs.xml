@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}|">
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Portal.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Padrao/Scripts/funcoes_resultado_de_pesquisa.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Portal.Web/Sinj.Master">
     <Files>
-      <File FileName="TCDF.Sinj.Portal.Web/Sinj.Master" Line="371" Column="69" />
+      <File FileName="TCDF.Sinj.Portal.Web/Sinj.Master" Line="284" Column="95" />
       <File FileName="TCDF.Sinj.Padrao/Scripts/funcoes_resultado_de_pesquisa.js" Line="642" Column="39" />
     </Files>
     <Pads>
