@@ -1706,7 +1706,7 @@ function valida_data(o) {
 }
 
 function setYearRange() {
-    return "1900:" + new Date().getFullYear();
+    return "1900:2099";
 }
 
 /* mask.js

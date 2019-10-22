@@ -3,21 +3,10 @@
     <Files>
       <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" Line="291" Column="39" />
       <File FileName="TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" Line="335" Column="56" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1675" Column="13" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1675" Column="1" />
       <File FileName="TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" Line="291" Column="21" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="155" Column="56" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="155" Column="58" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="Sinj.Master" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
