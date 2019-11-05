@@ -1665,7 +1665,7 @@ var _columns_arquivos = [
                     }
                 } else {
                     if (tipo == 'html' || mimetypeSplited[0] == 'image') {
-                        bt_import = '&nbsp;<a target="_blank" href="javascript:void(0);" onclick="javascript:selecionarDocumentoImportar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
+                        bt_import = '&nbsp;<a target="" href="javascript:void(0);" onclick="javascript:selecionarDocumentoImportar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
                     }
                 }
                 return bt_download + bt_import + bt_convert + bt_edit + bt_link_edit + bt_delete;

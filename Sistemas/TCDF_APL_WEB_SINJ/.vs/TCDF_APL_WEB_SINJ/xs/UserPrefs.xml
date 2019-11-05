@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/CadastrarNorma.aspx">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
     <Files>
       <File FileName="../../Projetos/TCDF.Sinj/RN/UsuarioRN.cs" Line="24" Column="24" />
       <File FileName="../../Projetos/TCDF.Sinj/OV/UsuarioOV.cs" Line="14" Column="1" />
       <File FileName="../../Projetos/TCDF.Sinj/AD/UsuarioAD.cs" Line="46" Column="32" />
-      <File FileName="TCDF.Sinj.Web/CadastrarNorma.aspx" Line="1251" Column="55" />
+      <File FileName="TCDF.Sinj.Web/CadastrarNorma.aspx" Line="1258" Column="27" />
       <File FileName="TCDF.Sinj.Web/EditarNorma.aspx" Line="734" Column="61" />
       <File FileName="TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" Line="31" Column="51" />
       <File FileName="../../Projetos/TCDF.Sinj/Util.cs" Line="362" Column="1" />
@@ -16,10 +16,27 @@
       <File FileName="TCDF.Sinj.Padrao/Scripts/funcoes_usuario.js" Line="115" Column="28" />
       <File FileName="TCDF.Sinj.Web/CadastrarUsuario.aspx.bak" Line="158" Column="133" />
       <File FileName="TCDF.Sinj.Web/EditarNorma.aspx.cs" Line="15" Column="35" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="128" Column="16" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="155" Column="53" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj" expanded="True">
+              <Node name="RN" expanded="True" />
+            </Node>
+            <Node name="TCDF.Sinj.Web" expanded="True">
+              <Node name="Sinj.Master" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
+  </DisabledProjects>
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
