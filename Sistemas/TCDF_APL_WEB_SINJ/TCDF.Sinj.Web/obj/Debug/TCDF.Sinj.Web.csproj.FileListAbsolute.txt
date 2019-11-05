@@ -28,3 +28,4 @@
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Debug/TCDF.Sinj.Web.csproj.CopyComplete
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Debug/TCDF.Sinj.Web.dll
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Debug/TCDF.Sinj.Web.pdb
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Debug/TCDF.Sinj.Web.csprojAssemblyReference.cache
