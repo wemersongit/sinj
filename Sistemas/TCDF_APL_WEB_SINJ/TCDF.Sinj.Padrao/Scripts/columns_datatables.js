@@ -40,9 +40,9 @@ var _columns_norma = [
             if (IsNotNullOrEmpty(id_file)) {
                 var filename = getTitleNorma(full);
 
-                links = '<a title="baixar arquivo" target="" href="./Norma/' + full.ch_norma + '/' + filename + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>' +
+                links = '<a title="baixar arquivo" target="_blank" href="./Norma/' + full.ch_norma + '/' + filename + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>' +
 						'&nbsp;&nbsp;' +
-						'<a title="visualizar texto" target="" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>';
+						'<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>';
 			}
 			return links;
 		}
@@ -108,9 +108,9 @@ var _columns_norma_es = [
 	            medida = '<br/><b>' + (full._source.fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB</b><br/>';
 	        }
 	        if (IsNotNullOrEmpty(id_file)) {
-	            links = '<a title="baixar arquivo" target="" href="./BaixarArquivoNorma.aspx?id_norma=' + full._source.ch_norma + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" /></a>';
+	            links = '<a title="baixar arquivo" target="_blank" href="./BaixarArquivoNorma.aspx?id_norma=' + full._source.ch_norma + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" /></a>';
 	            if (_aplicacao == "CADASTRO") {
-	                links += '&nbsp;&nbsp;<a title="visualizar texto" target="" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" /></a>';
+	                links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" /></a>';
 	            }
 	        }
 	        var icone = '<div class="fr" style="margin:2px;">' + links + '<br/>' + medida + '</div>';
@@ -165,9 +165,9 @@ var _columns_norma_es = [
 	            medida = '<b>(' + (full._source.fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB)</b>';
 	        }
 	        if (IsNotNullOrEmpty(url_file)) {
-	            links = '<a title="baixar arquivo" target="" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" width="20px" /> ' + medida + '</a>';
+	            links = '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" width="20px" /> ' + medida + '</a>';
 	            if (_aplicacao == "CADASTRO") {
-	                links += '&nbsp;&nbsp;<a title="visualizar texto" target="" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" /></a>';
+	                links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" /></a>';
 	            }
 	        }
 
@@ -245,9 +245,9 @@ _columns_norma_favoritos[8].mRender = function (data, type, full) {
 	    medida = '<b>(' + (full._source.fontes[0].ar_fonte.filesize / 1024).toFixed(0) + ' KB)</b>';
 	}
 	if (IsNotNullOrEmpty(url_file)) {
-	    links = '<a title="baixar arquivo" target="" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" width="20px" /> ' + medida + '</a>';
+	    links = '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_m.png" alt="download" width="20px" /> ' + medida + '</a>';
 	    if (_aplicacao == "CADASTRO") {
-	        links += '&nbsp;&nbsp;<a title="visualizar texto" target="" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" /></a>';
+	        links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoNorma.aspx?id_file=' + id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" /></a>';
 	    }
 	}
 
@@ -338,16 +338,16 @@ var _columns_diario = [
 	    "mRender": function (data, type, full) {
 	        var txt_retorno = "";
 	        if (IsNotNullOrEmpty(full, 'ar_diario.filename')) {
-	            var arquivo = '<a title="baixar arquivo" target="" href="./BaixarArquivoDiario.aspx?id_file=' + full.ar_diario.id_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a><br/>';
-	            var texto = '<a title="visualizar texto" target="" href="./TextoArquivoDiario.aspx?id_file=' + full.ar_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>';
+	            var arquivo = '<a title="baixar arquivo" target="_blank" href="./BaixarArquivoDiario.aspx?id_file=' + full.ar_diario.id_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a><br/>';
+	            var texto = '<a title="visualizar texto" target="_blank" href="./TextoArquivoDiario.aspx?id_file=' + full.ar_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>';
 
 	            txt_retorno += texto + arquivo;
 	        }
 	        else if (IsNotNullOrEmpty(full, 'arquivos')) {
 	            for (var i = 0; i < full.arquivos.length; i++) {
 	                var obj_arquivo = full.arquivos[i];
-	                var arquivo = '<a title="baixar arquivo" target="" href="./BaixarArquivoDiario.aspx?id_file=' + obj_arquivo.arquivo_diario.id_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>' + obj_arquivo.ds_arquivo + '<br/>';
-	                var texto = '<a title="visualizar texto" target="" href="./TextoArquivoDiario.aspx?id_file=' + obj_arquivo.arquivo_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>';
+	                var arquivo = '<a title="baixar arquivo" target="_blank" href="./BaixarArquivoDiario.aspx?id_file=' + obj_arquivo.arquivo_diario.id_file + '"><img src="' + _urlPadrao + '/Imagens/ico_download_p.png" alt="download" /></a>' + obj_arquivo.ds_arquivo + '<br/>';
+	                var texto = '<a title="visualizar texto" target="_blank" href="./TextoArquivoDiario.aspx?id_file=' + obj_arquivo.arquivo_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_p.png" alt="texto" /></a>';
 	                txt_retorno += texto + arquivo;
 	            }
 	        }
@@ -416,9 +416,9 @@ var _columns_diario_es = [
                 campo_highlight = MontarHighlight(full.highlight, 'ar_diario.filetext');
                 medida = '<b>(' + (full._source.ar_diario.filesize / 1024).toFixed(0) + ' KB)</b>';
 
-                links = '<a title="baixar arquivo" target="" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /> ' + medida + '</a>';
+                links = '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /> ' + medida + '</a>';
                 if (_aplicacao == "CADASTRO") {
-                    links += '&nbsp;&nbsp;<a title="visualizar texto" target="" href="./TextoArquivoDiario.aspx?id_file=' + full._source.ar_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" height="20px" /></a>';
+                    links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoDiario.aspx?id_file=' + full._source.ar_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" height="20px" /></a>';
                 }
             }
             else {
@@ -431,9 +431,9 @@ var _columns_diario_es = [
                     url_file = './Diario/' + full._source.ch_diario + '/' + id_file + '/arq/' + i + '/' + nm_file;
                     medida = '<b>(' + (obj_arquivo.arquivo_diario.filesize / 1024).toFixed(0) + ' KB)</b>';
 
-                    links += '<a title="baixar arquivo" target="" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /> ' + medida + '</a>';
+                    links += '<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /> ' + medida + '</a>';
                     if (_aplicacao == "CADASTRO") {
-                        links += '&nbsp;&nbsp;<a title="visualizar texto" target="" href="./TextoArquivoDiario.aspx?id_file=' + obj_arquivo.arquivo_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" height="20px" /></a>';
+                        links += '&nbsp;&nbsp;<a title="visualizar texto" target="_blank" href="./TextoArquivoDiario.aspx?id_file=' + obj_arquivo.arquivo_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" height="20px" /></a>';
                     }
                     links += '&nbsp;&nbsp;' + obj_arquivo.ds_arquivo + '<br/>';
 
@@ -472,11 +472,11 @@ var _columns_texto_diario = [
             var url_file = "";
             if (IsNotNullOrEmpty(full.fields.partial[0], 'ar_diario.id_file')) {
                 medida = (full.fields.partial[0].ar_diario.filesize / 1024).toFixed(0) + ' KB<br/>';
-                links = '<a title="visualizar texto" target="" href="./TextoArquivoDiario.aspx?id_file=' + full.fields.partial[0].ar_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" /></a>';
+                links = '<a title="visualizar texto" target="_blank" href="./TextoArquivoDiario.aspx?id_file=' + full.fields.partial[0].ar_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" /></a>';
                 id_file = full.fields.partial[0].ar_diario.id_file;
                 nm_file = full.fields.partial[0].ar_diario.filename;
                 url_file = './Diario/' + full.fields.partial[0].ch_diario + '/' + id_file + '/arq/' + nm_file;
-                links += '&nbsp;&nbsp;<a title="baixar arquivo" target="" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /></a>';
+                links += '&nbsp;&nbsp;<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /></a>';
                 var icone = '<div class="text-center">' + links + '<br/>' + medida + '</div>';
                 var campo_highlight = MontarHighlight(full.highlight, 'ar_diario.filetext');
                 if (IsNotNullOrEmpty(campo_highlight)) {
@@ -495,8 +495,8 @@ var _columns_texto_diario = [
                     id_file = obj_arquivo.arquivo_diario.id_file;
                     nm_file = obj_arquivo.arquivo_diario.filename;
                     url_file = './Diario/' + full.fields.partial[0].ch_diario + '/' + id_file + '/arq/' + i + '/' + nm_file;
-                    links = '<a title="visualizar texto" target="" href="./TextoArquivoDiario.aspx?id_file=' + obj_arquivo.arquivo_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" /></a>';
-                    links += '&nbsp;&nbsp;<a title="baixar arquivo" target="" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /></a>';
+                    links = '<a title="visualizar texto" target="_blank" href="./TextoArquivoDiario.aspx?id_file=' + obj_arquivo.arquivo_diario.id_file + '" ><img src="' + _urlPadrao + '/Imagens/ico_doc_m.png" alt="texto" width="20px" /></a>';
+                    links += '&nbsp;&nbsp;<a title="baixar arquivo" target="_blank" href="' + url_file + '"><img src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="download" width="20px" /></a>';
                     arquivos += '<div class="text-center"><h2>' + obj_arquivo.ds_arquivo + '</h2><br/>' + links + '<br/>' + medida + '<br/>' + '</div>';
                 }
                 arquivos = '<div class="line"><div class="column w-80-pc">' + campo_highlight + '</div><div class="column w-20-pc">' + arquivos + '</div></div>';
@@ -944,7 +944,7 @@ var _columns_termos_homonimos = [
 	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "Total", "sWidth": "150px", "sClass": "center", "mData": "nr_total" },
 	{ "indice": 1, "isControl": false, "standard_view": true, "sTitle": "", "sWidth": "100px", "sClass": "center ws", "mData": "nm_termo", "bSortable": false,
 		"mRender": function (data) {
-			return "<a target='' href='./PesquisarVocabulario.aspx?nm_termo=" + data + "' title='Pesquisar'><img valign='absmiddle' alt='detalhes' valign='absmiddle' src='"+_urlPadrao+"/Imagens/ico_loupe_p.png' /></a>";
+			return "<a target='_blank' href='./PesquisarVocabulario.aspx?nm_termo=" + data + "' title='Pesquisar'><img valign='absmiddle' alt='detalhes' valign='absmiddle' src='"+_urlPadrao+"/Imagens/ico_loupe_p.png' /></a>";
 		}
 	}
 ];
@@ -1187,7 +1187,7 @@ var _columns_vocabulario_restaurados = [
 },
 { "mData": "", "sDefaultContent": "", "sTitle": "", "sWidth": "20%", "sClass": "left ws all", "sName": "", "bSortable": false,
     "mRender": function (data, type, full) {
-        return "<a target='' href='./DetalhesDeVocabulario.aspx?id_doc=" + full._metadata.id_doc + "' title='Exibir Detalhes'><img valign='absmiddle' alt='Exibir' valign='absmiddle' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a><a class='button p' href='javascript:void(0);' onclick='javascript:trocarTermosRestaurados(\"" + full.ch_termo + "\",\"" + full.nm_termo + "\");'>Trocar</a>"
+        return "<a target='_blank' href='./DetalhesDeVocabulario.aspx?id_doc=" + full._metadata.id_doc + "' title='Exibir Detalhes'><img valign='absmiddle' alt='Exibir' valign='absmiddle' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a><a class='button p' href='javascript:void(0);' onclick='javascript:trocarTermosRestaurados(\"" + full.ch_termo + "\",\"" + full.nm_termo + "\");'>Trocar</a>"
     }
 }
 ];
@@ -1648,7 +1648,7 @@ var _columns_arquivos = [
                 var mimetypeSplited = full.ar_arquivo.mimetype.split('/');
                 var tipo = mimetypeSplited[1];
                 var ico = '<img src="' + _urlPadrao + '/Imagens/ico_file.png" width="18" height="18" /> ';
-                var bt_download = '<a target="" href="./Download/sinj_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename + '" title="Baixar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_download.png" alt="download" /></a>';
+                var bt_download = '<a target="_blank" href="./Download/sinj_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename + '" title="Baixar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_download.png" alt="download" /></a>';
                 var bt_edit = '';
                 var bt_link_edit = '';
                 var bt_convert = '';
@@ -1661,12 +1661,11 @@ var _columns_arquivos = [
                     if (tipo == 'html') {
                         bt_edit = '&nbsp;<a href="javascript:void(0);" onclick="javascript:openDialogEditFile(this)" title="Editar Arquivo"><img height="16" src="' + _urlPadrao + '/Imagens/ico_edit_dir.png" alt="editar html" /></a>';
                         //bt_link_edit = '&nbsp;<a href="javascript:void(0);" onclick="javascript:openDialogEditLink(this)" title="Editar Links"><img height="16" src="' + _urlPadrao + '/Imagens/ico_edit_link.png" alt="editar link" /></a>';
-                        bt_convert = '&nbsp;<a target="" href="./htmltopdf/dc_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename.replace(".html", ".pdf").replace(".htm", ".pdf") + '" title="Converter e Baixar em PDF" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="converter" /></a>';
+                        bt_convert = '&nbsp;<a target="_blank" href="./htmltopdf/dc_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename.replace(".html", ".pdf").replace(".htm", ".pdf") + '" title="Converter e Baixar em PDF" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_pdf.png" alt="converter" /></a>';
                     }
                 } else {
-                    //Foi retirado o '' pois não há necessidade do mesmo
                     if (tipo == 'html' || mimetypeSplited[0] == 'image') {
-                        bt_import = '&nbsp;<a target="" href="javascript:void(0);" onclick="javascript:selecionarDocumentoImportar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
+                        bt_import = '&nbsp;<a target="_blank" href="javascript:void(0);" onclick="javascript:selecionarDocumentoImportar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
                     }
                 }
                 return bt_download + bt_import + bt_convert + bt_edit + bt_link_edit + bt_delete;
@@ -1694,7 +1693,7 @@ var _columns_imagens = [
                     var size = (full.ar_arquivo.filesize / 1024).toFixed(0) + ' KB';
                     url = "Download/sinj_arquivo/" + full.ar_arquivo.id_file + "/" + full.ar_arquivo.filename;
                     var ico = '<img src="./Download/sinj_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename + '" alt="' + full.ar_arquivo.filename + '" style="max-width:50px;max-height:30px;" />';
-                    html = '<div class="div_arq" chave="' + full.ch_arquivo + '"><a target="" href="javascript:void(0);" onclick="javascript:selectImage(\''+url+'\');" title="Selecionar Imagem" >' + ico + ' ' + full.ar_arquivo.filename + ' <img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="ok" /></a></div>';
+                    html = '<div class="div_arq" chave="' + full.ch_arquivo + '"><a target="_blank" href="javascript:void(0);" onclick="javascript:selectImage(\''+url+'\');" title="Selecionar Imagem" >' + ico + ' ' + full.ar_arquivo.filename + ' <img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="ok" /></a></div>';
                 }
             }
             return html;
@@ -1730,8 +1729,8 @@ var _columns_arquivos_versionados = [
     { "indice": 3, "isControl": true, "bSortable": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "grid-cell ws left", "mData": "",
         "mRender": function (data, type, full) {
             var tipo = full.ar_arquivo_versionado.mimetype.split('/')[1];
-            var bt_download = '<a target="" href="./Download/sinj_arquivo_versionado_norma/' + full.ar_arquivo_versionado.id_file + '/' + full.ar_arquivo_versionado.filename + '" title="Baixar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_download.png" alt="download" /></a>';
-            var bt_recovery = '&nbsp;<a target="" href="javascript:void(0);" onclick="javascript:selecionarDocumentoRecuperar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
+            var bt_download = '<a target="_blank" href="./Download/sinj_arquivo_versionado_norma/' + full.ar_arquivo_versionado.id_file + '/' + full.ar_arquivo_versionado.filename + '" title="Baixar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_download.png" alt="download" /></a>';
+            var bt_recovery = '&nbsp;<a target="_blank" href="javascript:void(0);" onclick="javascript:selecionarDocumentoRecuperar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
             return bt_download + bt_recovery;
         }
     }

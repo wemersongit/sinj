@@ -57,9 +57,6 @@
     <Reference Include="Ude">
       <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
     </Reference>
-    <Reference Include="TCDF.Sinj">
-      <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BaixarArquivoDiario.aspx" />
@@ -1859,6 +1856,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\Visualizacao\FaleConoscoDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj">
+      <Project>{3B23C9D4-4624-473E-8976-7CD48EF5559C}</Project>
+      <Name>TCDF.Sinj</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
