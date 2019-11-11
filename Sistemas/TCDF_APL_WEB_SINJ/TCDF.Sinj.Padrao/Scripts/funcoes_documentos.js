@@ -160,8 +160,20 @@ function fnUploadEditorFile() {
     CKEDITOR.instances.textarea_arquivo_editor.updateElement();
     
     var id_form = $('#div_editor_file form').attr('id');
+    var conteudoArquivo = $('#div_conteudo_arquivo').html($('#div_editor_file textarea[name="arquivo"]').val());
+    var itensDoTextoaArquivo = $(conteudoArquivo).children();
 
-    $('#div_conteudo_arquivo').html($('#div_editor_file textarea[name="arquivo"]').val().replaceAll('&nbsp;', ' '));
+    // NOTE: Remove parágrafos em branco para eviatr quebra de formatação
+    // quando se adiciona uma nova Vide. By Jimmy/Lirão
+    for(var i = 0; i < itensDoTextoaArquivo.length; i++) {
+        // console.log(itensDoTextoaArquivo[i]);
+
+        if (!itensDoTextoaArquivo[i].textContent.trim()) {
+            // console.log("REMOVENDO");
+            itensDoTextoaArquivo[i].remove();
+        } 
+    }
+
     var valor = 'div_conteudo_arquivo';
     console.log(valor);
     inserirMarcacoesNosParagrafos('div_conteudo_arquivo', false);
