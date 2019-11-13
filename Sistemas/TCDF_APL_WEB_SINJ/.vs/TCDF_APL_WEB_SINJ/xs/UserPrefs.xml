@@ -1,31 +1,29 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
     <Files>
+      <File FileName="TCDF.Sinj.Web/Favoritos.aspx" Line="7" Column="47" />
+      <File FileName="TCDF.Sinj.Web/ashx/Datatable/FavoritosDatatable.ashx.cs" Line="82" Column="6" />
       <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="155" Column="56" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" expanded="True">
-              <Node name="OV" expanded="True" />
-            </Node>
             <Node name="TCDF.Sinj.Web" expanded="True">
               <Node name="ashx" expanded="True">
-                <Node name="Arquivo" expanded="True">
-                  <Node name="HtmlFileEncoded.ashx" expanded="True" />
-                </Node>
-                <Node name="Cadastro" expanded="True">
-                  <Node name="ArquivoIncluir.ashx" expanded="True" />
-                  <Node name="NormaIncluir.ashx" expanded="True" />
+                <Node name="Datatable" expanded="True">
+                  <Node name="FavoritosDatatable.ashx" expanded="True" />
                 </Node>
               </Node>
-              <Node name="CadastrarNorma.aspx" expanded="True" />
-              <Node name="EditarNorma.aspx" expanded="True" />
-              <Node name="Norma.aspx" expanded="True" />
+              <Node name="Favoritos.aspx" expanded="True" />
               <Node name="Sinj.Master" selected="True" />
             </Node>
           </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
@@ -78,6 +76,7 @@
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EditarNorma.aspx.cs" relfile="TCDF.Sinj.Web/EditarNorma.aspx.cs" line="19" column="1" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Arquivo/HtmlFileEncoded.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Arquivo/HtmlFileEncoded.ashx.cs" line="40" column="1" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/CadastrarNorma.aspx.cs" relfile="TCDF.Sinj.Web/CadastrarNorma.aspx.cs" line="27" column="12" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Datatable/FavoritosDatatable.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Datatable/FavoritosDatatable.ashx.cs" line="68" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
