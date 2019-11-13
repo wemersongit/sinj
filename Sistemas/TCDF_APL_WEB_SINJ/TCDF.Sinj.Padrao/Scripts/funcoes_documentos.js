@@ -170,7 +170,10 @@ function fnUploadEditorFile() {
 
         if (!itensDoTextoaArquivo[i].textContent.trim()) {
             // console.log("REMOVENDO");
-            itensDoTextoaArquivo[i].remove();
+            var img =itensDoTextoaArquivo[i].childNodes[0].nodeName;
+            if(img != "IMG"){
+                itensDoTextoaArquivo[i].remove();
+            }
         } 
     }
 
