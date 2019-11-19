@@ -1,32 +1,10 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/ashx/Datatable/FavoritosDatatable.ashx.cs">
     <Files>
       <File FileName="TCDF.Sinj.Web/Favoritos.aspx" Line="7" Column="47" />
-      <File FileName="TCDF.Sinj.Web/ashx/Datatable/FavoritosDatatable.ashx.cs" Line="82" Column="6" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="155" Column="56" />
+      <File FileName="TCDF.Sinj.Web/ashx/Datatable/FavoritosDatatable.ashx.cs" Line="48" Column="1" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="190" Column="72" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="ashx" expanded="True">
-                <Node name="Datatable" expanded="True">
-                  <Node name="FavoritosDatatable.ashx" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="Favoritos.aspx" expanded="True" />
-              <Node name="Sinj.Master" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State name="__root__">
-          <Node name="TCDF_APL_WEB_SINJ" expanded="True" selected="True" />
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
