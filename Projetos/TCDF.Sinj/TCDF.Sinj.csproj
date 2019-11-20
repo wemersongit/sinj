@@ -50,6 +50,12 @@
     <Reference Include="Ude">
       <HintPath>..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
     </Reference>
+    <Reference Include="NuGet.Core, Version=2.14.0.0, Culture=neutral">
+      <Package>nuget</Package>
+    </Reference>
+    <Reference Include="Microsoft.Web.XmlTransform, Version=1.2.0.0, Culture=neutral">
+      <Package>nuget</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AD\AmbitoAD.cs" />
