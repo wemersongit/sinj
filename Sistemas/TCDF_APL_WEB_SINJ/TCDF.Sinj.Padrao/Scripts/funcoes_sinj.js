@@ -3112,6 +3112,24 @@ function fnSubmitInputFile(id_div_arquivo) {
     CKEDITOR.instances.arquivo.updateElement();
 
     $('#div_conteudo_arquivo').html(document.getElementById('arquivo').value.replaceAll('&nbsp;', ' '));
+
+    var conteudoArquivo = $('#div_conteudo_arquivo').html($('#div_editor_file textarea[name="arquivo"]').val());
+    var itensDoTextoaArquivo = $(conteudoArquivo).children();
+
+    // NOTE: Remove parágrafos em branco para eviatr quebra de formatação
+    // quando se adiciona uma nova Vide. By Jimmy/Lirão
+    for(var i = 0; i < itensDoTextoaArquivo.length; i++) {
+        // console.log(itensDoTextoaArquivo[i]);
+
+        if (!itensDoTextoaArquivo[i].textContent.trim()) {
+            // console.log("REMOVENDO");
+            var img =itensDoTextoaArquivo[i].childNodes[0].nodeName;
+            if(img != "IMG"){
+                itensDoTextoaArquivo[i].remove();
+            }
+        }
+    }
+
     inserirMarcacoesNosParagrafos('div_conteudo_arquivo', false);
     document.getElementById('arquivo').value = window.encodeURI($('#div_conteudo_arquivo').html());
     $('#div_conteudo_arquivo').html('');
