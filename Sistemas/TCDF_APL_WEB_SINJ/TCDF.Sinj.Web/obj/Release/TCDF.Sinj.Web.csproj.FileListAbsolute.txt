@@ -32,3 +32,17 @@
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Release/TCDF.Sinj.Web.dll
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Release/TCDF.Sinj.Web.pdb
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Release/TCDF.Sinj.Web.csprojAssemblyReference.cache
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/TCDF.Sinj.Web.dll
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/TCDF.Sinj.Web.pdb
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/neo.BRLightREST.dll
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/neo.BRLightSession.dll
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/Newtonsoft.Json.dll
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/TCDF.Sinj.dll
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/Ude.dll
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/util.BRLight.dll
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/Newtonsoft.Json.pdb
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/bin/Newtonsoft.Json.xml
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Release/TCDF.Sinj.Web.csproj.CoreCompileInputs.cache
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Release/TCDF.Sinj.Web.dll
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Release/TCDF.Sinj.Web.pdb
+/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/obj/Release/TCDF.Sinj.Web.csprojResolveAssemblyReference.cache
