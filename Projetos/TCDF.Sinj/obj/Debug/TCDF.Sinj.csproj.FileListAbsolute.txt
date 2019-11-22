@@ -25,6 +25,9 @@
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Debug/TCDF.Sinj.dll
 /home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Debug/TCDF.Sinj.pdb
 <<<<<<< HEAD
+=======
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Debug/TCDF.Sinj.csprojAssemblyReference.cache
+>>>>>>> 10168ff525c0e545314348efeec8410b1bd9d9cb
 /home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Debug/TCDF.Sinj.dll
 /home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Debug/TCDF.Sinj.pdb
 /home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/bin/Debug/neo.BRLightREST.dll
@@ -37,7 +40,3 @@
 /home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Debug/TCDF.Sinj.csproj.CoreCompileInputs.cache
 /home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Debug/TCDF.Sinj.dll
 /home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Debug/TCDF.Sinj.pdb
-/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Debug/TCDF.Sinj.csprojResolveAssemblyReference.cache
-=======
-/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/obj/Debug/TCDF.Sinj.csprojAssemblyReference.cache
->>>>>>> 10168ff525c0e545314348efeec8410b1bd9d9cb

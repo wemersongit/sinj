@@ -1,51 +1,20 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="env" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/OV/VideOV.cs">
     <Files>
-<<<<<<< HEAD
-      <File FileName="TCDF.Sinj.Web/Favoritos.aspx" Line="7" Column="47" />
-      <File FileName="TCDF.Sinj.Web/ashx/Datatable/FavoritosDatatable.ashx.cs" Line="44" Column="78" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="190" Column="72" />
-=======
-      <File FileName="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" Line="113" Column="94" />
-      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1089" Column="10" />
-      <File FileName="TCDF.Sinj.Web/Web.config" Line="209" Column="51" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="155" Column="55" />
->>>>>>> efdf4ca27a9741c11e2293c60753d9b3b78ac932
+      <File FileName="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" Line="113" Column="145" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="1103" Column="204" />
+      <File FileName="TCDF.Sinj.Web/Web.config" Line="193" Column="47" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="1" Column="1" />
+      <File FileName="../../Projetos/TCDF.Sinj/OV/VideOV.cs" Line="154" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" line="23" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1702" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1740" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1830" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1406" column="44" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1678" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1771" column="43" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1803" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" line="21" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Exclusao/VideExcluir.ashx.cs" line="21" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1882" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1893" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1887" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1898" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1904" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1922" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="2055" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1961" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="2080" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="672" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="156" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="2167" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="2232" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="2290" column="1" />
+      <Breakpoint file="/home/brlight/JimmySinj/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="2237" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <DisabledProjects>
-    <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
-  </DisabledProjects>
 </Properties>
