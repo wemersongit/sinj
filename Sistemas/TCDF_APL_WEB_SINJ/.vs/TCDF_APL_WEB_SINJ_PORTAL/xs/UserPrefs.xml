@@ -1,18 +1,24 @@
 ﻿<Properties StartupConfiguration="{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}|">
   <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Portal.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Portal.Web/Sinj.Master">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Portal.Web/Web.config">
     <Files>
-      <File FileName="TCDF.Sinj.Portal.Web/Sinj.Master" Line="284" Column="95" />
-      <File FileName="TCDF.Sinj.Padrao/Scripts/funcoes_resultado_de_pesquisa.js" Line="642" Column="39" />
+      <File FileName="TCDF.Sinj.Portal.Web/Sinj.Master" Line="166" Column="55" />
+      <File FileName="../../Projetos/TCDF.Sinj/ES/ES.cs" Line="910" Column="14" />
+      <File FileName="TCDF.Sinj.Portal.Web/Web.config" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ_PORTAL" expanded="True">
             <Node name="TCDF.Sinj.Portal.Web" expanded="True">
-              <Node name="Sinj.Master" selected="True" />
+              <Node name="Web.config" selected="True" />
             </Node>
           </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ_PORTAL" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
@@ -41,6 +47,7 @@
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/NormaOV.cs" line="132" column="1" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/OV/NormaOV.cs" line="27" column="1" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/AD/NormaAD.cs" line="46" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="911" column="16" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
