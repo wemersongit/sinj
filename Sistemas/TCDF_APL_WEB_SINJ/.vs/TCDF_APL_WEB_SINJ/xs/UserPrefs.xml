@@ -1,28 +1,20 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/Sinj.Master">
     <Files>
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="155" Column="56" />
+      <File FileName="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" Line="95" Column="57" />
+      <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="679" Column="16" />
+      <File FileName="TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" Line="78" Column="1" />
+      <File FileName="../../Projetos/TCDF.Sinj/ES/UtilBuscaEs.cs" Line="92" Column="56" />
+      <File FileName="../../Projetos/TCDF.Sinj/ES/ES.cs" Line="929" Column="14" />
+      <File FileName="../../Projetos/TCDF.Sinj/LB.cs" Line="87" Column="24" />
+      <File FileName="TCDF.Sinj.Web/ashx/Consulta/TotalConsulta.ashx.cs" Line="100" Column="1" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="23" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TCDF_APL_WEB_SINJ" expanded="True">
-            <Node name="TCDF.Sinj" expanded="True">
-              <Node name="OV" expanded="True" />
-            </Node>
             <Node name="TCDF.Sinj.Web" expanded="True">
-              <Node name="ashx" expanded="True">
-                <Node name="Arquivo" expanded="True">
-                  <Node name="HtmlFileEncoded.ashx" expanded="True" />
-                </Node>
-                <Node name="Cadastro" expanded="True">
-                  <Node name="ArquivoIncluir.ashx" expanded="True" />
-                  <Node name="NormaIncluir.ashx" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="CadastrarNorma.aspx" expanded="True" />
-              <Node name="EditarNorma.aspx" expanded="True" />
-              <Node name="Norma.aspx" expanded="True" />
               <Node name="Sinj.Master" selected="True" />
             </Node>
           </Node>
@@ -38,46 +30,44 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" relfile="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" line="391" column="91" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" relfile="TCDF.Sinj.Web/EstatisticasDePesquisas.aspx" line="106" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Sinj.Master" relfile="TCDF.Sinj.Web/Sinj.Master" line="155" column="56" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="849" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="723" column="26" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/TCDF_REPORT/TCDF_REPORT/OV/DecisaoOV.cs" line="22" column="51" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/Exportador_LB_to_ES/Exportador_LB_to_ES.AD/Models/Situacao.cs" line="79" column="70" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Padrao/Scripts/funcoes_norma.js" relfile="TCDF.Sinj.Padrao/Scripts/funcoes_norma.js" line="855" column="9" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" line="291" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" line="336" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" line="278" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1994" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1992" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/VideIncluir.ashx.cs" line="294" column="67" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="866" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="1666" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/UsuarioRN.cs" line="158" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/UsuarioRN.cs" line="24" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/AD/UsuarioAD.cs" line="39" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" line="91" column="49" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/Util.cs" line="362" column="41" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Sinj.Master.cs" relfile="TCDF.Sinj.Web/Sinj.Master.cs" line="18" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Padrao/Scripts/funcoes_usuario.js" relfile="TCDF.Sinj.Padrao/Scripts/funcoes_usuario.js" line="115" column="11" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/SessaoRN.cs" line="126" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/SessaoRN.cs" line="129" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/NormaEditar.ashx.cs" line="32" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/NormaIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/NormaIncluir.ashx.cs" line="27" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="26" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/CadastrarNorma.aspx.cs" relfile="TCDF.Sinj.Web/CadastrarNorma.aspx.cs" line="23" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="64" column="1" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Portal.Web/Norma.aspx.cs" line="27" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" line="83" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Cadastro/VideEditar.ashx.cs" line="437" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="706" column="1" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="738" column="1" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Push/FavoritosIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Push/FavoritosIncluir.ashx.cs" line="30" column="1" />
-      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Push/FavoritosIncluir.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Push/FavoritosIncluir.ashx.cs" line="28" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EditarNorma.aspx.cs" relfile="TCDF.Sinj.Web/EditarNorma.aspx.cs" line="19" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Arquivo/HtmlFileEncoded.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Arquivo/HtmlFileEncoded.ashx.cs" line="40" column="1" />
-      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/CadastrarNorma.aspx.cs" relfile="TCDF.Sinj.Web/CadastrarNorma.aspx.cs" line="27" column="12" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" relfile="TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" line="34" column="23" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" relfile="TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" line="273" column="19" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" relfile="TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" line="286" column="19" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" relfile="TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" line="460" column="73" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="120" column="27" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Norma.aspx.cs" relfile="TCDF.Sinj.Web/Norma.aspx.cs" line="26" column="17" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="73" column="21" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="76" column="34" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="652" column="98" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/BuscaEs.cs" line="454" column="12" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="644" column="12" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="651" column="23" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="615" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" relfile="TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" line="81" column="35" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" relfile="TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" line="88" column="29" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="86" column="27" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/Doc.cs" line="31" column="21" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/AD.cs" line="28" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/UtilBuscaEs.cs" line="57" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/UtilBuscaEs.cs" line="94" column="56" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="29" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="27" column="23" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="353" column="20" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="321" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" line="66" column="28" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="319" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="554" column="25" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="584" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Consulta/TotalConsulta.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Consulta/TotalConsulta.ashx.cs" line="28" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" relfile="TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" line="78" column="38" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" line="88" column="34" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="16" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" line="207" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="604" column="25" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="614" column="7" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="858" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="930" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="911" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
