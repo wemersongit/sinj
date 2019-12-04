@@ -70,6 +70,7 @@ namespace TCDF.Sinj.ES
             string query = "";
             try
             {
+
                 ulong limit_max = 1000;
                 url_es = MontarUrl(context, _bbusca).Split('?')[0];
                 query = MontarConsulta(context, sessao_usuario_ov, _bbusca);
@@ -600,13 +601,16 @@ namespace TCDF.Sinj.ES
                 {
                     query_textual = "*";
                 }
-                var query_filtro = MontarQueryFiltros(context);
-                query = "{\"query\":{\"query_string\":{\"fields\":[" + fields + "],\"query\":\"" + query_textual + (!string.IsNullOrEmpty(query_filtro) ? " AND (" + query_filtro + ")" : "") + "\", \"default_operator\":\"AND\"}}";
+                var query_filtro = MontarQueryFiltros(context);//O que esse cara pega do context???
+                query = "{\"query\":{\"query_string\":{\"fields\":[" + fields + "],\"query\":\"" + query_textual 
+                + (!string.IsNullOrEmpty(query_filtro) ? " AND (" + query_filtro + ")" : "") + "\", \"default_operator\":\"AND\"}}";
+
                 if (fields_highlight != "" && _exibir_total != "1")
                 {
                     highlight = ",\"highlight\":{\"pre_tags\":[\"\"],\"post_tags\":[\"\"],\"fields\":{" + fields_highlight + "}}";
                 }
             }
+            var bla = query + sOrder + partial_fields + highlight + "}";
             return query + sOrder + partial_fields + highlight + "}";
         }
 
@@ -851,7 +855,7 @@ namespace TCDF.Sinj.ES
 
         public string MontarQueryFiltros(HttpContext context)
 	    {
-		    string filtrar = context.Request["filtrar"];
+		    string filtrar = context.Request["filtrar"];//ver aqui
             string query = "";
             if(filtrar == "norma"){
                 string _ch_tipo_norma = context.Request["ch_tipo_norma"];
@@ -909,7 +913,17 @@ namespace TCDF.Sinj.ES
                 {
                     foreach (var _filtro in _filtros)
                     {
-                        query += (!string.IsNullOrEmpty(query) ? " AND " : "") + _filtro;
+
+
+                        if (_filtro.IndexOf("ano_") == 0)
+                        {
+                            string[] _ano = _filtro.Split(':');
+                            query += (!string.IsNullOrEmpty(query) ? " AND " : "") + "dt_assinatura:[01/01/" + _ano[1] + " TO 31/12/" + _ano[1] + "]";
+                        }
+                        else
+                        {
+                            query += (!string.IsNullOrEmpty(query) ? " AND " : "") + _filtro;
+                        }
                     }
                 }
             }
