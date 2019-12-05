@@ -63,7 +63,7 @@
                             <div class="column w-70-pc">
                                 <div id="div_autocomplete_tipo_fonte_modal" class="cell w-60-pc">
                                     <input id="ch_tipo_fonte_modal" name="ch_tipo_fonte" obrigatorio="sim" label="Tipo de Fonte" type="hidden" value="" />
-                                    <input id="nm_tipo_fonte_modal" type="text" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_fonte"></a>
+                                    <input id="nm_tipo_fonte_modal" type="text" value="" class="w-80-pc" onblur="onblurTipoDeFonte()"/><a title="Listar" id="a_tipo_fonte"></a><!-- Adicionado a function onblurTipoDeFonte by Lirão -->
                                 </div>
                             </div>
                         </div>
@@ -75,11 +75,12 @@
                             </div>
                             <div class="column w-70-pc">
                                 <div class="cell w-50-pc">
-                                    <input name="dt_assinatura" type="text" value="" class="w-50-pc date" obrigatorio="sim" label="Data da Publicação" />
+                                    <!-- foi adicionado o id dt_assinatura_fonte_modal para criação do modal-->
+                                    <input id="dt_assinatura_fonte_modal" name="dt_assinatura" type="text" value="" class="w-50-pc date" obrigatorio="sim" label="Data da Publicação" />
                                 </div>
                             </div>
                         </div>
-                        <div class="line">
+                        <div class="line"> 
                             <div class="column w-100-pc text-right">
                                 <button type="submit" title="Consulta os diários com tipo e data informados">
                                     <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_loupe_p.png" alt="ok" /> Consultar Diários

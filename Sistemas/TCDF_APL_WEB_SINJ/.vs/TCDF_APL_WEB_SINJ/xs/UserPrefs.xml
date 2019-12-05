@@ -1,16 +1,28 @@
 ﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projetos/TCDF.Sinj/ES/ES.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/EditarNorma.aspx">
     <Files>
-      <File FileName="TCDF.Sinj.Web/ashx/Datatable/ResultadoDePesquisaNormaDatatable.ashx.cs" Line="1" Column="1" />
-      <File FileName="../../Projetos/TCDF.Sinj/ES/NormaBuscaEs.cs" Line="1" Column="1" />
-      <File FileName="TCDF.Sinj.Web/RelatorioDePesquisa.aspx.cs" Line="1" Column="1" />
-      <File FileName="../../Projetos/TCDF.Sinj/ES/UtilBuscaEs.cs" Line="1" Column="1" />
-      <File FileName="../../Projetos/TCDF.Sinj/ES/ES.cs" Line="934" Column="1" />
-      <File FileName="../../Projetos/TCDF.Sinj/LB.cs" Line="1" Column="1" />
-      <File FileName="TCDF.Sinj.Web/ashx/Consulta/TotalConsulta.ashx.cs" Line="1" Column="1" />
-      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="155" Column="56" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="168" Column="67" />
       <File FileName="TCDF.Sinj.Web/Web.config" Line="220" Column="9" />
+      <File FileName="../../Projetos/TCDF.Sinj/RN/NormaRN.cs" Line="87" Column="13" />
+      <File FileName="TCDF.Sinj.Web/EditarNorma.aspx.cs" Line="22" Column="13" />
+      <File FileName="TCDF.Sinj.Web/CadastrarNorma.aspx.cs" Line="19" Column="10" />
+      <File FileName="TCDF.Sinj.Web/CadastrarNorma.aspx" Line="44" Column="22" />
+      <File FileName="TCDF.Sinj.Web/EditarNorma.aspx" Line="55" Column="2" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj" expanded="True" />
+            <Node name="TCDF.Sinj.Web" expanded="True">
+              <Node name="ashx" expanded="True" />
+              <Node name="CadastrarNorma.aspx" expanded="True" />
+              <Node name="EditarNorma.aspx" expanded="True" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
@@ -59,6 +71,18 @@
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="930" column="1" />
       <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/ES/ES.cs" line="911" column="1" />
       <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Sinj.Master" relfile="TCDF.Sinj.Web/Sinj.Master" line="155" column="58" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Padrao/Scripts/funcoes_sinj.js" relfile="TCDF.Sinj.Padrao/Scripts/funcoes_sinj.js" line="2918" column="214" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="87" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="21" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/TCDF.Sinj/RN/NormaRN.cs" line="27" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/CadastrarNorma.aspx.cs" relfile="TCDF.Sinj.Web/CadastrarNorma.aspx.cs" line="21" column="11" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EditarNorma.aspx.cs" relfile="TCDF.Sinj.Web/EditarNorma.aspx.cs" line="22" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/Default.aspx" relfile="TCDF.Sinj.Web/Default.aspx" line="185" column="310" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/CadastrarNorma.aspx" relfile="TCDF.Sinj.Web/CadastrarNorma.aspx" line="44" column="54" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EditarNorma.aspx" relfile="TCDF.Sinj.Web/EditarNorma.aspx" line="66" column="36" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/CadastrarNorma.aspx" relfile="TCDF.Sinj.Web/CadastrarNorma.aspx" line="66" column="142" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/CadastrarNorma.aspx" relfile="TCDF.Sinj.Web/CadastrarNorma.aspx" line="33" column="48" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/EditarNorma.aspx" relfile="TCDF.Sinj.Web/EditarNorma.aspx" line="55" column="17" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
