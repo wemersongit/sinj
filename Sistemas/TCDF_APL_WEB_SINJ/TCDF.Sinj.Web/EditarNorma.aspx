@@ -19,6 +19,7 @@
     <style type="text/css">
         #sg_hierarquia_nm_vigencia{z-index:10005;}
         #div_modal_importar_arquivo table thead th.nm_arquivo {width:250px;}
+        #ds_ementa, #ds_observacao{text-align:justify;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
