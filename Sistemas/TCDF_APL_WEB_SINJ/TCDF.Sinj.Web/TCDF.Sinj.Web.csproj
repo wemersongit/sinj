@@ -46,9 +46,6 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
-    <Reference Include="neo.BRLightREST">
-      <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
-    </Reference>
     <Reference Include="util.BRLight">
       <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>
@@ -63,6 +60,9 @@
     </Reference>
     <Reference Include="Microsoft.Web.XmlTransform, Version=1.2.0.0, Culture=neutral">
       <Package>nuget</Package>
+    </Reference>
+    <Reference Include="neo.BRLightREST">
+      <HintPath>..\..\..\..\..\..\TEMP\sinj_2004\sinj\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
     <Reference Include="TCDF.Sinj">
       <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>

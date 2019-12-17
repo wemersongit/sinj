@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCDF.Sinj.Web", "TCDF.Sinj.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCDF.Sinj", "..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj", "{3B23C9D4-4624-473E-8976-7CD48EF5559C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.BRLightREST", "..\..\Projetos\neo.BRLightRest\neo.BRLightREST.csproj", "{7C032FC2-D4AE-403A-94F2-A18A6C856795}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C032FC2-D4AE-403A-94F2-A18A6C856795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C032FC2-D4AE-403A-94F2-A18A6C856795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C032FC2-D4AE-403A-94F2-A18A6C856795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C032FC2-D4AE-403A-94F2-A18A6C856795}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

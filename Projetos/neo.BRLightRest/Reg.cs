@@ -114,6 +114,7 @@ namespace neo.BRLightREST
                 iUri = BaseUrl + "/" + BaseNome + "/doc";
             } else {
                 iUri = BaseUrl + "/" + BaseNome + "/doc?$$=" + HttpUtility.UrlEncode(JSON.Serialize<Pesquisa>(oPesquisa));
+                var blaa = iUri;
             }
 
             var resultado = "";

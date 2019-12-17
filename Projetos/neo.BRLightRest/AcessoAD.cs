@@ -38,9 +38,10 @@ namespace neo.BRLightREST
         {
             try
             {
-                var oReg = new Reg(Base);
+                var oReg = new Reg(Base);//"sinj_orgao"
                 string resultado = oReg.pesquisar(opesquisa);
                 var results = JSON.Deserializa<Results<T>>(resultado);
+                Console.WriteLine(resultado);
                 if (DisplayErrors) {
                     if (oReg.Erro.error_message != null) {
                         throw new Exception(oReg.Response);
