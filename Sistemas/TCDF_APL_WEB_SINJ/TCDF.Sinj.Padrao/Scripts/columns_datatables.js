@@ -1398,8 +1398,8 @@ var _columns_norma_vide = [
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Situação", "sWidth": "", "sClass": "center ws nm_situacao", "mData": "nm_situacao" },
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "center ws all", "bSortable": false,
 		"mRender": function (data, type, full) {
-		    var ds_norma = full.nm_tipo_norma + " " + full.nr_norma + " " + full.dt_assinatura;
-			return "<a href='javascript:void(0);' onclick='javascript:SelecionarNormaVide(\"" + full.ch_norma + "\",\"" + ds_norma + "\", \"" + full.dt_assinatura +  "\", \"" + full.nm_tipo_norma + "\" ," + full.st_acao + ");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
+		    var ds_norma = full.nm_tipo_norma + " " + full.nr_norma + " de " + full.dt_assinatura;
+			return "<a href='javascript:void(0);' onclick='javascript:selecionarNormaVide(\"" + full.ch_norma + "\",\"" + ds_norma + "\", \"" + full.dt_assinatura +  "\", \"" + full.nm_tipo_norma + "\" ," + full.st_acao + ");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
 		}
 	}
 ];

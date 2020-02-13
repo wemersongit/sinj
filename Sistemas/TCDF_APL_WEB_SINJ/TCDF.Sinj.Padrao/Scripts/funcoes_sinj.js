@@ -546,11 +546,7 @@ function ValidarRegrasEspecificas(id_form) {
                 throw "Senha inválida. Verifique se confirmou a senha corretamente.";
             }
         }
-    } else if (id_form == "form_vide") {
-        if ($('#ch_norma_alteradora').val() == $('#ch_norma_alterada').val()) {
-            throw "Uma Norma não pode aplicar uma Vide para ela mesma.";
-        }
-    } else if (id_form == "form_relatorio_norma") {
+    }  else if (id_form == "form_relatorio_norma") {
         // Caso um dos campos esteja preenchido e o outro não, é lancado esse erro
         if ($('#dt_cadastro').val() != "" || $('#ate_dt_cadastro').val() != "") {
             if ($('#dt_cadastro').val() == "" || $('#ate_dt_cadastro').val() == "") {

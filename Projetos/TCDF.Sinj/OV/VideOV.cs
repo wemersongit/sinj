@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using neo.BRLightREST;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace TCDF.Sinj.OV
 {
@@ -49,6 +50,8 @@ namespace TCDF.Sinj.OV
         public string alinea_norma_vide { get; set; }
         public string item_norma_vide { get; set; }
         public Caput caput_norma_vide { get; set; }
+        [JsonProperty("dispositivos_norma_vide")]
+        public DispositivoVide[] DispositivosNormaVide { get; set; }
         public string anexo_norma_vide { get; set; }
 
         public string artigo_norma_vide_outra { get; set; }
@@ -57,6 +60,8 @@ namespace TCDF.Sinj.OV
         public string alinea_norma_vide_outra { get; set; }
         public string item_norma_vide_outra { get; set; }
         public Caput caput_norma_vide_outra { get; set; }
+        [JsonProperty("dispositivos_norma_vide_outra")]
+        public DispositivoVide[] DispositivosNormaVideOutra { get; set; }
         public string anexo_norma_vide_outra { get; set; }
 
         public bool possuiDispositivoInformadoManualmente()
@@ -148,6 +153,18 @@ namespace TCDF.Sinj.OV
         //    }
         //    return caput3;
         //}
+    }
+
+    public class DispositivoVide
+    {
+        [JsonProperty("linkname")]
+        public string Linkname { get; set; }
+        [JsonProperty("nm_linkname")]
+        public string NmLinkname { get; set; }
+        [JsonProperty("ds_linkname")]
+        public string DsLinkname { get; set; }
+        [JsonProperty("arquivo_novo")]
+        public string TextoNovo { get; set; }
     }
 
     public class UtilVides
