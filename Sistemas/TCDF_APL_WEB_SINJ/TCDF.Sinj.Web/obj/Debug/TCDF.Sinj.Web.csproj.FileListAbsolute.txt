@@ -10,3 +10,4 @@ E:\Dev\Light\TCDF\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\Newtonsoft.J
 E:\Dev\Light\TCDF\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\Newtonsoft.Json.xml
 E:\Dev\Light\TCDF\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Debug\TCDF.Sinj.Web.dll
 E:\Dev\Light\TCDF\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Debug\TCDF.Sinj.Web.pdb
+E:\Dev\Light\TCDF\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\Ude.dll

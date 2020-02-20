@@ -1730,7 +1730,7 @@ var _columns_arquivos_versionados = [
         "mRender": function (data, type, full) {
             var tipo = full.ar_arquivo_versionado.mimetype.split('/')[1];
             var bt_download = '<a target="_blank" href="./Download/sinj_arquivo_versionado_norma/' + full.ar_arquivo_versionado.id_file + '/' + full.ar_arquivo_versionado.filename + '" title="Baixar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_download.png" alt="download" /></a>';
-            var bt_recovery = '&nbsp;<a target="_blank" href="javascript:void(0);" onclick="javascript:selecionarDocumentoRecuperar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
+            var bt_recovery = '&nbsp;<button class="clean" onclick="javascript:selecionarDocumentoRecuperar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></button>';
             return bt_download + bt_recovery;
         }
     }

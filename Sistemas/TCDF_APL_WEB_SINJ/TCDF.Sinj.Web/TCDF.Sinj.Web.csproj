@@ -49,6 +49,9 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
+    <Reference Include="Ude">
+      <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
+    </Reference>
     <Reference Include="util.BRLight">
       <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>

@@ -9,3 +9,4 @@ E:\Dev\Light\TCDF\sinj\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Json.pdb
 E:\Dev\Light\TCDF\sinj\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Json.xml
 E:\Dev\Light\TCDF\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.dll
 E:\Dev\Light\TCDF\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.pdb
+E:\Dev\Light\TCDF\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csprojResolveAssemblyReference.cache

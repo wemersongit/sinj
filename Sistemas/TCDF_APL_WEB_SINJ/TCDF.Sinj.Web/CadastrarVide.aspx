@@ -342,7 +342,7 @@
         </div>
         <div id="div_cad_vide">
             <form id="form_vide" name="formCadastroVide" action="#" method="post">
-                <input type="hidden" id="dt_controle_alteracao" name="dt_controle_alteracao" value="" />
+                <input type="hidden" id="dt_controle_alteracao" name="dt_controle_alteracao" value="<%= DateTime.Now.ToString("dd'/'MM'/'yyyy HH':'mm':'ss") %>" />
                 <input type="hidden" id="vide" name="vide" value="" />
                 <div id="div_vide" class="loaded">
                     <fieldset class="w-95-pc">

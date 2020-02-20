@@ -2,6 +2,7 @@ let tiposDeRelacao = [];
 let tipoDeRelacaoSelecionado = [];
 let normaAlteradora = {};
 let normaAlterada = {};
+const dt_controle_alteracao = new Date();
 let flagModalNorma = '';
 let optionsTooltip = {
     template: `<div class="tooltip" role="tooltip">
@@ -71,6 +72,7 @@ function selecionarAlteracaoCompleta(){
         for(let i = 0; i < dispositivosNormaAlterada.length; i++){
             $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').append(dispositivosNormaAlterada[i]);
         }
+        $('#div_cad_dispositivo_alterada [data-toggle="tooltip"]').tooltip(optionsTooltip);
         normaAlterada.in_alteracao_completa = false;
     }
 }
@@ -79,11 +81,11 @@ function selecionarNormaForaDoSistema() {
     if ($('#in_norma_fora_do_sistema').is(':checked')) {
         $('#line_norma_fora_do_sistema').show();
         $('#line_norma_dentro_do_sistema').hide();
-        normaAlterada.ch_norma.in_norma_fora_do_sistema = true;
+        normaAlterada.in_norma_fora_do_sistema = true;
         $("#label_norma_vide_alterada").text("");
     }
     else {
-        normaAlterada.ch_norma.in_norma_fora_do_sistema = false;
+        normaAlterada.in_norma_fora_do_sistema = false;
         $('#line_norma_fora_do_sistema').hide();
         $('#line_norma_dentro_do_sistema').show();
     }
@@ -233,7 +235,6 @@ function resetarDispositivo(nm_sufixo) {
     $('#dispositivo_norma_vide_' + nm_sufixo).val('');
     $('#ds_dispositivo_norma_' + nm_sufixo).val('');
     $('#label_dispositivo_norma_' + nm_sufixo).text('');
-
 }
 
 // Se a data de assinatura da norma alteradora for inferior à data de assinatura da alterada,
@@ -280,12 +281,9 @@ function selecionarArquivoDaNorma(norma) {
             norma.arquivo = data.ar_atualizado;
         }
         else if (IsNotNullOrEmpty(data, 'fontes')) {
-            var ar_fonte = {};
-
-            ar_fonte = data.fontes[data.fontes.length - 1].ar_fonte; //Adicionado para pegar o ultimo texto by Wemerson/Xandinho
-
-            if (IsNotNullOrEmpty(ar_fonte, 'id_file')) {
-                norma.arquivo = data.ar_fonte;
+            
+            if (IsNotNullOrEmpty(data.fontes[data.fontes.length - 1].ar_fonte, 'id_file')) {
+                norma.arquivo = data.fontes[data.fontes.length - 1].ar_fonte;
             }
             else {
                 alert('Erro ao selecionar o arquivo de publicação da norma. Verifique se a norma possui arquivo em suas fontes de publicação e republicação.');
@@ -904,15 +902,36 @@ function salvarVide(vide, sucessoVide){
 }
 
 function salvarArquivosVide(sucessoVide){
-
-    const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
-    $conteudoArquivoNormaAlterada.find('p[linkname] button').remove();
     
-    $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html()));
-    $('#form_arquivo_norma_alteradora nm_arquivo').val(normaAlteradora.arquivo.filename);
+    let htmlNormaAlteradora = "";
+    const $conteudoArquivoNormaAlteradora = $($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html());
+    for(let i in $conteudoArquivoNormaAlteradora){
+        if($conteudoArquivoNormaAlteradora[i].outerHTML){
+            if($conteudoArquivoNormaAlteradora[i].getAttribute('linkname') == normaAlteradora.dispositivos[0].linkname){
+                const $link = $($conteudoArquivoNormaAlteradora[i]).find('a[href]');
+                for(let a in $link){
+                    if($link[a].innerText == normaAlteradora.dispositivos[0].texto){
+                        $link[a].setAttribute('href', `(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}.html#${normaAlterada.dispositivos[0].linkname}`);
+                        break;
+                    }
+                }
+            }
+            htmlNormaAlteradora += $conteudoArquivoNormaAlteradora[i].outerHTML;
+        }
+    }
+    $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlteradora));
+    $('#form_arquivo_norma_alteradora input[name=nm_arquivo]').val(normaAlteradora.arquivo.filename);
 
-    $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI($conteudoArquivoNormaAlterada.html()));
-    $('#form_arquivo_norma_alterada nm_arquivo').val(normaAlterada.arquivo.filename);
+    let htmlNormaAlterada = "";
+    const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
+    for(let i in $conteudoArquivoNormaAlterada){
+        if($conteudoArquivoNormaAlterada[i].outerHTML){
+            $($conteudoArquivoNormaAlterada[i]).find('button').remove();
+            htmlNormaAlterada += $conteudoArquivoNormaAlterada[i].outerHTML;
+        }
+    }
+    $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlterada));
+    $('#form_arquivo_norma_alterada input[name=nm_arquivo]').val(normaAlterada.arquivo.filename);
 
     $('#super_loading').hide();
 

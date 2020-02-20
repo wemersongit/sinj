@@ -130,13 +130,15 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             throw new DocValidacaoException("Uma ação não pode alterar uma norma que não é questionável.</br>Verifique no cadastro de Tipo de Norma se o Tipo '" + tipo_norma_alterada.nm_tipo_norma + "' está marcado como Questionável.");
                         }
                     }
-                    vide_alterador.DispositivosNormaVideOutra = vide.NormaAlterada.Dispositivos;
+                    vide_alterador.alteracao_texto_vide.dispositivos_norma_vide_outra = vide.NormaAlterada.Dispositivos;
                 }
-                vide_alterador.DispositivosNormaVide = vide.NormaAlteradora.Dispositivos;
+                vide_alterador.alteracao_texto_vide.dispositivos_norma_vide = vide.NormaAlteradora.Dispositivos;
 
                 normaAlteradoraOv.vides.Add(vide_alterador);
 
-                normaAlteradoraOv.ar_atualizado = vide.NormaAlteradora.Arquivo;
+                normaRn.SalvarTextoAntigoDaNorma(normaAlteradoraOv, vide_alterador, sessao_usuario.nm_login_usuario);
+
+                normaAlteradoraOv.ar_atualizado = vide.NormaAlteradora.ArquivoNovo;
 
                 var dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
 
@@ -169,9 +171,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             vide_alterada.dt_inicio_vigencia_norma_vide = normaAlteradoraOv.dt_inicio_vigencia;
                         }
 
-                        vide_alterada.DispositivosNormaVide = vide.NormaAlterada.Dispositivos;
+                        vide_alterada.alteracao_texto_vide.dispositivos_norma_vide = vide.NormaAlterada.Dispositivos;
 
-                        vide_alterada.DispositivosNormaVideOutra = vide.NormaAlteradora.Dispositivos;
+                        vide_alterada.alteracao_texto_vide.dispositivos_norma_vide_outra = vide.NormaAlteradora.Dispositivos;
 
                         vide_alterada.ds_comentario_vide = vide.DsComentarioVide;
 
@@ -206,16 +208,19 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                                 normaAlteradaOv.nm_situacao = "Suspenso";
                             }
                         }
-                        normaAlteradaOv.ar_atualizado = vide.NormaAlterada.Arquivo;
+
+                        normaRn.SalvarTextoAntigoDaNorma(normaAlteradaOv, vide_alterada, sessao_usuario.nm_login_usuario);
+
+                        normaAlteradaOv.ar_atualizado = vide.NormaAlterada.ArquivoNovo;
                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                         if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                         {
                             sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
-                            if (!normaAlteradoraOv.st_vacatio_legis || string.IsNullOrEmpty(normaAlteradoraOv.dt_inicio_vigencia) || Convert.ToDateTime(normaAlteradoraOv.dt_inicio_vigencia, new CultureInfo("pt-BR")) <= DateTime.Now)
-                            {
-                                normaRn.VerificarDispositivosESalvarOsTextosAntigosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada, sessao_usuario.nm_login_usuario);
-                                normaRn.VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada);
-                            }
+                            //if (!normaAlteradoraOv.st_vacatio_legis || string.IsNullOrEmpty(normaAlteradoraOv.dt_inicio_vigencia) || Convert.ToDateTime(normaAlteradoraOv.dt_inicio_vigencia, new CultureInfo("pt-BR")) <= DateTime.Now)
+                            //{
+                            //    normaRn.VerificarDispositivosESalvarOsTextosAntigosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada, sessao_usuario.nm_login_usuario);
+                            //    normaRn.VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada);
+                            //}
                         }
                         else
                         {
@@ -332,7 +337,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         public ArquivoOV Arquivo { get; set; }
         [JsonProperty("arquivo_novo")]
         public ArquivoOV ArquivoNovo { get; set; }
-        public DispositivoVide[] Dispositivos { get; set; }
+        public List<DispositivoVide> Dispositivos { get; set; }
 
     }
 }

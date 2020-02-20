@@ -5,6 +5,7 @@ using System.Linq;
 using neo.BRLightREST;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace TCDF.Sinj.OV
 {
@@ -15,6 +16,10 @@ namespace TCDF.Sinj.OV
     /// </summary>
     public class Vide
     {
+        public Vide()
+        {
+            alteracao_texto_vide = new AlteracaoDeTexoVide();
+        }
         public string ch_vide { get; set; }
         public string ds_comentario_vide { get; set; }
         /// <summary>
@@ -50,8 +55,6 @@ namespace TCDF.Sinj.OV
         public string alinea_norma_vide { get; set; }
         public string item_norma_vide { get; set; }
         public Caput caput_norma_vide { get; set; }
-        [JsonProperty("dispositivos_norma_vide")]
-        public DispositivoVide[] DispositivosNormaVide { get; set; }
         public string anexo_norma_vide { get; set; }
 
         public string artigo_norma_vide_outra { get; set; }
@@ -60,9 +63,9 @@ namespace TCDF.Sinj.OV
         public string alinea_norma_vide_outra { get; set; }
         public string item_norma_vide_outra { get; set; }
         public Caput caput_norma_vide_outra { get; set; }
-        [JsonProperty("dispositivos_norma_vide_outra")]
-        public DispositivoVide[] DispositivosNormaVideOutra { get; set; }
         public string anexo_norma_vide_outra { get; set; }
+
+        public AlteracaoDeTexoVide alteracao_texto_vide { get; set; }
 
         public bool possuiDispositivoInformadoManualmente()
         {
@@ -155,16 +158,23 @@ namespace TCDF.Sinj.OV
         //}
     }
 
+    public class AlteracaoDeTexoVide
+    {
+        public AlteracaoDeTexoVide()
+        {
+            dispositivos_norma_vide = new List<DispositivoVide>();
+            dispositivos_norma_vide_outra = new List<DispositivoVide>();
+        }
+        public List<DispositivoVide> dispositivos_norma_vide { get; set; }
+        public List<DispositivoVide> dispositivos_norma_vide_outra { get; set; }
+    }
+
     public class DispositivoVide
     {
-        [JsonProperty("linkname")]
-        public string Linkname { get; set; }
-        [JsonProperty("nm_linkname")]
-        public string NmLinkname { get; set; }
-        [JsonProperty("ds_linkname")]
-        public string DsLinkname { get; set; }
-        [JsonProperty("arquivo_novo")]
-        public string TextoNovo { get; set; }
+        public string linkname { get; set; }
+        public string nm_linkname { get; set; }
+        public string ds_linkname { get; set; }
+        public string texto_novo { get; set; }
     }
 
     public class UtilVides
