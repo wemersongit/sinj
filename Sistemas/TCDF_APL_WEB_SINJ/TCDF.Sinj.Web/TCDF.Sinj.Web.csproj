@@ -134,6 +134,7 @@
     <Content Include="EditarVocabulario.aspx" />
     <Content Include="Erro.aspx" />
     <Content Include="EstatisticasDePesquisas.aspx" />
+    <Content Include="ExcluirVide.aspx" />
     <Content Include="Favoritos.aspx" />
     <Content Include="GerenciarVocabulario.aspx" />
     <Content Include="HistoricoDePesquisa.aspx" />
@@ -1266,6 +1267,13 @@
     <Compile Include="EstatisticasDePesquisas.aspx.cs">
       <DependentUpon>EstatisticasDePesquisas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExcluirVide.aspx.cs">
+      <DependentUpon>ExcluirVide.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExcluirVide.aspx.designer.cs">
+      <DependentUpon>ExcluirVide.aspx</DependentUpon>
     </Compile>
     <Compile Include="Favoritos.aspx.cs">
       <DependentUpon>Favoritos.aspx</DependentUpon>

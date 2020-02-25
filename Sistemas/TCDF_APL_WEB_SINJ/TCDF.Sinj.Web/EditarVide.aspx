@@ -91,6 +91,7 @@
                             $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
                             for (var i = 0; i < data.vides.length; i++) {
                                 if (data.vides[i].ch_vide == ch_vide) {
+                                    
                                     $('#ch_tipo_relacao').val(data.vides[i].ch_tipo_relacao);
                                     $('#nm_tipo_relacao').val(data.vides[i].nm_tipo_relacao);
                                     $('#ds_comentario_vide').val(data.vides[i].ds_comentario_vide);
@@ -284,84 +285,17 @@
 	    <label>.: Editar Vide</label>
 	</div>
     <div class="form">
-        <div id="div_cad_caput_alteradora" style="display:none;">
-            <div class="div_caputs_selecionados"></div>
-            <div class="table w-100-pc">
-                <div class="head">
-                    <div class="title">Caput da Norma Alteradora</div>
-                </div>
-                <div class="line">
-                    <div class="column w-30-pc">
-                        <div class="cell fr">
-                            <label>Selecione um Arquivo:</label>
-                        </div>
-                    </div>
-                    <div class="column w-70-pc">
-                        <div class="arquivos_norma" class="cell w-100-pc">
-                        </div>
-                    </div>
-                </div>
-                <div class="line line_conteudo_arquivo" style="display:none;">
-                    <div class="column w-30-pc">
-                        <div class="cell fr">
-                            <label>Selecione o Link:</label>
-                        </div>
-                    </div>
-                    <div class="column w-100-pc">
-                        <div class="div_conteudo_arquivo" class="w-70-pc mauto">
-                        </div>
-                    </div>
-                </div>
-                <div class="line line_buttons" style="display:none;">
-                    <div class="column w-100-pc text-center">
-                        <button type="button" title="Concluir a seleção do caput" onclick="selecionarCaput('alteradora');" >Concluir</button>
-                        <button type="button" title="Cancelar a seleção do caput" onclick="fecharSelecionarCaput('alteradora');" >Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="div_cad_caput_alterada" style="display:none;">
-            <div class="div_caputs_selecionados"></div>
-            <div class="table w-100-pc">
-                <div class="head">
-                    <div class="title">Caput da Norma Alterada</div>
-                </div>
-                <div class="line">
-                    <div class="column w-30-pc">
-                        <div class="cell fr">
-                            <label>Selecione um Arquivo:</label>
-                        </div>
-                    </div>
-                    <div class="column w-70-pc">
-                        <div class="arquivos_norma" class="cell w-100-pc">
-                        </div>
-                    </div>
-                </div>
-                <div class="line line_enable_replaced" style="display:none;">
-                    <div class="column w-30-pc">
-                        <div class="cell fr">
-                            <label>Exibir dispositivos alterados:</label>
-                        </div>
-                    </div>
-                    <div class="column w-70-pc">
-                        <input type="checkbox" onclick="clickEnableReplaced(this)" />
-                    </div>
-                </div>
-                <div class="line line_conteudo_arquivo" style="display:none;">
-                    <div class="column w-30-pc">
-                        <div class="cell fr">
-                            <label>Selecione o Texto:</label>
-                        </div>
-                    </div>
-                    <div class="column w-100-pc">
-                        <div class="div_conteudo_arquivo" class="w-70-pc mauto">
-                        </div>
-                    </div>
-                </div>
-                <div class="line line_buttons" style="display:none;">
-                    <div class="column w-100-pc text-center">
-                        <button type="button" title="Concluir a seleção do caput" onclick="selecionarCaput('alterada');" >Concluir</button>
-                        <button type="button" title="Cancelar a seleção do caput" onclick="fecharSelecionarCaput('alterada');" >Cancelar</button>
+        <div class="stepper">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 offset-md-2 block border">
+                    <div class="wrapper-progressBar">
+                        <ul class="progressBar">
+                            <li class="norma-alteradora">Selecionar norma alteradora</li>
+                            <li class="relacao">Selecionar tipo de relação</li>
+                            <li class="norma-alterada">Selecionar norma alterada</li>
+                            <li class="dispositivo-alterador">Selecionar dispositivo alterador</li>
+                            <li class="dispositivo-alterado">Selecionar dispositivos alterados</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -369,288 +303,256 @@
         <div id="div_cad_vide">
             <form id="form_editar_vide" name="formEditarVide" action="#" method="post">
                 <input type="hidden" id="dt_controle_alteracao" name="dt_controle_alteracao" value="" />
+                <input type="hidden" id="vide" name="vide" value="" />
                 <div id="div_vide" class="loaded">
                     <fieldset class="w-95-pc">
-                        <!--<legend>Vide</legend>-->
-                        <div id="div_notificacao_vide" class="notify" style="display:none;"></div>
+                        <div id="div_notificacao_vide" class="w-50-pc mauto h-45-px"></div>
                         <div class="mauto table">
                             <div class="line">
                                 <div class="column w-100-pc">
                                     <div class="table w-100-pc">
                                         <div class="line">
-                                            <div class="column w-35-pc">
+                                            <div class="column w-100-pc text-center">
+                                                Tipo de relação:
+                                                <input id="chTipoRelacao" type="text" value="" disabled="disabled" />
+                                            </div>
+                                        </div>
+                                        <div id="lineNormas" class="line step">
+                                            <div class="column w-50-pc">
                                                 <div class="cell w-100-pc">
-                                                    <fieldset class="w-90-pc">
-                                                        <legend>Norma Alteradora</legend>
-                                                        <div class="table">
-                                                            <div class="line">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Norma:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="hidden" id="ch_norma_alteradora" value="" />
-                                                                        <label id="label_norma_vide_alteradora"></label>
-                                                                    </div>
-                                                                </div>
+                                                    <div class="table w-99-pc mauto">
+                                                        <div class="head">
+                                                            <div class="title">
+                                                                <h2>Norma Alteradora</h2>
                                                             </div>
-                                                            <div class="line line_caput_norma_alteradora">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Dispositivo:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="hidden" id="caput_norma_vide_alteradora" name="caput_norma_vide_alteradora" value="" />
-                                                                        <label id="label_caput_norma_alteradora"></label><a id="a_selecionar_caput_norma_alteradora" href="javascript:void(0);" onclick="javascript:abrirSelecionarCaput('alteradora');" title="Selecionar o caput da norma alteradora"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_edit_dir.png" alt="adicionar" width="16px" height="16px" /></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line line_link_caput" style="display:none;">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Texto do link:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <a href="javascript:void(0);" id="a_texto_link"></a>
-                                                                    </div>
+                                                        </div>
+                                                        <div class="line">
+                                                            <div class="column w-70-pc">
+                                                                <div class="cell w-100-pc">
+                                                                    <label id="label_norma_vide_alteradora"></label>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                            <div class="column w-30-pc">
-                                                <div class="cell w-100-pc">
-                                                    <div class="table mauto w-90-pc">
                                                         <div class="line">
-                                                            <div class="column w-20-pc">
-                                                                <div class="cell fr">
-                                                                    <label>Relação:</label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="column w-80-pc">
-                                                                <div id="div_autocomplete_tipo_relacao" class="cell w-100-pc">
-                                                                    <input type="hidden" id="ch_tipo_relacao" obrigatorio="sim" label="Vide &gt; Relação" name="ch_tipo_relacao" value="" />
-                                                                    <input type="hidden" id="ds_texto_para_alterador" name="ds_texto_para_alterador" value="" />
-                                                                    <input type="hidden" id="ds_texto_para_alterado" name="ds_texto_para_alterado" value="" />
-                                                                    <input type="text" id="nm_tipo_relacao" name="nm_tipo_relacao" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_relacao"></a>
+                                                            <div id="div_cad_dispositivo_alteradora">
+                                                                <div class="table w-100-pc">
+                                                                    <hr />
+                                                                    <div class="line line_conteudo_arquivo" >
+                                                                        <div class="column w-100-pc">
+                                                                            <div class="div_conteudo_arquivo w-100-pc mauto">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="column w-35-pc">
+                                            <div id="columnNormaAlterada" class="column w-50-pc step hidden">
                                                 <div class="cell w-100-pc">
-                                                    <fieldset class="w-90-pc">
-                                                        <legend>Norma Alterada</legend>
-                                                        <div class="table">
-                                                            <div id="line_norma_dentro_do_sistema" class="line">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Norma:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-40-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="hidden" id="ch_norma_alterada" value="" />
-                                                                        <label id="label_norma_vide_alterada"></label>
-                                                                    </div>
+                                                    <div class="table w-99-pc mauto">
+                                                        <div class="head">
+                                                            <div class="title">
+                                                                <h2>Norma Alterada</h2>
+                                                            </div>
+                                                        </div>
+                                                        <div id="Div1" class="line">
+                                                            <div class="column w-30-pc">
+                                                                <div class="cell w-100-pc">
+                                                                    <label id="label_norma_vide_alterada"></label>
                                                                 </div>
                                                             </div>
-                                                            <div id="line_norma_fora_do_sistema" class="line">
-                                                                <div class="column w-100-pc">
-                                                                    <div class="table w-100-pc">
-                                                                        <div class="line">
-                                                                            <div class="column w-30-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    Tipo:
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="column w-70-pc">
-                                                                                <div id="div_autocomplete_tipo_norma_vide_fora_de_sistema" class="cell w-100-pc">
-                                                                                    <input type="hidden" id="ch_tipo_norma_vide_fora_do_sistema" name="ch_tipo_norma_vide_fora_do_sistema" value="" />
-                                                                                    <input type="text" id="nm_tipo_norma_vide_fora_do_sistema" name="nm_tipo_norma_vide_fora_do_sistema" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_norma_vide_fora_do_sistema"></a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="line">
-                                                                            <div class="column w-30-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    Número:
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="column w-70-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    <input type="text" id="nr_norma_vide_fora_do_sistema" name="nr_norma_vide_fora_do_sistema" value="" />
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="line">
-                                                                            <div class="column w-30-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    Tipo de Fonte:
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="column w-70-pc">
-                                                                                <div id="div_autocomplete_tipo_fonte_vide_fora_do_sistema" class="cell w-100-pc">
-                                                                                    <input type="hidden" id="ch_tipo_fonte_vide_fora_do_sistema" name="ch_tipo_fonte_vide_fora_do_sistema" value="" />
-                                                                                    <input type="text" id="nm_tipo_fonte_vide_fora_do_sistema" name="nm_tipo_fonte_vide_fora_do_sistema" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_fonte_vide_fora_do_sistema"></a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="line">
-                                                                            <div class="column w-30-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    Data de Publicação:
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="column w-70-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    <input type="text" id="dt_publicacao_norma_vide_fora_do_sistema" name="dt_publicacao_norma_vide_fora_do_sistema" value="" class="date" />
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="line">
-                                                                            <div class="column w-30-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    Página:
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="column w-70-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    <input type="text" id="nr_pagina_publicacao_norma_vide_fora_do_sistema" name="nr_pagina_publicacao_norma_vide_fora_do_sistema" value="" />
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="line">
-                                                                            <div class="column w-30-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    Coluna:
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="column w-70-pc">
-                                                                                <div class="cell w-100-pc">
-                                                                                    <input type="text" id="nr_coluna_publicacao_norma_vide_fora_do_sistema" name="nr_coluna_publicacao_norma_vide_fora_do_sistema" value="" />
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Artigo:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="text" id="artigo_norma_vide_alterada" name="artigo_norma_vide_alterada" value="" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Parágrafo:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="text" id="paragrafo_norma_vide_alterada" name="paragrafo_norma_vide_alterada" value="" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Inciso:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="text" id="inciso_norma_vide_alterada" name="inciso_norma_vide_alterada" value="" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Alínea:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="text" id="alinea_norma_vide_alterada" name="alinea_norma_vide_alterada" value="" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Item:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="text" id="item_norma_vide_alterada" name="item_norma_vide_alterada" value="" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Anexo:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="text" id="anexo_norma_vide_alterada" name="anexo_norma_vide_alterada" value="" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line line_caput_norma_alterada">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Dispositivo:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <input type="hidden" id="caput_norma_vide_alterada" name="caput_norma_vide_alterada" value="" />
-                                                                        <label id="label_caput_norma_alterada"></label><a id="a_selecionar_caput_norma_alterada" href="javascript:void(0);" onclick="javascript:abrirSelecionarCaput('alterada');" title="Selecionar o caput da norma alterada"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_edit_dir.png" alt="adicionar" width="16px" height="16px" /></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line line_ds_caput_norma_alterada" style="display:none;">
-                                                                <div class="column w-30-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        Descrição:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="column w-70-pc">
-                                                                    <div class="cell w-100-pc">
-                                                                        <textarea id="ds_caput_norma_alterada" name="ds_caput_norma_alterada" class="w-100-pc" rows="5"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="line line_texto_caput" style="display:none;">
-                                                                <div class="column w-100-pc">
+                                                            <div class="column w-70-pc">
+                                                                <div class="cell w-100-pc">
+                                                                    <label id="labelAlteracaoCompleta" style="display:none;"><input type="checkbox" id="in_alteracao_completa" value="1" onclick="javascript:selecionarAlteracaoCompleta();" />Alterar a norma completa</label>
+                                                                    <label id="labelNormaForaDoSistema"><input type="checkbox" id="in_norma_fora_do_sistema" value="1" onclick="javascript:selecionarNormaForaDoSistema();" />Norma Fora do Sistema</label>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </fieldset>
+                                                        <div id="Div2" class="line">
+                                                            <button type="button" class="clean button-close" title="Fechar" onclick="fecharNormaForaDoSistema()"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="fechar" width="12px" height="12px" /></button>
+                                                            <div class="column w-100-pc">
+                                                                <div class="table w-100-pc">
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Tipo:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div id="div3" class="cell w-100-pc">
+                                                                                <input type="hidden" id="ch_tipo_norma_vide_fora_do_sistema" name="ch_tipo_norma_vide_fora_do_sistema" value="" />
+                                                                                <input type="text" id="nm_tipo_norma_vide_fora_do_sistema" name="nm_tipo_norma_vide_fora_do_sistema" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_norma_vide_fora_do_sistema"></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Número:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="nr_norma_vide_fora_do_sistema" value="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Tipo de Fonte:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div id="div4" class="cell w-100-pc">
+                                                                                <input type="hidden" name="ch_tipo_fonte_vide_fora_do_sistema" value="" />
+                                                                                <input type="text" name="nm_tipo_fonte_vide_fora_do_sistema" value="" class="w-80-pc" /><a title="Listar" id="a2"></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Data de Publicação:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="dt_publicacao_norma_vide_fora_do_sistema" value="" class="date" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Página:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="nr_pagina_publicacao_norma_vide_fora_do_sistema" value="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Coluna:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="nr_coluna_publicacao_norma_vide_fora_do_sistema" value="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Artigo:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="artigo_norma_vide_alterada" value="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Parágrafo:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="paragrafo_norma_vide_alterada" value="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Inciso:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="inciso_norma_vide_alterada" value="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Alínea:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="alinea_norma_vide_alterada" value="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Item:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="item_norma_vide_alterada" value="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Anexo:
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                <input type="text" name="anexo_norma_vide_alterada" value="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="line">
+                                                            <div id="div_cad_dispositivo_alterada" style="display:none;">
+                                                                <div class="table w-100-pc">
+                                                                    <hr />
+                                                                    <div class="line line_enable_replaced" style="display:none;">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell fr">
+                                                                                <label>Exibir dispositivos alterados:</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <input type="checkbox" onclick="clickEnableReplaced(this)" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line line_conteudo_arquivo" style="display:none;">
+                                                                        <div class="column w-100-pc">
+                                                                            <div class="div_conteudo_arquivo w-100-pc mauto">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="line">
+
+                                        <div id="lineComentario" class="line comentario step">
                                             <div class="column w-100-pc">
                                                 <div class="table w-80-pc mauto">
                                                     <div class="line">
