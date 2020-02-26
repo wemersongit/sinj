@@ -1237,7 +1237,8 @@ function Redirecionar(params_get, url) {
         'CadastrarNotifiqueme.aspx': "./LoginNotifiqueme.aspx",
         //Vide
         'CadastrarVide.aspx': "./DetalhesDeNorma.aspx",
-        'EditarVide.aspx': "./DetalhesDeNorma.aspx"
+        'EditarVide.aspx': "./DetalhesDeNorma.aspx",
+        'ExcluirVide.aspx': "./DetalhesDeNorma.aspx"
     };
     var page_redirect = IsNotNullOrEmpty(url) ? url : mapPaginaAPP[file];
     if (IsNotNullOrEmpty(page_redirect)) {

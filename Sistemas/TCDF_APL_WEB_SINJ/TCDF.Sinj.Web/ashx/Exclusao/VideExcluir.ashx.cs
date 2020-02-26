@@ -53,7 +53,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         throw new RiskOfInconsistency("A norma do vide excluído foi modificada pelo usuário <b>" + usuario + "</b> às <b>" + dDt_alteracao + "</b> tornando a sua modificação inconsistente.<br/> É aconselhável atualizar a página e refazer as modificações ou forçar a alteração.<br/>Obs.: Clicar em 'Salvar mesmo assim' vai forçar a alteração e pode sobrescrever as modificações do usuário <b>" + usuario + "</b>.");
                     }
                 }
-                normaAlteradoraOv.vides.RemoveAll(v => v.ch_norma_vide.Equals(vide.ChVide));
+                normaAlteradoraOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
                 if (vide.NormaAlteradora.ArquivoNovo != null)
                 {
                     normaAlteradoraOv.ar_atualizado = vide.NormaAlteradora.ArquivoNovo;
@@ -64,7 +64,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     sRetorno = "{\"id_doc_success\":" + id_doc + "}";
                     if(!vide.NormaAlterada.InNormaForaSistema){
                         var normaAlteradaOv = normaRn.Doc(vide.NormaAlterada.ChNorma);
-                        normaAlteradaOv.vides.RemoveAll(v => v.Equals(vide.ChVide));
+                        normaAlteradaOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
                         if(vide.NormaAlterada.ArquivoNovo != null){
                             normaAlteradaOv.ar_atualizado = vide.NormaAlterada.ArquivoNovo;
                         }
