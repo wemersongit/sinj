@@ -1411,7 +1411,8 @@ function MostrarPaginaAjax(action) {
         'RecriarSenhaNotifiqueme.aspx-SAL': "./ashx/Push/NotifiquemeRecriarSenha.ashx",
         //Vide
         'CadastrarVide.aspx-SAL': "./ashx/Cadastro/VideIncluir.ashx",
-        'EditarVide.aspx-SAL': "./ashx/Cadastro/VideEditar.ashx"
+        'EditarVide.aspx-SAL': "./ashx/Cadastro/VideEditar.ashx",
+        'ExcluirVide.aspx-SAL': "./ashx/Exclusao/VideExcluir.ashx"
     };
     var page_ajax = mapPaginaAPP[file + '-' + action];
     return page_ajax;

@@ -333,8 +333,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         public string DtAssinatura { get; set; }
         [JsonProperty("nm_tipo_norma")]
         public string NmTipoNorma { get; set; }
-        [JsonProperty("arquivo")]
-        public ArquivoOV Arquivo { get; set; }
         [JsonProperty("arquivo_novo")]
         public ArquivoOV ArquivoNovo { get; set; }
         public List<DispositivoVide> Dispositivos { get; set; }

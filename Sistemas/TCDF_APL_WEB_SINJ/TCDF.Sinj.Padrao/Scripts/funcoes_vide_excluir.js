@@ -9,7 +9,7 @@ function selecionarNormaAlteradora(norma){
         ds_norma: montarDescricaoDaNorma(norma),
         dt_assinatura: norma.dt_assinatura,
         nm_tipo_norma: norma.nm_tipo_norma,
-        dispositivos: []
+        dispositivos: norma.dispositivos
     };
 
     $('#label_norma_vide_alteradora').text(normaAlteradora.ds_norma);
@@ -23,10 +23,27 @@ function selecionarNormaAlterada(norma){
         ds_norma: montarDescricaoDaNorma(norma),
         dt_assinatura: norma.dt_assinatura,
         nm_tipo_norma: norma.nm_tipo_norma,
-        dispositivos: []
+        dispositivos: norma.dispositivos
     };
     $('#label_norma_vide_alterada').text(normaAlterada.ds_norma);
     selecionarArquivoDaNorma(Object.assign({}, normaAlterada, {sufixo: 'alterada'}));
+    
+}
+
+function selecionarNormaAlteradaForaSistema(){
+    normaAlterada = {
+        in_norma_fora_sistema: true
+    }
+    $('#line_norma_fora_do_sistema').removeClass('hidden');
+    $('#line_norma_dentro_do_sistema').addClass('hidden');
+    $('#ch_tipo_norma_vide_fora_do_sistema').val(vide.ch_tipo_norma_vide);
+    $('#nm_tipo_norma_vide_fora_do_sistema').val(vide.nm_tipo_norma_vide);
+    $('#nr_norma_vide_fora_do_sistema').val(vide.nr_norma_vide);
+    $('#ch_tipo_fonte_vide_fora_do_sistema').val(vide.ch_tipo_fonte_norma_vide);
+    $('#nm_tipo_fonte_vide_fora_do_sistema').val(vide.nm_tipo_fonte_norma_vide);
+    $('#dt_publicacao_norma_vide_fora_do_sistema').val(vide.dt_publicacao_fonte_norma_vide);
+    $('#nr_pagina_publicacao_norma_vide_fora_do_sistema').val(vide.pagina_publicacao_norma_vide);
+    $('#nr_coluna_publicacao_norma_vide_fora_do_sistema').val(vide.coluna_publicacao_norma_vide);
 }
 
 function selecionarArquivoDaNorma(norma) {
@@ -93,23 +110,11 @@ function exibirTextoDoArquivo(norma, arquivo) {
     
     if ($('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo p').length > 0) {
         if(norma.sufixo == 'alteradora'){
-            if(vide.in_norma_afetada){
-                desfazerLinkAlterador(vide.alteracao_texto_vide.dispositivos_norma_vide_outra[0].linkname, vide.alteracao_texto_vide.dispositivos_norma_vide_outra[0].texto);
-            }
-            else{
-                desfazerLinkAlterador(vide.alteracao_texto_vide.dispositivos_norma_vide[0].linkname, vide.alteracao_texto_vide.dispositivos_norma_vide[0].texto);
-            }
+            desfazerLinkAlterador(norma.dispositivos[0].linkname, norma.dispositivos[0].texto);
         }
         else{
-            if(vide.in_norma_afetada){
-                for(let i = 0; i < vide.alteracao_texto_vide.dispositivos_norma_vide.length; i++){
-                    desfazerAlteracaoDoDispositivo(vide.alteracao_texto_vide.dispositivos_norma_vide[i].linkname, vide.alteracao_texto_vide.dispositivos_norma_vide[i].texto);
-                }
-            }
-            else{
-                for(let i = 0; i < vide.alteracao_texto_vide.dispositivos_norma_vide_outra.length; i++){
-                    desfazerAlteracaoDoDispositivo(vide.alteracao_texto_vide.dispositivos_norma_vide_outra[i].linkname, vide.alteracao_texto_vide.dispositivos_norma_vide_outra[i].texto);
-                }
+            for(let i = 0; i < norma.dispositivos.length; i++){
+                desfazerAlteracaoDoDispositivo(norma.dispositivos[i].linkname, norma.dispositivos[i].texto);
             }
         }
         $('#div_cad_dispositivo_' + norma.sufixo + ' div.line_conteudo_arquivo').show();
@@ -146,48 +151,28 @@ function desfazerAlteracaoDoDispositivo(linkname, texto){
     }
 }
 
-function salvarVide(vide, sucessoVide){
-    $('#vide').val(JSON.stringify(vide));
-
-    return fnSalvar("form_vide", "", sucessoVide);
+function salvarVide(sucessoVide){
+    $('#vide').val(JSON.stringify({
+            ch_vide: vide.ch_vide,
+            norma_alteradora: normaAlteradora,
+            norma_alterada: normaAlterada
+        }));
+    return fnSalvar("form_vide_excluir", "", sucessoVide);
 }
 
 function salvarArquivosVide(sucessoVide){
     
-    let htmlNormaAlteradora = "";
-    const $conteudoArquivoNormaAlteradora = $($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html());
-    for(let i in $conteudoArquivoNormaAlteradora){
-        if($conteudoArquivoNormaAlteradora[i].outerHTML){
-            if($conteudoArquivoNormaAlteradora[i].getAttribute('linkname') == normaAlteradora.dispositivos[0].linkname){
-                const $link = $($conteudoArquivoNormaAlteradora[i]).find('a[href]');
-                for(let a in $link){
-                    if($link[a].innerText == normaAlteradora.dispositivos[0].texto){
-                        $link[a].setAttribute('href', `(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}.html#${normaAlterada.dispositivos[0].linkname}`);
-                        break;
-                    }
-                }
-            }
-            htmlNormaAlteradora += $conteudoArquivoNormaAlteradora[i].outerHTML;
-        }
-    }
-    $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlteradora));
+    $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html()));
     $('#form_arquivo_norma_alteradora input[name=nm_arquivo]').val(normaAlteradora.arquivo.filename);
 
-    let htmlNormaAlterada = "";
-    const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
-    for(let i in $conteudoArquivoNormaAlterada){
-        if($conteudoArquivoNormaAlterada[i].outerHTML){
-            $($conteudoArquivoNormaAlterada[i]).find('button').remove();
-            htmlNormaAlterada += $conteudoArquivoNormaAlterada[i].outerHTML;
+    let completed = true;
+    let complete = function(){
+        if(completed){
+            gComplete();
+        }else{
+            completed = true;
         }
     }
-    $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlterada));
-    $('#form_arquivo_norma_alterada input[name=nm_arquivo]').val(normaAlterada.arquivo.filename);
-
-    $('#super_loading').hide();
-
-    let completed = false;
-
     var sucessoNormaAlteradora = function (data) {
         if (data.error_message != null && data.error_message != "") {
             notificar('#div_cad_vide' + id_form, data.error_message, 'error');
@@ -195,34 +180,8 @@ function salvarArquivosVide(sucessoVide){
         else if (IsNotNullOrEmpty(data, "id_file")) {
             normaAlteradora.arquivo_novo = data;
             if(completed){
-                salvarVide({
-                    relacao: tipoDeRelacaoSelecionado,
-                    norma_alteradora: normaAlteradora,
-                    norma_alterada: normaAlterada
-                }, sucessoVide);
+                salvarVide(sucessoVide);
             }
-        }
-    }
-    var sucessoNormaAlterada = function (data) {
-        if (data.error_message != null && data.error_message != "") {
-            notificar('#div_cad_vide' + id_form, data.error_message, 'error');
-        }
-        else if (IsNotNullOrEmpty(data, "id_file")) {
-            normaAlterada.arquivo_novo = data;
-            if(completed){
-                salvarVide({
-                    relacao: tipoDeRelacaoSelecionado,
-                    norma_alteradora: normaAlteradora,
-                    norma_alterada: normaAlterada
-                }, sucessoVide);
-            }
-        }
-    }
-    let complete = function(){
-        if(completed){
-            gComplete();
-        }else{
-            completed = true;
         }
     }
     $.ajaxlight({
@@ -234,14 +193,31 @@ function salvarArquivosVide(sucessoVide){
         fnBeforeSubmit: gInicio,
         bAsync: true
     });
-    $.ajaxlight({
-        sFormId: 'form_arquivo_norma_alterada',
-        sUrl: './ashx/Arquivo/UploadHtml.ashx',
-        sType: "POST",
-        fnSuccess: sucessoNormaAlterada,
-        fnComplete: complete,
-        fnBeforeSubmit: null,
-        bAsync: true
-    });
+    if(!normaAlterada.in_norma_fora_do_sistema){
+        completed = false;
+        $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html()));
+        $('#form_arquivo_norma_alterada input[name=nm_arquivo]').val(normaAlterada.arquivo.filename);
+
+        var sucessoNormaAlterada = function (data) {
+            if (data.error_message != null && data.error_message != "") {
+                notificar('#div_cad_vide' + id_form, data.error_message, 'error');
+            }
+            else if (IsNotNullOrEmpty(data, "id_file")) {
+                normaAlterada.arquivo_novo = data;
+                if(completed){
+                    salvarVide(sucessoVide);
+                }
+            }
+        }
+        $.ajaxlight({
+            sFormId: 'form_arquivo_norma_alterada',
+            sUrl: './ashx/Arquivo/UploadHtml.ashx',
+            sType: "POST",
+            fnSuccess: sucessoNormaAlterada,
+            fnComplete: complete,
+            fnBeforeSubmit: null,
+            bAsync: true
+        });
+    }
     return false;
 }

@@ -748,8 +748,13 @@ function clickEnableReplaced(check) {
     }
 }
 
-function salvarVide(vide, sucessoVide){
-    $('#vide').val(JSON.stringify(vide));
+function salvarVide(sucessoVide){
+    $('#vide').val(JSON.stringify({
+            relacao: tipoDeRelacaoSelecionado,
+            norma_alteradora: normaAlteradora,
+            norma_alterada: normaAlterada,
+            ds_comentario_vide: $('#ds_comentario_vide').val()
+        }));
 
     return fnSalvar("form_vide", "", sucessoVide);
 }
@@ -762,7 +767,7 @@ function salvarArquivosVide(sucessoVide){
         if($conteudoArquivoNormaAlteradora[i].outerHTML){
             if($conteudoArquivoNormaAlteradora[i].getAttribute('linkname') == normaAlteradora.dispositivos[0].linkname){
                 const $link = $($conteudoArquivoNormaAlteradora[i]).find('a[href]');
-                for(let a in $link){
+                for(let a = 0; a < $link.length; a++){
                     if($link[a].innerText == normaAlteradora.dispositivos[0].texto){
                         $link[a].setAttribute('href', `(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}.html#${normaAlterada.dispositivos[0].linkname}`);
                         $link[a].removeAttribute('title', '');
@@ -776,21 +781,14 @@ function salvarArquivosVide(sucessoVide){
     $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlteradora));
     $('#form_arquivo_norma_alteradora input[name=nm_arquivo]').val(normaAlteradora.arquivo.filename);
 
-    let htmlNormaAlterada = "";
-    const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
-    for(let i in $conteudoArquivoNormaAlterada){
-        if($conteudoArquivoNormaAlterada[i].outerHTML){
-            $($conteudoArquivoNormaAlterada[i]).find('button').remove();
-            htmlNormaAlterada += $conteudoArquivoNormaAlterada[i].outerHTML;
+    let completed = true;
+    let complete = function(){
+        if(completed){
+            gComplete();
+        }else{
+            completed = true;
         }
     }
-    $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlterada));
-    $('#form_arquivo_norma_alterada input[name=nm_arquivo]').val(normaAlterada.arquivo.filename);
-
-    $('#super_loading').hide();
-
-    let completed = false;
-
     var sucessoNormaAlteradora = function (data) {
         if (data.error_message != null && data.error_message != "") {
             notificar('#div_cad_vide' + id_form, data.error_message, 'error');
@@ -798,34 +796,8 @@ function salvarArquivosVide(sucessoVide){
         else if (IsNotNullOrEmpty(data, "id_file")) {
             normaAlteradora.arquivo_novo = data;
             if(completed){
-                salvarVide({
-                    relacao: tipoDeRelacaoSelecionado,
-                    norma_alteradora: normaAlteradora,
-                    norma_alterada: normaAlterada
-                }, sucessoVide);
+                salvarVide(sucessoVide);
             }
-        }
-    }
-    var sucessoNormaAlterada = function (data) {
-        if (data.error_message != null && data.error_message != "") {
-            notificar('#div_cad_vide' + id_form, data.error_message, 'error');
-        }
-        else if (IsNotNullOrEmpty(data, "id_file")) {
-            normaAlterada.arquivo_novo = data;
-            if(completed){
-                salvarVide({
-                    relacao: tipoDeRelacaoSelecionado,
-                    norma_alteradora: normaAlteradora,
-                    norma_alterada: normaAlterada
-                }, sucessoVide);
-            }
-        }
-    }
-    let complete = function(){
-        if(completed){
-            gComplete();
-        }else{
-            completed = true;
         }
     }
     $.ajaxlight({
@@ -837,14 +809,39 @@ function salvarArquivosVide(sucessoVide){
         fnBeforeSubmit: gInicio,
         bAsync: true
     });
-    $.ajaxlight({
-        sFormId: 'form_arquivo_norma_alterada',
-        sUrl: './ashx/Arquivo/UploadHtml.ashx',
-        sType: "POST",
-        fnSuccess: sucessoNormaAlterada,
-        fnComplete: complete,
-        fnBeforeSubmit: null,
-        bAsync: true
-    });
+    if(!normaAlterada.in_norma_fora_do_sistema){
+        completed = false;
+        let htmlNormaAlterada = "";
+        const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
+        for(let i = 0; i < $conteudoArquivoNormaAlterada.length; i++){
+            if($conteudoArquivoNormaAlterada[i].outerHTML){
+                $($conteudoArquivoNormaAlterada[i]).find('button').remove();
+                htmlNormaAlterada += $conteudoArquivoNormaAlterada[i].outerHTML;
+            }
+        }
+        $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlterada));
+        $('#form_arquivo_norma_alterada input[name=nm_arquivo]').val(normaAlterada.arquivo.filename);
+
+        var sucessoNormaAlterada = function (data) {
+            if (data.error_message != null && data.error_message != "") {
+                notificar('#div_cad_vide' + id_form, data.error_message, 'error');
+            }
+            else if (IsNotNullOrEmpty(data, "id_file")) {
+                normaAlterada.arquivo_novo = data;
+                if(completed){
+                    salvarVide(sucessoVide);
+                }
+            }
+        }
+        $.ajaxlight({
+            sFormId: 'form_arquivo_norma_alterada',
+            sUrl: './ashx/Arquivo/UploadHtml.ashx',
+            sType: "POST",
+            fnSuccess: sucessoNormaAlterada,
+            fnComplete: complete,
+            fnBeforeSubmit: null,
+            bAsync: true
+        });
+    }
     return false;
 }
