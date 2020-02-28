@@ -1,0 +1,160 @@
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 13:37:43.96384
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 13:41:07.07304
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:07:17.74434
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:08:29.2664
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:08:43.76262
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:14:11.95505
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:17:07.80724
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:19:12.44782
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:26:41.80372
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:27:43.88118
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:49:57.54934
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 14:52:22.55519
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 15:04:14.38926
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 15:05:43.7709
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 15:08:08.52125
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+
+ERRO===ERRO===ERRO===ERRO===ERRO===ERRO==ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===ERRO===
+ Início da Operação : 15/01/2020 15:53:36.92211
+ Mensagem           : Erro no método Principal.
+ Exceção da Operação      = --> Could not load type of field 'LightInfocon.Data.LightBaseProvider.LightBaseConnection:objSession' (8) due to: Could not load file or assembly 'Interop.LBCOMLib, Version=1.4.4.0, Culture=neutral, PublicKeyToken=8fb645857dd75025' or one of its dependencies.
+ Local da Exceção         =   at Sinj.Notifica.AcessaDados.PushAD..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs:16 
+  at Sinj.Notifica.Regras.PushRN..ctor (System.String stringConection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs:13 
+  at Sinj.Notifica.NotificaCtrl..ctor (System.String stringConnection) [0x00008] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs:16 
+  at Sinj.Notifica.app.Program.Main (System.String[] args) [0x00098] in /home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs:36 
+
+

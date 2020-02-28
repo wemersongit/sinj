@@ -1,0 +1,13 @@
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/bin/Debug/Sinj.Notifica.app.exe.config
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/bin/Debug/Sinj.Notifica.app.exe
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/bin/Debug/Sinj.Notifica.app.pdb
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/bin/Debug/BRLight.Util.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/bin/Debug/Sinj.Notifica.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/bin/Debug/BRLight.DataAccess.LBW.Provider.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/bin/Debug/LightInfocon.Data.LightBaseProvider.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/bin/Debug/Sinj.Notifica.pdb
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/obj/Debug/Sinj.Notifica.app.csprojAssemblyReference.cache
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/obj/Debug/Sinj.Notifica.app.csproj.CoreCompileInputs.cache
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/obj/Debug/Sinj.Notifica.app.csproj.CopyComplete
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/obj/Debug/Sinj.Notifica.app.exe
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/obj/Debug/Sinj.Notifica.app.pdb

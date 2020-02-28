@@ -40,22 +40,27 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Frameworks\BRLight.Util\.NET_3.5\BRLight.Util.dll</HintPath>
     </Reference>
-    <Reference Include="LightInfocon.Data.LightBaseProvider, Version=4.4.0.0, Culture=neutral, PublicKeyToken=3016ddb54c1a70d5, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Frameworks\BRLight.DataAccess.LBW.Provider\LightInfocon.Data.LightBaseProvider.dll</HintPath>
+    <Reference Include="System">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System" />
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Data">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="LightInfocon.Data.LightBaseProvider">
+      <HintPath>..\..\..\..\Frameworks\BRLight.DataAccess.LBW.Provider\LightInfocon.Data.LightBaseProvider.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcessaDados\NormaAD.cs" />

@@ -1364,6 +1364,12 @@ function PreencherNormaEdicao() {
                     if (IsNotNullOrEmpty(data.url_referencia)) {
                         $('input[name="url_referencia"]').val(data.url_referencia);
                     }
+                    if (IsNotNullOrEmpty(data.url_projeto_lei)) {
+                        $('input[name="url_projeto_lei"]').val(data.url_projeto_lei);
+                    }
+                    if (IsNotNullOrEmpty(data.nr_projeto_lei)) {
+                        $('input[name="nr_projeto_lei"]').val(data.nr_projeto_lei);
+                    }
                     if (IsNotNullOrEmpty(data.ds_procedencia)) {
                         $('input[name="ds_procedencia"]').val(data.ds_procedencia);
                     }

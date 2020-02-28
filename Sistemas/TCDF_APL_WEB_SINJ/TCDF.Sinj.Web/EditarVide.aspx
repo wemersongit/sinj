@@ -90,6 +90,9 @@
                         else if (IsNotNullOrEmpty(data.ch_norma)) {
                             $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
                             for (var i = 0; i < data.vides.length; i++) {
+                                // NOTE: No backend, arquivo NormaDetalhes.ashx.cs, adquire-se o nome dos orgãos relacionados pelas
+                                // vides, e são concatenados no nm_tipo_relação. By New
+                                data.vides[i].nm_tipo_relacao = data.vides[i].nm_tipo_relacao.split(" @@ ")[0];
                                 if (data.vides[i].ch_vide == ch_vide) {
                                     
                                     $('#ch_tipo_relacao').val(data.vides[i].ch_tipo_relacao);

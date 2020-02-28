@@ -13,7 +13,10 @@ namespace Sinj.Notifica.AcessaDados
 
         public PushAD(string stringConnection)
         {
-            _conn = new BRLight.DataAccess.LBW.Provider.AcessaDados(stringConnection);
+            Console.WriteLine(_conn = new BRLight.DataAccess.LBW.Provider.AcessaDados(stringConnection));
+
+            Console.WriteLine(_conn);
+
         }
         public List<Push> BuscaAtivosPush()
         {

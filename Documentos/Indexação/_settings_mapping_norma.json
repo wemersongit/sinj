@@ -544,6 +544,12 @@
                 "url_referencia":{
                     "type":"string"
                 },
+                "url_projeto_lei":{
+                    "type":"string"
+                },
+                "nr_projeto_lei":{
+                    "type":"string"
+                },
                 "vides":{
                     "properties":{
                         "alinea_norma_vide":{

@@ -215,7 +215,9 @@ namespace SINJ_PUSH_APP
                             var email = new EmailRN();
                             var display_name_remetente = "SINJ Notifica";
                             var destinatario = new[] { usuario_push.email_usuario_push };
-                            var titulo = "Informações sobre o ato " + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
+                            //Deverá mostrar o seguinte: ex.: SINJ-DF - Criação - Decreto 40041/2019 - GAG
+                            //trecho substituido - var titulo = "Informações sobre o ato " + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
+                            var titulo = "SINJ-DF " +"Criacao "+ norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
                             var html = true;
 
                             var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj.jpg";
@@ -370,7 +372,9 @@ namespace SINJ_PUSH_APP
                         var email = new EmailRN();
                         var display_name_remetente = "SINJ Notifica";
                         var destinatario = new[] { usuario_push.email_usuario_push };
-                        var titulo = "Informações sobre o ato " + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + resultado_norma.origens[0].sg_orgao : "");
+                        //trecho substituido - var titulo = "Informações sobre o ato " + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + resultado_norma.origens[0].sg_orgao : "");
+                        //SINJ-DF - Criação - Decreto 40041/2019 - GAG
+                        var titulo = "SINJ-DF "+ "Alteração " +resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + resultado_norma.origens[0].sg_orgao : "");
                         var html = true;
 
                         var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj.jpg";
@@ -397,8 +401,10 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "<tr>";
                         corpoEmail = corpoEmail + "<td style=\"background-color: #B4E6CBs; text-align: left;\">";
                         corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
-                        corpoEmail = corpoEmail + "		Um ato que você escolheu para monitorar sofreu alteração.<br/>";
-                        corpoEmail = corpoEmail + "		As informações sobre esse ato estão abaixo:";
+                        //corpoEmail = corpoEmail + "		Um ato que você escolheu para monitorar sofreu alteração.<br/>";
+                        //corpoEmail = corpoEmail + "		As informações sobre esse ato estão abaixo:";
+                        corpoEmail = corpoEmail + "     O normativo "+ resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura+" "+ (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "")+  " sofreu a(s) seguinte(s) alteração(ões):<br/>";
+                        corpoEmail = corpoEmail + "     Acrescido "+"Art. 1°, § 4° pelo(a) Lei 6347/2019";
                         corpoEmail = corpoEmail + "	</div>";
 
                         corpoEmail = corpoEmail + "	<div>";
@@ -412,6 +418,10 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "			</tr><tr align=\"left\" style=\"background-color:#F0F0F0;height:20px;\">";
 
                         corpoEmail = corpoEmail + "				<td valign=\"top\" style=\"width:100px;\">" + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura;
+
+                        //mexendo aqui
+                        Console.WriteLine(corpoEmail);
+
 
                         if (quantidadeDeOrgaos > 0)
                         {
@@ -466,6 +476,8 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "</td>";
                         corpoEmail = corpoEmail + "</tr>";
                         corpoEmail = corpoEmail + "</table>";
+                        //Mexendo aqui
+                        Console.WriteLine(corpoEmail);
 
                         email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpoEmail);
                         var logEmail = new LogEmail();

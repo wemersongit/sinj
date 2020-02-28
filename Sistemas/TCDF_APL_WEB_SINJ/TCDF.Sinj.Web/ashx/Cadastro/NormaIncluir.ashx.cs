@@ -16,7 +16,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
     public class NormaIncluir : IHttpHandler
     {
 
-        public void ProcessRequest(HttpContext context)
+        void IHttpHandler.ProcessRequest(HttpContext context)
         {
             var sRetorno = "";
             NormaOV normaOv = null;
@@ -99,6 +99,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var _json_arquivo_texto_acao = context.Request["json_arquivo_texto_acao"];
                 var _ds_efeito_decisao = context.Request["ds_efeito_decisao"];
                 var _url_referencia = context.Request["url_referencia"];
+
+                var _url_projeto_lei = context.Request["url_projeto_lei"];
+                var _nr_projeto_lei = context.Request["nr_projeto_lei"];
 
                 var _st_situacao_forcada = context.Request["st_situacao_forcada"];
                 var _ch_situacao = context.Request["ch_situacao"];
@@ -250,9 +253,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 }
                 normaOv.ds_efeito_decisao = _ds_efeito_decisao;
                 normaOv.url_referencia = _url_referencia;
+                normaOv.url_projeto_lei = _url_projeto_lei;
+                normaOv.nr_projeto_lei = _nr_projeto_lei;
                 normaOv.id_orgao_cadastrador = sessao_usuario.orgao_cadastrador.id_orgao_cadastrador;
                 normaOv.nm_orgao_cadastrador = sessao_usuario.orgao_cadastrador.nm_orgao_cadastrador;
-                
+
 
                 normaOv.nm_login_usuario_cadastro = sessao_usuario.nm_login_usuario;
                 normaOv.dt_cadastro = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
@@ -267,7 +272,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var id_doc = new NormaRN().Incluir(normaOv);
                 if (id_doc > 0)
                 {
-                    sRetorno = "{\"id_doc_success\":" + id_doc + ",\"norma_st_acao\":"+normaOv.st_acao.ToString().ToLower()+", \"ch_norma\":\""+ normaOv.ch_norma +"\"}";
+                    sRetorno = "{\"id_doc_success\":" + id_doc + ",\"norma_st_acao\":" + normaOv.st_acao.ToString().ToLower() + ", \"ch_norma\":\"" + normaOv.ch_norma + "\"}";
                 }
                 else
                 {

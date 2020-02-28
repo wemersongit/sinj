@@ -1,0 +1,53 @@
+﻿<Properties StartupConfiguration="{8979BDCF-CC5A-4EA5-87A4-F6273E382989}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs">
+    <Files>
+      <File FileName="TCDF.Sinj.Web/Web.config" Line="220" Column="7" />
+      <File FileName="TCDF.Sinj.Web/Sinj.Master" Line="1" Column="1" />
+      <File FileName="TCDF.Sinj.Padrao/Scripts/funcoes_sinj.js" Line="1" Column="1" />
+      <File FileName="TCDF.Sinj.Web/ashx/Visualizacao/NormaDetalhes.ashx.cs" Line="59" Column="10" />
+      <File FileName="TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True">
+            <Node name="TCDF.Sinj.Web" expanded="True">
+              <Node name="ashx" expanded="True">
+                <Node name="Email" expanded="True">
+                  <Node name="FaleConoscoEnviarEmail.ashx" expanded="True">
+                    <Node name="FaleConoscoEnviarEmail.ashx.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="EditarVide.aspx" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="TCDF_APL_WEB_SINJ" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>../../Projetos/neo.BRLightRest/neo.BRLightREST.csproj</String>
+    <String>../../Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/SINJ_PUSH_APP.csproj</String>
+    <String>../../Projetos/TCDF.Sinj/TCDF.Sinj.csproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.ItemProperties.TCDF.Sinj.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" line="66" column="20" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" line="86" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" line="91" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" line="100" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" line="81" column="1" />
+      <Breakpoint enabled="false" file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" relfile="TCDF.Sinj.Web/ashx/Email/FaleConoscoEnviarEmail.ashx.cs" line="68" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

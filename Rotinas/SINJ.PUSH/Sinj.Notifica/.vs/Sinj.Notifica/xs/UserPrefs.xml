@@ -1,0 +1,37 @@
+﻿<Properties StartupConfiguration="{C9328AE4-818B-4763-BCDD-53C24AE9F917}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Sinj.Notifica.app/Program.cs">
+    <Files>
+      <File FileName="Sinj.Notifica.app/Program.cs" Line="88" Column="14" />
+      <File FileName="Sinj.Notifica/NotificaCtrl.cs" Line="16" Column="1" />
+      <File FileName="Sinj.Notifica/Regras/PushRN.cs" Line="13" Column="1" />
+      <File FileName="Sinj.Notifica/AcessaDados/PushAD.cs" Line="16" Column="106" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Sinj.Notifica.app PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs" relfile="Sinj.Notifica/AcessaDados/PushAD.cs" line="14" column="7" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs" relfile="Sinj.Notifica/AcessaDados/PushAD.cs" line="20" column="5" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs" relfile="Sinj.Notifica.app/Program.cs" line="58" column="20" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs" relfile="Sinj.Notifica.app/Program.cs" line="51" column="40" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs" relfile="Sinj.Notifica.app/Program.cs" line="52" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs" relfile="Sinj.Notifica.app/Program.cs" line="39" column="39" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs" relfile="Sinj.Notifica.app/Program.cs" line="47" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs" relfile="Sinj.Notifica.app/Program.cs" line="43" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs" relfile="Sinj.Notifica/NotificaCtrl.cs" line="16" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs" relfile="Sinj.Notifica/NotificaCtrl.cs" line="22" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs" relfile="Sinj.Notifica/AcessaDados/PushAD.cs" line="18" column="36" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs" relfile="Sinj.Notifica/AcessaDados/PushAD.cs" line="19" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs" relfile="Sinj.Notifica/AcessaDados/PushAD.cs" line="16" column="14" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/NotificaCtrl.cs" relfile="Sinj.Notifica/NotificaCtrl.cs" line="17" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs" relfile="Sinj.Notifica/Regras/PushRN.cs" line="13" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs" relfile="Sinj.Notifica/Regras/PushRN.cs" line="11" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/Regras/PushRN.cs" relfile="Sinj.Notifica/Regras/PushRN.cs" line="18" column="1" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica/AcessaDados/PushAD.cs" relfile="Sinj.Notifica/AcessaDados/PushAD.cs" line="23" column="14" />
+      <Breakpoint file="/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ.PUSH/Sinj.Notifica/Sinj.Notifica.app/Program.cs" relfile="Sinj.Notifica.app/Program.cs" line="34" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

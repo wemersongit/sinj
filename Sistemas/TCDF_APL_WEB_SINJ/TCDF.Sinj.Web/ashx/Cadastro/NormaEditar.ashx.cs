@@ -73,6 +73,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _ds_efeito_decisao = context.Request["ds_efeito_decisao"];
                     var _url_referencia = context.Request["url_referencia"];
 
+                    var _url_projeto_lei= context.Request["url_projeto_lei"];
+                    var _nr_projeto_lei = context.Request["nr_projeto_lei"];
+
                     var _st_situacao_forcada = context.Request["st_situacao_forcada"];
                     var _ch_situacao = context.Request["ch_situacao"];
                     var _nm_situacao = context.Request["nm_situacao"];
@@ -198,6 +201,18 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     if (_url_referencia != null)
                     {
                         normaOv.url_referencia = _url_referencia;
+                    }
+
+                    normaOv.url_projeto_lei= "";
+                    if (_url_projeto_lei != null)
+                    {
+                        normaOv.url_projeto_lei = _url_projeto_lei;
+                    }
+
+                    normaOv.nr_projeto_lei = "";
+                    if (_nr_projeto_lei != null)
+                    {
+                        normaOv.nr_projeto_lei = _nr_projeto_lei;
                     }
 
                     normaOv.ds_efeito_decisao = "";

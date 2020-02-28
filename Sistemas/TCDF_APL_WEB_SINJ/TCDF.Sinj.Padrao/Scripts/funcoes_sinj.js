@@ -2865,6 +2865,13 @@ function DetalhesNorma(data, highlight) {
 
                 var ano = "";
                 for (var i = 0; i < data.vides.length; i++) {
+
+                    // NOTE: No backend, arquivo NormaDetalhes.ashx.cs, adquire-se o nome dos orgãos relacionados pelas
+                    // vides, e são concatenados no nm_tipo_relação. By New
+                    nome_orgao = data.vides[i].nm_tipo_relacao.split(" @@ ");
+                    data.vides[i].nm_tipo_relacao = nome_orgao[0];
+                    data.vides[i].nm_orgao_origem = nome_orgao[1];
+
                     ano = "";
                     if(data.vides[i].nr_norma_vide == "0"){
                         data.vides[i].nr_norma_vide = "";
@@ -2980,6 +2987,8 @@ function DetalhesNorma(data, highlight) {
             }
 
             var link_norma = 'Detalhes da Norma - ' + '<a href="./DetalhesDeNorma.aspx?id_norma=' + data.ch_norma + '" target="_blank" title="link da norma">' + document.location.href.replace(document.location.href.replace(/^.*[\\\/]/, ''), 'DetalhesDeNorma.aspx?id_norma=' + data.ch_norma) + '</a>';
+    
+            var link_projeto_lei = `${data.nr_projeto_lei} - <a href="${data.url_projeto_lei}">${data.url_projeto_lei}</a>`;
 
             var link_texto = "";
             if (IsNotNullOrEmpty(id_file)) {
@@ -2991,6 +3000,11 @@ function DetalhesNorma(data, highlight) {
             $('#div_links').html(
                 link_norma + (IsNotNullOrEmpty(link_texto) ? '<br/>' + link_texto : '')
             );
+
+            if (data.nr_projeto_lei && data.url_projeto_lei && data.nr_projeto_lei != "null" && data.url_projeto_lei != "null") {
+                var link_projeto_lei = `${data.nr_projeto_lei} - <a href="${data.url_projeto_lei}">${data.url_projeto_lei}</a>`;
+                $("#div_links").append("<br>" + link_projeto_lei);
+            }
 
             if (IsNotNullOrEmpty(_notifiqueme) && _notifiqueme.ch_normas_monitoradas.indexOf(data.ch_norma) >= 0) {
                 $('#button_notifiqueme').html('<div class="div-light-button fr"><a href="javascript:void(0);" onclick="javascript:PararNotificar(\'' + data.ch_norma + '\');" title="Parar de receber e-mail sobre as alterações deste ato" ><img alt="@" src="' + _urlPadrao + '/Imagens/ico_stop_email_p.png" />Parar Notificação</a></div>');

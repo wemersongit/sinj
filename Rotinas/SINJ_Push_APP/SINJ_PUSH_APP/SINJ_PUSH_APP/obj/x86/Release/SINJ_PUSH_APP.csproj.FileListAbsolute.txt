@@ -1,0 +1,16 @@
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/SINJ_PUSH_APP.exe.config
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/SINJ_PUSH_APP.exe
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/SINJ_PUSH_APP.pdb
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/LightInfocon.Data.LightBaseProvider.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/neo.BRLightES.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/neo.BRLightREST.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/neo.BRLightSession.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/Newtonsoft.Json.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/TCDF.Sinj.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/util.BRLight.dll
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/Newtonsoft.Json.pdb
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/bin/Release/Newtonsoft.Json.xml
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/obj/x86/Release/SINJ_PUSH_APP.csproj.CoreCompileInputs.cache
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/obj/x86/Release/SINJ_PUSH_APP.csproj.CopyComplete
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/obj/x86/Release/SINJ_PUSH_APP.exe
+/home/brlight/Data/DEV_HOST/_SINJ/sinj/Rotinas/SINJ_Push_APP/SINJ_PUSH_APP/SINJ_PUSH_APP/obj/x86/Release/SINJ_PUSH_APP.pdb
