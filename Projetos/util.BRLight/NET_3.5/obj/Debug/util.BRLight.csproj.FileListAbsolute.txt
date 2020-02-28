@@ -1,6 +1,0 @@
-/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/util.BRLight/NET_3.5/bin/Debug/util.BRLight.dll
-/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/util.BRLight/NET_3.5/bin/Debug/util.BRLight.pdb
-/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/util.BRLight/NET_3.5/obj/Debug/util.BRLight.csprojAssemblyReference.cache
-/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/util.BRLight/NET_3.5/obj/Debug/util.BRLight.csproj.CoreCompileInputs.cache
-/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/util.BRLight/NET_3.5/obj/Debug/util.BRLight.dll
-/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/util.BRLight/NET_3.5/obj/Debug/util.BRLight.pdb

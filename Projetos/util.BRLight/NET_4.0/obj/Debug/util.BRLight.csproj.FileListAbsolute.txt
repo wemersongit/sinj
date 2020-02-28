@@ -1,1 +1,0 @@
-/home/brlight/Data/DEV_HOST/_SINJ/sinj/Projetos/util.BRLight/NET_4.0/obj/Debug/util.BRLight.csproj.CoreCompileInputs.cache
