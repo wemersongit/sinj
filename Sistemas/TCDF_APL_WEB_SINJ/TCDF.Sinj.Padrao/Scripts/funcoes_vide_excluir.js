@@ -110,18 +110,23 @@ function exibirTextoDoArquivo(norma, arquivo) {
     
     if ($('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo p').length > 0) {
         if(norma.sufixo == 'alteradora'){
-            desfazerLinkAlterador(norma.dispositivos[0].linkname, norma.dispositivos[0].texto);
+            removerLinkAlterador(norma.dispositivos[0].linkname, norma.dispositivos[0].texto);
         }
         else{
-            for(let i = 0; i < norma.dispositivos.length; i++){
-                desfazerAlteracaoDoDispositivo(norma.dispositivos[i].linkname, norma.dispositivos[i].texto);
+            if(norma.dispositivos.length > 0){
+                for(let i = 0; i < norma.dispositivos.length; i++){
+                    removerAlteracaoDoDispositivo(norma.dispositivos[i].linkname, norma.dispositivos[i].texto);
+                }
+            }
+            else{
+                removerAlteracaoDoDispositivo();
             }
         }
         $('#div_cad_dispositivo_' + norma.sufixo + ' div.line_conteudo_arquivo').show();
     }
 }
 
-function desfazerLinkAlterador(linkname, texto){
+function removerLinkAlterador(linkname, texto){
     $.each($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[linkname='+linkname+'] a'), function (item, value){
         if(value.innerText == texto){
             $(value).text('').after(texto).remove();
@@ -129,11 +134,14 @@ function desfazerLinkAlterador(linkname, texto){
     });
 }
 
-function desfazerAlteracaoDoDispositivo(linkname, texto){
+function removerAlteracaoDoDispositivo(linkname, texto){
     switch(vide.ch_tipo_relacao){
         case '1':
             $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
             break;
+        case '9':
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info="${normaAlteradora.ch_norma}"]`).remove();
+            break
         case '36':
             
             break;

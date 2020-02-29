@@ -312,7 +312,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 throw new DocValidacaoException("Erro ao informar a norma alterada. Verifique se está selecionando corretamente a norma afetada pelo vide.");
             }
-            if (!NormaAlterada.InAlteracaoCompleta && (NormaAlterada.Dispositivos == null || !NormaAlterada.Dispositivos.Any()))
+            if (!NormaAlterada.InAlteracaoCompleta && !Relacao.ch_tipo_relacao.Equals("9") && (NormaAlterada.Dispositivos == null || !NormaAlterada.Dispositivos.Any()))
             {
                 throw new DocValidacaoException("Erro ao informar o dispositivo alterado.");
             }
