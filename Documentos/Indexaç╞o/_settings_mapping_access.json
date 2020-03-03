@@ -1,0 +1,37 @@
+{
+    "settings":{
+        "analysis":{  
+            "analyzer":{  
+                "keyword_analyzer":{
+                    "tokenizer":"keyword"
+                },
+                "default":{  
+                    "filter":[  
+                        "lowercase",
+                        "asciifolding"
+                    ],
+                    "tokenizer":"standard"
+                }
+            }
+        }
+    },
+    "mappings":{
+        "sinj_access":{
+            "properties":{
+                "data":{
+                    "type":"date",
+                    "format":"dd/MM/yyyy HH:mm:ss"
+                },
+                "ds_norma":{
+                    "type":"string",
+                    "fields":{
+                        "ds_norma_keyword":{
+                            "type":"string",
+                            "analyzer":"keyword_analyzer"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

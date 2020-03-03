@@ -1,0 +1,46 @@
+
+
+/etc/postgresql/9.3/main/postgresql.conf
+max_connections = 100 >> max_connections = 200
+
+Criei o arquivo /etc/security/limits.d/apache_nofile.conf
+apache2 soft nofile 10000
+apache2 hard nofile 10000
+
+Alterei o net.ipv4.tcp_fin_timeout de 60 para 10
+douglas@sinj3-d:~$ sudo sysctl net.ipv4.tcp_fin_timeout=10
+
+Alterei o net.ipv4.tcp_max_syn_backlog de 256 para 1024
+douglas@sinj3-d:~$ sudo sysctl net.ipv4.tcp_max_syn_backlog=1024
+
+Alterei o net.core.somaxconn de 128 para 1024
+douglas@sinj3-d:~$ sudo sysctl net.core.somaxconn=1024
+
+Alterei o net.ipv4.tcp_tw_recycle de 0 para 1
+douglas@sinj3-d:~$ sudo sysctl net.ipv4.tcp_tw_recycle=1
+
+Alterei o net.ipv4.tcp_tw_recycle de 0 para 1
+douglas@sinj3-d:~$ sudo sysctl net.ipv4.tcp_tw_recycle=1
+
+Alterei o net.ipv4.tcp_tw_reuse  de 0 para 1
+douglas@sinj3-d:~$ sudo sysctl net.ipv4.tcp_tw_reuse =1
+
+Alterei o net.core.rmem_max de 212992 para 16777216
+douglas@sinj3-d:~$ sudo sysctl net.core.rmem_max=16777216
+
+Alterei o net.core.wmem_max  de 212992 para 16777216
+douglas@sinj3-d:~$ sudo sysctl net.core.wmem_max =16777216
+
+Configurei arquivo /etc/apache/mods-enabled/mpm_event.conf
+<IfModule mpm_event_module>
+        StartServers             64
+        MinSpareThreads          8182
+        MaxSpareThreads          32768
+        MaxClients               4096
+        ThreadLimit              2048
+        ServerLimit              64
+        ThreadsPerChild          512
+        MaxRequestWorkers        32768
+        MaxConnectionsPerChild   0
+</IfModule>
+
