@@ -249,7 +249,7 @@ function convertStringToDateTime(dataString) {
     var dia = dataSplit[0];
     var mes = dataSplit[1];
     var ano = dataSplit[2];
-    return new Date(ano + "/" + mes + "/" + dia);
+    return new Date(ano + "/" + (mes - 1) + "/" + dia);
 }
 
 function dateIsDateFuture(data) {
