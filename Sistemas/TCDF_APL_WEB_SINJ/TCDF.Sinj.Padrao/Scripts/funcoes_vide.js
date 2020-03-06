@@ -701,6 +701,10 @@ function getDescricaoDoLinkname(linkname) {
             descricao += (IsNotNullOrEmpty(descricao) ? ', ' : '') + descricaoDispositivo;
         }
     }
+    const lastItem = linknameSplited[linknameSplited.length - 1];
+    if(/art[0-9]|par[0-9]|inc[0-9]|ali[0-9]/.test(lastItem)){
+        descricao += ', Caput.'
+    }
     return descricao;
 }
 
