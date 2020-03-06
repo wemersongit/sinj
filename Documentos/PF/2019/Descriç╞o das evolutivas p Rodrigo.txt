@@ -1,0 +1,19 @@
+
+
+
+
+Melhorar o algoritmo de indexação de conteúdo do sistema SINJ pra que a pesquisa textual retorne os registros com maior relevância e ordenado com maior relevância para cada perfil logado no sistema e que retorne maior quantidade de informações dos registros. 
+
+
+
+
+Evolutiva Editor de Texto:
+Desenvolver validação de integridade do arquivo html e criar pré visualização do texto conforme formatado pelo usuário para somente após a visualização e confirmação salvar o arquivo.
+
+
+
+
+
+
+
+

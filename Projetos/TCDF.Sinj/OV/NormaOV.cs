@@ -6,6 +6,8 @@ namespace TCDF.Sinj.OV
 {
     public class NormaOV : metadata
     {
+        public bool st_habilita_pesquisa;
+
         public NormaOV()
         {
             nm_pessoa_fisica_e_juridica = new List<string>();
@@ -51,6 +53,9 @@ namespace TCDF.Sinj.OV
         public string nm_orgao_cadastrador { get; set; }
         public List<string> ch_para_nao_duplicacao { get; set; }
         public bool st_pendencia { get; set; }
+        //public bool st_habilita_pesquisa { get; set; }
+
+
         public string ds_pendencia { get; set; }
         public bool st_destaque { get; set; }
         public string ds_observacao { get; set; }

@@ -49,10 +49,6 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
-    <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
-    </Reference>
     <Reference Include="Ude">
       <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
     </Reference>
@@ -73,6 +69,9 @@
     </Reference>
     <Reference Include="neo.BRLightREST">
       <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
+    </Reference>
+    <Reference Include="TCDF.Sinj">
+      <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

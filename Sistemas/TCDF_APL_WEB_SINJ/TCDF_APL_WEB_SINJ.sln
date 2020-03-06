@@ -2,6 +2,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Web Developer Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCDF.Sinj.Web", "TCDF.Sinj.Web\TCDF.Sinj.Web.csproj", "{8979BDCF-CC5A-4EA5-87A4-F6273E382989}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCDF.Sinj", "..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj", "{3B23C9D4-4624-473E-8976-7CD48EF5559C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,14 @@ Global
 		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Release|x86.ActiveCfg = Release|Any CPU
 		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Release|x86.Build.0 = Release|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Debug|x86.Build.0 = Debug|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|x86.ActiveCfg = Release|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

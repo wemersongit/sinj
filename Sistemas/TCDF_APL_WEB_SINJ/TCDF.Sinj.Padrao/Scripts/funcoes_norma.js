@@ -1280,6 +1280,7 @@ function PreencherNormaEdicao() {
                     $('#ds_ementa').val(data.ds_ementa);
                     $('#ds_observacao').val(data.ds_observacao);
                     $('#st_destaque').prop("checked", data.st_destaque);
+                    $('#st_habilita_pesquisa').prop("checked", data.st_habilita_pesquisa);
                     $('#st_pendencia').prop("checked", data.st_pendencia);
                     $('#ds_pendencia').val(data.ds_pendencia);
                     MarcarPendente();
