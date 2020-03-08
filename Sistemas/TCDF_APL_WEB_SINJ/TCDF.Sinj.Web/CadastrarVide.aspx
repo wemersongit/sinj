@@ -137,6 +137,7 @@
                                 sWidth: "",
                                 iTime: null
                             });
+                            gComplete();
                         }
                         else if (IsNotNullOrEmpty(data.ch_norma)) {
                             selecionarNormaAlteradora({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma });
@@ -147,7 +148,7 @@
                     sUrl: './ashx/Visualizacao/NormaDetalhes.ashx' + window.location.search,
                     sType: "GET",
                     fnSuccess: sucesso,
-                    fnComplete: gComplete,
+                    fnComplete: null,
                     fnBeforeSend: gInicio,
                     fnError: null,
                     bAsync: true

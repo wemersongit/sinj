@@ -97,6 +97,7 @@
                             sWidth: "",
                             iTime: null
                         });
+                        gComplete();
                     }
                     else if (IsNotNullOrEmpty(data.ch_norma)) {
                         $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
@@ -105,9 +106,18 @@
                                 vide = data.vides[i];
                                 vide.nm_tipo_relacao = getNmTipoRelacao(vide);
                                 $('#tipoDeRelacao').val(vide.nm_tipo_relacao);
-                                console.log(vide);
-                                selecionarNorma(data)
+                                selecionarNorma(data);
                             }
+                        }
+                        if (!IsNotNullOrEmpty(vide, 'ch_vide')) {
+                            $('#div_notificacao_vide').messagelight({
+                                sTitle: "Erro",
+                                sContent: "O vide não existe.",
+                                sType: "error",
+                                sWidth: "",
+                                iTime: null
+                            });
+                            gComplete();
                         }
                     }
                 }
@@ -116,7 +126,7 @@
                 sUrl: './ashx/Visualizacao/NormaDetalhes.ashx' + window.location.search,
                 sType: "GET",
                 fnSuccess: sucesso,
-                fnComplete: gComplete,
+                fnComplete: null,
                 fnBeforeSend: gInicio,
                 fnError: null,
                 bAsync: true

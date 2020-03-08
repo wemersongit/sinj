@@ -122,7 +122,7 @@ function buscarTiposDeRelacao() {
         sUrl: './ashx/Autocomplete/TipoDeRelacaoAutocomplete.ashx' + (GetParameterValue("in_acao") == "true" ? "?in_relacao_de_acao=true" : ""),
         sType: "GET",
         fnSuccess: sucesso,
-        fnComplete: gComplete,
+        fnComplete: null,
         fnBeforeSend: gInicio,
         fnError: null,
         bAsync: true
@@ -308,7 +308,6 @@ function selecionarArquivoDaNorma(norma) {
             norma.arquivo = data.ar_atualizado;
         }
         else if (IsNotNullOrEmpty(data, 'fontes')) {
-
             if (IsNotNullOrEmpty(data.fontes[data.fontes.length - 1].ar_fonte, 'id_file')) {
                 norma.arquivo = data.fontes[data.fontes.length - 1].ar_fonte;
             }
@@ -320,7 +319,7 @@ function selecionarArquivoDaNorma(norma) {
             gComplete();
             $('#div_notificacao_norma').messagelight({
                 sTitle: "Erro",
-                sContent: "Ocorreu um erro não identificado.",
+                sContent: "A norma seleciona não possui arquivo.",
                 sType: "error",
                 sWidth: "",
                 iTime: null
@@ -340,13 +339,13 @@ function selecionarArquivoDaNorma(norma) {
         const sucessoArquivo = function(data){
             exibirTextoDoArquivo(norma, data);
             $('#div_cad_dispositivo_' + norma.sufixo).show();
-            gComplete();
         }
         $.ajaxlight({
             sUrl: "./ashx/Arquivo/HtmlFileEncoded.ashx?nm_base=sinj_norma&id_file=" + norma.arquivo.id_file,
             sType: "GET",
             fnSuccess: sucessoArquivo,
             fnBeforeSend: gInicio,
+            fnComplete: gComplete,
             bAsync: true
         });
     }
@@ -355,6 +354,7 @@ function selecionarArquivoDaNorma(norma) {
         sType: "GET",
         fnSuccess: sucesso,
         /*fnBeforeSend: gInicio,*/
+        fnComplete: null,
         bAsync: true,
         iTimeout: 2000
     });
@@ -819,23 +819,18 @@ function salvarArquivosVide(sucessoVide){
     $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlteradora));
     $('#form_arquivo_norma_alteradora input[name=nm_arquivo]').val(normaAlteradora.arquivo.filename);
 
-    let completed = true;
-    let complete = function(){
-        if(completed){
-            gComplete();
-        }else{
-            completed = true;
-        }
-    }
+    const deferredAlteradora = $.Deferred();
+    const deferredAlterada = $.Deferred();
+    $.when(deferredAlteradora, deferredAlterada).done(function(){
+        salvarVide(sucessoVide)
+    });
+
     var sucessoNormaAlteradora = function (data) {
         if (data.error_message != null && data.error_message != "") {
             notificar('#div_cad_vide' + id_form, data.error_message, 'error');
         }
         else if (IsNotNullOrEmpty(data, "id_file")) {
             normaAlteradora.arquivo_novo = data;
-            if(completed){
-                salvarVide(sucessoVide);
-            }
         }
     }
     $.ajaxlight({
@@ -843,7 +838,9 @@ function salvarArquivosVide(sucessoVide){
         sUrl: './ashx/Arquivo/UploadHtml.ashx',
         sType: "POST",
         fnSuccess: sucessoNormaAlteradora,
-        fnComplete: complete,
+        fnComplete: function(){
+            deferredAlteradora.resolve();
+        },
         fnBeforeSubmit: gInicio,
         bAsync: true
     });
@@ -866,9 +863,6 @@ function salvarArquivosVide(sucessoVide){
             }
             else if (IsNotNullOrEmpty(data, "id_file")) {
                 normaAlterada.arquivo_novo = data;
-                if(completed){
-                    salvarVide(sucessoVide);
-                }
             }
         }
         $.ajaxlight({
@@ -876,10 +870,15 @@ function salvarArquivosVide(sucessoVide){
             sUrl: './ashx/Arquivo/UploadHtml.ashx',
             sType: "POST",
             fnSuccess: sucessoNormaAlterada,
-            fnComplete: complete,
+            fnComplete: function(){
+                deferredAlterada.resolve();
+            },
             fnBeforeSubmit: null,
             bAsync: true
         });
+    }
+    else{
+        deferredAlterada.resolve();
     }
     return false;
 }
