@@ -909,4 +909,3 @@ function salvarArquivosVide(sucessoVide){
         deferredAlterada.resolve();
     }
     return false;
-}
