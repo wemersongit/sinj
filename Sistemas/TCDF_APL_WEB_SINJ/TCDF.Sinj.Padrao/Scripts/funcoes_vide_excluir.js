@@ -1,9 +1,20 @@
 let normaAlteradora = {};
 let normaAlterada = {};
+let ahTextoIncompativel = false;
 let vide = {};
 
+function showMessaNormaIncompativel(norma){
+    $('#div_notificacao_vide').messagelight({
+        sTitle: "Erro",
+        sContent: `O texto da norma ${norma.ds_norma} não é compatível o módulo de edição de vides.`,
+        sType: "error",
+        sWidth: "",
+        iTime: null
+    });
+}
+
 function selecionarNorma(norma){
-    if(vide.caput_norma_vide){
+    if(IsNotNullOrEmpty(vide.caput_norma_vide, 'caput')){
         vide.alteracao_texto_vide.dispositivos_norma_vide = [];
         for(var i = 0; i < vide.caput_norma_vide.caput.length; i++){
             vide.alteracao_texto_vide.dispositivos_norma_vide.push({
@@ -12,7 +23,7 @@ function selecionarNorma(norma){
             });
         }
     }
-    if(vide.caput_norma_vide_outra){
+    if(IsNotNullOrEmpty(vide.caput_norma_vide_outra, 'caput')){
         vide.alteracao_texto_vide.dispositivos_norma_vide_outra = [];
         for(var i = 0; i < vide.caput_norma_vide_outra.caput.length; i++){
             vide.alteracao_texto_vide.dispositivos_norma_vide_outra.push({
@@ -55,11 +66,21 @@ function selecionarNormaAlteradora(norma){
 }
 
 function selecionarArquivos(){
+    if(!IsNotNullOrEmpty(normaAlteradora.dispositivos)){
+        gComplete();
+        showMessaNormaIncompativel(normaAlteradora);
+        return;
+    }
     let deferredAlteradora = $.Deferred();
     let deferredAlterada = $.Deferred();
     $.when(deferredAlteradora, deferredAlterada).done(gComplete);
     selecionarArquivoDaNorma(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
     if(!normaAlterada.in_norma_fora_sistema){
+        if(!IsNotNullOrEmpty(normaAlterada.dispositivos)){
+            gComplete();
+            showMessaNormaIncompativel(normaAlterada);
+            return;
+        }
         selecionarArquivoDaNorma(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
     }
     else{
@@ -122,7 +143,7 @@ function selecionarArquivoDaNorma(norma, deferred) {
             normaAlterada.arquivo = norma.arquivo;
         }
         const sucessoArquivo = function(data){
-            exibirTextoDoArquivo(norma, data);
+            exibirTextoDoArquivoSemAsAltercoesDoVide(norma, data);
             $('#div_cad_dispositivo_' + norma.sufixo).show();
         }
         $.ajaxlight({
@@ -147,7 +168,17 @@ function selecionarArquivoDaNorma(norma, deferred) {
 
 }
 
-function exibirTextoDoArquivo(norma, arquivo) {
+function exibirTextoDoArquivoSemAsAltercoesDoVide(norma, arquivo) {
+    const htmlUnescaped = window.unescape(arquivo.fileencoded);
+    if(ahTextoIncompativel){
+        return;
+    }
+    if($(htmlUnescaped).closest('h1[epigrafe]').length <= 0){
+        showMessaNormaIncompativel(norma);
+        ahTextoIncompativel = true;
+        return;
+    }
+
     $('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo').html(window.unescape(arquivo.fileencoded));
     $('#filename_arquivo_norma_alteradora').val(arquivo.filename);
     
@@ -193,9 +224,6 @@ function removerAlteracaoDoDispositivo(linkname, texto){
         case '9':
             $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info="${normaAlteradora.ch_norma}"]`).remove();
             break
-        case '36':
-            
-            break;
         default:
             let $elementoAlterado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
             const html = $elementoAlterado.find('s').html();
@@ -205,6 +233,7 @@ function removerAlteracaoDoDispositivo(linkname, texto){
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
             }
             $elementoAlterado.attr('linkname', linkname);
+            $elementoAlterado.find(`a[name=${linkname}_replaced]`).attr('name', `${linkname}`);
             $elementoAlterado.removeAttr('replaced_by');
             break;
     }
