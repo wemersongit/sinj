@@ -2,6 +2,7 @@ let tiposDeRelacao = [];
 let tipoDeRelacaoSelecionado = {};
 let normaAlteradora = {};
 let normaAlterada = {};
+let ahTextoIncompativel = false;
 const dt_controle_alteracao = new Date();
 let flagModalNorma = '';
 let optionsTooltip = {
@@ -122,7 +123,11 @@ function buscarTiposDeRelacao() {
         sUrl: './ashx/Autocomplete/TipoDeRelacaoAutocomplete.ashx' + (GetParameterValue("in_acao") == "true" ? "?in_relacao_de_acao=true" : ""),
         sType: "GET",
         fnSuccess: sucesso,
-        fnComplete: null,
+        fnComplete: function(){
+            if(!IsNotNullOrEmpty(id_doc)){
+                gComplete();
+            }
+        },
         fnBeforeSend: gInicio,
         fnError: null,
         bAsync: true
@@ -441,7 +446,22 @@ function desfazerLinkAlterador(idLink){
 
 function exibirTextoDoArquivo(norma, arquivo) {
     limparDispositivoSelecionado(norma.sufixo);
-    $('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo').html(window.unescape(arquivo.fileencoded));
+    const htmlUnescaped = window.unescape(arquivo.fileencoded);
+    if(ahTextoIncompativel){
+        return;
+    }
+    if($(htmlUnescaped).closest('h1[epigrafe]').length <= 0){
+        $('#div_notificacao_vide').messagelight({
+            sTitle: "Erro",
+            sContent: `O texto da norma ${norma.ds_norma} não é compatível o módulo de edição de vides.`,
+            sType: "error",
+            sWidth: "",
+            iTime: null
+        });
+        ahTextoIncompativel = true;
+        return;
+    }
+    $('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo').html(htmlUnescaped);
     $('#filename_arquivo_norma_alteradora').val(arquivo.filename);
     if ($('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo p').length > 0) {
         //regex para localizar o link da revogação caso haja
@@ -457,7 +477,9 @@ function exibirTextoDoArquivo(norma, arquivo) {
                     var aTexto = $(aLinkVide[aLinkVide.length - 1]).text();
                     //se o último link de vide no paragrafo for o de revogação então o mesmo não será removido no texto
                     if (regex.test(aTexto)) {
+                        var replacedBy = $(p).attr('replaced_by');
                         $(p).removeAttr('replaced_by');
+                        $(p).attr('replaced_by_revogado',replacedBy);
                     }
                 }
             }
@@ -530,7 +552,7 @@ function clickAlterarDispositivo(){
                 dispositivoAlterado.texto = textosAcrescidos[i];
                 normaAlterada.dispositivos.push(Object.assign({}, dispositivoAlterado));
 
-                const $element = $(`<p linkname="${dispositivoAlterado.linkname}"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivo('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>${textosAcrescidos[i]}<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+                const $element = $(`<p linkname="${dispositivoAlterado.linkname}"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivo('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
                 $nextElement.after($element);
                 $nextElement = $element;
             }
@@ -542,9 +564,10 @@ function clickAlterarDispositivo(){
             dispositivoAlterado.nm_linkName = getNomeDoLinkName(dispositivoAlterado.linkname);
             dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(dispositivoAlterado.linkname);
             $elementoAlterado.attr('linkname', `${dispositivoAlterado.linkname}_replaced`);
+            $elementoAlterado.find(`a[name=${dispositivoAlterado.linkname}]`).attr('name', `${dispositivoAlterado.linkname}_replaced`);
             $elementoAlterado.attr('replaced_by', normaAlteradora.ch_norma);
             if(dispositivoAlterado.texto){
-                $elementoAlterado.after(`<p linkname="${dispositivoAlterado.linkname}"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivo('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>${dispositivoAlterado.texto}<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+                $elementoAlterado.after(`<p linkname="${dispositivoAlterado.linkname}"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivo('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${dispositivoAlterado.texto}<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
                 $elementoAlterado.html(`<s>${$elementoAlterado.html()}</s>`);
             }
             else{
@@ -564,10 +587,6 @@ function desfazerAlteracaoDoDispositivo(linkname){
             switch(tipoDeRelacaoSelecionado.ch_tipo_relacao){
                 case '1':
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
-                    normaAlterada.dispositivos.splice(removeIndex, 1);
-                    break;
-                case '36':
-
                     normaAlterada.dispositivos.splice(removeIndex, 1);
                     break;
                 default:
@@ -813,9 +832,18 @@ function salvarArquivosVide(sucessoVide){
                     }
                 }
             }
+            const replacedBy = $conteudoArquivoNormaAlteradora[i].getAttribute('replaced_by_revogado');
+            if(replacedBy){
+                $conteudoArquivoNormaAlteradora[i].removeAttribute('replaced_by_revogado');
+                $conteudoArquivoNormaAlteradora[i].setAttribute('replaced_by', replacedBy);
+            }
+            if($($conteudoArquivoNormaAlteradora[i]).is(':hidden')){
+                $($conteudoArquivoNormaAlteradora[i]).show();
+            }
             htmlNormaAlteradora += $conteudoArquivoNormaAlteradora[i].outerHTML;
         }
     }
+    
     $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlteradora));
     $('#form_arquivo_norma_alteradora input[name=nm_arquivo]').val(normaAlteradora.arquivo.filename);
 
@@ -881,4 +909,3 @@ function salvarArquivosVide(sucessoVide){
         deferredAlterada.resolve();
     }
     return false;
-}
