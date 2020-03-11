@@ -3127,6 +3127,16 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
     }
 }
 
+function ehRelacaoDeAlteracaoCompleta(chTipoRelacao){
+    const relacoesAlteracaoCompleta = ['21', '4', 'a8ed93396fcc4959b9b8e82808880f2a', '25'];
+    return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
+}
+
+function ehRelacaoQueDesfazAlteracaoCompleta(chTipoRelacao){
+    const relacoesQueDesfazAlteracaoCompleta = ['18', 'b4fe69f9b8d748b19e41be8a2071dbdd'];
+    return relacoesQueDesfazAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
+}
+
 function fnSubmitInputFile(id_div_arquivo) {
     if (!IsNotNullOrEmpty(form_editar_arquivo.filename.value)) {
         $('#editar_arquivo_notificacao').messagelight({

@@ -504,12 +504,9 @@
                             </div>
                         </div>
                     </fieldset>
-                    <div id="divButtons" style="width:210px; margin:auto;" class="buttons loaded">
+                    <div id="divButtons" class="buttons loaded text-center">
                         <button id="button_salvar_vide">
-                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" alt="salvar" />Salvar
-                        </button>
-                        <button type="reset">
-                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_eraser_p.png" alt="limpar" />Limpar
+                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png" alt="salvar" />Excluir
                         </button>
                     </div>
                 </div>
