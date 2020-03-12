@@ -304,7 +304,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 throw new DocValidacaoException("Erro na norma informada.");
             }
-            if (NormaAlteradora.Dispositivos == null || !NormaAlteradora.Dispositivos.Any())
+            if (!Relacao.ch_tipo_relacao.Equals("9") && (NormaAlteradora.Dispositivos == null || !NormaAlteradora.Dispositivos.Any()))
             {
                 throw new DocValidacaoException("Erro ao informar o dispositivo alterador.");
             }

@@ -66,7 +66,7 @@ function selecionarNormaAlteradora(norma){
 }
 
 function selecionarArquivos(){
-    if(!IsNotNullOrEmpty(normaAlteradora.dispositivos)){
+    if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && vide.ch_tipo_relacao != '9'){
         gComplete();
         showMessaNormaIncompativel(normaAlteradora);
         return;
@@ -76,7 +76,7 @@ function selecionarArquivos(){
     $.when(deferredAlteradora, deferredAlterada).done(gComplete);
     selecionarArquivoDaNorma(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
     if(!normaAlterada.in_norma_fora_sistema){
-        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao)){
+        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao) && vide.ch_tipo_relacao != '9'){
             gComplete();
             showMessaNormaIncompativel(normaAlterada);
             return;
@@ -184,13 +184,21 @@ function exibirTextoDoArquivoSemAsAltercoesDoVide(norma, arquivo) {
     
     if ($('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo p').length > 0) {
         if(norma.sufixo == 'alteradora'){
-            removerLinkAlterador(norma.dispositivos[0].linkname, norma.dispositivos[0].texto);
+            if(norma.dispositivos.length > 0){
+                removerLinkAlterador(norma.dispositivos[0].linkname, norma.dispositivos[0].texto);
+            }
+            else if(vide.ch_tipo_relacao == '9'){
+                $(`#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info=${normaAlterada.ch_norma}]`).remove();
+            }
         }
         else{
             if(norma.dispositivos.length > 0){
                 for(let i = 0; i < norma.dispositivos.length; i++){
                     removerAlteracaoDoDispositivo(norma.dispositivos[i].linkname, norma.dispositivos[i].texto);
                 }
+            }
+            else if(vide.ch_tipo_relacao == '9'){
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${normaAlteradora.ch_norma}]`).remove();
             }
             else{
                 removerAlteracaoDoDispositivo();
@@ -239,16 +247,47 @@ function removerAlteracaoDoDispositivo(linkname, texto){
                 break;
         }
     }
-    else if(ehRelacaoDeAlteracaoCompleta()){
-        const dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
+    else{
         $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).remove();
-        if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]').length <= 0){
-            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s')[0].remove();
-            for(let i = 0; i < dispositivosNormaAlterada.length; i++){
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').append(dispositivosNormaAlterada[i]);
+        const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
+        let dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]');
+        if(ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao)){
+            if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
+                const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
+                const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
+                if(!ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && dispositivosNormaAlterada.length > 0){
+                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s')[0].remove();
+                    let lastSelector = `p[ch_norma_alteracao_completa=${lastChNorma}]`;
+                    for(let i = 0; i < dispositivosNormaAlterada.length; i++){
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo ${lastSelector}`).after(dispositivosNormaAlterada[i]);
+                        lastSelector = `p[linkname=${dispositivosNormaAlterada[i].getAttribute('linkname')}]`;
+                    }
+                }
+            }
+            else{
+                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s')[0].remove();
+                let lastSelector = 'h1[epigrafe]';
+                for(let i = 0; i < dispositivosNormaAlterada.length; i++){
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo ${lastSelector}`).after(dispositivosNormaAlterada[i]);
+                    lastSelector = `p[linkname=${dispositivosNormaAlterada[i].getAttribute('linkname')}]`;
+                }
             }
         }
-    }
+        else if(ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao)){
+            if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
+                const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
+                const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
+                if(dispositivosNormaAlterada.length <= 0 && ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao)){
+                    dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
+                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').remove();
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after('<s></s>');
+                    for(let i = 0; i < dispositivosNormaAlterada.length; i++){
+                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s').append(dispositivosNormaAlterada[i]);
+                    }
+                }
+            }
+        }
+    } 
     
 }
 

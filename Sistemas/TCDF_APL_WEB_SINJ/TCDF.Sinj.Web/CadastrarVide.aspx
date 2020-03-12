@@ -366,9 +366,14 @@
                                                             </div>
                                                         </div>
                                                         <div class="line">
-                                                            <div class="column w-70-pc">
+                                                            <div class="column w-30-pc">
                                                                 <div class="cell w-100-pc">
                                                                     <label id="label_norma_vide_alteradora">Selecionar norma:</label><a id="a_adicionar_norma_alteradora" href="javascript:void(0);" onclick="javascript:abrirModalSelecionarNorma('alteradora');" title="Selecionar a norma alteradora"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_add_p.png" alt="adicionar" /></a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="column w-70-pc">
+                                                                <div class="cell w-100-pc">
+                                                                    <label id="labelLecoSemCitacao" style="display:none;"><input type="checkbox" id="inLecoSemCitacao" value="1" onclick="javascript:selecionarLecoSemCitacao();" />Leco sem citação no texto</label>
                                                                 </div>
                                                             </div>
                                                         </div>

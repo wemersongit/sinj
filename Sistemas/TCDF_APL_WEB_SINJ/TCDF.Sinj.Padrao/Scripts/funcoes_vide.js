@@ -330,8 +330,12 @@ function selecionarNormaAlterada(norma){
     }
     $('#label_norma_vide_alterada').text(normaAlterada.ds_norma);
     $('#labelNormaForaDoSistema').hide();
-    if(tipoDeRelacaoSelecionado.ch_tipo_relacao != '1'){
+    $('#labelLecoSemCitacao').hide();
+    if(ehRelacaoDeAlteracaoCompleta(tipoDeRelacaoSelecionado.ch_tipo_relacao) || ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacaoSelecionado.ch_tipo_relacao)){
         $('#labelAlteracaoCompleta').show();
+    }
+    else if(tipoDeRelacaoSelecionado.ch_tipo_relacao == '9'){
+        $('#labelLecoSemCitacao').show();
     }
     selecionarArquivoDaNorma(Object.assign({}, normaAlterada, {sufixo: 'alterada'}));
 }
@@ -582,9 +586,51 @@ function exibirTextoDoArquivo(norma, arquivo) {
 
 }
 
+function selecionarLecoSemCitacao(){
+    if($('#inLecoSemCitacao').is(':checked')){
+        if(tipoDeRelacaoSelecionado.ch_tipo_relacao == '9'){
+            if($(`#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info=${normaAlterada.ch_norma}]`).length > 0){
+                alert('A LECO já existe.');
+                return;
+            }
+            var $dispositivosLeco = $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info]');
+            var selectorInsertBefore = '#div_cad_dispositivo_alteradora div.div_conteudo_arquivo h1[epigrafe]';
+            if($dispositivosLeco.length > 0){
+                var expressaoRegular = /Legislação correlata - .*?([0-9]+)?(?: de ([0-9]{2}\/[0-9]{2}\/[0-9]{4}))?$/;
+                for(let i = 0; i < $dispositivosLeco.length; i++){
+                    let resultRegex = expressaoRegular.exec($dispositivosLeco.text());
+                    if(resultRegex[2] && normaAlterada.dt_assinatura){
+                        if(convertStringToDateTime(normaAlterada.dt_assinatura) > convertStringToDateTime(resultRegex[2])){
+                            continue;
+                        }
+                        if(convertStringToDateTime(normaAlterada.dt_assinatura) == convertStringToDateTime(resultRegex[2])){
+                            if(resultRegex[1] && normaAlterada.nr_norma){
+                                if(parseInt(normaAlterada.nr_norma) > parseInt(resultRegex[1])){
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                    selectorInsertBefore = `#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info=${$dispositivosLeco.attr('ch_norma_info')}]`;
+                }
+            }
+            $(selectorInsertBefore).before(`<p ch_norma_info="${normaAlterada.ch_norma}"><a href="(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}">Legislação correlata - ${normaAlterada.ds_norma}</a></p>`);
+            
+            $('.progressBar li.dispositivo-alterador').addClass('active');
+            $('#divButtons').removeClass('hidden');
+
+            clickAlterarDispositivo();
+        }
+    }
+}
+
 function clickAlterarDispositivo(){
     let dispositivoAlterado = {}
     if(tipoDeRelacaoSelecionado.ch_tipo_relacao == '9'){
+        if($(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${normaAlteradora.ch_norma}]`).length > 0){
+            alert('A LECO já existe.');
+            return;
+        }
         var $dispositivosLeco = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info]');
         var selectorInsertBefore = '#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]';
         if($dispositivosLeco.length > 0){
@@ -694,6 +740,7 @@ function changeTipoRelacao(el){
     resetarDispositivo('alterada');
     $('#labelNormaForaDoSistema').show();
     $('#labelAlteracaoCompleta').hide();
+    $('#labelLecoSemCitacao').hide();
     if(el.value){
         const chTipoDeRelacao = $('#selectTipoDeRelacao').val();
         for(let relacao of tiposDeRelacao){
@@ -889,33 +936,30 @@ function salvarVide(sucessoVide){
 function salvarArquivosVide(sucessoVide){
 
     let htmlNormaAlteradora = "";
-    const $conteudoArquivoNormaAlteradora = $($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html());
-    for(let i in $conteudoArquivoNormaAlteradora){
-        if($conteudoArquivoNormaAlteradora[i].outerHTML){
-            if($conteudoArquivoNormaAlteradora[i].getAttribute('linkname') == normaAlteradora.dispositivos[0].linkname){
-                const $link = $($conteudoArquivoNormaAlteradora[i]).find('a[href]');
-                let link = `(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}.html`;
-                if(normaAlterada.dispositivos.length > 0){
-                    link += `#${normaAlterada.dispositivos[0].linkname}`;
-                }
-                for(let a = 0; a < $link.length; a++){
-                    if($link[a].innerText == normaAlteradora.dispositivos[0].texto){
-                        $link[a].setAttribute('href', link);
-                        $link[a].removeAttribute('title');
-                        break;
+    if(!$('#inLecoSemCitacao').is(':checked')){
+        const $conteudoArquivoNormaAlteradora = $($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html());
+        for(let i in $conteudoArquivoNormaAlteradora){
+            if($conteudoArquivoNormaAlteradora[i].outerHTML){
+                if($conteudoArquivoNormaAlteradora[i].getAttribute('linkname') == normaAlteradora.dispositivos[0].linkname){
+                    const $link = $($conteudoArquivoNormaAlteradora[i]).find('a[href]');
+                    let link = `(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}.html`;
+                    if(normaAlterada.dispositivos.length > 0){
+                        link += `#${normaAlterada.dispositivos[0].linkname}`;
+                    }
+                    for(let a = 0; a < $link.length; a++){
+                        if($link[a].innerText == normaAlteradora.dispositivos[0].texto){
+                            $link[a].setAttribute('href', link);
+                            $link[a].removeAttribute('title');
+                            break;
+                        }
                     }
                 }
             }
-            const replacedBy = $conteudoArquivoNormaAlteradora[i].getAttribute('replaced_by_revogado');
-            if(replacedBy){
-                $conteudoArquivoNormaAlteradora[i].removeAttribute('replaced_by_revogado');
-                $conteudoArquivoNormaAlteradora[i].setAttribute('replaced_by', replacedBy);
-            }
-            if($($conteudoArquivoNormaAlteradora[i]).is(':hidden')){
-                $($conteudoArquivoNormaAlteradora[i]).show();
-            }
             htmlNormaAlteradora += $conteudoArquivoNormaAlteradora[i].outerHTML;
         }
+    }
+    else{
+        htmlNormaAlteradora = $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html();
     }
     
     $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlteradora));
@@ -947,12 +991,20 @@ function salvarArquivosVide(sucessoVide){
         bAsync: true
     });
     if(!normaAlterada.in_norma_fora_do_sistema){
-        completed = false;
         let htmlNormaAlterada = "";
+        let replacedBy = "";
         const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
         for(let i = 0; i < $conteudoArquivoNormaAlterada.length; i++){
             if($conteudoArquivoNormaAlterada[i].outerHTML){
                 $($conteudoArquivoNormaAlterada[i]).find('button').remove();
+                replacedBy = $conteudoArquivoNormaAlterada[i].getAttribute('replaced_by_revogado');
+                if(replacedBy){
+                    $conteudoArquivoNormaAlterada[i].removeAttribute('replaced_by_revogado');
+                    $conteudoArquivoNormaAlterada[i].setAttribute('replaced_by', replacedBy);
+                }
+                if($($conteudoArquivoNormaAlterada[i]).is(':hidden')){
+                    $($conteudoArquivoNormaAlterada[i]).show();
+                }
                 htmlNormaAlterada += $conteudoArquivoNormaAlterada[i].outerHTML;
             }
         }
