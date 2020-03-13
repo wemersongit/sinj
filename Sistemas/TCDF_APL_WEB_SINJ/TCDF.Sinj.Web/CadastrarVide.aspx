@@ -17,7 +17,7 @@
                     sType: "success",
                     oButtons: [
                         {
-                            text: "Continuar", click: function () {
+                            text: "Ver norma", click: function () {
                                 if (IsNotNullOrEmpty(data, "ch_norma")) {
                                     Redirecionar('?id_norma=' + data.ch_norma);
                                 }
@@ -29,47 +29,18 @@
                             }
                         },
                         {
-                            text: "Adicionar outro Vide", click: function () {
-                                var content = 'Adicionar outro Vide com as seguintes normas:<br/>' +
-                                                '<br/> <input type="checkbox" id="checkbox_norma_alteradora" value="norma_alteradora">' + $('#label_norma_vide_alteradora').html() + ' </input> ' +
-                                                '<br/> <input type="checkbox" id="checkbox_norma_alterada" value="norma_alterada">' + $('#label_norma_vide_alterada').html() + ' </input> ';
-                                $(this).html(content);
-                                $(this).dialog("option", "buttons", [
-                                    {
-                                        text: "Continuar",
-                                        click: function () {
-                                            if (IsNotNullOrEmpty(data, 'dt_controle_alteracao')) {
-                                                $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
-                                            }
-                                            $("#ch_tipo_relacao").val("");
-                                            $("#nm_tipo_relacao").val("");
-                                            $("#ds_comentario_vide").val("");
+                            text: "Continuar cadastrando", click: function () {
+                                if (IsNotNullOrEmpty(data, 'dt_controle_alteracao')) {
+                                    $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
+                                }
+                                idLink = '';
+                                selecionarNormaAlteradora(normaAlteradora);
+                                changeStepper('selecionarTipoRelacao');
+                                selecionarNormaAlterada(normaAlterada);
 
-                                            if (!$('#checkbox_norma_alteradora').prop("checked")) {
-                                                $('#ch_norma_alteradora').val("");
-                                                $('#label_norma_vide_alteradora').html("");
-                                                $('#artigo_norma_vide').val("");
-                                                $('#paragrafo_norma_vide').val("");
-                                                $('#inciso_norma_vide').val("");
-                                                $('#alinea_norma_vide').val("");
-                                                $('#item_norma_vide').val("");
-                                                $('#anexo_norma_vide').val("");
-                                            }
-                                            if (!$('#checkbox_norma_alterada').prop("checked")) {
-                                                $('#ch_norma_alterada').val("");
-                                                $('#label_norma_vide_alterada').html("");
-                                                $('#artigo_norma_vide_alterada').val("");
-                                                $('#paragrafo_norma_vide_alterada').val("");
-                                                $('#inciso_norma_vide_alterada').val("");
-                                                $('#alinea_norma_vide_alterada').val("");
-                                                $('#item_norma_vide_alterada').val("");
-                                                $('#anexo_norma_vide_alterada').val("");
-                                            }
+                                $("#ds_comentario_vide").val("");
 
-                                            $(this).dialog('destroy');
-                                        }
-                                    }
-                                ]);
+                                $(this).dialog('destroy');
                             }
                         }
                     ],
@@ -348,7 +319,7 @@
                                 <div class="column w-100-pc">
                                     <div class="table w-100-pc">
                                         <div class="line">
-                                            <div id="columnRelacao" class="column w-100-pc text-center step hidden">
+                                            <div id="columnRelacao" class="column w-100-pc text-center step step2 hidden">
                                                 Tipo de relação:
                                                 <select id="selectTipoDeRelacao" onchange="changeTipoRelacao(this);">
                                                     <option value=""></option>
@@ -356,7 +327,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div id="lineNormas" class="line step">
+                                        <div id="lineNormas" class="line step step1">
                                             <div class="column w-50-pc">
                                                 <div class="cell w-100-pc">
                                                     <div class="table w-99-pc mauto">
@@ -405,7 +376,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="columnNormaAlterada" class="column w-50-pc step hidden">
+                                            <div id="columnNormaAlterada" class="column w-50-pc step step3 hidden">
                                                 <div class="cell w-100-pc">
                                                     <div class="table w-99-pc mauto">
                                                         <div class="head">
@@ -426,7 +397,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div id="line_norma_fora_do_sistema" class="line">
+                                                        <div id="line_norma_fora_do_sistema" class="line hidden">
                                                             <button type="button" class="clean button-close" title="Fechar" onclick="fecharNormaForaDoSistema()"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="fechar" width="12px" height="12px" /></button>
                                                             <div class="column w-100-pc">
                                                                 <div class="table w-100-pc">
@@ -607,7 +578,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="lineComentario" class="line comentario step hidden">
+                                        <div id="lineComentario" class="line comentario step step4 hidden">
                                             <div class="column w-100-pc">
                                                 <div class="table w-80-pc mauto">
                                                     <div class="line">
@@ -626,7 +597,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <div id="divButtons" style="width:210px; margin:auto;" class="buttons loaded step hidden">
+                    <div id="divButtons" style="width:210px; margin:auto;" class="buttons loaded step step4 hidden">
                         <button id="button_salvar_vide">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" alt="salvar" />Salvar
                         </button>
