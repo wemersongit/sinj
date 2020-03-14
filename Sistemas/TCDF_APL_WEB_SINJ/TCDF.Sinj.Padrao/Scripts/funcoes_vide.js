@@ -856,7 +856,7 @@ function getDescricaoDoLinkname(linkname) {
         }
     }
     const lastItem = linknameSplited[linknameSplited.length - 1];
-    if(/art[0-9]|par[0-9]|inc[0-9]|ali[0-9]/.test(lastItem)){
+    if(/art[0-9]|par[0-9]|inc[0-9]|ali[0-9]/.test(lastItem) && $(`#div_cad_dispositivo_alterada p[linkname^=${linkname}_]`).length > 0){
         descricao += ', Caput.'
     }
     return descricao;
@@ -914,7 +914,7 @@ function getDescricaoDoElemento(dispositivo)
         dispositivo3 = "inc. " + dispositivo2;
     }
     else if (dispositivo1 == "num" && IsNotNullOrEmpty(dispositivo2)) {
-        dispositivo3 = dispositivo2 + ".";
+        dispositivo3 = 'núm. ' + dispositivo2;
     }
     else if (dispositivo1 == "ali" && IsNotNullOrEmpty(dispositivo2)) {
         dispositivo3 = dispositivo2 + ")";
@@ -968,8 +968,8 @@ function salvarArquivosVide(sucessoVide){
                         }
                     }
                 }
+                htmlNormaAlteradora += $conteudoArquivoNormaAlteradora[i].outerHTML;
             }
-            htmlNormaAlteradora += $conteudoArquivoNormaAlteradora[i].outerHTML;
         }
     }
     else{
