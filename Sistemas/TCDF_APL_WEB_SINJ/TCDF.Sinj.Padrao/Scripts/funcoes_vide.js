@@ -400,10 +400,12 @@ function selecionarArquivoDaNorma(norma) {
         }
         if (IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
             norma.arquivo = data.ar_atualizado;
+            exibirControlesNormaAlteradaSelecionada();
         }
         else if (IsNotNullOrEmpty(data, 'fontes')) {
             if (IsNotNullOrEmpty(data.fontes[data.fontes.length - 1].ar_fonte, 'id_file')) {
                 norma.arquivo = data.fontes[data.fontes.length - 1].ar_fonte;
+                exibirControlesNormaAlteradaSelecionada();
             }
             else {
                 alert('Erro ao selecionar o arquivo de publicação da norma. Verifique se a norma possui arquivo em suas fontes de publicação e republicação.');
