@@ -22,7 +22,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
             string sRetorno = "";
             string _bbusca = context.Request["bbusca"];
             SessaoUsuarioOV sessao_usuario = null;
-
+            
             try
             {
                 if (util.BRLight.Util.GetVariavel("Aplicacao") == "CADASTRO")
@@ -34,6 +34,10 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                 {
                     case "sinj_norma":
                         sRetorno = "{\"counts\":[{\"nm_base\":\"" + _bbusca + "\",\"ds_base\":\"Normas\",\"count\":" + BuscarTotalDeNormas(context) + "}]}";
+                        break;
+                    //PendenteDePublicacao
+                    case "pendenteDePublicacao":
+                        sRetorno = "{\"counts\":[{\"nm_base\":\"sinj_norma\",\"ds_base\":\"Normas\",\"count\":" + BuscarTotalDeNormas(context) + "},{\"nm_base\":\"sinj_diario\",\"ds_base\":\"Diários\",\"count\":" + BuscarTotalDeDiarios(context) + "}]}";
                         break;
                     case "sinj_diario":
                         sRetorno = "{\"counts\":[{\"nm_base\":\"" + _bbusca + "\",\"ds_base\":\"Diários\",\"count\":" + BuscarTotalDeDiarios(context) + "}]}";
@@ -61,7 +65,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                 }
             }
             context.Response.ContentType = "application/json";
-            context.Response.Write(sRetorno);//Aqui já foi "contada" as normas que est
+            context.Response.Write(sRetorno);
             context.Response.End();
         }
 
@@ -97,6 +101,14 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaAvancada.isCount = true;
                     var buscaAvancada = new NormaBuscaEs().MontarBusca(pesquisaAvancada);
                     query = buscaAvancada.GetQuery();
+                    break;
+                case "pendenteDePublicacao":
+                    SentencaPesquisaPendenteDePublicacaoOV pesquisaPendenteDePublicacao = new SentencaPesquisaPendenteDePublicacaoOV();
+                    pesquisaPendenteDePublicacao.all = context.Request["all"];
+                    pesquisaPendenteDePublicacao.all = pesquisaPendenteDePublicacao.all.Replace(".", "");
+                    pesquisaPendenteDePublicacao.isCount = true;
+                    var buscaPendenteDePublicacao = new NormaBuscaEs().MontarBusca(pesquisaPendenteDePublicacao);
+                    query = buscaPendenteDePublicacao.GetQuery();
                     break;
                 default:
                     SentencaPesquisaGeralOV pesquisaGeral = new SentencaPesquisaGeralOV();

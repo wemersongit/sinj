@@ -1049,7 +1049,7 @@ function salvarArquivosVide(sucessoVide){
         deferredAlterada.resolve();
     }
     return false;
-<<<<<<< Updated upstream
+
 }
 
 function changeStepper(action){
@@ -1104,6 +1104,5 @@ function changeStepper(action){
             $('li.dispositivo-alterado').addClass('active');
             break;
     }
-=======
->>>>>>> Stashed changes
+
 }

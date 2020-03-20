@@ -27,6 +27,12 @@ namespace TCDF.Sinj.OV
     {
         public string all { get; set; }
     }
+
+    public class SentencaPesquisaPendenteDePublicacaoOV : SentencaPesquisaSinjOV
+    {
+        public string all { get; set; }
+    }
+
     public class SentencaPesquisaDiretaNormaOV : SentencaPesquisaSinjOV
     {
         public string all { get; set; }

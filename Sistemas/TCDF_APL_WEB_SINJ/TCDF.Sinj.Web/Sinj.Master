@@ -1,4 +1,4 @@
-<%@ Master Language="C#" Inherits="TCDF.Sinj.Web.Sinj" %>
+﻿<%@ Master Language="C#" Inherits="TCDF.Sinj.Web.Sinj" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -152,7 +152,7 @@
                 <div class="right-top">
                     <span id="span_versao"></span>
                 </div>
-                <div class="logo" style="display:none">
+                <div class="logo">
                     <a href="./" title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="sinj" /></a>
                 </div>
                 <div class="top-bottom">
@@ -250,6 +250,7 @@
                                 <li id="li_historico"><a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a></li>
                                 <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a></li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a></li>
+                                <li id="li_pendenteDePesquisa"><a title="Pendente de Pesquisa"                  class="lnkmenu" id="aPendenteDePesquisa"   href="./ResultadoDePesquisa?bbusca=pendenteDePublicacao&tipo_pesquisa=pendenteDePublicacao&all=">Pendente de Pesquisa</a></li>
                                 <li id="li_contatos"><a title="Contatos"             class="lnkmenu" id="aContatos"       href="./Contatos">Contatos</a></li>
                             </ul>
                             <div id="div_user_notifiqueme" >

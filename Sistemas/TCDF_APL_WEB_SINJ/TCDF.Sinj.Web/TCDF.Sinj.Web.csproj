@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -13,6 +14,17 @@
     <AssemblyName>TCDF.Sinj.Web</AssemblyName>
     <UseIISExpress>false</UseIISExpress>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,6 +61,10 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
+    <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
+    </Reference>
     <Reference Include="Ude">
       <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
     </Reference>
@@ -69,9 +85,6 @@
     </Reference>
     <Reference Include="neo.BRLightREST">
       <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
-    </Reference>
-    <Reference Include="TCDF.Sinj">
-      <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +287,7 @@
     <Content Include="ResultadoDePesquisa.aspx" />
     <Content Include="ResultadoDePesquisaErroExtracao.aspx" />
     <Content Include="ResultadoDePesquisaPesquisas.aspx" />
+    <Content Include="ResultadoDePesquisaPublicacao.aspx" />
     <Content Include="ResultadoDePesquisaPush.aspx" />
     <Content Include="ResultadoDePesquisaSessao.aspx" />
     <Content Include="Rotinas\AjustarChaveCronologia.aspx" />
@@ -1508,6 +1522,10 @@
       <DependentUpon>ResultadoDePesquisaPesquisas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ResultadoDePesquisaPublicacao.aspx.cs">
+      <DependentUpon>ResultadoDePesquisaPublicacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ResultadoDePesquisaPush.aspx.cs">
       <DependentUpon>ResultadoDePesquisaPush.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1881,9 +1899,15 @@
   <ItemGroup>
     <Content Include="ashx\Visualizacao\FaleConoscoDetalhes.ashx" />
   </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
