@@ -325,7 +325,21 @@ tbody td a:link {color: #333;}
 div.caputedit {position:relative; border-top: 1px solid #bbb; margin-top: 5px;}
 div.caputedit button.del {position:absolute; top: 0px; right: 0px;}
 p[linkname] button.selected{background: url("../Imagens/ico_anchor_p.png") no-repeat; border: none; padding: 9px;}
-p[linkname] button.select{background: url("../Imagens/ico_anchor_p_clear.png") no-repeat; border: none; padding: 9px;}    
+p[linkname] button.select{background: url("../Imagens/ico_anchor_p_clear.png") no-repeat; border: none; padding: 9px;}
+
+#div_tooltip_dispositivo{
+    position:absolute;
+    z-index:1001;
+    width: 45%;
+}
+.div_conteudo_arquivo { max-height: 700px; overflow-y: scroll; }
+.div_conteudo_arquivo p { margin-bottom: 10px; font-size: 13px; }
+#div_vide .remover { background-color: #ffa9a9; }
+#div_vide .desfazer { background-color: #b4f3b4; }
+#div_vide .refazer { background-color: #f1e1bf; }
+.legenda-excluir-vide { width: fit-content;}
+
+
 
 /*Vocabulario*/
 .div-alfabeto {width:100%; clear:both;}
