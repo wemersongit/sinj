@@ -966,6 +966,7 @@ function salvarArquivosVide(sucessoVide){
                         if($link[a].innerText == normaAlteradora.dispositivos[0].texto){
                             $link[a].setAttribute('href', link);
                             $link[a].removeAttribute('title');
+                            $link[a].removeAttribute('id');
                             break;
                         }
                     }
@@ -1051,7 +1052,10 @@ function salvarArquivosVide(sucessoVide){
         deferredAlterada.resolve();
     }
     return false;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3cacb4c675beb031966fb4ded9e6391a08ea1a6a
 }
 
 function changeStepper(action){
@@ -1106,5 +1110,8 @@ function changeStepper(action){
             $('li.dispositivo-alterado').addClass('active');
             break;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3cacb4c675beb031966fb4ded9e6391a08ea1a6a
 }

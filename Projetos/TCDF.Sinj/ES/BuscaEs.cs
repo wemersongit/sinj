@@ -410,7 +410,7 @@ namespace TCDF.Sinj.ES
             }
             else
             {
-                sQuery = "*";
+                sQuery = "st_habilita_pesquisa=true";
             }
             if (!string.IsNullOrEmpty(searchFilter))
             {

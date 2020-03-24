@@ -1161,6 +1161,7 @@ function SelecionarTipoDeNorma() {
     $('#div_dados_de_acoes').hide();
     $('#line_interessados').hide();
     $('#line_autorias').hide();
+	$('.projetoDeLei').hide();
     $('#line_apelido').hide();
     if ($('#ch_tipo_norma').val() != "" && IsNotNullOrEmpty(_user, 'orgao_cadastrador.nm_orgao_cadastrador')) {
         $('.buttons').show();
@@ -1195,7 +1196,7 @@ function SelecionarTipoDeNorma() {
         if ($('#EhLei').val() === "true") {
 
             $('#line_autorias').show();
-            
+            $('.projetoDeLei').show();
         }
         if ($('#EhDecreto').val() === "true") {
             

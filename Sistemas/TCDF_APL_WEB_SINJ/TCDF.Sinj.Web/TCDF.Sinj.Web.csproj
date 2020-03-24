@@ -68,9 +68,6 @@
     <Reference Include="Ude">
       <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
     </Reference>
-    <Reference Include="util.BRLight">
-      <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -85,6 +82,10 @@
     </Reference>
     <Reference Include="neo.BRLightREST">
       <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
+    </Reference>
+    <Reference Include="util.BRLight, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -287,7 +288,6 @@
     <Content Include="ResultadoDePesquisa.aspx" />
     <Content Include="ResultadoDePesquisaErroExtracao.aspx" />
     <Content Include="ResultadoDePesquisaPesquisas.aspx" />
-    <Content Include="ResultadoDePesquisaPublicacao.aspx" />
     <Content Include="ResultadoDePesquisaPush.aspx" />
     <Content Include="ResultadoDePesquisaSessao.aspx" />
     <Content Include="Rotinas\AjustarChaveCronologia.aspx" />
@@ -1520,10 +1520,6 @@
     </Compile>
     <Compile Include="ResultadoDePesquisaPesquisas.aspx.cs">
       <DependentUpon>ResultadoDePesquisaPesquisas.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ResultadoDePesquisaPublicacao.aspx.cs">
-      <DependentUpon>ResultadoDePesquisaPublicacao.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ResultadoDePesquisaPush.aspx.cs">

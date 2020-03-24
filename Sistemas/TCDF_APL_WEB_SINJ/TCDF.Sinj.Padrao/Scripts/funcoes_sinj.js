@@ -2923,7 +2923,7 @@ function DetalhesNorma(data, highlight) {
             );
 
             if (data.nr_projeto_lei && data.url_projeto_lei && data.nr_projeto_lei != "null" && data.url_projeto_lei != "null") {
-                var link_projeto_lei = `${data.nr_projeto_lei} - <a href="${data.url_projeto_lei}">${data.url_projeto_lei}</a>`;
+                var link_projeto_lei = `<a href="${data.url_projeto_lei}">${data.nr_projeto_lei}</a>`;
                 $("#div_links").append("<br>" + link_projeto_lei);
             }
 

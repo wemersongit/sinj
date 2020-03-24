@@ -106,6 +106,9 @@
                                 vide = data.vides[i];
                                 vide.nm_tipo_relacao = getNmTipoRelacao(vide);
                                 $('#tipoDeRelacao').val(vide.nm_tipo_relacao);
+                                if (!IsNotNullOrEmpty(vide.ds_comentario_vide)) {
+                                    $('#lineComentario').remove();
+                                }
                                 selecionarNorma(data);
                             }
                         }
@@ -142,95 +145,9 @@
         z-index:1001;
         width: 45%;
     }
-    .tooltip > .tooltip-header {
-        background-color: #EEE; 
-        color: #006633; 
-        border: 1px solid #006633;
-        padding: 0px 15px;
-        font-size: 14px;
-        border-radius: 4px 4px 0px 0px;
-    }
-    .tooltip > .tooltip-header {
-        border-bottom: none;
-    }
-    .tooltip > .tooltip-inner {
-        background-color: #EEE; 
-        color: #006633; 
-        border: 1px solid #006633;
-        padding: 0px 15px;
-        font-size: 14px;
-        border-radius: 0px 0px 4px 4px;
-    }
-    .tooltip > .tooltip-inner {
-        border-top: none;
-    }    
-    #div_cad_dispositivo_alteradora div.div_conteudo_arquivo.copy-enabled{cursor:copy;}
-    .button-close{float:right;}
-        
-        
-    .wrapper-progressBar {
-        width: 80%;
-        margin:auto;
-        padding:30px;
-    }
-
-    .progressBar {
-        margin-bottom:50px;
-    }
-
-    .progressBar li 
-    {
-        color: #38953F;
-        font-size: 14px;
-        list-style-type: none;
-        float: left;
-        width: 20%;
-        position: relative;
-        text-align: center;
-    }
-
-    .progressBar li:before {
-        content: " ";
-        line-height: 30px;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        border: 2px solid #036735;
-        display: block;
-        text-align: center;
-        margin: 0 auto 10px;
-        background-color: white
-    }
-
-    .progressBar li:after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 4px;
-        background-color: #ddd;
-        top: 15px;
-        left: -50%;
-        z-index: -1;
-    }
-
-    .progressBar li:first-child:after {
-        content: none;
-    }
-
-    .progressBar li.active {
-            
-    }
-
-    .progressBar li.active:before {
-        border-color: #036735;
-        background-color: #036735
-    }
-
-    .progressBar .active:after 
-    {
-        z-index: 1;
-        background-color: #036735;
-    }
+    .div_conteudo_arquivo p { margin-bottom: 10px; font-size: 13px; }
+    .div_conteudo_arquivo .remover { background-color: #ffa9a9; }
+    .div_conteudo_arquivo .desfazer { background-color: #b4f3b4; }
         
 </style>
 </asp:Content>
@@ -256,6 +173,11 @@
                                                 Relação a ser removida:
                                                 <input type="text" id="tipoDeRelacao" value="" disabled="disabled" />
                                             </div>
+                                        </div>
+                                        <div class="legenda-excluir-vide">
+                                            <p class="desfazer">O dispositivo terá a modificação desfeita.</p>
+                                            <p class="refazer">O dispositivo voltará a sofrer a alteração que sofria antes do vide.</p>
+                                            <p class="remover">O dispositivo será removido junto com o vide.</p>
                                         </div>
                                         <div id="lineNormas" class="line">
                                             <div class="column w-50-pc">

@@ -131,11 +131,6 @@
     <style type="text/css">
         div.table div.head div.title{width:100%}
         div.table div.head div.title h2{font-size: 18px;}
-        #div_tooltip_dispositivo{
-            position:absolute;
-            z-index:1001;
-            width: 45%;
-        }
         .tooltip > .tooltip-header {
             background-color: #EEE; 
             color: #006633; 
