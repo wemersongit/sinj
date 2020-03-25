@@ -1,13 +1,14 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="CadastrarVide.aspx.cs" Inherits="TCDF.Sinj.Web.CadastrarVide" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" ></script>
+<script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide_cadastrar.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" ></script>
     <script type="text/javascript" language="javascript">
 
         var id_doc = GetParameterValue('id_doc');
         $(document).ready(function () {
 
             $('#button_salvar_vide').click(function () {
-                return salvarArquivosVide(sucesso_vide);
+                return salvarArquivosVideCadastrar(sucesso_vide);
             });
 
             var open_modal = function (data) {
@@ -111,7 +112,7 @@
                             gComplete();
                         }
                         else if (IsNotNullOrEmpty(data.ch_norma)) {
-                            selecionarNormaAlteradora({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma });
+                            selecionarNormaAlteradoraCadastrar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma });
                         }
                     }
                 };
@@ -314,8 +315,8 @@
                                 <div class="column w-100-pc">
                                     <div class="table w-100-pc">
                                         <div class="line">
-                                            <div id="columnRelacao" class="column w-100-pc text-center step step2 hidden">
-                                                Tipo de relação:
+                                            <div id="columnRelacao" class="column w-100-pc text-center step step2 hidden bold">
+                                                <label>Tipo de Relação:</label>
                                                 <select id="selectTipoDeRelacao" onchange="changeTipoRelacao(this);">
                                                     <option value=""></option>
                                                     <option value="Alteração">Alteração</option>
@@ -388,12 +389,12 @@
                                                             <div class="column w-70-pc">
                                                                 <div class="cell w-100-pc">
                                                                     <label id="labelAlteracaoCompleta" style="display:none;"><input type="checkbox" id="in_alteracao_completa" value="1" onclick="javascript:selecionarAlteracaoCompleta();" />Alterar a norma completa</label>
-                                                                    <label id="labelNormaForaDoSistema"><input type="checkbox" id="in_norma_fora_do_sistema" value="1" onclick="javascript:selecionarNormaForaDoSistema();" />Norma Fora do Sistema</label>
+                                                                    <label id="labelNormaForaDoSistema"><input type="checkbox" id="in_norma_fora_do_sistema" value="1" onclick="javascript:selecionarNormaForaDoSistemaCadastrar();" />Norma Fora do Sistema</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div id="line_norma_fora_do_sistema" class="line hidden">
-                                                            <button type="button" class="clean button-close" title="Fechar" onclick="fecharNormaForaDoSistema()"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="fechar" width="12px" height="12px" /></button>
+                                                            <button type="button" class="clean button-close" title="Fechar" onclick="fecharNormaForaDoSistemaCadastrar()"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="fechar" width="12px" height="12px" /></button>
                                                             <div class="column w-100-pc">
                                                                 <div class="table w-100-pc">
                                                                     <div class="line">

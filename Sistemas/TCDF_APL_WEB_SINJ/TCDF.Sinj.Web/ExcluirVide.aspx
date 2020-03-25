@@ -1,12 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sinj.Master" AutoEventWireup="true" CodeBehind="ExcluirVide.aspx.cs" Inherits="TCDF.Sinj.Web.ExcluirVide" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
+<script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" ></script>
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide_excluir.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" ></script>
 <script type="text/javascript" language="javascript">
 
     $(document).ready(function () {
 
         $('#button_salvar_vide').click(function () {
-            return salvarArquivosVide(sucesso_vide);
+            return salvarArquivosVideExcluir(sucesso_vide);
         });
 
         var open_modal = function (data) {
@@ -109,7 +110,7 @@
                                 if (!IsNotNullOrEmpty(vide.ds_comentario_vide)) {
                                     $('#lineComentario').remove();
                                 }
-                                selecionarNorma(data);
+                                selecionarNormaExcluir(data);
                             }
                         }
                         if (!IsNotNullOrEmpty(vide, 'ch_vide')) {
@@ -140,11 +141,6 @@
 <style type="text/css">
     div.table div.head div.title{width:100%}
     div.table div.head div.title h2{font-size: 18px;}
-    #div_tooltip_dispositivo{
-        position:absolute;
-        z-index:1001;
-        width: 45%;
-    }
     .div_conteudo_arquivo p { margin-bottom: 10px; font-size: 13px; }
     .div_conteudo_arquivo .remover { background-color: #ffa9a9; }
     .div_conteudo_arquivo .desfazer { background-color: #b4f3b4; }
@@ -169,8 +165,8 @@
                                 <div class="column w-100-pc">
                                     <div class="table w-100-pc">
                                         <div class="line">
-                                            <div id="columnRelacao" class="column w-100-pc text-center">
-                                                Relação a ser removida:
+                                            <div id="columnRelacao" class="column w-100-pc text-center bold">
+                                                <label>Tipo de Relação:</label>
                                                 <input type="text" id="tipoDeRelacao" value="" disabled="disabled" />
                                             </div>
                                         </div>

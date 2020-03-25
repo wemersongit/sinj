@@ -3093,7 +3093,7 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
             '<td width="25%">' + dispositivo_afetado + '</td>' +
             '<td width="10%"> pelo(a) </td>' +
             '<td width="30%">' + (IsNotNullOrEmpty(vide.ch_norma_vide) ? '<a href="./DetalhesDeNorma.aspx?id_norma=' + vide.ch_norma_vide + '" title="Visualizar Detalhes da Norma">' + vide.nm_tipo_norma_vide + ' ' + vide.nr_norma_vide + '</a>' : vide.nm_tipo_norma_vide + ' ' + vide.nr_norma_vide) + '/' + ano +  ' - ' + vide.nm_orgao_origem +'</td>' +
-            (bCadastro ? '<td width="10%">' + (bPodeEditar && ValidarPermissao(_grupos.nor_edt) ? '<a href="./ExcluirVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '" title="Excluir Vide" ><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" alt="excluir" /></a>' : '') + '</td>' : '') +
+            (bCadastro ? '<td width="10%">' + (bPodeEditar && ValidarPermissao(_grupos.nor_edt) ? '<a href="./EditarVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '" title="Editar Vide" ><img src="' + _urlPadrao + '/Imagens/ico_pencil_p.png" alt="editar" /></a>&nbsp;<a href="./ExcluirVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '" title="Excluir Vide" ><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" alt="excluir" /></a>' : '') + '</td>' : '') +
             '</tr>' +
             (IsNotNullOrEmpty(vide.ds_comentario_vide) ? '<tr><td colspan="5" style="background-color:transparent;"><table style="width:98%; float:right;"><thead><tr><th class="text-left">Comentário</th></tr></thead><tbody id="tbody_comentario_vide"><tr><td>' + vide.ds_comentario_vide + '</td></tr></tbody></table></td></tr>' : '')
         );
@@ -3122,21 +3122,11 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
             '<td width="25%">' + dispositivo_afetado + '</td>' +
             '<td width="10%">' + (IsNotNullOrEmpty(dispositivo_afetado) ? "do(a)" : "&nbsp;&nbsp;&nbsp;&nbsp;") + '</td>' +
             '<td width="30%">' + (IsNotNullOrEmpty(vide.ch_norma_vide) ? '<a href="./DetalhesDeNorma.aspx?id_norma=' + vide.ch_norma_vide + '" title="Visualizar Detalhes da Norma">' + vide.nm_tipo_norma_vide + ' ' + vide.nr_norma_vide + '</a>' : vide.nm_tipo_norma_vide + ' ' + vide.nr_norma_vide) + '/' + ano +  ' - ' + vide.nm_orgao_origem +'</td>' +
-            (bCadastro ? '<td width="10%">' + (bPodeEditar && ValidarPermissao(_grupos.nor_edt) ? '<a href="./ExcluirVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '" title="Excluir Vide" ><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" alt="excluir" /></a>' : '') + '</td>' : '') +
+            (bCadastro ? '<td width="10%">' + (bPodeEditar && ValidarPermissao(_grupos.nor_edt) ? '<a href="./EditarVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '" title="Editar Vide" ><img src="' + _urlPadrao + '/Imagens/ico_pencil_p.png" alt="editar" /></a>&nbsp;<a href="./ExcluirVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '" title="Excluir Vide" ><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" alt="excluir" /></a>' : '') + '</td>' : '') +
             '</tr>' +
             (IsNotNullOrEmpty(vide.ds_comentario_vide) ? '<tr><td colspan="5" style="background-color:transparent;"><table style="width:98%; float:right;"><thead><tr><th class="text-left">Comentário</th></tr></thead><tbody id="tbody_comentario_vide"><tr><td>' + vide.ds_comentario_vide + '</td></tr></tbody></table></td></tr>' : '')
         );
     }
-}
-
-function ehRelacaoDeAlteracaoCompleta(chTipoRelacao){
-    const relacoesAlteracaoCompleta = ['21', '4', 'a8ed93396fcc4959b9b8e82808880f2a', '25'];
-    return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
-}
-
-function ehRelacaoQueDesfazAlteracaoCompleta(chTipoRelacao){
-    const relacoesQueDesfazAlteracaoCompleta = ['18', 'b4fe69f9b8d748b19e41be8a2071dbdd'];
-    return relacoesQueDesfazAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
 }
 
 function fnSubmitInputFile(id_div_arquivo) {
