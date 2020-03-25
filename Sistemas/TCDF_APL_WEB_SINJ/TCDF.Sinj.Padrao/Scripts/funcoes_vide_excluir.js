@@ -1,19 +1,4 @@
-let normaAlteradora = {};
-let normaAlterada = {};
-let ahTextoIncompativel = false;
-let vide = {};
-
-function showMessaNormaIncompativel(norma){
-    $('#div_notificacao_vide').messagelight({
-        sTitle: "Erro",
-        sContent: `O texto da norma ${norma.ds_norma} não é compatível o módulo de edição de vides.`,
-        sType: "error",
-        sWidth: "",
-        iTime: null
-    });
-}
-
-function selecionarNorma(norma){
+function selecionarNormaExcluir(norma){
     if(IsNotNullOrEmpty(vide.caput_norma_vide, 'caput')){
         vide.alteracao_texto_vide.dispositivos_norma_vide = [];
         for(var i = 0; i < vide.caput_norma_vide.caput.length; i++){
@@ -34,26 +19,26 @@ function selecionarNorma(norma){
     }
     if (vide.in_norma_afetada) {
         if (vide.in_norma_fora_sistema) {
-            selecionarNormaAlteradaForaSistema();
+            selecionarNormaAlteradaForaSistemaExcluir();
         }
         else {
-            selecionarNormaAlterada({ ch_norma: norma.ch_norma, nr_norma: norma.nr_norma, dt_assinatura: norma.dt_assinatura, nm_tipo_norma: norma.nm_tipo_norma, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide });
+            selecionarNormaAlteradaExcluir({ ch_norma: norma.ch_norma, nr_norma: norma.nr_norma, dt_assinatura: norma.dt_assinatura, nm_tipo_norma: norma.nm_tipo_norma, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide });
         }
-        selecionarNormaAlteradora({ ch_norma: vide.ch_norma_vide, nr_norma: vide.nr_norma_vide, dt_assinatura: vide.dt_assinatura_norma_vide, nm_tipo_norma: vide.nm_tipo_norma_vide, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide_outra });
+        selecionarNormaAlteradoraExcluir({ ch_norma: vide.ch_norma_vide, nr_norma: vide.nr_norma_vide, dt_assinatura: vide.dt_assinatura_norma_vide, nm_tipo_norma: vide.nm_tipo_norma_vide, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide_outra });
     }
     else {
         if (vide.in_norma_fora_sistema) {
-            selecionarNormaAlteradaForaSistema();
+            selecionarNormaAlteradaForaSistemaExcluir();
         }
         else {
-            selecionarNormaAlterada({ ch_norma: vide.ch_norma_vide, nr_norma: vide.nr_norma_vide, dt_assinatura: vide.dt_assinatura_norma_vide, nm_tipo_norma: vide.nm_tipo_norma_vide, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide_outra });
+            selecionarNormaAlteradaExcluir({ ch_norma: vide.ch_norma_vide, nr_norma: vide.nr_norma_vide, dt_assinatura: vide.dt_assinatura_norma_vide, nm_tipo_norma: vide.nm_tipo_norma_vide, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide_outra });
         }
-        selecionarNormaAlteradora({ ch_norma: norma.ch_norma, nr_norma: norma.nr_norma, dt_assinatura: norma.dt_assinatura, nm_tipo_norma: norma.nm_tipo_norma, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide });
+        selecionarNormaAlteradoraExcluir({ ch_norma: norma.ch_norma, nr_norma: norma.nr_norma, dt_assinatura: norma.dt_assinatura, nm_tipo_norma: norma.nm_tipo_norma, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide });
     }
-    selecionarArquivos();
+    selecionarArquivosExcluir();
 }
 
-function selecionarNormaAlteradora(norma){
+function selecionarNormaAlteradoraExcluir(norma){
     normaAlteradora = {
         ch_norma: norma.ch_norma,
         nr_norma: norma.nr_norma,
@@ -65,23 +50,23 @@ function selecionarNormaAlteradora(norma){
     $('#label_norma_vide_alteradora').text(normaAlteradora.ds_norma);
 }
 
-function selecionarArquivos(){
+function selecionarArquivosExcluir(){
     if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && vide.ch_tipo_relacao != '9'){
         gComplete();
-        showMessaNormaIncompativel(normaAlteradora);
+        showMessageNormaIncompativel(normaAlteradora);
         return;
     }
     let deferredAlteradora = $.Deferred();
     let deferredAlterada = $.Deferred();
     $.when(deferredAlteradora, deferredAlterada).done(gComplete);
-    selecionarArquivoDaNorma(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+    selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
     if(!normaAlterada.in_norma_fora_sistema){
         if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao) && vide.ch_tipo_relacao != '9'){
             gComplete();
-            showMessaNormaIncompativel(normaAlterada);
+            showMessageNormaIncompativel(normaAlterada);
             return;
         }
-        selecionarArquivoDaNorma(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
+        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
     }
     else{
         deferredAlterada.resolve();
@@ -89,7 +74,7 @@ function selecionarArquivos(){
     
 }
 
-function selecionarNormaAlterada(norma){
+function selecionarNormaAlteradaExcluir(norma){
     normaAlterada = {
         ch_norma: norma.ch_norma,
         nr_norma: norma.nr_norma,
@@ -101,7 +86,7 @@ function selecionarNormaAlterada(norma){
     $('#label_norma_vide_alterada').text(normaAlterada.ds_norma);
 }
 
-function selecionarNormaAlteradaForaSistema(){
+function selecionarNormaAlteradaForaSistemaExcluir(){
     normaAlterada = {
         in_norma_fora_sistema: true
     }
@@ -117,7 +102,7 @@ function selecionarNormaAlteradaForaSistema(){
     $('#nr_coluna_publicacao_norma_vide_fora_do_sistema').val(vide.coluna_publicacao_norma_vide);
 }
 
-function selecionarArquivoDaNorma(norma, deferred) {
+function selecionarArquivoDaNormaExcluir(norma, deferred) {
 
     var sucesso = function (data) {
         if (IsNotNullOrEmpty(data, 'error_message')) {
@@ -174,7 +159,7 @@ function exibirTextoDoArquivoSemAsAltercoesDoVide(norma, arquivo) {
         return;
     }
     if($(htmlUnescaped).closest('h1[epigrafe]').length <= 0){
-        showMessaNormaIncompativel(norma);
+        showMessageNormaIncompativel(norma);
         ahTextoIncompativel = true;
         return;
     }
@@ -225,7 +210,6 @@ function destacarLinkAlterador(linkname, texto){
 function removerLinkAlterador(){
     $(`#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[linkname] a[remover=linkAlterador]`).contents().unwrap();
     $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[remover=leco]').remove();
-
 }
 
 function destacarAlteracaoDoDispositivo(linkname, texto){
@@ -383,7 +367,7 @@ function removerAlteracaoDoDispositivo(){
     }
 }
 
-function salvarVide(sucessoVide){
+function salvarVideExcluir(sucessoVide){
     $('#vide').val(JSON.stringify({
             ch_vide: vide.ch_vide,
             norma_alteradora: normaAlteradora,
@@ -392,7 +376,7 @@ function salvarVide(sucessoVide){
     return fnSalvar("form_vide_excluir", "", sucessoVide);
 }
 
-function salvarArquivosVide(sucessoVide){
+function salvarArquivosVideExcluir(sucessoVide){
     if(normaAlteradora.arquivo && normaAlterada.arquivo){
         removerLinkAlterador();
         removerAlteracaoDoDispositivo();
@@ -402,7 +386,7 @@ function salvarArquivosVide(sucessoVide){
         const deferredAlteradora = $.Deferred();
         const deferredAlterada = $.Deferred();
         $.when(deferredAlteradora, deferredAlterada).done(function(){
-            salvarVide(sucessoVide);
+            salvarVideExcluir(sucessoVide);
         });
         
         var sucessoNormaAlteradora = function (data) {
@@ -453,8 +437,7 @@ function salvarArquivosVide(sucessoVide){
         }
     }
     else{
-        salvarVide(sucessoVide);
+        salvarVideExcluir(sucessoVide);
     }
-    
     return false;
 }
