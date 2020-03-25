@@ -20,6 +20,8 @@
         #sg_hierarquia_nm_vigencia{z-index:10005;}
         #div_modal_importar_arquivo table thead th.nm_arquivo {width:250px;}
         #ds_ementa, #ds_observacao{text-align:justify;}
+        #checkbox_st_habilita_pesquisa {}
+
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
@@ -580,6 +582,8 @@
                                             <input id="in_apelidavel" type="hidden" value="" />
                                             <input id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" onblur="javascript:SelecionarTipoDeNorma();"/><a title="Listar" id="a_tipo_norma"></a>
                                         </div>
+                                        <label style="font-size:large">Habilitar Pesquisa:</label>      
+                                        <input id="checkbox_st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
                                     </div>
                                 </div>
                                 <div class="line">
@@ -683,20 +687,7 @@
                                 
                                 
                                 
-                                <!-- Adicionando mudança aqui Habilita  -->
-                                <div class="line">
-                                    <div class="column w-20-pc">
-                                        <div class="cell fr">
-                                            <label>Habilita no Sinj Pesquisa:</label>
-                                        </div>
-                                    </div>
-                                    <div class="column w-70-pc">
-                                        <div class="cell w-80-pc">
-                                            <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- -->
+                               
                                 
                                 
                                 <div class="line">
@@ -755,6 +746,17 @@
                             <div id="div_notificacao_norma_duplicadade" class="w-80-pc mauto" style="display:none;"></div>
                         </fieldset>
                     </div>
+                               <!-- Adicionando mudança aqui Habilita  -->
+                              <%--  <div id="habilita_pesquisa">
+                                    <div>
+                                        <div>
+                                            <label style="font-size:large">Habilita no Sinj Pesquisa:</label>
+                                            <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                        </div>
+                                    </div>
+                                   
+                                </div>--%>
+                                <!-- -->
                     <div id="div_dados_gerais" class="pos_cad">
                         <fieldset>
                             <legend>Dados Gerais</legend>
