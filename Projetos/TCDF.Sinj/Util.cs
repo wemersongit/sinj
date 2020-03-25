@@ -360,7 +360,7 @@ namespace TCDF.Sinj
             SessaoUsuarioOV usuario_session = new SessaoRN().LerSessaoUsuarioOv();
             if (usuario_session == null)
             {
-                throw new SessionExpiredException("Sessão expirou.");
+                 throw new SessionExpiredException("Sessão expirou.");
             }
             return usuario_session;
         }

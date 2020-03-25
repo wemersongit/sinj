@@ -346,6 +346,46 @@ namespace TCDF.Sinj.ES
         
     }
 
+    //Pendente de publicacao
+    public class BuscaPendenteDePublicacaoEs : BuscaEs
+    {
+        public string GetQuery()
+        {
+            var docEs = new DocEs();
+            var sQuery = "";
+            var sFilters = GetFiltersToQueryString();
+
+            var sSort = GetSort();
+            var sSource = GetSource();
+            var sAgg = GetAggregation();
+            var sHighlight = GetHighlight();
+            var sFromAndSize = GetFromAndSize();
+
+            var fields = GetSearchableFields();
+
+
+
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                sQuery = searchValue;
+            }
+            else
+            {
+                sQuery = "*";
+            }
+            if (!string.IsNullOrEmpty(searchFilter))
+            {
+                sQuery += string.Format(" AND ({0})", searchFilter);
+            }
+
+            sQuery = "{\"query\":{\"query_string\":{\"fields\":[" + fields + "],\"query\":\"" + sQuery + (!string.IsNullOrEmpty(sFilters) ? " AND (" + sFilters + ")" : "") + "\", \"default_operator\":\"AND\"}}" + (sHighlight != "" ? ", " + sHighlight : "") + (sSort != "" ? ", " + sSort : "") + (sSource != "" ? ", " + sSource : "") + (sAgg != "" ? ", " + sAgg : "") + (sFromAndSize != "" ? ", " + sFromAndSize : "") + "}";
+
+
+            return sQuery;
+        }
+    }
+
+
     public class BuscaGeralEs : BuscaEs
     {
         public string GetQuery()
@@ -370,7 +410,7 @@ namespace TCDF.Sinj.ES
             }
             else
             {
-                sQuery = "*";
+                sQuery = "st_habilita_pesquisa=true";
             }
             if (!string.IsNullOrEmpty(searchFilter))
             {

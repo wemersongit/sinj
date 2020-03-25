@@ -363,6 +363,55 @@ namespace TCDF.Sinj.ES
             return buscaGeral;
         }
 
+        //Pendente de publicacao
+        public BuscaPendenteDePublicacaoEs MontarBusca(SentencaPesquisaPendenteDePublicacaoOV sentencaOv)
+        {
+            var buscaPendenteDeEnvioEs = new BuscaPendenteDePublicacaoEs();
+            if (!string.IsNullOrEmpty(sentencaOv.all))
+            {
+                var auxAll = "";
+                if (sentencaOv.all.IndexOf("\"") < 0)
+                {
+                    auxAll = "\\\"" + sentencaOv.all + "\\\"";
+                }
+                sentencaOv.all = new DocEs().TratarCaracteresReservadosDoEs(sentencaOv.all);
+                if (!string.IsNullOrEmpty(sentencaOv.all))
+                {
+                    if (auxAll != "")
+                    {
+                        sentencaOv.all = "((" + sentencaOv.all + ") OR (" + auxAll + "))";
+                    }
+                    buscaPendenteDeEnvioEs.searchValue = sentencaOv.all;
+                }
+            }
+            if (!string.IsNullOrEmpty(sentencaOv.search))
+            {
+                var sSearch = sentencaOv.search;
+                util.BRLight.ManipulaTexto.RemoverAcentuacao(ref sSearch);
+                sentencaOv.search = new DocEs().TratarCaracteresReservadosDoEs(sSearch);
+                if (!string.IsNullOrEmpty(sentencaOv.search))
+                {
+                    buscaPendenteDeEnvioEs.searchFilter = "((" + sentencaOv.search + ") OR (" + sentencaOv.search + "*))";
+                }
+            }
+            if (!sentencaOv.isCount)
+            {
+                buscaPendenteDeEnvioEs.order = MontarOrdenamento(sentencaOv.sentencaOrdenamento);
+                buscaPendenteDeEnvioEs.sourceInclude = MontarSourceInclude();
+                buscaPendenteDeEnvioEs.aggregation = MontarAggregation();
+                buscaPendenteDeEnvioEs.highlight = MontarHighlight();
+                buscaPendenteDeEnvioEs.from = sentencaOv.iDisplayStart;
+                buscaPendenteDeEnvioEs.size = sentencaOv.iDisplayLength;
+            }
+
+            buscaPendenteDeEnvioEs.fields = MontarSearchableFields();
+
+            new UtilBuscaPendenteDePublicacaoEs().MontarFiltroBuscaGeral(sentencaOv.filtros, buscaPendenteDeEnvioEs);
+
+            return buscaPendenteDeEnvioEs;
+        }
+
+
         public BuscaDiretaEs MontarBusca(SentencaPesquisaDiretaNormaOV sentencaOv)
         {
             var buscaDireta = new BuscaDiretaEs();
@@ -638,6 +687,8 @@ namespace TCDF.Sinj.ES
             fields.Add(new SearchableField() { name = "nm_ambito" });
             fields.Add(new SearchableField() { name = "ar_atualizado.filetext" });
             fields.Add(new SearchableField() { name = "fontes.ar_fonte.filetext" });
+
+            fields.Add(new SearchableField() { name = "st_habilita_pesquisa" });
 
             return fields;
         }

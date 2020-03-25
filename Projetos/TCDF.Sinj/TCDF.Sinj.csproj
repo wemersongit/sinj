@@ -85,6 +85,7 @@
     <Compile Include="ES\Doc.cs" />
     <Compile Include="ES\Model.cs" />
     <Compile Include="ES\NormaBuscaEs.cs" />
+    <Compile Include="ES\UtilBuscaPendenteDePublicacaoEs.cs" />
     <Compile Include="ES\UtilBuscaEs.cs" />
     <Compile Include="Excecoes.cs" />
     <Compile Include="LB.cs" />

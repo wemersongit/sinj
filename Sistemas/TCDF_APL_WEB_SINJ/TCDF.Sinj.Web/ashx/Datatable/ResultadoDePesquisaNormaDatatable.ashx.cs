@@ -65,10 +65,23 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaGeral.sentencaOrdenamento = sentencaOrdenamento;
                         query = utilNormaBuscaEs.MontarBusca(pesquisaGeral).GetQuery();
                         break;
+
+                    //Nota: Mostra normas PendenteDePublicacao
+                    case "pendenteDePublicacao":
+                        SentencaPesquisaPendenteDePublicacaoOV pesquisaPendenteDePublicacao = new SentencaPesquisaPendenteDePublicacaoOV();
+                        pesquisaPendenteDePublicacao.all = context.Request["all"];
+                        pesquisaPendenteDePublicacao.all = pesquisaPendenteDePublicacao.all.Replace(".", "");
+                        pesquisaPendenteDePublicacao.filtros = context.Request.Params.GetValues("filtro");
+                        pesquisaPendenteDePublicacao.iDisplayStart = iDisplayStart;
+                        pesquisaPendenteDePublicacao.iDisplayLength = iDisplayLength;
+                        pesquisaPendenteDePublicacao.sentencaOrdenamento = sentencaOrdenamento;
+                        query = utilNormaBuscaEs.MontarBusca(pesquisaPendenteDePublicacao).GetQuery();
+                        break;
+
                     case "norma":
                         SentencaPesquisaDiretaNormaOV pesquisaDireta = new SentencaPesquisaDiretaNormaOV();
                         pesquisaDireta.all = context.Request["all"];
-                        pesquisaDireta.all = pesquisaDireta.all.Replace(".", "");//Código inserido para retirar o ponto da pesquisa
+                        pesquisaDireta.all = pesquisaDireta.all.Replace(".", "");
                         pesquisaDireta.filtros = context.Request.Params.GetValues("filtro");
                         pesquisaDireta.ch_tipo_norma = context.Request["ch_tipo_norma"];
                         pesquisaDireta.nr_norma = context.Request["nr_norma"];
