@@ -450,9 +450,6 @@
                         "artigo_norma_vide":{  
                             "type":"string"
                         },
-                        "caput_norma_vide":{  
-                            "type":"string"
-                        },
                         "ch_tipo_fonte_norma_vide":{  
                             "type":"string"
                         },
