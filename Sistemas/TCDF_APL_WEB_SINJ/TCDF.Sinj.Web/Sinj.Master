@@ -250,7 +250,7 @@
                                 <li id="li_historico"><a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a></li>
                                 <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a></li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a></li>
-                                <li id="li_pendenteDePesquisa"><a title="Pendente de Pesquisa"                  class="lnkmenu" id="aPendenteDePesquisa"   href="./ResultadoDePesquisa?bbusca=pendenteDePublicacao&tipo_pesquisa=pendenteDePublicacao&all=">Pendente de Pesquisa</a></li>
+                                <%--<li id="li_pendenteDePesquisa"><a title="Pendente de Pesquisa"                  class="lnkmenu" id="aPendenteDePesquisa"   href="./ResultadoDePesquisa?bbusca=pendenteDePublicacao&tipo_pesquisa=pendenteDePublicacao&all=">Pendente de Pesquisa</a></li>--%>
                                 <li id="li_contatos"><a title="Contatos"             class="lnkmenu" id="aContatos"       href="./Contatos">Contatos</a></li>
                             </ul>
                             <div id="div_user_notifiqueme" >

@@ -35,10 +35,10 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     case "sinj_norma":
                         sRetorno = "{\"counts\":[{\"nm_base\":\"" + _bbusca + "\",\"ds_base\":\"Normas\",\"count\":" + BuscarTotalDeNormas(context) + "}]}";
                         break;
-                    //PendenteDePublicacao
-                    case "pendenteDePublicacao":
-                        sRetorno = "{\"counts\":[{\"nm_base\":\"sinj_norma\",\"ds_base\":\"Normas\",\"count\":" + BuscarTotalDeNormas(context) + "},{\"nm_base\":\"sinj_diario\",\"ds_base\":\"Diários\",\"count\":" + BuscarTotalDeDiarios(context) + "}]}";
-                        break;
+                    ////PendenteDePublicacao
+                    //case "pendenteDePublicacao":
+                    //    sRetorno = "{\"counts\":[{\"nm_base\":\"sinj_norma\",\"ds_base\":\"Normas\",\"count\":" + BuscarTotalDeNormas(context) + "},{\"nm_base\":\"sinj_diario\",\"ds_base\":\"Diários\",\"count\":" + BuscarTotalDeDiarios(context) + "}]}";
+                    //    break;
                     case "sinj_diario":
                         sRetorno = "{\"counts\":[{\"nm_base\":\"" + _bbusca + "\",\"ds_base\":\"Diários\",\"count\":" + BuscarTotalDeDiarios(context) + "}]}";
                         break;
@@ -176,6 +176,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new DiarioBuscaEs().MontarBusca(pesquisaGeral);
                     query = buscaGeral.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa=true", "*");
                     break;
             }
 
