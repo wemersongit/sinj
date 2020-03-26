@@ -83,9 +83,9 @@ namespace SINJ_PUSH_APP
             {
                 NotifiquemeRN notifiquemeRN = new NotifiquemeRN(false);
                 NormaRN normaRn = new NormaRN();
-                pesquisa_norma.literal = "st_nova=true";
+                pesquisa_norma.literal = "st_nova=true AND st_habilita_email=true";
                 pesquisa_norma.limit = null;
-                pesquisa_norma.select = new[] { "id_doc", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "ch_tipo_norma", "indexacoes" };
+                pesquisa_norma.select = new[] { "id_doc", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "ch_tipo_norma", "indexacoes", "vides" };
                 var results_normas = normaRn.Consultar(pesquisa_norma);
                 this._sb_info.AppendLine(DateTime.Now + ": Total de normas ST_NOVA=true => " + results_normas.results.Count);
 
@@ -95,7 +95,7 @@ namespace SINJ_PUSH_APP
                 var result_opmode = normaRn.PathPut<string>(pesquisa_norma, opmode);
                 this._sb_info.AppendLine(DateTime.Now + ": Atualizar campo ST_NOVA para false => " + result_opmode);
 
-                foreach(var norma in results_normas.results){
+                foreach (var norma in results_normas.results){
                     var literal = "'"+norma.ch_tipo_norma+"'=any(ch_tipo_norma_criacao)";
                     foreach (var origem in norma.origens)
                     {
@@ -217,7 +217,7 @@ namespace SINJ_PUSH_APP
                             var destinatario = new[] { usuario_push.email_usuario_push };
                             //Deverá mostrar o seguinte: ex.: SINJ-DF - Criação - Decreto 40041/2019 - GAG
                             //trecho substituido - var titulo = "Informações sobre o ato " + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
-                            var titulo = "SINJ-DF " +"Criacao "+ norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
+                            var titulo = "SINJ-DF - " +"Criação "+ norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
                             var html = true;
 
                             var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj.jpg";
@@ -231,7 +231,7 @@ namespace SINJ_PUSH_APP
                             corpoEmail = corpoEmail + "<td>";
                             corpoEmail = corpoEmail + "<table width=\"600px\" align=\"center\">";
                             corpoEmail = corpoEmail + "<tr>";
-                            corpoEmail = corpoEmail + "<td><a href=\"http://www.sinj.df.gov.br\" target=\"_blank\" title=\"http://www.sinj.df.gov.br\"><img src=" + _linkImagemEmailTopo + "></a></td>";
+                            corpoEmail = corpoEmail + "<td><a href=\"http://www.sinj.df.gov.br\" target=\"_blank\" title=\"http://www.sinj.df.gov.br\"><img src=" + _linkImagemEmailTopo + " width='50%' height='auto'></a></td>";
                             corpoEmail = corpoEmail + "</tr>";
                             corpoEmail = corpoEmail + "</table>";
                             corpoEmail = corpoEmail + "</td>";
@@ -242,23 +242,14 @@ namespace SINJ_PUSH_APP
                             corpoEmail = corpoEmail + "<HR SIZE=1 WIDTH=601 ALIGN=center>";
                             corpoEmail = corpoEmail + "<tr>";
                             corpoEmail = corpoEmail + "<td style=\"background-color: #B4E6CBs; text-align: left;\">";
-                            corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
-                            corpoEmail = corpoEmail + "		Um tipo de ato que você escolheu para monitorar foi criado.<br/>";
-                            corpoEmail = corpoEmail + "		As informações sobre esse ato estão abaixo:";
+                            corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 16px; font-weight: bold; background-color:#B4E6CBs\">";
+                            corpoEmail = corpoEmail + "O normativo a seguir está disponível no SINJ-DF";
                             corpoEmail = corpoEmail + "	</div>";
 
-                            corpoEmail = corpoEmail + "	<div>";
-                            corpoEmail = corpoEmail + "		Ato:";
-                            corpoEmail = corpoEmail + "		<table cellspacing=\"0\" cellpadding=\"2\" rules=\"all\" border=\"1\" style=\"border-color:#A3A3A3;border-style:Solid;width:100%;border-collapse:collapse;font-size: 11px;\">";
-                            corpoEmail = corpoEmail + "			<tbody>";
-                            corpoEmail = corpoEmail + "			<tr class=\"textoCorVide\" align=\"left\" style=\"color:#323232;background-color:#B4E6CB;height:30px;\">";
-                            corpoEmail = corpoEmail + "				<th scope=\"col\">Identificação</th>";
-                            corpoEmail = corpoEmail + "				<th scope=\"col\">Ementa</th>";
-                            corpoEmail = corpoEmail + "				<th scope=\"col\" style=\"width:80px;\">Link</th>";
-                            corpoEmail = corpoEmail + "			</tr><tr align=\"left\" style=\"background-color:#F0F0F0;height:20px;\">";
 
-                            corpoEmail = corpoEmail + "				<td valign=\"top\" style=\"width:100px;\">" + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura;
 
+                            corpoEmail = corpoEmail + "<div style='font-size: 14px; font-weight: 500; background-color:#B4E6CBs;'>";
+                            corpoEmail = corpoEmail + "<a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma +">" + norma.nm_tipo_norma + " " + norma.nr_norma + "</a>" + " " + "(" + norma.ds_ementa + "), publicado no(a) ";
                             if (quantidadeDeOrgaos > 0)
                             {
                                 if (quantidadeDeOrgaos > 1)
@@ -273,38 +264,35 @@ namespace SINJ_PUSH_APP
                                             corpoEmail = corpoEmail + orgao.sg_orgao + ", ";
                                         i++;
                                     }
+                                    corpoEmail = corpoEmail + " em " + norma.dt_assinatura;
                                 }
                                 else
                                 {
-                                    corpoEmail = corpoEmail + " do órgão: " + norma.origens.First().sg_orgao;
+                                    corpoEmail = corpoEmail + " <a> " + norma.origens.First().sg_orgao + " de " + norma.dt_assinatura + "</a>";
                                 }
                             }
 
-                            corpoEmail = corpoEmail + "</td>";
-                            corpoEmail = corpoEmail + "				<td valign=\"top\" style=\"width:200px;\">" + norma.ds_ementa + "</td>";
-                            corpoEmail = corpoEmail + "				<td valign=\"top\" style=\"width:80px;\"> <a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + ">Clique para ver o ato</a></td>";
-                            corpoEmail = corpoEmail + "			</tr>";
-                            corpoEmail = corpoEmail + "		</tbody>";
-                            corpoEmail = corpoEmail + "		</table>";
-                            corpoEmail = corpoEmail + "	</div>";
-                            corpoEmail = corpoEmail + "		<div style=\"margin-bottom: 3px; font-size: 10px; font-weight: bold; background-color:#B4E6CBs\">";
-                            corpoEmail = corpoEmail + "		<br/>";
-                            corpoEmail = corpoEmail + "		<br/>";
-                            corpoEmail = corpoEmail + "	</div>";
-                            corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 11px; font-weight: bold; background-color:#B4E6CBs\">";
-                            corpoEmail = corpoEmail + "		<a href=" + Config.ValorChave("LinkSINJ", true) + "/DesativarNormaPush.aspx?email_usuario_push=" + usuario_push.email_usuario_push + "&" + "ch_criacao_norma_monitorada=" + ch_criacao_norma_monitorada + ">Não quero mais receber informações sobre a criação desses atos.</a>";
-                            corpoEmail = corpoEmail + "	</div>";
-                            corpoEmail = corpoEmail + "</td>";
-                            corpoEmail = corpoEmail + "</tr>";
-                            corpoEmail = corpoEmail + " </tr>";
-                            corpoEmail = corpoEmail + " </table>";
-                            corpoEmail = corpoEmail +
-                                "<table width=\"600px\" style=\"background:#ddffdc;\" align=\"center\" > <br/>";
+                            corpoEmail = corpoEmail + "</div>";
+
+                            corpoEmail = corpoEmail + "<div>";
+                            if (norma.vides.Count > 0)
+                            {
+                                corpoEmail = corpoEmail + "<p style='font-size: 14px; font-weight: bold; background-color:#B4E6CBs;'>Normas afetadas por esse normativo: </p>";
+                                foreach (var vides in norma.vides)
+                                {
+                                    corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px; font-weight: 500;\"> " + vides.nm_tipo_relacao + " " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" + vides.nm_tipo_norma_vide + " " + vides.nr_norma_vide + "/" + vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) + "</a>" + "</div>";
+                                }
+                            }
+                            corpoEmail = corpoEmail + "</div>";
+
+                            corpoEmail = corpoEmail + "<table width=\"600px\" style=\"background:#ddffdc;\" align=\"center\" > <br/>";
                             corpoEmail = corpoEmail + "<tr>";
                             corpoEmail = corpoEmail + "<td>";
                             corpoEmail = corpoEmail + "<HR SIZE=1 WIDTH=601 ALIGN=center>";
                             corpoEmail = corpoEmail + "<img src=" + _linkImagemEmailRodape + " width=\"600px\">";
-
+                            corpoEmail = corpoEmail + "	<div style=\"float:right; margin:15px 0 15px 0; font-size: 11px; font-weight: bold; background-color:#B4E6CBs\">";
+                            corpoEmail = corpoEmail + "		<a style=\"color:red;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DesativarNormaPush.aspx?email_usuario_push=" + usuario_push.email_usuario_push + "&" + "ch_criacao_norma_monitorada=" + ch_criacao_norma_monitorada + ">Não quero mais receber informações sobre esse ato.</a>";
+                            corpoEmail = corpoEmail + "	</div>";
                             corpoEmail = corpoEmail + "</td>";
                             corpoEmail = corpoEmail + "</tr>";
                             corpoEmail = corpoEmail + " </table >";
@@ -344,9 +332,9 @@ namespace SINJ_PUSH_APP
             try
             {
                 NormaRN normaRn = new NormaRN();
-                pesquisa_norma.literal = "st_atualizada=true";
+                pesquisa_norma.literal = "st_atualizada=true AND st_habilita_email=true";
                 pesquisa_norma.limit = null;
-                pesquisa_norma.select = new[] { "id_doc", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa" };
+                pesquisa_norma.select = new[] { "id_doc", "vides", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "fontes" };
                 var results_normas = normaRn.Consultar(pesquisa_norma);
 
                 //após a consulta atualiza o campo st_atualizada para false
@@ -372,14 +360,11 @@ namespace SINJ_PUSH_APP
                         var email = new EmailRN();
                         var display_name_remetente = "SINJ Notifica";
                         var destinatario = new[] { usuario_push.email_usuario_push };
-                        //trecho substituido - var titulo = "Informações sobre o ato " + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + resultado_norma.origens[0].sg_orgao : "");
-                        //SINJ-DF - Criação - Decreto 40041/2019 - GAG
-                        var titulo = "SINJ-DF "+ "Alteração " +resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + resultado_norma.origens[0].sg_orgao : "");
+                        var titulo = "SINJ-DF - "+ "Alteração " +resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + resultado_norma.origens[0].sg_orgao : "");
                         var html = true;
 
                         var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj.jpg";
                         var _linkImagemEmailRodape = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/rodape_sinj.jpg";
-
 
                         var corpoEmail = "";
                         corpoEmail = corpoEmail + "<table width=\"100%\" style=\"border:1px\"> ";
@@ -389,7 +374,7 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "<td>";
                         corpoEmail = corpoEmail + "<table width=\"600px\" align=\"center\">";
                         corpoEmail = corpoEmail + "<tr>";
-                        corpoEmail = corpoEmail + "<td><a href=\"http://www.sinj.df.gov.br\" target=\"_blank\" title=\"http://www.sinj.df.gov.br\"><img src=" + _linkImagemEmailTopo + "></a></td>";
+                        corpoEmail = corpoEmail + "<td><a href=\"http://www.sinj.df.gov.br\" target=\"_blank\" title=\"http://www.sinj.df.gov.br\"><img src=" + _linkImagemEmailTopo + " width='50%' height='auto'></a></td>";
                         corpoEmail = corpoEmail + "</tr>";
                         corpoEmail = corpoEmail + "</table>";
                         corpoEmail = corpoEmail + "</td>";
@@ -401,72 +386,27 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "<tr>";
                         corpoEmail = corpoEmail + "<td style=\"background-color: #B4E6CBs; text-align: left;\">";
                         corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
-                        //corpoEmail = corpoEmail + "		Um ato que você escolheu para monitorar sofreu alteração.<br/>";
-                        //corpoEmail = corpoEmail + "		As informações sobre esse ato estão abaixo:";
                         corpoEmail = corpoEmail + "     O normativo "+ resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura+" "+ (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "")+  " sofreu a(s) seguinte(s) alteração(ões):<br/>";
-                        corpoEmail = corpoEmail + "     Acrescido "+"Art. 1°, § 4° pelo(a) Lei 6347/2019";
                         corpoEmail = corpoEmail + "	</div>";
 
-                        corpoEmail = corpoEmail + "	<div>";
-                        corpoEmail = corpoEmail + "		Ato:";
-                        corpoEmail = corpoEmail + "		<table cellspacing=\"0\" cellpadding=\"2\" rules=\"all\" border=\"1\" style=\"border-color:#A3A3A3;border-style:Solid;width:100%;border-collapse:collapse;font-size: 11px;\">";
-                        corpoEmail = corpoEmail + "			<tbody>";
-                        corpoEmail = corpoEmail + "			<tr class=\"textoCorVide\" align=\"left\" style=\"color:#323232;background-color:#B4E6CB;height:30px;\">";
-                        corpoEmail = corpoEmail + "				<th scope=\"col\">Identificação</th>";
-                        corpoEmail = corpoEmail + "				<th scope=\"col\">Ementa</th>";
-                        corpoEmail = corpoEmail + "				<th scope=\"col\" style=\"width:80px;\">Link</th>";
-                        corpoEmail = corpoEmail + "			</tr><tr align=\"left\" style=\"background-color:#F0F0F0;height:20px;\">";
-
-                        corpoEmail = corpoEmail + "				<td valign=\"top\" style=\"width:100px;\">" + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura;
-
-                        //mexendo aqui
-                        Console.WriteLine(corpoEmail);
-
-
-                        if (quantidadeDeOrgaos > 0)
+                        corpoEmail = corpoEmail + "<div>";
+                        if (resultado_norma.vides.Count > 0)
                         {
-                            if (quantidadeDeOrgaos > 1)
+                            foreach (var vides in resultado_norma.vides)
                             {
-                                corpoEmail = corpoEmail + " dos órgãos: ";
-                                int i = 0;
-                                foreach (var orgao in resultado_norma.origens)
-                                {
-                                    if (i == quantidadeDeOrgaos - 1)
-                                        corpoEmail = corpoEmail + " e " + orgao.sg_orgao;
-                                    else
-                                        corpoEmail = corpoEmail + orgao.sg_orgao + ", ";
-                                    i++;
-                                }
-                            }
-                            else
-                            {
-                                corpoEmail = corpoEmail + " do órgão: " + resultado_norma.origens[0].sg_orgao;
+                                corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px;\"> "+vides.ds_texto_relacao +  " " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" + vides.nm_tipo_norma_vide + " " + vides.nr_norma_vide +"/"+vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) + "</a>" + "</div>";
                             }
                         }
+                        corpoEmail = corpoEmail + "</div>";
 
-                        corpoEmail = corpoEmail + "</td>";
-                        corpoEmail = corpoEmail + "				<td valign=\"top\" style=\"width:200px;\">" + resultado_norma.ds_ementa + "</td>";
-                        corpoEmail = corpoEmail + "				<td valign=\"top\" style=\"width:80px;\"> <a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + resultado_norma.ch_norma + ">Clique para ver o ato</a></td>";
-                        corpoEmail = corpoEmail + "			</tr>";
-                        corpoEmail = corpoEmail + "		</tbody>";
-                        corpoEmail = corpoEmail + "		</table>";
-                        corpoEmail = corpoEmail + "	</div>";
-                        corpoEmail = corpoEmail + "		<div style=\"margin-bottom: 3px; font-size: 10px; font-weight: bold; background-color:#B4E6CBs\">";
-                        corpoEmail = corpoEmail + "		<br/>";
-                        corpoEmail = corpoEmail + "		<br/>";
-                        corpoEmail = corpoEmail + "	</div>";
-                        corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 11px; font-weight: bold; background-color:#B4E6CBs\">";
-                        corpoEmail = corpoEmail + "		<a href=" + Config.ValorChave("LinkSINJ", true) + "/DesativarNormaPush.aspx?ch_norma_monitorada=" + resultado_norma.ch_norma + "&" + "email_usuario_push=" + usuario_push.email_usuario_push + ">Não quero mais receber informações sobre este ato. </a>";
-                        corpoEmail = corpoEmail + "	</div>";
-                        corpoEmail = corpoEmail + "</td>";
-                        corpoEmail = corpoEmail + "</tr>";
-                        corpoEmail = corpoEmail + " </tr>";
-                        corpoEmail = corpoEmail + " </table>";
                         corpoEmail = corpoEmail + "<table width=\"600px\" style=\"background:#ddffdc;\" align=\"center\" > <br/>";
                         corpoEmail = corpoEmail + "<tr>";
                         corpoEmail = corpoEmail + "<td>";
                         corpoEmail = corpoEmail + "<HR SIZE=1 WIDTH=601 ALIGN=center>";
                         corpoEmail = corpoEmail + "<img src=" + _linkImagemEmailRodape + " width=\"600px\">";
+                        corpoEmail = corpoEmail + "	<div style=\"margin: 15px 0 15px 0; float: right; font-size: 11px; font-weight: bold; background-color:#B4E6CBs\">";
+                        corpoEmail = corpoEmail + "		<a style=\"color: red; \" href=" + Config.ValorChave("LinkSINJ", true) + "/DesativarNormaPush.aspx?ch_norma_monitorada=" + resultado_norma.ch_norma + "&" + "email_usuario_push=" + usuario_push.email_usuario_push + ">Não quero mais receber informações sobre este ato. </a>";
+                        corpoEmail = corpoEmail + "	</div>";
                         corpoEmail = corpoEmail + "</td>";
                         corpoEmail = corpoEmail + "</tr>";
                         corpoEmail = corpoEmail + " </table >";
@@ -476,8 +416,6 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "</td>";
                         corpoEmail = corpoEmail + "</tr>";
                         corpoEmail = corpoEmail + "</table>";
-                        //Mexendo aqui
-                        Console.WriteLine(corpoEmail);
 
                         email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpoEmail);
                         var logEmail = new LogEmail();
