@@ -7,7 +7,7 @@ namespace TCDF.Sinj.OV
     public class NormaOV : metadata
     {
         public bool st_habilita_pesquisa;
-
+        public bool st_habilita_email;
         public NormaOV()
         {
             nm_pessoa_fisica_e_juridica = new List<string>();
