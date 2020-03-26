@@ -106,6 +106,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new NormaBuscaEs().MontarBusca(pesquisaGeral);
                     query = buscaGeral.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa=true", "*");
                     break;
             }
 
