@@ -106,6 +106,7 @@ namespace TCDF.Sinj
                 var _st_pendencia = context.Request["st_pendencia"];
 
                 var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                var _st_habilita_email = context.Request["st_habilita_email"];
 
                 var _orgao_cadastrador = context.Request.Params.GetValues("orgao_cadastrador");
 
@@ -204,6 +205,10 @@ namespace TCDF.Sinj
                     query += (query != "" ? " and " : "") + "st_habilita_pesquisa=true";
                 }
 
+                if (!string.IsNullOrEmpty(_st_habilita_email))
+                {
+                    query += (query != "" ? " and " : "") + "st_habilita_email=true";
+                }
 
                 if (!string.IsNullOrEmpty(_sSearch))
                 {

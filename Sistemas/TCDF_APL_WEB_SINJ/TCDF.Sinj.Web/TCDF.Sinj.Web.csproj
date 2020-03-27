@@ -45,7 +45,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="neo.BRLightREST">
+    <Reference Include="neo.BRLightREST, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
     <Reference Include="neo.BRLightSession">
@@ -61,10 +62,6 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
-    <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
-    </Reference>
     <Reference Include="Ude">
       <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
     </Reference>
@@ -1894,6 +1891,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\Visualizacao\FaleConoscoDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj">
+      <Project>{3b23c9d4-4624-473e-8976-7cd48ef5559c}</Project>
+      <Name>TCDF.Sinj</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
