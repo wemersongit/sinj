@@ -682,47 +682,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div class="line">
-                                    <div class="column w-20-pc">
-                                        <div class="cell fr">
-                                            <label>Número e Ano do Projeto de Lei CLDF:</label>
-                                        </div>
-                                    </div>
-                                    <div class="column w-70-pc">
-                                        <div class="cell w-80-pc">
-                                            <input id="nr_projeto_lei" name="nr_projeto_lei" type="text" value="" class="w-50-pc"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="line">
-                                    <div class="column w-20-pc">
-                                        <div class="cell fr">
-                                            <label>Url do Projeto de Lei CLDF:</label>
-                                        </div>
-                                    </div>
-                                    <div class="column w-70-pc">
-                                        <div class="cell w-80-pc">
-                                            <input id="url_projeto_lei" name="url_projeto_lei" type="text" value="" class="w-80-pc"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Adicionando mudança aqui Habilita  -->
-                                <div class="line">
-                                    <div class="column w-20-pc">
-                                        <div class="cell fr">
-                                            <label>Habilita no Sinj Pesquisa:</label>
-                                        </div>
-                                    </div>
-                                    <div class="column w-70-pc">
-                                        <div class="cell w-80-pc">
-                                            <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
-                                        </div>
-                                    </div>
-                                </div>
 
+                               
                                 <div class="line">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">
