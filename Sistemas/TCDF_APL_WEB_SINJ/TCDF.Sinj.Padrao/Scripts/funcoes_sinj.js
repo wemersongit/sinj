@@ -2819,6 +2819,13 @@ function DetalhesNorma(data, highlight) {
             } else {
                 $('#line_observacao').hide();
             }
+			
+			if (IsNotNullOrEmpty(data.nr_projeto_lei)) {
+                $('#line_link_lei').show();
+            } else {
+                $('#line_link_lei').hide();
+            }
+			
             if (IsNotNullOrEmpty(data.nm_pessoa_fisica_e_juridica)) {
                 for (var i = 0; i < data.nm_pessoa_fisica_e_juridica.length; i++) {
                     $('#div_nome').append(data.nm_pessoa_fisica_e_juridica[i] + '<br/>');
@@ -2923,8 +2930,8 @@ function DetalhesNorma(data, highlight) {
             );
 
             if (data.nr_projeto_lei && data.url_projeto_lei && data.nr_projeto_lei != "null" && data.url_projeto_lei != "null") {
-                var link_projeto_lei = `<a href="${data.url_projeto_lei}">${data.nr_projeto_lei}</a>`;
-                $("#div_links").append("<br>" + link_projeto_lei);
+                var link_projeto_lei = `<a href="${data.url_projeto_lei}" target="_blank">${data.nr_projeto_lei}</a>`;
+                $("#div_link_lei").append("<br>" + link_projeto_lei);
             }
 
             if (IsNotNullOrEmpty(_notifiqueme) && _notifiqueme.ch_normas_monitoradas.indexOf(data.ch_norma) >= 0) {

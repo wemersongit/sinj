@@ -582,7 +582,7 @@
                                             <input id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" disabled="true"/>
                                         </div>
                                          <label style="font-size:large">Habilitar Pesquisa:</label>      
-                                        <input id="checkbox_st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                        <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
                                     </div>
                                 </div>
                                 <div class="line">
@@ -799,7 +799,7 @@
                                 <div class="line projetoDeLei">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">
-                                            <label>Número e Ano do Projeto de Lei CLDF:</label>
+                                            <label>Número e Ano da Proposição de Origem:</label>
                                         </div>
                                     </div>
                                     <div class="column w-70-pc">
@@ -812,7 +812,7 @@
                                 <div class="line projetoDeLei">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">
-                                            <label>Url do Projeto de Lei CLDF:</label>
+                                            <label>Url da Proposição de Origem:</label>
                                         </div>
                                     </div>
                                     <div class="column w-70-pc">

@@ -583,7 +583,7 @@
                                             <input id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" onblur="javascript:SelecionarTipoDeNorma();"/><a title="Listar" id="a_tipo_norma"></a>
                                         </div>
                                         <label style="font-size:large">Habilitar Pesquisa:</label>      
-                                        <input id="checkbox_st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                        <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
                                     </div>
                                 </div>
                                 <div class="line">
@@ -746,17 +746,7 @@
                             <div id="div_notificacao_norma_duplicadade" class="w-80-pc mauto" style="display:none;"></div>
                         </fieldset>
                     </div>
-                               <!-- Adicionando mudança aqui Habilita  -->
-                              <%--  <div id="habilita_pesquisa">
-                                    <div>
-                                        <div>
-                                            <label style="font-size:large">Habilita no Sinj Pesquisa:</label>
-                                            <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
-                                        </div>
-                                    </div>
-                                   
-                                </div>--%>
-                                <!-- -->
+
                     <div id="div_dados_gerais" class="pos_cad">
                         <fieldset>
                             <legend>Dados Gerais</legend>
@@ -823,7 +813,7 @@
                                 <div class="line projetoDeLei">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">
-                                            <label>Número e Ano do Projeto de Lei CLDF:</label>
+                                            <label>Número e Ano da Proposição de Origem:</label>
                                         </div>
                                     </div>
                                     <div class="column w-70-pc">
@@ -836,7 +826,7 @@
                                 <div class="line projetoDeLei">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">
-                                            <label>Url do Projeto de Lei CLDF:</label>
+                                            <label>Url da Proposição de Origem:</label>
                                         </div>
                                     </div>
                                     <div class="column w-70-pc">
