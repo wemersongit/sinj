@@ -406,11 +406,12 @@ namespace TCDF.Sinj.ES
             
             if (!string.IsNullOrEmpty(searchValue))
             {
-                sQuery = searchValue;
+                sQuery = "(st_habilita_pesquisa=true)and";
+                sQuery += searchValue;
             }
             else
             {
-                sQuery = "*";
+                sQuery = "st_habilita_pesquisa=true";
             }
             if (!string.IsNullOrEmpty(searchFilter))
             {

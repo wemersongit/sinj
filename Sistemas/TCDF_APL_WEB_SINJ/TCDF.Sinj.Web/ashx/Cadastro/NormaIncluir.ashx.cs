@@ -59,6 +59,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
                 var st_habilita_pesquisa = false;
 
+                var _st_habilita_email = context.Request["st_habilita_email"];
+                var st_habilita_email = false;
+
                 var _ds_pendencia = context.Request["ds_pendencia"];
 
                 var _st_destaque = context.Request["st_destaque"];
@@ -159,6 +162,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 if (bool.TryParse(_st_habilita_pesquisa, out st_habilita_pesquisa))
                 {
                     normaOv.st_habilita_pesquisa = st_habilita_pesquisa;
+                }
+
+                if (bool.TryParse(_st_habilita_email, out st_habilita_email))
+                {
+                    normaOv.st_habilita_email = st_habilita_email;
                 }
 
                 if (bool.TryParse(_st_destaque, out st_destaque))

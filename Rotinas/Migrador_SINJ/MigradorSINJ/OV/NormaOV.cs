@@ -274,6 +274,7 @@ namespace MigradorSINJ.OV
         public bool st_pendencia { get; set; }
 
         public bool st_habilita_pesquisa { get; set; }
+        public bool st_habilita_email { get; set; }
 
         public string ds_pendencia { get; set; }
         public bool st_destaque { get; set; }

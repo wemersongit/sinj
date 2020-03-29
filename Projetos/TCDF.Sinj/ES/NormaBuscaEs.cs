@@ -810,6 +810,7 @@ namespace TCDF.Sinj.ES
             sourceInclude.Add("st_vacatio_legis");
             sourceInclude.Add("ds_vacatio_legis");
             sourceInclude.Add("st_habilita_pesquisa");
+            sourceInclude.Add("st_habilita_email");
             return sourceInclude;
         }
         
