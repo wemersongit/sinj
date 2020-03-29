@@ -5,9 +5,8 @@
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
             $('#button_salvar_vide').click(function () {
-                return fnSalvar("form_editar_vide", "", sucesso_vide);
+                return salvarArquivosVideEditar(sucesso_vide);
             });
-            $('#button_cancelar').click(function () { voltar() });
 
             var open_modal = function (data) {
                 $('<div id="modal_notificacao_modal_salvar" />').modallight({
@@ -129,14 +128,30 @@
     <style type="text/css">
         div.table div.head div.title{width:100%}
         div.table div.head div.title h2{font-size: 18px;}
-        #div_tooltip_dispositivo{
-            position:absolute;
-            z-index:1001;
-            width: 45%;
+        .tooltip > .tooltip-header {
+            background-color: #EEE; 
+            color: #006633; 
+            border: 1px solid #006633;
+            padding: 0px 15px;
+            font-size: 14px;
+            border-radius: 4px 4px 0px 0px;
         }
-        .div_conteudo_arquivo p { margin-bottom: 10px; font-size: 13px; }
-        .div_conteudo_arquivo .remover { background-color: #ffa9a9; }
-        .div_conteudo_arquivo .desfazer { background-color: #b4f3b4; }
+        .tooltip > .tooltip-header {
+            border-bottom: none;
+        }
+        .tooltip > .tooltip-inner {
+            background-color: #EEE; 
+            color: #006633; 
+            border: 1px solid #006633;
+            padding: 0px 15px;
+            font-size: 14px;
+            border-radius: 0px 0px 4px 4px;
+        }
+        .tooltip > .tooltip-inner {
+            border-top: none;
+        }    
+        #div_cad_dispositivo_alteradora div.div_conteudo_arquivo.copy-enabled{cursor:copy;}
+        .button-close{float:right;}
         
     </style>
 </asp:Content>
@@ -146,7 +161,7 @@
 	</div>
     <div class="form">
         <div id="div_cad_vide">
-            <form id="form_vide_excluir" name="formExcluirVide" action="#" method="post">
+            <form id="form_vide_editar" name="formEditarVide" action="#" method="post">
                 <input type="hidden" id="dt_controle_alteracao" name="dt_controle_alteracao" value="<%= DateTime.Now.ToString("dd'/'MM'/'yyyy HH':'mm':'ss") %>" />
                 <input type="hidden" id="id_doc" name="id_doc" value="" />
                 <input type="hidden" id="vide" name="vide" value="" />
@@ -414,8 +429,8 @@
                         <button id="button_salvar_vide">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" alt="salvar" />Salvar
                         </button>
-                        <button id="button_cancelar">
-                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_eraser_p.png" alt="limpar" />Cancelar
+                        <button type="button" id="button_cancelar" onclick="javascript:voltar()" >
+                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png" alt="cancelar" />Cancelar
                         </button>
                     </div>
                 </div>
@@ -434,5 +449,6 @@
                 <textarea name="arquivo"></textarea>
             </form>
         </div>
+        <div id="div_tooltip_dispositivo"></div>
     </div>
 </asp:Content>

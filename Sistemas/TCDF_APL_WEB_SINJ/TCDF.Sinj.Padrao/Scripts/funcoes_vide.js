@@ -69,6 +69,13 @@ function clickButtonSelecionarDispositivo(el) {
     }
 }
 
+function selecionarTextoNormaAlteradoraEditar() {
+    if($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').hasClass('copy-enabled')){
+        selecionarTextoCopiar();
+        return;
+    }
+}
+
 function getNomeDoLinkName(linkname){
     const sufixo = linkname.substring(0, 3);
     const linknames = linkname.split('_');
