@@ -93,6 +93,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaDireta.isCount = true;
                     var buscaDireta = new NormaBuscaEs().MontarBusca(pesquisaDireta);
                     query = buscaDireta.GetQuery();
+                    query = query.Replace("AND(st_habilita_pesquisa:true)", "");
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
                     break;
                 case "avancada":
                     SentencaPesquisaAvancadaNormaOV pesquisaAvancada = new SentencaPesquisaAvancadaNormaOV();
@@ -101,6 +103,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaAvancada.isCount = true;
                     var buscaAvancada = new NormaBuscaEs().MontarBusca(pesquisaAvancada);
                     query = buscaAvancada.GetQuery();
+                    query = query.Replace("AND(st_habilita_pesquisa:true)", "");
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
                     break;
                 case "pendenteDePublicacao":
                     SentencaPesquisaPendenteDePublicacaoOV pesquisaPendenteDePublicacao = new SentencaPesquisaPendenteDePublicacaoOV();
@@ -117,6 +121,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new NormaBuscaEs().MontarBusca(pesquisaGeral);
                     query = buscaGeral.GetQuery();
+                    query = query.Replace("AND(st_habilita_pesquisa:true)", "");
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
                     break;
             }
 
@@ -145,6 +151,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaDireta.isCount = true;
                     var buscaDireta = new DiarioBuscaEs().MontarBusca(pesquisaDireta);
                     query = buscaDireta.GetQuery();
+                    query = query.Replace("AND(st_habilita_pesquisa:true)", "");
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
                     break;
                 case "notifiqueme":
                     SentencaPesquisaNotifiquemeDiarioOV pesquisaNotifiqueme = new SentencaPesquisaNotifiquemeDiarioOV();
@@ -176,8 +184,9 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new DiarioBuscaEs().MontarBusca(pesquisaGeral);
                     query = buscaGeral.GetQuery();
-                    query = query.Replace("st_habilita_pesquisa=true", "*");
-                    query = query.Replace("(*)and", "");
+                    query = query.Replace("AND(st_habilita_pesquisa:true)", "");
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    //query = query.Replace("(*)and", "");
                     break;
             }
 

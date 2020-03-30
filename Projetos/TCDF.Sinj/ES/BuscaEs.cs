@@ -406,12 +406,12 @@ namespace TCDF.Sinj.ES
             
             if (!string.IsNullOrEmpty(searchValue))
             {
-                sQuery = "(st_habilita_pesquisa=true)and";
                 sQuery += searchValue;
+                sQuery += "AND(st_habilita_pesquisa:true)";
             }
             else
             {
-                sQuery = "st_habilita_pesquisa=true";
+                sQuery = "st_habilita_pesquisa:true";
             }
             if (!string.IsNullOrEmpty(searchFilter))
             {
@@ -445,7 +445,8 @@ namespace TCDF.Sinj.ES
             var sQueryFiltered = "";
             if (!string.IsNullOrEmpty(searchValue))
             {
-                sQueryString = searchValue;
+                sQueryString = "("+searchValue+")";
+                sQueryString += "AND(st_habilita_pesquisa:true)";
             }
             if(!string.IsNullOrEmpty(searchFilter)){
                 sQueryString = (sQueryString != "" ? "(" + sQueryString + ") AND (" + searchFilter + ")" : searchFilter);

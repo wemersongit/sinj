@@ -60,6 +60,8 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
                         pesquisaGeral.iDisplayLength = iDisplayLength;
                         pesquisaGeral.sentencaOrdenamento = sentencaOrdenamento;
                         query = diarioBuscaEs.MontarBusca(pesquisaGeral).GetQuery();
+                        query = query.Replace("AND(st_habilita_pesquisa:true)", "");
+                        query = query.Replace("st_habilita_pesquisa:true", "*");
                         break;
                     case "notifiqueme":
                         SentencaPesquisaNotifiquemeDiarioOV pesquisaNotifiqueme = new SentencaPesquisaNotifiquemeDiarioOV();
@@ -88,6 +90,8 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
                         pesquisaDireta.iDisplayLength = iDisplayLength;
                         pesquisaDireta.sentencaOrdenamento = sentencaOrdenamento;
                         query = diarioBuscaEs.MontarBusca(pesquisaDireta).GetQuery();
+                        query = query.Replace("AND(st_habilita_pesquisa:true)", "");
+                        query = query.Replace("st_habilita_pesquisa:true", "*");
                         break;
                 }
 
