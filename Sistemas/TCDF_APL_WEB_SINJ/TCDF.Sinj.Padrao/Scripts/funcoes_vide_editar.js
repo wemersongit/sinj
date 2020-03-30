@@ -1,3 +1,36 @@
+
+let optionsTooltip = {
+    template: `<div class="tooltip" role="tooltip">
+        <div class="tooltip-arrow"></div>
+            <div class="tooltip-header">
+                <div class="table w-100-pc">
+                    <div class="head">
+                        <div class="title">
+                            <h2>Texto Novo</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="tooltip-inner"></div>
+    </div>`,
+    container: '#div_tooltip_dispositivo',
+    trigger: 'manual',
+    title: `<div class="table w-80-pc mauto">
+        <div class="line texto-novo">
+            <div class="column w-100-pc">
+                <textarea name="textoNovo" class="w-100-pc"></textarea>
+            </div>
+        </div>
+        <div class="line">
+            <div class="column w-100-pc text-center">
+                <button type="button" class="button" onclick="clickAlterarDispositivoEditar()"><img src="${_urlPadrao}/Imagens/ico_check.png" width="15px" height="15px" /> Ok</button>
+            </div>
+        </div>
+    </div>`,
+    html: true,
+    placement: "right"
+};
+
 function selecionarNormaEditar(norma){
     if(IsNotNullOrEmpty(vide.caput_norma_vide, 'caput')){
         vide.alteracao_texto_vide.dispositivos_norma_vide = [];
@@ -179,22 +212,28 @@ function exibirTextoDoArquivoEditar(norma, arquivo) {
                     });
                 }
             }
+            $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[linkname]').mouseup(function () {
+                selecionarTextoNormaAlteradoraEditar();
+            });
         }
         else{
             if(norma.dispositivos.length > 0){
-                let criaBotao = true;
+                let showButton = true;
                 $.each($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p'), function (index, value) {
                     var linkname = $(value).attr('linkname');
                     if (IsNotNullOrEmpty(linkname)) {
-                        criaBotao = true;
+                        showButton = true;
                         for(let i = 0; i < norma.dispositivos.length; i++){
                             if(linkname == norma.dispositivos[i].linkname || linkname == `${norma.dispositivos[i].linkname}_replaced` || linkname.indexOf('_add_') > -1){
-                                criaBotao = false;
+                                showButton = false;
                                 break;
                             }
                         }
-                        if(criaBotao){
+                        if(showButton){
                             $(value).prepend('<button data-toggle="tooltip" linkname="' + linkname + '" class="select" type="button" onclick="javascript:clickButtonSelecionarDispositivo(this, \'' + norma.sufixo + '\');"></button>');
+                        }
+                        else{
+                            $(value).find('s').first().prepend('<button data-toggle="tooltip" linkname="' + linkname + '" class="select" type="button" onclick="javascript:clickButtonSelecionarDispositivo(this, \'' + norma.sufixo + '\');" style="display:none;"></button>');
                         }
                     }
                 });
@@ -203,6 +242,7 @@ function exibirTextoDoArquivoEditar(norma, arquivo) {
                 }
                 
             }
+            $('#div_cad_dispositivo_' + norma.sufixo + ' [data-toggle="tooltip"]').tooltip(optionsTooltip);
         }
         $('#div_cad_dispositivo_' + norma.sufixo + ' div.line_conteudo_arquivo').show();
     }
@@ -228,14 +268,89 @@ function habilitarEdicaoDoDispositivo(linkname, texto){
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`).addClass('alterado');
                 if(texto){
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('adicionado');
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
                 }
                 else{
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`).prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`).prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
                 }
 
             }
             break;
+    }
+}
+
+function clickAlterarDispositivoEditar(){
+    let dispositivoAlterado = {}
+    dispositivoAlterado.texto = $('#div_tooltip_dispositivo textarea[name=textoNovo]').val();
+        let $buttonSelected = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo button.selected');
+        $buttonSelected.tooltip('hide');
+        $buttonSelected.removeClass('selected').addClass('select');
+        if(vide.ch_tipo_relacao == '1'){
+            if(!dispositivoAlterado.texto){
+                return;
+            }
+            const textosAcrescidos = dispositivoAlterado.texto.split('\n');
+            let $nextElement = $buttonSelected.parent();
+            for(let i = 0; i < textosAcrescidos.length; i++){
+                dispositivoAlterado.linkname = generateLinkNameCaput(textosAcrescidos[i]) + '_add';
+                dispositivoAlterado.nm_linkName = getNomeDoLinkName(dispositivoAlterado.linkname);
+                dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(dispositivoAlterado.linkname);
+                dispositivoAlterado.texto = textosAcrescidos[i];
+                normaAlterada.dispositivos.push(Object.assign({}, dispositivoAlterado));
+
+                const $element = $(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${vide.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+                $nextElement.after($element);
+                $nextElement = $element;
+            }
+        }
+        else{
+            let $elementoAlterado = $buttonSelected.parent();
+            $buttonSelected.hide();
+            dispositivoAlterado.linkname= $elementoAlterado.attr('linkname');
+            dispositivoAlterado.nm_linkName = getNomeDoLinkName(dispositivoAlterado.linkname);
+            dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(dispositivoAlterado.linkname);
+            $elementoAlterado.attr('linkname', `${dispositivoAlterado.linkname}_replaced`);
+            $elementoAlterado.addClass('alterado');
+            $elementoAlterado.find(`a[name=${dispositivoAlterado.linkname}]`).attr('name', `${dispositivoAlterado.linkname}_replaced`);
+            $elementoAlterado.attr('replaced_by', normaAlteradora.ch_norma);
+            if(dispositivoAlterado.texto){
+                $elementoAlterado.after(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${dispositivoAlterado.texto}<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${vide.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+                $elementoAlterado.html(`<s>${$elementoAlterado.html()}</s>`);
+            }
+            else{
+                $elementoAlterado.html(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><s>${$elementoAlterado.html()}</s><a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a>`);
+            }
+            normaAlterada.dispositivos.push(dispositivoAlterado);
+        }
+}
+
+function desfazerAlteracaoDoDispositivoEditar(linkname){
+    let removeIndex = -1;
+    for(let i in normaAlterada.dispositivos){
+        removeIndex = i;
+        if(normaAlterada.dispositivos[i].linkname == linkname){
+            switch(vide.ch_tipo_relacao){
+                case '1':
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
+                    normaAlterada.dispositivos.splice(removeIndex, 1);
+                    break;
+                default:
+                    let $elementoAlterado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
+                    const html = $elementoAlterado.find('s').html();
+                    $elementoAlterado.find('s').remove();
+                    $elementoAlterado.html(html);
+                    if(normaAlterada.dispositivos[i].texto){
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
+                    }
+                    $elementoAlterado.attr('linkname', linkname);
+                    $elementoAlterado.removeAttr('replaced_by');
+                    $elementoAlterado.removeClass('alterado');
+                    $elementoAlterado.find('button.select').show().tooltip(optionsTooltip);
+                    normaAlterada.dispositivos.splice(removeIndex, 1);
+                    break;
+            }
+            break;
+        }
     }
 }
 
@@ -245,14 +360,35 @@ function salvarVideEditar(sucessoVide){
             norma_alteradora: normaAlteradora,
             norma_alterada: normaAlterada
         }));
-    return fnSalvar("form_vide_excluir", "", sucessoVide);
+    return fnSalvar("form_vide_editar", "", sucessoVide);
 }
 
 function salvarArquivosVideEditar(sucessoVide){
     if(normaAlteradora.arquivo && normaAlterada.arquivo){
-        removerLinkAlterador();
-        removerAlteracaoDoDispositivo();
-        $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html()));
+        limparFormatacao();
+        let htmlNormaAlteradora = "";
+
+        const $conteudoArquivoNormaAlteradora = $($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html());
+        for(let i in $conteudoArquivoNormaAlteradora){
+            if($conteudoArquivoNormaAlteradora[i].outerHTML){
+                if($conteudoArquivoNormaAlteradora[i].getAttribute('linkname') == normaAlteradora.dispositivos[0].linkname){
+                    const $link = $($conteudoArquivoNormaAlteradora[i]).find('a[href]');
+                    let link = `(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}.html`;
+                    if(normaAlterada.dispositivos.length > 0){
+                        link += `#${normaAlterada.dispositivos[0].linkname}`;
+                    }
+                    for(let a = 0; a < $link.length; a++){
+                        if($link[a].innerText == normaAlteradora.dispositivos[0].texto){
+                            $link[a].setAttribute('href', link);
+                            break;
+                        }
+                    }
+                }
+                htmlNormaAlteradora += $conteudoArquivoNormaAlteradora[i].outerHTML;
+            }
+        }
+
+        $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlteradora));
         $('#form_arquivo_norma_alteradora input[name=nm_arquivo]').val(normaAlteradora.arquivo.filename);
 
         const deferredAlteradora = $.Deferred();
@@ -281,7 +417,14 @@ function salvarArquivosVideEditar(sucessoVide){
             bAsync: true
         });
         if(!normaAlterada.in_norma_fora_do_sistema){
-            $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html()));
+            let htmlNormaAlterada = "";
+            const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
+            for(let i = 0; i < $conteudoArquivoNormaAlterada.length; i++){
+                if($conteudoArquivoNormaAlterada[i].outerHTML){
+                    htmlNormaAlterada += $conteudoArquivoNormaAlterada[i].outerHTML;
+                }
+            }
+            $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI(htmlNormaAlterada));
             $('#form_arquivo_norma_alterada input[name=nm_arquivo]').val(normaAlterada.arquivo.filename);
 
             var sucessoNormaAlterada = function (data) {

@@ -689,6 +689,7 @@ namespace TCDF.Sinj.ES
             fields.Add(new SearchableField() { name = "fontes.ar_fonte.filetext" });
 
             //fields.Add(new SearchableField() { name = "st_habilita_pesquisa" });
+            fields.Add(new SearchableField() { name = "st_habilita_email" });
 
             return fields;
         }
@@ -810,6 +811,7 @@ namespace TCDF.Sinj.ES
             sourceInclude.Add("st_vacatio_legis");
             sourceInclude.Add("ds_vacatio_legis");
             sourceInclude.Add("st_habilita_pesquisa");
+            sourceInclude.Add("st_habilita_email");
             return sourceInclude;
         }
         

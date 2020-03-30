@@ -597,8 +597,8 @@
                         <button id="button_salvar_vide">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" alt="salvar" />Salvar
                         </button>
-                        <button type="reset">
-                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_eraser_p.png" alt="limpar" />Limpar
+                        <button type="button" id="button_cancelar" onclick="javascript:voltar()" >
+                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png" alt="Cancelar" />Cancelar
                         </button>
                     </div>
                 </div>

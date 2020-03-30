@@ -169,6 +169,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                     query = query.Replace("AND(st_habilita_pesquisa:true)", "");
                     query = query.Replace("st_habilita_pesquisa:true", "*");
                     break;
+
             }
 
             return new DiarioAD().ConsultarEs(query).hits.total;

@@ -216,11 +216,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                         {
                             sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
-                            //if (!normaAlteradoraOv.st_vacatio_legis || string.IsNullOrEmpty(normaAlteradoraOv.dt_inicio_vigencia) || Convert.ToDateTime(normaAlteradoraOv.dt_inicio_vigencia, new CultureInfo("pt-BR")) <= DateTime.Now)
-                            //{
-                            //    normaRn.VerificarDispositivosESalvarOsTextosAntigosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada, sessao_usuario.nm_login_usuario);
-                            //    normaRn.VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradoraOv, normaAlteradaOv, vide_alterador, vide_alterada);
-                            //}
+
                         }
                         else
                         {

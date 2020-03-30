@@ -826,7 +826,6 @@ function salvarArquivosVideCadastrar(sucessoVide){
     });
     if(!normaAlterada.in_norma_fora_do_sistema){
         let htmlNormaAlterada = "";
-        let replacedBy = "";
         const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
         for(let i = 0; i < $conteudoArquivoNormaAlterada.length; i++){
             if($conteudoArquivoNormaAlterada[i].outerHTML){
