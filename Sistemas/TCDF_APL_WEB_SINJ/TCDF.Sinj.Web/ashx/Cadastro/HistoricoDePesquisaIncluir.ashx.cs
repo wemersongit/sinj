@@ -51,6 +51,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _ano_assinatura = context.Request["ano_assinatura"];
                     var _nm_orgao = context.Request["sg_hierarquia_nm_vigencia"];
                     var _nm_termo = context.Request.Params.GetValues("nm_termo");
+                    var _st_habilita_pesquisa = context.Request.Params.GetValues("st_habilita_pesquisa");
                     pesquisa.ds_historico = "";
                     if (!string.IsNullOrEmpty(_all))
                     {
@@ -85,7 +86,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         var _origem_por = context.Request["origem_por"];
                         if (string.IsNullOrEmpty(_origem_por))
                         {
-                            _origem_por = "toda_a_hierarquia_em_qualquer_epoca";
+                            _origem_por = "toda_a_hierarquia_em_qualquer_epoca1";
                         }
                         pesquisa.ds_historico += (pesquisa.ds_historico != "" ? " E " : "") + "Origem=" + _nm_orgao + " E " + _origem_por.Replace("_", " ");
                         pesquisa.argumentos.Add(new ArgumentoOV { campo = "Origem", operador = "igual", valor = _nm_orgao + " E " + _origem_por.Replace("_", " "), conector = (pesquisa.ds_historico != "" ? " E " : "") });

@@ -485,6 +485,58 @@ function prosseguirSemDiario(){
     $('#modal_fonte .diario').show();
 }
 
+function CriarModalHabilitarPesquisa() {
+    $("#modal_habilitar_pesquisa").modallight({
+        sTitle: "Confirmar",
+        sWidth: '400',
+        oButtons: [
+            {
+                text: "Confirmar",
+                click: function () {
+                    let notifique = $('#habilitar_notifique_email');
+                    if(notifique.is(":checked")){
+                        /* chamar função de disparar email */
+                        st_habilita_email = true;
+                    }
+
+                }
+            },
+            {
+                text: "Cancelar",
+                click: function () {
+                    $(this).dialog('close');
+                }
+            }
+        ],
+        fnClose: function () {
+            LimparModal('modal_habilitar_pesquisa');
+        }
+    });
+}
+
+function CriarModalEnviarEmail() {
+    $("#modal_enviar_email_norma").modallight({
+        sTitle: "Confirmar",
+        sWidth: '400',
+        oButtons: [
+            {
+                text: "Confirmar",
+                click: function () {
+                }
+            },
+            {
+                text: "Cancelar",
+                click: function () {
+                    $(this).dialog('close');
+                }
+            }
+        ],
+        fnClose: function () {
+            LimparModal('modal_enviar_email_norma');
+        }
+    });
+}
+
 function CriarModalOrigem() {
     $('#modal_origem .dados_orgao').hide();
     $("#modal_origem").modallight({

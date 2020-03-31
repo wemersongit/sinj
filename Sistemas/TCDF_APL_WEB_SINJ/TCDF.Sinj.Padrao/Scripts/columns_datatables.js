@@ -122,11 +122,11 @@ var _columns_norma_es = [
 	        var html = '<div class="table w-100-pc">';
 	        html += '<div class="line">' +
                 '<div class="column">' +
-	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + (full._source.nm_tipo_norma.toLowerCase() == "parecer normativo" ? "*" : "") + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
+	                '<button title="Detalhes TERA" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + (full._source.nm_tipo_norma.toLowerCase() == "parecer normativo" ? "*" : "") + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
                     (full._source.nm_tipo_norma.toLowerCase() == "parecer normativo" ? '<br/><span class="obs">*Data de Despacho do Governador</span>' : '') +
                     (full._source.st_vacatio_legis && IsNotNullOrEmpty(full._source.dt_inicio_vigencia) && convertStringToDateTime(full._source.dt_inicio_vigencia) > convertStringToDateTime(date_now) ? '<br/><span class="obs">*'+(IsNotNullOrEmpty(full._source.ds_vacatio_legis) ? full._source.ds_vacatio_legis : 'Entrará em vigor a partir de <span class="dt_inicio_vigencia">' + full._source.dt_inicio_vigencia + '</span>')+'</span>' : '') +
-	            '</div>' +
-            '</div>';
+				'</div>' +
+			'</div>';
 	        var origens = "";
 	        for (var i = 0; i < full._source.origens.length; i++) {
 	            origens += (origens != "" ? "<br/>" : "") + full._source.origens[i].sg_orgao + ' - ' + full._source.origens[i].nm_orgao;
@@ -183,7 +183,18 @@ var _columns_norma_es = [
 	        }
 	        return html;
 	    }
-	}
+	},
+
+	/* validar se esta na pesquisa */
+
+	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "250px", "sClass": "grid-cell ws center", "mData": "_score", "bSortable": false, "visible": true,
+	    "mRender": function (data, type, full) {
+			return '<div style="float: right;">'+ ( ValidarPermissao(_grupos.aut_exc) ? '<a style="margin-right:5px; color: #009900 !important; cursor:pointer;" onclick="CriarModalEnviarEmail()">Enviar e-mail</a>' : "" ) + 
+			( ValidarPermissao(_grupos.aut_exc) ? '<a style="margin-left:5px; color: #009900 !important; cursor:pointer;" onclick="CriarModalHabilitarPesquisa()">Habilitar no SINJ pesquisa</a>' : " " ) +'</div>' ;
+	    }
+	},
+
+
 ];
 var _columns_norma_favoritos = $.extend(true, [], _columns_norma_es);
 _columns_norma_favoritos[0] = { "indice": 0, "isControl": true, "standard_view": true, "sTitle": ' ', "sWidth": "30px", "sClass": "grid-cell ws", "mData": "", "bSortable": false,

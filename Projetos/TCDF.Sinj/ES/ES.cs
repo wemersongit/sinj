@@ -175,9 +175,15 @@ namespace TCDF.Sinj.ES
                 var _ano_assinatura = context.Request["ano_assinatura"];
                 var _ch_orgao = context.Request["ch_orgao"];
                 var _ch_termo = context.Request.Form.GetValues("ch_termo");
+                var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+
                 if (!string.IsNullOrEmpty(_ch_tipo_norma))
                 {
                     query_textual += (query_textual != "" ? " AND " : "") + "(ch_tipo_norma:\\\"" + _ch_tipo_norma + "\\\")";
+                }
+                if (!string.IsNullOrEmpty(_st_habilita_pesquisa))
+                {
+                    query_textual += (query_textual != "" ? " AND " : "") + "(st_habilita_pesquisa:\\\"" + _st_habilita_pesquisa + "\\\")";
                 }
                 if (!string.IsNullOrEmpty(_ano_assinatura))
                 {
@@ -193,7 +199,7 @@ namespace TCDF.Sinj.ES
                     var chaves = "";
                     if (string.IsNullOrEmpty(_origem_por))
                     {
-                        _origem_por = "toda_a_hierarquia_em_qualquer_epoca";
+                        _origem_por = "toda_a_hierarquia_em_qualquer_epoca1";
                     }
                     var orgaos_hierarquia = new List<OrgaoOV>();
                     var orgaos_cronologia = new List<OrgaoOV>();
@@ -202,7 +208,7 @@ namespace TCDF.Sinj.ES
                     var _ch_hierarquia = context.Request["ch_hierarquia"];
                     switch (_origem_por)
                     {
-                        case "toda_a_hierarquia_em_qualquer_epoca":
+                        case "toda_a_hierarquia_em_qualquer_epoca1":
                             orgaos_hierarquia = new OrgaoRN().BuscarOrgaosDaHierarquia(_ch_orgao, _ch_hierarquia);
                             orgaos_cronologia = new OrgaoRN().BuscarOrgaosDaCronologia(_ch_orgao);
                             foreach (var orgao in orgaos_hierarquia)
@@ -861,6 +867,11 @@ namespace TCDF.Sinj.ES
                 string _ch_tipo_norma = context.Request["ch_tipo_norma"];
                 if(!string.IsNullOrEmpty(_ch_tipo_norma)){
                     query += "ch_tipo_norma:("+_ch_tipo_norma+")";
+                }
+                string _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                if (!string.IsNullOrEmpty(_st_habilita_pesquisa))
+                {
+                    query += "st_habilita_pesquisa:(" + _st_habilita_pesquisa + ")";
                 }
                 string _ch_orgao = context.Request["ch_orgao"];
                 if(!string.IsNullOrEmpty(_ch_orgao)){

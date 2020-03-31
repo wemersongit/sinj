@@ -84,17 +84,18 @@ namespace TCDF.Sinj.RN
             {
                 if (string.IsNullOrEmpty(pesquisaDireta.origem_por))
                 {
-                    pesquisaDireta.origem_por = "toda_a_hierarquia_em_qualquer_epoca";
+                    pesquisaDireta.origem_por = "toda_a_hierarquia_em_qualquer_epoca1";
                 }
                 else
                 {
-                    consulta += "&origem_por=" + pesquisaDireta.origem_por;
+                    consulta += "&origem_po2r=" + pesquisaDireta.origem_por;
                 }
                 historicoDePesquisa.ds_historico += (historicoDePesquisa.ds_historico != "" ? " E " : "") + "Origem=" + pesquisaDireta.nm_orgao + " E " + pesquisaDireta.origem_por.Replace("_", " ");
                 historicoDePesquisa.argumentos.Add(new ArgumentoOV { campo = "Origem", operador = "igual", valor = pesquisaDireta.nm_orgao + " E " + pesquisaDireta.origem_por.Replace("_", " "), conector = (historicoDePesquisa.ds_historico != "" ? " E " : "") });
                 consulta += "&ch_orgao=" + pesquisaDireta.ch_orgao;
                 consulta += "&ch_hierarquia=" + pesquisaDireta.ch_hierarquia;
                 consulta += "&sg_hierarquia_nm_vigencia=" + pesquisaDireta.nm_orgao;
+                consulta += "&st_habilita_pesquisa=" + pesquisaDireta.st_habilita_pesquisa;
             }
 
             historicoDePesquisa.consulta = consulta;

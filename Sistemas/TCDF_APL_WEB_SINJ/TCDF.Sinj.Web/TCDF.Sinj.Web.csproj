@@ -45,10 +45,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="neo.BRLightREST, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
-    </Reference>
     <Reference Include="neo.BRLightSession">
       <HintPath>..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
     </Reference>
