@@ -18,7 +18,7 @@ namespace TCDF.Sinj
     public class Util
     {
 
-        // NOTE: . By Questor
+        // NOTE: . By Questor 
         public static byte[] FileBytesInUTF8(byte[] fileBytes)
         {
             return Encoding.Convert(
