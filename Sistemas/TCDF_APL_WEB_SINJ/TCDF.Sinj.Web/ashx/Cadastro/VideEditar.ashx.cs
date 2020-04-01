@@ -155,7 +155,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         [JsonProperty("norma_alterada")]
         public NormaVideEdicao NormaAlterada { get; set; }
 
-        public void Validate()//validação Douglas
+        public void Validate()
         {
             if (NormaAlteradora == null || string.IsNullOrEmpty(NormaAlteradora.ChNorma))
             {
