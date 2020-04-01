@@ -61,8 +61,12 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
+<<<<<<< HEAD
     <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+=======
+    <Reference Include="TCDF.Sinj">
+>>>>>>> 72ba3733d0267876fd247f592ba7667663ca23b3
       <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
     <Reference Include="Ude">
