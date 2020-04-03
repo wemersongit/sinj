@@ -424,7 +424,10 @@
                     </fieldset>
                     <div id="divButtons" class="buttons loaded text-center">
                         <button id="button_salvar_vide">
-                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png" alt="salvar" />Excluir
+                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_trash_p.png" alt="escluir" />Excluir
+                        </button>
+                        <button type="button" id="button_cancelar" onclick="javascript:voltar()" >
+                            <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_delete_p.png" alt="cancelar" />Cancelar
                         </button>
                     </div>
                 </div>

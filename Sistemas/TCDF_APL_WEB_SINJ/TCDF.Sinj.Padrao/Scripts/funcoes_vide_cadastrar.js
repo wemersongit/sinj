@@ -628,15 +628,15 @@ function clickAlterarDispositivoCadastrar(){
         $(selectorInsertBefore).before(`<p ch_norma_info="${normaAlteradora.ch_norma}" class="adicionado"><a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}">Legislação correlata - ${normaAlteradora.ds_norma}</a></p>`);
     }
     else{
-        dispositivoAlterado.texto = $('#div_tooltip_dispositivo textarea[name=textoNovo]').val();
+        const texto = $('#div_tooltip_dispositivo textarea[name=textoNovo]').val();
         let $buttonSelected = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo button.selected');
         $buttonSelected.tooltip('hide');
         $buttonSelected.removeClass('selected').addClass('select');
         if(tipoDeRelacaoSelecionado.ch_tipo_relacao == '1'){
-            if(!dispositivoAlterado.texto){
+            if(!IsNotNullOrEmpty(texto)){
                 return;
             }
-            const textosAcrescidos = dispositivoAlterado.texto.split('\n');
+            const textosAcrescidos = texto.split('\n');
             let $nextElement = $buttonSelected.parent();
             for(let i = 0; i < textosAcrescidos.length; i++){
                 dispositivoAlterado.linkname = generateLinkNameCaput(textosAcrescidos[i]) + '_add';
@@ -651,11 +651,16 @@ function clickAlterarDispositivoCadastrar(){
             }
         }
         else{
+            if(IsNotNullOrEmpty(texto) && texto.indexOf('\n') > -1){
+                alert('Esse tipo de relação não permite que a alteração possua mais de um dispositivo por vez.');
+                return;
+            }
             let $elementoAlterado = $buttonSelected.parent();
             $buttonSelected.hide();
             dispositivoAlterado.linkname= $elementoAlterado.attr('linkname');
             dispositivoAlterado.nm_linkName = getNomeDoLinkName(dispositivoAlterado.linkname);
             dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(dispositivoAlterado.linkname);
+            dispositivoAlterado.texto = texto;
             $elementoAlterado.attr('linkname', `${dispositivoAlterado.linkname}_replaced`);
             $elementoAlterado.addClass('alterado');
             $elementoAlterado.find(`a[name=${dispositivoAlterado.linkname}]`).attr('name', `${dispositivoAlterado.linkname}_replaced`);

@@ -95,8 +95,7 @@
                             for (var i = 0; i < data.vides.length; i++) {
                                 if (data.vides[i].ch_vide == ch_vide) {
                                     vide = data.vides[i];
-                                    vide.nm_tipo_relacao = getNmTipoRelacao(vide);
-                                    $('#tipoDeRelacao').val(vide.nm_tipo_relacao);
+                                    buscarTipoDeRelacao(vide.ch_tipo_relacao);
                                     selecionarNormaEditar(data);
                                 }
                             }
@@ -438,11 +437,6 @@
             </form>
         </div>
         <div id="div_cad_arquivos" class="hidden">
-            <form id="form_arquivo_norma_alteradora" name="form_arquivo_norma_alteradora" url-ajax="./ashx/Arquivo/UploadHtml.ashx" action="#" method="post">
-                <input name="nm_base" type="hidden" value="sinj_norma" />
-                <input name="nm_arquivo" type="hidden" value="" />
-                <textarea name="arquivo"></textarea>
-            </form>
             <form id="form_arquivo_norma_alterada" name="form_arquivo_norma_alterada" url-ajax="./ashx/Arquivo/UploadHtml.ashx" action="#" method="post">
                 <input name="nm_base" type="hidden" value="sinj_norma" />
                 <input name="nm_arquivo" type="hidden" value="" />

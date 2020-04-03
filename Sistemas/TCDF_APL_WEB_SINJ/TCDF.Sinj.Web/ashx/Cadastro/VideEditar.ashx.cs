@@ -62,10 +62,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     selectVide.caput_norma_vide = null;
                     selectVide.caput_norma_vide_outra = null;
                 }
-                if (vide.NormaAlteradora.ArquivoNovo != null)
-                {
-                    normaAlteradoraOv.ar_atualizado = vide.NormaAlteradora.ArquivoNovo;
-                }
                 normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                 if (normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
                 {

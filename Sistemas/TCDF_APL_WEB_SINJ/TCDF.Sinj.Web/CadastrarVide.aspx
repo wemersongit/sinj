@@ -35,9 +35,9 @@
                                     $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
                                 }
                                 idLink = '';
-                                selecionarNormaAlteradora(normaAlteradora);
+                                selecionarNormaAlteradoraCadastrar(normaAlteradora);
                                 changeStepper('selecionarTipoRelacao');
-                                selecionarNormaAlterada(normaAlterada);
+                                selecionarNormaAlteradaCadastrar(normaAlterada);
 
                                 $("#ds_comentario_vide").val("");
 

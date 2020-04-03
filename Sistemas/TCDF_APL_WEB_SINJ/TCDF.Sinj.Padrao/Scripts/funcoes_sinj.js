@@ -3074,11 +3074,11 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
     //                            Art. 102, Caput
     var dispositivo_afetado = "";
     const getDescriptionAlteracaoTextoVide = function(value, index, array){
-        return value.ds_linkname + '<br/>';
+        return value.ds_linkname;
     }
     if (vide.in_norma_afetada) {
         if(vide.alteracao_texto_vide && vide.alteracao_texto_vide.dispositivos_norma_vide.length > 0){
-            dispositivo_afetado = vide.alteracao_texto_vide.dispositivos_norma_vide.map(getDescriptionAlteracaoTextoVide);
+            dispositivo_afetado = vide.alteracao_texto_vide.dispositivos_norma_vide.map(getDescriptionAlteracaoTextoVide).join('<br/>');
         }
         else if(IsNotNullOrEmpty(vide.caput_norma_vide, 'ds_caput')){
             dispositivo_afetado = vide.caput_norma_vide.ds_caput.replaceAll('\n','<br/>');
@@ -3107,7 +3107,7 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
     } else {
         // Caso a norma afete outra, os valores exibidos estao persistidos em campos diferentes:
         if(vide.alteracao_texto_vide && vide.alteracao_texto_vide.dispositivos_norma_vide_outra.length > 0){
-            dispositivo_afetado = vide.alteracao_texto_vide.dispositivos_norma_vide_outra.map(getDescriptionAlteracaoTextoVide);
+            dispositivo_afetado = vide.alteracao_texto_vide.dispositivos_norma_vide_outra.map(getDescriptionAlteracaoTextoVide).join('<br/>');
         }
         else if(IsNotNullOrEmpty(vide.caput_norma_vide_outra, 'ds_caput')){
             dispositivo_afetado = vide.caput_norma_vide_outra.ds_caput.replaceAll('\n','<br/>');
