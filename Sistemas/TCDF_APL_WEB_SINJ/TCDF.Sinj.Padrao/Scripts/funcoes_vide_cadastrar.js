@@ -26,7 +26,9 @@ let optionsTooltip = {
         </div>
         <div class="line">
             <div class="column w-100-pc text-center">
-                <button type="button" class="button" onclick="clickAlterarDispositivoCadastrar()"><img src="${_urlPadrao}/Imagens/ico_check.png" width="15px" height="15px" /> Ok</button>
+            <button type="button" class="button" onclick="clickAlterarDispositivoCadastrar()"><img src="${_urlPadrao}/Imagens/ico_check.png" width="15px" height="15px" /> Ok</button>
+            &nbsp;
+            <button type="button" class="button" onclick="clickCancelarAlterarDispositivo(this)"><img src="${_urlPadrao}/Imagens/ico_close.png" width="15px" height="15px" /> Cancelar</button>
             </div>
         </div>
     </div>`,

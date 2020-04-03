@@ -62,11 +62,19 @@ function clickButtonSelecionarDispositivo(el) {
             $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').addClass('copy-enabled');
         }
         else {
-            $(el).removeClass('selected').addClass('select');
-            $(el).tooltip('hide');
-            $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').removeClass('copy-enabled');
+            closeTooltipDispositivoAlterado(el);
         }
     }
+}
+
+function clickCancelarAlterarDispositivo(el){
+    closeTooltipDispositivoAlterado($(`button[aria-describedby=${$('#div_tooltip_dispositivo>div.tooltip').attr('id')}]`));
+}
+
+function closeTooltipDispositivoAlterado(el){
+    $(el).removeClass('selected').addClass('select');
+    $(el).tooltip('hide');
+    $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').removeClass('copy-enabled');
 }
 
 function selecionarTextoNormaAlteradoraEditar() {
