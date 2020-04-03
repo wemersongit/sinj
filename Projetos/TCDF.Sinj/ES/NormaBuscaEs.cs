@@ -458,6 +458,17 @@ namespace TCDF.Sinj.ES
                     }
                 );
             }
+            if (!string.IsNullOrEmpty(sentencaOv.st_habilita_pesquisa))
+            {
+                buscaDireta.filtersToQueryFiltered.Add(
+                    new FilterQueryFiltered()
+                    {
+                        name = "st_habilita_pesquisa",
+                        value = sentencaOv.st_habilita_pesquisa,
+                        @operator = TypeOperator.equal
+                    }
+                );
+            }
             if (!string.IsNullOrEmpty(sentencaOv.ano_assinatura))
             {
                 buscaDireta.filtersToQueryFiltered.Add(
@@ -496,12 +507,12 @@ namespace TCDF.Sinj.ES
                 var filterOrgao = new FilterQueryFiltered();
                 if (string.IsNullOrEmpty(sentencaOv.origem_por))
                 {
-                    sentencaOv.origem_por = "toda_a_hierarquia_em_qualquer_epoca";
+                    sentencaOv.origem_por = "toda_a_hierarquia_em_qualquer_epoca1";
                 }
                 var orgaos = new List<OrgaoOV>();
                 switch (sentencaOv.origem_por)
                 {
-                    case "toda_a_hierarquia_em_qualquer_epoca":
+                    case "toda_a_hierarquia_em_qualquer_epoca1":
                         orgaos = new OrgaoRN().BuscarTodaHierarquiaEmQualquerEpoca(sentencaOv.ch_orgao, sentencaOv.ch_hierarquia);
                         break;
                     case "hierarquia_superior":

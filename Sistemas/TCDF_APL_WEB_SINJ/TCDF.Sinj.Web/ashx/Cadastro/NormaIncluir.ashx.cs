@@ -60,7 +60,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var st_habilita_pesquisa = false;
 
                 var _st_habilita_email = context.Request["st_habilita_email"];
-                var st_habilita_email = false;
+                var st_habilita_email = false; ;
 
                 var _ds_pendencia = context.Request["ds_pendencia"];
 

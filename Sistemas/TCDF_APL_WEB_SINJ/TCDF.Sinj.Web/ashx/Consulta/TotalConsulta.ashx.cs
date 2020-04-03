@@ -89,6 +89,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaDireta.ch_hierarquia = context.Request["ch_hierarquia"];
                     pesquisaDireta.nm_orgao = context.Request["sg_hierarquia_nm_vigencia"];
                     pesquisaDireta.origem_por = context.Request["origem_por"];
+                    //pesquisaDireta.st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
                     pesquisaDireta.ch_termos = context.Request.Params.GetValues("ch_termo");
                     pesquisaDireta.isCount = true;
                     var buscaDireta = new NormaBuscaEs().MontarBusca(pesquisaDireta);

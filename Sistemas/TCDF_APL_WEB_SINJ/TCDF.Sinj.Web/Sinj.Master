@@ -250,7 +250,7 @@
                                 <li id="li_historico"><a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a></li>
                                 <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a></li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a></li>
-                                <%--<li id="li_pendenteDePesquisa"><a title="Pendente de Pesquisa"                  class="lnkmenu" id="aPendenteDePesquisa"   href="./ResultadoDePesquisa?bbusca=pendenteDePublicacao&tipo_pesquisa=pendenteDePublicacao&all=">Pendente de Pesquisa</a></li>--%>
+                                <li id="li_pendenteDePesquisa"><a title="Pendente de Pesquisa"                  class="lnkmenu" id="aPendenteDePesquisa" href="./ResultadoDePesquisa?tipo_pesquisa=norma&all=&ch_tipo_norma=&nm_tipo_norma=&nr_norma=&ano_assinatura=&ch_orgao=&ch_hierarquia=&sg_hierarquia_nm_vigencia=&origem_por=toda_a_hierarquia_em_qualquer_epoca&st_habilita_pesquisa=true">Pendente de Pesquisa</a></li>
                                 <li id="li_contatos"><a title="Contatos"             class="lnkmenu" id="aContatos"       href="./Contatos">Contatos</a></li>
                             </ul>
                             <div id="div_user_notifiqueme" >
@@ -275,6 +275,39 @@
             </div>
         </div>
     </div>
+    <div id="modal_habilitar_pesquisa" class="modal" style="display:none;">
+        <div class="table w-100-pc">
+            <div class="line">
+                <div class="column w-100-pc">
+                    <div class="cell fr">
+                        <label>Deseja realmente habilitar a norma no SINJ Pesquisa?</label>
+                    </div>
+                </div>
+                <div class="column w-60-pc">
+                    <div class="cell fr">
+                        <label>Notificar a norma por e-mail</label>
+                    </div>
+                </div>
+                <div class="column w-10-pc">
+                    <div id="div_autocomplete_autoria_modal" class="cell w-100-pc">
+                        <input id="habilitar_notifique_email" type="checkbox" value="" class="w-80-pc" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="modal_enviar_email_norma" class="modal" style="display:none;">
+            <div class="table w-100-pc">
+                <div class="line">
+                    <div class="column w-100-pc">
+                        <div class="cell">
+                            <label>Deseja realmente notificar esta norma?</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <div id="show_top" class="ancora" >
         <a href="#" title="topo"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/show_top.png" alt="topo" /></a>
     </div>
