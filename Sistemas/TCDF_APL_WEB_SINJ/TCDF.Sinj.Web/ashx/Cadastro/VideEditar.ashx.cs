@@ -30,6 +30,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             var vide = JsonConvert.DeserializeObject<VideEdicao>(_vide);
 
             var _dt_controle_alteracao = context.Request["dt_controle_alteracao"];
+            var _ds_dispositivos_alterados = context.Request["ds_dispositivos_alterados"];
 
             var action = AcoesDoUsuario.nor_edt;
             SessaoUsuarioOV sessao_usuario = null;
@@ -56,6 +57,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 foreach (var selectVide in normaAlteradoraOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)))
                 {
                     selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide(){
+                        ds_dispositivos_alterados = _ds_dispositivos_alterados,
                         dispositivos_norma_vide = vide.NormaAlteradora.Dispositivos,
                         dispositivos_norma_vide_outra = vide.NormaAlterada != null ? vide.NormaAlterada.Dispositivos : new List<DispositivoVide>()
                     };
@@ -78,6 +80,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         {
                             selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
                             {
+                                ds_dispositivos_alterados = _ds_dispositivos_alterados,
                                 dispositivos_norma_vide = vide.NormaAlterada.Dispositivos,
                                 dispositivos_norma_vide_outra = vide.NormaAlteradora != null ? vide.NormaAlteradora.Dispositivos : new List<DispositivoVide>()
                             };

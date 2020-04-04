@@ -84,6 +84,26 @@ function selecionarTextoNormaAlteradoraEditar() {
     }
 }
 
+function adicionarDescricaoDispositivosAlterados(ds_dispositivo_alterado){
+    let ds_dispositivos_alterados = $('textarea[name=ds_dispositivos_alterados]').val();
+    ds_dispositivos_alterados += (IsNotNullOrEmpty(ds_dispositivos_alterados) ? '\n' : '') + ds_dispositivo_alterado;
+    $('textarea[name=ds_dispositivos_alterados]').val(ds_dispositivos_alterados);
+}
+
+function removerDescricaoDispositivosAlterados(ds_dispositivo_alterado){
+    let ds_dispositivos_alterados = $('textarea[name=ds_dispositivos_alterados]').val();
+    const dispositivosSplited = ds_dispositivos_alterados.split('\n');
+    ds_dispositivos_alterados = "";
+    for(let i = 0; i < dispositivosSplited.length; i++){
+        if(dispositivosSplited[i] == ds_dispositivo_alterado){
+            continue;
+        }
+        ds_dispositivos_alterados += (IsNotNullOrEmpty(ds_dispositivos_alterados) ? '\n' : '') + dispositivosSplited[i];
+    }
+    $('textarea[name=ds_dispositivos_alterados]').val(ds_dispositivos_alterados);
+    
+}
+
 function getNomeDoLinkName(linkname){
     const sufixo = linkname.substring(0, 3);
     const linknames = linkname.split('_');

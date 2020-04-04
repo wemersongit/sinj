@@ -26,6 +26,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             var _dt_controle_alteracao = context.Request["dt_controle_alteracao"];
             var _vide = context.Request["vide"];
             var vide = JsonConvert.DeserializeObject<VideInclusao>(_vide);
+            var _ds_dispositivos_alterados = context.Request["ds_dispositivos_alterados"];
 
             var _ch_tipo_norma_vide_fora_do_sistema = context.Request["ch_tipo_norma_vide_fora_do_sistema"];
             var _nm_tipo_norma_vide_fora_do_sistema = context.Request["nm_tipo_norma_vide_fora_do_sistema"];
@@ -132,8 +133,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     }
                     vide_alterador.alteracao_texto_vide.dispositivos_norma_vide_outra = vide.NormaAlterada.Dispositivos;
                 }
+                vide_alterador.alteracao_texto_vide.ds_dispositivos_alterados = _ds_dispositivos_alterados;
                 vide_alterador.alteracao_texto_vide.dispositivos_norma_vide = vide.NormaAlteradora.Dispositivos;
-
                 normaAlteradoraOv.vides.Add(vide_alterador);
 
                 normaRn.SalvarTextoAntigoDaNorma(normaAlteradoraOv, vide_alterador, sessao_usuario.nm_login_usuario);
@@ -148,36 +149,35 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 {
                     if (normaAlteradaOv != null)
                     {
-                        var vide_alterada = new Vide();
-                        vide_alterada.ch_vide = ch_vide;
-                        vide_alterada.in_relacao_de_acao = normaAlteradoraOv.st_acao;
+                        var vide_alterado = new Vide();
+                        vide_alterado.ch_vide = ch_vide;
+                        vide_alterado.in_relacao_de_acao = normaAlteradoraOv.st_acao;
 
-                        vide_alterada.ch_tipo_relacao = vide.Relacao.ch_tipo_relacao;
-                        vide_alterada.nm_tipo_relacao = vide.Relacao.nm_tipo_relacao;
-                        vide_alterada.ds_texto_relacao = vide.Relacao.ds_texto_para_alterador; //Exemplo: Revogado Totalmente
+                        vide_alterado.ch_tipo_relacao = vide.Relacao.ch_tipo_relacao;
+                        vide_alterado.nm_tipo_relacao = vide.Relacao.nm_tipo_relacao;
+                        vide_alterado.ds_texto_relacao = vide.Relacao.ds_texto_para_alterador; //Exemplo: Revogado Totalmente
 
-                        vide_alterada.in_norma_afetada = true;
-                        vide_alterada.ch_norma_vide = normaAlteradoraOv.ch_norma;
-                        vide_alterada.ch_tipo_norma_vide = normaAlteradoraOv.ch_tipo_norma;
-                        vide_alterada.nm_tipo_norma_vide = normaAlteradoraOv.nm_tipo_norma;
-                        vide_alterada.nr_norma_vide = normaAlteradoraOv.nr_norma;
-                        if (vide_alterada.nr_norma_vide == "0")
+                        vide_alterado.in_norma_afetada = true;
+                        vide_alterado.ch_norma_vide = normaAlteradoraOv.ch_norma;
+                        vide_alterado.ch_tipo_norma_vide = normaAlteradoraOv.ch_tipo_norma;
+                        vide_alterado.nm_tipo_norma_vide = normaAlteradoraOv.nm_tipo_norma;
+                        vide_alterado.nr_norma_vide = normaAlteradoraOv.nr_norma;
+                        if (vide_alterado.nr_norma_vide == "0")
                         {
-                            vide_alterada.nr_norma_vide = "";
+                            vide_alterado.nr_norma_vide = "";
                         }
-                        vide_alterada.dt_assinatura_norma_vide = normaAlteradoraOv.dt_assinatura;
+                        vide_alterado.dt_assinatura_norma_vide = normaAlteradoraOv.dt_assinatura;
                         if (normaAlteradoraOv.st_vacatio_legis && !string.IsNullOrEmpty(normaAlteradoraOv.dt_inicio_vigencia))
                         {
-                            vide_alterada.dt_inicio_vigencia_norma_vide = normaAlteradoraOv.dt_inicio_vigencia;
+                            vide_alterado.dt_inicio_vigencia_norma_vide = normaAlteradoraOv.dt_inicio_vigencia;
                         }
+                        vide_alterado.alteracao_texto_vide.ds_dispositivos_alterados = _ds_dispositivos_alterados;
+                        vide_alterado.alteracao_texto_vide.dispositivos_norma_vide = vide.NormaAlterada.Dispositivos;
+                        vide_alterado.alteracao_texto_vide.dispositivos_norma_vide_outra = vide.NormaAlteradora.Dispositivos;
 
-                        vide_alterada.alteracao_texto_vide.dispositivos_norma_vide = vide.NormaAlterada.Dispositivos;
+                        vide_alterado.ds_comentario_vide = vide.DsComentarioVide;
 
-                        vide_alterada.alteracao_texto_vide.dispositivos_norma_vide_outra = vide.NormaAlteradora.Dispositivos;
-
-                        vide_alterada.ds_comentario_vide = vide.DsComentarioVide;
-
-                        normaAlteradaOv.vides.Add(vide_alterada);
+                        normaAlteradaOv.vides.Add(vide_alterado);
                         //Coloca o nome na situação
                         if (!normaAlteradaOv.st_situacao_forcada)
                         {
@@ -209,7 +209,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             }
                         }
 
-                        normaRn.SalvarTextoAntigoDaNorma(normaAlteradaOv, vide_alterada, sessao_usuario.nm_login_usuario);
+                        normaRn.SalvarTextoAntigoDaNorma(normaAlteradaOv, vide_alterado, sessao_usuario.nm_login_usuario);
 
                         normaAlteradaOv.ar_atualizado = vide.NormaAlterada.ArquivoNovo;
                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });

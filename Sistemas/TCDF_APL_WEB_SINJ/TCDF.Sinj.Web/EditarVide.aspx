@@ -95,6 +95,9 @@
                             for (var i = 0; i < data.vides.length; i++) {
                                 if (data.vides[i].ch_vide == ch_vide) {
                                     vide = data.vides[i];
+                                    if (IsNotNullOrEmpty(vide, 'alteracao_texto_vide.ds_dispositivos_alterados')) {
+                                        $('textarea[name=ds_dispositivos_alterados]').val(vide.alteracao_texto_vide.ds_dispositivos_alterados);
+                                    }
                                     buscarTipoDeRelacao(vide.ch_tipo_relacao);
                                     selecionarNormaEditar(data);
                                 }
@@ -394,7 +397,19 @@
                                                                     <hr />
                                                                     <div class="line line_conteudo_arquivo" style="display:none;">
                                                                         <div class="column w-100-pc">
-                                                                            <div class="div_conteudo_arquivo w-100-pc mauto">
+                                                                            <div class="table w-100-pc">
+                                                                                <div class="line">
+                                                                                    <div class="column w-100-pc">
+                                                                                        <div class="div_conteudo_arquivo w-100-pc mauto">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="line">
+                                                                                    <div class="column w-100-pc">
+                                                                                        <label>Dispositivos alterados: </label><br />
+                                                                                        <textarea name="ds_dispositivos_alterados" rows="10" cols="50"></textarea>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

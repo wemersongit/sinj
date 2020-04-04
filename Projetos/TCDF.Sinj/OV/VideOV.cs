@@ -165,6 +165,7 @@ namespace TCDF.Sinj.OV
             dispositivos_norma_vide = new List<DispositivoVide>();
             dispositivos_norma_vide_outra = new List<DispositivoVide>();
         }
+        public string ds_dispositivos_alterados { get; set; }
         public List<DispositivoVide> dispositivos_norma_vide { get; set; }
         public List<DispositivoVide> dispositivos_norma_vide_outra { get; set; }
     }

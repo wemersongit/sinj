@@ -676,19 +676,23 @@ function clickAlterarDispositivoCadastrar(){
             }
             normaAlterada.dispositivos.push(dispositivoAlterado);
         }
+        if(IsNotNullOrEmpty(dispositivoAlterado.ds_linkname)){
+            adicionarDescricaoDispositivosAlterados(dispositivoAlterado.ds_linkname);
+        }
     }
     changeStepper('selecionarDispositivoAlterado');
 }
 
 function desfazerAlteracaoDoDispositivoCadastrar(linkname){
     let removeIndex = -1;
+    let dispositivoDesfeito = {};
     for(let i in normaAlterada.dispositivos){
         removeIndex = i;
         if(normaAlterada.dispositivos[i].linkname == linkname){
             switch(tipoDeRelacaoSelecionado.ch_tipo_relacao){
                 case '1':
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
-                    normaAlterada.dispositivos.splice(removeIndex, 1);
+                    dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
                     break;
                 default:
                     let $elementoAlterado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
@@ -702,8 +706,11 @@ function desfazerAlteracaoDoDispositivoCadastrar(linkname){
                     $elementoAlterado.removeAttr('replaced_by');
                     $elementoAlterado.removeClass('alterado');
                     $elementoAlterado.find('button.select').show().tooltip(optionsTooltip);
-                    normaAlterada.dispositivos.splice(removeIndex, 1);
+                    dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
                     break;
+            }
+            if(IsNotNullOrEmpty(dispositivoDesfeito)){
+                removerDescricaoDispositivosAlterados(dispositivoDesfeito[0].ds_linkname);
             }
             break;
         }

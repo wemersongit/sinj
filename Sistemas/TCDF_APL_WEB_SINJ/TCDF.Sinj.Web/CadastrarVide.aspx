@@ -563,7 +563,19 @@
                                                                     </div>
                                                                     <div class="line line_conteudo_arquivo" style="display:none;">
                                                                         <div class="column w-100-pc">
-                                                                            <div class="div_conteudo_arquivo w-100-pc mauto">
+                                                                            <div class="table w-100-pc">
+                                                                                <div class="line">
+                                                                                    <div class="column w-100-pc">
+                                                                                        <div class="div_conteudo_arquivo w-100-pc mauto">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="line">
+                                                                                    <div class="column w-100-pc">
+                                                                                        <label>Dispositivos alterados: </label><br />
+                                                                                        <textarea name="ds_dispositivos_alterados" rows="10" cols="50"></textarea>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
