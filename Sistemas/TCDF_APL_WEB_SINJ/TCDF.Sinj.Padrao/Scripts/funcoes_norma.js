@@ -485,7 +485,8 @@ function prosseguirSemDiario(){
     $('#modal_fonte .diario').show();
 }
 
-function CriarModalHabilitarPesquisa() {
+// função que habilita a norma no SINJ pesquisa e a opção de enviar email.
+function CriarModalHabilitarPesquisa(id_doc) {    
     $("#modal_habilitar_pesquisa").modallight({
         sTitle: "Confirmar",
         sWidth: '400',
@@ -493,14 +494,101 @@ function CriarModalHabilitarPesquisa() {
             {
                 text: "Confirmar",
                 click: function () {
-                    let notifique = $('#habilitar_notifique_email');
-                    if(notifique.is(":checked")){
-                        /* chamar função de disparar email */
-                        st_habilita_email = true;
-                    }
+                    let notifique = $('#habilitar_notifique_email').is(":checked");
 
+                    var inicio = function() {
+                        $('#super_loading').show();
+                    }
+                    var complete = function(data) {     
+                        if(!notifique){
+                            $('#super_loading').hide();
+                        }                 
+                    }
+                    var sucesso = function(data) {
+                        !notifique ? $('#modal_habilitar_pesquisa').dialog('close') : " ";
+                        if (IsNotNullOrEmpty(data, 'error_message')) {
+                            $('#div_habilita_pesquisa_norma').messagelight({
+                                sTitle: "Erro",
+                                sContent: data.error_message,
+                                sType: "error",
+                                sWidth: "",
+                                iTime: null
+                            });
+                        } else if(!notifique){
+                            $("<div id='modal_habilitar_pesquisa' />").modallight({
+                                sTitle: "Norma habilitada",
+                                sType: "success",
+                                sContent: "Norma habilitada no SINJ pesquisa com sucesso.",
+                                oButtons: [
+                                    {
+                                        text: "Ok",
+                                        click: function () {
+                                            $(this).dialog('close');
+                                        }
+                                    }
+                                ],
+                                fnClose: function () {
+                                    document.location.reload();
+                                }
+                            });            
+                        }else{
+                            var sucessoEmail = function(data) {                                
+                                $('#modal_habilitar_pesquisa').dialog('close');
+
+                                if (IsNotNullOrEmpty(data, 'error_message')) {
+                                    $('#div_habilita_pesquisa_norma').messagelight({
+                                        sTitle: "Erro",
+                                        sContent: data.error_message,
+                                        sType: "error",
+                                        sWidth: "",
+                                        iTime: null
+                                    });
+                                } else {
+                                    $("<div id='modal_habilitar_pesquisa' />").modallight({
+                                        sTitle: "Norma habilitada",
+                                        sType: "success",
+                                        sContent: "Norma habilitada no SINJ pesquisa e notificação enviada com sucesso.",
+                                        oButtons: [
+                                            {
+                                                text: "Ok",
+                                                click: function () {
+                                                    $(this).dialog('close');
+                                                }
+                                            }
+                                        ],
+                                        fnClose: function () {
+                                            document.location.reload();
+                                        }
+                                    }); 
+                            }
+                            
+                        }
+                        var completeEmail = function(data) {     
+                            $('#super_loading').hide();    
+                        }
+                        // requisição ajax habilitar envio de emails
+                        $.ajaxlight({
+                            sUrl:'./ashx/Cadastro/NormaEditarCampoEmail.ashx?id_doc='+id_doc+"&st_atualizada=true&st_habilita_email=true",
+                            sType: "GET",
+                            fnSuccess: sucessoEmail,
+                            fnComplete: completeEmail,
+                            // fnBeforeSend: inicio,
+                            bAsync: true,
+                            iTimeout: 60000
+                        });
+                    }
                 }
-            },
+                $.ajaxlight({
+                    sUrl:'./ashx/Cadastro/NormaEditarCampo.ashx?id_doc='+id_doc+"&st_habilita_pesquisa=true",
+                    sType: "GET",
+                    fnSuccess: sucesso,
+                    fnComplete: complete,
+                    fnBeforeSend: inicio,
+                    bAsync: true,
+                    iTimeout: 60000
+                });
+            }
+        },
             {
                 text: "Cancelar",
                 click: function () {
@@ -514,7 +602,8 @@ function CriarModalHabilitarPesquisa() {
     });
 }
 
-function CriarModalEnviarEmail() {
+// função que habilita enviar email na tela normas pendentes
+function CriarModalEnviarEmail(id_doc) {    
     $("#modal_enviar_email_norma").modallight({
         sTitle: "Confirmar",
         sWidth: '400',
@@ -522,6 +611,51 @@ function CriarModalEnviarEmail() {
             {
                 text: "Confirmar",
                 click: function () {
+                    var inicio = function() {
+                        $('#super_loading').show();
+                    }
+                    var complete = function(data) {                        
+                        $('#super_loading').hide();
+                    }
+                    var sucesso = function(data) {
+                        if (IsNotNullOrEmpty(data, 'error_message')) {
+                            $('#modal_enviar_email_norma').messagelight({
+                                sTitle: "Erro",
+                                sContent: data.error_message,
+                                sType: "error",
+                                sWidth: "",
+                                iTime: null
+                            });
+                        } else{
+                            $('#modal_enviar_email_norma').dialog('close');
+
+                            $("<div id='modal_enviar_email_norma' />").modallight({
+                                sTitle: "Enviar E-mail",
+                                sType: "success",
+                                sContent: "Norma notificada com sucesso.",
+                                oButtons: [
+                                    {
+                                        text: "Ok",
+                                        click: function () {
+                                            $(this).dialog('close');
+                                        }
+                                    }
+                                ],
+                            });
+                        
+                        }
+                    }
+                    $.ajaxlight({
+                        sUrl:'./ashx/Cadastro/NormaEditarCampoEmail.ashx?id_doc='+id_doc+"&st_habilita_email=true&st_atualizada=true",
+                        sType: "GET",
+                        fnSuccess: sucesso,
+                        fnComplete: complete,
+                        fnBeforeSend: inicio,
+                        bAsync: true,
+                        iTimeout: 40000
+                    });
+
+
                 }
             },
             {

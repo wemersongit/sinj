@@ -108,6 +108,15 @@ $(document).ready(function () {
     }
     ConsultarTotal(nm_base_aux_total);
     ConsultarTotalCesta();
+
+    //Se estiver na tela de pendente de pesquisa, esconte da aba de cesta e muda o titulo
+    if(window.location.href.indexOf("st_habilita_pesquisa=false") > 0){
+        $('div.divIdentificadorDePagina label').text('.: Normas Pendentes');
+        $('#tabs_pesquisa').find('[nm="cesta"]').hide();
+    }else{
+        $('div.divIdentificadorDePagina label').text('.: Resultado de Pesquisa');
+        $('#tabs_pesquisa').find('[nm="cesta"]').show();
+    }
 });
 
 function sugerirBuscas(nm_base) {
