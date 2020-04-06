@@ -3073,25 +3073,24 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
     //                            Art. 102, Parágrafo único, inc. VIII, ali. "c", item 4
     //                            Art. 102, Caput
     var dispositivo_afetado = "";
-    const getDescriptionAlteracaoTextoVide = function(value, index, array){
-        return value.ds_linkname;
+    if(IsNotNullOrEmpty(vide.alteracao_texto_vide, 'ds_dispositivos_alterados')){
+        dispositivo_afetado = vide.alteracao_texto_vide.ds_dispositivos_alterados.replaceAll('\n','<br/>');
     }
     if (vide.in_norma_afetada) {
-        if(vide.alteracao_texto_vide && vide.alteracao_texto_vide.dispositivos_norma_vide.length > 0){
-            dispositivo_afetado = vide.alteracao_texto_vide.ds_dispositivos_alterados.replaceAll('\n','<br/>');
-        }
-        else if(IsNotNullOrEmpty(vide.caput_norma_vide, 'ds_caput')){
-            dispositivo_afetado = vide.caput_norma_vide.ds_caput.replaceAll('\n','<br/>');
-        }else{
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.artigo_norma_vide) ? "Art. " + vide.artigo_norma_vide.replace(/^0?([1-9])$/, vide.artigo_norma_vide + 'º').replace(/^0+/, '') + ", " : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.paragrafo_norma_vide) ? (vide.paragrafo_norma_vide.toLowerCase() == "único" || vide.paragrafo_norma_vide.toLowerCase() == "unico" ? "Parágrafo " + vide.paragrafo_norma_vide + ", " : "§ " + vide.paragrafo_norma_vide.replace(/^([1-9])$/, vide.paragrafo_norma_vide + 'º') + ", ") : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.inciso_norma_vide) ? "inc. " + vide.inciso_norma_vide + ", " : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.alinea_norma_vide) ? "ali. \"" + vide.alinea_norma_vide + "\", " : "");
-            //dispositivo_afetado += ((IsNotNullOrEmpty(vide.caput_norma_vide) && (vide.caput_norma_vide == true)) ? "Caput. " : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.item_norma_vide) ? "item " + vide.item_norma_vide + ", " : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.anexo_norma_vide) ? "Anexo " + vide.anexo_norma_vide : "");
-            if (dispositivo_afetado.substring(dispositivo_afetado.length - 2) == ", ") {
-                dispositivo_afetado = dispositivo_afetado.substring(0, dispositivo_afetado.length - 2);
+        if(dispositivo_afetado == ""){
+            if(IsNotNullOrEmpty(vide.caput_norma_vide, 'ds_caput')){
+                dispositivo_afetado = vide.caput_norma_vide.ds_caput.replaceAll('\n','<br/>');
+            }else{
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.artigo_norma_vide) ? "Art. " + vide.artigo_norma_vide.replace(/^0?([1-9])$/, vide.artigo_norma_vide + 'º').replace(/^0+/, '') + ", " : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.paragrafo_norma_vide) ? (vide.paragrafo_norma_vide.toLowerCase() == "único" || vide.paragrafo_norma_vide.toLowerCase() == "unico" ? "Parágrafo " + vide.paragrafo_norma_vide + ", " : "§ " + vide.paragrafo_norma_vide.replace(/^([1-9])$/, vide.paragrafo_norma_vide + 'º') + ", ") : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.inciso_norma_vide) ? "inc. " + vide.inciso_norma_vide + ", " : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.alinea_norma_vide) ? "ali. \"" + vide.alinea_norma_vide + "\", " : "");
+                //dispositivo_afetado += ((IsNotNullOrEmpty(vide.caput_norma_vide) && (vide.caput_norma_vide == true)) ? "Caput. " : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.item_norma_vide) ? "item " + vide.item_norma_vide + ", " : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.anexo_norma_vide) ? "Anexo " + vide.anexo_norma_vide : "");
+                if (dispositivo_afetado.substring(dispositivo_afetado.length - 2) == ", ") {
+                    dispositivo_afetado = dispositivo_afetado.substring(0, dispositivo_afetado.length - 2);
+                }
             }
         }
         $('#tbody_vides_normas_que_afetam').append(
@@ -3106,21 +3105,20 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
         );
     } else {
         // Caso a norma afete outra, os valores exibidos estao persistidos em campos diferentes:
-        if(IsNotNullOrEmpty(vide, 'alteracao_texto_vide.ds_dispositivos_alterados')){
-            dispositivo_afetado = vide.alteracao_texto_vide.ds_dispositivos_alterados.replaceAll('\n','<br/>');
-        }
-        else if(IsNotNullOrEmpty(vide.caput_norma_vide_outra, 'ds_caput')){
-            dispositivo_afetado = vide.caput_norma_vide_outra.ds_caput.replaceAll('\n','<br/>');
-        }
-        else{
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.artigo_norma_vide_outra) ? "Art. " + vide.artigo_norma_vide_outra.replace(/^0?([1-9])$/, vide.artigo_norma_vide_outra + 'º').replace(/^0+/, '') + ", " : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.paragrafo_norma_vide_outra) ? (vide.paragrafo_norma_vide_outra.toLowerCase() == "único" || vide.paragrafo_norma_vide_outra.toLowerCase() == "unico" ? "Parágrafo " + vide.paragrafo_norma_vide_outra + ", " : "§ " + vide.paragrafo_norma_vide_outra.replace(/^([1-9])$/, vide.paragrafo_norma_vide_outra + 'º') + ", ") : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.inciso_norma_vide_outra) ? "inc. " + vide.inciso_norma_vide_outra + ", " : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.alinea_norma_vide_outra) ? "ali. \"" + vide.alinea_norma_vide_outra + "\", " : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.item_norma_vide_outra) ? "item " + vide.item_norma_vide_outra + ", " : "");
-            dispositivo_afetado += (IsNotNullOrEmpty(vide.anexo_norma_vide_outra) ? "Anexo " + vide.anexo_norma_vide_outra : "");
-            if (dispositivo_afetado.substring(dispositivo_afetado.length - 2) == ", ") {
-                dispositivo_afetado = dispositivo_afetado.substring(0, dispositivo_afetado.length - 2);
+        if(dispositivo_afetado == ""){
+            if(IsNotNullOrEmpty(vide.caput_norma_vide_outra, 'ds_caput')){
+                dispositivo_afetado = vide.caput_norma_vide_outra.ds_caput.replaceAll('\n','<br/>');
+            }
+            else{
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.artigo_norma_vide_outra) ? "Art. " + vide.artigo_norma_vide_outra.replace(/^0?([1-9])$/, vide.artigo_norma_vide_outra + 'º').replace(/^0+/, '') + ", " : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.paragrafo_norma_vide_outra) ? (vide.paragrafo_norma_vide_outra.toLowerCase() == "único" || vide.paragrafo_norma_vide_outra.toLowerCase() == "unico" ? "Parágrafo " + vide.paragrafo_norma_vide_outra + ", " : "§ " + vide.paragrafo_norma_vide_outra.replace(/^([1-9])$/, vide.paragrafo_norma_vide_outra + 'º') + ", ") : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.inciso_norma_vide_outra) ? "inc. " + vide.inciso_norma_vide_outra + ", " : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.alinea_norma_vide_outra) ? "ali. \"" + vide.alinea_norma_vide_outra + "\", " : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.item_norma_vide_outra) ? "item " + vide.item_norma_vide_outra + ", " : "");
+                dispositivo_afetado += (IsNotNullOrEmpty(vide.anexo_norma_vide_outra) ? "Anexo " + vide.anexo_norma_vide_outra : "");
+                if (dispositivo_afetado.substring(dispositivo_afetado.length - 2) == ", ") {
+                    dispositivo_afetado = dispositivo_afetado.substring(0, dispositivo_afetado.length - 2);
+                }
             }
         }
         $('#tbody_vides_normas_afetadas').append(
