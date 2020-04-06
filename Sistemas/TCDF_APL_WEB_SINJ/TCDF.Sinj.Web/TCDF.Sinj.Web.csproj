@@ -45,7 +45,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="neo.BRLightREST">
+    <Reference Include="neo.BRLightREST, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
     <Reference Include="neo.BRLightSession">
@@ -61,7 +62,8 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
-    <Reference Include="TCDF.Sinj">
+    <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
     <Reference Include="Ude">
@@ -494,6 +496,12 @@
     </Compile>
     <Compile Include="ashx\Cadastro\InteressadoIncluir.ashx.cs">
       <DependentUpon>InteressadoIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\NormaEditarCampoEmail.ashx.cs">
+      <DependentUpon>NormaEditarCampoEmail.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\NormaEditarCampo.ashx.cs">
+      <DependentUpon>NormaEditarCampo.ashx</DependentUpon>
     </Compile>
     <Compile Include="ashx\Cadastro\NormaEditar.ashx.cs">
       <DependentUpon>NormaEditar.ashx</DependentUpon>
@@ -1890,6 +1898,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\Visualizacao\FaleConoscoDetalhes.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Cadastro\NormaEditarCampo.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Cadastro\NormaEditarCampoEmail.ashx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -181,10 +181,6 @@ namespace TCDF.Sinj.ES
                 {
                     query_textual += (query_textual != "" ? " AND " : "") + "(ch_tipo_norma:\\\"" + _ch_tipo_norma + "\\\")";
                 }
-                if (!string.IsNullOrEmpty(_st_habilita_pesquisa))
-                {
-                    query_textual += (query_textual != "" ? " AND " : "") + "(st_habilita_pesquisa:\\\"" + _st_habilita_pesquisa + "\\\")";
-                }
                 if (!string.IsNullOrEmpty(_ano_assinatura))
                 {
                     query_textual += (query_textual != "" ? " AND " : "") + "(dt_assinatura:[01/01/" + _ano_assinatura + " TO 31/12/" + _ano_assinatura + "])";
@@ -284,6 +280,10 @@ namespace TCDF.Sinj.ES
                     {
                         fields_highlight += (fields_highlight != "" ? "," : "") + MontarHighlight(context, _bbusca);
                     }
+                }
+                if (!string.IsNullOrEmpty(_st_habilita_pesquisa))
+                {
+                    query_textual += (query_textual != "" ? " AND " : "") + "(st_habilita_pesquisa:" + _st_habilita_pesquisa + ")";
                 }
                 if (!string.IsNullOrEmpty(_nr_norma))
                 {

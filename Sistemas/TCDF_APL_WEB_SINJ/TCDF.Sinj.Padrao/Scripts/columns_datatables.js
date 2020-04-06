@@ -50,7 +50,7 @@ var _columns_norma = [
 ];
 
 var _columns_norma_es = [
-	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);" class="center"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "_score", "bSortable": false, "visible": true,
+	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);" class="center"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "_score", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false") == -1,
 	    "mRender": function (data, type, full) {
 	        if (!IsNotNullOrEmpty(window.aHighlight)) {
 	            aHighlight = [];
@@ -183,15 +183,14 @@ var _columns_norma_es = [
 	        }
 	        return html;
 	    }
-	},
+	},	
 
-	/* validar se esta na pesquisa */
-
-	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "250px", "sClass": "grid-cell ws center", "mData": "_score", "bSortable": false, "visible": true,
-	    "mRender": function (data, type, full) {
-			return '<div style="float: right;">'+ ( ValidarPermissao(_grupos.aut_exc) ? '<a style="margin-right:5px; color: #009900 !important; cursor:pointer;" onclick="CriarModalEnviarEmail()">Enviar e-mail</a>' : "" ) + 
-			( ValidarPermissao(_grupos.aut_exc) ? '<a style="margin-left:5px; color: #009900 !important; cursor:pointer;" onclick="CriarModalHabilitarPesquisa()">Habilitar no SINJ pesquisa</a>' : " " ) +'</div>' ;
-	    }
+	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "320px","sTitle":"<h2>Habilitar</h2>" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false") > 0,
+		"mRender": function (data, type, full) {
+			return `<div class="div-light-button"><a onclick="CriarModalHabilitarPesquisa( ${full._source._metadata.id_doc} )"><img src="http://localhost:10502/Imagens/ico_doc_m.png">Habilitar no SINJ pesquisa</a></div> 
+			<div class="div-light-button"><a onclick="CriarModalEnviarEmail( ${full._source._metadata.id_doc} )"><img src="http://localhost:10502/Imagens/ico_email_p.png">Enviar e-mail</a></div>`;
+		}
+		
 	},
 
 

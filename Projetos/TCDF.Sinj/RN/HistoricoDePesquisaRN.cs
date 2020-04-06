@@ -53,6 +53,12 @@ namespace TCDF.Sinj.RN
                 consulta += "&nm_tipo_norma=" + pesquisaDireta.nm_tipo_norma;
                 consulta += "&ch_tipo_norma=" + pesquisaDireta.ch_tipo_norma;
             }
+            if (!string.IsNullOrEmpty(pesquisaDireta.st_habilita_pesquisa))
+            {
+                historicoDePesquisa.ds_historico += (historicoDePesquisa.ds_historico != "" ? " E " : "") + "Número=" + pesquisaDireta.st_habilita_pesquisa;
+                historicoDePesquisa.argumentos.Add(new ArgumentoOV { campo = "Pesquisa", operador = "igual", valor = pesquisaDireta.nr_norma, conector = (historicoDePesquisa.ds_historico != "" ? " E " : "") });
+                consulta += "&st_habilita_pesquisa=" + pesquisaDireta.st_habilita_pesquisa;
+            }
             if (!string.IsNullOrEmpty(pesquisaDireta.nr_norma))
             {
                 historicoDePesquisa.ds_historico += (historicoDePesquisa.ds_historico != "" ? " E " : "") + "Número=" + pesquisaDireta.nr_norma;
@@ -95,7 +101,7 @@ namespace TCDF.Sinj.RN
                 consulta += "&ch_orgao=" + pesquisaDireta.ch_orgao;
                 consulta += "&ch_hierarquia=" + pesquisaDireta.ch_hierarquia;
                 consulta += "&sg_hierarquia_nm_vigencia=" + pesquisaDireta.nm_orgao;
-                consulta += "&st_habilita_pesquisa=" + pesquisaDireta.st_habilita_pesquisa;
+                //consulta += "&st_habilita_pesquisa=" + pesquisaDireta.st_habilita_pesquisa;
             }
 
             historicoDePesquisa.consulta = consulta;
