@@ -94,6 +94,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaDireta.isCount = true;
                     var buscaDireta = new NormaBuscaEs().MontarBusca(pesquisaDireta);
                     query = buscaDireta.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa=true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
                 case "avancada":
                     SentencaPesquisaAvancadaNormaOV pesquisaAvancada = new SentencaPesquisaAvancadaNormaOV();
@@ -102,6 +104,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaAvancada.isCount = true;
                     var buscaAvancada = new NormaBuscaEs().MontarBusca(pesquisaAvancada);
                     query = buscaAvancada.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa=true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
                 case "pendenteDePublicacao":
                     SentencaPesquisaPendenteDePublicacaoOV pesquisaPendenteDePublicacao = new SentencaPesquisaPendenteDePublicacaoOV();
@@ -110,6 +114,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaPendenteDePublicacao.isCount = true;
                     var buscaPendenteDePublicacao = new NormaBuscaEs().MontarBusca(pesquisaPendenteDePublicacao);
                     query = buscaPendenteDePublicacao.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa=true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
                 default:
                     SentencaPesquisaGeralOV pesquisaGeral = new SentencaPesquisaGeralOV();
@@ -118,6 +124,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new NormaBuscaEs().MontarBusca(pesquisaGeral);
                     query = buscaGeral.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa=true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
             }
 
@@ -146,6 +154,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaDireta.isCount = true;
                     var buscaDireta = new DiarioBuscaEs().MontarBusca(pesquisaDireta);
                     query = buscaDireta.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa=true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
                 case "notifiqueme":
                     SentencaPesquisaNotifiquemeDiarioOV pesquisaNotifiqueme = new SentencaPesquisaNotifiquemeDiarioOV();
@@ -156,6 +166,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaNotifiqueme.isCount = true;
                     var buscaNotifiqueme = new DiarioBuscaEs().MontarBusca(pesquisaNotifiqueme);
                     query = buscaNotifiqueme.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa=true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
                 case "texto_diario":
                     SentencaPesquisaTextoDiarioOV pesquisaTexto = new SentencaPesquisaTextoDiarioOV();
@@ -169,6 +181,8 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaTexto.isCount = true;
                     var buscaTexto = new DiarioBuscaEs().MontarBusca(pesquisaTexto);
                     query = buscaTexto.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa=true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
                 default:
                     SentencaPesquisaGeralOV pesquisaGeral = new SentencaPesquisaGeralOV();
