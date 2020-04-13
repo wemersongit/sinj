@@ -61,8 +61,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
-    <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="TCDF.Sinj">
       <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
     <Reference Include="Ude">
@@ -1903,6 +1902,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\Cadastro\NormaEditarCampoEmail.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TCDF.Sinj.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

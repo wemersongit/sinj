@@ -596,6 +596,10 @@ namespace TCDF.Sinj
         nor_vis,
         [Description("NOR.FST")]
         nor_fst,
+        [Description("NOR.EML")]
+        nor_eml,
+        [Description("NOR.HSP")]
+        nor_hsp,
         //Diario
         [Description("DIO.INC")]
         dio_inc,

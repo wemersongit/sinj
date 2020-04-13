@@ -187,8 +187,8 @@ var _columns_norma_es = [
 
 	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "320px","sTitle":"<h2>Habilitar</h2>" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false") > 0,
 		"mRender": function (data, type, full) {
-			return `<div class="div-light-button"><a onclick="CriarModalHabilitarPesquisa( ${full._source._metadata.id_doc} )"><img src="http://localhost:10502/Imagens/ico_doc_m.png">Habilitar no SINJ pesquisa</a></div> 
-			<div class="div-light-button"><a onclick="CriarModalEnviarEmail( ${full._source._metadata.id_doc} )"><img src="http://localhost:10502/Imagens/ico_email_p.png">Enviar e-mail</a></div>`;
+			return (ValidarPermissao(_grupos.nor_hsp) ? `<div class="div-light-button"><a onclick="CriarModalHabilitarPesquisa( ${full._source._metadata.id_doc} )"><img src="${_urlPadrao}/Imagens/ico_doc_m.png">Habilitar no SINJ pesquisa</a></div>` : " " ) +
+			(ValidarPermissao(_grupos.nor_eml) ? `<div class="div-light-button"><a onclick="CriarModalEnviarEmail( ${full._source._metadata.id_doc} )"><img src="${_urlPadrao}/Imagens/ico_email_p.png">Enviar e-mail</a></div>` : " " );
 		}
 		
 	},
