@@ -558,6 +558,8 @@ function RestaurarExcluido(json_excluido) {
 }
 
 var operacoes = [
+    {ch_operacao:"NOR.EML",nm_operacao:"Enviar E-mail"},
+    {ch_operacao:"NOR.HSP",nm_operacao:"Habilitar Sinj Pesquisa"},
     {ch_operacao:"NOR.INC",nm_operacao:"Incluir Norma"},
     {ch_operacao:"NOR.EDT",nm_operacao:"Editar Norma"},
     {ch_operacao:"NOR.EXC",nm_operacao:"Excluir Norma"},
@@ -676,6 +678,8 @@ var operacoes = [
 ]
 
 var operacoes_parse = {
+    "NOR.EML":"Habilitar enviar email",
+    "NOR.HSP":"Habilitar Sinj Pesquisa",
     "NOR.INC":"Incluir Norma",
     "NOR.EDT":"Editar Norma",
     "NOR.EXC":"Excluir Norma",

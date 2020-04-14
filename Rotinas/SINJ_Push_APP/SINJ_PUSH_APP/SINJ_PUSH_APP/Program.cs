@@ -334,7 +334,7 @@ namespace SINJ_PUSH_APP
                 NormaRN normaRn = new NormaRN();
                 pesquisa_norma.literal = "st_atualizada=true AND st_habilita_email=true";
                 pesquisa_norma.limit = null;
-                pesquisa_norma.select = new[] { "id_doc", "vides", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "fontes", "ar_atualizado", "decisoes", "procuradores_responsaveis" };
+                pesquisa_norma.select = new[] { "id_doc", "vides", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "fontes", "ar_atualizado" };
                 var results_normas = normaRn.Consultar(pesquisa_norma);
 
                 //após a consulta atualiza o campo st_atualizada para false
