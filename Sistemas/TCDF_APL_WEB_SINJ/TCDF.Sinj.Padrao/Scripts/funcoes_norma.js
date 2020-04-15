@@ -1,5 +1,3 @@
-
-
 function Notificar(ch_norma) {
     var sucesso = function (data) {
         if (IsNotNullOrEmpty(data, 'error_message')) {

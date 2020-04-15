@@ -450,6 +450,14 @@
                                                         <th>Forçar Situação</th>
                                                         <td id="nor_fst"></td>
                                                     </tr>
+                                                    <tr>
+                                                        <th>Enviar e-mail</th>
+                                                        <td id="nor_eml"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Habilitar no SINJ Pesquisa</th>
+                                                        <td id="nor_hsp"></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>

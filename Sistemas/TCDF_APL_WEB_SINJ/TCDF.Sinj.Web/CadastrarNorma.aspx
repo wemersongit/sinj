@@ -13,8 +13,20 @@
             <% if(isAdmin && !string.IsNullOrEmpty(situacoes)){ %>
                 fnAutocompleteSituacao(<%= situacoes%>);
             <%} %>
+
+            if (ValidarPermissao(_grupos.nor_hsp)) {
+                $('#habilitarPesquisaNorna').show();
+            } else {
+                $('#habilitarPesquisaNorna').hide();
+            }
+            if (ValidarPermissao(_grupos.nor_eml)) {
+                $('#habilitarNotificacao').show();
+            } else {
+                $('#habilitarNotificacao').hide();
+            }
         });
-        
+
+
     </script>
     <style type="text/css">
         #sg_hierarquia_nm_vigencia{z-index:10005;}
@@ -582,8 +594,11 @@
                                             <input id="in_apelidavel" type="hidden" value="" />
                                             <input id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" onblur="javascript:SelecionarTipoDeNorma();"/><a title="Listar" id="a_tipo_norma"></a>
                                         </div>
-                                        <label style="font-size:large">Habilitar Pesquisa:</label>      
-                                        <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                        <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                        <div id="habilitarPesquisaNorna">
+                                            <label style="font-size:large">Habilitar Pesquisa:</label>      
+                                            <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>   
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="line">
@@ -685,9 +700,8 @@
                                     </div>
                                 </div>
                                 
-                                
-                              
-                                <div class="line">
+                                <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                <div class="line" id="habilitarNotificacao">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">
                                             <label>Habilita enviar e-mail:</label>
@@ -699,8 +713,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- -->
-                                
+
                                 
                                 <div class="line">
                                     <div class="column w-100-pc">

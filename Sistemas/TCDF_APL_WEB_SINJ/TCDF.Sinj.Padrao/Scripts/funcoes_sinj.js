@@ -1428,6 +1428,8 @@ function MostrarErro(cd) {
 }
 
 var _grupos = {
+    nor_eml: "NOR.EML",
+    nor_hsp: "NOR.HSP",
     nor_inc: "NOR.INC",
     nor_edt: "NOR.EDT",
     nor_exc: "NOR.EXC",

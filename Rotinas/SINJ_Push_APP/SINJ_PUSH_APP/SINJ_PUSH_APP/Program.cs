@@ -334,7 +334,7 @@ namespace SINJ_PUSH_APP
                 NormaRN normaRn = new NormaRN();
                 pesquisa_norma.literal = "st_atualizada=true AND st_habilita_email=true";
                 pesquisa_norma.limit = null;
-                pesquisa_norma.select = new[] { "id_doc", "vides", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "fontes" };
+                pesquisa_norma.select = new[] { "id_doc", "vides", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "fontes", "ar_atualizado" };
                 var results_normas = normaRn.Consultar(pesquisa_norma);
 
                 //após a consulta atualiza o campo st_atualizada para false
@@ -394,8 +394,12 @@ namespace SINJ_PUSH_APP
                         {
                             foreach (var vides in resultado_norma.vides)
                             {
-                                corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px;\"> "+vides.ds_texto_relacao +  " " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" + vides.nm_tipo_norma_vide + " " + vides.nr_norma_vide +"/"+vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) + "</a>" + "</div>";
+                                corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px;\"> "+vides.ds_texto_relacao +  " " + vides.alteracao_texto_vide.ds_dispositivos_alterados + (vides.in_norma_afetada ? " pelo(a) " : " do(a) ") +   "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" + vides.nm_tipo_norma_vide + " " + vides.nr_norma_vide +"/"+vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) + "</a>" + "</div>";
                             }
+                        }
+                        else
+                        {
+                            corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px;\"> "+ "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + resultado_norma.ch_norma + ">" + "Ementa: </a>" + resultado_norma.ds_ementa + " "  + "</div>";
                         }
                         corpoEmail = corpoEmail + "</div>";
 
