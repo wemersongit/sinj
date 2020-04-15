@@ -538,7 +538,7 @@ function CriarModalPesquisarNormasMonitorada() {
 
 function PesquisarNorma() {
     $("#datatable_normas_modal").dataTablesLight({
-        sAjaxUrl: './ashx/Datatable/ResultadoDePesquisaDatatable.ashx?tipo_pesquisa=norma&bbusca=sinj_norma&ch_tipo_norma=' + $('#ch_tipo_norma_modal').val() + '&nr_norma=' + $('#nr_norma_modal').val() + '&dt_assinatura=' + $('#dt_assinatura_modal').val(),
+        sAjaxUrl: './ashx/Datatable/NormaDatatable.ashx?ch_tipo_norma=' + $('#ch_tipo_norma_modal').val() + '&nr_norma=' + $('#nr_norma_modal').val() + '&dt_assinatura=' + $('#dt_assinatura_modal').val(),
         aoColumns: _columns_norma_notifiqueme,
         sIdTable: 'table_normas_modal'
     });
