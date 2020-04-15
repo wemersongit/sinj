@@ -129,6 +129,14 @@
 
 
             $('[data-toggle="tooltip"]').tooltip({ container: "#div_tooltip", trigger: "hover" });
+
+
+            if (ValidarPermissao(_grupos.nor_eml)) {
+                $('#hne_norma').show();
+            } else {
+                $('#hne_norma').hide();
+            }
+
         });
         function incrementTime() {
             dateTimeServer.setSeconds(dateTimeServer.getSeconds() + 1);
@@ -285,14 +293,16 @@
                             <label>Deseja realmente habilitar a norma no SINJ Pesquisa?</label>
                         </div>
                     </div>
-                    <div class="column w-60-pc">
-                        <div class="cell fr">
-                            <label>Notificar a norma por e-mail</label>
+                    <div id="hne_norma">
+                        <div class="column w-60-pc">
+                            <div class="cell fr">
+                                <label>Notificar a norma por e-mail</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="column w-10-pc">
-                        <div id="" class="cell w-100-pc">
-                            <input id="habilitar_notifique_email" type="checkbox" value="" class="w-80-pc" />
+                        <div class="column w-10-pc">
+                            <div id="" class="cell w-100-pc">
+                                <input id="habilitar_notifique_email" type="checkbox" value="" class="w-80-pc" />
+                            </div>
                         </div>
                     </div>
                 </div>
