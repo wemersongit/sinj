@@ -594,10 +594,21 @@
                                             <input id="in_apelidavel" type="hidden" value="" />
                                             <input id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" disabled="true"/>
                                         </div>
-                                        <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                        <div id="habilitarPesquisaNorna">
-                                            <label style="font-size:large">Habilitar Pesquisa:</label>      
-                                            <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                        <div class="w-130-pc" style="float:right">
+                                            <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                            <div id="habilitarPesquisaNorna">
+                                                <label style="font-size:large">Habilitar no Sinj Pesquisa:</label>      
+                                                <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                            </div>
+
+                                            <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                            <div id="habilitarNotificacao">
+                                                <div>
+                                                    <label style="font-size:large">Habilita enviar e-mail:</label>
+                                                    <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
+                                                </div>
+                                            </div>
+                                            <!-- -->
                                         </div>
                                     </div>
                                 </div>
@@ -699,20 +710,7 @@
                                     </div>
                                 </div>
 
-                               <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                <div class="line" id="habilitarNotificacao">
-                                    <div class="column w-20-pc">
-                                        <div class="cell fr">
-                                            <label>Habilita enviar e-mail:</label>
-                                        </div>
-                                    </div>
-                                    <div class="column w-70-pc">
-                                        <div class="cell w-80-pc">
-                                            <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- -->
+                               
                                 
                                 <div class="line">
                                     <div class="column w-100-pc">

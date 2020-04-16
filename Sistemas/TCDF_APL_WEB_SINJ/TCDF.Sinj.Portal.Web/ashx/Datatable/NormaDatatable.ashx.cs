@@ -16,7 +16,7 @@ namespace TCDF.Sinj.Web.ashx.DT
 
         public void ProcessRequest(HttpContext context)
         {
-            var action = AcoesDoUsuario.nor_pes;
+            //var action = AcoesDoUsuario.nor_pes;
             var json_resultado = "";
             var _iDisplayLength = context.Request["iDisplayLength"];
             var _tipo_de_pesquisa = context.Request["tipo_de_pesquisa"];
@@ -26,8 +26,8 @@ namespace TCDF.Sinj.Web.ashx.DT
             try
             {
                 Pesquisa pesquisa = new Pesquisa();
-                sessao_usuario = Util.ValidarSessao();
-                Util.ValidarUsuario(sessao_usuario, action);
+                //sessao_usuario = Util.ValidarSessao();
+                //Util.ValidarUsuario(sessao_usuario, action);
 
                 var lb = new LB();
 
@@ -42,7 +42,7 @@ namespace TCDF.Sinj.Web.ashx.DT
                     RegistrosTotal = results.result_count.ToString(),
                     PesquisaLight = pesquisa
                 };
-                LogOperacao.gravar_operacao(Util.GetEnumDescription(action), log_busca, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
+                //LogOperacao.gravar_operacao(Util.GetEnumDescription(action), log_busca, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace TCDF.Sinj.Web.ashx.DT
                 };
                 if (sessao_usuario != null)
                 {
-                    LogErro.gravar_erro(Util.GetEnumDescription(action), erro, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
+                   // LogErro.gravar_erro(Util.GetEnumDescription(action), erro, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
                 }
             }
             context.Response.ContentType = "application/json";
