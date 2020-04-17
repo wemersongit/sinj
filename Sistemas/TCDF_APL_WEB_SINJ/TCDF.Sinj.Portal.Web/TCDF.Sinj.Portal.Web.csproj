@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ashx\Datatable\NormaDatatable.ashx" />
     <Content Include="CadastrarNotifiqueme.aspx" />
     <Content Include="captcha.aspx" />
     <Content Include="Contatos.aspx" />
@@ -528,8 +529,5 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\Cadastro\FaleConoscoMensagemIncluir.ashx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ashx\Datatable\NormaDatatable.ashx" />
   </ItemGroup>
 </Project>
