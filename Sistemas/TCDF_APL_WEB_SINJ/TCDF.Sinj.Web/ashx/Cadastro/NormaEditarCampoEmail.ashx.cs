@@ -34,10 +34,15 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     var _st_habilita_email = context.Request["st_habilita_email"];
                     var _st_atualizada = context.Request["st_atualizada"];
+                    var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
 
                     NormaRN normaRn = new NormaRN();
                     normaRn.PathPut(id_doc, "st_habilita_email", _st_habilita_email, "");
                     normaRn.PathPut(id_doc, "st_atualizada", _st_atualizada, "");
+                    if (_st_habilita_pesquisa == "false" || _st_habilita_pesquisa == null)
+                    {
+                    normaRn.PathPut(id_doc, "st_habilita_pesquisa", "true", "");
+                    }
                     normaOv = normaRn.Doc(id_doc);
 
                     var podeEditar = false;

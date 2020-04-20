@@ -207,7 +207,7 @@ namespace TCDF.Sinj
 
                 if (!string.IsNullOrEmpty(_st_habilita_email))
                 {
-                    query += (query != "" ? " and " : "") + "st_habilita_email=true";
+                    query += (query != "" ? " or " : "") + "st_habilita_email=true";
                 }
 
                 if (!string.IsNullOrEmpty(_sSearch))

@@ -484,7 +484,12 @@ function prosseguirSemDiario(){
 }
 
 // função que habilita a norma no SINJ pesquisa e a opção de enviar email.
-function CriarModalHabilitarPesquisa(id_doc) {    
+function CriarModalHabilitarPesquisa(id_doc, eml) {
+    if(!eml){
+        $('#hne_norma').show();
+    }else{
+        $('#hne_norma').hide();
+    }
     $("#modal_habilitar_pesquisa").modallight({
         sTitle: "Confirmar",
         sWidth: '400',
@@ -566,7 +571,7 @@ function CriarModalHabilitarPesquisa(id_doc) {
                         }
                         // requisição ajax habilitar envio de emails
                         $.ajaxlight({
-                            sUrl:'./ashx/Cadastro/NormaEditarCampoEmail.ashx?id_doc='+id_doc+"&st_atualizada=true&st_habilita_email=true",
+                            sUrl:'./ashx/Cadastro/NormaEditarCampoEmail.ashx?id_doc='+id_doc+"&st_atualizada=true&st_habilita_email=true&st_habilita_pesquisa=true",
                             sType: "GET",
                             fnSuccess: sucessoEmail,
                             fnComplete: completeEmail,
@@ -601,7 +606,14 @@ function CriarModalHabilitarPesquisa(id_doc) {
 }
 
 // função que habilita enviar email na tela normas pendentes
-function CriarModalEnviarEmail(id_doc) {    
+function CriarModalEnviarEmail(id_doc, hsp) {
+    // NOTE: Caso o habilitar no SINJ Pesquisa esteja desabilitado, mostra mensagem q ira habilitar
+    // caso ele continue
+    if(!hsp){
+        $('#hspEml').show();
+    }else{
+        $('#hspEml').hide();
+    }
     $("#modal_enviar_email_norma").modallight({
         sTitle: "Confirmar",
         sWidth: '400',
@@ -630,7 +642,7 @@ function CriarModalEnviarEmail(id_doc) {
                             $("<div id='modal_enviar_email_norma' />").modallight({
                                 sTitle: "Enviar E-mail",
                                 sType: "success",
-                                sContent: "Norma notificada com sucesso.",
+                                sContent: "Norma notificada com sucesso e habilitada no SINJ Pesquisa.",
                                 oButtons: [
                                     {
                                         text: "Ok",
@@ -639,6 +651,9 @@ function CriarModalEnviarEmail(id_doc) {
                                         }
                                     }
                                 ],
+                                fnClose: function () {
+                                    document.location.reload();
+                                }
                             });
                         
                         }

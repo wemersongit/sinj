@@ -30,6 +30,7 @@ namespace TCDF.Sinj.Web.ashx.Consulta
             var _bConsultarNormaDuplicada = context.Request["b_consultar_norma_duplicada"];
             var _bNormaSemNumero = context.Request["b_norma_sem_numero"];
             var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+            var _st_habilita_email = context.Request["st_habilita_email"];
 
             var action = AcoesDoUsuario.nor_pes;
             SessaoUsuarioOV sessao_usuario = null;
@@ -94,7 +95,11 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     }
                     if (!string.IsNullOrEmpty(_st_habilita_pesquisa))
                     {
-                        query += (query != "" ? " and " : "") + "ch_tipo_norma='" + _st_habilita_pesquisa + "'";
+                        query += (query != "" ? " and " : "") + "st_habilita_pesquisa='" + _st_habilita_pesquisa + "'";
+                    }
+                    if (!string.IsNullOrEmpty(_st_habilita_email))
+                    {
+                        query += (query != "" ? " or " : "") + "st_habilita_email='" + _st_habilita_email + "'";
                     }
                     if (!string.IsNullOrEmpty(_nr_norma))
                     {

@@ -49,6 +49,7 @@ namespace TCDF.Sinj.OV
         public string ch_hierarquia { get; set; }
         public string origem_por { get; set; }
         public string st_habilita_pesquisa { get; set; }
+        public string st_habilita_email { get; set; }
     }
     public class SentencaPesquisaAvancadaNormaOV : SentencaPesquisaSinjOV
     {
