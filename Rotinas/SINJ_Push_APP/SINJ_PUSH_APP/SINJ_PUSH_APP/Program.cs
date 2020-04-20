@@ -397,12 +397,16 @@ namespace SINJ_PUSH_APP
                         //var textoRelacionado = "";
                         var dtTexto = "";
                         var nmTipoRelacao = "";
+                        var nmrAfetada = "";
                         if(resultado_norma.vides.Count > 0)
                         {
                             foreach (var vides in resultado_norma.vides)
                             {
-                                Console.WriteLine(vides.in_norma_afetada);
-                                Console.WriteLine(vides.in_relacao_de_acao);
+
+                                if (vides.in_norma_afetada)
+                                {
+                                    nmrAfetada = vides.nm_tipo_relacao;
+                                }
                                 if (dtTexto == "" || dtTexto == null)
                                 {
                                     //textoRelacionado = vides.ds_texto_relacao;
@@ -435,7 +439,7 @@ namespace SINJ_PUSH_APP
                         //nmTipoRelacao.ToLower()
 
                         corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
-                        corpoEmail = corpoEmail + "     O normativo "+ resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura+" "+ (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "")+ " sofreu a(s) seguinte(s) " + "alteração" + "(ões) :<br/>";
+                        corpoEmail = corpoEmail + "     O normativo "+ resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura+" "+ (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "")+ " sofreu a(s) seguinte(s) " + nmrAfetada.ToLower() == "" ? "alteração" : nmrAfetada.ToLower() + "(ões) :<br/>";
                         corpoEmail = corpoEmail + "	</div>";
 
                         corpoEmail = corpoEmail + "<div>";
