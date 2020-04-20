@@ -403,9 +403,10 @@ namespace SINJ_PUSH_APP
                             foreach (var vides in resultado_norma.vides)
                             {
 
-                                if (vides.in_norma_afetada)
+                                if (resultado_norma.vides.Count == 1)
                                 {
-                                    nmrAfetada = vides.nm_tipo_relacao;
+                                    dtTexto = vides.dt_assinatura_norma_vide;
+                                    nmTipoRelacao = vides.nm_tipo_relacao;
                                 }
                                 if (dtTexto == "" || dtTexto == null)
                                 {
@@ -435,13 +436,105 @@ namespace SINJ_PUSH_APP
                         {
                             nmTipoRelacao = "alteração";
                         }
-                        Console.WriteLine(nmTipoRelacao);
+
                         //nmTipoRelacao.ToLower()
 
                         corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
-                        corpoEmail = corpoEmail + "     O normativo "+ resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura+" "+ (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "")+ " sofreu a(s) seguinte(s) " + nmrAfetada.ToLower() == "" ? "alteração" : nmrAfetada.ToLower() + "(ões) :<br/>";
+                        corpoEmail = corpoEmail + "     O normativo "+ resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura+" "+ (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "")+ " sofreu a(s) seguinte(s) " + nmTipoRelacao.ToLower() + "(ões) :<br/>";
                         corpoEmail = corpoEmail + "	</div>";
 
+                        var ds_norma = "";
+                        var ds_dispositivo = "";
+                        foreach (var vide in resultado_norma.vides)
+                        {
+                            if (vide.caput_norma_vide_outra != null && !string.IsNullOrEmpty(vide.caput_norma_vide_outra.ds_norma))
+                            {
+                                ds_norma = vide.caput_norma_vide_outra.ds_norma;
+                            }
+                            else
+                            {
+                                ds_norma = vide.nm_tipo_norma_vide + " " + vide.nr_norma_vide + " de " + vide.dt_assinatura_norma_vide;
+                            }
+                            if (vide.in_norma_afetada)
+                            {
+                                if (vide.caput_norma_vide != null)
+                                {
+                                    if (!string.IsNullOrEmpty(vide.caput_norma_vide.ds_caput))
+                                    {
+                                        ds_dispositivo = vide.caput_norma_vide.ds_caput + " ";
+                                    }
+                                }
+                                if (string.IsNullOrEmpty(ds_dispositivo))
+                                {
+                                    if (!string.IsNullOrEmpty(vide.artigo_norma_vide))
+                                    {
+                                        ds_dispositivo += "Art. " + vide.artigo_norma_vide;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.paragrafo_norma_vide))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Par. " + vide.paragrafo_norma_vide;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.inciso_norma_vide))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Inc. " + vide.inciso_norma_vide;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.alinea_norma_vide))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Alí. " + vide.alinea_norma_vide;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.item_norma_vide))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Item " + vide.item_norma_vide;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.anexo_norma_vide))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Anexo " + vide.anexo_norma_vide;
+                                    }
+                                }
+                                //vides += (vides != "" ? "<br style=\"mso-data-placement:same-cell;\"/>" : "") + ds_dispositivo + vide.ds_texto_relacao + " pelo(a) " + ds_norma;
+                            }
+                            else
+                            {
+                                if (vide.caput_norma_vide_outra != null)
+                                {
+                                    if (!string.IsNullOrEmpty(vide.caput_norma_vide_outra.ds_caput))
+                                    {
+                                        ds_dispositivo = " " + vide.caput_norma_vide_outra.ds_caput + " do(a) ";
+                                    }
+                                }
+                                if (string.IsNullOrEmpty(ds_dispositivo))
+                                {
+                                    if (!string.IsNullOrEmpty(vide.artigo_norma_vide_outra))
+                                    {
+                                        ds_dispositivo += "Art. " + vide.artigo_norma_vide_outra;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.paragrafo_norma_vide_outra))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Par. " + vide.paragrafo_norma_vide_outra;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.inciso_norma_vide_outra))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Inc. " + vide.inciso_norma_vide_outra;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.alinea_norma_vide_outra))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Alí. " + vide.alinea_norma_vide_outra;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.item_norma_vide_outra))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Item " + vide.item_norma_vide_outra;
+                                    }
+                                    if (!string.IsNullOrEmpty(vide.anexo_norma_vide_outra))
+                                    {
+                                        ds_dispositivo += (!string.IsNullOrEmpty(ds_dispositivo) ? ", " : "") + "Anexo " + vide.anexo_norma_vide_outra;
+                                    }
+                                }
+                                //vides += (vides != "" ? "<br style=\"mso-data-placement:same-cell;\"/>" : "") + vide.ds_texto_relacao + (ds_dispositivo != "" ? ds_dispositivo : " o(a) ") + ds_norma;
+
+                            }
+
+                        }
+                        Console.WriteLine(ds_dispositivo);
                         corpoEmail = corpoEmail + "<div>";
                         if (resultado_norma.vides.Count > 0)
                         {
@@ -449,6 +542,10 @@ namespace SINJ_PUSH_APP
                             {
                                 var disositivoAfetado= "";
                                 var link = "";
+                                if(vides.alinea_norma_vide != null || vides.alinea_norma_vide != "")
+                                {
+
+                                }
                                 if (vides.alteracao_texto_vide.ds_dispositivos_alterados != null)
                                 {
                                     disositivoAfetado = vides.alteracao_texto_vide.ds_dispositivos_alterados;
