@@ -40,6 +40,7 @@
                                 selecionarNormaAlteradaCadastrar(normaAlterada);
 
                                 $("#ds_comentario_vide").val("");
+                                $("textarea[name=ds_dispositivos_alterados]").val("");
 
                                 $(this).dialog('destroy');
                             }
