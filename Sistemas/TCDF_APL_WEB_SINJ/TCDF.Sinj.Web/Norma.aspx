@@ -199,5 +199,29 @@
         </div>
         <div id="div_texto" runat="server"></div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('#div_texto').length == 1 && window.location.href.indexOf('#') > -1) {
+                var i = window.location.href.split('#');
+                var cap;
+                if (typeof i[1] != undefined) {
+                    if (i[1] != "") {
+                        var disAfetado = $(`#${i[1]}`);
+                        if (disAfetado.length > 1 && disAfetado.is(':visible')) {
+                            cap = i[1];
+                        } else {
+                            var divToCap;
+                            divToCap = i[1].split('_');
+                            cap = divToCap[0];
+                        }
+                    }
+                }
+
+                $('html, body').animate({
+                    scrollTop: $(`#${cap}`).offset().top
+                }, 600);
+            }
+        });
+    </script>
 </body>
 </html>
