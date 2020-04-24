@@ -88,6 +88,15 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     id_doc = id_doc
                 };
                 LogOperacao.gravar_operacao(Util.GetEnumDescription(action) + ",VIDE.EXC", log_editar, id_doc, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
+                
+                if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
+                {
+                    normaRn.PathPut(id_doc, "st_habilita_email", "false", "");
+                }
+                if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
+                {
+                    normaRn.PathPut(id_doc, "st_habilita_pesquisa", "false", "");
+                }
             }
             catch (Exception ex)
             {
