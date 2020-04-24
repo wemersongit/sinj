@@ -176,6 +176,7 @@ namespace TCDF.Sinj.ES
                 var _ch_orgao = context.Request["ch_orgao"];
                 var _ch_termo = context.Request.Form.GetValues("ch_termo");
                 var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                var _st_habilita_email = context.Request["st_habilita_email"];
 
                 if (!string.IsNullOrEmpty(_ch_tipo_norma))
                 {
@@ -284,6 +285,10 @@ namespace TCDF.Sinj.ES
                 if (!string.IsNullOrEmpty(_st_habilita_pesquisa))
                 {
                     query_textual += (query_textual != "" ? " AND " : "") + "(st_habilita_pesquisa:" + _st_habilita_pesquisa + ")";
+                }
+                if (!string.IsNullOrEmpty(_st_habilita_email))
+                {
+                    query_textual += (query_textual != "" ? " OR " : "") + "(st_habilita_email:" + _st_habilita_email + ")";
                 }
                 if (!string.IsNullOrEmpty(_nr_norma))
                 {
@@ -872,6 +877,11 @@ namespace TCDF.Sinj.ES
                 if (!string.IsNullOrEmpty(_st_habilita_pesquisa))
                 {
                     query += "st_habilita_pesquisa:(" + _st_habilita_pesquisa + ")";
+                }
+                string _st_habilita_email = context.Request["st_habilita_email"];
+                if (!string.IsNullOrEmpty(_st_habilita_email))
+                {
+                    query += "st_habilita_email:(" + _st_habilita_email + ")";
                 }
                 string _ch_orgao = context.Request["ch_orgao"];
                 if(!string.IsNullOrEmpty(_ch_orgao)){
