@@ -13,6 +13,10 @@ using TCDF.Sinj.Log;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 using TCDF.Sinj.ES;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.Net;
+using System.Net.Mail;
 
 namespace SINJ_PUSH_APP
 {
@@ -67,8 +71,10 @@ namespace SINJ_PUSH_APP
                 MonitorarDiarioPush();
                 this.Log();
             }
-            catch
+            catch(Exception ex)
             {
+                var mensagem = util.BRLight.Excecao.LerTodasMensagensDaExcecao(ex, false);
+                Console.WriteLine("Exception: " + mensagem);
             }
         }
 
@@ -302,7 +308,9 @@ namespace SINJ_PUSH_APP
                             corpoEmail = corpoEmail + "</td>";
                             corpoEmail = corpoEmail + "</tr>";
                             corpoEmail = corpoEmail + "</table>";
-
+                            ServicePointManager.ServerCertificateValidationCallback =
+                            delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                            { return true; }; 
                             email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpoEmail);
                             var logEmail = new LogEmail();
                             logEmail.emails = destinatario;
@@ -385,8 +393,49 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "<HR SIZE=1 WIDTH=601 ALIGN=center>";
                         corpoEmail = corpoEmail + "<tr>";
                         corpoEmail = corpoEmail + "<td style=\"background-color: #B4E6CBs; text-align: left;\">";
+
+                        //var textoRelacionado = "";
+                        var dtTexto = "";
+                        var nmTipoRelacao = "";
+                        if(resultado_norma.vides.Count > 0)
+                        {
+                            foreach (var vides in resultado_norma.vides)
+                            {
+                                Console.WriteLine(vides.in_norma_afetada);
+                                Console.WriteLine(vides.in_relacao_de_acao);
+                                if (dtTexto == "" || dtTexto == null)
+                                {
+                                    //textoRelacionado = vides.ds_texto_relacao;
+                                    dtTexto = vides.dt_assinatura_norma_vide;
+                                    nmTipoRelacao = vides.nm_tipo_relacao;
+                                }
+                                else
+                                {
+                                    DateTime dtAtual = Convert.ToDateTime(vides.dt_assinatura_norma_vide);
+                                    DateTime data2 = DateTime.Parse(dtTexto);
+                                    if (dtAtual.CompareTo(data2) == 1)
+                                    {
+                                        //dtAtual maior que a data2
+                                        //textoRelacionado = vides.ds_texto_relacao;
+                                        nmTipoRelacao = vides.nm_tipo_relacao;
+                                        dtTexto = Convert.ToString(dtAtual);
+                                    }
+                                    else
+                                    {
+                                        //data2 maior que a data1
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            nmTipoRelacao = "alteração";
+                        }
+                        Console.WriteLine(nmTipoRelacao);
+                        //nmTipoRelacao.ToLower()
+
                         corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
-                        corpoEmail = corpoEmail + "     O normativo "+ resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura+" "+ (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "")+  " sofreu a(s) seguinte(s) alteração(ões):<br/>";
+                        corpoEmail = corpoEmail + "     O normativo "+ resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura+" "+ (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "")+ " sofreu a(s) seguinte(s) " + "alteração" + "(ões) :<br/>";
                         corpoEmail = corpoEmail + "	</div>";
 
                         corpoEmail = corpoEmail + "<div>";
@@ -394,7 +443,30 @@ namespace SINJ_PUSH_APP
                         {
                             foreach (var vides in resultado_norma.vides)
                             {
-                                corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px;\"> "+vides.ds_texto_relacao +  " " + vides.alteracao_texto_vide.ds_dispositivos_alterados + (vides.in_norma_afetada ? " pelo(a) " : " do(a) ") +   "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" + vides.nm_tipo_norma_vide + " " + vides.nr_norma_vide +"/"+vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) + "</a>" + "</div>";
+                                var disositivoAfetado= "";
+                                var link = "";
+                                if (vides.alteracao_texto_vide.ds_dispositivos_alterados != null)
+                                {
+                                    disositivoAfetado = vides.alteracao_texto_vide.ds_dispositivos_alterados;
+                                    foreach (var linkname in vides.alteracao_texto_vide.dispositivos_norma_vide_outra)
+                                    {
+                                        link = linkname.linkname;
+                                    }
+                                    //link = vides.alteracao_texto_vide.dispositivos_norma_vide_outra[0].linkname;
+                                }
+                                else if(vides.caput_norma_vide != null && vides.in_norma_afetada)
+                                {
+                                    disositivoAfetado = vides.caput_norma_vide.ds_caput;
+                                }
+                                else if (vides.caput_norma_vide_outra != null) 
+                                {
+                                    disositivoAfetado = vides.caput_norma_vide_outra.link;
+                                }
+                                corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px;\"> "+vides.ds_texto_relacao +  " " +
+                                    "<a title='Visualizar' target='_blank' href=" + Config.ValorChave("LinkSINJ", true) + "/BaixarArquivoNorma.aspx?id_norma=" + vides.ch_norma_vide + "#" + link + ">" + disositivoAfetado + "</a>" + (vides.in_norma_afetada ? " pelo(a) " : " do(a) ") +   
+                                    "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" + 
+                                    vides.nm_tipo_norma_vide + " " + vides.nr_norma_vide +"/"+vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) + 
+                                    "</a>" + "</div>";
                             }
                         }
                         else
@@ -421,6 +493,9 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "</tr>";
                         corpoEmail = corpoEmail + "</table>";
 
+                        ServicePointManager.ServerCertificateValidationCallback =
+                            delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                        { return true; };
                         email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpoEmail);
                         var logEmail = new LogEmail();
                         logEmail.emails = destinatario;

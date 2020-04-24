@@ -1,0 +1,6 @@
+17/04/2020 10:57:43: Atualizar campo ST_ATUALIZADA para false => {"success": 2, "failure" : 0}
+17/04/2020 11:00:41: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Lei 556 de 01/01/2011 do órgão CBMDF > ABM
+17/04/2020 11:02:29: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Lei 123 de 01/01/2000 do órgão ACSNB
+17/04/2020 11:02:29: Total de normas ST_NOVA=true => 0
+17/04/2020 11:02:30: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
+17/04/2020 11:02:30: Total de diários ST_NOVO=true => 0

@@ -52,6 +52,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _nm_orgao = context.Request["sg_hierarquia_nm_vigencia"];
                     var _nm_termo = context.Request.Params.GetValues("nm_termo");
                     var _st_habilita_pesquisa = context.Request.Params.GetValues("st_habilita_pesquisa");
+                    var _st_habilita_email = context.Request.Params.GetValues("st_habilita_email");
                     pesquisa.ds_historico = "";
                     if (!string.IsNullOrEmpty(_all))
                     {

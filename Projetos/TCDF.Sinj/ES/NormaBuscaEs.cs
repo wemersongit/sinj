@@ -465,7 +465,20 @@ namespace TCDF.Sinj.ES
                     {
                         name = "st_habilita_pesquisa",
                         value = sentencaOv.st_habilita_pesquisa,
-                        @operator = TypeOperator.equal
+                        @operator = TypeOperator.equal,
+                        connector = TypeConnector.OR
+                    }
+                );
+            }
+            if (!string.IsNullOrEmpty(sentencaOv.st_habilita_email))
+            {
+                buscaDireta.filtersToQueryFiltered.Add(
+                    new FilterQueryFiltered()
+                    {
+                        name = "st_habilita_email",
+                        value = sentencaOv.st_habilita_email,
+                        @operator = TypeOperator.equal,
+                        connector = TypeConnector.OR
                     }
                 );
             }
@@ -699,6 +712,7 @@ namespace TCDF.Sinj.ES
             fields.Add(new SearchableField() { name = "ar_atualizado.filetext" });
             fields.Add(new SearchableField() { name = "fontes.ar_fonte.filetext" });
             fields.Add(new SearchableField() { name = "st_habilita_pesquisa", boost = 3 });
+            fields.Add(new SearchableField() { name = "st_habilita_email", boost = 3 });
 
             return fields;
         }

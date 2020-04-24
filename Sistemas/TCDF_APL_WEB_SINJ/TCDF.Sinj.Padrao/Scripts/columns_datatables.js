@@ -187,8 +187,15 @@ var _columns_norma_es = [
 
 	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "320px","sTitle":"<h2>Habilitar</h2>" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false") > 0,
 		"mRender": function (data, type, full) {
-			return (ValidarPermissao(_grupos.nor_hsp) ? `<div class="div-light-button"><a onclick="CriarModalHabilitarPesquisa( ${full._source._metadata.id_doc} )"><img src="${_urlPadrao}/Imagens/ico_doc_m.png">Habilitar no SINJ pesquisa</a></div>` : " " ) +
-			(ValidarPermissao(_grupos.nor_eml) ? `<div class="div-light-button"><a onclick="CriarModalEnviarEmail( ${full._source._metadata.id_doc} )"><img src="${_urlPadrao}/Imagens/ico_email_p.png">Enviar e-mail</a></div>` : " " );
+
+			var htmlToAppend = ""
+			if(ValidarPermissao(_grupos.nor_hsp) && !full._source.st_habilita_pesquisa){
+				htmlToAppend = htmlToAppend + `<div class="div-light-button"><a onclick="CriarModalHabilitarPesquisa( ${full._source._metadata.id_doc}, ${full._source.st_habilita_email} )"><img src="${_urlPadrao}/Imagens/ico_doc_m.png">Habilitar no SINJ pesquisa</a></div>`;
+			}
+			if(ValidarPermissao(_grupos.nor_eml) && !full._source.st_habilita_email){
+				htmlToAppend = htmlToAppend + `<div class="div-light-button" style="float:right;"><a onclick="CriarModalEnviarEmail( ${full._source._metadata.id_doc}, ${full._source.st_habilita_pesquisa} )"><img src="${_urlPadrao}/Imagens/ico_email_p.png">Enviar e-mail</a></div>`;	
+			}
+			return htmlToAppend;
 		}
 		
 	},
@@ -1483,33 +1490,33 @@ var _columns_norma_associada_vocabulario = [
 var _columns_norma_notifiqueme = [
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo e Número", "sWidth": "20%", "sClass": "grid-cell ws nm_tipo_norma nr_norma", "mData": "nm_tipo_norma",
 		"mRender": function (data, type, full) {
-			return full.nm_tipo_norma + " " + (full.nr_norma != null ? full.nr_norma : "") + " " + full.dt_assinatura;
+			return full.fields.partial[0].nm_tipo_norma + " " + (full.fields.partial[0].nr_norma != null ? full.fields.partial[0].nr_norma : "") + " " + full.fields.partial[0].dt_assinatura;
 		}
 	},
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Origem", "sWidth": "", "sClass": "grid-cell ws sg_orgao", "mData": "origens", "bSortable": false,
 		"mRender": function (data, type, full) {
 			var origens = "";
-			for (var i = 0; i < full.origens.length; i++) {
-				origens += (origens != "" ? "<br/>" : "") + '<a href="javascript:void(0)" onclick="javascript:CriarModalDescricaoOrigem(\'' + full.origens[i].ch_orgao + '\')">' + full.origens[i].sg_orgao + '</a>';
+			for (var i = 0; i < full.fields.partial[0].origens.length; i++) {
+				origens += (origens != "" ? "<br/>" : "") + '<a href="javascript:void(0)" onclick="javascript:CriarModalDescricaoOrigem(\'' + full.fields.partial[0].origens[i].ch_orgao + '\')">' + full.fields.partial[0].origens[i].sg_orgao + '</a>';
 			}
 			return origens;
 		}
 	},
 	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Ementa", "sWidth": "35%", "sClass": "grid-cell ws ds_ementa", "mData": "ds_ementa", "bSortable": false,
 		"mRender": function (data, type, full) {
-			return full.ds_ementa;
+			return full.fields.partial[0].ds_ementa;
 		}
 	},
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Situação", "sWidth": "", "sClass": "center ws nm_situacao", "mData": "nm_situacao",
 		"mRender": function (data, type, full) {
-			return full.nm_situacao;
+			return full.fields.partial[0].nm_situacao;
 		}
 	},
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "center ws all", "bSortable": false,
 		"mRender": function (data, type, full) {
 			var detalhes = "";
 			var ds_norma = montarDescricaoDaNorma(full);
-			var selecionar = "<a href='javascript:void(0);' onclick='selecionarNorma(\"" + full.ch_norma + "\");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
+			var selecionar = "<a href='javascript:void(0);' onclick='selecionarNorma(\"" + full.fields.partial[0].ch_norma + "\");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
 			return detalhes + selecionar;
 		}
 	}

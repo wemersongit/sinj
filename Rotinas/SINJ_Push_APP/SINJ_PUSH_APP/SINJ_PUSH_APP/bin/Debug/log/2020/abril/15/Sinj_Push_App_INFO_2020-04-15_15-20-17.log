@@ -1,0 +1,10 @@
+15/04/2020 15:20:29: Atualizar campo ST_ATUALIZADA para false => {"success": 5, "failure" : 0}
+15/04/2020 15:20:35: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Lei 40 de 05/06/2010 do órgão PCDF > APC
+15/04/2020 15:20:40: ALTERACAO - Email enviado para joao.h.o.ferreira@gmail.com com o titulo SINJ-DF - Alteração Lei 17 de 17/07/2002 do órgão RA-V
+15/04/2020 15:20:45: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Lei 556 de 01/01/2011 do órgão CBMDF > ABM
+15/04/2020 15:20:49: ALTERACAO - Email enviado para joao.h.o.ferreira@gmail.com com o titulo SINJ-DF - Alteração Lei 555 de 06/05/2013 do órgão RA-IX
+15/04/2020 15:21:03: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Lei 555 de 06/05/2013 do órgão RA-IX
+15/04/2020 15:21:08: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Resolução 2322 de 20/03/2012 do órgão TCDF
+15/04/2020 15:21:09: Total de normas ST_NOVA=true => 0
+15/04/2020 15:21:09: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
+15/04/2020 15:21:09: Total de diários ST_NOVO=true => 0

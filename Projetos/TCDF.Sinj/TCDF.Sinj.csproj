@@ -186,12 +186,6 @@
     <Compile Include="Util.cs" />
     <Compile Include="ValidaCaptcha.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\TCDF.Sinj.Web.csproj">
-      <Project>{8979bdcf-cc5a-4ea5-87a4-f6273e382989}</Project>
-      <Name>TCDF.Sinj.Web</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
