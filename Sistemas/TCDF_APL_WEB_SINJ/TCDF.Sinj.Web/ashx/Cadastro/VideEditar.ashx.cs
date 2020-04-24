@@ -102,6 +102,15 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 {
                     throw new Exception("Erro ao editar Vide na norma alteradora.");
                 }
+
+                if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
+                {
+                    normaRn.PathPut(id_doc, "st_habilita_email", "false", "");
+                }
+                if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
+                {
+                    normaRn.PathPut(id_doc, "st_habilita_pesquisa", "false", "");
+                }
                 var log_editar = new LogAlterar<NormaOV>
                 {
                     id_doc = id_doc

@@ -1,0 +1,5 @@
+08/04/2020 14:22:16: Atualizar campo ST_ATUALIZADA para false => {"success": 1, "failure" : 0}
+08/04/2020 14:22:20: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Decreto 40487 de 04/03/2020 do órgão GAG
+08/04/2020 14:22:20: Total de normas ST_NOVA=true => 0
+08/04/2020 14:22:20: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
+08/04/2020 14:22:20: Total de diários ST_NOVO=true => 0

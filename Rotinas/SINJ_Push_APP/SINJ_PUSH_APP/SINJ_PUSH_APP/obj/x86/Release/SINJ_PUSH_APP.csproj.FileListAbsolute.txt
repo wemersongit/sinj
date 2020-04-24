@@ -1,0 +1,14 @@
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\SINJ_PUSH_APP.exe.config
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\SINJ_PUSH_APP.exe
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\SINJ_PUSH_APP.pdb
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\LightInfocon.Data.LightBaseProvider.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\neo.BRLightES.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\neo.BRLightREST.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\neo.BRLightSession.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\Newtonsoft.Json.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\TCDF.Sinj.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\util.BRLight.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\bin\Release\Newtonsoft.Json.xml
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\obj\x86\Release\SINJ_PUSH_APP.csproj.CopyComplete
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\obj\x86\Release\SINJ_PUSH_APP.exe
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ_Push_APP\SINJ_PUSH_APP\SINJ_PUSH_APP\obj\x86\Release\SINJ_PUSH_APP.pdb

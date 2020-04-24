@@ -1,0 +1,6 @@
+09/04/2020 18:26:03: Atualizar campo ST_ATUALIZADA para false => {"success": 1, "failure" : 0}
+09/04/2020 18:26:41: ALTERACAO - Email enviado para joao.h.o.ferreira@gmail.com com o titulo SINJ-DF - Alteração Lei 555 de 06/05/2013 do órgão RA-IX
+09/04/2020 18:27:15: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Lei 555 de 06/05/2013 do órgão RA-IX
+09/04/2020 18:27:21: Total de normas ST_NOVA=true => 0
+09/04/2020 18:27:21: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
+09/04/2020 18:27:22: Total de diários ST_NOVO=true => 0

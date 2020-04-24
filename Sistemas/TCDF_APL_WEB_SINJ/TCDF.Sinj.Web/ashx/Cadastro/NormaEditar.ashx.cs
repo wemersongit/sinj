@@ -47,10 +47,34 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _st_pendencia = context.Request["st_pendencia"];
                     var st_pendencia = false;
 
-                    var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
-                    var st_habilita_pesquisa = false;
-                    var _st_habilita_email = context.Request["st_habilita_email"];
+                    
+
+                    var _st_habilita_email = "";
                     var st_habilita_email = false;
+
+                    if (TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
+                    {
+                        _st_habilita_email = context.Request["st_habilita_email"];
+                    }
+                    else
+                    {
+                        _st_habilita_email = "false";
+                    }
+
+                    var _st_habilita_pesquisa = "";
+                    var st_habilita_pesquisa = false;
+                    if (TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
+                    {
+                        _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                    }
+                    else
+                    {
+                        _st_habilita_pesquisa = "false";
+                    }
+
+
+
+
                     var _interessado = context.Request.Form.GetValues("interessado");
                     var _requerente = context.Request.Form.GetValues("requerente");
                     var _requerido = context.Request.Form.GetValues("requerido");

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -20,12 +20,6 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <Use64BitIISExpress />
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
-    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,7 +64,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ashx\Datatable\NormaDatatable.ashx" />
     <Content Include="CadastrarNotifiqueme.aspx" />
     <Content Include="captcha.aspx" />
     <Content Include="Contatos.aspx" />
@@ -167,9 +160,6 @@
     </Compile>
     <Compile Include="ashx\Datatable\HistoricoDePesquisaDatatable.ashx.cs">
       <DependentUpon>HistoricoDePesquisaDatatable.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="ashx\Datatable\NormaDatatable.ashx.cs">
-      <DependentUpon>NormaDatatable.ashx</DependentUpon>
     </Compile>
     <Compile Include="ashx\Datatable\ResultadoDePesquisaDiarioDatatable.ashx.cs">
       <DependentUpon>ResultadoDePesquisaDiarioDatatable.ashx</DependentUpon>

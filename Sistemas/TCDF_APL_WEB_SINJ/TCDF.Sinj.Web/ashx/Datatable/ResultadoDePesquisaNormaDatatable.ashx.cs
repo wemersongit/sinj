@@ -97,6 +97,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaDireta.ch_hierarquia = context.Request["ch_hierarquia"];
                         pesquisaDireta.origem_por = context.Request["origem_por"];
                         pesquisaDireta.st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                        pesquisaDireta.st_habilita_email = context.Request["st_habilita_email"];
                         pesquisaDireta.iDisplayStart = iDisplayStart;
                         pesquisaDireta.iDisplayLength = iDisplayLength;
                         pesquisaDireta.sentencaOrdenamento = sentencaOrdenamento;

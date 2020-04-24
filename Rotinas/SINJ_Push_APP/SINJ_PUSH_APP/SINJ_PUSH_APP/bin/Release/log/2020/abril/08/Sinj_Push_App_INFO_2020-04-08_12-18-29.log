@@ -1,0 +1,5 @@
+08/04/2020 12:18:30: Atualizar campo ST_ATUALIZADA para false => {"success": 1, "failure" : 0}
+08/04/2020 12:19:16: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração ADI 777777 de 02/02/2020 do órgão PCDF > APC
+08/04/2020 12:19:16: Total de normas ST_NOVA=true => 0
+08/04/2020 12:19:16: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
+08/04/2020 12:19:16: Total de diários ST_NOVO=true => 0

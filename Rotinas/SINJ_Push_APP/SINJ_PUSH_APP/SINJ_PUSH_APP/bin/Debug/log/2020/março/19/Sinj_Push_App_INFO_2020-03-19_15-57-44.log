@@ -1,0 +1,10 @@
+19/03/2020 16:00:00: Atualizar campo ST_ATUALIZADA para false => {"success": 3, "failure" : 0}
+19/03/2020 16:01:13: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF Alteração Portaria 1 de 06/02/1996 do órgão SO
+19/03/2020 16:01:18: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF Alteração Portaria 272 de 29/06/2018 do órgão DPDF
+19/03/2020 16:01:23: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF Alteração Portaria 14 de 11/03/1988 do órgão SEA
+19/03/2020 16:01:24: Total de normas ST_NOVA=true => 0
+19/03/2020 16:01:24: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
+19/03/2020 16:01:25: Total de diários ST_NOVO=true => 20
+19/03/2020 16:01:27: Atualizar campo ST_NOVO para false => {"success": 0, "failure" : 20}
+19/03/2020 16:01:27: Total de usuários => 4
+19/03/2020 16:02:04: CRIACAO - Email enviado para wemersoned@hotmail.com com o titulo Foram cadastrados 10 diários no SINJ contendo o texto: dodf.
