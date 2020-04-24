@@ -39,3 +39,4 @@ E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release
 E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.csproj.CopyComplete
 E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.pdb
+E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.csprojAssemblyReference.cache
