@@ -172,6 +172,33 @@
                 }
                 verificarLinks();
             }
+
+            if ($('#div_texto').length == 1 && window.location.href.indexOf('#') > -1) {
+                console.log("entrou no if 1");
+                var i = window.location.href.split('#');
+                var cap;
+                console.log(i);
+                if (typeof i[1] != undefined) {
+                    console.log("entrou no if 2");
+                    if (i[1] != "") {
+                        console.log("entrou em outro if");
+                        var disAfetado = $(`#${i[1]}`);
+                        if (disAfetado.length > 1 && disAfetado.is(':visible')) {
+                            cap = i[1];
+                            console.log(cap);
+                        } else {
+                            var divToCap;
+                            divToCap = i[1].split('_');
+                            cap = divToCap[0];
+                            console.log(cap);
+                        }
+                    }
+                }
+
+                $('html, body').animate({
+                    scrollTop: $(`#${cap}`).offset().top
+                }, 600);
+            }
         });
     </script>
     <style type="text/css">
@@ -199,36 +226,5 @@
         </div>
         <div id="div_texto" runat="server"></div>
     </div>
-    <script type="text/javascript">
-        console.log("ta no script");
-        $(document).ready(function () {
-            console.log("entrou no rady");
-            if ($('#div_texto').length == 1 && window.location.href.indexOf('#') > -1) {
-                console.log("entrou no if 1");
-                var i = window.location.href.split('#');
-                var cap;
-                console.log(i);
-                if (typeof i[1] != undefined) {
-                    if (i[1] != "") {
-                        console.log("entrou em outro if");
-                        var disAfetado = $(`#${i[1]}`);
-                        if (disAfetado.length > 1 && disAfetado.is(':visible')) {
-                            cap = i[1];
-                            console.log(cap);
-                        } else {
-                            var divToCap;
-                            divToCap = i[1].split('_');
-                            cap = divToCap[0];
-                            console.log(cap);
-                        }
-                    }
-                }
-
-                $('html, body').animate({
-                    scrollTop: $(`#${cap}`).offset().top
-                }, 600);
-            }
-        });
-    </script>
 </body>
 </html>
