@@ -88,7 +88,8 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     id_doc = id_doc
                 };
                 LogOperacao.gravar_operacao(Util.GetEnumDescription(action) + ",VIDE.EXC", log_editar, id_doc, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-                
+
+                //NOTE: Se o usuario nao tiver permissao pra habilitar o email ou habilitar no sinj pesquisa, seta pra false. By Victor
                 if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
                 {
                     normaRn.PathPut(id_doc, "st_habilita_email", "false", "");

@@ -103,6 +103,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     throw new Exception("Erro ao editar Vide na norma alteradora.");
                 }
 
+                //NOTE: Se o usuario nao tiver permissao pra habilitar o email ou habilitar no sinj pesquisa, seta pra false. By Victor
                 if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
                 {
                     normaRn.PathPut(id_doc, "st_habilita_email", "false", "");

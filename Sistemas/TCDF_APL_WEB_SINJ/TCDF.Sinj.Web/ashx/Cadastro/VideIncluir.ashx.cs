@@ -233,6 +233,16 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     throw new Exception("Erro ao cadastrar Vide.");
                 }
 
+                //NOTE: Se o usuario nao tiver permissao pra habilitar o email ou habilitar no sinj pesquisa, seta pra false. By Victor
+                if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
+                {
+                    normaRn.PathPut(id_doc, "st_habilita_email", "false", "");
+                }
+                if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
+                {
+                    normaRn.PathPut(id_doc, "st_habilita_pesquisa", "false", "");
+                }
+
 
                 var log_editar = new LogAlterar<NormaOV>
                 {

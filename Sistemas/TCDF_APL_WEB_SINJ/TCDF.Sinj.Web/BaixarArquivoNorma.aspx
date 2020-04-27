@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BaixarArquivoNorma.aspx.cs" Inherits="TCDF.Sinj.Web.BaixarArquivoNorma" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BaixarArquivoNorma.aspx.cs" Inherits="TCDF.Sinj.Web.BaixarArquivoNorma" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -22,6 +22,33 @@
         $(document).ready(function () {
             if ($('#div_erro').length > 0) {
                 $('#a_print').hide();
+            }
+
+            if ($('#div_texto').length == 1 && window.location.href.indexOf('#') > -1) {
+                console.log("entrou no if 1");
+                var i = window.location.href.split('#');
+                var cap;
+                console.log(i);
+                if (typeof i[1] != undefined) {
+                    console.log("entrou no if 2");
+                    if (i[1] != "") {
+                        console.log("entrou em outro if");
+                        var disAfetado = $(`#${i[1]}`);
+                        if (disAfetado.length > 1 && disAfetado.is(':visible')) {
+                            cap = i[1];
+                            console.log(cap);
+                        } else {
+                            var divToCap;
+                            divToCap = i[1].split('_');
+                            cap = divToCap[0];
+                            console.log(cap);
+                        }
+                    }
+                }
+
+                $('html, body').animate({
+                    scrollTop: $(`#${cap}`).offset().top
+                }, 600);
             }
         });
     </script>

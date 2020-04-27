@@ -546,7 +546,7 @@ namespace SINJ_PUSH_APP
                                 }
 
                                 corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px;\"> " + (!string.IsNullOrEmpty(vides.nm_tipo_relacao.ToLower()) ? System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(vides.nm_tipo_relacao.ToLower()) : " ") + " " +
-                                    "<a title='Visualizar' target='_blank' href=" + Config.ValorChave("LinkSINJ", true) + "/BaixarArquivoNorma.aspx?id_norma=" + (vides.in_norma_afetada ? resultado_norma.ch_norma : vides.ch_norma_vide) + "#" + linkName + ">" +
+                                    "<a title='Visualizar' target='_blank' href=" + Config.ValorChave("LinkSINJ", true) + "/Norma/" + (vides.in_norma_afetada ? resultado_norma.ch_norma : vides.ch_norma_vide) + "#" + linkName + ">" +
                                     dispositivo_afetado + "</a>" + (vides.in_norma_afetada ? " pelo(a) " : " do(a) ") +
                                     "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + string.IsNullOrEmpty(vides.ch_norma_vide) + ">" +
                                     (!string.IsNullOrEmpty(vides.nm_tipo_norma_vide) ? vides.nm_tipo_norma_vide : " ") + " " + (!string.IsNullOrEmpty(vides.nr_norma_vide) ? vides.nr_norma_vide : " ") + "/" +
