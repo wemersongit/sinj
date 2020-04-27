@@ -1,18 +1,3 @@
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.pdb
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\neo.BRLightREST.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\neo.BRLightSession.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Json.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.Web.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\Ude.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\util.BRLight.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.Web.pdb
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.Web.dll.config
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Json.xml
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csprojAssemblyReference.cache
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.CopyComplete
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.pdb
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.pdb
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Release\neo.BRLightREST.dll
@@ -26,3 +11,16 @@ E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.Core
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.CopyComplete
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.pdb
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.pdb
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\neo.BRLightREST.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\neo.BRLightSession.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Json.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\Ude.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\util.BRLight.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Json.xml
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csprojAssemblyReference.cache
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.CoreCompileInputs.cache
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.CopyComplete
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.pdb

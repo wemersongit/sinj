@@ -1,16 +1,3 @@
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.Web.dll.config
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.Web.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.Web.pdb
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\neo.BRLightREST.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\neo.BRLightSession.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\Newtonsoft.Json.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\Ude.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\util.BRLight.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\Newtonsoft.Json.xml
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.csproj.CopyComplete
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.pdb
 C:\Users\victo\OneDrive\Documentos\sinjBK20042020\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.Web.dll.config
 C:\Users\victo\OneDrive\Documentos\sinjBK20042020\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.Web.dll
 C:\Users\victo\OneDrive\Documentos\sinjBK20042020\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.Web.pdb
@@ -40,3 +27,18 @@ E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release
 E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.pdb
 E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.csprojAssemblyReference.cache
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.Web.dll.config
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.Web.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.Web.pdb
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\neo.BRLightREST.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\neo.BRLightSession.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\Newtonsoft.Json.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\TCDF.Sinj.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\Ude.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\util.BRLight.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\bin\Newtonsoft.Json.xml
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.csprojAssemblyReference.cache
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.csproj.CoreCompileInputs.cache
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.csproj.CopyComplete
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.dll
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.pdb
