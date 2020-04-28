@@ -3079,7 +3079,6 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
         dispositivo_afetado = vide.alteracao_texto_vide.ds_dispositivos_alterados.replaceAll('\n','<br/>');
     }
     if (vide.in_norma_afetada) {
-        console.log(vide);
         if(dispositivo_afetado == ""){
             if(IsNotNullOrEmpty(vide.caput_norma_vide, 'ds_caput')){
                 dispositivo_afetado = vide.caput_norma_vide.ds_caput.replaceAll('\n','<br/>');
@@ -3102,12 +3101,11 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
             '<td width="25%">' + dispositivo_afetado + '</td>' +
             '<td width="10%"> pelo(a) </td>' +
             '<td width="30%">' + (IsNotNullOrEmpty(vide.ch_norma_vide) ? '<a href="./DetalhesDeNorma.aspx?id_norma=' + vide.ch_norma_vide + '" title="Visualizar Detalhes da Norma">' + vide.nm_tipo_norma_vide + ' ' + vide.nr_norma_vide + '</a>' : vide.nm_tipo_norma_vide + ' ' + vide.nr_norma_vide) + '/' + ano +  ' - ' + (vide.nm_orgao_origem != undefined ? vide.nm_orgao_origem : "<span style='color:red'> Norma excluída </span>") +'</td>' +
-            (bCadastro ? '<td width="10%">' + (bPodeEditar && ValidarPermissao(_grupos.nor_edt) ? '<a href="./EditarVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '&st_habilita_email=' + data.st_habilita_email +'&st_habilita_pesquisa='+ data.st_habilita_pesquisa +'  " title="Editar Vide" ><img src="' + _urlPadrao + '/Imagens/ico_pencil_p.png" alt="editar" /></a>&nbsp;<a href="./ExcluirVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '" title="Excluir Vide" ><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" alt="excluir" /></a>' : '') + '</td>' : '') +
+            (bCadastro ? '<td width="10%">' + (bPodeEditar && ValidarPermissao(_grupos.nor_edt) ? '<a href="./EditarVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '&st_habilita_email=' + data.st_habilita_email +'&st_habilita_pesquisa='+ data.st_habilita_pesquisa +'  " title="Editar Vide" ><img src="' + _urlPadrao + '/Imagens/ico_pencil_p.png" alt="editar" /></a>&nbsp;<a href="./ExcluirVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '&st_habilita_pesquisa='+ data.st_habilita_pesquisa +'&st_habilita_email='+ data.st_habilita_email +'" title="Excluir Vide" ><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" alt="excluir" /></a>' : '') + '</td>' : '') +
             '</tr>' +
             (IsNotNullOrEmpty(vide.ds_comentario_vide) ? '<tr><td colspan="5" style="background-color:transparent;"><table style="width:98%; float:right;"><thead><tr><th class="text-left">Comentário</th></tr></thead><tbody id="tbody_comentario_vide"><tr><td>' + vide.ds_comentario_vide + '</td></tr></tbody></table></td></tr>' : '')
         );
     } else {
-        console.log(vide);
         // Caso a norma afete outra, os valores exibidos estao persistidos em campos diferentes:
         if(dispositivo_afetado == ""){
             if(IsNotNullOrEmpty(vide.caput_norma_vide_outra, 'ds_caput')){
@@ -3131,7 +3129,7 @@ function montarTabelaDeVideDetalhesNorma(vide, bCadastro, bPodeEditar){
             '<td width="25%">' + dispositivo_afetado + '</td>' +
             '<td width="10%">' + (IsNotNullOrEmpty(dispositivo_afetado) ? "do(a)" : "&nbsp;&nbsp;&nbsp;&nbsp;") + '</td>' +
             '<td width="30%">' + (IsNotNullOrEmpty(vide.ch_norma_vide) ? '<a href="./DetalhesDeNorma.aspx?id_norma=' + vide.ch_norma_vide + '" title="Visualizar Detalhes da Norma">' + vide.nm_tipo_norma_vide + ' ' + vide.nr_norma_vide + '</a>' : vide.nm_tipo_norma_vide + ' ' + vide.nr_norma_vide) + '/' + ano +  ' - ' + (vide.nm_orgao_origem != undefined ? vide.nm_orgao_origem : "<span style='color:red'> Norma excluída </span>") +'</td>' +
-            (bCadastro ? '<td width="10%">' + (bPodeEditar && ValidarPermissao(_grupos.nor_edt) ? '<a href="./EditarVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '&st_habilita_email=' + data.st_habilita_email +'&st_habilita_pesquisa='+ data.st_habilita_pesquisa +' " title="Editar Vide" ><img src="' + _urlPadrao + '/Imagens/ico_pencil_p.png" alt="editar" /></a>&nbsp;<a href="./ExcluirVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '" title="Excluir Vide" ><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" alt="excluir" /></a>' : '') + '</td>' : '') +
+            (bCadastro ? '<td width="10%">' + (bPodeEditar && ValidarPermissao(_grupos.nor_edt) ? '<a href="./EditarVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '&st_habilita_email=' + data.st_habilita_email +'&st_habilita_pesquisa='+ data.st_habilita_pesquisa +' " title="Editar Vide" ><img src="' + _urlPadrao + '/Imagens/ico_pencil_p.png" alt="editar" /></a>&nbsp;<a href="./ExcluirVide.aspx?id_doc=' + data._metadata.id_doc + '&ch_vide=' + vide.ch_vide + '&st_habilita_pesquisa='+ data.st_habilita_pesquisa +'&st_habilita_email='+ data.st_habilita_email +'" title="Excluir Vide" ><img src="' + _urlPadrao + '/Imagens/ico_delete_p.png" alt="excluir" /></a>' : '') + '</td>' : '') +
             '</tr>' +
             (IsNotNullOrEmpty(vide.ds_comentario_vide) ? '<tr><td colspan="5" style="background-color:transparent;"><table style="width:98%; float:right;"><thead><tr><th class="text-left">Comentário</th></tr></thead><tbody id="tbody_comentario_vide"><tr><td>' + vide.ds_comentario_vide + '</td></tr></tbody></table></td></tr>' : '')
         );

@@ -219,8 +219,10 @@ function limparFormatacao(){
 }
 
 function habilitarEmailPesquisa(id_doc, hsp, hemail){
-    //habilitar email
-    if (hemail) {
+    if (hemail != undefined && hsp != undefined) {
+        var sucesso = function(data) {
+            
+        }
         var inicio = function () {
             $('#super_loading').show();
         }
@@ -228,28 +230,9 @@ function habilitarEmailPesquisa(id_doc, hsp, hemail){
             $('#super_loading').hide();
         }
         $.ajaxlight({
-            sUrl: './ashx/Cadastro/NormaEditarCampoEmail.ashx?id_doc=' + id_doc + "&st_habilita_email=true&st_atualizada=true",
+            sUrl: './ashx/Cadastro/NormaEditarCampo.ashx?id_doc=' + id_doc + "&st_habilita_pesquisa=" + hsp + "&st_habilita_email=" + hemail,
             sType: "GET",
-            fnSuccess: null,
-            fnComplete: hsp ? null : complete,
-            fnBeforeSend: inicio,
-            fnError: null,
-            bAsync: true
-        });
-    }
-    //habilitar pesquisa, se já tiver setado pra habilitar no email, nao há necessidade de fazer essa persistencia, já que se o usuario quiser
-    //habilitar o envio de email, ele terá que habilitar no SINJ Pesquisa. By Victor
-    if (hsp && !hemail) {
-        var inicio = function () {
-            $('#super_loading').show();
-        }
-        var complete = function (data) {
-            $('#super_loading').hide();
-        }
-        $.ajaxlight({
-            sUrl: './ashx/Cadastro/NormaEditarCampo.ashx?id_doc=' + id_doc + "&st_habilita_pesquisa=true",
-            sType: "GET",
-            fnSuccess: null,
+            fnSuccess: sucesso,
             fnComplete: complete,
             fnBeforeSend: inicio,
             fnError: null,

@@ -41,7 +41,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     normaRn.PathPut(id_doc, "st_atualizada", _st_atualizada, "");
                     if (_st_habilita_pesquisa == "false" || _st_habilita_pesquisa == null)
                     {
-                    normaRn.PathPut(id_doc, "st_habilita_pesquisa", "true", "");
+                        normaRn.PathPut(id_doc, "st_habilita_pesquisa", "true", "");
                     }
                     normaOv = normaRn.Doc(id_doc);
 

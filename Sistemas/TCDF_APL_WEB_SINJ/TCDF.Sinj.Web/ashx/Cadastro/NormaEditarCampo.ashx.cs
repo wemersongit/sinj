@@ -33,9 +33,17 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
 
                     var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                    var _st_habilita_email = context.Request["st_habilita_email"];
 
                     NormaRN normaRn = new NormaRN();
-                    normaRn.PathPut(id_doc, "st_habilita_pesquisa", _st_habilita_pesquisa, "");
+                    if (_st_habilita_pesquisa != null && _st_habilita_pesquisa != "")
+                    {
+                        normaRn.PathPut(id_doc, "st_habilita_pesquisa", _st_habilita_pesquisa, "");
+                    }
+                    if (_st_habilita_email != null && _st_habilita_email != "")
+                    {
+                        normaRn.PathPut(id_doc, "st_habilita_email", _st_habilita_email, "");
+                    }
                     normaOv = normaRn.Doc(id_doc);
 
                     var podeEditar = false;

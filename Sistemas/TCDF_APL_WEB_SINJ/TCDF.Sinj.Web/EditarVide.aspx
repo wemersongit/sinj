@@ -3,9 +3,9 @@
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" ></script>
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide_editar.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript">
-        var vide_habilita_pesquisa = GetParameterValue('st_habilita_pesquisa');
-        var vide_habilita_email = GetParameterValue('st_habilita_email');
         $(document).ready(function () {
+            var vide_habilita_pesquisa = GetParameterValue('st_habilita_pesquisa');
+            var vide_habilita_email = GetParameterValue('st_habilita_email');
             $('#button_salvar_vide').click(function () {
                 return salvarArquivosVideEditar(sucesso_vide);
             });

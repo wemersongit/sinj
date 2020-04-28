@@ -5,45 +5,67 @@
 <script type="text/javascript" language="javascript">
 
     $(document).ready(function () {
-
+        var vide_habilita_pesquisa = GetParameterValue('st_habilita_pesquisa');
+        var vide_habilita_email = GetParameterValue('st_habilita_email');
         $('#button_salvar_vide').click(function () {
             return salvarArquivosVideExcluir(sucesso_vide);
         });
 
         var open_modal = function (data) {
+            var append_eml_pes = (ValidarPermissao(_grupos.nor_eml) ? "<div style='display:block;'> Habilita enviar e-mail:" +
+                "<input id='vide_st_habilita_email' name='vide_st_habilita_email' value='true' type='checkbox' title='Habilita o envio de e- mails.' " + (vide_habilita_email == 'true' ? 'checked' : '') + "  /> </div>" : "") +
+                (ValidarPermissao(_grupos.nor_hsp) ? "<div style='display:block'> Habilita no SINJ Pesquisa:" +
+                "<input id='vide_st_habilita_pesquisa' name='vide_st_habilita_pesquisa' value='true' type='checkbox' title='Habilita no SINJ Pesquisa.' " + (vide_habilita_pesquisa == 'true' ? 'checked' : '') + " /> </div>" : "");
+
             $('<div id="modal_notificacao_modal_excluir" />').modallight({
                 sTitle: "Sucesso",
-                sContent: "Excluído com sucesso.",
+                sContent: "Excluído com sucesso." + append_eml_pes,
                 sType: "success",
                 oButtons: [
                         {
-                            text: "Ok", click: function () {
+                        text: "Ok", click: function () {
+                                let hsp = $('#vide_st_habilita_pesquisa').is(':checked');
+                                let heml = $('#vide_st_habilita_email').is(':checked');
+                                habilitarEmailPesquisa(data.id_doc_success, hsp, heml);
                                 Redirecionar('?id_norma=' + data.ch_norma);
                             }
                         }
                     ],
                 fnClose: function () {
+                    let hsp = $('#vide_st_habilita_pesquisa').is(':checked');
+                    let heml = $('#vide_st_habilita_email').is(':checked');
+                    habilitarEmailPesquisa(data.id_doc_success, hsp, heml);
                     Redirecionar('?id_norma=' + data.ch_norma);
                 }
             });
         }
 
         var sucesso_vide = function (data) {
+            var append_eml_pes = (ValidarPermissao(_grupos.nor_eml) ? "<div style='display:block;'> Habilita enviar e-mail:" +
+                "<input id='vide_st_habilita_email' name='vide_st_habilita_email' value='true' type='checkbox' title='Habilita o envio de e- mails.' " + (vide_habilita_email == 'true' ? 'checked' : '') + "  /> </div>" : "") +
+                (ValidarPermissao(_grupos.nor_hsp) ? "<div style='display:block'> Habilita no SINJ Pesquisa:" +
+                "<input id='vide_st_habilita_pesquisa' name='vide_st_habilita_pesquisa' value='true' type='checkbox' title='Habilita no SINJ Pesquisa.' " + (vide_habilita_pesquisa == 'true' ? 'checked' : '') + " /> </div>" : "");
             gComplete();
             if (IsNotNullOrEmpty(data)) {
                 if (IsNotNullOrEmpty(data, 'id_doc_success')) {
                     $('<div id="modal_notificacao_modal_excluir" />').modallight({
                         sTitle: "Sucesso",
-                        sContent: "Excluído com sucesso.",
+                        sContent: "Excluído com sucesso." + append_eml_pes,
                         sType: "success",
                         oButtons: [
                             {
                                 text: "Ok", click: function () {
+                                    let hsp = $('#vide_st_habilita_pesquisa').is(':checked');
+                                    let heml = $('#vide_st_habilita_email').is(':checked');
+                                    habilitarEmailPesquisa(data.id_doc_success, hsp, heml);
                                     Redirecionar('?id_doc=' + data.id_doc_success);
                                 }
                             }
                         ],
                         fnClose: function () {
+                            let hsp = $('#vide_st_habilita_pesquisa').is(':checked');
+                            let heml = $('#vide_st_habilita_email').is(':checked');
+                            habilitarEmailPesquisa(data.id_doc_success, hsp, heml);
                             Redirecionar('?id_doc=' + data.id_doc_success);
                         }
                     });
