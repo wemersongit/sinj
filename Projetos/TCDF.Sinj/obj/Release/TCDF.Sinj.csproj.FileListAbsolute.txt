@@ -6,7 +6,6 @@ E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Json.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Release\Ude.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Release\util.BRLight.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Json.xml
-E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csprojAssemblyReference.cache
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.CoreCompileInputs.cache
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.CopyComplete
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.dll
@@ -35,3 +34,4 @@ E:\Dev\Light\TCDF\sinj-merge-branch\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Js
 E:\Dev\Light\TCDF\sinj-merge-branch\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csprojResolveAssemblyReference.cache
 E:\Dev\Light\TCDF\sinj-merge-branch\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.dll
 E:\Dev\Light\TCDF\sinj-merge-branch\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.pdb
+E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csprojAssemblyReference.cache
