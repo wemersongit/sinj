@@ -69,16 +69,15 @@ namespace TCDF.Sinj.ES
                 var _ch_campo = "";
                 var _ch_operador = "";
                 var _ch_valor = "";
-                var aux_conector = "";
+                TypeConnector connector = TypeConnector.AND;
                 //guarda o conector do último argumento para concatenar com o proximo
                 foreach (var argumento in sentencaOv.argumentos)
                 {
-                    //Define o conector com o último da lista
-                    TypeConnector connector = aux_conector.Equals("NÃO") ? TypeConnector.NOT : aux_conector.Equals("OU") ? TypeConnector.OR : TypeConnector.AND;
-
                     argumento_split = argumento.Split('#');
-                    aux_conector = argumento_split[7];
-                    
+                    if (!argumento.Equals(sentencaOv.argumentos.Last()))
+                    {
+                        connector = argumento_split[7].Equals("NÃO") ? TypeConnector.NOT : argumento_split[7].Equals("OU") ? TypeConnector.OR : TypeConnector.AND;
+                    }
                     if (argumento_split.Length == 8)
                     {
                         _tipo_campo = argumento_split[0];
