@@ -215,7 +215,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                         if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                         {
-                            sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
+                            sRetorno = "{\"id_doc_success\":" + id_doc + ", \"st_habilita_pesquisa\":\"" + normaAlteradaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaAlteradaOv.st_habilita_email + "\", \"id_doc_vide\":\"" + normaAlteradaOv._metadata.id_doc + "\", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
 
                         }
                         else
@@ -225,7 +225,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     }
                     else
                     {
-                        sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
+                        sRetorno = "{\"id_doc_success\":" + id_doc + ", \"st_habilita_pesquisa\":\"" + normaAlteradaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaAlteradaOv.st_habilita_email + "\", \"id_doc_vide\":\"" + normaAlteradaOv._metadata.id_doc + "\", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
+
                     }
                 }
                 else
@@ -233,14 +234,14 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     throw new Exception("Erro ao cadastrar Vide.");
                 }
 
-                //NOTE: Se o usuario nao tiver permissao pra habilitar o email ou habilitar no sinj pesquisa, seta pra false. By Victor
+                //NOTE: Se o usuario nao tiver permissao pra habilitar o email ou habilitar no sinj pesquisa, seta pra false os campos da norma alterada. By Victor
                 if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
                 {
-                    normaRn.PathPut(id_doc, "st_habilita_email", "false", "");
+                    normaRn.PathPut(normaAlteradaOv._metadata.id_doc, "st_habilita_email", "false", "");
                 }
                 if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
                 {
-                    normaRn.PathPut(id_doc, "st_habilita_pesquisa", "false", "");
+                    normaRn.PathPut(normaAlteradaOv._metadata.id_doc, "st_habilita_pesquisa", "false", "");
                 }
 
 

@@ -61,7 +61,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                 if (normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
                 {
-                    sRetorno = "{\"id_doc_success\":" + id_doc + "}";
+                    
                     if(!vide.NormaAlterada.InNormaForaSistema){
                         var normaAlteradaOv = normaRn.Doc(vide.NormaAlterada.ChNorma);
                         normaAlteradaOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
@@ -71,12 +71,26 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
                         normaAlteradaOv.ch_situacao = situacao.ch_situacao;
                         normaAlteradaOv.nm_situacao = situacao.nm_situacao;
-
+                        sRetorno = "{\"id_doc_success\":" + id_doc + ", \"st_habilita_pesquisa\":\"" + normaAlteradaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaAlteradaOv.st_habilita_email + "\",  \"id_doc_vide\":\"" + normaAlteradaOv._metadata.id_doc + "\"}";
                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                         if (!normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                         {
                             throw new Exception("Erro ao excluir Vide na norma alterada.");
                         }
+
+                        //NOTE: Se o usuario nao tiver permissao pra habilitar o email ou habilitar no sinj pesquisa, seta pra false os campos da norma alterada. By Victor
+                        if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
+                        {
+                            normaRn.PathPut(normaAlteradaOv._metadata.id_doc, "st_habilita_email", "false", "");
+                        }
+                        if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
+                        {
+                            normaRn.PathPut(normaAlteradaOv._metadata.id_doc, "st_habilita_pesquisa", "false", "");
+                        }
+                    }
+                    else
+                    {
+                        sRetorno = "{\"id_doc_success\":" + id_doc + "}";
                     }
                 }
                 else
@@ -88,16 +102,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     id_doc = id_doc
                 };
                 LogOperacao.gravar_operacao(Util.GetEnumDescription(action) + ",VIDE.EXC", log_editar, id_doc, sessao_usuario.nm_usuario, sessao_usuario.nm_login_usuario);
-
-                //NOTE: Se o usuario nao tiver permissao pra habilitar o email ou habilitar no sinj pesquisa, seta pra false. By Victor
-                if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
-                {
-                    normaRn.PathPut(id_doc, "st_habilita_email", "false", "");
-                }
-                if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
-                {
-                    normaRn.PathPut(id_doc, "st_habilita_pesquisa", "false", "");
-                }
             }
             catch (Exception ex)
             {

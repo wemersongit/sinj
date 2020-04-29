@@ -4,17 +4,15 @@
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide_editar.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
-            var vide_habilita_pesquisa = GetParameterValue('st_habilita_pesquisa');
-            var vide_habilita_email = GetParameterValue('st_habilita_email');
             $('#button_salvar_vide').click(function () {
                 return salvarArquivosVideEditar(sucesso_vide);
             });
 
             var open_modal = function (data) {
                 var append_eml_pes = (ValidarPermissao(_grupos.nor_eml) ? "<div style='display:block;'> Habilita enviar e-mail:" +
-                    "<input id='vide_st_habilita_email' name='vide_st_habilita_email' value='true' type='checkbox' title='Habilita o envio de e- mails.' " + (vide_habilita_email == 'true' ? 'checked' : '') + "  /> </div>" : "") +
+                    "<input id='vide_st_habilita_email' name='vide_st_habilita_email' value='true' type='checkbox' title='Habilita o envio de e- mails.' " + (data.st_habilita_email == "true" || data.st_habilita_email == "True" ? 'checked' : '') + "  /> </div>" : "") +
                     (ValidarPermissao(_grupos.nor_hsp) ? "<div style='display:block'> Habilita no SINJ Pesquisa:" +
-                    "<input id='vide_st_habilita_pesquisa' name='vide_st_habilita_pesquisa' value='true' type='checkbox' title='Habilita no SINJ Pesquisa.' " + (vide_habilita_pesquisa == 'true' ? 'checked' : '') + " /> </div>" : "");
+                    "<input id='vide_st_habilita_pesquisa' name='vide_st_habilita_pesquisa' value='true' type='checkbox' title='Habilita no SINJ Pesquisa.' " + (data.st_habilita_pesquisa == 'true' || data.st_habilita_pesquisa == "True" ? 'checked' : '') + " /> </div>" : "");
 
                 $('<div id="modal_notificacao_modal_salvar" />').modallight({
                     sTitle: "Sucesso",
@@ -25,7 +23,7 @@
                         click: function () {
                             let hsp = $('#vide_st_habilita_pesquisa').is(':checked');
                             let heml = $('#vide_st_habilita_email').is(':checked');
-                            habilitarEmailPesquisa(data.id_doc_success, hsp, heml);
+                            habilitarEmailPesquisa(data.id_doc_vide, hsp, heml);
                             $(this).dialog('close');
                         }
                     }],
