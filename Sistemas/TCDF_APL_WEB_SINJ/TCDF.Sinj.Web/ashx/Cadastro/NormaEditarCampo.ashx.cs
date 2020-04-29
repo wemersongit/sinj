@@ -58,7 +58,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                     if (normaRn.Atualizar(id_doc, normaOv))
                     {
-                        sRetorno = "{\"id_doc_success\":" + id_doc + ",\"update\":true, \"st_habilita_pesquisa\":\""+normaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaOv.st_habilita_email + "\"}";
+                        sRetorno = "{\"id_doc_success\":" + id_doc + ",\"update\":true, \"st_habilita_pesquisa\":\"" + normaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaOv.st_habilita_email + "\"}";
                     }
                     else
                     {

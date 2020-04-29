@@ -61,11 +61,13 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                 normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                 if (normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
                 {
-                    
-                    if(!vide.NormaAlterada.InNormaForaSistema){
+
+                    if (!vide.NormaAlterada.InNormaForaSistema)
+                    {
                         var normaAlteradaOv = normaRn.Doc(vide.NormaAlterada.ChNorma);
                         normaAlteradaOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
-                        if(vide.NormaAlterada.ArquivoNovo != null){
+                        if (vide.NormaAlterada.ArquivoNovo != null)
+                        {
                             normaAlteradaOv.ar_atualizado = vide.NormaAlterada.ArquivoNovo;
                         }
                         var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
@@ -130,7 +132,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             context.Response.End();
         }
 
-        
+
 
         public bool IsReusable
         {
@@ -160,7 +162,8 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
             {
                 throw new DocValidacaoException("Erro ao informar a norma alterada.");
             }
-            if(!NormaAlterada.InNormaForaSistema && string.IsNullOrEmpty(NormaAlterada.ChNorma)){
+            if (!NormaAlterada.InNormaForaSistema && string.IsNullOrEmpty(NormaAlterada.ChNorma))
+            {
                 throw new DocValidacaoException("Erro ao informar a norma alterada. Por não se tratar de uma norma fora do sistema a chave é obrigatória.");
             }
         }
