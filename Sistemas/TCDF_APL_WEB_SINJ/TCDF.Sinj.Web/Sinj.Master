@@ -41,7 +41,7 @@
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/stacktable.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.dataTablesLight.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/columns_datatables.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
-    <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/columns_datatables_pesquisa.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+    <!-- <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/columns_datatables_pesquisa.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script> -->
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/platform.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/tooltip.js"></script>
 
