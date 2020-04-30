@@ -13,3 +13,15 @@ E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\obj\
 E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\obj\Debug\TCDF.Sinj.Portal.Web.csproj.CopyComplete
 E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\obj\Debug\TCDF.Sinj.Portal.Web.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\obj\Debug\TCDF.Sinj.Portal.Web.pdb
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\bin\TCDF.Sinj.Portal.Web.dll
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\bin\TCDF.Sinj.Portal.Web.pdb
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\bin\neo.BRLightREST.dll
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\bin\neo.BRLightSession.dll
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\bin\Newtonsoft.Json.dll
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\bin\TCDF.Sinj.dll
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\bin\Ude.dll
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\bin\util.BRLight.dll
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\bin\Newtonsoft.Json.xml
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\obj\Debug\TCDF.Sinj.Portal.Web.csprojResolveAssemblyReference.cache
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\obj\Debug\TCDF.Sinj.Portal.Web.dll
+E:\Dev\Light\TCDF\sinj-merge-branch\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\obj\Debug\TCDF.Sinj.Portal.Web.pdb
