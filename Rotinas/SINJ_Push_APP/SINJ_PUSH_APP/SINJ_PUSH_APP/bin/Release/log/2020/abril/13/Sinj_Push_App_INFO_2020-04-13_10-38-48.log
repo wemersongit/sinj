@@ -1,4 +1,0 @@
-13/04/2020 10:38:57: Atualizar campo ST_ATUALIZADA para false => {"success": 1, "failure" : 0}
-13/04/2020 10:39:24: Total de normas ST_NOVA=true => 0
-13/04/2020 10:39:24: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
-13/04/2020 10:39:24: Total de diários ST_NOVO=true => 0

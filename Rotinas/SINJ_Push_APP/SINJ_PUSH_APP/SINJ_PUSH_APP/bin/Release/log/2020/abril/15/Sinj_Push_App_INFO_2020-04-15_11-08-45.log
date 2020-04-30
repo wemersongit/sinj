@@ -1,6 +1,0 @@
-15/04/2020 11:08:48: Atualizar campo ST_ATUALIZADA para false => {"success": 3, "failure" : 0}
-15/04/2020 11:09:11: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Lei 40 de 05/06/2010 do órgão PCDF > APC
-15/04/2020 11:09:22: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Lei 556 de 01/01/2011 do órgão CBMDF > ABM
-15/04/2020 11:09:49: Total de normas ST_NOVA=true => 0
-15/04/2020 11:09:50: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
-15/04/2020 11:09:50: Total de diários ST_NOVO=true => 0

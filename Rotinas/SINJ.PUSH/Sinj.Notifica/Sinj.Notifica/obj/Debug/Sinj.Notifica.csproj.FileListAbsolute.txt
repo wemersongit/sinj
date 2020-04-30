@@ -1,9 +1,0 @@
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ.PUSH\Sinj.Notifica\Sinj.Notifica\bin\Debug\Sinj.Notifica.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ.PUSH\Sinj.Notifica\Sinj.Notifica\bin\Debug\Sinj.Notifica.pdb
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ.PUSH\Sinj.Notifica\Sinj.Notifica\bin\Debug\BRLight.DataAccess.LBW.Provider.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ.PUSH\Sinj.Notifica\Sinj.Notifica\bin\Debug\BRLight.Util.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ.PUSH\Sinj.Notifica\Sinj.Notifica\bin\Debug\LightInfocon.Data.LightBaseProvider.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ.PUSH\Sinj.Notifica\Sinj.Notifica\obj\Debug\Sinj.Notifica.csprojAssemblyReference.cache
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ.PUSH\Sinj.Notifica\Sinj.Notifica\obj\Debug\Sinj.Notifica.csproj.CopyComplete
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ.PUSH\Sinj.Notifica\Sinj.Notifica\obj\Debug\Sinj.Notifica.dll
-C:\Users\victo\OneDrive\Área de Trabalho\sinj\Rotinas\SINJ.PUSH\Sinj.Notifica\Sinj.Notifica\obj\Debug\Sinj.Notifica.pdb

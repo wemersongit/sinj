@@ -1,5 +1,0 @@
-17/04/2020 12:26:07: Atualizar campo ST_ATUALIZADA para false => {"success": 1, "failure" : 0}
-17/04/2020 12:27:46: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Lei 123 de 01/01/2000 do órgão ACSNB
-17/04/2020 12:27:46: Total de normas ST_NOVA=true => 0
-17/04/2020 12:27:47: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
-17/04/2020 12:27:47: Total de diários ST_NOVO=true => 0

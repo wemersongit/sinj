@@ -1,9 +1,0 @@
-25/03/2020 16:58:54: Atualizar campo ST_ATUALIZADA para false => {"success": 0, "failure" : 0}
-25/03/2020 16:58:56: Total de normas ST_NOVA=true => 1
-25/03/2020 16:58:57: Atualizar campo ST_NOVA para false => {"success": 1, "failure" : 0}
-25/03/2020 16:58:57: Literal => '46000000'=any(ch_tipo_norma_criacao) OR '646'=any(ch_orgao_criacao) OR '3026176c728248858fce0de947ee8288'=any(ch_termo_criacao) OR '5a2e142691a0490a821b194d0705cff2'=any(ch_termo_criacao) OR '5a34ee46f36e4791bb5a34efa81a6207'=any(ch_termo_criacao) OR '4ba519480bbb4999a735704025a2b724'=any(ch_termo_criacao) OR '83f75be041fe4ddcaf91d28f51ee5bcf'=any(ch_termo_criacao) OR 'aa48fbac112945e3860e5cf080093b95'=any(ch_termo_criacao)
-25/03/2020 16:58:57: Total de usuários => 0
-25/03/2020 16:59:07: Total de diários ST_NOVO=true => 22
-25/03/2020 16:59:10: Atualizar campo ST_NOVO para false => {"success": 0, "failure" : 22}
-25/03/2020 16:59:11: Total de usuários => 4
-25/03/2020 16:59:44: CRIACAO - Email enviado para wemersoned@hotmail.com com o titulo Foram cadastrados 10 diários no SINJ contendo o texto: dodf.
