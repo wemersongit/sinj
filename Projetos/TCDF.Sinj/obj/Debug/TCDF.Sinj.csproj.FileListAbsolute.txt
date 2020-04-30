@@ -6,6 +6,7 @@ E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Debug\Newtonsoft.Json.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Debug\Ude.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Debug\util.BRLight.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\bin\Debug\Newtonsoft.Json.xml
+E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Debug\TCDF.Sinj.csprojAssemblyReference.cache
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Debug\TCDF.Sinj.csproj.CoreCompileInputs.cache
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Debug\TCDF.Sinj.csproj.CopyComplete
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Debug\TCDF.Sinj.dll
