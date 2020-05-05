@@ -113,26 +113,35 @@ function selecionarNormaAlteradoraEditar(norma){
 }
 
 function selecionarArquivosEditar(){
-    if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && vide.ch_tipo_relacao != '9'){
-        gComplete();
-        showMessageNormaIncompativel(normaAlteradora);
-        return;
-    }
-    let deferredAlteradora = $.Deferred();
-    let deferredAlterada = $.Deferred();
-    $.when(deferredAlteradora, deferredAlterada).done(gComplete);
-    selecionarArquivoDaNormaEditar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
-    if(!normaAlterada.in_norma_fora_sistema){
-        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao) && vide.ch_tipo_relacao != '9'){
+    if(!vide.alteracao_texto_vide.in_sem_arquivo){
+        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && vide.ch_tipo_relacao != '9'){
             gComplete();
-            showMessageNormaIncompativel(normaAlterada);
+            showMessageNormaIncompativel(normaAlteradora);
             return;
         }
-        selecionarArquivoDaNormaEditar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
+        let deferredAlteradora = $.Deferred();
+        let deferredAlterada = $.Deferred();
+        $.when(deferredAlteradora, deferredAlterada).done(gComplete);
+        selecionarArquivoDaNormaEditar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+        if(!normaAlterada.in_norma_fora_sistema){
+            if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao) && vide.ch_tipo_relacao != '9'){
+                gComplete();
+                showMessageNormaIncompativel(normaAlterada);
+                return;
+            }
+            selecionarArquivoDaNormaEditar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
+        }
+        else{
+            deferredAlterada.resolve();
+        }
     }
     else{
-        deferredAlterada.resolve();
+        $('#div_cad_dispositivo_alterada').show();
+        $('#div_cad_dispositivo_alterada .line_conteudo_arquivo').show();
+        gComplete();
     }
+    
+    
     
 }
 
@@ -397,6 +406,7 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
 
 function salvarVideEditar(sucessoVide){
     $('#vide').val(JSON.stringify({
+            naoPossuiArquivo: vide.alteracao_texto_vide.in_sem_arquivo,
             ch_vide: vide.ch_vide,
             norma_alteradora: normaAlteradora,
             norma_alterada: normaAlterada
