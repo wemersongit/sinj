@@ -12,14 +12,13 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Ude;
 
 namespace TCDF.Sinj
 {
     public class Util
     {
 
-        // NOTE: . By Questor
+        // NOTE: . By Questor 
         public static byte[] FileBytesInUTF8(byte[] fileBytes)
         {
             return Encoding.Convert(
@@ -361,7 +360,7 @@ namespace TCDF.Sinj
             SessaoUsuarioOV usuario_session = new SessaoRN().LerSessaoUsuarioOv();
             if (usuario_session == null)
             {
-                throw new SessionExpiredException("Sessão expirou.");
+                 throw new SessionExpiredException("Sessão expirou.");
             }
             return usuario_session;
         }
@@ -597,6 +596,10 @@ namespace TCDF.Sinj
         nor_vis,
         [Description("NOR.FST")]
         nor_fst,
+        [Description("NOR.EML")]
+        nor_eml,
+        [Description("NOR.HSP")]
+        nor_hsp,
         //Diario
         [Description("DIO.INC")]
         dio_inc,

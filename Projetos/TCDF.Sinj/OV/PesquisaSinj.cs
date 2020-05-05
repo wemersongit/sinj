@@ -27,6 +27,12 @@ namespace TCDF.Sinj.OV
     {
         public string all { get; set; }
     }
+
+    public class SentencaPesquisaPendenteDePublicacaoOV : SentencaPesquisaSinjOV
+    {
+        public string all { get; set; }
+    }
+
     public class SentencaPesquisaDiretaNormaOV : SentencaPesquisaSinjOV
     {
         public string all { get; set; }
@@ -42,7 +48,8 @@ namespace TCDF.Sinj.OV
         public string[] nm_termos { get; set; }
         public string ch_hierarquia { get; set; }
         public string origem_por { get; set; }
-
+        public string st_habilita_pesquisa { get; set; }
+        public string st_habilita_email { get; set; }
     }
     public class SentencaPesquisaAvancadaNormaOV : SentencaPesquisaSinjOV
     {

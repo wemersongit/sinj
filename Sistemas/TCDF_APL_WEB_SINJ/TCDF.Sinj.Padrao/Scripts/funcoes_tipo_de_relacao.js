@@ -13,6 +13,9 @@ function PreencherTipoDeRelacaoEdicao() {
                     });
                 }
                 if (data.ch_tipo_relacao != null && data.ch_tipo_relacao != "") {
+                    // NOTE: No backend, arquivo NormaDetalhes.ashx.cs, adquire-se o nome dos orgãos relacionados pelas
+                    // vides, e são concatenados no nm_tipo_relação. By New
+                    data.nm_tipo_relacao = data.nm_tipo_relacao.split(" @@ ")[0];
                     $('#id_doc').val(data._metadata.id_doc);
                     $('#nm_tipo_relacao').val(data.nm_tipo_relacao);
                     $('#ds_tipo_relacao').val(data.ds_tipo_relacao);
@@ -67,7 +70,10 @@ function DetalhesTipoDeRelacao() {
                         $('#div_controls_detalhes').append('<a title="Excluir Tipo de Relação" href="javascript:void(0);" onclick="javascript:Excluir(' + data._metadata.id_doc + ');" ><img alt="excluir" src="'+_urlPadrao+'/Imagens/ico_trash_p.png"/></a>');
                     }
                     DetalhesCadastro(data.nm_login_usuario_cadastro, data.dt_cadastro); // Chama a funçao que preenche os dados do cadastro passando o nome e a data como argumentos. (Essa funçao está em funcoes_sinj)
-					DetalhesAlteracoes(data.alteracoes); // Chama a funçao que preenche as alterações passando a lista como argumento. (Essa funçao está em funcoes_sinj)
+                    DetalhesAlteracoes(data.alteracoes); // Chama a funçao que preenche as alterações passando a lista como argumento. (Essa funçao está em funcoes_sinj)
+                    // NOTE: No backend, arquivo NormaDetalhes.ashx.cs, adquire-se o nome dos orgãos relacionados pelas
+                    // vides, e são concatenados no nm_tipo_relação. By New
+                    data.nm_tipo_relacao = data.nm_tipo_relacao.split(" @@ ")[0];
                     $('#div_nm_tipo_relacao').text(data.nm_tipo_relacao);
                     $('#div_ds_tipo_relacao').text(data.ds_tipo_relacao);
                     $('#div_ds_texto_para_alterador').text(data.ds_texto_para_alterador);

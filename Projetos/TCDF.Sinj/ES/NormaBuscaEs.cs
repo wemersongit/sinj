@@ -69,16 +69,15 @@ namespace TCDF.Sinj.ES
                 var _ch_campo = "";
                 var _ch_operador = "";
                 var _ch_valor = "";
-                var aux_conector = "";
+                TypeConnector connector = TypeConnector.AND;
                 //guarda o conector do último argumento para concatenar com o proximo
                 foreach (var argumento in sentencaOv.argumentos)
                 {
-                    //Define o conector com o último da lista
-                    TypeConnector connector = aux_conector.Equals("NÃO") ? TypeConnector.NOT : aux_conector.Equals("OU") ? TypeConnector.OR : TypeConnector.AND;
-
                     argumento_split = argumento.Split('#');
-                    aux_conector = argumento_split[7];
-                    
+                    if (!argumento.Equals(sentencaOv.argumentos.Last()))
+                    {
+                        connector = argumento_split[7].Equals("NÃO") ? TypeConnector.NOT : argumento_split[7].Equals("OU") ? TypeConnector.OR : TypeConnector.AND;
+                    }
                     if (argumento_split.Length == 8)
                     {
                         _tipo_campo = argumento_split[0];
@@ -363,6 +362,55 @@ namespace TCDF.Sinj.ES
             return buscaGeral;
         }
 
+        //Pendente de publicacao
+        public BuscaPendenteDePublicacaoEs MontarBusca(SentencaPesquisaPendenteDePublicacaoOV sentencaOv)
+        {
+            var buscaPendenteDeEnvioEs = new BuscaPendenteDePublicacaoEs();
+            if (!string.IsNullOrEmpty(sentencaOv.all))
+            {
+                var auxAll = "";
+                if (sentencaOv.all.IndexOf("\"") < 0)
+                {
+                    auxAll = "\\\"" + sentencaOv.all + "\\\"";
+                }
+                sentencaOv.all = new DocEs().TratarCaracteresReservadosDoEs(sentencaOv.all);
+                if (!string.IsNullOrEmpty(sentencaOv.all))
+                {
+                    if (auxAll != "")
+                    {
+                        sentencaOv.all = "((" + sentencaOv.all + ") OR (" + auxAll + "))";
+                    }
+                    buscaPendenteDeEnvioEs.searchValue = sentencaOv.all;
+                }
+            }
+            if (!string.IsNullOrEmpty(sentencaOv.search))
+            {
+                var sSearch = sentencaOv.search;
+                util.BRLight.ManipulaTexto.RemoverAcentuacao(ref sSearch);
+                sentencaOv.search = new DocEs().TratarCaracteresReservadosDoEs(sSearch);
+                if (!string.IsNullOrEmpty(sentencaOv.search))
+                {
+                    buscaPendenteDeEnvioEs.searchFilter = "((" + sentencaOv.search + ") OR (" + sentencaOv.search + "*))";
+                }
+            }
+            if (!sentencaOv.isCount)
+            {
+                buscaPendenteDeEnvioEs.order = MontarOrdenamento(sentencaOv.sentencaOrdenamento);
+                buscaPendenteDeEnvioEs.sourceInclude = MontarSourceInclude();
+                buscaPendenteDeEnvioEs.aggregation = MontarAggregation();
+                buscaPendenteDeEnvioEs.highlight = MontarHighlight();
+                buscaPendenteDeEnvioEs.from = sentencaOv.iDisplayStart;
+                buscaPendenteDeEnvioEs.size = sentencaOv.iDisplayLength;
+            }
+
+            buscaPendenteDeEnvioEs.fields = MontarSearchableFields();
+
+            new UtilBuscaPendenteDePublicacaoEs().MontarFiltroBuscaGeral(sentencaOv.filtros, buscaPendenteDeEnvioEs);
+
+            return buscaPendenteDeEnvioEs;
+        }
+
+
         public BuscaDiretaEs MontarBusca(SentencaPesquisaDiretaNormaOV sentencaOv)
         {
             var buscaDireta = new BuscaDiretaEs();
@@ -409,6 +457,30 @@ namespace TCDF.Sinj.ES
                     }
                 );
             }
+            if (!string.IsNullOrEmpty(sentencaOv.st_habilita_pesquisa))
+            {
+                buscaDireta.filtersToQueryFiltered.Add(
+                    new FilterQueryFiltered()
+                    {
+                        name = "st_habilita_pesquisa",
+                        value = sentencaOv.st_habilita_pesquisa,
+                        @operator = TypeOperator.equal,
+                        connector = TypeConnector.OR
+                    }
+                );
+            }
+            if (!string.IsNullOrEmpty(sentencaOv.st_habilita_email))
+            {
+                buscaDireta.filtersToQueryFiltered.Add(
+                    new FilterQueryFiltered()
+                    {
+                        name = "st_habilita_email",
+                        value = sentencaOv.st_habilita_email,
+                        @operator = TypeOperator.equal,
+                        connector = TypeConnector.OR
+                    }
+                );
+            }
             if (!string.IsNullOrEmpty(sentencaOv.ano_assinatura))
             {
                 buscaDireta.filtersToQueryFiltered.Add(
@@ -436,7 +508,7 @@ namespace TCDF.Sinj.ES
                             name = "ch_termo",
                             value = ch_termo,
                             @operator = TypeOperator.equal,
-                            connector = TypeConnector.OR
+                            connector = TypeConnector.AND
                         }
                     );
                 }
@@ -447,12 +519,12 @@ namespace TCDF.Sinj.ES
                 var filterOrgao = new FilterQueryFiltered();
                 if (string.IsNullOrEmpty(sentencaOv.origem_por))
                 {
-                    sentencaOv.origem_por = "toda_a_hierarquia_em_qualquer_epoca";
+                    sentencaOv.origem_por = "toda_a_hierarquia_em_qualquer_epoca1";
                 }
                 var orgaos = new List<OrgaoOV>();
                 switch (sentencaOv.origem_por)
                 {
-                    case "toda_a_hierarquia_em_qualquer_epoca":
+                    case "toda_a_hierarquia_em_qualquer_epoca1":
                         orgaos = new OrgaoRN().BuscarTodaHierarquiaEmQualquerEpoca(sentencaOv.ch_orgao, sentencaOv.ch_hierarquia);
                         break;
                     case "hierarquia_superior":
@@ -638,6 +710,8 @@ namespace TCDF.Sinj.ES
             fields.Add(new SearchableField() { name = "nm_ambito" });
             fields.Add(new SearchableField() { name = "ar_atualizado.filetext" });
             fields.Add(new SearchableField() { name = "fontes.ar_fonte.filetext" });
+            fields.Add(new SearchableField() { name = "st_habilita_pesquisa", boost = 3 });
+            fields.Add(new SearchableField() { name = "st_habilita_email", boost = 3 });
 
             return fields;
         }
@@ -758,6 +832,8 @@ namespace TCDF.Sinj.ES
             sourceInclude.Add("dt_inicio_vigencia");
             sourceInclude.Add("st_vacatio_legis");
             sourceInclude.Add("ds_vacatio_legis");
+            sourceInclude.Add("st_habilita_pesquisa");
+            sourceInclude.Add("st_habilita_email");
             return sourceInclude;
         }
         

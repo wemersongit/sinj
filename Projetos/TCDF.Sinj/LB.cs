@@ -104,6 +104,10 @@ namespace TCDF.Sinj
                 var _cadastrado_por_inativo = context.Request["cadastrado_por_inativo"];
                 var _alterado_por_inativo = context.Request["alterado_por_inativo"];
                 var _st_pendencia = context.Request["st_pendencia"];
+
+                var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                var _st_habilita_email = context.Request["st_habilita_email"];
+
                 var _orgao_cadastrador = context.Request.Params.GetValues("orgao_cadastrador");
 
                 var _sSearch = context.Request["sSearch"];
@@ -195,6 +199,17 @@ namespace TCDF.Sinj
                 {
                     query += (query != "" ? " and " : "") + "st_pendencia=true";
                 }
+
+                if (!string.IsNullOrEmpty(_st_habilita_pesquisa))
+                {
+                    query += (query != "" ? " and " : "") + "st_habilita_pesquisa=true";
+                }
+
+                if (!string.IsNullOrEmpty(_st_habilita_email))
+                {
+                    query += (query != "" ? " or " : "") + "st_habilita_email=true";
+                }
+
                 if (!string.IsNullOrEmpty(_sSearch))
                 {
                     var sSearch_split = _sSearch.Split(' ');

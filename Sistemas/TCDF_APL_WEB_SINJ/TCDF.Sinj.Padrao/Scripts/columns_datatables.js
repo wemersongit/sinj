@@ -50,7 +50,7 @@ var _columns_norma = [
 ];
 
 var _columns_norma_es = [
-	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);" class="center"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "_score", "bSortable": false, "visible": true,
+	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);" class="center"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "_score", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false") == -1,
 	    "mRender": function (data, type, full) {
 	        if (!IsNotNullOrEmpty(window.aHighlight)) {
 	            aHighlight = [];
@@ -122,11 +122,11 @@ var _columns_norma_es = [
 	        var html = '<div class="table w-100-pc">';
 	        html += '<div class="line">' +
                 '<div class="column">' +
-	                '<button title="Detalhes" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + (full._source.nm_tipo_norma.toLowerCase() == "parecer normativo" ? "*" : "") + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
+	                '<button title="Detalhes TERA" name="btn" type="submit" class="link" onclick="javascript:doc_clicked=' + full._source._metadata.id_doc + ';base_clicked=\'sinj_norma\'"><H2><span class="nm_tipo_norma">' + full._source.nm_tipo_norma + '</span> <span class="nr_norma nr_norma_text">' + full._source.nr_norma + '</span> de <span class="dt_assinatura dt_assinatura_text">' + full._source.dt_assinatura + (full._source.nm_tipo_norma.toLowerCase() == "parecer normativo" ? "*" : "") + ' <span class="st_norma nm_situacao">' + full._source.nm_situacao + '</span></H2><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /> </button>' +
                     (full._source.nm_tipo_norma.toLowerCase() == "parecer normativo" ? '<br/><span class="obs">*Data de Despacho do Governador</span>' : '') +
                     (full._source.st_vacatio_legis && IsNotNullOrEmpty(full._source.dt_inicio_vigencia) && convertStringToDateTime(full._source.dt_inicio_vigencia) > convertStringToDateTime(date_now) ? '<br/><span class="obs">*'+(IsNotNullOrEmpty(full._source.ds_vacatio_legis) ? full._source.ds_vacatio_legis : 'Entrará em vigor a partir de <span class="dt_inicio_vigencia">' + full._source.dt_inicio_vigencia + '</span>')+'</span>' : '') +
-	            '</div>' +
-            '</div>';
+				'</div>' +
+			'</div>';
 	        var origens = "";
 	        for (var i = 0; i < full._source.origens.length; i++) {
 	            origens += (origens != "" ? "<br/>" : "") + full._source.origens[i].sg_orgao + ' - ' + full._source.origens[i].nm_orgao;
@@ -183,7 +183,23 @@ var _columns_norma_es = [
 	        }
 	        return html;
 	    }
-	}
+	},	
+
+	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "320px","sTitle":"<h2>Habilitar</h2>" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false") > 0,
+		"mRender": function (data, type, full) {
+			var htmlToAppend = ""
+			if(ValidarPermissao(_grupos.nor_hsp) && !full._source.st_habilita_pesquisa){
+				htmlToAppend = htmlToAppend + `<div class="div-light-button" style="float:left;"><a onclick="CriarModalHabilitarPesquisa( ${full._source._metadata.id_doc}, ${full._source.st_habilita_email} )"><img src="${_urlPadrao}/Imagens/ico_doc_m.png">Habilitar no SINJ pesquisa</a></div>`;
+			}
+			if(ValidarPermissao(_grupos.nor_eml) && !full._source.st_habilita_email){
+				htmlToAppend = htmlToAppend + `<div class="div-light-button" style="float:right; display: flex;"><a onclick="CriarModalEnviarEmail( ${full._source._metadata.id_doc}, ${full._source.st_habilita_pesquisa} )"><img src="${_urlPadrao}/Imagens/ico_email_p.png">Enviar e-mail</a></div>`;	
+			}
+			return htmlToAppend;
+		}
+		
+	},
+
+
 ];
 var _columns_norma_favoritos = $.extend(true, [], _columns_norma_es);
 _columns_norma_favoritos[0] = { "indice": 0, "isControl": true, "standard_view": true, "sTitle": ' ', "sWidth": "30px", "sClass": "grid-cell ws", "mData": "", "bSortable": false,
@@ -1371,8 +1387,7 @@ function fn_columns_norma_associada(associacao) {
         { "indice": 4, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "center ws word-no-break all", "bSortable": false,
             "mRender": function (data, type, full) {
                 var detalhes = "";
-                var ds_norma = full.nm_tipo_norma + " " + full.nr_norma + " " + full.dt_assinatura;
-                var selecionar = "<a href='javascript:void(0);' onclick='javascript:SelecionarNormaAssociada(\"" + full.ch_norma + "\",\"" + ds_norma + "\", \""+associacao+"\");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
+                var selecionar = "<a href='javascript:void(0);' onclick='javascript:SelecionarNormaAssociada(\"" + full.ch_norma + "\",\"" + montarDescricaoDaNorma(full) + "\", \""+associacao+"\");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
                 return detalhes + selecionar;
             }
         }
@@ -1398,8 +1413,7 @@ var _columns_norma_vide = [
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Situação", "sWidth": "", "sClass": "center ws nm_situacao", "mData": "nm_situacao" },
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "center ws all", "bSortable": false,
 		"mRender": function (data, type, full) {
-		    var ds_norma = full.nm_tipo_norma + " " + full.nr_norma + " " + full.dt_assinatura;
-			return "<a href='javascript:void(0);' onclick='javascript:SelecionarNormaVide(\"" + full.ch_norma + "\",\"" + ds_norma + "\", \"" + full.dt_assinatura +  "\", \"" + full.nm_tipo_norma + "\" ," + full.st_acao + ");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
+			return "<a href='javascript:void(0);' onclick='javascript:selecionarNormaVide(\"" + full.ch_norma + "\",\"" + full.nr_norma + "\", \"" + full.dt_assinatura +  "\", \"" + full.nm_tipo_norma + "\" ," + full.st_acao + ");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
 		}
 	}
 ];
@@ -1475,33 +1489,33 @@ var _columns_norma_associada_vocabulario = [
 var _columns_norma_notifiqueme = [
 	{ "indice": 0, "isControl": false, "standard_view": true, "sTitle": "Tipo e Número", "sWidth": "20%", "sClass": "grid-cell ws nm_tipo_norma nr_norma", "mData": "nm_tipo_norma",
 		"mRender": function (data, type, full) {
-			return full.fields.partial[0].nm_tipo_norma + " " + (full.fields.partial[0].nr_norma != null ? full.fields.partial[0].nr_norma : "") + " " + full.fields.partial[0].dt_assinatura;
+			return full.nm_tipo_norma + " " + (full.nr_norma != null ? full.nr_norma : "") + " " + full.dt_assinatura;
 		}
 	},
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": "Origem", "sWidth": "", "sClass": "grid-cell ws sg_orgao", "mData": "origens", "bSortable": false,
 		"mRender": function (data, type, full) {
 			var origens = "";
-			for (var i = 0; i < full.fields.partial[0].origens.length; i++) {
-				origens += (origens != "" ? "<br/>" : "") + '<a href="javascript:void(0)" onclick="javascript:CriarModalDescricaoOrigem(\'' + full.fields.partial[0].origens[i].ch_orgao + '\')">' + full.fields.partial[0].origens[i].sg_orgao + '</a>';
+			for (var i = 0; i < full.origens.length; i++) {
+				origens += (origens != "" ? "<br/>" : "") + '<a href="javascript:void(0)" onclick="javascript:CriarModalDescricaoOrigem(\'' + full.origens[i].ch_orgao + '\')">' + full.origens[i].sg_orgao + '</a>';
 			}
 			return origens;
 		}
 	},
 	{ "indice": 3, "isControl": false, "standard_view": true, "sTitle": "Ementa", "sWidth": "35%", "sClass": "grid-cell ws ds_ementa", "mData": "ds_ementa", "bSortable": false,
 		"mRender": function (data, type, full) {
-			return full.fields.partial[0].ds_ementa;
+			return full.ds_ementa;
 		}
 	},
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Situação", "sWidth": "", "sClass": "center ws nm_situacao", "mData": "nm_situacao",
 		"mRender": function (data, type, full) {
-			return full.fields.partial[0].nm_situacao;
+			return full.nm_situacao;
 		}
 	},
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "center ws all", "bSortable": false,
 		"mRender": function (data, type, full) {
 			var detalhes = "";
-			var ds_norma = full.nm_tipo_norma + " " + full.nr_norma + " " + full.dt_assinatura;
-			var selecionar = "<a href='javascript:void(0);' onclick='selecionarNorma(\"" + full.fields.partial[0].ch_norma + "\");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
+			var ds_norma = montarDescricaoDaNorma(full);
+			var selecionar = "<a href='javascript:void(0);' onclick='selecionarNorma(\"" + full.ch_norma + "\");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
 			return detalhes + selecionar;
 		}
 	}
@@ -1730,7 +1744,7 @@ var _columns_arquivos_versionados = [
         "mRender": function (data, type, full) {
             var tipo = full.ar_arquivo_versionado.mimetype.split('/')[1];
             var bt_download = '<a target="_blank" href="./Download/sinj_arquivo_versionado_norma/' + full.ar_arquivo_versionado.id_file + '/' + full.ar_arquivo_versionado.filename + '" title="Baixar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_download.png" alt="download" /></a>';
-            var bt_recovery = '&nbsp;<a target="_blank" href="javascript:void(0);" onclick="javascript:selecionarDocumentoRecuperar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></a>';
+            var bt_recovery = '&nbsp;<button class="clean" onclick="javascript:selecionarDocumentoRecuperar(this);" title="Selecionar Arquivo" ><img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="selecionar" /></button>';
             return bt_download + bt_recovery;
         }
     }

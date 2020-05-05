@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Web;
 using util.BRLight;
@@ -12,7 +12,6 @@ namespace neo.BRLightREST
         {
             BaseUrl = BaseUrl;
             Params.CheckNotNullOrEmpty("BaseUrl", BaseUrl);
-
         }
 
         public Base(string pBaseUrl)

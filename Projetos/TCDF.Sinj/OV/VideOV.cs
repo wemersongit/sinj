@@ -4,6 +4,8 @@ using System.Text;
 using System.Linq;
 using neo.BRLightREST;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace TCDF.Sinj.OV
 {
@@ -14,6 +16,10 @@ namespace TCDF.Sinj.OV
     /// </summary>
     public class Vide
     {
+        public Vide()
+        {
+            alteracao_texto_vide = new AlteracaoDeTexoVide();
+        }
         public string ch_vide { get; set; }
         public string ds_comentario_vide { get; set; }
         /// <summary>
@@ -58,6 +64,8 @@ namespace TCDF.Sinj.OV
         public string item_norma_vide_outra { get; set; }
         public Caput caput_norma_vide_outra { get; set; }
         public string anexo_norma_vide_outra { get; set; }
+
+        public AlteracaoDeTexoVide alteracao_texto_vide { get; set; }
 
         public bool possuiDispositivoInformadoManualmente()
         {
@@ -148,6 +156,27 @@ namespace TCDF.Sinj.OV
         //    }
         //    return caput3;
         //}
+    }
+
+    public class AlteracaoDeTexoVide
+    {
+        public AlteracaoDeTexoVide()
+        {
+            dispositivos_norma_vide = new List<DispositivoVide>();
+            dispositivos_norma_vide_outra = new List<DispositivoVide>();
+        }
+        public bool in_sem_arquivo { get; set; }
+        public string ds_dispositivos_alterados { get; set; }
+        public List<DispositivoVide> dispositivos_norma_vide { get; set; }
+        public List<DispositivoVide> dispositivos_norma_vide_outra { get; set; }
+    }
+
+    public class DispositivoVide
+    {
+        public string linkname { get; set; }
+        public string nm_linkname { get; set; }
+        public string ds_linkname { get; set; }
+        public string texto { get; set; }
     }
 
     public class UtilVides

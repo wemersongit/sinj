@@ -47,6 +47,34 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _st_pendencia = context.Request["st_pendencia"];
                     var st_pendencia = false;
 
+                    
+
+                    var _st_habilita_email = "";
+                    var st_habilita_email = false;
+
+                    if (TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
+                    {
+                        _st_habilita_email = context.Request["st_habilita_email"];
+                    }
+                    else
+                    {
+                        _st_habilita_email = "false";
+                    }
+
+                    var _st_habilita_pesquisa = "";
+                    var st_habilita_pesquisa = false;
+                    if (TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
+                    {
+                        _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                    }
+                    else
+                    {
+                        _st_habilita_pesquisa = "false";
+                    }
+
+
+
+
                     var _interessado = context.Request.Form.GetValues("interessado");
                     var _requerente = context.Request.Form.GetValues("requerente");
                     var _requerido = context.Request.Form.GetValues("requerido");
@@ -72,6 +100,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _json_arquivo_texto_acao = context.Request["json_arquivo_texto_acao"];
                     var _ds_efeito_decisao = context.Request["ds_efeito_decisao"];
                     var _url_referencia = context.Request["url_referencia"];
+
+                    var _url_projeto_lei= context.Request["url_projeto_lei"];
+                    var _nr_projeto_lei = context.Request["nr_projeto_lei"];
 
                     var _st_situacao_forcada = context.Request["st_situacao_forcada"];
                     var _ch_situacao = context.Request["ch_situacao"];
@@ -200,6 +231,18 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         normaOv.url_referencia = _url_referencia;
                     }
 
+                    normaOv.url_projeto_lei= "";
+                    if (_url_projeto_lei != null)
+                    {
+                        normaOv.url_projeto_lei = _url_projeto_lei;
+                    }
+
+                    normaOv.nr_projeto_lei = "";
+                    if (_nr_projeto_lei != null)
+                    {
+                        normaOv.nr_projeto_lei = _nr_projeto_lei;
+                    }
+
                     normaOv.ds_efeito_decisao = "";
                     if (_ds_efeito_decisao != null)
                     {
@@ -220,7 +263,26 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     {
                         normaOv.st_pendencia = st_pendencia;
                     }
-                    if(!string.IsNullOrEmpty(_st_destaque) && bool.TryParse(_st_destaque, out st_destaque))
+
+                    if (!string.IsNullOrEmpty(_st_habilita_pesquisa) && bool.TryParse(_st_habilita_pesquisa, out st_habilita_pesquisa))
+                    {
+                        normaOv.st_habilita_pesquisa = st_habilita_pesquisa;
+                    }
+                    else
+                    {
+                        normaOv.st_habilita_pesquisa = st_habilita_pesquisa;
+                    }
+
+                    if (!string.IsNullOrEmpty(_st_habilita_email) && bool.TryParse(_st_habilita_email, out st_habilita_email))
+                    {
+                        normaOv.st_habilita_email = st_habilita_email;
+                    }
+                    else
+                    {
+                        normaOv.st_habilita_email= st_habilita_email;
+                    }
+
+                    if (!string.IsNullOrEmpty(_st_destaque) && bool.TryParse(_st_destaque, out st_destaque))
                     {
                         normaOv.st_destaque = st_destaque;
                     }

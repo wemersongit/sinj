@@ -14,7 +14,20 @@
             <% if(isAdmin && !string.IsNullOrEmpty(situacoes)){ %>
                 fnAutocompleteSituacao(<%= situacoes%>);
             <%} %>
+
+            if (ValidarPermissao(_grupos.nor_hsp)) {
+                $('#habilitarPesquisaNorna').show();
+            } else {
+                $('#habilitarPesquisaNorna').hide();
+            }
+            if (ValidarPermissao(_grupos.nor_eml)) {
+                $('#habilitarNotificacao').show();
+            } else {
+                $('#habilitarNotificacao').hide();
+            }
         });
+
+        
     </script>
     <style type="text/css">
         #sg_hierarquia_nm_vigencia{z-index:10005;}
@@ -581,6 +594,22 @@
                                             <input id="in_apelidavel" type="hidden" value="" />
                                             <input id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" disabled="true"/>
                                         </div>
+                                        <div class="w-130-pc" style="float:right">
+                                            <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                            <div id="habilitarPesquisaNorna">
+                                                <label style="font-size:large">Habilitar no Sinj Pesquisa:</label>      
+                                                <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                            </div>
+
+                                            <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                            <div id="habilitarNotificacao">
+                                                <div>
+                                                    <label style="font-size:large">Habilita enviar e-mail:</label>
+                                                    <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
+                                                </div>
+                                            </div>
+                                            <!-- -->
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="line">
@@ -680,6 +709,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+                               
+                                
                                 <div class="line">
                                     <div class="column w-100-pc">
                                         <div class="cell w-100-pc">
@@ -787,6 +819,33 @@
                                     <div class="column w-70-pc">
                                         <div class="cell w-100-pc">
                                             <textarea id="ds_ementa" name="ds_ementa" obrigatorio="sim" label="Ementa" cols="100" rows="10" style="width:80%; max-width:100%;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Adicionando  projetoDeLei-->
+                                <div class="line projetoDeLei">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Número e Ano da Proposição de Origem:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="nr_projeto_lei" name="nr_projeto_lei" type="text" value="" class="w-50-pc"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="line projetoDeLei">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Url da Proposição de Origem:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="url_projeto_lei" name="url_projeto_lei" type="text" value="" class="w-80-pc"/>
                                         </div>
                                     </div>
                                 </div>

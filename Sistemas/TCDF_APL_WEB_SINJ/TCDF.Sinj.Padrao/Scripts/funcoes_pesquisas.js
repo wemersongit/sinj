@@ -129,6 +129,7 @@ function RecuperarDoHistorico(tipo_pesquisa) {
             var _ch_termo = GetParameterValueDecode("ch_termo");
             var _nm_termo = GetParameterValueDecode("nm_termo").replace(/\+/g, " ");
             var _ch_orgao = GetParameterValueDecode("ch_orgao");
+            var _st_habilita_pesquisa = GetParameterValueDecode("st_habilita_pesquisa");
             var _ch_hierarquia = GetParameterValueDecode("ch_hierarquia").replace(/\+/g, " ");
             var _origem_por = GetParameterValueDecode("origem_por").replace(/\+/g, " ");
             var _sg_hierarquia_nm_vigencia = GetParameterValueDecode("sg_hierarquia_nm_vigencia").replace(/\+/g, " ");
@@ -137,6 +138,9 @@ function RecuperarDoHistorico(tipo_pesquisa) {
             }
             if (IsNotNullOrEmpty(_ch_tipo_norma)) {
                 $('#ch_tipo_norma').val(_ch_tipo_norma);
+            }
+            if (IsNotNullOrEmpty(_st_habilita_pesquisa)) {
+                $('#st_habilita_pesquisa').val(_st_habilita_pesquisa);
             }
             if (IsNotNullOrEmpty(_nm_tipo_norma)) {
                 $('#nm_tipo_norma').val(_nm_tipo_norma);

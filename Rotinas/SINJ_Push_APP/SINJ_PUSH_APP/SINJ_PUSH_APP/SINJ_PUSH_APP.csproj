@@ -38,9 +38,6 @@
     <Reference Include="neo.BRLightES">
       <HintPath>..\..\..\..\Frameworks\neo.BRLightES\neo.BRLightES.dll</HintPath>
     </Reference>
-    <Reference Include="neo.BRLightREST">
-      <HintPath>..\..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
-    </Reference>
     <Reference Include="neo.BRLightSession">
       <HintPath>..\..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
     </Reference>
@@ -48,17 +45,25 @@
       <HintPath>..\..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="util.BRLight">
+      <HintPath>..\..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
+    </Reference>
     <Reference Include="TCDF.Sinj">
       <HintPath>..\..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
-    <Reference Include="util.BRLight">
-      <HintPath>..\..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
+    <Reference Include="LightInfocon.Data.LightBaseProvider">
+      <HintPath>..\..\..\..\Frameworks\BRLight.DataAccess.LBW.Provider\LightInfocon.Data.LightBaseProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="neo.BRLightREST">
+      <HintPath>..\..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
