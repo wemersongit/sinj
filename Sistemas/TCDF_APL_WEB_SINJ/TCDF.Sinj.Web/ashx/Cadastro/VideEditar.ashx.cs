@@ -58,6 +58,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 {
                     selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
                     {
+                        in_sem_arquivo = vide.NaoPossuiArquivo,
                         ds_dispositivos_alterados = _ds_dispositivos_alterados,
                         dispositivos_norma_vide = vide.NormaAlteradora.Dispositivos,
                         dispositivos_norma_vide_outra = vide.NormaAlterada != null ? vide.NormaAlterada.Dispositivos : new List<DispositivoVide>()
@@ -81,6 +82,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         {
                             selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
                             {
+                                in_sem_arquivo = vide.NaoPossuiArquivo,
                                 ds_dispositivos_alterados = _ds_dispositivos_alterados,
                                 dispositivos_norma_vide = vide.NormaAlterada.Dispositivos,
                                 dispositivos_norma_vide_outra = vide.NormaAlteradora != null ? vide.NormaAlteradora.Dispositivos : new List<DispositivoVide>()
@@ -163,6 +165,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
     public class VideEdicao
     {
+        [JsonProperty("naoPossuiArquivo")]
+        public bool NaoPossuiArquivo { get; set; }
         [JsonProperty("ch_vide")]
         public string ChVide { get; set; }
         [JsonProperty("norma_alteradora")]

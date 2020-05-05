@@ -29,8 +29,7 @@ $(document).ready(function () {
         ).tabs();
         nm_aba = 'sinj_norma';
     }
-	
-	    if (tipo_pesquisa == "pendenteDePesquisa") {
+    if (tipo_pesquisa == "pendenteDePesquisa") {
         $('#tabs_pesquisa').html(
             '<ul>' +
                 '<a href="javascript:void(0);" onclick="javascript:RestaurarDefaultDatatable();" class="fr" title="Restaurar Padrão"><img alt="xls" src="' + _urlPadrao + '/Imagens/ico_restore_p.png"/></a>' +
@@ -53,7 +52,6 @@ $(document).ready(function () {
         ).tabs();
         nm_aba = 'sinj_norma';
     }
-	
     else if (tipo_pesquisa == "norma") {
         $('#tabs_pesquisa').html(
             '<ul>' +
