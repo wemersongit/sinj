@@ -51,27 +51,32 @@ function selecionarNormaAlteradoraExcluir(norma){
 }
 
 function selecionarArquivosExcluir(){
-    if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && vide.ch_tipo_relacao != '9'){
-        gComplete();
-        showMessageNormaIncompativel(normaAlteradora);
-        return;
-    }
-    let deferredAlteradora = $.Deferred();
-    let deferredAlterada = $.Deferred();
-    $.when(deferredAlteradora, deferredAlterada).done(gComplete);
-    selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
-    if(!normaAlterada.in_norma_fora_sistema){
-        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao) && vide.ch_tipo_relacao != '9'){
+    if(!vide.alteracao_texto_vide.in_sem_arquivo){
+
+        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && vide.ch_tipo_relacao != '9'){
             gComplete();
-            showMessageNormaIncompativel(normaAlterada);
+            showMessageNormaIncompativel(normaAlteradora);
             return;
         }
-        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
+        let deferredAlteradora = $.Deferred();
+        let deferredAlterada = $.Deferred();
+        $.when(deferredAlteradora, deferredAlterada).done(gComplete);
+        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+        if(!normaAlterada.in_norma_fora_sistema){
+            if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao) && vide.ch_tipo_relacao != '9'){
+                gComplete();
+                showMessageNormaIncompativel(normaAlterada);
+                return;
+            }
+            selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
+        }
+        else{
+            deferredAlterada.resolve();
+        }
     }
     else{
-        deferredAlterada.resolve();
+        gComplete();
     }
-    
 }
 
 function selecionarNormaAlteradaExcluir(norma){

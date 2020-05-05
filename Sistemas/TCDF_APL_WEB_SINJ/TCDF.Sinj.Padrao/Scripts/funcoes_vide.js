@@ -1,6 +1,7 @@
 let normaAlteradora = {};
 let normaAlterada = {};
 let vide = {};
+let videSemArquivo = false;
 let ahTextoIncompativel = false;
 const dt_controle_alteracao = new Date();
 
