@@ -93,8 +93,6 @@ namespace TCDF.Sinj.Web
             routes.MapPageRoute("HistoricoDePesquisa", "HistoricoDePesquisa", "~/HistoricoDePesquisa.aspx");
             routes.MapPageRoute("Notifiqueme", "Notifiqueme", "~/Notifiqueme.aspx");
             routes.MapPageRoute("Favoritos", "Favoritos", "~/Favoritos.aspx");
-            
-            routes.MapPageRoute("ResultadoDePesquisaPublicacao", "ResultadoDePesquisaPublicacao", "~/ResultadoDePesquisaPublicacao.aspx");
 
             routes.MapPageRoute("ResultadoDePesquisa", "ResultadoDePesquisa", "~/ResultadoDePesquisa.aspx");
 

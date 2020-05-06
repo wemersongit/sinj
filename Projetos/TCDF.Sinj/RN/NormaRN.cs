@@ -47,13 +47,9 @@ namespace TCDF.Sinj.RN
             return _normaAd.JsonReg(id_doc);
         }
 
-         public string PathPut(ulong id_doc, string path, string value, string retorno)
+        public string PathPut(ulong id_doc, string path, string value, string retorno)
         {
             return _normaAd.PathPut(id_doc, path, value, retorno);
-        }
-        public string PathPost(ulong id_doc, string path, string value, string retorno)
-        {
-            return _normaAd.PathPost(id_doc, path, value, retorno);
         }
 
         public string PathPut<T>(Pesquisa pesquisa, List<opMode<T>> listopMode)

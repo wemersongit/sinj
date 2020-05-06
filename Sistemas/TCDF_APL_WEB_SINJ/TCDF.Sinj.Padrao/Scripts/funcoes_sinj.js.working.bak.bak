@@ -1,0 +1,723 @@
+/* funcoes_sinj.js
+===========================================*/
+
+var aHighlight = [];
+
+function Pesquisar(id_form) {
+    $('#' + id_form + ' .notify').html('');
+    try {
+        ValidarPesquisa(id_form);
+        Validar(id_form);
+        return true;
+    } catch (ex) {
+        $('#' + id_form + ' .notify').messagelight({
+            sTitle: "Erro",
+            sContent: ex,
+            sType: "error"
+        });
+    }
+    return false;
+}
+
+function fnExcluir(id_datatable) {
+    $('#div_notificacao_modal_exclusao').html('');
+    var ajax = MostrarPaginaAjax('EXC');
+    if (IsNotNullOrEmpty(ajax)) {
+        try {
+            Validar(form_exclusao);
+            var sucesso = function(data) {
+                if (IsNotNullOrEmpty(data)) {
+                    $('#div_loading_modal_exclusao').hide();
+                    $('#div_buttons_modal_exclusao').show();
+                    if (data.error_message != null && data.error_message != "") {
+                        $('#div_notificacao_modal_exclusao').messagelight({
+                            sTitle: "Erro",
+                            sContent: data.error_message,
+                            sType: "error",
+                            sWidth: "",
+                            iTime: null
+                        });
+                    } else if (data.excluido != null && data.excluido == true) {
+                        $('<div id="modal_notificacao_modal_exclusao" />').modallight({
+                            sTitle: "Sucesso",
+                            sContent: "Excluído com sucesso.",
+                            sType: "success",
+                            oButtons: [{
+                                text: "Ok",
+                                click: function() {
+                                    $(this).dialog('close');
+                                }
+                            }],
+                            fnClose: function() {
+                                if (!Redirecionar()) {
+                                    if (IsNotNullOrEmpty(id_datatable)) {
+                                        $('#' + id_datatable + ' tr.selected').remove();
+                                    } else {
+                                        location.reload();
+                                    }
+                                }
+                            }
+                        });
+                        $('#modal_exclusao').dialog("close");
+                    } else {
+                        $('#div_notificacao_modal_exclusao').messagelight({
+                            sTitle: "Erro",
+                            sContent: "Erro na exclusão.",
+                            sType: "error",
+                            sWidth: "",
+                            iTime: null
+                        });
+                    }
+                }
+            }
+            var beforeSubmit = function() {
+                $('#div_loading_modal_exclusao').show();
+                $('#div_buttons_modal_exclusao').hide();
+            };
+            $.ajaxlight({
+                sUrl: ajax,
+                sType: "POST",
+                fnSuccess: sucesso,
+                sFormId: "form_exclusao",
+                fnBeforeSubmit: beforeSubmit
+            });
+        } catch (ex) {
+            $("#div_notificacao_modal_exclusao").messagelight({
+                sTitle: "Erro nos dados informados",
+                sContent: ex,
+                sType: "error"
+            });
+        }
+    }
+    return false;
+}
+
+function Excluir(id_doc, id_datatable) {
+    var html = '<form id="form_exclusao" name="formExclusao" action="#" method="POST">' +
+        '<input id="id_doc" type="hidden" value="' + id_doc + '" label="ID" obrigatorio="sim" name="id_doc" />' +
+        '<div class="mauto table">' +
+        '<div class="line">' +
+        '<div class="column w-20-pc">' +
+        '<div class="cell fr">' +
+        '<label>Justificativa:</label>' +
+        '</div>' +
+        '</div>' +
+        '<div class="column w-70-pc">' +
+        '<div class="cell w-100-pc">' +
+        '<textarea label="Justificativa" obrigatorio="sim" id="justificativa" name="justificativa" class="w-90-pc" cols="100" rows="5" style="max-width:100%;" ></textarea>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div id="div_notificacao_modal_exclusao" style="display:none;">' +
+        '</div>' +
+        '<div id="div_loading_modal_exclusao" class="loading" style="display:none;"></div>' +
+        '<div id="div_buttons_modal_exclusao" style="width:220px; margin:auto;" class="loaded">' +
+        '<button id="button_excluir" onclick="javascript:return fnExcluir(\'' + id_datatable + '\');">' +
+        '<img src="' + _urlPadrao + '/Imagens/ico_disk_p.png" />Excluir' +
+        '</button>' +
+        '<button type="reset">' +
+        '<img src="' + _urlPadrao + '/Imagens/ico_eraser_p.png" />Limpar' +
+        '</button>' +
+        '</div>' +
+        '</form>';
+    if ($('#modal_exclusao').length > 0) {
+        $('#modal_exclusao').html(html);
+        $('#modal_exclusao').dialog('open');
+    } else {
+        $('<div id="modal_exclusao" />').modallight({
+            sTitle: "Excluir",
+            sType: "default",
+            sContent: html,
+            sWidth: 500,
+            oButtons: []
+        });
+    }
+}
+
+function fnSalvar(id_form, action, _sucesso) {
+    $('#' + id_form + ' .notify').html('');
+    try {
+        Validar(id_form);
+        ValidarRegrasEspecificas(id_form);
+        var sucesso = typeof _sucesso === "function" ? _sucesso : function(data) {
+            if (IsNotNullOrEmpty(data)) {
+                gComplete();
+                if (data.error_message != null && data.error_message != "") {
+                    if (IsNotNullOrEmpty(data.ids_duplicados)) {
+                        var links = "";
+                        for (var i = 0; i < data.ids_duplicados.length; i++) {
+                            links += '<br/><a target="_blank" href="./DetalhesDe' + MostrarPaginaSemPrefixo() + '?id_doc=' + data.ids_duplicados[i] + '">Visualizar <img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" alt="detalhes" /></a>';
+                        }
+                        $('<div id="modal_notificacao_ids_duplicados" />').modallight({
+                            sTitle: "Erro",
+                            sContent: data.error_message + links,
+                            sType: "error",
+                            oButtons: [{
+                                text: "Ok",
+                                click: function() {
+                                    $(this).dialog('close');
+                                }
+                            }]
+                        });
+                    } else {
+                        $('#' + id_form + ' .notify').messagelight({
+                            sTitle: "Erro",
+                            sContent: data.error_message,
+                            sType: "error",
+                            sWidth: "",
+                            iTime: null
+                        });
+                    }
+                } else if (IsNotNullOrEmpty(data, 'id_doc_success')) {
+                    if (IsNotNullOrEmpty(data, 'filhos_errados')) {
+                        $('<div id="modal_notificacao_modal_salvar" />').modallight({
+                            sTitle: "Atenção",
+                            sContent: "Salvo com sucesso.<br/>No entanto, os filhos " + data.filhos_errados + " não foram herdados.",
+                            sType: "alert",
+                            oButtons: [{
+                                text: "Ok",
+                                click: function() {
+                                    $(this).dialog('close');
+                                }
+                            }],
+                            fnClose: function() {
+                                if (!Redirecionar('?id_doc=' + data.id_doc_success + "&time=" + new Date().getTime())) {
+                                    location.reload();
+                                }
+                            }
+                        });
+                    } else if (IsNotNullOrEmpty(data, 'norma_st_acao') && data.norma_st_acao) {
+                        $('<div id="modal_notificacao_modal_salvar" />').modallight({
+                            sTitle: "Atenção",
+                            sContent: "Para finalizar o cadastro da ação, é necessário cadastrar uma Vide.",
+                            sType: "alert",
+                            oButtons: [{
+                                text: "Adicionar Vide",
+                                click: function() {
+                                    $(this).dialog('close');
+                                }
+                            }],
+                            fnClose: function() {
+                                Redirecionar('?id_doc=' + data.id_doc_success + "&in_acao=true&time=" + new Date().getTime(), './CadastrarVide.aspx');
+                            }
+                        });
+                    } else {
+                        $('<div id="modal_notificacao_modal_salvar" />').modallight({
+                            sTitle: "Sucesso",
+                            sContent: "Salvo com sucesso.",
+                            sType: "success",
+                            oButtons: [{
+                                text: "Ok",
+                                click: function() {
+                                    $(this).dialog('close');
+                                }
+                            }],
+                            fnClose: function() {
+                                if (IsNotNullOrEmpty(data, "ch_norma")) {
+                                    Redirecionar('?id_norma=' + data.ch_norma);
+                                } else {
+                                    if (!Redirecionar('?id_doc=' + data.id_doc_success + "&time=" + new Date().getTime())) {
+                                        location.reload();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    $('#' + id_form + ' .notify').messagelight({
+                        sTitle: "Erro",
+                        sContent: "Erro ao salvar.",
+                        sType: "error",
+                        sWidth: "",
+                        iTime: null
+                    });
+                }
+            }
+        };
+        var beforeSubmit = function() {
+            gInicio();
+        };
+        $.ajaxlight({
+            sUrl: MostrarPaginaAjax(IsNotNullOrEmpty(action) ? action : 'SAL') + window.location.search,
+            sType: "POST",
+            fnSuccess: sucesso,
+            sFormId: id_form,
+            fnBeforeSubmit: beforeSubmit,
+            bAsync: true,
+            iTimeout: 60000
+        });
+    } catch (ex) {
+        $('#' + id_form + ' .notify').messagelight({
+            sTitle: "Erro nos dados informados",
+            sContent: ex,
+            sType: "error"
+        });
+        $("html, body").animate({
+            scrollTop: 0
+        }, "slow");
+    }
+    return false;
+}
+
+function DeletarArquivo(event) {
+    var parent = $(event.target).parent().parent();
+    var id_hidden_container_uuid = $('.uuid', parent).attr("id");
+    var id_label_container_filename = $('.name', parent).attr("id");
+    var id_hidden_container_mimetype = $('.mimetype', parent).attr("id");
+    var id_hidden_container_filesize = $('.filesize', parent).attr("id");
+    var id_hidden_container_id_file = $('.id_file', parent).attr("id");
+    var id_hidden_container_filename = $('.filename', parent).attr("id");
+    if (IsNotNullOrEmpty(id_hidden_container_uuid) && IsNotNullOrEmpty(id_label_container_filename)) {
+        $('#' + id_hidden_container_uuid).val('');
+        $('#' + id_hidden_container_mimetype).val('');
+        $('#' + id_hidden_container_filesize).val('');
+        $('#' + id_hidden_container_id_file).val('');
+        $('#' + id_hidden_container_filename).val('');
+        $('#' + id_label_container_filename).text('');
+        $('.attach', parent).show();
+        $('.create', parent).show();
+        $('.delete', parent).hide();
+    }
+}
+
+function deletarInputFile(el) {
+    var parent = $(el).parent();
+    $('.name', parent).text('');
+    $('.json_arquivo', parent).val('');
+    $('a.attach', parent).show();
+    $('a.create', parent).show();
+    $('a.delete', parent).hide();
+}
+
+function salvarArquivoSelecionado(el) {
+    var id_div_file = el.getAttribute('id_div_file');
+    if (IsNotNullOrEmpty(id_div_file) && IsNotNullOrEmpty(el, 'value')) {
+        var sucesso = function(data) {
+            $('#super_loading').hide();
+            if (data.error_message != null && data.error_message != "") {
+                notificar('#' + id_div_file, data.error_message, 'error');
+            } else if (IsNotNullOrEmpty(data, "id_file")) {
+                $('#' + id_div_file + ' input.json_arquivo').val(JSON.stringify(data));
+                $('#' + id_div_file + ' label.name').text(data.filename);
+                $('#' + id_div_file + ' a.attach').hide();
+                //                $('#' + id_div_file + ' a.edit_file').attr('id_file', '');
+                //                $('#' + id_div_file + ' a.edit_file').hide();
+                $('#' + id_div_file + ' a.delete').show();
+            }
+        }
+        return fnSalvarForm('form_upload_file', sucesso);
+    }
+}
+
+function anexarInputFile(el) {
+    var parent = $(el).parent();
+    $('#form_upload_file input[name="file"]').val('');
+    $('#form_upload_file input[name="file"]').attr('id_div_file', parent.attr('id'));
+    $('#form_upload_file input[name="file"]').click();
+
+    //    var parent = $(el).closest('div');
+    //    var id_hidden_container_uuid = $('.uuid', parent).attr("id");
+    //    var id_label_container_filename = $('.name', parent).attr("id");
+    //    var id_hidden_container_mimetype = $('.mimetype', parent).attr("id");
+    //    var id_hidden_container_filesize = $('.filesize', parent).attr("id");
+    //    var id_hidden_container_id_file = $('.id_file', parent).attr("id");
+    //    var id_hidden_container_filename = $('.filename', parent).attr("id");
+    //    if ($('.uuid', parent).length == 1 && $('.name', parent).length > 0)
+    //        
+    //    }
+}
+
+function AnexarArquivo(event) {
+    var parent = $(event.target).parent().parent();
+    var id_hidden_container_uuid = $('.uuid', parent).attr("id");
+    var id_label_container_filename = $('.name', parent).attr("id");
+    var id_hidden_container_mimetype = $('.mimetype', parent).attr("id");
+    var id_hidden_container_filesize = $('.filesize', parent).attr("id");
+    var id_hidden_container_id_file = $('.id_file', parent).attr("id");
+    var id_hidden_container_filename = $('.filename', parent).attr("id");
+    if (IsNotNullOrEmpty(id_hidden_container_uuid) && IsNotNullOrEmpty(id_label_container_filename)) {
+        var html = '<form id="form_arquivo_' + id_hidden_container_uuid + '" name="formArquivo' + id_hidden_container_uuid + '" action="#" method="POST">' +
+            '<div class="mauto table loaded">' +
+            '<div class="line">' +
+            '<div class="column w-20-pc">' +
+            '<div class="cell fr">' +
+            '<label>Arquivo:</label>' +
+            '</div>' +
+            '</div>' +
+            '<div class="column w-70-pc">' +
+            '<div class="cell w-100-pc">' +
+            '<input type="file" name="file" obrigatorio="sim" label="Arquivo" />' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="notify" style="display:none;"></div>' +
+            '<div class="loading" style="display:none;"></div>' +
+            '</form>';
+        if ($('#modal_arquivo_' + id_hidden_container_uuid).length > 0) {
+            $('#modal_arquivo_' + id_hidden_container_uuid).html(html);
+            $('#modal_arquivo_' + id_hidden_container_uuid).dialog('open');
+        } else {
+            $('<div id="modal_arquivo_' + id_hidden_container_uuid + '" />').modallight({
+                sTitle: "Anexar Arquivo",
+                sType: "default",
+                sContent: html,
+                sWidth: 400,
+                oButtons: [{
+                    text: "Salvar",
+                    click: function() {
+                        $('#form_arquivo_' + id_hidden_container_uuid + ' .notify').html('');
+                        try {
+                            Validar('form_arquivo_' + id_hidden_container_uuid);
+                            var sucesso = function(data) {
+                                if (IsNotNullOrEmpty(data)) {
+                                    $('#form_arquivo_' + id_hidden_container_uuid + ' .loading').hide();
+                                    $('#form_arquivo_' + id_hidden_container_uuid + ' .loaded').show();
+                                    $('.ui-dialog-buttonpane', $('#modal_arquivo_' + id_hidden_container_uuid).parent()).show();
+                                    if (data.error_message != null && data.error_message != "") {
+                                        $('#form_arquivo_' + id_hidden_container_uuid + ' .notify').messagelight({
+                                            sTitle: "Erro",
+                                            sContent: data.error_message,
+                                            sType: "error",
+                                            sWidth: "",
+                                            iTime: null
+                                        });
+                                    } else if (IsNotNullOrEmpty(data, 'uuid')) {
+                                        $('#' + id_hidden_container_uuid).val(data.uuid);
+                                        $('#' + id_hidden_container_mimetype).val(data.mimetype);
+                                        $('#' + id_hidden_container_filesize).val(data.filesize);
+                                        $('#' + id_hidden_container_id_file).val(data.id_file);
+                                        $('#' + id_hidden_container_filename).val(data.filename);
+                                        $('#' + id_label_container_filename).text(data.filename);
+                                        $('.attach', parent).hide();
+                                        $('.delete', parent).show();
+                                        $('#modal_arquivo_' + id_hidden_container_uuid).dialog('close');
+                                    } else {
+                                        $('#form_arquivo_' + id_hidden_container_uuid + ' .notify').messagelight({
+                                            sTitle: "Erro",
+                                            sContent: "Erro ao anexar arquivo.",
+                                            sType: "error",
+                                            sWidth: "",
+                                            iTime: null
+                                        });
+                                    }
+                                }
+                            }
+                            var beforeSubmit = function() {
+                                $('#form_arquivo_' + id_hidden_container_uuid + ' .loading').show();
+                                $('#form_arquivo_' + id_hidden_container_uuid + ' .loaded').hide();
+                                $('.ui-dialog-buttonpane', $('#modal_arquivo_' + id_hidden_container_uuid).parent()).hide();
+                            };
+                            $.ajaxlight({
+                                sUrl: MostrarPaginaAjax('ANX'),
+                                sType: "POST",
+                                fnSuccess: sucesso,
+                                sFormId: 'form_arquivo_' + id_hidden_container_uuid,
+                                fnBeforeSubmit: beforeSubmit,
+                                bAsync: true,
+                                iTimeout: 240000
+                            });
+                        } catch (ex) {
+                            $('#form_arquivo_' + id_hidden_container_uuid + ' .notify').messagelight({
+                                sTitle: "Erro",
+                                sContent: ex,
+                                sType: "error"
+                            });
+                        }
+                    }
+                }, {
+                    text: "Cancelar",
+                    click: function() {
+                        $(this).dialog('close');
+                    }
+                }]
+            });
+        }
+    }
+}
+
+function ValidarRegrasEspecificas(id_form) {
+    if (id_form == "form_orgao") {
+        var radio_st_orgao = $('input[type="radio"][name="st_orgao"]:checked');
+        if (radio_st_orgao.length <= 0) {
+            throw "O campo " + $($('input[type=\"radio\"][name=\"st_orgao\"]')[0]).attr('label') + " é obrigatório.";
+        }
+        var st_orgao = radio_st_orgao.val();
+        var dt_inicio_vigencia = $('#dt_inicio_vigencia').val();
+        var dt_fim_vigencia = $('#dt_fim_vigencia').val();
+        if (IsNotNullOrEmpty(dt_fim_vigencia)) {
+            if (convertStringToDateTime(dt_inicio_vigencia) > convertStringToDateTime(dt_fim_vigencia)) {
+                throw "Data de Fim de Vigência não pode ser menor que a do Início de Vigência.";
+            }
+            if (st_orgao == "true" && convertStringToDateTime(dt_fim_vigencia) < new Date()) {
+                throw "Se o Fim da Vigência é inferior à data de hoje, a situação deve ser Inativo.";
+            }
+        } else if (st_orgao == "false") {
+            throw "Data de Fim de Vigência Obrigatório caso o Órgão esteja Inativo.";
+        }
+        if ($('#id_ambito').val() == "") {
+            throw "O campo Âmbito é obrigatório.";
+        }
+    } else if (id_form == "form_norma") {
+        //É obrigatório ter Origem
+        if ($("input[name='orgao']").length <= 0) {
+            throw "O campo Origens é obrigatório.";
+        }
+        //Se tipo de norma for G2 (PGDF) é obrigatório possuir decisão
+        if ($('#in_g2').val() == "true" && $("input[name='decisao']").length <= 0) {
+            throw "O campo Decisões é obrigatório.";
+        }
+        //Se tipo de norma não for G2 (PGDF) é obrigatório possuir fontes
+        if ($('#in_g2').val() != "true" && $("input[name='fonte']").length <= 0) {
+            throw "O campo Fontes é obrigatório.";
+        }
+    } else if (id_form == "form_notifiqueme") {
+        if ($('#email_usuario_push').val() != $('#email_usuario_push_confirme').val()) {
+            throw "E-mail inválido. Verifique se confirmou o e-mail corretamente.";
+        }
+        if ($('#senha_usuario_push').val() != $('#senha_usuario_push_confirme').val()) {
+            throw "Senha inválida. Verifique se confirmou a senha corretamente.";
+        }
+        if (!$('#checkbox_ciente').prop('checked')) {
+            throw "É necessário declarar que está ciente de que o serviço SINJ-DF - Notifique-Me(PUSH) - é meramente informativo, não tendo, portanto, cunho oficial";
+        }
+    } else if (id_form == "form_notifiqueme_atualizar") {
+        if ($('#senha_usuario_push').val() != "" || $('#senha_usuario_push_confirme').val() != "" || $('#senha_usuario_push_antiga').val() != "") {
+            if ($('#senha_usuario_push').val() == "") {
+                throw "Campo Nova Senha inválido.";
+            }
+            if ($('#senha_usuario_push_confirme').val() == "") {
+                throw "Campo Confirme a Senha inválido.";
+            }
+            if ($('#senha_usuario_push_antiga').val() == "") {
+                throw "Campo Senha Antiga inválido.";
+            }
+            if ($('#senha_usuario_push').val() != $('#senha_usuario_push_confirme').val()) {
+                throw "Senha inválida. Verifique se confirmou a senha corretamente.";
+            }
+        }
+    } else if (id_form == "form_vide") {
+        if ($('#ch_norma_alteradora').val() == $('#ch_norma_alterada').val()) {
+            throw "Uma Norma não pode aplicar uma Vide para ela mesma.";
+        }
+    } else if (id_form == "form_relatorio_norma") {
+        // Caso um dos campos esteja preenchido e o outro não, é lancado esse erro
+        if ($('#dt_cadastro').val() != "" || $('#ate_dt_cadastro').val() != "") {
+            if ($('#dt_cadastro').val() == "" || $('#ate_dt_cadastro').val() == "") {
+                throw "Data inválida. Preencha os dois campos.";
+            }
+        }
+    } else if (id_form == "form_usuario") {
+        if ($('#senha_usuario').val() != "" || $('#redigite_senha_usuario').val() != "") {
+            if ($('#senha_usuario').val() != $('#redigite_senha_usuario').val()) {
+                throw "Senha inválida. Verifique se confirmou a senha corretamente."
+            }
+            if ($('#senha_usuario').val().length < 6) {
+                throw "O campo senha est&aacute; com um tamanho m&iacute;nimo (6) inv&aacute;lido!!!";
+            }
+        }
+    }
+}
+
+function ConstruirOrgaosCadastradores() {
+    for (var i = 0; i < _orgaos_cadastradores.length; i++) {
+        $('#div_orgaos_cadastradores').append('<label style="color:#333333;"><input type="checkbox" name="orgao_cadastrador" value="' + _orgaos_cadastradores[i].id_orgao_cadastrador + '" />' + _orgaos_cadastradores[i].nm_orgao_cadastrador + '</label>');
+    }
+}
+
+function ConstruirSelectOrgaosCadastradores() {
+    for (var i = 0; i < _orgaos_cadastradores.length; i++) {
+        $('#orgao_cadastrador').append('<option value="' + _orgaos_cadastradores[i].id_orgao_cadastrador + '">' + _orgaos_cadastradores[i].nm_orgao_cadastrador + '</option>');
+    }
+}
+
+function ConstruirAmbitos() {
+    for (var j = 0; j < _ambitos.length; j++) {
+        $('#id_ambito').append('<option value="' + _ambitos[j].id_ambito + '">' + _ambitos[j].nm_ambito + '</option>');
+    }
+}
+
+function ConstruirSelectTemas() {
+    for (var i = 0; i < _temas.length; i++) {
+        $('#ch_tema').append('<option value="' + _temas[i].ch_tema + '">' + _temas[i].nm_tema + '</option>');
+    }
+}
+
+function ContruirDivControl() {
+    if (IsNotNullOrEmpty(_user, "grupos")) {
+        var prefixo_grupo = MostrarPrefixoDeGrupoDaPagina();
+        var pagina = MostrarPaginaSemPrefixo();
+        var titulo = MostrarTituloDaPagina();
+        if (ValidarPermissao(eval('_grupos.' + prefixo_grupo + '_inc'))) {
+            $('#div_controls').append('<div class="div-light-button"><a href="./Cadastrar' + pagina + '"><img src="' + _urlPadrao + '/Imagens/ico_add_p.png" >Cadastrar ' + titulo + '</a></div>');
+        }
+        if (prefixo_grupo == 'voc') {
+            if (ValidarPermissao(eval('_grupos.' + prefixo_grupo + '_ger'))) {
+                $('#div_controls').append('<div class="div-light-button"><a href="./Gerenciar' + pagina + '"><img src="' + _urlPadrao + '/Imagens/ico_manage_p.png" >Gerenciar ' + titulo + '</a></div>');
+            }
+        }
+        if (ValidarPermissao(eval('_grupos.' + prefixo_grupo + '_pes'))) {
+            $('#div_controls').append('<div class="div-light-button"><a href="./Pesquisar' + pagina + '"><img src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" >Pesquisar ' + titulo + '</a></div>');
+        }
+        if (prefixo_grupo == 'voc') {
+            if (ValidarPermissao(eval('_grupos.' + prefixo_grupo + '_pes'))) {
+                $('#div_controls').append('<div class="div-light-button"><a href="./Listas' + pagina + '"><img src="' + _urlPadrao + '/Imagens/ico_tree_p.png" >Listas Auxiliares</a></div>');
+            }
+        }
+    }
+}
+
+function Texto(url) {
+    $('#modal_texto .notify').hide();
+    $('#modal_texto .text').text('');
+    $('#modal_texto .text').hide();
+    $('#modal_texto').modallight({
+        sWidth: 800,
+        sHeight: 400,
+        sTitle: "Texto",
+        sType: "default",
+        fnClose: function() {
+            $('#modal_texto .text').text('');
+            $('#modal_texto').dialog('destroy');
+        }
+    });
+    var sucesso = function(data) {
+        if (IsNotNullOrEmpty(data, 'filetext')) {
+            $('#modal_texto .text').text(data.filetext);
+        } else if (IsNotNullOrEmpty(data, 'error_message')) {
+            $('#modal_texto .notify').messagelight({
+                sContent: data.error_message,
+                sType: "error"
+            });
+        } else {
+            $('#modal_texto .notify').messagelight({
+                sContent: "Ocorreu um erro desconhecido.",
+                sType: "error"
+            });
+        }
+    }
+    var inicio = function(data) {
+        $('#modal_texto .loading').show();
+        $('#modal_texto .notify').hide();
+        $('#modal_texto .text').hide();
+    }
+    var complete = function(data) {
+        $('#modal_texto .text').show();
+        $('#modal_texto .loading').hide();
+    }
+    $.ajaxlight({
+        sUrl: url,
+        sType: "GET",
+        fnSuccess: sucesso,
+        fnComplete: complete,
+        fnBeforeSend: inicio,
+        bAsync: true,
+        iTime: 120000
+    });
+}
+
+function prepararCampoDownloadDeDocumento(id_parent, arquivoOv, urlDownload, urlPadrao) {
+    if (IsNotNullOrEmpty(arquivoOv.id_file)) {
+        $('#' + id_parent).html('<a id="link-' + div + '" href="' + urlDownload + '"><img src="' + (IsNotNullOrEmpty(urlPadrao) ? urlPadrao : '.') + '/Imagens/ico_download_p.png"/>' + getVal(arquivoOv.filename) + '</a>');
+        $(document).on('click', 'a#link-' + div, function() {
+            goDownload($(this).prop('href'), null, false);
+            return false;
+        });
+    }
+}
+
+function goDownload(sLink, data, isRelatorio) {
+    var title = "Preparando Download...";
+    var msg = "Download efetuado com sucesso!";
+    if (IsNotNullOrEmpty(isRelatorio)) {
+        title = "Gerando Relatório...";
+        msg = "Relatório gerado com sucesso!";
+    }
+    $.fileDownload(sLink, {
+        internalCallbacks: $('<div id="modal_notificacao_preparando_download" />').modallight({
+            sTitle: title,
+            sContent: '<div class="ui-progressbar-value ui-corner-left ui-corner-right"></div>',
+            sType: "info",
+            oButtons: [{
+                text: "Ok",
+                click: function() {
+                    $(this).dialog('close');
+                }
+            }],
+            fnClose: function() {
+                $(this).remove();
+            }
+        }),
+        successCallback: function(url) {
+            $('<div id="modal_notificacao_sucesso_download" />').modallight({
+                sTitle: "Sucesso",
+                sContent: msg,
+                sType: "success",
+                oButtons: [{
+                    text: "Ok",
+                    click: function() {
+                        $(this).dialog('close');
+                    }
+                }],
+                fnClose: function() {
+                    $(this).remove();
+                }
+            });
+        },
+        data: data,
+        failCallback: function(responseHtml, url) {
+            $('<div id="modal_notificacao_erro_download" />').modallight({
+                sTitle: "Erro",
+                sContent: responseHtml,
+                sType: "error",
+                oButtons: [{
+                    text: "Ok",
+                    click: function() {
+                        $(this).dialog('close');
+                    }
+                }],
+                fnClose: function() {
+                    $(this).remove();
+                }
+            });
+        }
+    });
+    return false;
+}
+
+function DeletarLinha(event) {
+    var tbody = $(event.target).closest("tbody");
+    var table = $(event.target).closest("table");
+    var thead = $('thead', table);
+    var th = $('th', thead);
+    $(event.target).closest("tr").remove();
+    var trs = $('tr', tbody);
+    if (trs.length <= 0) {
+        $(tbody).append('<tr class="tr_vazia"><td colspan="' + th.length + '"></td></tr>');
+    }
+}
+
+function DeletarLinhas(id_table) {
+    var tbody = $('#' + id_table + ' tbody');
+    var thead = $('#' + id_table + ' thead');
+    var th = $('th', thead);
+    $(tbody).html('<tr class="tr_vazia"><td colspan="' + th.length + '"></td></tr>');
+}
+
+function LimparModal(id_modal) {
+    $('#' + id_modal + ' input').val('');
+    var tables = $('#' + id_modal + ' table');
+    for (var i = 0; i < tables.length; i++) {
+        var tbody = $('tbody', tables[i]);
+        var thead = $('thead', tables[i]);
+        var th = $('th', thead);
+        $(tbody).html('<tr class="tr_vazia"><td colspan="' + th.length + '"></td></tr>');
+    }
+}
+
+
+// Função que preenche os span com os dados
+function DetalhesCadastro(usuario_cadastro, dt_cadastro) {
+    $('#span_nome_usuario_cadastro').after(usuario_cadastro);
+    $('#span_data_cadastro').after(dt_cadast

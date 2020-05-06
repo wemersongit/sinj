@@ -114,17 +114,7 @@ function DetalhesUsuario() {
 
 function SelecionarPerfil() {
     var grupos = $('#autocomplete_grupos').val().split(',');
-    let user = $('#nm_perfil').val();
     $('#grupos input[type="checkbox"]').prop("checked", false);
-    // NOTE: Essa verificação abaixo é apenas uma gambiarra pois não foi encontrado um jeito de inserir novas permissoes no array de permissões.
-    // O desejavel a longo prazo seria corrigir e deixar padronizado. By Victor
-    if(user != "Usuário Comum"){
-        $('#nor_eml').prop('checked',true);
-        $('#nor_hsp').prop('checked',true);
-    }else{
-        $('#nor_eml').prop('checked',false);
-        $('#nor_hsp').prop('checked',false);
-    }
     for (var i = 0; i < grupos.length; i++) {
         $('table.grupos input[value="' + grupos[i] + '"]').prop("checked", true);
     }

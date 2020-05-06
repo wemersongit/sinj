@@ -459,14 +459,6 @@
                                                             <th>Forçar Situação</th>
                                                             <td><input type="checkbox" id="nor_fst" name="grupos" title="Forçar situação da norma" value="NOR.FST" /></td>
                                                         </tr>
-                                                        <tr>
-                                                            <th>Enviar e-mail</th>
-                                                            <td><input type="checkbox" id="nor_eml" name="grupos" title="Enviar e-mail da norma" value="NOR.EML" /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Habilitar no SINJ Pesquisa</th>
-                                                            <td><input type="checkbox" id="nor_hsp" name="grupos" title="Forçar situação da norma" value="NOR.HSP" /></td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>

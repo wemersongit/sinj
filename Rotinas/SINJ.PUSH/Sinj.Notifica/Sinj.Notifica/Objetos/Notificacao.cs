@@ -2,7 +2,7 @@ namespace Sinj.Notifica.Objetos
 {
     public class Notificacao
     {
-        public int IdUsuario { get; set; }
+        public int IdUsuário { get; set; }
         public int IdNorma { get; set; }
         public string From { get; set; }
         public string To { get; set; }

@@ -7,7 +7,6 @@ using TCDF.Sinj.OV;
 using util.BRLight;
 using TCDF.Sinj.Log;
 using System.Text.RegularExpressions;
-using neo.BRLightREST;
 
 namespace TCDF.Sinj.Web.ashx.Visualizacao
 {
@@ -52,36 +51,6 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
                 {
                     throw new ParametroInvalidoException("Não foi passado parametro para a busca.");
                 }
-
-
-
-
-                //Cad para adicionar o nome dos orgãos de cada vide na apresentação da norma by New
-                List<string> listChVides = new List<string>();
-                foreach (var jsonVide in normaOv.vides)
-                {
-                    listChVides.Add(jsonVide.ch_norma_vide);
-                }
-                string stringChVides = String.Join("', '", listChVides);
-                Pesquisa pesquisa = new Pesquisa();
-                pesquisa.limit = null;
-                pesquisa.literal = "ch_norma in ('" + stringChVides + "')";
-                pesquisa.select = new string[] { "sg_orgao", "ch_norma" };
-
-                Results<NormaOV> resultGetVides = normaRn.Consultar(pesquisa);
-                foreach (var resultGet in resultGetVides.results)
-                {
-                    foreach (var videOV in normaOv.vides)
-                    {
-                        if (videOV.ch_norma_vide == resultGet.ch_norma)
-                        {
-                            videOV.nm_tipo_relacao += " @@ " + resultGet.origens[0].sg_orgao;
-                        }
-                    }
-                }
-
-
-
                 if (normaOv != null)
                 {
                     var sNorma = JSON.Serialize<NormaOV>(normaOv);

@@ -94,8 +94,6 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                         sentencaOv.ch_orgao = context.Request["ch_orgao"];
                         sentencaOv.nm_orgao = context.Request["sg_hierarquia_nm_vigencia"];
                         sentencaOv.origem_por = context.Request["origem_por"];
-                        sentencaOv.st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
-                        sentencaOv.st_habilita_email = context.Request["st_habilita_email"];
                         sentencaOv.nm_termos = context.Request.Params.GetValues("nm_termo");
                         sentencaOv.ch_termos = context.Request.Params.GetValues("ch_termo");
                         sentencaOv.isCount = true;

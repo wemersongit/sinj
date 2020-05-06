@@ -1,7 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29911.84
-MinimumVisualStudioVersion = 10.0.40219.1
+
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCDF.Sinj.Portal.Web", "TCDF.Sinj.Portal.Web\TCDF.Sinj.Portal.Web.csproj", "{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCDF.Sinj", "..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj", "{3B23C9D4-4624-473E-8976-7CD48EF5559C}"
@@ -23,9 +22,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8A451576-3408-4BC6-B1C7-7F4948800FFA}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = TCDF.Sinj.Portal.Web\TCDF.Sinj.Portal.Web.csproj
