@@ -1,0 +1,153 @@
+{
+    "content": [
+        {
+            "field": {
+                "description": "Define o nome da aplicação em que ocorreu o acesso, valores desse campo são oriundos da tabela aplicação",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Aplicação",
+                "multivalued": false,
+                "indices": [
+                    "Ordenado"
+                ],
+                "name": "nm_aplicacao"
+            }
+        },
+        {
+            "field": {
+                "description": "Apelido da aplicação. Campo usado para identificar à qual aplicação o acesso pertence ou de qual aplicação. Oriundo da tabela Aplicação nm_apelido.",
+                "datatype": "Text",
+                "required": true,
+                "alias": "nm_apelido",
+                "multivalued": false,
+                "indices": [
+                    "Nenhum"
+                ],
+                "name": "nm_apelido"
+            }
+        },
+        {
+            "field": {
+                "description": "String com o IP da máquina do usuário no formato '999.999.999.999'",
+                "datatype": "Text",
+                "required": true,
+                "alias": "IP Usuário",
+                "multivalued": false,
+                "indices": [
+                    "Ordenado"
+                ],
+                "name": "nr_ip_usuario"
+            }
+        },
+        {
+            "field": {
+                "description": "String com a identificação do browser utilizado pelo usuário para acessar app.",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Browser ",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "name": "ds_browser"
+            }
+        },
+        {
+            "field": {
+                "description": "Descrição do preenchimento do usuário no campo do LOGIN para a aplicação. Independente do usuário da aplicação ter ou não realizado o LOGIN, é armazenado aqui o descritivo do usuário.",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Login",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "name": "ds_login"
+            }
+        },
+        {
+            "field": {
+                "description": "String com o IP do servidor que hospeda a aplicação. Registrar no formato '999.999.999.999' se possivel registar a porta da aplicação '999.999.999.999:999' ",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Servidor",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "name": "ip_servidor_porta"
+            }
+        },
+        {
+            "field": {
+                "description": "Descritivo para qualquer mensagem apresentada na tela para o usuário, no momento do LOGIN.",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Observação",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "name": "ds_obs_login"
+            }
+        },
+        {
+            "field": {
+                "description": "Nome do usuário que realizou o acesso ao sitema. Campo usado para identificar o nome do usuário que realizou o acesso.",
+                "datatype": "Text",
+                "required": false,
+                "alias": "nm_user_acesso",
+                "multivalued": false,
+                "indices": [
+                    "Ordenado"
+                ],
+                "name": "nm_user_acesso"
+            }
+        },
+        {
+            "field": {
+                "description": "Login da da pessoa que realizou o acesso para aplicação. Este identificador está definido na entidade USUÁRIO. Deve ser preenchido em caso de sucesso na autenticação",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Usuário",
+                "multivalued": false,
+                "indices": [
+                    "Ordenado"
+                ],
+                "name": "nm_login_user_acesso"
+            }
+        },
+        {
+            "field": {
+                "description": "Data e Hora no formato DD/MM/AAAA - HH:MM:SS em que se deu o acesso na aplicação.",
+                "datatype": "DateTime",
+                "required": true,
+                "alias": "Data e Hora de acesso",
+                "multivalued": false,
+                "indices": [
+                    "Ordenado"
+                ],
+                "name": "dt_acesso"
+            }
+        },
+        {
+            "field": {
+                "description": "Identificador boleano de uma marcação (FLAG) que informa se o LOGIN foi realizado ou não com sucesso. Codificação: (0- SEM SUCESSO; 1- SUCESSO).",
+                "datatype": "Boolean",
+                "required": true,
+                "alias": "Sucesso",
+                "multivalued": false,
+                "indices": [
+                    "Ordenado"
+                ],
+                "name": "in_login_sucesso"
+            }
+        }
+    ],
+    "metadata": {
+        "description": "Entidade responsável por armazenamento de todos os registros de acesso para o ambiente de aplicação. Há um parâmetro de configuração que ao ser ativado as aplicações iniciam o procedimento de registro de LOG de todos os acessos",
+        "color": "#003300",
+        "name": "sinj_log_acesso"
+    }
+}

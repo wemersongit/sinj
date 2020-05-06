@@ -1,0 +1,15 @@
+.ui-autocomplete-loading { background: #ffffff url("../Imagens/loading-p.gif") right center no-repeat !important;}
+.ui-autocomplete { background: Black; border-radius: 0px 0px 6px 6px; border-width: 1px; border-style: solid; max-height: 280px; overflow-y: auto; overflow-x: hidden; height: auto; font-size:14px; z-index:1002 !important; }
+.ui-autocompletelight-btn { background : url("../Imagens/ui-icons_a6a90d_256x240.png") no-repeat scroll -60px 5px #dddddd !important; padding: 0px !important;}
+.ui-autocomplete .ui-menu-item { font-size:13px; border-bottom: 1px solid #C4C4C4 !important;}
+.ui-menu-item { background: #ffffff;}
+.ui-menu-item:hover, .ui-menu-item:focus, .ui-menu-item:active { background: #CFCFCF; cursor:pointer;}
+.ui-menu-item a.ui-state-focus, .ui-menu .ui-menu-item a.ui-state-active { background: #CFCFCF; cursor:pointer; }
+.ui-menu-item-disabled { font-size:11px; height: 19px;  text-decoration: none !important; display: block !important;  display: inline-block;  color: #000000; font-weight: normal; background: #FFFFFF; }
+.jPagBtn {  width:18px; height: 18px; display:inline !important; background: #FFFFFF; color:#000000; cursor: pointer; padding: 2px 0.4em; line-height: 1.5;}
+.jPagBtnDisable { width:18px; height: 18px; display:inline !important; background: #FFFFFF; color: #666666;  cursor: pointer; padding: 2px 0.4em; line-height: 1.5;}
+span.ds_autocomplete{font-size:10px; font-weight:bold;}
+
+/*JQUERY UI HELP
+------------------------------------------------------*/
+.ui-autocompletelight-btn.ui-icon{width:25px !important;height:25px !important;}

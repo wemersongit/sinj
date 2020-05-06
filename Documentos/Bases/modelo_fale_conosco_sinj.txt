@@ -1,0 +1,309 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "ch_chamado",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Chave",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+                    "Unico"
+                ],
+                "description": "Chave do Chamado. Identifica o Chamado."
+            }
+        },
+        {
+            "field": {
+                "name": "ch_controle_excesso_email",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Chave Controle E-mail",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+                    "Unico"
+                ],
+                "description": "Chave para evitar inclusão em massa. Combinação do Email com a data a hora e o primeiro algarismo do minuto. jose@gamil.com_17052018154 equivale ao email jose@gamil.com e incluído 17/05/2018 15:4X. Dessa forma o usuário só vai conseguir incluir novamente outro registro às 17:5X"
+            }
+        },
+        {
+            "field": {
+                "name": "nm_user",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Nome",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "ds_email",
+                "datatype": "Text",
+                "required": true,
+                "alias": "E-mail",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "E-mail do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "nr_telefone",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Telefone",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Telefone do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_orgao_cadastrador_atribuido",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Atribuído para",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do órgão cadastrador para qual o chamado foi atribuído."
+            }
+        },
+        {
+            "field": {
+                "name": "print",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Print base64",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Print da tela em string base 64"
+            }
+        },
+        {
+            "field": {
+                "name": "ds_url_pagina",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Página",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Url da página da qual foi incluída o chamado."
+            }
+        },
+        {
+            "field": {
+                "name": "ds_assunto",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Assunto",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Assunto da mensagem."
+            }
+        },
+        {
+            "field": {
+                "name": "ds_msg",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Mensagem",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Mensagem."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_inclusao",
+                "datatype": "DateTime",
+                "required": true,
+                "alias": "Data",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data na qual o registro foi cadastrado."
+            }
+        },
+        {
+            "field": {
+                "name": "st_atendimento",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Status",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Status do chamado: Novo, Recebido ou Finalizado."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_recebido",
+                "datatype": "DateTime",
+                "required": false,
+                "alias": "Data Recebido",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data na qual o chamado foi atendido."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_finalizado",
+                "datatype": "DateTime",
+                "required": false,
+                "alias": "Data Finalizado",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data na qual o chamado foi finalizado."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_login_usuario_atendimento",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Atendido por (login)",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Login do usuário que atendeu."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_usuario_atendimento",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Atendido por (nome)",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do usuário que atendeu."
+            }
+        },
+        {
+            "group": {
+                "content": [
+                    {
+                        "field": {
+                            "name": "ds_assunto_resposta",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Assunto",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Assunto da resposta do email."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ds_msg_resposta",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Mensagem",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Mensagem da resposta do email."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nm_login_usuario_resposta",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Enviado por (login)",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Login do usuário que atendeu."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nm_usuario_resposta",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Enviado por (nome)",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Nome do usuário que atendeu."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "dt_resposta",
+                            "datatype": "DateTime",
+                            "required": false,
+                            "alias": " Data da Resposta",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Data no formato DD/MM/AAAA, do envio da resposta."
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Histórico de mensagens",
+                    "description": "Grupo multivalorado usado para armazenar as mensagens enviadas para o usuário.",
+                    "multivalued": true,
+                    "name": "mensagens"
+                }
+            }
+        }
+    ],
+    "metadata": {
+        "description": "Base de chamados Fale Conosco do SINJ",
+        "color": "#003300",
+        "password": "BRLight@)!$",
+        "name": "sinj_fale_conosco"
+    }
+}

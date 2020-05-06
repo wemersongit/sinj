@@ -1,0 +1,8 @@
+/home/brlight/Desktop/20181212.1/Projetos/neo.BRLightRest/bin/Debug/neo.BRLightREST.dll
+/home/brlight/Desktop/20181212.1/Projetos/neo.BRLightRest/bin/Debug/neo.BRLightREST.pdb
+/home/brlight/Desktop/20181212.1/Projetos/neo.BRLightRest/bin/Debug/util.BRLight.dll
+/home/brlight/Desktop/20181212.1/Projetos/neo.BRLightRest/obj/Debug/neo.BRLightREST.csprojAssemblyReference.cache
+/home/brlight/Desktop/20181212.1/Projetos/neo.BRLightRest/obj/Debug/neo.BRLightREST.csproj.CoreCompileInputs.cache
+/home/brlight/Desktop/20181212.1/Projetos/neo.BRLightRest/obj/Debug/neo.BRLightREST.csproj.CopyComplete
+/home/brlight/Desktop/20181212.1/Projetos/neo.BRLightRest/obj/Debug/neo.BRLightREST.dll
+/home/brlight/Desktop/20181212.1/Projetos/neo.BRLightRest/obj/Debug/neo.BRLightREST.pdb

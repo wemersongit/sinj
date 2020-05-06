@@ -1,0 +1,310 @@
+{  
+    "content":[  
+        {  
+            "field":{  
+                "name":"ch_consulta",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Chave Unica",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual",
+                    "Unico"
+                ],
+                "description":"Identificador único para impedir duplicação."
+            }
+        },
+        {  
+            "field":{  
+                "name":"ch_usuario",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Chave Usuario",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Identificador do usuário auxilia a localizar as pesquisas do usuário com base na chave armazenada em cookie."
+            }
+        },
+        {  
+            "field":{  
+                "name":"nm_tipo_pesquisa",
+                "datatype":"Text",
+                "required":true,
+                "alias":"tipo",
+                "multivalued":false,
+                "indices":[
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Identifica em qual pesquisa a consulta foi realizada (geral, avançada, etc.)."
+            }
+        },
+        {  
+            "field":{  
+                "name":"usuario",
+                "datatype":"Text",
+                "required":false,
+                "alias":"Chave",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Identificador do usuário auxilia a localizar as pesquisas do usuário com base na chave armazenada em cookie."
+            }
+        },
+        {  
+            "field":{  
+                "name":"dt_historico",
+                "datatype":"DateTime",
+                "required":true,
+                "alias":"Data e Hora",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Data e hora na qual a pesquisa foi realizada."
+            }
+        },
+        {  
+            "field":{  
+                "name":"ds_historico",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Descrição",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Descrição da pesquisa realizada."
+            }
+        },
+        {  
+            "field":{  
+                "name":"consulta",
+                "datatype":"Text",
+                "required":true,
+                "alias":"Consulta",
+                "multivalued":false,
+                "indices":[  
+                    "Ordenado",
+                    "Textual"
+                ],
+                "description":"Contém os parametros encodados utilizados na consulta."
+            }
+        },
+        {  
+            "field":{  
+                "name":"contador",
+                "datatype":"Integer",
+                "required":false,
+                "alias":"Contador",
+                "multivalued":false,
+                "indices":[
+                    "Textual"
+                ],
+                "description":"Contém a quantidade de vezes que o usuário realizou a pesquisa."
+            }
+        },
+        {
+            "group": {
+                "content":[
+                    {
+                        "field": {
+                            "name": "nm_base",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Nome",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Noma da base"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ds_base",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Apelido",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Apelido da base"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nr_total",
+                            "datatype": "Integer",
+                            "required": false,
+                            "alias": "Total",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Total de registros"
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Total por base",
+                    "description": "Armazena a quantidade de registros em cada no momento da última vez que a última consulta foi realizada",
+                    "name": "total",
+                    "multivalued": true
+                }
+            }
+        },
+        {
+            "group": {
+                "content":[
+                    {
+                        "field": {
+                            "name": "campo",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Campo",
+                            "multivalued": false,
+                            "indices": [
+                                "Ordenado",
+                                "Textual"
+                            ],
+                            "description": "Campo da pesquisa"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "operador",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Operador",
+                            "multivalued": false,
+                            "indices": [
+                                "Ordenado",
+                                "Textual"
+                            ],
+                            "description": "Operador da pesquisa"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "valor",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Valor",
+                            "multivalued": false,
+                            "indices": [
+                                "Ordenado",
+                                "Textual"
+                            ],
+                            "description": "Valor da pesquisa"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "conector",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Conector",
+                            "multivalued": false,
+                            "indices": [
+                                "Ordenado",
+                                "Textual"
+                            ],
+                            "description": "Conector da pesquisa"
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Argumentos",
+                    "description": "Grupo multivalorado com os argumentos de pesquisa (campo, operador e valor)",
+                    "name": "argumentos",
+                    "multivalued": true
+                }
+            }
+        },
+        {
+            "group": {
+                "content":[
+                    {
+                        "field": {
+                            "name": "ch_registro_clicado",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Chave do Registro",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "A chave que identifica o registro clicado."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "nm_base_clicado",
+                            "datatype": "Text",
+                            "required": false,
+                            "alias": "Base do Registro",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "A base do registro clicado."
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "ds_registro_clicado",
+                            "datatype": "Text",
+                            "required": true,
+                            "alias": "Descrição do Registro",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Descrição do registro clicado"
+                        }
+                    },
+                    {
+                        "field": {
+                            "name": "contador_clicado",
+                            "datatype": "Integer",
+                            "required": false,
+                            "alias": "Contador de cliques",
+                            "multivalued": false,
+                            "indices": [
+                                "Textual"
+                            ],
+                            "description": "Conta quantos cliques o registro recebeu pelo usuário na consulta."
+                        }
+                    }
+                ],
+                "metadata": {
+                    "alias": "Registros Clicados",
+                    "description": "Grupo multivalorado com os dados dos registros que o usuário clicou com a consulta realizada.",
+                    "name": "registros_clicados",
+                    "multivalued": true
+                }
+            }
+        }
+    ],
+    "metadata":{  
+        "idx_exp_time":2,
+        "idx_exp":true,
+        "description":"Um histórico das pesquisas realizadas.",
+        "color":"#3f7f7f",
+        "file_ext_time":0,
+        "idx_exp_url":"http://127.0.0.1:9200/sinj_log_pesquisa/pesquisa",
+        "file_ext":false,
+        "password":"BRLight@)!$",
+        "name":"sinj_log_pesquisa"
+    }
+}

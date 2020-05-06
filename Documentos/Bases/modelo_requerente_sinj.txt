@@ -1,0 +1,120 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "ch_requerente",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Chave",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+					"Unico"
+                ],
+                "description": "Chave do Requerente. Identifica o Requerente. Deve ser usado para fazer os relacionamentos."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_requerente",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Nome",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+					"Unico"
+                ],
+                "description": "Nome do Requerente."
+            }
+        },
+        {
+            "field": {
+                "name": "ds_requerente",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Descrição",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Descrição do Requerente."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_login_usuario_cadastro",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Cadastrador por",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Login do usuário que cadastrou."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_cadastro",
+                "datatype": "DateTime",
+                "required": true,
+                "alias": "Cadastrado dia",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data na qual o registro foi cadastrado."
+            }
+        },
+        {
+			"group": {
+				"content":[
+					{
+						"field": {
+							"name": "nm_login_usuario_alteracao",
+							"datatype": "Text",
+							"required": false,
+							"alias": "Alterado por",
+							"multivalued": false,
+							"indices": [
+								"Textual"
+							],
+							"description": " Login do usuário que fez a alteração."
+						}
+					},
+					{
+						"field": {
+							"name": "dt_alteracao",
+							"datatype": "DateTime",
+							"required": false,
+							"alias": "Alterado dia",
+							"multivalued": false,
+							"indices": [
+								"Textual"
+							],
+							"description": "Data na qual o registro foi alterado."
+						}
+					}
+				],
+                "metadata": {
+                    "alias": "Alterações",
+                    "description": "Identifica as alterações do Registro.",
+                    "name": "alteracoes",
+                    "multivalued": true
+                }
+			}
+		}
+	],
+    "metadata": {
+        "description": "Base de Requerentes do SINJ",
+        "color": "#003300",
+        "password": "BRLight@)!$",
+        "name": "sinj_requerente"
+    }
+}

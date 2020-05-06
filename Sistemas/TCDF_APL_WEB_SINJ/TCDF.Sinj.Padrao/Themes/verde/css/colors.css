@@ -1,0 +1,52 @@
+/*Default---------------------------------------------------------*/
+select:focus, textarea:focus, input[type="text"]:focus, input[type="number"]:focus, input[type="password"]:focus { border-color:#38953F;}
+
+/*Master----------------------------------------------------------*/
+a.back {color:#38953F;}
+
+/*CORPO----------------------------------------------------------*/
+div.body div.inner-body {background-color:#FFFFFF;}
+
+/*Topo----------------------------------------------------------*/
+div.top div.art-top { background: url("../Imagens/center_top_sinj.jpg");}
+div.top div.right-top { background: url("../Imagens/right_top_sinj.jpg") no-repeat;}
+div.top div.right-top.mobile { background: url("../Imagens/right_top_sinj_mobile.jpg") no-repeat;}
+div.top div.right-top span { color:#B8E5D0; }
+div.top div.logo { background: url("../Imagens/left_top_sinj.jpg") no-repeat;}
+div.top div.top-bottom {background-color: #036735; }
+
+/*Menu
+----------------------------------------------------------*/
+.menu{ background-color: #036735; border-top-color: #48BB7E; border-left-color: #48BB7E; border-bottom-color: #003300; border-right-color: #003300;}
+.ul-menu li{background-color: #036735;}
+.ul-menu li a{color: #fff; background-color:transparent;}
+.ul-menu li a:hover{background-color: #037533}
+.ul-menu li:hover>a{background-color: #037533}
+.ul-menu li ul li{background-color: #037533; border-top-color: #036735;}
+.ul-menu li ul li a:hover{background-color: #036735; border-top-color: #036735; border-bottom-color:#036735}
+
+/*PESQUISA
+----------------------------------------------------------*/
+div.pesquisa label { color: #38953F;}
+div.pesquisa button { color: #38953F;}
+
+/*CADASTRO
+----------------------------------------------------------*/
+div.form fieldset {background-color:#F9F9F9; border-color: #036735;}
+div.form fieldset legend {color: #036735;}
+div.form label, form label { color: #38953F;}
+div.menu-suspenso li a{color:#036735; background-color:transparent; }
+div.menu-suspenso li a:hover{background-color: #CCCCCC}
+
+/*TABLELESS*/
+div.table div.column div.cell table{ background-color: #FFF;}
+div.table div.column div.cell table caption{ background-color: #CCCCCC; color: #036735; }
+div.table div.column div.cell >  table tr th { background-color: #016E35; color:#FFFFFF; }
+div.table div.column div.cell > table tr td { background-color: #C4EFD8;}
+/*STACKTABLE*/
+.stacktable table{ background-color: transparent !important; border-top: 1px solid #C4EFD8;}
+.stacktable caption{ color: #036735; }
+.stacktable td.st-key{ color:#016E35; }
+
+/*Modal*/
+.ui-dialog label {color:#38953F;}

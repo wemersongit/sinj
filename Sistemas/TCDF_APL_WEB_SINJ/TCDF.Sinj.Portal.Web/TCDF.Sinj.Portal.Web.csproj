@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FEBB7C90-DA8E-4EF9-9422-CEE3C1006D38}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TCDF.Sinj.Portal.Web</RootNamespace>
+    <AssemblyName>TCDF.Sinj.Portal.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="neo.BRLightREST">
+      <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
+    </Reference>
+    <Reference Include="neo.BRLightSession">
+      <HintPath>..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="util.BRLight">
+      <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
+    </Reference>
+    <Reference Include="Ude">
+      <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
+    </Reference>
+    <Reference Include="TCDF.Sinj">
+      <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CadastrarNotifiqueme.aspx" />
+    <Content Include="captcha.aspx" />
+    <Content Include="Contatos.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="DesativarNormaPush.aspx" />
+    <Content Include="DetalhesDeNorma.aspx" />
+    <Content Include="Diario.aspx" />
+    <Content Include="Download.aspx" />
+    <Content Include="FaleConosco.aspx" />
+    <Content Include="Favoritos.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="google75989ba6a8d364f2.html" />
+    <Content Include="HistoricoDePesquisa.aspx" />
+    <Content Include="Norma.aspx" />
+    <Content Include="PesquisarDiretorioDiario.aspx" />
+    <Content Include="PesquisarTextoDiario.aspx" />
+    <Content Include="RelatorioDePesquisa.aspx" />
+    <Content Include="ResultadoDePesquisa.aspx" />
+    <Content Include="Notifiqueme.aspx" />
+    <Content Include="LoginNotifiqueme.aspx" />
+    <Content Include="RecriarSenhaNotifiqueme.aspx" />
+    <Content Include="robots.txt" />
+    <Content Include="sitemap.txt" />
+    <Content Include="sitemap.xml" />
+    <Content Include="sitemap1.txt" />
+    <Content Include="sitemap2.txt" />
+    <Content Include="sitemap3.txt" />
+    <Content Include="sitemap4.txt" />
+    <Content Include="sitemap5.txt" />
+    <Content Include="sitemap6.txt" />
+    <Content Include="TextoArquivoDiario.aspx" />
+    <Content Include="TextoArquivoNorma.aspx" />
+    <Content Include="BaixarArquivoDiario.aspx" />
+    <Content Include="BaixarArquivoNorma.aspx" />
+    <Content Include="Arquivo.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ashx\Autocomplete\AutoriaAutocomplete.ashx.cs">
+      <DependentUpon>AutoriaAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\InteressadoAutocomplete.ashx.cs">
+      <DependentUpon>InteressadoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\OrgaoAutocomplete.ashx.cs">
+      <DependentUpon>OrgaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\SituacaoAutocomplete.ashx.cs">
+      <DependentUpon>SituacaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDeEdicaoAutocomplete.ashx.cs">
+      <DependentUpon>TipoDeEdicaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDeFonteAutocomplete.ashx.cs">
+      <DependentUpon>TipoDeFonteAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDeNormaAutocomplete.ashx.cs">
+      <DependentUpon>TipoDeNormaAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDePublicacaoAutocomplete.ashx.cs">
+      <DependentUpon>TipoDePublicacaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\TipoDeRelacaoAutocomplete.ashx.cs">
+      <DependentUpon>TipoDeRelacaoAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Autocomplete\VocabularioAutocomplete.ashx.cs">
+      <DependentUpon>VocabularioAutocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\FaleConoscoMensagemIncluir.ashx.cs">
+      <DependentUpon>FaleConoscoMensagemIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Cadastro\HistoricoDePesquisaIncluir.ashx.cs">
+      <DependentUpon>HistoricoDePesquisaIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\DiarioConsulta.ashx.cs">
+      <DependentUpon>DiarioConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\OrigemDaNormaConsulta.ashx.cs">
+      <DependentUpon>OrigemDaNormaConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\SugestoesConsulta.ashx.cs">
+      <DependentUpon>SugestoesConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\TipoDeNormaConsulta.ashx.cs">
+      <DependentUpon>TipoDeNormaConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Consulta\TotalConsulta.ashx.cs">
+      <DependentUpon>TotalConsulta.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\CestaPesquisaDatatable.ashx.cs">
+      <DependentUpon>CestaPesquisaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\FavoritosDatatable.ashx.cs">
+      <DependentUpon>FavoritosDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\HistoricoDePesquisaDatatable.ashx.cs">
+      <DependentUpon>HistoricoDePesquisaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\ResultadoDePesquisaDiarioDatatable.ashx.cs">
+      <DependentUpon>ResultadoDePesquisaDiarioDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\ResultadoDePesquisaNormaDatatable.ashx.cs">
+      <DependentUpon>ResultadoDePesquisaNormaDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Datatable\TextoDiarioDatatable.ashx.cs">
+      <DependentUpon>TextoDiarioDatatable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\ErrorJS.ashx.cs">
+      <DependentUpon>ErrorJS.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Exclusao\HistoricoDePesquisaExcluir.ashx.cs">
+      <DependentUpon>HistoricoDePesquisaExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\FavoritosExcluir.ashx.cs">
+      <DependentUpon>FavoritosExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\FavoritosIncluir.ashx.cs">
+      <DependentUpon>FavoritosIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeCheckLogin.ashx.cs">
+      <DependentUpon>NotifiquemeCheckLogin.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeCriacaoNormaEditar.ashx.cs">
+      <DependentUpon>NotifiquemeCriacaoNormaEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeCriacaoNormaExcluir.ashx.cs">
+      <DependentUpon>NotifiquemeCriacaoNormaExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeCriacaoNormaIncluir.ashx.cs">
+      <DependentUpon>NotifiquemeCriacaoNormaIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeDetalhes.ashx.cs">
+      <DependentUpon>NotifiquemeDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeEditar.ashx.cs">
+      <DependentUpon>NotifiquemeEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeEnviarRecriarSenha.ashx.cs">
+      <DependentUpon>NotifiquemeEnviarRecriarSenha.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeIncluir.ashx.cs">
+      <DependentUpon>NotifiquemeIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeLogin.ashx.cs">
+      <DependentUpon>NotifiquemeLogin.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeNormaEditar.ashx.cs">
+      <DependentUpon>NotifiquemeNormaEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeNormaExcluir.ashx.cs">
+      <DependentUpon>NotifiquemeNormaExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeNormaIncluir.ashx.cs">
+      <DependentUpon>NotifiquemeNormaIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeRecriarSenha.ashx.cs">
+      <DependentUpon>NotifiquemeRecriarSenha.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeSessaoEnd.ashx.cs">
+      <DependentUpon>NotifiquemeSessaoEnd.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeTermoDiarioEditar.ashx.cs">
+      <DependentUpon>NotifiquemeTermoDiarioEditar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeTermoDiarioExcluir.ashx.cs">
+      <DependentUpon>NotifiquemeTermoDiarioExcluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Push\NotifiquemeTermoDiarioIncluir.ashx.cs">
+      <DependentUpon>NotifiquemeTermoDiarioIncluir.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\DiarioDetalhes.ashx.cs">
+      <DependentUpon>DiarioDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Visualizacao\NormaDetalhes.ashx.cs">
+      <DependentUpon>NormaDetalhes.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="CadastrarNotifiqueme.aspx.cs">
+      <DependentUpon>CadastrarNotifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="captcha.aspx.cs">
+      <DependentUpon>captcha.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="captcha.aspx.designer.cs">
+      <DependentUpon>captcha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contatos.aspx.cs">
+      <DependentUpon>Contatos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DesativarNormaPush.aspx.cs">
+      <DependentUpon>DesativarNormaPush.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DesativarNormaPush.aspx.designer.cs">
+      <DependentUpon>DesativarNormaPush.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetalhesDeNorma.aspx.cs">
+      <DependentUpon>DetalhesDeNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalhesDeNorma.aspx.designer.cs">
+      <DependentUpon>DetalhesDeNorma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Diario.aspx.cs">
+      <DependentUpon>Diario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Diario.aspx.designer.cs">
+      <DependentUpon>Diario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Download.aspx.cs">
+      <DependentUpon>Download.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Download.aspx.designer.cs">
+      <DependentUpon>Download.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FaleConosco.aspx.cs">
+      <DependentUpon>FaleConosco.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Favoritos.aspx.cs">
+      <DependentUpon>Favoritos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HistoricoDePesquisa.aspx.cs">
+      <DependentUpon>HistoricoDePesquisa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Norma.aspx.cs">
+      <DependentUpon>Norma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Norma.aspx.designer.cs">
+      <DependentUpon>Norma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PesquisarDiretorioDiario.aspx.cs">
+      <DependentUpon>PesquisarDiretorioDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PesquisarTextoDiario.aspx.cs">
+      <DependentUpon>PesquisarTextoDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelatorioDePesquisa.aspx.cs">
+      <DependentUpon>RelatorioDePesquisa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RelatorioDePesquisa.aspx.designer.cs">
+      <DependentUpon>RelatorioDePesquisa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResultadoDePesquisa.aspx.cs">
+      <DependentUpon>ResultadoDePesquisa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sinj.Master.cs">
+      <DependentUpon>Sinj.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sinj.Master.designer.cs">
+      <DependentUpon>Sinj.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Notifiqueme.aspx.cs">
+      <DependentUpon>Notifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginNotifiqueme.aspx.cs">
+      <DependentUpon>LoginNotifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecriarSenhaNotifiqueme.aspx.cs">
+      <DependentUpon>RecriarSenhaNotifiqueme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecriarSenhaNotifiqueme.aspx.designer.cs">
+      <DependentUpon>RecriarSenhaNotifiqueme.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TextoArquivoDiario.aspx.cs">
+      <DependentUpon>TextoArquivoDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TextoArquivoDiario.aspx.designer.cs">
+      <DependentUpon>TextoArquivoDiario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TextoArquivoNorma.aspx.cs">
+      <DependentUpon>TextoArquivoNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TextoArquivoNorma.aspx.designer.cs">
+      <DependentUpon>TextoArquivoNorma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BaixarArquivoDiario.aspx.cs">
+      <DependentUpon>BaixarArquivoDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BaixarArquivoDiario.aspx.designer.cs">
+      <DependentUpon>BaixarArquivoDiario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BaixarArquivoNorma.aspx.cs">
+      <DependentUpon>BaixarArquivoNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BaixarArquivoNorma.aspx.designer.cs">
+      <DependentUpon>BaixarArquivoNorma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Arquivo.ashx.cs">
+      <DependentUpon>Arquivo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Versao.aspx.cs">
+      <DependentUpon>Versao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Versao.aspx.designer.cs">
+      <DependentUpon>Versao.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ashx\Portal\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Autocomplete\AutoriaAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\InteressadoAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\OrgaoAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\TipoDeFonteAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\TipoDeNormaAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\TipoDePublicacaoAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\TipoDeRelacaoAutocomplete.ashx" />
+    <Content Include="ashx\Autocomplete\VocabularioAutocomplete.ashx" />
+    <Content Include="ashx\Datatable\CestaPesquisaDatatable.ashx" />
+    <Content Include="ashx\Datatable\HistoricoDePesquisaDatatable.ashx" />
+    <Content Include="ashx\Exclusao\HistoricoDePesquisaExcluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeCheckLogin.ashx" />
+    <Content Include="ashx\Push\NotifiquemeCriacaoNormaExcluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeCriacaoNormaIncluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeEditar.ashx" />
+    <Content Include="ashx\Push\NotifiquemeEnviarRecriarSenha.ashx" />
+    <Content Include="ashx\Push\NotifiquemeIncluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeLogin.ashx" />
+    <Content Include="ashx\Push\NotifiquemeNormaEditar.ashx" />
+    <Content Include="ashx\Push\NotifiquemeNormaExcluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeNormaIncluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeRecriarSenha.ashx" />
+    <Content Include="ashx\Push\NotifiquemeSessaoEnd.ashx" />
+    <Content Include="ashx\Visualizacao\DiarioDetalhes.ashx" />
+    <Content Include="ashx\Visualizacao\NormaDetalhes.ashx" />
+    <Content Include="ashx\Cadastro\HistoricoDePesquisaIncluir.ashx" />
+    <Content Include="ashx\Push\NotifiquemeDetalhes.ashx" />
+    <Content Include="ashx\Consulta\OrigemDaNormaConsulta.ashx" />
+    <Content Include="ashx\Autocomplete\SituacaoAutocomplete.ashx" />
+    <Content Include="ashx\Consulta\TipoDeNormaConsulta.ashx" />
+    <Content Include="ashx\Push\NotifiquemeCriacaoNormaEditar.ashx" />
+    <Content Include="Sinj.Master" />
+    <Content Include="Versao.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>10501</DevelopmentServerPort>
+          <DevelopmentServerVPath>/sinj/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+    <MonoDevelop>
+      <Properties VerifyCodeBehindFields="True" VerifyCodeBehindEvents="True">
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <WebDeployTargets>
+          <Target Name="">
+            <FileCopier Handler="MonoDevelop.Deployment.LocalFileCopyHandler" TargetDirectory="/home/brlight/Desktop/sinj_deploy/sinj" ctype="LocalFileCopyConfiguration" />
+          </Target>
+        </WebDeployTargets>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Content Include="ashx\ErrorJS.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\FavoritosDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\FavoritosIncluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\FavoritosExcluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\TextoDiarioDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Consulta\DiarioConsulta.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Autocomplete\TipoDeEdicaoAutocomplete.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\NotifiquemeTermoDiarioIncluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\NotifiquemeTermoDiarioEditar.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Push\NotifiquemeTermoDiarioExcluir.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Consulta\TotalConsulta.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\ResultadoDePesquisaNormaDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Datatable\ResultadoDePesquisaDiarioDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Consulta\SugestoesConsulta.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Cadastro\FaleConoscoMensagemIncluir.ashx" />
+  </ItemGroup>
+</Project>

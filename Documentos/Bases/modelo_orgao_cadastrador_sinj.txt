@@ -1,0 +1,39 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "id_orgao_cadastrador",
+                "datatype": "Integer",
+                "required": true,
+                "alias": "Id",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+					"Unico"
+                ],
+                "description": "Id do orgao cadastrador. Identifica o orgao cadastrador."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_orgao_cadastrador",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Nome",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do orgao cadastrador."
+            }
+        }
+	],
+    "metadata": {
+        "description": "Base de orgãos cadastradores do SINJ",
+        "color": "#003300",
+        "password": "BRLight@)!$",
+        "name": "sinj_orgao_cadastrador"
+    }
+}

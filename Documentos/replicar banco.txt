@@ -1,0 +1,37 @@
+MASTER
+	postgresql.conf
+		adicionar o ip da máquina replicada
+			listen_addresses='127.0.0.1,10.9.16.197'
+		alterar wal_level
+			wal_level = hot_standby
+		alterar wal_keep_segments
+			wal_keep_segments = 1
+		alterar max_wal_senders igual ao número de réplicas
+			max_wal_senders = 1
+			
+	pg_hba.conf
+		criar entrada usuário replicação
+			host    replication     replicador      10.9.15.33/32           md5
+	reiniciar postgresql
+	
+	criar usuario replicação pelo psql
+		create user replicador replication;
+		alter user replicador password 'r3plicad0r#@!';
+		
+SLAVE
+	parar postgresql
+	pg_basebackup
+		limpar o diretório dos dados
+			rm -r /tcdf/dados/lightbase/data/*
+		rodar o comando e aguardar
+			pg_basebackup -D /tcdf/dados/lightbase/data/ -h 10.9.16.197 -U replicador
+	criar /tcdf/dados/lightbase/data/recovery.conf usando o usuario postgres com o conteúdo
+		standby_mode=on
+		primary_conninfo='host=10.9.16.197 user=replicador password=r3plicad0r#@! application_name=sinj_rep1'
+		trigger_file='/tmp/pgtrigger'
+	ajustar máscara do diretório
+	iniciar postgresql
+	
+SUBIR SLAVE PARA MASTER
+	criar o arquivo trigger_file com o usuario postgres
+		touch /tmp/pgtrigger

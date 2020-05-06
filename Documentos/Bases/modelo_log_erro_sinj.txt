@@ -1,0 +1,119 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "nm_tipo",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Tipo",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Especifica o tipo do erro, se é JavaScript, vb, Java, c# .net, server, Rest Light Base."
+            }
+        },
+        {
+            "field": {
+                "name": "ch_operacao",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Operação",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Identifica a operação a ser realizada no momento do erro."
+            }
+        },
+        {
+            "field": {
+                "name": "ds_erro",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Erro",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "Especifica a informação obtida na pilha de execução de determinado erro para possibitar a correção do mesmo. "
+            }
+        },
+        {
+            "field": {
+                "name": "nr_ip_usuario",
+                "datatype": "Text",
+                "required": true,
+                "alias": "IP Usuário",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "String com o IP da máquina do usuário no formato segunte: {\"ip\":[]}"
+            }
+        },
+        {
+            "field": {
+                "name": "ds_browser",
+                "datatype": "TextArea",
+                "required": false,
+                "alias": "Browser",
+                "multivalued": false,
+                "indices": [
+                    "Textual"
+                ],
+                "description": "String com a identificação do browser utilizado pelo usuário para acessar app"
+            }
+        },
+        {
+            "field": {
+                "name": "nm_user_erro",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Usuário",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do usuário que estava logado no sistema onde ocorreu o erro."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_login_user_erro",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Login",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Especifica quem é o usuário logado no momento do erro."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_log_erro",
+                "datatype": "DateTime",
+                "required": true,
+                "alias": "Data",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data e Hora no formato DD/MM/AAAA - HH:MM:SS de Inclusão do log de erro; Especifica a data de inclusão do log de erro do sistema."
+            }
+        }
+    ],
+    "metadata": {
+        "description": "Entidade para o armazenamento das informações de erros gerados nos diversos sistemas. Esses erros geralmente são exceções não tratadas nas aplicações e que é disparado na tela do usuário. Em caso de exclusão, a exclusão de linhas é feita fisicamente.",
+        "color": "#003300",
+        "name": "sinj_log_erro"
+    }
+}

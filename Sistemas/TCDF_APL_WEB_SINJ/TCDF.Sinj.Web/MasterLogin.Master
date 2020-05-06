@@ -1,0 +1,66 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterLogin.Master.cs" Inherits="TCDF.Sinj.Web.MasterLogin" %>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    <meta http-equiv="Content-Language" content="pt-br" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="stylesheet" type="text/css" href="<%= TCDF.Sinj.Util._urlPadrao %>/Jquery-ui/jquery-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="<%= TCDF.Sinj.Util._urlPadrao %>/Styles/jquery.modalLight.css?<%= TCDF.Sinj.Util.MostrarVersao() %>" />
+    <link rel="stylesheet" type="text/css" href="<%= TCDF.Sinj.Util._urlPadrao %>/Styles/default.css?<%= TCDF.Sinj.Util.MostrarVersao() %>" />
+    <link rel="stylesheet" type="text/css" href="<%= TCDF.Sinj.Util._urlPadrao %>/Styles/sinj.css?<%= TCDF.Sinj.Util.MostrarVersao() %>" />
+    <link rel="stylesheet" type="text/css" href="<%= TCDF.Sinj.Util._urlPadrao %>/Themes/verde/css/colors.css?<%= TCDF.Sinj.Util.MostrarVersao() %>" />
+    
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_sinj.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/liblight.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.modalLight.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/stacktrace.js"></script>
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.form.min.js"></script>
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.ajaxLight.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/login.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/favicon.png" />
+
+    <title>.:: SINJ-DF - Sistema Integrado de Normas Jurídicas do DF ::. </title>
+
+    <asp:ContentPlaceHolder ID="Head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="master-green">
+    <div class="page">
+        <div class="top">
+            <div class="art-top">
+                <div class="right-top">
+                    <span>
+                        <%= TCDF.Sinj.Util.MostrarVersao() %>
+                    </span>
+                </div>
+                <div class="logo">
+                    <a title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj_10_anos.png" alt="sinj" /></a>
+                </div>
+                <div class="top-bottom" style="height: 40px;">
+                    <div class="top-bottom-left">
+                        <h2>SISTEMA INTEGRADO DE NORMAS JURÍDICAS DO DF</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="inner-body">
+                <div class="content">
+                    <div>
+                        <asp:ContentPlaceHolder ID="Body" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+ </body>
+</html>

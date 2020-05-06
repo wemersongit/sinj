@@ -1,0 +1,448 @@
+{
+	"nm_portal":"sinj_portal",
+	"alias_portal":"Portal de Pesquisa",
+	"ds_portal":"Portal de Pesquisa",
+	"cpf_user":"00600154114",
+	"bases":[
+        {
+            "url_index": null,
+            "nm_base": "sinj_dodf",
+            "field": [
+                {
+                    "groups_can_view": [],
+                    "inf_direct_search": {
+                        "nr_position_direct": 0,
+                        "nm_display_direct": "Número do DODF",
+                        "script_direct": "",
+                        "nm_type_control_direct": "number",
+                        "in_display_direct": true
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "",
+                        "nm_table_tabulated": "",
+                        "relational_key_tabulated": "",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": ""
+                    },
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "Número",
+                        "in_sortable_listed": true,
+                        "nr_position_listed": 0,
+                        "script_listed": "",
+                        "in_display_listed": true
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": false,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "number",
+                        "nm_display_advanced": "Número",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Número do DODF",
+                    "nm_type_field": "text",
+                    "nm_field": "nr_dodf",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "Número",
+                        "in_search_detailed": false,
+                        "in_display_detailed": true,
+                        "script_detailed": "",
+                        "nr_position_detailed": 0
+                    }
+                },
+                {
+                    "groups_can_view": [],
+                    "inf_direct_search": {
+                        "nr_position_direct": 2,
+                        "nm_display_direct": "Seção do DODF",
+                        "script_direct": "",
+                        "nm_type_control_direct": "text",
+                        "in_display_direct": true
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "",
+                        "nm_table_tabulated": "",
+                        "relational_key_tabulated": "",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": ""
+                    },
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "Seção",
+                        "in_sortable_listed": true,
+                        "nr_position_listed": 1,
+                        "script_listed": "",
+                        "in_display_listed": true
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": false,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "text",
+                        "nm_display_advanced": "Seção",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Seção do DODF",
+                    "nm_type_field": "text",
+                    "nm_field": "nm_secao",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "Seção",
+                        "in_search_detailed": false,
+                        "in_display_detailed": true,
+                        "script_detailed": "",
+                        "nr_position_detailed": 1
+                    }
+                },
+                {
+                    "groups_can_view": [],
+                    "inf_direct_search": {
+                        "nr_position_direct": 2,
+                        "nm_display_direct": "Data de Assinatura",
+                        "script_direct": "",
+                        "nm_type_control_direct": "date",
+                        "in_display_direct": true
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "",
+                        "nm_table_tabulated": "",
+                        "relational_key_tabulated": "",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": ""
+                    },
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "Data de Assinatura",
+                        "in_sortable_listed": false,
+                        "nr_position_listed": 2,
+                        "script_listed": "",
+                        "in_display_listed": true
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": false,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "date",
+                        "nm_display_advanced": "Data de Assinatura",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Data da assinatura do DODF.",
+                    "nm_type_field": "date",
+                    "nm_field": "dt_assinatura",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "Data de Assinatura",
+                        "in_search_detailed": false,
+                        "in_display_detailed": true,
+                        "script_detailed": "",
+                        "nr_position_detailed": 2
+                    }
+                },
+                {
+                    "groups_can_view": [],
+                    "inf_direct_search": {
+                        "nr_position_direct": 3,
+                        "nm_display_direct": "Texto do DODF",
+                        "script_direct": "",
+                        "nm_type_control_direct": "text",
+                        "in_display_direct": true
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "",
+                        "nm_table_tabulated": "",
+                        "relational_key_tabulated": "",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": ""
+                    },
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "Arquivo",
+                        "in_sortable_listed": false,
+                        "nr_position_listed": 3,
+                        "script_listed": "downloadFile",
+                        "in_display_listed": true
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": false,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "text",
+                        "nm_display_advanced": "Texto",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Cotém o texto do DODF.",
+                    "nm_type_field": "textarea",
+                    "nm_field": "ar_dodf",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "",
+                        "in_search_detailed": false,
+                        "in_display_detailed": true,
+                        "script_detailed": "",
+                        "nr_position_detailed": 3
+                    }
+                }
+            ],
+            "url_detail": null,
+            "url_app": null,
+            "nr_order": 1,
+            "ds_base": "DODFs"
+        },
+        {
+            "url_index": null,
+            "nm_base": "sinj_norma",
+            "field": [
+                {
+                    "groups_can_view": [],
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "Tipo e Número",
+                        "in_sortable_listed": true,
+                        "nr_position_listed": 0,
+                        "script_listed": "",
+                        "in_display_listed": true
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "id_tipo",
+                        "nm_table_tabulated": "sinj_tipo_norma",
+                        "relational_key_tabulated": "id_tipo_norma",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": "nm_tipo"
+                    },
+                    "inf_direct_search": {
+                        "nr_position_direct": 0,
+                        "nm_display_direct": "Tipo de Norma",
+                        "script_direct": "",
+                        "nm_type_control_direct": "autocomplete",
+                        "in_display_direct": true
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": true,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "checkbox",
+                        "nm_display_advanced": "",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Determina o tipo de ato.",
+                    "nm_type_field": "tabulated",
+                    "nm_field": "nm_tipo_norma",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "",
+                        "in_search_detailed": false,
+                        "in_display_detailed": true,
+                        "script_detailed": "",
+                        "nr_position_detailed": 0
+                    }
+                },
+                {
+                    "groups_can_view": [],
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "",
+                        "in_sortable_listed": false,
+                        "nr_position_listed": 0,
+                        "script_listed": "",
+                        "in_display_listed": false
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "",
+                        "nm_table_tabulated": "",
+                        "relational_key_tabulated": "",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": ""
+                    },
+                    "inf_direct_search": {
+                        "nr_position_direct": 1,
+                        "nm_display_direct": "Número",
+                        "script_direct": "",
+                        "nm_type_control_direct": "number",
+                        "in_display_direct": true
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": false,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "number",
+                        "nm_display_advanced": "Número",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Numero do ato.",
+                    "nm_type_field": "Text",
+                    "nm_field": "nr_norma",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "",
+                        "in_search_detailed": false,
+                        "in_display_detailed": true,
+                        "script_detailed": "",
+                        "nr_position_detailed": 0
+                    }
+                },
+                {
+                    "groups_can_view": [],
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "",
+                        "in_sortable_listed": true,
+                        "nr_position_listed": 1,
+                        "script_listed": "",
+                        "in_display_listed": true
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "",
+                        "nm_table_tabulated": "",
+                        "relational_key_tabulated": "",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": ""
+                    },
+                    "inf_direct_search": {
+                        "nr_position_direct": 2,
+                        "nm_display_direct": "Ano de Assinatura",
+                        "script_direct": "",
+                        "nm_type_control_direct": "year",
+                        "in_display_direct": true
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": false,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "date",
+                        "nm_display_advanced": "Data de Assinatura",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Define a data na qual o ato foi assinado.",
+                    "nm_type_field": "date",
+                    "nm_field": "dt_assinatura",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "",
+                        "in_search_detailed": true,
+                        "in_display_detailed": true,
+                        "script_detailed": "",
+                        "nr_position_detailed": 1
+                    }
+                },
+                {
+                    "groups_can_view": [],
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "",
+                        "in_sortable_listed": false,
+                        "nr_position_listed": 3,
+                        "script_listed": "",
+                        "in_display_listed": true
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "id_orgao",
+                        "nm_table_tabulated": "sinj_orgao",
+                        "relational_key_tabulated": "id_orgao_norma",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": "nm_orgao"
+                    },
+                    "inf_direct_search": {
+                        "nr_position_direct": 3,
+                        "nm_display_direct": "Origem",
+                        "script_direct": "",
+                        "nm_type_control_direct": "autocomplete",
+                        "in_display_direct": true
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": false,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "autocomplete",
+                        "nm_display_advanced": "Órgão de Origem",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Define a origem do ato.",
+                    "nm_type_field": "tabulated",
+                    "nm_field": "nm_orgao",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "",
+                        "in_search_detailed": true,
+                        "in_display_detailed": true,
+                        "script_detailed": "",
+                        "nr_position_detailed": 1
+                    }
+                },
+                {
+                    "groups_can_view": [],
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "",
+                        "in_sortable_listed": false,
+                        "nr_position_listed": 4,
+                        "script_listed": "",
+                        "in_display_listed": true
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "",
+                        "nm_table_tabulated": "",
+                        "relational_key_tabulated": "",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": ""
+                    },
+                    "inf_direct_search": {
+                        "nr_position_direct": 0,
+                        "nm_display_direct": "",
+                        "script_direct": "",
+                        "nm_type_control_direct": "",
+                        "in_display_direct": false
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": false,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "text",
+                        "nm_display_advanced": "Ementa",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Cotém o texto da ementa.",
+                    "nm_type_field": "textarea",
+                    "nm_field": "ds_ementa",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "Ementa",
+                        "in_search_detailed": true,
+                        "in_display_detailed": true,
+                        "script_detailed": "",
+                        "nr_position_detailed": 3
+                    }
+                },
+                {
+                    "groups_can_view": [],
+                    "inf_listed_search": {
+                        "in_search_listed": true,
+                        "nm_display_listed": "Situação",
+                        "in_sortable_listed": true,
+                        "nr_position_listed": 5,
+                        "script_listed": "",
+                        "in_display_listed": true
+                    },
+                    "inf_field_tabulated": {
+                        "nm_field_key_tabulated": "id_situacao",
+                        "nm_table_tabulated": "sinj_situacao_norma",
+                        "relational_key_tabulated": "id_situacao_norma",
+                        "data_tabulated": [],
+                        "nm_field_value_tabulated": "nm_situacao"
+                    },
+                    "inf_direct_search": {
+                        "nr_position_direct": 0,
+                        "nm_display_direct": "",
+                        "script_direct": "",
+                        "nm_type_control_direct": "",
+                        "in_display_direct": false
+                    },
+                    "inf_advanced_search": {
+                        "in_fixed_advanced": false,
+                        "in_display_advanced": true,
+                        "nm_type_control_advanced": "autocomplete",
+                        "nm_display_advanced": "Situação",
+                        "script_advanced": ""
+                    },
+                    "ds_field": "Situação do ato.",
+                    "nm_type_field": "textarea",
+                    "nm_field": "nm_situacao",
+                    "inf_detailed_search": {
+                        "nm_display_detailed": "",
+                        "in_search_detailed": false,
+                        "in_display_detailed": false,
+                        "script_detailed": "",
+                        "nr_position_detailed": 0
+                    }
+                }
+            ],
+            "url_detail": null,
+            "url_app": null,
+            "nr_order": 0,
+            "ds_base": "Norma"
+        }
+	]
+}

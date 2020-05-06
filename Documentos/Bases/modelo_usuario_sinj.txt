@@ -1,0 +1,327 @@
+{
+    "content": [
+        {
+            "field": {
+                "name": "nm_login_usuario",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Login",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado",
+					"Unico"
+                ],
+                "description": "Login do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_usuario",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Nome",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "senha_usuario",
+                "datatype": "Text",
+                "required": true,
+                "alias": "Login",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Senha do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "email_usuario",
+                "datatype": "Email",
+                "required": false,
+                "alias": "E-mail",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "E-mail do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "pagina_inicial",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Página Inicial",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Página que é carregada ao realizar login."
+            }
+        },
+        {
+            "field": {
+                "name": "ds_pagina_inicial",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Página Inicial",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Descrição da Página que é carregada ao realizar login."
+            }
+        },
+        {
+            "field": {
+                "name": "ch_tema",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Tema",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Tema de cores."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_ultimo_login",
+                "datatype": "DateTime",
+                "required": false,
+                "alias": "Última vez o usuário acessou o sistema.",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data em que o usuário acessou o sistema o sistema pela última vez."
+            }
+        },
+        {
+            "field": {
+                "name": "ch_push_usuario",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Chave Push",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Indica a chave do push do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "st_usuario",
+                "datatype": "Boolean",
+                "required": true,
+                "alias": "Ativo",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Status do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "in_alterar_senha",
+                "datatype": "Boolean",
+                "required": true,
+                "alias": "Forçar Mudança de Senha",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Força o usuário mudar a senha quando acessar o sistema."
+            }
+        },
+        {
+            "field": {
+                "name": "ch_perfil",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Chave do Perfil",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Indica o perfil de permissão do usuário. Com uma chave que identifica o perfil do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_perfil",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Nome do Perfil",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Nome do Perfil do usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "nm_login_usuario_cadastro",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Cadastrado por",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Login de quem cadastrou o usuário."
+            }
+        },
+        {
+            "field": {
+                "name": "dt_cadastro",
+                "datatype": "DateTime",
+                "required": false,
+                "alias": "Data do Cadastro",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Data em que o usuário foi cadastrado."
+            }
+        },
+        {
+            "field": {
+                "name": "nr_tentativa_login",
+                "datatype": "Integer",
+                "required": false,
+                "alias": "Tentativas",
+                "multivalued": false,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Número de vezes que o usuário errou o login."
+            }
+        },
+        {
+            "field": {
+                "name": "grupos",
+                "datatype": "Text",
+                "required": false,
+                "alias": "Grupos",
+                "multivalued": true,
+                "indices": [
+                    "Textual",
+                    "Ordenado"
+                ],
+                "description": "Indica os grupos de permissão do usuário. Contém uma lista de chaves que identificam cada grupo."
+            }
+        },
+        {
+			"group": {
+				"content":[
+					{
+						"field": {
+							"name": "id_orgao_cadastrador",
+							"datatype": "Integer",
+							"required": false,
+							"alias": "Id",
+							"multivalued": false,
+							"indices": [
+								"Textual",
+								"Ordenado"
+							],
+							"description": " Id do Órgão Cadastrador."
+						}
+					},
+					{
+						"field": {
+							"name": "nm_orgao_cadastrador",
+							"datatype": "Text",
+							"required": false,
+							"alias": "Nome",
+							"multivalued": false,
+							"indices": [
+								"Textual",
+								"Ordenado"
+							],
+							"description": "Nome do Órgão Cadastrador"
+						}
+					}
+				],
+                "metadata": {
+                    "alias": "Órgão Cadastradore",
+                    "description": "Identifica o Órgão do Usuário.",
+                    "name": "orgao_cadastrador",
+                    "multivalued": false
+                }
+			}
+		},
+        {
+			"group": {
+				"content":[
+					{
+						"field": {
+							"name": "nm_login_usuario_alteracao",
+							"datatype": "Text",
+							"required": false,
+							"alias": "Alterado por",
+							"multivalued": false,
+							"indices": [
+								"Textual"
+							],
+							"description": " Login do usuário que fez a alteração."
+						}
+					},
+					{
+						"field": {
+							"name": "dt_alteracao",
+							"datatype": "DateTime",
+							"required": false,
+							"alias": "Alterado dia",
+							"multivalued": false,
+							"indices": [
+								"Textual"
+							],
+							"description": "Data na qual o registro foi alterado."
+						}
+					}
+				],
+                "metadata": {
+                    "alias": "Alterações",
+                    "description": "Identifica as alterações do Registro.",
+                    "name": "alteracoes",
+                    "multivalued": true
+                }
+			}
+		}
+	],
+    "metadata": {
+        "description": "Base de Usuários do SINJ",
+        "color": "#003300",
+        "password": "BRLight@)!$",
+        "name": "sinj_usuario"
+    }
+}

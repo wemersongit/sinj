@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SINJ.Desfazer_Revogados.App", "SINJ.Desfazer_Revogados.App.csproj", "{2547B5C7-52B7-45CC-A994-4297293F95DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2547B5C7-52B7-45CC-A994-4297293F95DB}.Debug|x86.ActiveCfg = Debug|x86
+		{2547B5C7-52B7-45CC-A994-4297293F95DB}.Debug|x86.Build.0 = Debug|x86
+		{2547B5C7-52B7-45CC-A994-4297293F95DB}.Release|x86.ActiveCfg = Release|x86
+		{2547B5C7-52B7-45CC-A994-4297293F95DB}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

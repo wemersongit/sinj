@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{575A6BF7-D4E5-4C3E-9594-D8AD772FE1D6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TCDF_REPORT</RootNamespace>
+    <AssemblyName>TCDF_REPORT</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LightInfocon.Data.LightBaseProvider, Version=4.4.0.0, Culture=neutral, PublicKeyToken=3016ddb54c1a70d5, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Frameworks\LightInfocon.Data.LightBaseProvider\LightInfocon.Data.LightBaseProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AD\AcessaDados.cs" />
+    <Compile Include="AD\NormaAD.cs" />
+    <Compile Include="AD\TermoAD.cs" />
+    <Compile Include="OV\DecisaoOV.cs" />
+    <Compile Include="OV\FonteOV.cs" />
+    <Compile Include="OV\InformacoesSobreVersaoOV.cs" />
+    <Compile Include="OV\InteressadoOV.cs" />
+    <Compile Include="OV\Norma.cs" />
+    <Compile Include="OV\NormaOV.cs" />
+    <Compile Include="OV\OrgaoCadastrador.cs" />
+    <Compile Include="OV\OrgaoOV.cs" />
+    <Compile Include="OV\PesquisaSinjOV.cs" />
+    <Compile Include="OV\ProcuradorResponsavelOV.cs" />
+    <Compile Include="OV\RelatorOV.cs" />
+    <Compile Include="OV\RequerenteOV.cs" />
+    <Compile Include="OV\RequeridoOV.cs" />
+    <Compile Include="OV\TermoOV.cs" />
+    <Compile Include="OV\TipoDeDecisaoOV.cs" />
+    <Compile Include="OV\TipoDeEdicao.cs" />
+    <Compile Include="OV\TipoDeFonteBOOV.cs" />
+    <Compile Include="OV\TipoDeNormaOV.cs" />
+    <Compile Include="OV\TipoDePublicacaoBOOV.cs" />
+    <Compile Include="OV\TipoDeRelacaoOV.cs" />
+    <Compile Include="OV\VideEntreNormasOV.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RN\NormaRN.cs" />
+    <Compile Include="RN\TermoRN.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
