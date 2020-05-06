@@ -1,3 +1,5 @@
+
+
 function Notificar(ch_norma) {
     var sucesso = function (data) {
         if (IsNotNullOrEmpty(data, 'error_message')) {
@@ -481,207 +483,6 @@ function prosseguirSemDiario(){
     $('#modal_fonte .consultar').hide();
     $('#modal_fonte .resultado').hide();
     $('#modal_fonte .diario').show();
-}
-
-// função que habilita a norma no SINJ pesquisa e a opção de enviar email.
-function CriarModalHabilitarPesquisa(id_doc, eml) {
-    if(!eml){
-        $('#hne_norma').show();
-    }else{
-        $('#hne_norma').hide();
-    }
-    $("#modal_habilitar_pesquisa").modallight({
-        sTitle: "Confirmar",
-        sWidth: '400',
-        oButtons: [
-            {
-                text: "Confirmar",
-                click: function () {
-                    let notifique = $('#habilitar_notifique_email').is(":checked");
-
-                    var inicio = function() {
-                        $('#super_loading').show();
-                    }
-                    var complete = function(data) {     
-                        if(!notifique){
-                            $('#super_loading').hide();
-                        }                 
-                    }
-                    var sucesso = function(data) {
-                        !notifique ? $('#modal_habilitar_pesquisa').dialog('close') : " ";
-                        if (IsNotNullOrEmpty(data, 'error_message')) {
-                            $('#div_habilita_pesquisa_norma').messagelight({
-                                sTitle: "Erro",
-                                sContent: data.error_message,
-                                sType: "error",
-                                sWidth: "",
-                                iTime: null
-                            });
-                        } else if(!notifique){
-                            $("<div id='modal_habilitar_pesquisa' />").modallight({
-                                sTitle: "Norma habilitada",
-                                sType: "success",
-                                sContent: "Norma habilitada no SINJ pesquisa com sucesso.",
-                                oButtons: [
-                                    {
-                                        text: "Ok",
-                                        click: function () {
-                                            $(this).dialog('close');
-                                        }
-                                    }
-                                ],
-                                fnClose: function () {
-                                    document.location.reload();
-                                }
-                            });            
-                        }else{
-                            var sucessoEmail = function(data) {                                
-                                $('#modal_habilitar_pesquisa').dialog('close');
-
-                                if (IsNotNullOrEmpty(data, 'error_message')) {
-                                    $('#div_habilita_pesquisa_norma').messagelight({
-                                        sTitle: "Erro",
-                                        sContent: data.error_message,
-                                        sType: "error",
-                                        sWidth: "",
-                                        iTime: null
-                                    });
-                                } else {
-                                    $("<div id='modal_habilitar_pesquisa' />").modallight({
-                                        sTitle: "Norma habilitada",
-                                        sType: "success",
-                                        sContent: "Norma habilitada no SINJ pesquisa e notificação enviada com sucesso.",
-                                        oButtons: [
-                                            {
-                                                text: "Ok",
-                                                click: function () {
-                                                    $(this).dialog('close');
-                                                }
-                                            }
-                                        ],
-                                        fnClose: function () {
-                                            document.location.reload();
-                                        }
-                                    }); 
-                            }
-                            
-                        }
-                        var completeEmail = function(data) {     
-                            $('#super_loading').hide();    
-                        }
-                        // requisição ajax habilitar envio de emails
-                        $.ajaxlight({
-                            sUrl:'./ashx/Cadastro/NormaEditarCampoEmail.ashx?id_doc='+id_doc+"&st_atualizada=true&st_habilita_email=true&st_habilita_pesquisa=true",
-                            sType: "GET",
-                            fnSuccess: sucessoEmail,
-                            fnComplete: completeEmail,
-                            // fnBeforeSend: inicio,
-                            bAsync: true,
-                            iTimeout: 60000
-                        });
-                    }
-                }
-                $.ajaxlight({
-                    sUrl:'./ashx/Cadastro/NormaEditarCampo.ashx?id_doc='+id_doc+"&st_habilita_pesquisa=true",
-                    sType: "GET",
-                    fnSuccess: sucesso,
-                    fnComplete: complete,
-                    fnBeforeSend: inicio,
-                    bAsync: true,
-                    iTimeout: 60000
-                });
-            }
-        },
-            {
-                text: "Cancelar",
-                click: function () {
-                    $(this).dialog('close');
-                }
-            }
-        ],
-        fnClose: function () {
-            LimparModal('modal_habilitar_pesquisa');
-        }
-    });
-}
-
-// função que habilita enviar email na tela normas pendentes
-function CriarModalEnviarEmail(id_doc, hsp) {
-    // NOTE: Caso o habilitar no SINJ Pesquisa esteja desabilitado, mostra mensagem q ira habilitar
-    // caso ele continue
-    if(!hsp){
-        $('#hspEml').show();
-    }else{
-        $('#hspEml').hide();
-    }
-    $("#modal_enviar_email_norma").modallight({
-        sTitle: "Confirmar",
-        sWidth: '400',
-        oButtons: [
-            {
-                text: "Confirmar",
-                click: function () {
-                    var inicio = function() {
-                        $('#super_loading').show();
-                    }
-                    var complete = function(data) {                        
-                        $('#super_loading').hide();
-                    }
-                    var sucesso = function(data) {
-                        if (IsNotNullOrEmpty(data, 'error_message')) {
-                            $('#modal_enviar_email_norma').messagelight({
-                                sTitle: "Erro",
-                                sContent: data.error_message,
-                                sType: "error",
-                                sWidth: "",
-                                iTime: null
-                            });
-                        } else{
-                            $('#modal_enviar_email_norma').dialog('close');
-
-                            $("<div id='modal_enviar_email_norma' />").modallight({
-                                sTitle: "Enviar E-mail",
-                                sType: "success",
-                                sContent: "Norma notificada com sucesso e habilitada no SINJ Pesquisa.",
-                                oButtons: [
-                                    {
-                                        text: "Ok",
-                                        click: function () {
-                                            $(this).dialog('close');
-                                        }
-                                    }
-                                ],
-                                fnClose: function () {
-                                    document.location.reload();
-                                }
-                            });
-                        
-                        }
-                    }
-                    $.ajaxlight({
-                        sUrl:'./ashx/Cadastro/NormaEditarCampoEmail.ashx?id_doc='+id_doc+"&st_habilita_email=true&st_atualizada=true",
-                        sType: "GET",
-                        fnSuccess: sucesso,
-                        fnComplete: complete,
-                        fnBeforeSend: inicio,
-                        bAsync: true,
-                        iTimeout: 40000
-                    });
-
-
-                }
-            },
-            {
-                text: "Cancelar",
-                click: function () {
-                    $(this).dialog('close');
-                }
-            }
-        ],
-        fnClose: function () {
-            LimparModal('modal_enviar_email_norma');
-        }
-    });
 }
 
 function CriarModalOrigem() {
@@ -1360,7 +1161,6 @@ function SelecionarTipoDeNorma() {
     $('#div_dados_de_acoes').hide();
     $('#line_interessados').hide();
     $('#line_autorias').hide();
-	$('.projetoDeLei').hide();
     $('#line_apelido').hide();
     if ($('#ch_tipo_norma').val() != "" && IsNotNullOrEmpty(_user, 'orgao_cadastrador.nm_orgao_cadastrador')) {
         $('.buttons').show();
@@ -1395,7 +1195,7 @@ function SelecionarTipoDeNorma() {
         if ($('#EhLei').val() === "true") {
 
             $('#line_autorias').show();
-            $('.projetoDeLei').show();
+            
         }
         if ($('#EhDecreto').val() === "true") {
             
@@ -1480,8 +1280,6 @@ function PreencherNormaEdicao() {
                     $('#ds_ementa').val(data.ds_ementa);
                     $('#ds_observacao').val(data.ds_observacao);
                     $('#st_destaque').prop("checked", data.st_destaque);
-                    $('#st_habilita_pesquisa').prop("checked", data.st_habilita_pesquisa);
-                    $('#st_habilita_email').prop("checked", data.st_habilita_email);
                     $('#st_pendencia').prop("checked", data.st_pendencia);
                     $('#ds_pendencia').val(data.ds_pendencia);
                     MarcarPendente();
@@ -1565,12 +1363,6 @@ function PreencherNormaEdicao() {
                     }
                     if (IsNotNullOrEmpty(data.url_referencia)) {
                         $('input[name="url_referencia"]').val(data.url_referencia);
-                    }
-                    if (IsNotNullOrEmpty(data.url_projeto_lei)) {
-                        $('input[name="url_projeto_lei"]').val(data.url_projeto_lei);
-                    }
-                    if (IsNotNullOrEmpty(data.nr_projeto_lei)) {
-                        $('input[name="nr_projeto_lei"]').val(data.nr_projeto_lei);
                     }
                     if (IsNotNullOrEmpty(data.ds_procedencia)) {
                         $('input[name="ds_procedencia"]').val(data.ds_procedencia);

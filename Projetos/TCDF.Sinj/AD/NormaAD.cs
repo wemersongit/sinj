@@ -65,11 +65,6 @@ namespace TCDF.Sinj.AD
             return _acessoAd.pathPut(id_doc, path, value, retorno);
         }
 
-        internal string PathPost(ulong id_doc, string path, string value, string retorno)
-        {
-            return _acessoAd.pathPut(id_doc, path, value, retorno);
-        }
-
         internal string PathPut<T>(Pesquisa pesquisa, List<opMode<T>> listopMode)
         {
             return new AcessoAD<T>(_nm_base).OP(pesquisa, listopMode);

@@ -150,8 +150,6 @@ namespace SINJ_Ajustar_Ementa
         public string ds_acao { get; set; }
         public string ds_efeito_decisao { get; set; }
         public string url_referencia { get; set; }
-        public string url_projeto_lei{ get; set; }
-        public string nr_projeto_lei { get; set; }
         public int id_orgao_cadastrador { get; set; }
         public string nm_orgao_cadastrador { get; set; }
         public List<string> ch_para_nao_duplicacao { get; set; }

@@ -177,6 +177,8 @@ function fnUploadEditorFile() {
         } 
     }
 
+    var valor = 'div_conteudo_arquivo';
+    console.log(valor);
     inserirMarcacoesNosParagrafos('div_conteudo_arquivo', false);
     $('#div_editor_file textarea[name="arquivo"]').val(window.encodeURI($('#div_conteudo_arquivo').html()));
 

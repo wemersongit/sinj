@@ -1,0 +1,522 @@
+
+// Dependências: liblight.js, validation.js, jquery.modalLight.js, jquery.ajaxLight.js
+//--------------------------------------------------------------------
+
+var _ch_orgao = "";
+
+function PesquisarOrgao() {
+    $('#div_notificacao_orgao').html('');
+    try {
+        ValidarPesquisa(form_pesquisa_orgao);
+        return true;
+    } catch (ex) {
+        $("#div_notificacao_orgao").messagelight({
+            sTitle: "Erro nos dados informados",
+            sContent: ex,
+            sType: "error"
+        });
+        return false;
+    }
+    return false;
+}
+
+function DetalhesOrgao() {
+    var id_doc = GetParameterValue("id_doc");
+    var ch_orgao = GetParameterValue("ch_orgao");
+    if (id_doc != "" || ch_orgao != "") {
+        var sucesso = function (data) {
+            if (IsNotNullOrEmpty(data)) {
+                _ch_orgao = data.ch_orgao;
+                if (data.error_message != null && data.error_message != "") {
+                    $('#div_notificacao_orgao').messagelight({
+                        sTitle: "Erro",
+                        sContent: data.error_message,
+                        sType: "error",
+                        sWidth: "",
+                        iTime: null
+                    });
+                }
+                if (data.ch_orgao != null && data.ch_orgao != "") {
+                    if (ValidarPermissao(_grupos.org_edt)) {
+                        $('#div_controls_detalhes').append(
+                            '<a title="Editar Órgão" href="./EditarOrgao.aspx?id_doc=' + data._metadata.id_doc + '"><img alt="editar" src="' + _urlPadrao + '/Imagens/ico_pencil_p.png"/></a> &nbsp;'
+                        );
+                    }
+                    if (ValidarPermissao(_grupos.org_exc)) {
+                        $('#div_controls_detalhes').append(
+                            '<a title="Excluir Órgão" href="javascript:void(0);" onclick="javascript:Excluir(' + data._metadata.id_doc + ');" ><img alt="excluir" src="' + _urlPadrao + '/Imagens/ico_trash_p.png"/></a>'
+                        );
+                    }
+                    DetalhesCadastro(data.nm_login_usuario_cadastro, data.dt_cadastro); // Chama a funçao que preenche os dados do cadastro passando o nome e a data como argumentos. (Essa funçao está em funcoes_sinj)
+                    DetalhesAlteracoes(data.alteracoes); // Chama a funçao que preenche as alterações passando a lista como argumento. (Essa funçao está em funcoes_sinj)
+                    $('#a_selecionar_normas').attr("onclick", "javascript:ExpandirTabelaDeNormas('" + data.ch_orgao + "')");
+                    $('#button_atualizar_normas').attr("onclick", "javascript:CriarModalConfirmacaoAtualizarOrigemDasNormas('" + data.ch_orgao + "', '" + data.sg_orgao + "', '" + data.nm_orgao + "')");
+                    $('#div_nm_orgao').text(data.nm_orgao);
+                    $('#div_sg_orgao').text(data.sg_orgao);
+                    $('#div_ambito').text(data.ambito.nm_ambito);
+                    $('#div_orgaos_cadastradores').text(data.get_orgaos_cadastradores);
+                    $('#div_st_orgao').text(data.get_st_orgao);
+                    $('#div_dt_inicio_vigencia').text(IsNotNullOrEmpty(data.dt_inicio_vigencia) ? data.dt_inicio_vigencia : "");
+                    $('#div_norma_inicio_vigencia').html(IsNotNullOrEmpty(data, 'ch_norma_inicio_vigencia') ? "<a href='./DetalhesDeNorma.aspx?id_norma=" + data.ch_norma_inicio_vigencia + "'> " + data.ds_norma_inicio_vigencia + " </a>" : "");
+                    if (!data.st_orgao) { // Se o órgão for inativo, preenche a linha. Se não, esconde.
+                        $('#div_dt_fim_vigencia').text(IsNotNullOrEmpty(data.dt_fim_vigencia) ? data.dt_fim_vigencia : "");
+                    }
+                    else {
+                        $('#line_dt_fim_vigencia').hide();
+                    }
+                    $('#div_norma_fim_vigencia').html(IsNotNullOrEmpty(data, 'ch_norma_fim_vigencia') ? "<a href='./DetalhesDeNorma.aspx?id_norma=" + data.ch_norma_fim_vigencia + "'> " + data.ds_norma_fim_vigencia + " </a>" : "");
+                    if (data.get_orgao_superior != null) {
+                        $('#tbody_orgao_superior').html(
+                            '<tr>' +
+                                '<td>' + data.get_orgao_superior.nm_orgao + '</td>' +
+                                '<td>' + data.get_orgao_superior.sg_orgao + '</td>' +
+                                '<td>' + data.get_orgao_superior.sg_hierarquia + '</td>' +
+                                '<td>' + data.get_orgao_superior.ambito.nm_ambito + '</td>' +
+                                '<td>' + GetText(data.get_orgao_superior.dt_inicio_vigencia) + '</td>' +
+                                '<td>' + (data.get_orgao_superior.dt_fim_vigencia != null ? data.get_orgao_superior.dt_fim_vigencia : '') + '</td>' +
+                                '<td>' + data.get_orgao_superior.get_orgaos_cadastradores + '</td>' +
+                                '<td class="control">' +
+                                    '<a href="./DetalhesDeOrgao.aspx?id_doc=' + data.get_orgao_superior._metadata.id_doc + '"><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>' +
+                                '</td>' +
+                            '</tr>');
+                    }
+                    if (data.get_orgaos_inferiores != null && data.get_orgaos_inferiores.length > 0) {
+                        $('#tbody_orgaos_inferiores').html('');
+                        for (var i = 0; i < data.get_orgaos_inferiores.length; i++) {
+                            $('#tbody_orgaos_inferiores').append(
+                                '<tr>' +
+                                    '<td>' + data.get_orgaos_inferiores[i].nm_orgao + '</td>' +
+                                    '<td>' + data.get_orgaos_inferiores[i].sg_orgao + '</td>' +
+                                    '<td>' + data.get_orgaos_inferiores[i].sg_hierarquia + '</td>' +
+                                    '<td>' + data.get_orgaos_inferiores[i].ambito.nm_ambito + '</td>' +
+                                    '<td>' + GetText(data.get_orgaos_inferiores[i].dt_inicio_vigencia) + '</td>' +
+                                    '<td>' + (data.get_orgaos_inferiores[i].dt_fim_vigencia != null ? data.get_orgaos_inferiores[i].dt_fim_vigencia : '') + '</td>' +
+                                    '<td>' + data.get_orgaos_inferiores[i].get_orgaos_cadastradores + '</td>' +
+                                    '<td class="control">' +
+                                        '<a href="./DetalhesDeOrgao.aspx?id_doc=' + data.get_orgaos_inferiores[i]._metadata.id_doc + '"><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>' +
+                                    '</td>' +
+                                '</tr>');
+                        }
+                    }
+                    if (data.get_orgaos_anteriores != null && data.get_orgaos_anteriores.length > 0) {
+                        $('#tbody_orgaos_anteriores').html('');
+                        for (var i = 0; i < data.get_orgaos_anteriores.length; i++) {
+                            $('#tbody_orgaos_anteriores').append(
+                                '<tr>' +
+                                    '<td>' + data.get_orgaos_anteriores[i].nm_orgao + '</td>' +
+                                    '<td>' + data.get_orgaos_anteriores[i].sg_orgao + '</td>' +
+                                    '<td>' + data.get_orgaos_anteriores[i].sg_hierarquia + '</td>' +
+                                    '<td>' + data.get_orgaos_anteriores[i].ambito.nm_ambito + '</td>' +
+                                    '<td>' + GetText(data.get_orgaos_anteriores[i].dt_inicio_vigencia) + '</td>' +
+                                    '<td>' + (data.get_orgaos_anteriores[i].dt_fim_vigencia != null ? data.get_orgaos_anteriores[i].dt_fim_vigencia : '') + '</td>' +
+                                    '<td>' + data.get_orgaos_anteriores[i].get_orgaos_cadastradores + '</td>' +
+                                    '<td class="control">' +
+                                        '<a href="./DetalhesDeOrgao.aspx?id_doc=' + data.get_orgaos_anteriores[i]._metadata.id_doc + '"><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>' +
+                                    '</td>' +
+                                '</tr>');
+                        }
+                    }
+                    if (data.get_orgaos_posteriores != null && data.get_orgaos_posteriores.length > 0) {
+                        $('#tbody_orgaos_posteriores').html('');
+                        for (var i = 0; i < data.get_orgaos_posteriores.length; i++) {
+                            $('#tbody_orgaos_posteriores').append(
+                                '<tr>' +
+                                    '<td>' + data.get_orgaos_posteriores[i].nm_orgao + '</td>' +
+                                    '<td>' + data.get_orgaos_posteriores[i].sg_orgao + '</td>' +
+                                    '<td>' + data.get_orgaos_posteriores[i].sg_hierarquia + '</td>' +
+                                    '<td>' + data.get_orgaos_posteriores[i].ambito.nm_ambito + '</td>' +
+                                    '<td>' + GetText(data.get_orgaos_posteriores[i].dt_inicio_vigencia) + '</td>' +
+                                    '<td>' + (data.get_orgaos_posteriores[i].dt_fim_vigencia != null ? data.get_orgaos_posteriores[i].dt_fim_vigencia : '') + '</td>' +
+                                    '<td>' + data.get_orgaos_posteriores[i].get_orgaos_cadastradores + '</td>' +
+                                    '<td class="control">' +
+                                        '<a href="./DetalhesDeOrgao.aspx?id_doc=' + data.get_orgaos_posteriores[i]._metadata.id_doc + '"><img alt="detalhes" src="' + _urlPadrao + '/Imagens/ico_loupe_p.png" /></a>' +
+                                    '</td>' +
+                                '</tr>');
+                        }
+                    }
+                }
+            }
+        };
+        var inicio = function () {
+            $('#div_orgao_loading').show();
+            $('#div_orgao').hide();
+        }
+        var complete = function () {
+            $('#div_orgao_loading').hide();
+            $('#div_orgao').show();
+        }
+        $.ajaxlight({
+            sUrl: MostrarPaginaAjax('VIS') + window.location.search,
+            sType: "POST",
+            fnSuccess: sucesso,
+            fnComplete: complete,
+            fnBeforeSend: inicio,
+            fnError: null,
+            bAsync: true
+        });
+    }
+}
+
+function PreencherOrgaoEdicao() {
+    var id_doc = GetParameterValue("id_doc");
+    if (id_doc != "") {
+        var sucesso = function (data) {
+            if (IsNotNullOrEmpty(data)) {
+                if (data.error_message != null && data.error_message != "") {
+                    $('#div_orgao_notificacao').messagelight({
+                        sTitle: "Erro",
+                        sContent: data.error_message,
+                        sType: "error",
+                        sWidth: "",
+                        iTime: null
+                    });
+                }
+                if (data.ch_orgao != null && data.ch_orgao != "") {
+                    $('#id_doc').val(data._metadata.id_doc);
+                    $('#nm_orgao').val(data.nm_orgao);
+                    $('#sg_orgao').val(data.sg_orgao);
+                    $('#id_ambito option[value="' + data.ambito.id_ambito + '"]').attr('selected', 'selected');
+                    for (var i = 0; i < data.orgaos_cadastradores.length; i++) {
+                        $('#div_orgaos_cadastradores input[value="' + data.orgaos_cadastradores[i].id_orgao_cadastrador + '"]').prop("checked", true);
+                    }
+                    $('#div_st_orgao input[value="' + data.st_orgao + '"]').prop("checked", true);
+                    if (!$('#div_st_orgao input[value="true"]').prop("checked")) {
+                        SelecionarInativo();
+                    }
+                    else {
+                        SelecionarAtivo();
+                    }
+                    $("#label_inativar_filhos").attr("ch_orgao", data.ch_orgao);
+                    $('#dt_inicio_vigencia').val(IsNotNullOrEmpty(data.dt_inicio_vigencia) ? data.dt_inicio_vigencia : "");
+                    $('#dt_fim_vigencia').val(IsNotNullOrEmpty(data.dt_fim_vigencia) ? data.dt_fim_vigencia : "");
+                    if (data.get_orgao_superior != null) {
+                        $('#tbody_hierarquia').html(
+                            '<tr>' +
+                                '<td>' + data.get_orgao_superior.nm_orgao + '<input type="hidden" id="hidden_ch_orgao_pai" name="ch_orgao_pai" value="' + data.get_orgao_superior.ch_orgao + '" /></td>' +
+                                '<td>' + data.get_orgao_superior.sg_orgao + '</td>' +
+                                '<td>' + data.get_orgao_superior.sg_hierarquia + '</td>' +
+                                '<td>' + data.get_orgao_superior.ambito.nm_ambito + '</td>' +
+                                '<td>' + GetText(data.get_orgao_superior.dt_inicio_vigencia) + '</td>' +
+                                '<td>' + (data.get_orgao_superior.dt_fim_vigencia != null ? data.get_orgao_superior.dt_fim_vigencia : '') + '</td>' +
+                                '<td>' + data.get_orgao_superior.get_orgaos_cadastradores + '</td>' +
+                                '<td class="control">' +
+                                    '<a href="javascript:void(0);" onclick="javascript:DeletarLinha(event);"><img valign="absmiddle" alt="Excluir" src="' + _urlPadrao + '/Imagens/ico_delete_p.png"  /></a>' +
+                                '</td>' +
+                            '</tr>');
+                    }
+                    if (data.get_orgaos_anteriores != null) {
+                        for (var i = 0; i < data.get_orgaos_anteriores.length; i++) {
+                            $('#tbody_cronologia .tr_vazia').remove();
+                            $('#tbody_cronologia').append(
+	                            '<tr ch_orgao="' + data.get_orgaos_anteriores[i].ch_orgao + '">' +
+	                                '<td>' + data.get_orgaos_anteriores[i].nm_orgao + '<input type="hidden" name="orgao_anterior" value="' + data.get_orgaos_anteriores[i].ch_orgao + '" /></td>' +
+	                                '<td>' + data.get_orgaos_anteriores[i].sg_orgao + '</td>' +
+	                                '<td sg_hierarquia>' + data.get_orgaos_anteriores[i].sg_hierarquia + '</td>' +
+	                                '<td>' + data.get_orgaos_anteriores[i].ambito.nm_ambito + '</td>' +
+	                                '<td>' + GetText(data.get_orgaos_anteriores[i].dt_inicio_vigencia) + '</td>' +
+	                                '<td>' + (data.get_orgaos_anteriores[i].dt_fim_vigencia != null ? data.get_orgaos_anteriores[i].dt_fim_vigencia : '') + '</td>' +
+	                                '<td>' + data.get_orgaos_anteriores[i].get_orgaos_cadastradores + '</td>' +
+	                                '<td class="control">' +
+	                                    '<a href="javascript:void(0);" onclick="javascript:DeletarLinha(event); javascript:DeletarFilhos(\'' + data.get_orgaos_anteriores[i].ch_orgao + '\')"><img valign="absmiddle" alt="Excluir" src="' + _urlPadrao + '/Imagens/ico_delete_p.png"  /></a>' +
+	                                '</td>' +
+	                            '</tr>');
+                        }
+                    }
+                    if (IsNotNullOrEmpty(data, 'ch_norma_inicio_vigencia')) {
+                        SelecionarNormaAssociada(data.ch_norma_inicio_vigencia, data.ds_norma_inicio_vigencia, 'inicio');
+                    }
+                    if (IsNotNullOrEmpty(data, 'ch_norma_fim_vigencia')) {
+                        SelecionarNormaAssociada(data.ch_norma_fim_vigencia, data.ds_norma_fim_vigencia, 'fim');
+                    }
+                }
+            }
+        };
+        var inicio = function () {
+            $('#div_loading_orgao').show();
+            $('#div_orgao').hide();
+        }
+        var complete = function () {
+            $('#div_loading_orgao').hide();
+            $('#div_orgao').show();
+        }
+        $.ajaxlight({
+            sUrl: MostrarPaginaAjax("VIS") + window.location.search,
+            sType: "POST",
+            fnSuccess: sucesso,
+            fnComplete: complete,
+            fnBeforeSend: inicio,
+            fnError: null,
+            bAsync: true
+        });
+    }
+}
+
+function CriarModalHierarquia() {
+    $('#modal_hierarquia .dados_orgao').hide();
+    $("#modal_hierarquia").modallight({
+        sTitle: "Adicionar Órgão Pai",
+        sWidth: '600',
+        oButtons: [{
+            text: "Salvar",
+            click: function () {
+                var ch_orgao = $('#ch_orgao_pai_modal').val();
+                var sg_ds_orgao = $('#sg_nm_orgao_pai_modal').val();
+                if (IsNotNullOrEmpty(ch_orgao) && IsNotNullOrEmpty(sg_ds_orgao)) {
+                    $('#tbody_hierarquia').html(
+                                '<tr>' +
+                                    '<td>' + $('#label_nm_orgao_pai_modal').text().trim() + '<input type="hidden" id="hidden_ch_orgao_pai" name="ch_orgao_pai" value="' + ch_orgao + '" /></td>' +
+                                    '<td>' + $('#label_sg_orgao_pai_modal').text().trim() + '</td>' +
+                                    '<td>' + $('#label_sg_hierarquia_orgao_pai_modal').text().trim() + '</td>' +
+                                    '<td>' + $('#label_in_ambito_orgao_pai_modal').text().trim() + '</td>' +
+                                    '<td>' + $('#label_dt_inicio_vigencia_orgao_pai_modal').text().trim() + '</td>' +
+                                    '<td>' + $('#label_dt_fim_vigencia_orgao_pai_modal').text().trim() + '</td>' +
+                                    '<td>' + $('#label_in_orgao_cadastrador_orgao_pai_modal').text().trim() + '</td>' +
+                                    '<td class="control">' +
+                                        '<a href="javascript:void(0);" onclick="javascript:DeletarLinha(event);"><img valign="absmiddle" alt="Excluir" src="'+_urlPadrao+'/Imagens/ico_delete_p.png"  /></a>' +
+                                    '</td>' +
+                                '</tr>');
+                    LimparModal('modal_hierarquia');
+                    $(this).dialog('close');
+                }
+            }
+        }, {
+            text: "Cancelar",
+            click: function () {
+                $(this).dialog('close');
+            }
+        }],
+        fnClose: function () {
+            LimparModal('modal_hierarquia');
+        }
+    });
+}
+
+function CriarModalCronologia() {
+    $('#modal_cronologia .notify').hide();
+    $('#modal_cronologia .dados_orgao').hide();
+    $("#modal_cronologia").modallight({
+        sTitle: "Adicionar Órgão Anterior",
+        sWidth: '600',
+        oButtons: [{
+            text: "Salvar",
+            click: function () {
+                var ch_orgao = $('#ch_orgao_anterior_modal').val();
+                var nm_orgao = $('#label_nm_orgao_anterior_modal').text();
+                var sg_nm_orgao = $('#sg_nm_orgao_anterior_modal').val();
+                var dt_inicio_vigencia = $('#label_dt_inicio_vigencia_orgao_anterior_modal').text().trim();
+                var dt_fim_vigencia = $('#label_dt_fim_vigencia_orgao_anterior_modal').text().trim();
+                var dt_inicio_vigencia_editar = "";
+                var dt_fim_vigencia_editar = "";
+                if (!IsNotNullOrEmpty(dt_inicio_vigencia)) {
+                    dt_inicio_vigencia = $('#input_dt_inicio_vigencia_orgao_anterior_modal').val();
+                    if (!IsNotNullOrEmpty(dt_inicio_vigencia)) {
+                        $('#modal_cronologia .notify').messagelight({
+                            sContent: "O Órgão precisa ter data de início de vigência.",
+                            sType: "error"
+                        });
+                        return;
+                    }
+                    dt_inicio_vigencia_editar = dt_inicio_vigencia;
+                }
+                if (!IsNotNullOrEmpty(dt_fim_vigencia)) {
+                    dt_fim_vigencia = $('#input_dt_fim_vigencia_orgao_anterior_modal').val();
+                    if (!IsNotNullOrEmpty(dt_fim_vigencia)) {
+                        $('#modal_cronologia .notify').messagelight({
+                            sContent: "O Órgão precisa ter data de fim de vigência.",
+                            sType: "error"
+                        });
+                        return;
+                    }
+                    dt_fim_vigencia_editar = dt_fim_vigencia;
+                }
+                if (IsNotNullOrEmpty(ch_orgao) && IsNotNullOrEmpty(sg_nm_orgao)) {
+                    var hiddens_orgaos_anteriores = $('#table_cronologia').find('input[name="orgao_anterior"]');
+                    var i = hiddens_orgaos_anteriores.length;
+                    while (i--) {
+                        if ($(hiddens_orgaos_anteriores[i]).val().split('#')[0] == ch_orgao) {
+                            $('#modal_cronologia .notify').messagelight({
+                                sContent: "O Órgão já existe na " + (i + 1) + "ª linha da tabela.",
+                                sType: "error"
+                            });
+                            return;
+                        }
+                    }
+                    $('#tbody_cronologia .tr_vazia').remove();
+                    $('#tbody_cronologia').append(
+                                '<tr onmouseover="DestacarLinha(event)" onmouseout="RemoverDestaqueLinha()" ch_orgao="'+ch_orgao+'">' +
+                                    '<td>' + $('#label_nm_orgao_anterior_modal').text() + '<input type="hidden" name="orgao_anterior" value="' + ch_orgao + '#' + dt_inicio_vigencia_editar + '#' + dt_fim_vigencia_editar + '" /></td>' +
+                                    '<td>' + $('#label_sg_orgao_anterior_modal').text() + '</td>' +
+                                    '<td sg_hierarquia>' + $('#label_sg_hierarquia_orgao_anterior_modal').text() + '</td>' +
+                                    '<td>' + $('#label_in_ambito_orgao_anterior_modal').text() + '</td>' +
+                                    '<td>' + dt_inicio_vigencia + '</td>' +
+                                    '<td >' + dt_fim_vigencia + '</td>' + 
+                                    '<td>' + $('#label_in_orgao_cadastrador_orgao_anterior_modal').text() + '</td>' +
+                                    '<td class="control">' +
+                                        '<a href="javascript:void(0);" onclick="javascript:DeletarLinha(event); javascript:DeletarFilhos(\'' + ch_orgao + '\')"><img valign="absmiddle" alt="Excluir" src="'+_urlPadrao+'/Imagens/ico_delete_p.png"  /></a>' +
+                                        '<a href="javascript:void(0);" onclick="javascript:CriarModalFilhos(\''+ch_orgao+'\',\''+nm_orgao+'\',\''+dt_fim_vigencia+'\');"><img valign="absmiddle" title="Selecionar Órgãos Filho" alt="Selecionar Órgãos Filho" src="'+_urlPadrao+'/Imagens/ico_arrow_down.png"  /></a>' +
+                                    '</td>' +
+                                '</tr>');
+                    $(this).dialog('close');
+                }
+                
+            }
+        }, {
+            text: "Cancelar",
+            click: function () {
+                $(this).dialog('close');
+            }
+        }],
+        fnClose: function () {
+            LimparModal('modal_cronologia');
+        }
+    });
+}
+
+function CriarModalFilhos(ch_orgao, nm_orgao, dt_fim_vigencia) {
+    	$('<div id="modal_filhos"/>').modallight({
+        sTitle: "Selecionar Órgãos Filho: "+nm_orgao,
+        sContent: '<div id="div_orgaos_filho" class="table w-100-pc"></div>',
+        sWidth: '600',
+        fnCreated: function(){
+        	var sucesso = function(data){
+            	if (!IsNotNullOrEmpty(data.results)) {
+	            	$('#modal_filhos').append(
+	            		'Esse órgão não tem nenhum filho associado'
+	            	);
+            	}
+            	else{
+            		$('#modal_filhos').append(
+            			'<ul id="ul_orgao"> </ul>'
+            		);
+	        		for (var orgao in data.results){
+	        			var orgaos_cadastradores = "";
+	        			for (i in data.results[orgao].orgaos_cadastradores){
+	        				orgaos_cadastradores += (orgaos_cadastradores == "" ? "" : ", ") + data.results[orgao].orgaos_cadastradores[i].nm_orgao_cadastrador;
+	        			}    
+		            	$('#ul_orgao').append(
+		            		'<li id="li_orgao_filho'+orgao+'"> <input type="checkbox" class="checkbox_orgao_filho" id="checkbox_orgao'+orgao+'"' +
+		            		'ch_hierarquia="'+data.results[orgao].ch_hierarquia+'" ch_orgao="'+data.results[orgao].ch_orgao+'"' +
+		            		'ch_orgao_pai="'+data.results[orgao].ch_orgao_pai+'" nm_orgao="'+data.results[orgao].nm_orgao+'" sg_orgao="'+data.results[orgao].sg_orgao+'"' +
+		            		'sg_hierarquia="'+data.results[orgao].sg_hierarquia+'" nm_ambito="'+data.results[orgao].ambito.nm_ambito+'"' +
+		            		'dt_inicio_vigencia="'+data.results[orgao].dt_inicio_vigencia+'" dt_fim_vigencia="'+dt_fim_vigencia+'"' +
+		            		'orgaos_cadastradores="'+orgaos_cadastradores+'"> </input>' + data.results[orgao].nm_orgao + '</li>'
+		            	);
+	        			var orgao_existente = $('tr[ch_orgao="'+data.results[orgao].ch_orgao+'"]');
+	        			if (IsNotNullOrEmpty(orgao_existente)){
+	        				$('#checkbox_orgao'+orgao).prop('checked', true);
+	        			}	  
+	        		}
+            	}
+        	}
+	        var inicio = function () {
+	            $('#div_loading_orgao').show();
+	            $('#div_orgaos_filho').hide();
+	        }
+	        var complete = function () {
+	            $('#div_loading_orgao').hide();
+	            $('#div_orgaos_filho').show();
+            }
+        	$.ajaxlight({
+        		sUrl: "./ashx/Consulta/OrgaosInferioresConsulta.ashx?ch_orgao="+ch_orgao, 
+           		fnSuccess: sucesso,
+                fnBeforeSubmit: inicio,
+                fnComplete: complete,
+                bAsync: true
+        	});
+    	},
+        oButtons: [
+        	{
+	            text: "Salvar",
+	            click: function () {
+	            	var filhos_selecionados = $('.checkbox_orgao_filho:checked');
+	            	var filhos_nao_selecionados = $('.checkbox_orgao_filho:not(:checked)');
+				    if (IsNotNullOrEmpty(filhos_selecionados)) {
+				    	$('#div_filhos_selecionados').show();
+				  		$('#tbody_filhos .tr_vazia').remove();
+		            	for (var i=0; i<filhos_selecionados.length;i++){
+		            		var obj_filho = {
+		            			ch_orgao : $(filhos_selecionados[i]).attr('ch_orgao'),		
+		            			ch_hierarquia : $(filhos_selecionados[i]).attr('ch_hierarquia'),		
+		            			ch_orgao_pai : $(filhos_selecionados[i]).attr('ch_orgao_pai'),		
+		            			nm_orgao : $(filhos_selecionados[i]).attr('nm_orgao'),		
+		            			sg_orgao : $(filhos_selecionados[i]).attr('sg_orgao'),		
+		            			sg_hierarquia : $(filhos_selecionados[i]).attr('sg_hierarquia'),		
+		            			nm_ambito : $(filhos_selecionados[i]).attr('nm_ambito'),		
+		            			dt_inicio_vigencia : $(filhos_selecionados[i]).attr('dt_inicio_vigencia'),		
+		            			dt_fim_vigencia : $(filhos_selecionados[i]).attr('dt_fim_vigencia'),			
+		            			orgaos_cadastradores : $(filhos_selecionados[i]).attr('orgaos_cadastradores')		            	
+		            		};
+		        			var orgao_existente = $('tr[ch_orgao="'+obj_filho.ch_orgao+'"]');
+		        			if (!IsNotNullOrEmpty(orgao_existente)){
+			            		$('#tbody_filhos').append(
+			            			'<tr onmouseover="DestacarLinha(event)" onmouseout="RemoverDestaqueLinha()" ch_orgao="'+obj_filho.ch_orgao+'" ch_hierarquia="'+obj_filho.ch_hierarquia+'" ch_orgao_pai="'+obj_filho.ch_orgao_pai+'">' +
+			            				'<td nm_orgao>' + obj_filho.nm_orgao + '<input type="hidden" name="orgao_filho" value="'+obj_filho.ch_orgao+'"/> </td>' +
+			            				'<td sg_orgao>' + obj_filho.sg_orgao + '</td>' +
+			            				'<td sg_hierarquia>' + obj_filho.sg_hierarquia + '</td>' +
+			            				'<td nm_ambito>' + obj_filho.nm_ambito + '</td>' +
+			            				'<td dt_inicio_vigencia>' + obj_filho.dt_inicio_vigencia + '</td>' +
+		                   				'<td dt_fim_vigencia>'+ (obj_filho.dt_fim_vigencia != "null" ? '<input type="text" name="orgao_filho_dt_fim_vigencia" onblur="javascript:AlterarDataFimVigencia(event)" class="w-100-pc date" value="' + obj_filho.dt_fim_vigencia + '"</input> ' : '')+'</td>' +
+			            				'<td orgaos_cadastradores>' + obj_filho.orgaos_cadastradores + '</td>' +
+					                    '<td class="control">' +
+					                        '<a href="javascript:void(0);" onclick="javascript:DeletarFilhos(\''+obj_filho.ch_orgao+'\')"><img valign="absmiddle" alt="Excluir" src="'+_urlPadrao+'/Imagens/ico_delete_p.png"  /></a>' +  
+					                        '<a class="modal" href="javascript:void(0);" onclick="javascript:CriarModalFilhos(\''+obj_filho.ch_orgao+'\',\''+obj_filho.nm_orgao+'\',\''+obj_filho.dt_fim_vigencia+'\');"><img valign="absmiddle" title="Selecionar Órgãos Filho" alt="Selecionar Órgãos Filho" src="'+_urlPadrao+'/Imagens/ico_arrow_down.png"  /></a>' +
+					                    '</td>' +
+				                    '</tr>'  
+			            		);
+			    				var onselect = function(date, inst){
+									var hoje = new Date();
+									// O split recebe o string com a data selecionada
+									// e o divide em tres partes: data, mes, ano
+									var split_date = date.split("/");
+									var data_selecionada = new Date();
+									data_selecionada.setDate(parseInt(split_date[0]));
+									data_selecionada.setMonth(parseInt(split_date[1]) -1);
+									data_selecionada.setFullYear(parseInt(split_date[2]));
+									var dt_inicio_vigencia_recebida = $(this).closest('tr').find('[dt_inicio_vigencia]').text();	
+									var split_dt_inicio_vigencia = dt_inicio_vigencia_recebida.split("/");
+									var dt_inicio_vigencia = new Date();
+									dt_inicio_vigencia.setDate(parseInt(split_dt_inicio_vigencia[0]));
+									dt_inicio_vigencia.setMonth(parseInt(split_dt_inicio_vigencia[1]) -1);
+									dt_inicio_vigencia.setFullYear(parseInt(split_dt_inicio_vigencia[2]));
+									if (data_selecionada > hoje || data_selecionada < dt_inicio_vigencia){
+										$(this).val("");
+										$('<div id="modal_notificacao_data_invalida" />').modallight({
+							                sTitle: "Data inválida",
+							                sContent: (data_selecionada > hoje ? "A data do fim de vigência não pode ser maior que a data de hoje" : "A data do fim de vigência não pode ser maior que a data de início."),
+							                sType: "error",
+											sWidth: 500,
+							                oButtons: [{ text: "Ok", click: function () { $(this).dialog('close'); } }],
+							                fnClose: function () {
+							                    $(this).remove();
+							                }
+							            });
+									}
+									else{
+										var ch_orgao = $(this).parent().closest('tr').attr('ch_orgao');
+										AlterarDataFimVigenciaDatePicker(date, ch_orgao, this);
+									}
+								}
+								inicializarDatePicker({onSelect:onselect});
+		        			}	
+		            	}
+			  		}
+					if (IsNotNullOrEmpty(filhos_nao_selecionados)) {
+		            	for (var i=0; i<filhos_nao_selecionados.length;i++){
+		            		var obj_filho = {
+		            			ch_orgao : $(filhos_nao_selecionados[i]).attr('ch_orgao'),		
+		            			ch_hierarquia : $(filhos_nao_selecionados[i]).attr('ch_hierarquia'),		
+		            			ch_orgao_pai : $(filhos_nao_selecionados[i]).attr('ch_orgao_pai'),		
+		            			nm_orgao : $(filhos_nao_selecionados[i]).attr('nm_orgao'),		
+		            			sg_orgao : $(filhos_nao_selecionados[i]).attr('sg_orgao'),		
+		            			sg_hierarquia : $(filhos_nao_selecionados[i]).attr('sg_hierarquia'),		
+		            			nm_ambito : $(filhos_nao_selecionados[i]).attr('nm_ambito'),		
+		            			dt_inicio_vigencia : $(filhos_nao_selecionados[i]).attr('dt_inicio_vigencia'),		
+		            			dt_fim_vigencia : $(filhos_nao_selecionados[i]).attr('dt_fim_vigencia'),			
+		            			orgaos_cadastradores : $(filhos_nao_selecionados[i]).attr('orgaos_cadastradores')		            	
+		            		};
+		        			var orgao_existente = $('tr[ch_orgao="'+obj_filho.ch_orgao+'"]');
+		        			if (IsNotNullOrEmpty(orgao_existente)){
+		        				orgao_existente.remove();
+		        			}
+		        			function RemoverDescendentes(ch_orgao_pai){
+			        			var

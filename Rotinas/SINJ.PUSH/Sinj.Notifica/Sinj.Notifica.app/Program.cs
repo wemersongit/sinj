@@ -78,12 +78,12 @@ namespace Sinj.Notifica.app
                 {
                     Notificar(notificacao);
                     Console.WriteLine("Usuário notificado: " + notificacao.To);
-                    Log.Writer("Notificacao, de ato criado, enviada para o email " + notificacao.To + ", usuário de id " + notificacao.IdUsuario);
+                    Log.Writer("Notificacao, de ato criado, enviada para o email " + notificacao.To + ", usuário de id " + notificacao.IdUsuário);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Erro usuário: " + notificacao.To);
-                    Log.Writer(ex, "Erro na notificacao sobre norma criada para email " + notificacao.To + ", usuário de id " + notificacao.IdUsuario);
+                    Log.Writer(ex, "Erro na notificacao sobre norma criada para email " + notificacao.To + ", usuário de id " + notificacao.IdUsuário);
                 }
             }
 
@@ -107,12 +107,12 @@ namespace Sinj.Notifica.app
                 {
                     Notificar(notificacao);
                     Console.WriteLine("Usuário notificado: " + notificacao.To);
-                    Log.Writer("Notificacao, de ato alterado, enviada para o email " + notificacao.To + ", usuário de id " + notificacao.IdUsuario);
+                    Log.Writer("Notificacao, de ato alterado, enviada para o email " + notificacao.To + ", usuário de id " + notificacao.IdUsuário);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Erro usuário: " + notificacao.To);
-                    Log.Writer(ex, "Erro na notificacao sobre norma alterada para email " + notificacao.To + ", usuário de id " + notificacao.IdUsuario);
+                    Log.Writer(ex, "Erro na notificacao sobre norma alterada para email " + notificacao.To + ", usuário de id " + notificacao.IdUsuário);
                 }
             }
 
@@ -217,7 +217,7 @@ namespace Sinj.Notifica.app
         {
             Notificacao notificacao = new Notificacao();
             notificacao.IdNorma = norma.Id;
-            notificacao.IdUsuario = Convert.ToInt32(push.Id);
+            notificacao.IdUsuário = Convert.ToInt32(push.Id);
             notificacao.From = _contaDeEmail;
             notificacao.To = push.Email;
             notificacao.Subject = CriaAssuntoDaNotificacao(norma);
@@ -229,7 +229,7 @@ namespace Sinj.Notifica.app
         {
             Notificacao notificacao = new Notificacao();
             notificacao.IdNorma = normaAlterada.Id;
-            notificacao.IdUsuario = Convert.ToInt32(push.Id);
+            notificacao.IdUsuário = Convert.ToInt32(push.Id);
             notificacao.From = _contaDeEmail;
             notificacao.To = push.Email;
             notificacao.Subject = CriaAssuntoDaNotificacao(normaAlterada);
@@ -275,10 +275,6 @@ namespace Sinj.Notifica.app
             corpoEmail = corpoEmail + "			</tr><tr align=\"left\" style=\"background-color:#F0F0F0;height:20px;\">";
 
             corpoEmail = corpoEmail + "				<td valign=\"top\" style=\"width:100px;\">" + norma.Tipo.Nome + " " + norma.Numero + " de " + norma.DataAssinatura.ToString("dd/MM/yyyy");
-
-            Console.WriteLine(corpoEmail);
-
-
 
             int quantidadeDeOrgaos = norma.Origens.Count;
             if (quantidadeDeOrgaos > 0)
@@ -441,9 +437,8 @@ namespace Sinj.Notifica.app
 
         private static string CriaAssuntoDaNotificacao(Norma norma)
         {
-            // trecho substituido - string assunto = "Informações sobre o ato " + norma.Tipo.Nome + " " + norma.Numero + " de " + norma.DataAssinatura.ToString("dd/MM/yyyy");
-            //Deverá mostrar o seguinte: ex.: SINJ-DF - Criação - Decreto 40041/2019 - GAG
-            string assunto = "SINJ-DF " + norma.Tipo.Nome + " " + norma.Numero + " de " + norma.DataAssinatura.ToString("dd/MM/yyyy");
+            string assunto = "Informações sobre o ato " + norma.Tipo.Nome + " " + norma.Numero + " de " + norma.DataAssinatura.ToString("dd/MM/yyyy");
+
             int quantidadeDeOrgaos = norma.Origens.Count;
             if (quantidadeDeOrgaos > 0)
             {
