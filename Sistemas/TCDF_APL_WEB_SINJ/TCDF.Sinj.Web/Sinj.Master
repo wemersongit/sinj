@@ -322,6 +322,20 @@
             </div>
         </form>
     </div>
+
+    <div id="modal_desabilitar_email_norma" class="modal" style="display:none;">
+        <form id="desabilitar_email" name="enviar_email" action="#" method="post">
+            <div class="table w-100-pc">
+                <div class="line">
+                    <div class="column w-100-pc">
+                        <div class="cell">
+                            <label>Deseja desabilitar o envio de e-mail dessa norma?</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     <div id="show_top" class="ancora" >
         <a href="#" title="topo"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/show_top.png" alt="topo" /></a>
     </div>

@@ -496,6 +496,9 @@
     <Compile Include="ashx\Cadastro\InteressadoIncluir.ashx.cs">
       <DependentUpon>InteressadoIncluir.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx\Cadastro\NormaDesabilitarEmail.ashx.cs">
+      <DependentUpon>NormaDesabilitarEmail.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx\Cadastro\NormaEditarCampoEmail.ashx.cs">
       <DependentUpon>NormaEditarCampoEmail.ashx</DependentUpon>
     </Compile>
@@ -1906,6 +1909,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="TCDF.Sinj.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ashx\Cadastro\NormaDesabilitarEmail.ashx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

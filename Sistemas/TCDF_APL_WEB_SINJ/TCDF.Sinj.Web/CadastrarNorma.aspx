@@ -594,23 +594,6 @@
                                             <input id="in_apelidavel" type="hidden" value="" />
                                             <input id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" onblur="javascript:SelecionarTipoDeNorma();"/><a title="Listar" id="a_tipo_norma"></a>
                                         </div>
-                                        <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                        <div class="w-130-pc" style="float:right">
-                                            <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                            <div id="habilitarPesquisaNorna">
-                                                <label style="font-size:large">Habilitar no Sinj Pesquisa:</label>      
-                                                <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
-                                            </div>
-
-                                            <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                            <div id="habilitarNotificacao">
-                                                <div>
-                                                    <label style="font-size:large">Habilita enviar e-mail:</label>
-                                                    <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
-                                                </div>
-                                            </div>
-                                            <!-- -->
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="line">
@@ -1292,6 +1275,26 @@
                                     <div class="column w-80-pc">
                                         <div class="cell w-100-pc">
                                             <input name="url_referencia" type="text" value="" class="w-90-pc" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="w-90-pc mauto">
+                                        <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                        <div class="column" id="habilitarPesquisaNorna">
+                                            <label style="font-size:large">Habilitar no Sinj Pesquisa:</label>      
+                                            <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="w-90-pc mauto ">
+                                        <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                        <div class="column" id="habilitarNotificacao">
+                                            <div>
+                                                <label style="font-size:large">Habilita enviar e-mail:</label>
+                                                <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -684,6 +684,77 @@ function CriarModalEnviarEmail(id_doc, hsp) {
     });
 }
 
+function CriarModalDesabilitarEmail(id_doc){
+    $("#modal_desabilitar_email_norma").modallight({
+        sTitle: "Confirmar",
+        sWidth: '400',
+        oButtons: [
+            {
+                text: "Confirmar",
+                click: function () {
+                    var inicio = function() {
+                        $('#super_loading').show();
+                    }
+                    var complete = function(data) {                        
+                        $('#super_loading').hide();
+                    }
+                    var sucesso = function(data) {
+                        if (IsNotNullOrEmpty(data, 'error_message')) {
+                            $('#modal_desabilitar_email_norma').messagelight({
+                                sTitle: "Erro",
+                                sContent: data.error_message,
+                                sType: "error",
+                                sWidth: "",
+                                iTime: null
+                            });
+                        } else{
+                            $('#modal_desabilitar_email_norma').dialog('close');
+
+                            $("<div id='modal_desabilitar_email_norma' />").modallight({
+                                sTitle: "Enviar E-mail",
+                                sType: "success",
+                                sContent: "Desabilito o envio de e-mail da norma com sucesso.",
+                                oButtons: [
+                                    {
+                                        text: "Ok",
+                                        click: function () {
+                                            $(this).dialog('close');
+                                        }
+                                    }
+                                ],
+                                fnClose: function () {
+                                    document.location.reload();
+                                }
+                            });
+                        
+                        }
+                    }
+                    $.ajaxlight({
+                        sUrl:'./ashx/Cadastro/NormaDesabilitarEmail.ashx?id_doc='+id_doc,
+                        sType: "GET",
+                        fnSuccess: sucesso,
+                        fnComplete: complete,
+                        fnBeforeSend: inicio,
+                        bAsync: true,
+                        iTimeout: 40000
+                    });
+
+
+                }
+            },
+            {
+                text: "Cancelar",
+                click: function () {
+                    $(this).dialog('close');
+                }
+            }
+        ],
+        fnClose: function () {
+            LimparModal('modal_desabilitar_email_norma');
+        }
+    });
+}
+
 function CriarModalOrigem() {
     $('#modal_origem .dados_orgao').hide();
     $("#modal_origem").modallight({

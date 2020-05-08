@@ -594,22 +594,6 @@
                                             <input id="in_apelidavel" type="hidden" value="" />
                                             <input id="nm_tipo_norma" name="nm_tipo_norma" type="text" value="" class="w-80-pc" disabled="true"/>
                                         </div>
-                                        <div class="w-130-pc" style="float:right">
-                                            <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                            <div id="habilitarPesquisaNorna">
-                                                <label style="font-size:large">Habilitar no Sinj Pesquisa:</label>      
-                                                <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
-                                            </div>
-
-                                            <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                            <div id="habilitarNotificacao">
-                                                <div>
-                                                    <label style="font-size:large">Habilita enviar e-mail:</label>
-                                                    <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
-                                                </div>
-                                            </div>
-                                            <!-- -->
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="line">
@@ -1300,6 +1284,28 @@
                             </div>
                         </fieldset>
                     </div>
+                    <fieldset>
+                        <div class="line">
+                            <div class="w-90-pc mauto">
+                                <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                <div class="column" id="habilitarPesquisaNorna">
+                                    <label style="font-size:large">Habilitar no Sinj Pesquisa:</label>      
+                                    <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="w-90-pc mauto ">
+                                <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                <div class="column" id="habilitarNotificacao">
+                                    <div>
+                                        <label style="font-size:large">Habilita enviar e-mail:</label>
+                                        <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
                     <div style="width:210px; margin:auto; display:none;" class="loaded buttons">
                         <button id="button_salvar_norma">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" />Salvar
