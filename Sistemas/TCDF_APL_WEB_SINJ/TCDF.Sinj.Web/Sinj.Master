@@ -260,7 +260,7 @@
                                 <li id="li_historico"><a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a></li>
                                 <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a></li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a></li>
-                                <li id="li_pendenteDePesquisa"><a title="Normas Pendentes" class="lnkmenu" id="aPendenteDePesquisa" href="./ResultadoDePesquisa?tipo_pesquisa=norma&all=&ch_tipo_norma=&nm_tipo_norma=&nr_norma=&ano_assinatura=&ch_orgao=&ch_hierarquia=&sg_hierarquia_nm_vigencia=&origem_por=toda_a_hierarquia_em_qualquer_epoca&st_habilita_pesquisa!=true&st_habilita_email=false">Normas Pendentes</a></li>
+                                <li id="li_pendenteDePesquisa"><a title="Normas Pendentes" class="lnkmenu" id="aPendenteDePesquisa" href="./ResultadoDePesquisa?tipo_pesquisa=norma&all=&st_habilita_pesquisa!=true&st_habilita_email=false">Normas Pendentes</a></li>
                                 <li id="li_contatos"><a title="Contatos"             class="lnkmenu" id="aContatos"       href="./Contatos">Contatos</a></li>
                             </ul>
                         </div>
