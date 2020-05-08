@@ -35,7 +35,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _st_habilita_email = context.Request["st_habilita_email"];
 
                     NormaRN normaRn = new NormaRN();
-                    normaRn.PathPut(id_doc, "st_habilita_email", null, "");
+                    normaRn.PathPut(id_doc, "st_habilita_email", _st_habilita_email, "");
 
                     normaOv = normaRn.Doc(id_doc);
 

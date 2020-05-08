@@ -29,6 +29,7 @@ C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\Ne
 C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\Ude.dll
 C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\util.BRLight.dll
 C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\bin\Release\Newtonsoft.Json.xml
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csprojAssemblyReference.cache
 C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.CoreCompileInputs.cache
 C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.CopyComplete
 C:\Users\victo\OneDrive\Área de Trabalho\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.dll

@@ -685,6 +685,7 @@ function CriarModalEnviarEmail(id_doc, hsp) {
 }
 
 function CriarModalDesabilitarEmail(id_doc){
+    let Bollfalse = false;
     $("#modal_desabilitar_email_norma").modallight({
         sTitle: "Confirmar",
         sWidth: '400',
@@ -713,7 +714,7 @@ function CriarModalDesabilitarEmail(id_doc){
                             $("<div id='modal_desabilitar_email_norma' />").modallight({
                                 sTitle: "Enviar E-mail",
                                 sType: "success",
-                                sContent: "Desabilito o envio de e-mail da norma com sucesso.",
+                                sContent: "Desabilitado envio de e-mail da norma com sucesso.",
                                 oButtons: [
                                     {
                                         text: "Ok",
@@ -730,7 +731,7 @@ function CriarModalDesabilitarEmail(id_doc){
                         }
                     }
                     $.ajaxlight({
-                        sUrl:'./ashx/Cadastro/NormaDesabilitarEmail.ashx?id_doc='+id_doc,
+                        sUrl:'./ashx/Cadastro/NormaDesabilitarEmail.ashx?id_doc='+id_doc+"&st_habilita_email=null",
                         sType: "GET",
                         fnSuccess: sucesso,
                         fnComplete: complete,
@@ -1551,8 +1552,13 @@ function PreencherNormaEdicao() {
                     $('#ds_ementa').val(data.ds_ementa);
                     $('#ds_observacao').val(data.ds_observacao);
                     $('#st_destaque').prop("checked", data.st_destaque);
-                    $('#st_habilita_pesquisa').prop("checked", data.st_habilita_pesquisa);
-                    $('#st_habilita_email').prop("checked", data.st_habilita_email);
+                    $('#st_habilita_pesquisa').prop("checked", data.st_habilita_pesquisa);                    
+                    if(data.st_habilita_email == null){
+                        $('#st_habilita_email').prop('disabled', true);
+                        $('#st_desabilita_email').prop('checked', true);
+                    }else{
+                        $('#st_habilita_email').prop("checked", data.st_habilita_email);
+                    }
                     $('#st_pendencia').prop("checked", data.st_pendencia);
                     $('#ds_pendencia').val(data.ds_pendencia);
                     MarcarPendente();

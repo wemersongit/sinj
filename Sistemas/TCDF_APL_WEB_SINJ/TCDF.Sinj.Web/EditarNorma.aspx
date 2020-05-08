@@ -25,6 +25,17 @@
             } else {
                 $('#habilitarNotificacao').hide();
             }
+
+            $('#st_desabilita_email').on('change', function () {
+                let desabilitarEmail = $('#st_desabilita_email');
+                let habilitaEmail = $('#st_habilita_email');
+                if (desabilitarEmail.is(':checked')) {
+                    habilitaEmail.prop('checked', false)
+                    habilitaEmail.prop('disabled', true);
+                } else {
+                    habilitaEmail.prop('disabled', false);
+                }
+            });
         });
 
         
@@ -1301,6 +1312,17 @@
                                     <div>
                                         <label style="font-size:large">Habilita enviar e-mail:</label>
                                         <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="w-90-pc mauto ">
+                                <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                <div class="column" id="desabilitarNotificacao">
+                                    <div>
+                                        <label style="font-size:large">Desabilitar enviar e-mail:</label>
+                                        <input id="st_desabilita_email" name="st_desabilita_email" value="true" type="checkbox" title="Desabilitar o envio de e-mails."/>
                                     </div>
                                 </div>
                             </div>

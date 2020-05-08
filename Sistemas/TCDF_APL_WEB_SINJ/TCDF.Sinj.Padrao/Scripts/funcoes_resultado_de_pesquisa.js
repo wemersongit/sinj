@@ -110,7 +110,7 @@ $(document).ready(function () {
     ConsultarTotalCesta();
 
     //Se estiver na tela de pendente de pesquisa, esconte da aba de cesta e muda o titulo
-    if(window.location.href.indexOf("st_habilita_pesquisa=false") > 0){
+    if(window.location.href.indexOf("st_habilita_pesquisa!=true") > 0){
         $('div.divIdentificadorDePagina label').text('.: Normas Pendentes');
         $('#tabs_pesquisa').find('[nm="cesta"]').hide();
     }else{
