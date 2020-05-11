@@ -35,6 +35,17 @@
                     habilitaEmail.prop('disabled', false);
                 }
             });
+
+            $('#st_habilita_email').on('change', function () {
+                let desabilitarEmail = $('#st_desabilita_email');
+                let habilitaEmail = $('#st_habilita_email');
+                if (habilitaEmail.is(':checked')) {
+                    desabilitarEmail.prop('checked', false)
+                    desabilitarEmail.prop('disabled', true);
+                } else {
+                    desabilitarEmail.prop('disabled', false);
+                }
+            });
         });
 
 
