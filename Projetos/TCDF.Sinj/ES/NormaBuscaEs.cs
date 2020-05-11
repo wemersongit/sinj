@@ -508,7 +508,7 @@ namespace TCDF.Sinj.ES
                             name = "ch_termo",
                             value = ch_termo,
                             @operator = TypeOperator.equal,
-                            connector = TypeConnector.OR
+                            connector = TypeConnector.AND
                         }
                     );
                 }
