@@ -1,6 +1,7 @@
 let normaAlteradora = {};
 let normaAlterada = {};
 let vide = {};
+let videSemArquivo = false;
 let ahTextoIncompativel = false;
 const dt_controle_alteracao = new Date();
 
@@ -133,8 +134,9 @@ function getDescricaoDoLinkname(linkname) {
         }
     }
     const lastItem = linknameSplited[linknameSplited.length - 1];
-    if(/art[0-9]|par[0-9]|inc[0-9]|ali[0-9]/.test(lastItem) && $(`#div_cad_dispositivo_alterada p[linkname^=${linkname}_]`).length > 0){
-        descricao += ', Caput.'
+    
+    if(/art[0-9]|par[0-9]|inc[MDCLXVI]|ali[a-z]/.test(lastItem) && $(`#div_cad_dispositivo_alterada p[linkname^=${linkname}_]`).length > 0){
+        descricao += ', caput'
     }
     return descricao;
 }
@@ -173,7 +175,7 @@ function getDescricaoDoElemento(dispositivo)
     if (dispositivo.length > 3) {
         dispositivo2 = dispositivo.substring(3);
         if (isInt(dispositivo2)) {
-            if (parseInt(dispositivo2) < 10) {
+            if (parseInt(dispositivo2) < 10 && (dispositivo1 == 'art' || dispositivo1 == 'par')) {
                 dispositivo2 += 'º';
             }
         }

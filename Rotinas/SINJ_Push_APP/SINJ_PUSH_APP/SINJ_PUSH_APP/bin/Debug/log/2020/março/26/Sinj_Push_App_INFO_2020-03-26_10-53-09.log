@@ -1,9 +1,0 @@
-26/03/2020 10:54:21: Total de normas ST_NOVA=true => 2
-26/03/2020 10:54:31: Literal => '77000000'=any(ch_tipo_norma_criacao) OR '867aa2bedfca4b619bd33675abb58481'=any(ch_orgao_criacao)
-26/03/2020 10:54:31: Total de usuários => 1
-26/03/2020 10:54:31: Verificando dados de monitoramento do usuário => teste.sinj.lightbase@hotmail.com
-26/03/2020 10:54:38: CRIACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Criação Termo Aditivo 1112221212121 de 03/02/1997 do órgão PCDF > APC
-26/03/2020 10:54:39: Literal => '11000000'=any(ch_tipo_norma_criacao) OR '966'=any(ch_orgao_criacao)
-26/03/2020 10:54:39: Total de usuários => 1
-26/03/2020 10:54:39: Verificando dados de monitoramento do usuário => teste.sinj.lightbase@hotmail.com
-26/03/2020 10:54:42: CRIACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Criação ADI 999999999 de 02/02/1997 do órgão SEPLAG

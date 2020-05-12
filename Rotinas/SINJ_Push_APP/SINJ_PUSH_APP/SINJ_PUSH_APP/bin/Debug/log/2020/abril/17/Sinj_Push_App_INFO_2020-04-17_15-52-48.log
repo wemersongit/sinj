@@ -1,5 +1,0 @@
-17/04/2020 15:52:51: Atualizar campo ST_ATUALIZADA para false => {"success": 1, "failure" : 0}
-17/04/2020 15:54:10: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Ato Normativo 333333 de 14/03/2017 do órgão RA-V
-17/04/2020 15:54:10: Total de normas ST_NOVA=true => 0
-17/04/2020 15:54:10: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
-17/04/2020 15:54:11: Total de diários ST_NOVO=true => 0

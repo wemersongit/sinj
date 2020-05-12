@@ -1,5 +1,0 @@
-15/04/2020 10:45:03: Atualizar campo ST_ATUALIZADA para false => {"success": 1, "failure" : 0}
-15/04/2020 10:45:30: ALTERACAO - Email enviado para teste.sinj.lightbase@hotmail.com com o titulo SINJ-DF - Alteração Resolução 3040 de 01/10/2016 do órgão TCDF
-15/04/2020 10:45:30: Total de normas ST_NOVA=true => 0
-15/04/2020 10:45:30: Atualizar campo ST_NOVA para false => {"success": 0, "failure" : 0}
-15/04/2020 10:45:30: Total de diários ST_NOVO=true => 0

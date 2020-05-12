@@ -317,8 +317,16 @@ function selecionarNormaAlteradaCadastrar(norma){
         return;
     }
     $('#label_norma_vide_alterada').text(normaAlterada.ds_norma);
-    selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}));
-    changeStepper('selecionarNormaAlterada');
+    if(!videSemArquivo){
+        selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}));
+        changeStepper('selecionarNormaAlterada');
+    }
+    else{
+        $('#div_cad_dispositivo_alterada').show();
+        $('#div_cad_dispositivo_alterada div.line_conteudo_arquivo').show();
+        $('.stepper').hide();
+        $('.step4').removeClass('hidden');
+    }
 }
 
 function exibirControlesNormaAlteradaSelecionada(){
@@ -368,6 +376,7 @@ function selecionarArquivoDaNormaCadastrar(norma) {
     limparDispositivoSelecionado(norma.sufixo);
 
     var sucesso = function (data) {
+        let normaSemArquivo = false;
         if (IsNotNullOrEmpty(data, 'error_message')) {
             gComplete();
             $('#div_notificacao_norma').messagelight({
@@ -389,19 +398,44 @@ function selecionarArquivoDaNormaCadastrar(norma) {
                 exibirControlesNormaAlteradaSelecionada();
             }
             else {
-                alert('Erro ao selecionar o arquivo de publicação da norma. Verifique se a norma possui arquivo em suas fontes de publicação e republicação.');
+                normaSemArquivo = true;
             }
         }
         else {
+            normaSemArquivo = true;
+        }
+        if(normaSemArquivo){
             gComplete();
-            $('#div_notificacao_norma').messagelight({
-                sTitle: "Erro",
-                sContent: "A norma seleciona não possui arquivo.",
-                sType: "error",
-                sWidth: "",
-                iTime: null
-            });
-            return;
+                $('<div id="modal_notificacao_vide" />').modallight({
+                    sTitle: "Atenção",
+                    sContent: "Não foi encontrado arquivo nas fontes de publicação e republicação da norma selecionada.<br/> Deseja incluir o vide mesmo assim?",
+                    sType: "error",
+                    oButtons: [{
+                            text: "Sim",
+                            click: function() {
+                                videSemArquivo = true;
+                                limparDispositivoSelecionado(norma.sufixo);
+                                if(norma.sufixo == 'alterada'){
+                                    limparDispositivoSelecionado('alteradora');
+                                    $('#div_cad_dispositivo_alterada').show();
+                                    $('#div_cad_dispositivo_alterada div.line_conteudo_arquivo').show();
+                                    $('.stepper').hide();
+                                    $('.step4').removeClass('hidden');
+                                }
+                                $(this).dialog('close');
+                            }
+                        },{
+                            text: "Não",
+                            click: function() {
+                                resetarDispositivo(norma.sufixo);
+                                $(this).dialog('close');
+                            }
+                        }
+                    ]
+                });
+                return;
+        }else{
+            $('.stepper').show();
         }
         if(norma.sufixo == 'alteradora'){
             normaAlteradora.arquivo = norma.arquivo;
@@ -410,6 +444,7 @@ function selecionarArquivoDaNormaCadastrar(norma) {
             normaAlterada.arquivo = norma.arquivo;
         }
         const sucessoArquivo = function(data){
+            videSemArquivo = false;
             exibirTextoDoArquivoCadastrar(norma, data);
             $('#div_cad_dispositivo_' + norma.sufixo).show();
         }
@@ -417,7 +452,6 @@ function selecionarArquivoDaNormaCadastrar(norma) {
             sUrl: "./ashx/Arquivo/HtmlFileEncoded.ashx?nm_base=sinj_norma&id_file=" + norma.arquivo.id_file,
             sType: "GET",
             fnSuccess: sucessoArquivo,
-            fnBeforeSend: gInicio,
             fnComplete: gComplete,
             bAsync: true
         });
@@ -426,10 +460,10 @@ function selecionarArquivoDaNormaCadastrar(norma) {
         sUrl: './ashx/Visualizacao/NormaDetalhes.ashx?id_norma=' + norma.ch_norma,
         sType: "GET",
         fnSuccess: sucesso,
-        /*fnBeforeSend: gInicio,*/
+        fnBeforeSend: gInicio,
         fnComplete: null,
         bAsync: true,
-        iTimeout: 2000
+        iTimeout: null
     });
 
 }
@@ -773,16 +807,21 @@ function clickEnableReplaced(check) {
 
 function salvarVideCadastrar(sucessoVide){
     $('#vide').val(JSON.stringify({
-            relacao: tipoDeRelacaoSelecionado,
-            norma_alteradora: normaAlteradora,
-            norma_alterada: normaAlterada,
-            ds_comentario_vide: $('#ds_comentario_vide').val()
-        }));
+        naoPossuiArquivo: videSemArquivo,
+        relacao: tipoDeRelacaoSelecionado,
+        norma_alteradora: normaAlteradora,
+        norma_alterada: normaAlterada,
+        ds_comentario_vide: $('#ds_comentario_vide').val()
+    }));
 
     return fnSalvar("form_vide", "", sucessoVide);
 }
 
 function salvarArquivosVideCadastrar(sucessoVide){
+    if(videSemArquivo){
+        salvarVideCadastrar(sucessoVide);
+        return false;
+    }
     limparFormatacao();
     let htmlNormaAlteradora = "";
     if(!$('#inLecoSemCitacao').is(':checked')){
