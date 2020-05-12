@@ -1300,40 +1300,43 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="line">
-                                    <div class="w-90-pc mauto">
-                                        <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                        <div class="column" id="habilitarPesquisaNorna">
-                                            <label style="font-size:large">Habilitar no Sinj Pesquisa:</label>      
-                                            <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                
+                            </div>
+                        </fieldset>
+                    </div>
+                        <fieldset>
+                            <div class="line">
+                                <div class="w-90-pc mauto">
+                                    <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                    <div class="column" id="habilitarPesquisaNorna">
+                                        <label style="font-size:large">Habilitar no Sinj Pesquisa:</label>      
+                                        <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="w-90-pc mauto ">
+                                    <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                    <div class="column" id="habilitarNotificacao">
+                                        <div>
+                                            <label style="font-size:large">Habilita enviar e-mail:</label>
+                                            <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="line">
-                                    <div class="w-90-pc mauto ">
-                                        <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                        <div class="column" id="habilitarNotificacao">
-                                            <div>
-                                                <label style="font-size:large">Habilita enviar e-mail:</label>
-                                                <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="line">
-                                    <div class="w-90-pc mauto ">
-                                        <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
-                                        <div class="column" id="desabilitarNotificacao">
-                                            <div>
-                                                <label style="font-size:large">Desabilitar enviar e-mail:</label>
-                                                <input id="st_desabilita_email" name="st_desabilita_email" value="true" type="checkbox" title="Desabilitar o envio de e-mails."/>
-                                            </div>
+                            </div>
+                            <div class="line">
+                                <div class="w-90-pc mauto ">
+                                    <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                    <div class="column" id="desabilitarNotificacao">
+                                        <div>
+                                            <label style="font-size:large">Desabilitar enviar e-mail:</label>
+                                            <input id="st_desabilita_email" name="st_desabilita_email" value="true" type="checkbox" title="Desabilitar o envio de e-mails."/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </fieldset>
-                    </div>
                     <div style="width:210px; margin:auto; display:none;" class="loaded buttons">
                         <button id="button_salvar_norma">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_save.png" alt="add" width="18px" height="18px"/>  Salvar
