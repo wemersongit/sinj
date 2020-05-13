@@ -301,9 +301,6 @@
     <Content Include="TextoArquivoDiario.aspx" />
     <Content Include="TextoArquivoNorma.aspx" />
     <Content Include="Versao.aspx" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="MasterLogin.Master" />
     <Content Include="ashx\Autocomplete\OrgaoAnteriorAutocomplete.ashx" />
     <Content Include="ashx\Autocomplete\TipoDeNormaAutocomplete.ashx" />
@@ -1912,6 +1909,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx\Cadastro\NormaDesabilitarEmail.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

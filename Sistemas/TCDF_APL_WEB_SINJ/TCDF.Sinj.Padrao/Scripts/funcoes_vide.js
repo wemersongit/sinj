@@ -196,10 +196,10 @@ function getDescricaoDoElemento(dispositivo)
         dispositivo3 = 'núm. ' + dispositivo2;
     }
     else if (dispositivo1 == "ali" && IsNotNullOrEmpty(dispositivo2)) {
-        dispositivo3 = dispositivo2 + ")";
+        dispositivo3 = 'alí. "' + dispositivo2 + '"';
     }
     else if (dispositivo1 == "let" && IsNotNullOrEmpty(dispositivo2)) {
-        dispositivo3 = dispositivo2 + ")";
+        dispositivo3 = 'let. "' + dispositivo2 + '"';
     }
     return dispositivo3;
 }

@@ -469,17 +469,17 @@ function selecionarArquivoDaNormaCadastrar(norma) {
 }
 
 function selecionarTextoNormaAlteradoraCadastrar() {
-    if($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').hasClass('copy-enabled')){
-        selecionarTextoCopiar();
-        return;
-    }
-    if(IsNotNullOrEmpty(normaAlteradora.dispositivos)){
-        alert('Erro! Já existe um link selecionado.');
-        return;
-    }
     var text = window.getSelection().toString();
-    var parentNode = $(window.getSelection().baseNode).parents('p[linkname]');
     if (text != '') {
+        if($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').hasClass('copy-enabled')){
+            selecionarTextoCopiar();
+            return;
+        }
+        if(IsNotNullOrEmpty(normaAlteradora.dispositivos)){
+            alert('Erro! Já existe um link selecionado.');
+            return;
+        }
+        var parentNode = $(window.getSelection().baseNode).parents('p[linkname]');
         //Impede que selecione o link da norma alteradora antes de estar com a norma alterada selecionada.
         if ($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p').length <= 0) {
             alert('Erro! Selecione também o arquivo da norma alterada.');
