@@ -41,3 +41,4 @@ C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.S
 C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.csproj.CopyComplete
 C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.dll
 C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.pdb
+C:\Users\victo\OneDrive\Área de Trabalho\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Web\obj\Release\TCDF.Sinj.Web.csprojAssemblyReference.cache
