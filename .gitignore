@@ -354,13 +354,6 @@ MigrationBackup/
 
 # Backup from merge tools
 *.bak
-#Remove WebConfig
-
-#Web.config
-Web.config
-
-#Sinj.Master
-Sinj.Master
 
 # Others
 .directory
