@@ -260,7 +260,7 @@
                                 <li id="li_historico"><a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a></li>
                                 <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a></li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a></li>
-                                <li id="li_pendenteDePesquisa"><a title="Normas Pendentes" class="lnkmenu" id="aPendenteDePesquisa" href="./ResultadoDePesquisa?tipo_pesquisa=norma&all=&st_habilita_pesquisa!=true&st_habilita_email=false">Normas Pendentes</a></li>
+                                <li id="li_pendenteDePesquisa"><a title="Normas Pendentes" class="lnkmenu" id="aPendenteDePesquisa" href="./ResultadoDePesquisa?tipo_pesquisa=norma&all=&st_habilita_pesquisa=false&st_habilita_email=false">Normas Pendentes</a></li>
                                 <li id="li_contatos"><a title="Contatos"             class="lnkmenu" id="aContatos"       href="./Contatos">Contatos</a></li>
                             </ul>
                         </div>
@@ -301,6 +301,18 @@
                         <div class="column w-10-pc">
                             <div id="" class="cell w-100-pc">
                                 <input id="habilitar_notifique_email" type="checkbox" value="" class="w-80-pc" />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="des_eml_nmr">
+                        <div class="column w-60-pc">
+                            <div class="cell fr">
+                                <label>Desabilitar Envio de e-mail</label>
+                            </div>
+                        </div>
+                        <div class="column w-10-pc">
+                            <div id="" class="cell w-100-pc">
+                                <input id="desabilitar_notifique_email" type="checkbox" value="" class="w-80-pc" />
                             </div>
                         </div>
                     </div>

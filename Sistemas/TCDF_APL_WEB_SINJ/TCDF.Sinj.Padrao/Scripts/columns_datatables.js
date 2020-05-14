@@ -50,7 +50,7 @@ var _columns_norma = [
 ];
 
 var _columns_norma_es = [
-	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);" class="center"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "_score", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa!=true") == -1,
+	{ "indice": 0, "isControl": true, "standard_view": true, "sTitle": '<a title="Adicionar na cesta" href="javascript:void(0);" onclick="javascript:AdicionarNaCesta(null, true);" class="center"><img src="' + _urlPadrao + '/Imagens/ico_basket_p.png" alt="cesta" /><b>TODOS</b></a>', "sWidth": "60px", "sClass": "grid-cell ws center", "mData": "_score", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false") == -1,
 	    "mRender": function (data, type, full) {
 	        if (!IsNotNullOrEmpty(window.aHighlight)) {
 	            aHighlight = [];
@@ -185,10 +185,10 @@ var _columns_norma_es = [
 	    }
 	},	
 
-	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "320px","sTitle":"<h2>Habilitar</h2>" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa!=true&st_habilita_email=false") > 0,
+	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "320px","sTitle":"<h2>Habilitar</h2>" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false&st_habilita_email=false") > 0,
 		"mRender": function (data, type, full) {
 			var htmlToAppend = ""
-			if(ValidarPermissao(_grupos.nor_eml) && !full._source.st_habilita_email){
+			if(ValidarPermissao(_grupos.nor_eml) && full._source.st_habilita_email == false){
 				htmlToAppend = htmlToAppend + `<div class="div-light-button" style="float:right; display: flex;"><a onclick="CriarModalEnviarEmail( ${full._source._metadata.id_doc}, ${full._source.st_habilita_pesquisa} )"><img src="${_urlPadrao}/Imagens/ico_email_p.png">Enviar e-mail</a></div>
 				<div class="div-light-button" style="float:right; display: flex;"><a onclick="CriarModalDesabilitarEmail( ${full._source._metadata.id_doc}, ${full._source.st_habilita_pesquisa} )"><img src="${_urlPadrao}/Imagens/ico_stop_email_p.png">Desabilitar e-mail</a></div>`;	
 			}
@@ -199,7 +199,7 @@ var _columns_norma_es = [
 		}
 		
 	},
-	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "120px","sTitle":"" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa!=true&st_habilita_email=false") == -1,
+	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "120px","sTitle":"" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false&st_habilita_email=false") == -1,
 		"mRender": function (data, type, full) {
 			var htmlToAppend = "";
 			if(!full._source.st_habilita_pesquisa || !full._source.st_habilita_email){
