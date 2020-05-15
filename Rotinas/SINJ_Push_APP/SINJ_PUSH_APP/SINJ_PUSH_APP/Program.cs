@@ -312,9 +312,15 @@ namespace SINJ_PUSH_APP
                                     orgaosEmail = orgaosEmail + " <a> " + norma.origens[0].sg_orgao + "</a>";
                                 }
                             }
-
+                            //AQUI
+                            var corpo_ementa_nova = "";
+                            string[] ementa = norma.ds_ementa.Split(new char[] { '\n', '\r' });
+                            foreach (var e in ementa)
+                            {
+                                corpo_ementa_nova = corpo_ementa_nova + "<div style=\"display:block;\">" + e + "</div>";
+                            }
                             corpoEmail = corpoEmail + "<div style='font-size: 14px; font-weight: 500; background-color:#B4E6CBs;'>";
-                            corpoEmail = corpoEmail + "<a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + ">" + norma.nm_tipo_norma + " " + norma.nr_norma + "</a>"+ " de " + norma.dt_assinatura + " " + orgaosEmail + " " + "(" + norma.ds_ementa + "), publicado no(a) ";
+                            corpoEmail = corpoEmail + "<a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + ">" + norma.nm_tipo_norma + " " + norma.nr_norma + "</a>"+ " de " + norma.dt_assinatura + " " + orgaosEmail + " " + "(" + corpo_ementa_nova + "), publicado no(a) ";
 
                             
 
@@ -578,7 +584,13 @@ namespace SINJ_PUSH_APP
                         else
                         {
                             nmTipoRelacao = "Alteração";
-                            corpo_vide = "<div style=\"display:block; font-size: 12px;\"> " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + resultado_norma.ch_norma + ">" + "Ementa: </a>" + resultado_norma.ds_ementa + " " + "</div>";
+                            var corpo_ementa = "";
+                            string[] ementa = resultado_norma.ds_ementa.Split(new char[] { '\n', '\r' });
+                            foreach (var e in ementa)
+                            {
+                                corpo_ementa = corpo_ementa + "<div style=\"display:block;\">" + e + "</div>";
+                            }
+                            corpo_vide = "<div style=\"display:block; font-size: 12px;\"> " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + resultado_norma.ch_norma + ">" + "Ementa: </a>" + "</div>" + "<span>" + corpo_ementa + "</span>";
                         }
 
                         nmTipoRelacao = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nmTipoRelacao.ToLower());
@@ -868,44 +880,6 @@ namespace SINJ_PUSH_APP
             _sb_info.Clear();
         }
 
-        public String formatarDispositivo(String normaAfetada)
-        {
-            String[] arrayNormaAfetada = normaAfetada.Split(',');
-            var idFormatado = "";
-            var capAfetado = "";
-            var incAfetado = "";
-            foreach (string n in arrayNormaAfetada)
-            {
-                if (n.Contains("Cap"))
-                {
-                    capAfetado = n.Substring(0, 3);
-                    idFormatado = "cap" + capAfetado[2];
-                }
-                else if (n.Contains("Art"))
-                {
 
-                    var result = Regex.Match(n, @"\d+").Value;
-
-                    var artFormatado = n.Replace('º', ' ');
-                    capAfetado += "_art" + result;
-                }
-                else if (n.Contains("inc"))
-                {
-                    string[] substrings = Regex.Split(n, @"(\s(?=[A-Z]))");
-
-                    incAfetado += "_inc" + substrings[2].Replace(" ", "_");
-                }
-            }
-
-            if (idFormatado == "")
-            {
-                idFormatado += "capI";
-            }
-
-            idFormatado += capAfetado + incAfetado;
-
-
-            return idFormatado;
-        }
     }
 }
