@@ -11,8 +11,9 @@ $(document).ready(function () {
             $('#nm_usuario_push').val(data.nm_usuario_push);
             $('#email_usuario_push').val(data.email_usuario_push);
             $('#st_push').prop("checked", data.st_push);
-            $('#button_salvar_notifiqueme').click(function () {
-                return fnSalvar('form_notifiqueme_atualizar');
+            $('#button_salvar_notifiqueme').click(function (e) {
+                e.preventDefault();
+                salvarDadosNotifique('form_notifiqueme_atualizar');
             });
             $('#div_autocomplete_tipo_norma_modal').autocompletelight({
                 sKeyDataName: "ch_tipo_norma",
@@ -657,4 +658,57 @@ function changeInExata() {
             $('#ds_termo_diario_monitorado').val(value);
         }
     }
+}
+
+function salvarDadosNotifique(form){
+    var inicioNotifique = typeof _sucesso === "function" ? _sucesso : function(data)  {
+        $('#super_loading').show();
+    }
+    var completeNotifique = function(data) {                        
+        $('#super_loading').hide();
+    }
+    var beforeSubmit = function() {
+        gInicio();
+    };
+    var sucessoNotifique = typeof _sucesso === "function" ? _sucesso : function(data) {
+        if (IsNotNullOrEmpty(data, 'error_message')) {
+            $('#modal_notifiqueme_sucesso').messagelight({
+                sTitle: "Erro",
+                sContent: data.error_message,
+                sType: "error",
+                sWidth: "",
+                iTime: null
+            });
+        } else{
+
+            $("<div id='modal_notifiqueme_sucesso' />").modallight({
+                sTitle: "Sucesso",
+                sType: "success",
+                sContent: "Alterações dos dados realizados com sucesso.",
+                oButtons: [
+                    {
+                        text: "Ok",
+                        click: function () {
+                            document.location.reload();
+                        }
+                    }
+                ],
+                fnClose: function () {
+                    document.location.reload();
+                }
+            });
+        
+        }
+    }
+    $.ajaxlight({
+        sUrl:'./ashx/Push/NotifiquemeEditar.ashx',
+        sType: "POST",
+        sFormId: form,
+        fnSuccess: sucessoNotifique,
+        fnComplete: completeNotifique,
+        fnBeforeSend: beforeSubmit,
+        bAsync: true,
+        iTimeout: 60000
+    });
+    return false;
 }

@@ -335,6 +335,20 @@
         </form>
     </div>
 
+    <div id="modal_notifiqueme_sucesso" class="modal" style="display:none;">
+        <form id="modal_notifiqueme" name="modal_notifiqueme" action="#" method="post">
+            <div class="table w-100-pc">
+                <div class="line">
+                    <div class="column w-100-pc">
+                        <div class="cell">
+                            <label>Alteração dos dados do notifique-me feita com sucesso!</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <div id="modal_desabilitar_email_norma" class="modal" style="display:none;">
         <form id="desabilitar_email" name="enviar_email" action="#" method="post">
             <div class="table w-100-pc">
