@@ -341,7 +341,7 @@ p[linkname] button.select{background: url("../Imagens/ico_anchor_p_clear.png") n
 #div_vide .desfazer { background-color: #b4f3b4; }
 #div_vide .refazer { background-color: #f1e1bf; }
 .legenda-excluir-vide { width: fit-content;}
-
+img.limit-width{width:100% !important;}
 
 
 /*Vocabulario*/

@@ -262,7 +262,7 @@ function exibirTextoDoArquivoEditar(norma, arquivo) {
                     if (IsNotNullOrEmpty(linkname)) {
                         showButton = true;
                         for(let i = 0; i < norma.dispositivos.length; i++){
-                            if(linkname == norma.dispositivos[i].linkname || linkname == `${norma.dispositivos[i].linkname}_replaced` || linkname.indexOf('_add_') > -1){
+                            if(linkname == norma.dispositivos[i].linkname || linkname == `${norma.dispositivos[i].linkname}_replaced` || linkname.indexOf('_add') > -1){
                                 showButton = false;
                                 break;
                             }
@@ -282,6 +282,13 @@ function exibirTextoDoArquivoEditar(norma, arquivo) {
             }
             $('#div_cad_dispositivo_' + norma.sufixo + ' [data-toggle="tooltip"]').tooltip(optionsTooltip);
         }
+        $('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo img').filter(function() {
+            if($(this).width() > $('#div_vide fieldset').width()/2){
+                $(this).addClass('limit-width');
+                console.log(this);
+            }
+        });
+        
         $('#div_cad_dispositivo_' + norma.sufixo + ' div.line_conteudo_arquivo').show();
     }
 }
@@ -289,7 +296,7 @@ function exibirTextoDoArquivoEditar(norma, arquivo) {
 function habilitarEdicaoDoDispositivo(linkname, texto){
     switch(vide.ch_tipo_relacao){
         case '1':
-            if(texto.indexOf('\n')){
+            if(texto.indexOf('\n') > -1){
                 const textoSplited = texto.split('\n');
                 for(let i = 0; i < textoSplited.length; i++){
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_${i}"]`).addClass('adicionado');
@@ -303,13 +310,14 @@ function habilitarEdicaoDoDispositivo(linkname, texto){
             break;
         default:
             if(linkname){
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`).addClass('alterado');
                 if(texto){
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`).addClass('alterado');
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('adicionado');
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
                 }
                 else{
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`).prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('alterado');
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
                 }
 
             }
@@ -336,7 +344,7 @@ function clickAlterarDispositivoEditar(){
             dispositivoAlterado.texto = textosAcrescidos[i];
             normaAlterada.dispositivos.push(Object.assign({}, dispositivoAlterado));
 
-            const $element = $(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+            const $element = $(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}&nbsp;<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
             $nextElement.after($element);
             $nextElement = $element;
         }
@@ -348,7 +356,7 @@ function clickAlterarDispositivoEditar(){
         }
         let $elementoAlterado = $buttonSelected.parent();
         $buttonSelected.hide();
-        dispositivoAlterado.linkname= $elementoAlterado.attr('linkname');
+        dispositivoAlterado.linkname = $elementoAlterado.attr('linkname');
         dispositivoAlterado.nm_linkName = getNomeDoLinkName(dispositivoAlterado.linkname);
         dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(dispositivoAlterado.linkname);
         dispositivoAlterado.texto = texto;
@@ -357,11 +365,12 @@ function clickAlterarDispositivoEditar(){
         $elementoAlterado.find(`a[name=${dispositivoAlterado.linkname}]`).attr('name', `${dispositivoAlterado.linkname}_replaced`);
         $elementoAlterado.attr('replaced_by', normaAlteradora.ch_norma);
         if(dispositivoAlterado.texto){
-            $elementoAlterado.after(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${dispositivoAlterado.texto}<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+            $elementoAlterado.after(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${dispositivoAlterado.texto}&nbsp;<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
             $elementoAlterado.html(`<s>${$elementoAlterado.html()}</s>`);
         }
         else{
-            $elementoAlterado.html(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><s>${$elementoAlterado.html()}</s><a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a>`);
+            dispositivoAlterado.linkname += '_replaced'
+            $elementoAlterado.html(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><s>${$elementoAlterado.html()}</s>&nbsp;<a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a>`);
         }
         normaAlterada.dispositivos.push(dispositivoAlterado);
     }
@@ -382,13 +391,16 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
                     dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
                     break;
                 default:
+                    if(normaAlterada.dispositivos[i].texto){
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
+                    }
+                    else{
+                        linkname = linkname.replace(/_replaced+/,'');
+                    }
                     let $elementoAlterado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
                     const html = $elementoAlterado.find('s').html();
                     $elementoAlterado.find('s').remove();
                     $elementoAlterado.html(html);
-                    if(normaAlterada.dispositivos[i].texto){
-                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
-                    }
                     $elementoAlterado.attr('linkname', linkname);
                     $elementoAlterado.removeAttr('replaced_by');
                     $elementoAlterado.removeClass('alterado');
@@ -448,7 +460,7 @@ function salvarArquivosVideEditar(sucessoVide){
                 sType: "POST",
                 fnSuccess: sucessoNormaAlterada,
                 fnComplete: null,
-                fnBeforeSubmit: null,
+                fnBeforeSubmit: gInicio,
                 bAsync: true
             });
         }

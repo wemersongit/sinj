@@ -220,7 +220,7 @@ function removerLinkAlterador(){
 function destacarAlteracaoDoDispositivo(linkname, texto){
     switch(vide.ch_tipo_relacao){
         case '1':
-            if(texto.indexOf('\n')){
+            if(texto.indexOf('\n') > -1){
                 const textoSplited = texto.split('\n');
                 for(let i = 0; i < textoSplited.length; i++){
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_${i}"]`).attr('remover', 'acrescimo').addClass('remover');
@@ -235,14 +235,22 @@ function destacarAlteracaoDoDispositivo(linkname, texto){
             break;
         default:
             if(linkname){
-                let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
                 if(texto){
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'alteracao').addClass('remover').removeAttr('linkname');
+                    let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
+                    $elementoDesfazer.attr('linkname', linkname);
+                    $elementoDesfazer.find(`a[name=${linkname}_replaced]`).attr('name', `${linkname}`);
+                    $elementoDesfazer.removeAttr('replaced_by');
+                    $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
+
                 }
-                $elementoDesfazer.attr('linkname', linkname);
-                $elementoDesfazer.find(`a[name=${linkname}_replaced]`).attr('name', `${linkname}`);
-                $elementoDesfazer.removeAttr('replaced_by');
-                $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
+                else{
+                    let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
+                    $elementoDesfazer.attr('linkname', linkname.replace(/_replaced+/,''));
+                    $elementoDesfazer.find(`a[name=${linkname}]`).attr('name', `${linkname.replace(/_replaced+/,'')}`);
+                    $elementoDesfazer.removeAttr('replaced_by');
+                    $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
+                }
             }
             else{
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).attr('remover', 'identificador-alteracao-completa').addClass('remover');
