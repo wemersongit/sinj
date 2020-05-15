@@ -505,15 +505,17 @@ function CriarModalHabilitarPesquisa(id_doc, eml) {
             desabilitaEmailModal.prop('disabled', false);
         }
     });
+    
     // NOTE: O parametro "eml" recebe do st_habilita_email da norma, se estiver setado como true nao mostra o checkbox
     // de habilitar o email da norma.
-    if(eml == true){
+    if(eml == false){
         $('#des_eml_nmr').show();
         $('#hne_norma').show();
     }else{
         $('#des_eml_nmr').hide();
         $('#hne_norma').hide();
     }
+
     $("#modal_habilitar_pesquisa").modallight({
         sTitle: "Confirmar",
         sWidth: '400',

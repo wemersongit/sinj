@@ -91,7 +91,7 @@ namespace SINJ_PUSH_APP
                 NormaRN normaRn = new NormaRN();
                 pesquisa_norma.literal = "st_nova=true AND st_habilita_email=true";
                 pesquisa_norma.limit = null;
-                pesquisa_norma.select = new[] { "id_doc", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "ch_tipo_norma", "indexacoes", "vides" };
+                pesquisa_norma.select = new[] { "id_doc", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "ch_tipo_norma", "indexacoes", "vides", "fontes" };
                 var results_normas = normaRn.Consultar(pesquisa_norma);
                 this._sb_info.AppendLine(DateTime.Now + ": Total de normas ST_NOVA=true => " + results_normas.results.Count);
 
@@ -286,10 +286,7 @@ namespace SINJ_PUSH_APP
                             corpoEmail = corpoEmail + "O normativo a seguir está disponível no SINJ-DF";
                             corpoEmail = corpoEmail + "	</div>";
 
-
-
-                            corpoEmail = corpoEmail + "<div style='font-size: 14px; font-weight: 500; background-color:#B4E6CBs;'>";
-                            corpoEmail = corpoEmail + "<a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + ">" + norma.nm_tipo_norma + " " + norma.nr_norma + "</a>" + " " + "(" + norma.ds_ementa + "), publicado no(a) ";
+                            var orgaosEmail = "";
                             if (quantidadeDeOrgaos > 0)
                             {
                                 if (quantidadeDeOrgaos > 1)
@@ -298,17 +295,72 @@ namespace SINJ_PUSH_APP
                                     int i = 0;
                                     foreach (var orgao in norma.origens)
                                     {
-                                        if (i == quantidadeDeOrgaos - 1)
-                                            corpoEmail = corpoEmail + " e " + orgao.sg_orgao;
+                                        if (i == quantidadeDeOrgaos)
+                                        {
+                                            orgaosEmail = orgaosEmail + orgao.sg_orgao;
+                                        }
                                         else
-                                            corpoEmail = corpoEmail + orgao.sg_orgao + ", ";
+                                        {
+                                            orgaosEmail = orgaosEmail + orgao.sg_orgao + ", ";
+                                        }
                                         i++;
                                     }
-                                    corpoEmail = corpoEmail + " em " + norma.dt_assinatura;
+                                    //corpoEmail = corpoEmail + " de " + norma.dt_assinatura;
                                 }
                                 else
                                 {
-                                    corpoEmail = corpoEmail + " <a> " + norma.origens.First().sg_orgao + " de " + norma.dt_assinatura + "</a>";
+                                    orgaosEmail = orgaosEmail + " <a> " + norma.origens[0].sg_orgao + "</a>";
+                                }
+                            }
+
+                            corpoEmail = corpoEmail + "<div style='font-size: 14px; font-weight: 500; background-color:#B4E6CBs;'>";
+                            corpoEmail = corpoEmail + "<a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + ">" + norma.nm_tipo_norma + " " + norma.nr_norma + "</a>"+ " de " + norma.dt_assinatura + " " + orgaosEmail + " " + "(" + norma.ds_ementa + "), publicado no(a) ";
+
+                            
+
+                            if(norma.fontes.Count > 0)
+                            {
+                                if(norma.fontes.Count > 1)
+                                {
+                                    var dtTexto = "";
+                                    var nmTpFonte = "";
+                                    foreach (var fontes in norma.fontes)
+                                    {
+                                        if (dtTexto == "" || dtTexto == null)
+                                        {
+                                            dtTexto = fontes.dt_publicacao;
+                                            nmTpFonte = fontes.nm_tipo_fonte;
+                                        }
+                                        else
+                                        {
+                                            DateTime dtNovaFonte = Convert.ToDateTime(fontes.dt_publicacao);
+                                            DateTime dataSetada = DateTime.Parse(dtTexto);
+                                            if (dtNovaFonte.CompareTo(dataSetada) == 1)
+                                            {
+                                                //dtNovaVide maior que a dataSetada
+                                                nmTpFonte = fontes.dt_publicacao;
+                                                dtTexto = Convert.ToString(dtNovaFonte);
+                                            }
+                                            else
+                                            {
+                                                if (dtNovaFonte.CompareTo(dataSetada) == 0)
+                                                {
+                                                    nmTpFonte = fontes.dt_publicacao;
+                                                    dtTexto = Convert.ToString(dtNovaFonte);
+                                                    //Console.WriteLine("é igual");
+                                                }
+                                                else
+                                                {
+                                                    //dataSetada maior que a dtNovaVide
+                                                }
+                                            }
+                                        }
+                                    }
+                                    corpoEmail = corpoEmail + "<a> " + nmTpFonte + " de " + dtTexto;
+                                }
+                                else
+                                {
+                                    corpoEmail = corpoEmail + "<a> " + norma.fontes[0].nm_tipo_fonte + " de " + norma.fontes[0].dt_publicacao;
                                 }
                             }
 
@@ -474,7 +526,7 @@ namespace SINJ_PUSH_APP
                                 //(!string.IsNullOrEmpty(vides.dt_assinatura_norma_vide) ? vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) : " ") +
                                 //"</a>" + "</div>";
 
-                                var corpo_vide_atual = "<div style=\"display:block; font-size: 12px;\"> " + (!string.IsNullOrEmpty(vides.ds_texto_relacao.ToLower()) ? System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(vides.ds_texto_relacao.ToLower()) : " ") + ": " +
+                                var corpo_vide_atual = "<div style=\"display:block; font-size: 12px;\"> " + (!string.IsNullOrEmpty(vides.ds_texto_relacao) ? vides.ds_texto_relacao.ToLower() : vides.nm_tipo_relacao) + ": " +
                                     "<a title='Visualizar' target='_blank' href=" + Config.ValorChave("LinkSINJ", true) + "/BaixarArquivoNorma.aspx?id_norma=" + (vides.in_norma_afetada ? resultado_norma.ch_norma : vides.ch_norma_vide) + "#" + linkName + ">" +
                                     dispositivo_afetado + "</a>" + (vides.in_norma_afetada ? " pelo(a) " : " do(a) ") +
                                     "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" +
@@ -486,13 +538,13 @@ namespace SINJ_PUSH_APP
                                 if (resultado_norma.vides.Count == 1)
                                 {
                                     dtTexto = vides.dt_assinatura_norma_vide;
-                                    nmTipoRelacao = vides.ds_texto_relacao;
+                                    nmTipoRelacao = (vides.ds_texto_relacao == "" ? vides.nm_tipo_relacao : vides.ds_texto_relacao);
                                     corpo_vide = corpo_vide_atual;
                                 }
                                 if (dtTexto == "" || dtTexto == null)
                                 {
                                     dtTexto = vides.dt_assinatura_norma_vide;
-                                    nmTipoRelacao = vides.ds_texto_relacao;
+                                    nmTipoRelacao = (vides.ds_texto_relacao == " " ? vides.nm_tipo_relacao : vides.ds_texto_relacao);
                                     corpo_vide = corpo_vide_atual;
                                 }
                                 else
@@ -502,7 +554,7 @@ namespace SINJ_PUSH_APP
                                     if (dtNovaVide.CompareTo(dataSetada) == 1)
                                     {
                                         //dtNovaVide maior que a dataSetada
-                                        nmTipoRelacao = vides.ds_texto_relacao;
+                                        nmTipoRelacao = (vides.ds_texto_relacao == " " ? vides.nm_tipo_relacao : vides.ds_texto_relacao);
                                         dtTexto = Convert.ToString(dtNovaVide);
                                         corpo_vide = corpo_vide_atual;
                                     }
@@ -510,7 +562,7 @@ namespace SINJ_PUSH_APP
                                     {
                                         if (dtNovaVide.CompareTo(dataSetada) == 0)
                                         {
-                                            nmTipoRelacao = vides.ds_texto_relacao;
+                                            nmTipoRelacao = (vides.ds_texto_relacao == " " ? vides.nm_tipo_relacao : vides.ds_texto_relacao);
                                             dtTexto = Convert.ToString(dtNovaVide);
                                             corpo_vide = corpo_vide_atual;
                                             //Console.WriteLine("é igual");
@@ -531,7 +583,7 @@ namespace SINJ_PUSH_APP
 
                         nmTipoRelacao = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nmTipoRelacao.ToLower());
 
-                        var titulo = "SINJ-DF - " + nmTipoRelacao + " do(a) " + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + resultado_norma.origens[0].sg_orgao : "");
+                        var titulo = "SINJ-DF - O normativo " + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "") + " foi atualizado";
                         var html = true;
 
                         var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj.jpg";
@@ -628,7 +680,8 @@ namespace SINJ_PUSH_APP
                     var sQuery = "";
                     var corpoEmail = "";
                     var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj_large.jpg";
-                    var url_es = new DocEs().GetUrlEs(util.BRLight.Util.GetVariavel("NmBaseDiario", true)) + "/_search";
+                    //var url_es = new DocEs().GetUrlEs(util.BRLight.Util.GetVariavel("NmBaseDiario", true)) + "/_search";
+                    var url_es = "http://app.lightbase.cc/sinjrest/sinj_diario/diario/_search";
                     countDiarios = resultsDiario.results.Count;
                     foreach (var diario in resultsDiario.results)
                     {
@@ -767,7 +820,9 @@ namespace SINJ_PUSH_APP
                                         corpoEmail = corpoEmail + "        </td>";
                                         corpoEmail = corpoEmail + "    </tr>";
                                         corpoEmail = corpoEmail + "</table>";
-
+                                        ServicePointManager.ServerCertificateValidationCallback =
+                                        delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                                        { return true; };
                                         email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpoEmail);
                                         var logEmail = new LogEmail();
                                         logEmail.emails = destinatario;
