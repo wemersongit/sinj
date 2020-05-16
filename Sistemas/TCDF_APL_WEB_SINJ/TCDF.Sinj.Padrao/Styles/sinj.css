@@ -613,3 +613,7 @@ table.dataTable tbody tr.even td.highlighted, table.dataTable tr.odd td.highligh
 } 
 
 
+#ds_ementa{
+    /* white-space: pre-line !important; */
+    white-space: pre-wrap !important;
+}

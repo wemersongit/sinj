@@ -130,7 +130,7 @@
                         </div><br />
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_ds_ementa" class="w-90-pc mauto word-no-break ds_ementa value" style="text-align:justify;" print="sim" print-type="linha" print-label="Ementa">
+                                <div id="div_ds_ementa" class="w-90-pc mauto word-no-break ds_ementa value" style="text-align:justify; white-space: pre-wrap !important;" print="sim" print-type="linha" print-label="Ementa">
                                     
                                 </div>
                             </div>
