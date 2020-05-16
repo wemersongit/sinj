@@ -710,8 +710,8 @@ namespace TCDF.Sinj.ES
             fields.Add(new SearchableField() { name = "nm_ambito" });
             fields.Add(new SearchableField() { name = "ar_atualizado.filetext" });
             fields.Add(new SearchableField() { name = "fontes.ar_fonte.filetext" });
-            fields.Add(new SearchableField() { name = "st_habilita_pesquisa", boost = 3 });
-            fields.Add(new SearchableField() { name = "st_habilita_email", boost = 3 });
+            //fields.Add(new SearchableField() { name = "st_habilita_pesquisa", boost = 3 });
+            //fields.Add(new SearchableField() { name = "st_habilita_email", boost = 3 });
 
             return fields;
         }
