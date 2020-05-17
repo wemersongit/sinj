@@ -64,7 +64,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaGeral.iDisplayLength = iDisplayLength;
                         pesquisaGeral.sentencaOrdenamento = sentencaOrdenamento;
                         query = utilNormaBuscaEs.MontarBusca(pesquisaGeral).GetQuery();
-                        query = query.Replace("st_habilita_pesquisa=true", "*");
+                        query = query.Replace("st_habilita_pesquisa:true", "*");
                         query = query.Replace("(*)and", "");
                         break;
 
@@ -78,7 +78,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaPendenteDePublicacao.iDisplayLength = iDisplayLength;
                         pesquisaPendenteDePublicacao.sentencaOrdenamento = sentencaOrdenamento;
                         query = utilNormaBuscaEs.MontarBusca(pesquisaPendenteDePublicacao).GetQuery();
-                        query = query.Replace("st_habilita_pesquisa=true", "*");
+                        query = query.Replace("st_habilita_pesquisa:true", "*");
                         query = query.Replace("(*)and", "");
                         break;
 
@@ -102,7 +102,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaDireta.iDisplayLength = iDisplayLength;
                         pesquisaDireta.sentencaOrdenamento = sentencaOrdenamento;
                         query = utilNormaBuscaEs.MontarBusca(pesquisaDireta).GetQuery();
-                        query = query.Replace("st_habilita_pesquisa=true", "*");
+                        query = query.Replace("st_habilita_pesquisa:true", "*");
                         query = query.Replace("(*)and", "");
                         break;
                     case "avancada":
@@ -114,7 +114,7 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaAvancada.iDisplayLength = iDisplayLength;
                         pesquisaAvancada.sentencaOrdenamento = sentencaOrdenamento;
                         query = utilNormaBuscaEs.MontarBusca(pesquisaAvancada).GetQuery();
-                        query = query.Replace("st_habilita_pesquisa=true", "*");
+                        query = query.Replace("st_habilita_pesquisa:true", "*");
                         query = query.Replace("(*)and", "");
                         break;
                 }
