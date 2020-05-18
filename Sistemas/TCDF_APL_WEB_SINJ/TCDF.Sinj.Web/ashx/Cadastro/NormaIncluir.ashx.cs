@@ -167,21 +167,15 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     normaOv.st_habilita_pesquisa = st_habilita_pesquisa;
                 }
 
-                if (bool.TryParse(_st_habilita_email, out st_habilita_email))
+                if(_st_desabilita_email == "true")
                 {
-                    if(_st_desabilita_email == "true")
-                    {
-                        normaOv.st_habilita_email = null;
-                    }
-                    else
-                    {
-                        normaOv.st_habilita_email = st_habilita_email;
-                    }
+                    normaOv.st_habilita_email = null;
                 }
-                else
+                else if(bool.TryParse(_st_habilita_email, out st_habilita_email))
                 {
                     normaOv.st_habilita_email = st_habilita_email;
                 }
+
 
                 if (bool.TryParse(_st_destaque, out st_destaque))
                 {
