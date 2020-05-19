@@ -254,7 +254,7 @@ namespace TCDF.Sinj.Web
             }
             totalNovos = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo'" }).result_count;
             orgaoUsuario = new SessaoRN().LerSessaoUsuario();
-            if (orgaoUsuario != null && orgaoUsuario != "")
+            if (!string.IsNullOrEmpty(orgaoUsuario))
             {
                 var jsonParseOrgao = Newtonsoft.Json.Linq.JObject.Parse(orgaoUsuario);
                 var OrgaoJson = jsonParseOrgao["orgao_cadastrador"]["nm_orgao_cadastrador"];
