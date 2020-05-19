@@ -253,7 +253,7 @@ namespace TCDF.Sinj.Web
                 oSessaoNotifiqueme = null;
             }
             totalNovos = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo'" }).result_count;
-            var orgaoBla = orgaoCadastradorDoUsuario.orgao_cadastrador.nm_orgao_cadastrador;
+//            var orgaoBla = orgaoCadastradorDoUsuario.orgao_cadastrador.nm_orgao_cadastrador;
         }
         private bool ValidarMenuPorGrupo(string li)
         {
