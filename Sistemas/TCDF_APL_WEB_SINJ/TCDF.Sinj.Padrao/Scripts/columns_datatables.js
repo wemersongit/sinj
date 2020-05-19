@@ -202,7 +202,7 @@ var _columns_norma_es = [
 	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "120px","sTitle":"" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false&st_habilita_email=false") == -1,
 		"mRender": function (data, type, full) {
 			var htmlToAppend = "";
-			if(!full._source.st_habilita_pesquisa || !full._source.st_habilita_email){
+			if(full._source.st_habilita_pesquisa == false || full._source.st_habilita_email == false){
 				htmlToAppend = "<label style='color:red'>Norma pendente</label>"
 			}
 			return htmlToAppend;

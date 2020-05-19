@@ -255,7 +255,6 @@ namespace SINJ_PUSH_APP
                             var email = new EmailRN();
                             var display_name_remetente = "SINJ Notifica";
                             var destinatario = new[] { usuario_push.email_usuario_push };
-                            //Deverá mostrar o seguinte: ex.: SINJ-DF - Criação - Decreto 40041/2019 - GAG
                             //trecho substituido - var titulo = "Informações sobre o ato " + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
                             var titulo = "SINJ-DF - " + "Criação " + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
                             var html = true;
@@ -312,7 +311,6 @@ namespace SINJ_PUSH_APP
                                     orgaosEmail = orgaosEmail + " <a> " + norma.origens[0].sg_orgao + "</a>";
                                 }
                             }
-                            //AQUI
                             var corpo_ementa_nova = "";
                             string[] ementa = norma.ds_ementa.Split(new char[] { '\n', '\r' });
                             foreach (var e in ementa)
@@ -674,9 +672,9 @@ namespace SINJ_PUSH_APP
             Pesquisa pesquisaPush = new Pesquisa();
             NotifiquemeOV notifiquemeOv = new NotifiquemeOV();
             DiarioOV diarioOv = new DiarioOV();
+            
             try
             {
-                NotifiquemeRN notifiquemeRN = new NotifiquemeRN(false);
                 DiarioRN diarioRn = new DiarioRN();
                 pesquisaDiario.literal = "st_novo AND dt_idx is not null";
                 pesquisaDiario.limit = null;
@@ -692,8 +690,7 @@ namespace SINJ_PUSH_APP
                     var sQuery = "";
                     var corpoEmail = "";
                     var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj_large.jpg";
-                    //var url_es = new DocEs().GetUrlEs(util.BRLight.Util.GetVariavel("NmBaseDiario", true)) + "/_search";
-                    var url_es = "http://app.lightbase.cc/sinjrest/sinj_diario/diario/_search";
+                    var url_es = new DocEs().GetUrlEs(util.BRLight.Util.GetVariavel("NmBaseDiario", true)) + "/_search";
                     countDiarios = resultsDiario.results.Count;
                     foreach (var diario in resultsDiario.results)
                     {
@@ -710,12 +707,12 @@ namespace SINJ_PUSH_APP
 
                     pesquisaPush.literal = "st_push";
                     pesquisaPush.limit = null;
+                    NotifiquemeRN notifiquemeRN = new NotifiquemeRN(false);
                     var resultsNotifiqueme = notifiquemeRN.Consultar(pesquisaPush);
                     this._sb_info.AppendLine(DateTime.Now + ": Total de usuários => " + resultsNotifiqueme.results.Count);
-
                     foreach (var usuarioPush in resultsNotifiqueme.results)
                     {
-                        if (usuarioPush.termos_diarios_monitorados.Count > 0)
+                        if (usuarioPush.termos_diarios_monitorados != null && usuarioPush.termos_diarios_monitorados.Count > 0)
                         {
                             foreach (var termo_diario in usuarioPush.termos_diarios_monitorados)
                             {
