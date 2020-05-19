@@ -254,9 +254,12 @@ namespace TCDF.Sinj.Web
             }
             totalNovos = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo'" }).result_count;
             orgaoUsuario = new SessaoRN().LerSessaoUsuario();
-            var jsonParseOrgao = Newtonsoft.Json.Linq.JObject.Parse(orgaoUsuario);
-            var OrgaoJson = jsonParseOrgao["orgao_cadastrador"]["nm_orgao_cadastrador"];
-            orgaoUsuario = OrgaoJson.ToString();
+            if (orgaoUsuario != null && orgaoUsuario != "")
+            {
+                var jsonParseOrgao = Newtonsoft.Json.Linq.JObject.Parse(orgaoUsuario);
+                var OrgaoJson = jsonParseOrgao["orgao_cadastrador"]["nm_orgao_cadastrador"];
+                orgaoUsuario = OrgaoJson.ToString();
+            }
         }
         private bool ValidarMenuPorGrupo(string li)
         {
