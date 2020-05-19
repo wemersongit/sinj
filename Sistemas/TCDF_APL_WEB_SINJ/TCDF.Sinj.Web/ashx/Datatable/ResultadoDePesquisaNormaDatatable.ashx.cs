@@ -101,6 +101,9 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaDireta.iDisplayStart = iDisplayStart;
                         pesquisaDireta.iDisplayLength = iDisplayLength;
                         pesquisaDireta.sentencaOrdenamento = sentencaOrdenamento;
+
+                        pesquisaDireta.nm_orgao_cadastrador = context.Request["nm_orgao_cadastrador"];
+
                         query = utilNormaBuscaEs.MontarBusca(pesquisaDireta).GetQuery();
                         query = query.Replace("st_habilita_pesquisa:true", "*");
                         query = query.Replace("(*)and", "");

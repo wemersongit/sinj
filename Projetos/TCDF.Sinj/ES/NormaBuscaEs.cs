@@ -481,6 +481,21 @@ namespace TCDF.Sinj.ES
                     }
                 );
             }
+
+            if (!string.IsNullOrEmpty(sentencaOv.nm_orgao_cadastrador))
+            {
+                buscaDireta.filtersToQueryFiltered.Add(
+                    new FilterQueryFiltered()
+                    {
+                        name = "nm_orgao_cadastrador",
+                        value = sentencaOv.nm_orgao_cadastrador,
+                        @operator = TypeOperator.equal,
+                        connector = TypeConnector.AND
+                    }
+                );
+            }
+
+
             if (!string.IsNullOrEmpty(sentencaOv.ano_assinatura))
             {
                 buscaDireta.filtersToQueryFiltered.Add(

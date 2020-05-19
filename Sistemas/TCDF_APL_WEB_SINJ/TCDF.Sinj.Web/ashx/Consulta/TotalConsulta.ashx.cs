@@ -92,6 +92,9 @@ namespace TCDF.Sinj.Web.ashx.Consulta
                     pesquisaDireta.st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
                     pesquisaDireta.st_habilita_email = context.Request["st_habilita_email"];
                     pesquisaDireta.ch_termos = context.Request.Params.GetValues("ch_termo");
+                    
+                    pesquisaDireta.nm_orgao_cadastrador = context.Request["nm_orgao_cadastrador"];
+                    
                     pesquisaDireta.isCount = true;
                     var buscaDireta = new NormaBuscaEs().MontarBusca(pesquisaDireta);
                     query = buscaDireta.GetQuery();
