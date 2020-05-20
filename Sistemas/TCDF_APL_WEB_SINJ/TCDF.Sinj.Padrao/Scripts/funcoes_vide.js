@@ -1,7 +1,6 @@
 let normaAlteradora = {};
 let normaAlterada = {};
 let vide = {};
-let videSemArquivo = false;
 let ahTextoIncompativel = false;
 const dt_controle_alteracao = new Date();
 
@@ -43,7 +42,7 @@ function selecionarTextoCopiar() {
 }
 
 function clickButtonSelecionarDispositivo(el) {
-    if(normaAlteradora.dispositivos.length <= 0){
+    if(!IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo){
         alert('Selecione o dispositivo alterador.');
         return;
     }

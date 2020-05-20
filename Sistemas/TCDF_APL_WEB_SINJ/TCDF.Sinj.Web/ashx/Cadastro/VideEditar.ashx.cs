@@ -58,7 +58,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 {
                     selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
                     {
-                        in_sem_arquivo = vide.NaoPossuiArquivo,
+                        in_sem_arquivo = vide.NormaAlteradora.SemArquivo,
                         ds_dispositivos_alterados = _ds_dispositivos_alterados,
                         dispositivos_norma_vide = vide.NormaAlteradora.Dispositivos,
                         dispositivos_norma_vide_outra = vide.NormaAlterada != null ? vide.NormaAlterada.Dispositivos : new List<DispositivoVide>()
@@ -82,7 +82,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         {
                             selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
                             {
-                                in_sem_arquivo = vide.NaoPossuiArquivo,
+                                in_sem_arquivo = vide.NormaAlterada.SemArquivo,
                                 ds_dispositivos_alterados = _ds_dispositivos_alterados,
                                 dispositivos_norma_vide = vide.NormaAlterada.Dispositivos,
                                 dispositivos_norma_vide_outra = vide.NormaAlteradora != null ? vide.NormaAlteradora.Dispositivos : new List<DispositivoVide>()
@@ -165,8 +165,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
     public class VideEdicao
     {
-        [JsonProperty("naoPossuiArquivo")]
-        public bool NaoPossuiArquivo { get; set; }
         [JsonProperty("ch_vide")]
         public string ChVide { get; set; }
         [JsonProperty("norma_alteradora")]
@@ -188,6 +186,10 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 throw new DocValidacaoException("Erro ao informar a norma alterada. Por não se tratar de uma norma fora do sistema a chave é obrigatória.");
             }
+            if (!NormaAlterada.InNormaForaSistema && !NormaAlterada.SemArquivo && (NormaAlterada.Dispositivos == null || !NormaAlterada.Dispositivos.Any()))
+            {
+                throw new DocValidacaoException("Erro ao informar dispositivos alterados. É obrigatório salvar no mínimo um dispositivo alterado.");
+            }
         }
     }
 
@@ -197,6 +199,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         public string ChNorma { get; set; }
         [JsonProperty("in_norma_fora_do_sistema")]
         public bool InNormaForaSistema { get; set; }
+        [JsonProperty("sem_arquivo")]
+        public bool SemArquivo { get; set; }
         [JsonProperty("arquivo_novo")]
         public ArquivoOV ArquivoNovo { get; set; }
         public List<DispositivoVide> Dispositivos { get; set; }
