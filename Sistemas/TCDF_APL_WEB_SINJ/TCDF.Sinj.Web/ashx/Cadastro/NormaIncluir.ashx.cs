@@ -165,6 +165,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 if (bool.TryParse(_st_habilita_pesquisa, out st_habilita_pesquisa))
                 {
                     normaOv.st_habilita_pesquisa = st_habilita_pesquisa;
+                }else if (_st_habilita_pesquisa == null)
+                {
+                    normaOv.st_habilita_pesquisa = false;
                 }
 
                 if(_st_desabilita_email == "true")
@@ -174,6 +177,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 else if(bool.TryParse(_st_habilita_email, out st_habilita_email))
                 {
                     normaOv.st_habilita_email = st_habilita_email;
+                }else if(_st_habilita_email == null)
+                {
+                    normaOv.st_habilita_email = false;
                 }
 
 
