@@ -4,9 +4,6 @@
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide_editar.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
-            $('#button_salvar_vide').click(function () {
-                return salvarArquivosVideEditar(sucesso_vide);
-            });
 
             var open_modal = function (data) {
                 var append_eml_pes = (ValidarPermissao(_grupos.nor_eml) ? "<div style='display:block;'> Habilita enviar e-mail:" +
@@ -100,17 +97,51 @@
                         }
                         else if (IsNotNullOrEmpty(data.ch_norma)) {
                             $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
+                            var videEditar = {};
                             for (var i = 0; i < data.vides.length; i++) {
                                 if (data.vides[i].ch_vide == ch_vide) {
-                                    vide = data.vides[i];
-                                    if (IsNotNullOrEmpty(vide, 'alteracao_texto_vide.ds_dispositivos_alterados')) {
-                                        $('textarea[name=ds_dispositivos_alterados]').val(vide.alteracao_texto_vide.ds_dispositivos_alterados);
-                                    }
-                                    buscarTipoDeRelacao(vide.ch_tipo_relacao);
-                                    selecionarNormaEditar(data);
+                                    videEditar = data.vides[i];
+                                    $('#button_salvar_vide').click(function () {
+                                        return salvarArquivosVideEditar(sucesso_vide, videEditar.ch_vide);
+                                    });
+                                    var deferredTipoDeRelacao = $.Deferred();
+                                    
+                                    $.when(deferredTipoDeRelacao).done(function(){
+                                        if (IsNotNullOrEmpty(videEditar, 'alteracao_texto_vide.ds_dispositivos_alterados')) {
+                                            $('textarea[name=ds_dispositivos_alterados]').val(videEditar.alteracao_texto_vide.ds_dispositivos_alterados);
+                                        }
+                                        if(IsNotNullOrEmpty(videEditar.caput_norma_vide, 'caput')){
+                                            if(!IsNullOrEmpty(data, 'ar_atualizado')){
+                                                videEditar.alteracao_texto_vide.in_sem_arquivo = true;
+                                            }
+                                            videEditar.alteracao_texto_vide.dispositivos_norma_vide = [];
+                                            for(var i = 0; i < videEditar.caput_norma_vide.caput.length; i++){
+                                                videEditar.alteracao_texto_vide.dispositivos_norma_vide.push({
+                                                    linkname: videEditar.caput_norma_vide.caput[i],
+                                                    texto: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_novo['+i+']') ? videEditar.caput_norma_vide.texto_novo[i] : IsNotNullOrEmpty(videEditar.caput_norma_vide.link) ? videEditar.caput_norma_vide.link : '')
+                                                });
+                                            }
+                                        }
+                                        if(videEditar.in_norma_afetada){
+                                            selecionarNormaAlteradaEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videEditar.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videEditar.alteracao_texto_vide.dispositivos_norma_vide });
+                                        }
+                                        else{
+                                            selecionarNormaAlteradoraEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videEditar.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videEditar.alteracao_texto_vide.dispositivos_norma_vide });
+                                        }
+                                        if(!videEditar.in_norma_fora_sistema){
+                                            buscarOutraNorma(videEditar.ch_norma_vide, videEditar.ch_vide);
+                                        }
+                                        else{
+                                            selecionarArquivoNormaAlteradoraEditar();
+                                        }
+                                    });
+                                    
+                                    buscarTipoDeRelacao(videEditar.ch_tipo_relacao, deferredTipoDeRelacao);
+
+                                    
                                 }
                             }
-                            if (!IsNotNullOrEmpty(vide, 'ch_vide')) {
+                            if (!IsNotNullOrEmpty(videEditar, 'ch_vide')) {
                                 $('#div_notificacao_vide').messagelight({
                                     sTitle: "Erro",
                                     sContent: "O vide não existe.",
@@ -134,6 +165,56 @@
                 });
             }
         });
+        function buscarOutraNorma(ch_norma, ch_vide){
+            var sucesso = function (data) {
+                    if (IsNotNullOrEmpty(data)) {
+                        if (data.error_message != null && data.error_message != "") {
+                            $('#div_notificacao_vide').messagelight({
+                                sTitle: "Erro",
+                                sContent: data.error_message,
+                                sType: "error",
+                                sWidth: "",
+                                iTime: null
+                            });
+                            gComplete();
+                        }
+                        else if (IsNotNullOrEmpty(data.ch_norma)) {
+                            for (var i = 0; i < data.vides.length; i++) {
+                                if (data.vides[i].ch_vide == ch_vide) {
+                                    if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'caput')){
+                                        if(!IsNullOrEmpty(data, 'ar_atualizado')){
+                                            data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
+                                        }
+                                        data.vides[i].alteracao_texto_vide.dispositivos_norma_vide = [];
+                                        for(var i = 0; i < data.vides[i].caput_norma_vide.caput.length; i++){
+                                            data.vides[i].alteracao_texto_vide.dispositivos_norma_vide.push({
+                                                linkname: data.vides[i].caput_norma_vide.caput[i],
+                                                texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+i+']') ? data.vides[i].caput_norma_vide.texto_novo[i] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : '')
+                                            });
+                                        }
+                                    }
+                                    if(data.vides[i].in_norma_afetada){
+                                        selecionarNormaAlteradaEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
+                                    }
+                                    else{
+                                        selecionarNormaAlteradoraEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
+                                    }
+                                    selecionarArquivosEditar();
+                                }
+                            }
+                        }
+                    }
+                };
+                $.ajaxlight({
+                    sUrl: './ashx/Visualizacao/NormaDetalhes.ashx?id_norma=' + ch_norma,
+                    sType: "GET",
+                    fnSuccess: sucesso,
+                    fnComplete: null,
+                    fnBeforeSend: null,
+                    fnError: null,
+                    bAsync: true
+                });
+        }
     </script>
     <style type="text/css">
         div.table div.head div.title{width:100%}

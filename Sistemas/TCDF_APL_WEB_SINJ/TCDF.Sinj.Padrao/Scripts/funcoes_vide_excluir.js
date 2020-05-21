@@ -1,41 +1,33 @@
-function selecionarNormaExcluir(norma){
-    if(IsNotNullOrEmpty(vide.caput_norma_vide, 'caput')){
-        vide.alteracao_texto_vide.dispositivos_norma_vide = [];
-        for(var i = 0; i < vide.caput_norma_vide.caput.length; i++){
-            vide.alteracao_texto_vide.dispositivos_norma_vide.push({
-                linkname: vide.caput_norma_vide.caput[i],
-                texto: (IsNotNullOrEmpty(vide.caput_norma_vide, 'texto_novo['+i+']') ? vide.caput_norma_vide.texto_novo[i] : IsNotNullOrEmpty(vide.caput_norma_vide.link) ? vide.caput_norma_vide.link : '')
-            });
-        }
-    }
-    if(IsNotNullOrEmpty(vide.caput_norma_vide_outra, 'caput')){
-        vide.alteracao_texto_vide.dispositivos_norma_vide_outra = [];
-        for(var i = 0; i < vide.caput_norma_vide_outra.caput.length; i++){
-            vide.alteracao_texto_vide.dispositivos_norma_vide_outra.push({
-                    linkname: vide.caput_norma_vide_outra.caput[i],
-                    texto: (IsNotNullOrEmpty(vide.caput_norma_vide_outra, 'texto_novo['+i+']') ? vide.caput_norma_vide_outra.texto_novo[i] : IsNotNullOrEmpty(vide.caput_norma_vide_outra.link) ? vide.caput_norma_vide_outra.link : '')
+let tipoDeRelacao;
+
+function buscarTipoDeRelacao(ch_tipo_relacao, deferred) {
+    var sucesso = function (data) {
+        if (IsNotNullOrEmpty(data)) {
+            if (data.error_message != null && data.error_message != "") {
+                $('#div_notificacao_vide').messagelight({
+                    sTitle: "Erro",
+                    sContent: data.error_message,
+                    sType: "error",
+                    sWidth: "",
+                    iTime: null
                 });
+            }
+            else{
+                tipoDeRelacao = data;
+                $('#tipoDeRelacao').val(data.nm_tipo_relacao);
+            }
         }
-    }
-    if (vide.in_norma_afetada) {
-        if (vide.in_norma_fora_sistema) {
-            selecionarNormaAlteradaForaSistemaExcluir();
-        }
-        else {
-            selecionarNormaAlteradaExcluir({ ch_norma: norma.ch_norma, nr_norma: norma.nr_norma, dt_assinatura: norma.dt_assinatura, nm_tipo_norma: norma.nm_tipo_norma, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide });
-        }
-        selecionarNormaAlteradoraExcluir({ ch_norma: vide.ch_norma_vide, nr_norma: vide.nr_norma_vide, dt_assinatura: vide.dt_assinatura_norma_vide, nm_tipo_norma: vide.nm_tipo_norma_vide, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide_outra });
-    }
-    else {
-        if (vide.in_norma_fora_sistema) {
-            selecionarNormaAlteradaForaSistemaExcluir();
-        }
-        else {
-            selecionarNormaAlteradaExcluir({ ch_norma: vide.ch_norma_vide, nr_norma: vide.nr_norma_vide, dt_assinatura: vide.dt_assinatura_norma_vide, nm_tipo_norma: vide.nm_tipo_norma_vide, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide_outra });
-        }
-        selecionarNormaAlteradoraExcluir({ ch_norma: norma.ch_norma, nr_norma: norma.nr_norma, dt_assinatura: norma.dt_assinatura, nm_tipo_norma: norma.nm_tipo_norma, dispositivos: vide.alteracao_texto_vide.dispositivos_norma_vide });
-    }
-    selecionarArquivosExcluir();
+        deferred.resolve();
+    };
+    $.ajaxlight({
+        sUrl: './ashx/Visualizacao/TipoDeRelacaoDetalhes.ashx?ch_tipo_relacao=' + ch_tipo_relacao,
+        sType: "GET",
+        fnSuccess: sucesso,
+        fnComplete: null,
+        fnBeforeSend: null,
+        fnError: null,
+        bAsync: true
+    });
 }
 
 function selecionarNormaAlteradoraExcluir(norma){
@@ -45,38 +37,11 @@ function selecionarNormaAlteradoraExcluir(norma){
         ds_norma: montarDescricaoDaNorma(norma),
         dt_assinatura: norma.dt_assinatura,
         nm_tipo_norma: norma.nm_tipo_norma,
+        sem_arquivo: norma.sem_arquivo,
+        arquivo: norma.arquivo,
         dispositivos: norma.dispositivos
     };
     $('#label_norma_vide_alteradora').text(normaAlteradora.ds_norma);
-}
-
-function selecionarArquivosExcluir(){
-    if(!vide.alteracao_texto_vide.in_sem_arquivo){
-
-        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && vide.ch_tipo_relacao != '9'){
-            gComplete();
-            showMessageNormaIncompativel(normaAlteradora);
-            return;
-        }
-        let deferredAlteradora = $.Deferred();
-        let deferredAlterada = $.Deferred();
-        $.when(deferredAlteradora, deferredAlterada).done(gComplete);
-        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
-        if(!normaAlterada.in_norma_fora_sistema){
-            if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao) && vide.ch_tipo_relacao != '9'){
-                gComplete();
-                showMessageNormaIncompativel(normaAlterada);
-                return;
-            }
-            selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
-        }
-        else{
-            deferredAlterada.resolve();
-        }
-    }
-    else{
-        gComplete();
-    }
 }
 
 function selecionarNormaAlteradaExcluir(norma){
@@ -86,76 +51,92 @@ function selecionarNormaAlteradaExcluir(norma){
         ds_norma: montarDescricaoDaNorma(norma),
         dt_assinatura: norma.dt_assinatura,
         nm_tipo_norma: norma.nm_tipo_norma,
+        sem_arquivo: norma.sem_arquivo,
+        arquivo: norma.arquivo,
         dispositivos: norma.dispositivos
     };
     $('#label_norma_vide_alterada').text(normaAlterada.ds_norma);
 }
 
-function selecionarNormaAlteradaForaSistemaExcluir(){
+function selecionarNormaAlteradaForaSistemaExcluir(videExcluir){
     normaAlterada = {
         in_norma_fora_sistema: true
     }
     $('#line_norma_fora_do_sistema').removeClass('hidden');
     $('#line_norma_dentro_do_sistema').addClass('hidden');
-    $('#ch_tipo_norma_vide_fora_do_sistema').val(vide.ch_tipo_norma_vide);
-    $('#nm_tipo_norma_vide_fora_do_sistema').val(vide.nm_tipo_norma_vide);
-    $('#nr_norma_vide_fora_do_sistema').val(vide.nr_norma_vide);
-    $('#ch_tipo_fonte_vide_fora_do_sistema').val(vide.ch_tipo_fonte_norma_vide);
-    $('#nm_tipo_fonte_vide_fora_do_sistema').val(vide.nm_tipo_fonte_norma_vide);
-    $('#dt_publicacao_norma_vide_fora_do_sistema').val(vide.dt_publicacao_fonte_norma_vide);
-    $('#nr_pagina_publicacao_norma_vide_fora_do_sistema').val(vide.pagina_publicacao_norma_vide);
-    $('#nr_coluna_publicacao_norma_vide_fora_do_sistema').val(vide.coluna_publicacao_norma_vide);
+    $('#ch_tipo_norma_vide_fora_do_sistema').val(videExcluir.ch_tipo_norma_vide);
+    $('#nm_tipo_norma_vide_fora_do_sistema').val(videExcluir.nm_tipo_norma_vide);
+    $('#nr_norma_vide_fora_do_sistema').val(videExcluir.nr_norma_vide);
+    $('#ch_tipo_fonte_vide_fora_do_sistema').val(videExcluir.ch_tipo_fonte_norma_vide);
+    $('#nm_tipo_fonte_vide_fora_do_sistema').val(videExcluir.nm_tipo_fonte_norma_vide);
+    $('#dt_publicacao_norma_vide_fora_do_sistema').val(videExcluir.dt_publicacao_fonte_norma_vide);
+    $('#nr_pagina_publicacao_norma_vide_fora_do_sistema').val(videExcluir.pagina_publicacao_norma_vide);
+    $('#nr_coluna_publicacao_norma_vide_fora_do_sistema').val(videExcluir.coluna_publicacao_norma_vide);
+}
+
+function selecionarArquivoNormaAlteradoraExcluir(){
+    let deferredAlteradora = $.Deferred();
+    $.when(deferredAlteradora).done(gComplete);
+
+    if(!normaAlteradora.sem_arquivo){
+        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && tipoDeRelacao.ch_tipo_relacao != '9'){
+            gComplete();
+            showMessageNormaIncompativel(normaAlteradora);
+            return;
+        }
+        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+    }
+    else{
+        deferredAlteradora.resolve();
+    }
+}
+
+function selecionarArquivosExcluir(){
+    let deferredAlteradora = $.Deferred();
+    let deferredAlterada = $.Deferred();
+    $.when(deferredAlteradora, deferredAlterada).done(gComplete);
+    if(!normaAlteradora.sem_arquivo){
+        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && tipoDeRelacao.ch_tipo_relacao != '9'){
+            gComplete();
+            showMessageNormaIncompativel(normaAlteradora);
+            return;
+        }
+        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+    }
+    else{
+        deferredAlteradora.resolve();
+    }
+    if(!normaAlterada.in_norma_fora_sistema && !normaAlterada.sem_arquivo){
+        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && tipoDeRelacao.ch_tipo_relacao != '9'){
+            gComplete();
+            showMessageNormaIncompativel(normaAlterada);
+            return;
+        }
+        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
+    }
+    else{
+        deferredAlterada.resolve();
+    }
 }
 
 function selecionarArquivoDaNormaExcluir(norma, deferred) {
-
-    var sucesso = function (data) {
-        if (IsNotNullOrEmpty(data, 'error_message')) {
-            $('#div_notificacao_norma').messagelight({
-                sTitle: "Erro",
-                sContent: data.error_message,
-                sType: "error",
-                sWidth: "",
-                iTime: null
-            });
-            return false;
-        }
-        if (IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
-            norma.arquivo = data.ar_atualizado;
-        }
-        else {
-            return;
-        }
-        if(norma.sufixo == 'alteradora'){
-            normaAlteradora.arquivo = norma.arquivo;
-        }
-        else{
-            normaAlterada.arquivo = norma.arquivo;
-        }
-        const sucessoArquivo = function(data){
-            exibirTextoDoArquivoSemAsAltercoesDoVide(norma, data);
-            $('#div_cad_dispositivo_' + norma.sufixo).show();
-        }
-        $.ajaxlight({
-            sUrl: "./ashx/Arquivo/HtmlFileEncoded.ashx?nm_base=sinj_norma&id_file=" + norma.arquivo.id_file,
-            sType: "GET",
-            fnSuccess: sucessoArquivo,
-            fnBeforeSend: gInicio,
-            fnComplete: function(){
-                deferred.resolve();
-            },
-            bAsync: true
-        });
+    if (!IsNotNullOrEmpty(norma, 'arquivo.id_file')) {
+        return;
+    }
+    const sucessoArquivo = function(data){
+        exibirTextoDoArquivoSemAsAltercoesDoVide(norma, data);
+        $('#div_cad_dispositivo_' + norma.sufixo).show();
     }
     $.ajaxlight({
-        sUrl: './ashx/Visualizacao/NormaDetalhes.ashx?id_norma=' + norma.ch_norma,
+        sUrl: "./ashx/Arquivo/HtmlFileEncoded.ashx?nm_base=sinj_norma&id_file=" + norma.arquivo.id_file,
         sType: "GET",
-        fnSuccess: sucesso,
-        fnComplete: null,
-        bAsync: true,
-        iTimeout: 2000
+        fnSuccess: sucessoArquivo,
+        fnBeforeSend: gInicio,
+        fnComplete: function(){
+            deferred.resolve();
+        },
+        bAsync: true
     });
-
 }
 
 function exibirTextoDoArquivoSemAsAltercoesDoVide(norma, arquivo) {
@@ -206,7 +187,7 @@ function destacarLinkAlterador(linkname, texto){
         });
     }
     else{
-        if(vide.ch_tipo_relacao == '9'){
+        if(tipoDeRelacao.ch_tipo_relacao == '9'){
             $(`#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info="${normaAlterada.ch_norma}"]`).attr('remover', 'leco').addClass('remover');
         }
     }
@@ -218,7 +199,7 @@ function removerLinkAlterador(){
 }
 
 function destacarAlteracaoDoDispositivo(linkname, texto){
-    switch(vide.ch_tipo_relacao){
+    switch(tipoDeRelacao.ch_tipo_relacao){
         case '1':
             if(texto.indexOf('\n') > -1){
                 const textoSplited = texto.split('\n');
@@ -255,7 +236,7 @@ function destacarAlteracaoDoDispositivo(linkname, texto){
             else{
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).attr('remover', 'identificador-alteracao-completa').addClass('remover');
                 const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
-                if(ehRelacaoDeAlteracaoCompleta(vide.ch_tipo_relacao)){
+                if(ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao)){
                     let dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]');
                     if(dispositivosIdentificacaoAlteracaoCompleta.length > 1){
                         const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 2].getAttribute('ch_tipo_relacao');
@@ -287,7 +268,7 @@ function destacarAlteracaoDoDispositivo(linkname, texto){
                         }
                     }
                 }
-                else if(ehRelacaoQueDesfazAlteracaoCompleta(vide.ch_tipo_relacao)){
+                else if(ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao)){
                     let dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]');
                     if(dispositivosIdentificacaoAlteracaoCompleta.length > 1){
                         let lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 2].getAttribute('ch_norma_alteracao_completa');
@@ -317,7 +298,7 @@ function destacarAlteracaoDoDispositivo(linkname, texto){
 }
 
 function removerAlteracaoDoDispositivo(){
-    switch(vide.ch_tipo_relacao){
+    switch(tipoDeRelacao.ch_tipo_relacao){
         case '1':
             $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=acrescimo]').remove();
             break;
@@ -380,27 +361,27 @@ function removerAlteracaoDoDispositivo(){
     }
 }
 
-function salvarVideExcluir(sucessoVide){
+function salvarVideExcluir(sucessoVide, ch_vide){
     $('#vide').val(JSON.stringify({
-            ch_vide: vide.ch_vide,
+            ch_vide: ch_vide,
             norma_alteradora: normaAlteradora,
             norma_alterada: normaAlterada
         }));
     return fnSalvar("form_vide_excluir", "", sucessoVide);
 }
 
-function salvarArquivosVideExcluir(sucessoVide){
-    if(normaAlteradora.arquivo && normaAlterada.arquivo){
+function salvarArquivosVideExcluir(sucessoVide, ch_vide){
+    const deferredAlteradora = $.Deferred();
+    const deferredAlterada = $.Deferred();
+    $.when(deferredAlteradora, deferredAlterada).done(function(){
+        salvarVideExcluir(sucessoVide, ch_vide);
+    });
+    gInicio();
+    if(normaAlteradora.arquivo){
         removerLinkAlterador();
-        removerAlteracaoDoDispositivo();
+        
         $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html()));
         $('#form_arquivo_norma_alteradora input[name=nm_arquivo]').val(normaAlteradora.arquivo.filename);
-
-        const deferredAlteradora = $.Deferred();
-        const deferredAlterada = $.Deferred();
-        $.when(deferredAlteradora, deferredAlterada).done(function(){
-            salvarVideExcluir(sucessoVide);
-        });
         
         var sucessoNormaAlteradora = function (data) {
             if (data.error_message != null && data.error_message != "") {
@@ -418,39 +399,41 @@ function salvarArquivosVideExcluir(sucessoVide){
             fnComplete: function(){
                 deferredAlteradora.resolve();
             },
-            fnBeforeSubmit: gInicio,
+            fnBeforeSubmit: null,
             bAsync: true
         });
-        if(!normaAlterada.in_norma_fora_do_sistema){
-            $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html()));
-            $('#form_arquivo_norma_alterada input[name=nm_arquivo]').val(normaAlterada.arquivo.filename);
-
-            var sucessoNormaAlterada = function (data) {
-                if (data.error_message != null && data.error_message != "") {
-                    notificar('#div_cad_vide' + id_form, data.error_message, 'error');
-                }
-                else if (IsNotNullOrEmpty(data, "id_file")) {
-                    normaAlterada.arquivo_novo = data;
-                }
-            }
-            $.ajaxlight({
-                sFormId: 'form_arquivo_norma_alterada',
-                sUrl: './ashx/Arquivo/UploadHtml.ashx',
-                sType: "POST",
-                fnSuccess: sucessoNormaAlterada,
-                fnComplete: function(){
-                    deferredAlterada.resolve();
-                },
-                fnBeforeSubmit: null,
-                bAsync: true
-            });
-        }
-        else{
-            deferredAlterada.resolve();
-        }
     }
     else{
-        salvarVideExcluir(sucessoVide);
+        deferredAlteradora.resolve();
+    }
+    if(normaAlterada.arquivo){
+        removerAlteracaoDoDispositivo();
+        
+        $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html()));
+        $('#form_arquivo_norma_alterada input[name=nm_arquivo]').val(normaAlterada.arquivo.filename);
+
+        var sucessoNormaAlterada = function (data) {
+            if (data.error_message != null && data.error_message != "") {
+                notificar('#div_cad_vide' + id_form, data.error_message, 'error');
+            }
+            else if (IsNotNullOrEmpty(data, "id_file")) {
+                normaAlterada.arquivo_novo = data;
+            }
+        }
+        $.ajaxlight({
+            sFormId: 'form_arquivo_norma_alterada',
+            sUrl: './ashx/Arquivo/UploadHtml.ashx',
+            sType: "POST",
+            fnSuccess: sucessoNormaAlterada,
+            fnComplete: function(){
+                deferredAlterada.resolve();
+            },
+            fnBeforeSubmit: null,
+            bAsync: true
+        });
+    }
+    else{
+        deferredAlterada.resolve();
     }
     return false;
 }

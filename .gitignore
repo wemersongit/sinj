@@ -29,6 +29,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+!Projetos/TCDF.Sinj/Log
 [Ll]ogs/
 
 # Visual Studio 2015/2017 cache/options directory
@@ -354,6 +355,14 @@ MigrationBackup/
 
 # Backup from merge tools
 *.bak
+#Remove WebConfig
+
+#Web.config
+Web.config
+
+#Sinj.Master
+Sinj.Master
 
 # Others
 .directory
+
