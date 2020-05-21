@@ -393,7 +393,7 @@ function CriarModalFonte(tr_fonte) {
                         }
                     }
 
-                    if (((IsNotNullOrEmpty(oFonte, 'ds_diario') && IsNotNullOrEmpty(oFonte, 'ar_diario')) || $('#ch_tipo_norma').val() == '11000000' ) && IsNotNullOrEmpty(oFonte, 'ch_tipo_fonte') && IsNotNullOrEmpty(oFonte, 'ch_tipo_publicacao')) {
+                    if (IsNotNullOrEmpty(oFonte, 'ds_diario') && IsNotNullOrEmpty(oFonte, 'ch_tipo_fonte') && IsNotNullOrEmpty(oFonte, 'ch_tipo_publicacao')) {
                         $('#tbody_fontes .tr_vazia').remove();
                         var guid = Guid('N');
                         if (IsNotNullOrEmpty(tr_fonte)) {
@@ -462,7 +462,7 @@ function CriarModalFonte(tr_fonte) {
 }
 
 function onblurTipoDeFonte(){
-    if($('#ch_tipo_norma').val() == '11000000' && $('#ch_tipo_fonte_modal').val() == '18'){
+    if($('#ch_tipo_fonte_modal').val() == '18' || $('#ch_tipo_fonte_modal').val() == '13'){
         $('#buttonProsseguirSemDiario').show();
     }
     else{
