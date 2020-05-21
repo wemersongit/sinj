@@ -68,7 +68,6 @@
         }
         $(document).ready(function () {
             if (_user.orgao_cadastrador.nm_orgao_cadastrador != null && _user.orgao_cadastrador.nm_orgao_cadastrador != "") {
-                console.log("1");
                 $("#li_pendenteDePesquisa a").attr('href', './ResultadoDePesquisa?tipo_pesquisa=norma&all=&st_habilita_pesquisa=false&st_habilita_email=false&nm_orgao_cadastrador=' + _user.orgao_cadastrador.nm_orgao_cadastrador)
             }
                 setInterval(incrementTime, 100000);
