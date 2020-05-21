@@ -840,7 +840,7 @@ function salvarArquivosVideCadastrar(sucessoVide){
     $.when(deferredAlteradora, deferredAlterada).done(function(){
         salvarVideCadastrar(sucessoVide)
     });
-
+    gInicio();
     limparFormatacao();
     if(!normaAlteradora.sem_arquivo){
         let htmlNormaAlteradora = "";
@@ -886,7 +886,7 @@ function salvarArquivosVideCadastrar(sucessoVide){
             fnComplete: function(){
                 deferredAlteradora.resolve();
             },
-            fnBeforeSubmit: gInicio,
+            fnBeforeSubmit: null,
             bAsync: true
         });
     }

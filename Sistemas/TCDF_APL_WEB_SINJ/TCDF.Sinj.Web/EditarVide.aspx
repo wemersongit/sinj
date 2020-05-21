@@ -112,7 +112,7 @@
                                         }
                                         if(IsNotNullOrEmpty(videEditar.caput_norma_vide, 'caput')){
                                             if(!IsNullOrEmpty(data, 'ar_atualizado')){
-                                                data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
+                                                videEditar.alteracao_texto_vide.in_sem_arquivo = true;
                                             }
                                             videEditar.alteracao_texto_vide.dispositivos_norma_vide = [];
                                             for(var i = 0; i < videEditar.caput_norma_vide.caput.length; i++){
@@ -129,10 +129,10 @@
                                             selecionarNormaAlteradoraEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videEditar.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videEditar.alteracao_texto_vide.dispositivos_norma_vide });
                                         }
                                         if(!videEditar.in_norma_fora_sistema){
-                                            buscarOutraNorma(videEditar.ch_norma_vide, ch_vide);
+                                            buscarOutraNorma(videEditar.ch_norma_vide, videEditar.ch_vide);
                                         }
                                         else{
-                                            selecionarArquivoNormaAlteradoraEditar(videEditar);
+                                            selecionarArquivoNormaAlteradoraEditar();
                                         }
                                     });
                                     
@@ -199,7 +199,7 @@
                                     else{
                                         selecionarNormaAlteradoraEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
                                     }
-                                    selecionarArquivosEditar(data.vides[i]);
+                                    selecionarArquivosEditar();
                                 }
                             }
                         }

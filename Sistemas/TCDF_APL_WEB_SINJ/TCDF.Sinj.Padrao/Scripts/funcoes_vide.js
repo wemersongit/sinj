@@ -105,9 +105,9 @@ function removerDescricaoDispositivosAlterados(ds_dispositivo_alterado){
 }
 
 function getNomeDoLinkName(linkname){
-    const sufixo = linkname.substring(0, 3);
+    let sufixo = linkname.substring(0, 3);
     const linknames = linkname.split('_');
-    if(linknames > 1){
+    if(linknames.length > 1){
         sufixo = linknames[linknames.length - 1].substring(0, 3);
     }
     const nomes = {

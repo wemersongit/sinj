@@ -32,6 +32,7 @@ let optionsTooltip = {
     html: true,
     placement: "right"
 };
+
 function buscarTipoDeRelacao(ch_tipo_relacao, deferred) {
     var sucesso = function (data) {
         if (IsNotNullOrEmpty(data)) {
@@ -107,28 +108,30 @@ function selecionarNormaAlteradaForaSistemaEditar(videEditar){
     $('#nr_coluna_publicacao_norma_vide_fora_do_sistema').val(videEditar.coluna_publicacao_norma_vide);
 }
 
-function selecionarArquivoNormaAlteradoraEditar(videEditar){
-    if(normaAlteradora.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && videEditar.ch_tipo_relacao != '9' && !normaAlteradora.sem_arquivo){
+function selecionarArquivoNormaAlteradoraEditar(){
+    let deferredAlteradora = $.Deferred();
+    $.when(deferredAlteradora).done(gComplete);
+    if(!normaAlteradora.sem_arquivo){
+        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && tipoDeRelacao.ch_tipo_relacao != '9'){
             gComplete();
             showMessageNormaIncompativel(normaAlteradora);
             return;
         }
-        let deferredAlteradora = $.Deferred();
-        $.when(deferredAlteradora).done(gComplete);
         selecionarArquivoDaNormaEditar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+    }
+    else{
+        deferredAlteradora.resolve();
     }
     $('#div_cad_dispositivo_alterada').show();
     $('#div_cad_dispositivo_alterada .line_conteudo_arquivo').show();
-    gComplete();
 }
 
-function selecionarArquivosEditar(videEditar){
+function selecionarArquivosEditar(){
     let deferredAlteradora = $.Deferred();
     let deferredAlterada = $.Deferred();
     $.when(deferredAlteradora, deferredAlterada).done(gComplete);
     if(!normaAlteradora.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && videEditar.ch_tipo_relacao != '9'){
+        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && tipoDeRelacao.ch_tipo_relacao != '9'){
             gComplete();
             showMessageNormaIncompativel(normaAlteradora);
             return;
@@ -139,7 +142,7 @@ function selecionarArquivosEditar(videEditar){
         deferredAlteradora.resolve();
     }
     if(!normaAlterada.in_norma_fora_sistema && !normaAlterada.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(videEditar.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(videEditar.ch_tipo_relacao) && videEditar.ch_tipo_relacao != '9'){
+        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && tipoDeRelacao.ch_tipo_relacao != '9'){
             gComplete();
             showMessageNormaIncompativel(normaAlterada);
             return;

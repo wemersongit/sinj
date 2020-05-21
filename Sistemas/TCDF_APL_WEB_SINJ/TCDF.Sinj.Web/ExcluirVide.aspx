@@ -8,10 +8,6 @@
         var id_doc = GetParameterValue('id_doc');
         var ch_vide = GetParameterValue('ch_vide');
 
-        $('#button_salvar_vide').click(function () {
-            return salvarArquivosVideExcluir(sucesso_vide);
-        });
-
         var open_modal = function (data) {
             var append_eml_pes = (ValidarPermissao(_grupos.nor_eml) ? "<div style='display:block;'> Habilita enviar e-mail:" +
                 "<input id='vide_st_habilita_email' name='vide_st_habilita_email' value='true' type='checkbox' title='Habilita o envio de e- mails.' " + (data.st_habilita_email == "true" || data.st_habilita_email == "True" ? 'checked' : '') + "  /> </div>" : "") +
@@ -125,18 +121,53 @@
                     }
                     else if (IsNotNullOrEmpty(data.ch_norma)) {
                         $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
+                        var videExcluir = {};
                         for (var i = 0; i < data.vides.length; i++) {
                             if (data.vides[i].ch_vide == ch_vide) {
-                                vide = data.vides[i];
-                                vide.nm_tipo_relacao = getNmTipoRelacao(vide);
-                                $('#tipoDeRelacao').val(vide.nm_tipo_relacao);
-                                if (!IsNotNullOrEmpty(vide.ds_comentario_vide)) {
+                                videExcluir = data.vides[i];
+
+                                if (!IsNotNullOrEmpty(videExcluir.ds_comentario_vide)) {
                                     $('#lineComentario').remove();
                                 }
-                                selecionarNormaExcluir(data);
+
+                                $('#button_salvar_vide').click(function () {
+                                    return salvarArquivosVideExcluir(sucesso_vide, videExcluir.ch_vide);
+                                });
+
+                                var deferredTipoDeRelacao = $.Deferred();
+
+                                $.when(deferredTipoDeRelacao).done(function(){
+                                    if(IsNotNullOrEmpty(videExcluir.caput_norma_vide, 'caput')){
+                                        if(!IsNullOrEmpty(data, 'ar_atualizado')){
+                                            videExcluir.alteracao_texto_vide.in_sem_arquivo = true;
+                                        }
+                                        videExcluir.alteracao_texto_vide.dispositivos_norma_vide = [];
+                                        for(var i = 0; i < videExcluir.caput_norma_vide.caput.length; i++){
+                                            videExcluir.alteracao_texto_vide.dispositivos_norma_vide.push({
+                                                linkname: videExcluir.caput_norma_vide.caput[i],
+                                                texto: (IsNotNullOrEmpty(videExcluir.caput_norma_vide, 'texto_novo['+i+']') ? videExcluir.caput_norma_vide.texto_novo[i] : IsNotNullOrEmpty(videExcluir.caput_norma_vide.link) ? videExcluir.caput_norma_vide.link : '')
+                                            });
+                                        }
+                                    }
+                                    if(videExcluir.in_norma_afetada){
+                                        selecionarNormaAlteradaExcluir({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videExcluir.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videExcluir.alteracao_texto_vide.dispositivos_norma_vide });
+                                    }
+                                    else{
+                                        selecionarNormaAlteradoraExcluir({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videExcluir.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videExcluir.alteracao_texto_vide.dispositivos_norma_vide });
+                                    }
+                                    if(!videExcluir.in_norma_fora_sistema){
+                                        buscarOutraNorma(videExcluir.ch_norma_vide, videExcluir.ch_vide);
+                                    }
+                                    else{
+                                        selecionarArquivoNormaAlteradoraExcluir();
+                                    }
+                                });
+                                
+                                
+                                buscarTipoDeRelacao(videExcluir.ch_tipo_relacao, deferredTipoDeRelacao);
                             }
                         }
-                        if (!IsNotNullOrEmpty(vide, 'ch_vide')) {
+                        if (!IsNotNullOrEmpty(videExcluir, 'ch_vide')) {
                             $('#div_notificacao_vide').messagelight({
                                 sTitle: "Erro",
                                 sContent: "O vide não existe.",
@@ -160,6 +191,56 @@
             });
         }
     });
+    function buscarOutraNorma(ch_norma, ch_vide){
+            var sucesso = function (data) {
+                if (IsNotNullOrEmpty(data)) {
+                    if (data.error_message != null && data.error_message != "") {
+                        $('#div_notificacao_vide').messagelight({
+                            sTitle: "Erro",
+                            sContent: data.error_message,
+                            sType: "error",
+                            sWidth: "",
+                            iTime: null
+                        });
+                        gComplete();
+                    }
+                    else if (IsNotNullOrEmpty(data.ch_norma)) {
+                        for (var i = 0; i < data.vides.length; i++) {
+                            if (data.vides[i].ch_vide == ch_vide) {
+                                if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'caput')){
+                                    if(!IsNullOrEmpty(data, 'ar_atualizado')){
+                                        data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
+                                    }
+                                    data.vides[i].alteracao_texto_vide.dispositivos_norma_vide = [];
+                                    for(var i = 0; i < data.vides[i].caput_norma_vide.caput.length; i++){
+                                        data.vides[i].alteracao_texto_vide.dispositivos_norma_vide.push({
+                                            linkname: data.vides[i].caput_norma_vide.caput[i],
+                                            texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+i+']') ? data.vides[i].caput_norma_vide.texto_novo[i] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : '')
+                                        });
+                                    }
+                                }
+                                if(data.vides[i].in_norma_afetada){
+                                    selecionarNormaAlteradaExcluir({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
+                                }
+                                else{
+                                    selecionarNormaAlteradoraExcluir({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
+                                }
+                                selecionarArquivosExcluir();
+                            }
+                        }
+                    }
+                }
+            };
+            $.ajaxlight({
+                sUrl: './ashx/Visualizacao/NormaDetalhes.ashx?id_norma=' + ch_norma,
+                sType: "GET",
+                fnSuccess: sucesso,
+                fnComplete: null,
+                fnBeforeSend: null,
+                fnError: null,
+                bAsync: true
+            });
+        }
 </script>
 <style type="text/css">
     div.table div.head div.title{width:100%}
