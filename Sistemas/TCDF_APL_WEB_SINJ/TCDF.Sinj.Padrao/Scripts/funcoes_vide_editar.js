@@ -1,4 +1,5 @@
 let tipoDeRelacao;
+let dsDispositivosAlteradosCopy;
 let optionsTooltip = {
     template: `<div class="tooltip" role="tooltip">
         <div class="tooltip-arrow"></div>
@@ -87,7 +88,8 @@ function selecionarNormaAlteradaEditar(norma){
         nm_tipo_norma: norma.nm_tipo_norma,
         sem_arquivo: norma.sem_arquivo,
         arquivo: norma.arquivo,
-        dispositivos: norma.dispositivos
+        dispositivos: norma.dispositivos,
+        in_alteracao_completa: (ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) || ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao)) && norma.dispositivos.length == 0
     };
     $('#label_norma_vide_alterada').text(normaAlterada.ds_norma);
 }
@@ -383,14 +385,14 @@ function salvarVideEditar(sucessoVide, ch_vide){
 }
 
 function salvarArquivosVideEditar(sucessoVide, ch_vide){
-    if(normaAlterada.arquivo){
+    if(IsNotNullOrEmpty(normaAlterada, 'arquivo.id_file') && dsDispositivosAlteradosCopy == $('textarea[name=ds_dispositivos_alterados]').val()){
         if(!IsNotNullOrEmpty(normaAlterada.dispositivos) || normaAlterada.dispositivos.length <= 0){
             alert('Não há dispositivos alterados. Se a intenção é removê-los use a função excluir.');
             return false;
         }
     }
     limparFormatacao();
-    if(!normaAlterada.in_norma_fora_do_sistema && !normaAlterada.sem_arquivo){
+    if(!normaAlterada.in_norma_fora_do_sistema && !normaAlterada.sem_arquivo && !normaAlterada.in_alteracao_completa){
         let htmlNormaAlterada = "";
         const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
         for(let i = 0; i < $conteudoArquivoNormaAlterada.length; i++){

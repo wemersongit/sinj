@@ -113,8 +113,8 @@ function getNomeDoLinkName(linkname){
     const nomes = {
         'art': 'Artigo',
         'ane': 'Anexo',
-        'par': 'Anexo',
-        'inc': 'Anexo',
+        'par': 'Parágrafo',
+        'inc': 'Inciso',
         'num': '',
         'ali': 'Alínea',
         'let': ''
