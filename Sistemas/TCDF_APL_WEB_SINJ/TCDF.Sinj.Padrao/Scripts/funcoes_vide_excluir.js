@@ -377,7 +377,7 @@ function salvarArquivosVideExcluir(sucessoVide, ch_vide){
         salvarVideExcluir(sucessoVide, ch_vide);
     });
     gInicio();
-    if(normaAlteradora.arquivo){
+    if(IsNotNullOrEmpty(normaAlteradora, 'arquivo.id_file')){
         removerLinkAlterador();
         
         $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html()));
@@ -406,7 +406,7 @@ function salvarArquivosVideExcluir(sucessoVide, ch_vide){
     else{
         deferredAlteradora.resolve();
     }
-    if(normaAlterada.arquivo){
+    if(IsNotNullOrEmpty(normaAlterada, 'arquivo.id_file')){
         removerAlteracaoDoDispositivo();
         
         $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html()));
