@@ -410,11 +410,12 @@ function selecionarArquivoDaNormaCadastrar(norma) {
                                 limparDispositivoSelecionado(norma.sufixo);
                                 if(norma.sufixo == 'alterada'){
                                     normaAlterada.sem_arquivo = true;
+                                    normaAlteradora.sem_arquivo = true;
                                     limparDispositivoSelecionado('alteradora');
-                                    // $('#div_cad_dispositivo_alterada').show();
-                                    // $('#div_cad_dispositivo_alterada div.line_conteudo_arquivo').show();
-                                    // $('.stepper').hide();
-                                    // $('.step4').removeClass('hidden');
+                                    $('#div_cad_dispositivo_alterada').show();
+                                    $('#div_cad_dispositivo_alterada div.line_conteudo_arquivo').show();
+                                    $('.stepper').hide();
+                                    $('.step4').removeClass('hidden');
                                 }
                                 else{
                                     normaAlteradora.sem_arquivo = true;
@@ -432,9 +433,6 @@ function selecionarArquivoDaNormaCadastrar(norma) {
                 });
                 return;
         }
-        // else{
-        //     $('.stepper').show();
-        // }
         $('.stepper').show();
         if(norma.sufixo == 'alteradora'){
             normaAlteradora.arquivo = norma.arquivo;
@@ -842,6 +840,7 @@ function salvarArquivosVideCadastrar(sucessoVide){
     });
     gInicio();
     limparFormatacao();
+    //Se a norma alterada não tiver aquivo então não tem porque salvar o arquivo da norma alteradora
     if(!normaAlteradora.sem_arquivo){
         let htmlNormaAlteradora = "";
         if(!$('#inLecoSemCitacao').is(':checked')){

@@ -108,6 +108,7 @@
                                     
                                     $.when(deferredTipoDeRelacao).done(function(){
                                         if (IsNotNullOrEmpty(videEditar, 'alteracao_texto_vide.ds_dispositivos_alterados')) {
+                                            dsDispositivosAlteradosCopy = videEditar.alteracao_texto_vide.ds_dispositivos_alterados;
                                             $('textarea[name=ds_dispositivos_alterados]').val(videEditar.alteracao_texto_vide.ds_dispositivos_alterados);
                                         }
                                         if(IsNotNullOrEmpty(videEditar.caput_norma_vide, 'caput')){
