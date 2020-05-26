@@ -5,7 +5,7 @@ let ahTextoIncompativel = false;
 const dt_controle_alteracao = new Date();
 
 function ehRelacaoDeAlteracaoCompleta(chTipoRelacao){
-    const relacoesAlteracaoCompleta = ['21', '4', 'a8ed93396fcc4959b9b8e82808880f2a', '25'];
+    const relacoesAlteracaoCompleta = ['7', '21', '25'];
     return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
 }
 

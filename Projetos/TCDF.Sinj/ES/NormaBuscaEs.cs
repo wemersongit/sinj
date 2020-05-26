@@ -139,7 +139,7 @@ namespace TCDF.Sinj.ES
                         }
                         else if (_tipo_campo == "number" || _tipo_campo == "date")
                         {
-                            if (_ch_campo == "dt_assinatura")//foi atualizado o nome do parametro de "ano_assinatura" para "dt_assinatura" para que entrasse na condição by: Wemerson
+                            if (_ch_campo == "ano_assinatura")
                             {
                                 if (_ch_operador == "intervalo")
                                 {
