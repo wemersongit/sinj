@@ -616,6 +616,12 @@ namespace TCDF.Sinj.RN
                         vide.caput_norma_vide == null || 
                         vide.caput_norma_vide.caput == null || 
                         vide.caput_norma_vide.caput.Length <= 0
+                    )
+                    &&
+                    (
+                        vide.alteracao_texto_vide == null ||
+                        vide.alteracao_texto_vide.dispositivos_norma_vide == null ||
+                        vide.alteracao_texto_vide.dispositivos_norma_vide.Count <= 0
                     );
         }
 
