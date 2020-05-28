@@ -1489,9 +1489,9 @@ var _columns_norma_associada_vocabulario = [
 	    }
 	},
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "60px", "sClass": "grid-cell ws all", "mData": "", "bSortable": false,
-	    "mRender": function (data, type, full) {
-	        var detalhes = "<a href='./ResultadoDePesquisa.aspx?" + window.unescape(full._source.consulta).replaceAll('#','%23') + "' title='Pesquisar'><img valign='absmiddle' alt='pesquisar' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a>";
-	        var editar = "<a href='./Pesquisas.aspx?" + window.unescape(full._source.consulta).replaceAll('#', '%23') + "' title='Editar'><img valign='absmiddle' alt='editar' src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' /></a>";
+	    "mRender": function (data, type, full) {	
+			var detalhes = "<a href='./ResultadoDePesquisa.aspx?" + (decodeURI(full._source.consulta).replaceAll('#', '%23')) + "' title='Pesquisar'><img valign='absmiddle' alt='pesquisar' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a>";
+			var editar = "<a href='./Pesquisas.aspx?" + (decodeURI(full._source.consulta).replaceAll('#', '%23')) + "' title='Editar'><img valign='absmiddle' alt='editar' src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' /></a>";
 	        return detalhes + "&nbsp;" + editar;
 	    }
 	}
