@@ -338,7 +338,7 @@
                             </div>
                         </div>
                         <div class="column w-70-pc">
-                            <div id="div_ds_msg" class="cell w-60-pc">
+                            <div id="div_ds_msg" class="cell w-60-pc" style="white-space: pre-wrap !important">
                             </div>
                         </div>
                     </div>

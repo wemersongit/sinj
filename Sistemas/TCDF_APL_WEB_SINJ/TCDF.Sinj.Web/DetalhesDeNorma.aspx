@@ -261,7 +261,7 @@
                         </div>
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">
-                                <div id="div_observacao" class="w-90-pc mauto word-no-break observacao value" style="text-align:justify;" print="sim" print-type="linha" print-label="Observação">
+                                <div id="div_observacao" class="w-90-pc mauto word-no-break observacao value" style="text-align:justify; white-space: pre-wrap !important;" print="sim" print-type="linha" print-label="Observação">
                                 </div>
                             </div>
                         </div>
