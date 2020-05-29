@@ -458,10 +458,22 @@ namespace TCDF.Sinj.RN
             var relacoes = new TipoDeRelacaoRN().Consultar(pesquisa);
             var situacoes = new SituacaoRN().Consultar(pesquisa);
             int importanciaFinal = Int32.MaxValue;
-            bool existeRevigoracao = false;
-            bool existeRepristinacao = false;
             bool ajuizado = false;
             var vides_que_afetam_a_norma = vides.Where<Vide>(v => v.in_norma_afetada).ToList<Vide>();
+
+            var relacoesDeAlteracaoCompleta = new List<string> {
+                "INCONSTITUCIONALIDADE",
+                "SUSPENSÃO",
+                "SUSTAÇÃO",
+                "ANULAÇÃO",
+                "CANCELAMENTO"
+            };
+
+            var desfazemAlteracaoCompleta = new List<string> {
+                "REPRISTINAÇÃO",
+                "RESTAURAÇÃO",
+                "REVIGORAÇÃO"
+            };
 
             var i_revigoracao = 0;
             // var i_repristinacao = 0;
@@ -478,7 +490,7 @@ namespace TCDF.Sinj.RN
                 int importanciaDaVez = relacao.nr_importancia;
 
                 // Liminar Deferida   12(*8)
-                if (relacao.nm_tipo_relacao.ToLower() == "liminar deferida")
+                if (relacao.nm_tipo_relacao.Equals("liminar deferida", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (!EhModificacaoTotal(vide))
                     {
@@ -491,43 +503,8 @@ namespace TCDF.Sinj.RN
                     }
                 }
 
-
-                // Inconstitucional 6(*8)
-                if (relacao.nm_tipo_relacao.ToLower() == "inconstitucionalidade")
-                {
-                    if (!EhModificacaoTotal(vide))
-                    {
-                        importanciaDaVez = 8;
-                    }
-                }
-
-                // Suspensão 6(*8)
-                if (relacao.nm_tipo_relacao.ToLower() == "suspensão")
-                {
-                    if (!EhModificacaoTotal(vide))
-                    {
-                        importanciaDaVez = 8;
-                    }
-                }
-
                 // Julgada Procedente            6(*8)
-                if (relacao.nm_tipo_relacao.ToLower() == "julgada procedente")
-                {
-                    if (!EhModificacaoTotal(vide))
-                    {
-                        importanciaDaVez = 8;
-                    }
-                }
-                // SUSTAÇÃO TOTAL               3 (*8)
-                if (relacao.nm_tipo_relacao.ToLower() == "sustação" || relacao.nm_tipo_relacao.ToLower() == "sustação total")
-                {
-                    if (!EhModificacaoTotal(vide))
-                    {
-                        importanciaDaVez = 8;
-                    }
-                }
-                // ANULAÇÃO                        4 (*8)
-                if (relacao.nm_tipo_relacao.ToLower() == "anulação")
+                if (relacao.nm_tipo_relacao.Equals("julgada procedente", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (!EhModificacaoTotal(vide))
                     {
@@ -535,13 +512,13 @@ namespace TCDF.Sinj.RN
                     }
                 }
 
-                // REVOGAÇÃO                    2 (*8)
-                // REVOGAÇÃO TOTAL              2 (*8)
-                // Caso seja uma revogação ou revogação total
-                if (relacao.nm_tipo_relacao.ToLower() == "revogação" || relacao.nm_tipo_relacao.ToLower() == "revogação total")
+                if (relacoesDeAlteracaoCompleta.Contains(relacao.nm_tipo_relacao, StringComparer.InvariantCultureIgnoreCase))
                 {
-                    //Caso seja uma revogação parcial a importancia deve ser 8.
-                    if (EhModificacaoTotal(vide))
+                    if (!EhModificacaoTotal(vide))
+                    {
+                        importanciaDaVez = 8;
+                    }
+                    else
                     {
                         var chegou_na_posicao_atual = false;
                         for (var i = i_revigoracao; i < vides_que_afetam_a_norma.Count; i++)
@@ -551,35 +528,16 @@ namespace TCDF.Sinj.RN
                                 chegou_na_posicao_atual = true;
                                 continue;
                             }
-                            if(chegou_na_posicao_atual){
-                                var relacao_revigoracao = relacoes.results.Where<TipoDeRelacaoOV>(tdr => tdr.ch_tipo_relacao == vides_que_afetam_a_norma[i].ch_tipo_relacao).First<TipoDeRelacaoOV>();
-                                if ((relacao_revigoracao.nm_tipo_relacao.ToLower() == "revigoração" || relacao_revigoracao.nm_tipo_relacao.ToLower() == "revigoração total"))
+                            if (chegou_na_posicao_atual)
+                            {
+                                var relacao_que_desfaz = relacoes.results.Where<TipoDeRelacaoOV>(tdr => tdr.ch_tipo_relacao == vides_que_afetam_a_norma[i].ch_tipo_relacao).First<TipoDeRelacaoOV>();
+                                if (desfazemAlteracaoCompleta.Contains(relacao_que_desfaz.nm_tipo_relacao, StringComparer.InvariantCultureIgnoreCase))
                                 {
-                                    existeRevigoracao = true;
-                                    break;
-                                }
-                                var relacao_repristinacao = relacoes.results.Where<TipoDeRelacaoOV>(tdr => tdr.ch_tipo_relacao == vides_que_afetam_a_norma[i].ch_tipo_relacao).First<TipoDeRelacaoOV>();
-                                if ((relacao_repristinacao.nm_tipo_relacao.ToLower() == "repristinação" || relacao_repristinacao.nm_tipo_relacao.ToLower() == "repristinação total"))
-                                {
-                                    existeRepristinacao = true;
+                                    importanciaDaVez = 8;
                                     break;
                                 }
                             }
                         }
-                        if (existeRevigoracao)
-                        {
-                            existeRevigoracao = false;
-                            importanciaDaVez = 8;
-                        }
-                        if (existeRepristinacao)
-                        {
-                            existeRepristinacao = false;
-                            importanciaDaVez = 8;
-                        }
-                    }
-                    else
-                    {
-                        importanciaDaVez = 8;
                     }
                 }
 
@@ -587,7 +545,7 @@ namespace TCDF.Sinj.RN
                 {
                     importanciaFinal = importanciaDaVez;
                     //ajuda a modificar de ajuizado para suspenso quando entre os vides há um ajuizado seguido de um liminar deferida
-                    if (relacao.nm_tipo_relacao.ToLower() == "ajuizado")
+                    if (relacao.nm_tipo_relacao.Equals("ajuizado", StringComparison.InvariantCultureIgnoreCase))
                     {
                         ajuizado = true;
                     }

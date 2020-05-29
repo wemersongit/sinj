@@ -1,17 +1,13 @@
+using neo.BRLightREST;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TCDF.Sinj.OV;
-using util.BRLight;
 using TCDF.Sinj.Log;
+using TCDF.Sinj.OV;
 using TCDF.Sinj.RN;
-using System.Text.RegularExpressions;
-using TCDF.Sinj.Web.ashx.Arquivo;
-using neo.BRLightREST;
-using System.Globalization;
-using Newtonsoft.Json;
-using TCDF.Sinj.Web;
+using util.BRLight;
 
 namespace TCDF.Sinj.Web.ashx.Cadastro
 {
@@ -191,32 +187,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         //Coloca o nome na situação
                         if (!normaAlteradaOv.st_situacao_forcada)
                         {
-                            var situacaoRn = new SituacaoRN();
-                            var situacaoOv = new SituacaoOV { ch_situacao = normaAlteradaOv.ch_situacao, nm_situacao = normaAlteradaOv.nm_situacao };
                             var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
-                            //Cod inserido para trocar o nome da situação caso for revigorado ele voltara a ser "sem revogação expressa"
-                            situacaoOv = situacaoRn.Doc("semrevogacaoexpressa");
-
-                            if (vide.Relacao.nm_tipo_relacao.Equals("REVIGORAÇÃO", StringComparison.CurrentCultureIgnoreCase))
-                            {
-                                normaAlteradaOv.ch_situacao = situacao.ch_situacao;
-                                normaAlteradaOv.nm_situacao = situacaoOv.nm_situacao;
-                            }
-                            else
-                            {
-                                normaAlteradaOv.nm_situacao = situacao.nm_situacao;
-                            }
-
-                            if (vide.Relacao.nm_tipo_relacao.Equals("INCONSTITUCIONALIDADE", StringComparison.CurrentCultureIgnoreCase))
-                            {
-                                normaAlteradaOv.nm_situacao = "Inconstitucional";
-                            }
-
-                            //Cod inserido para adicionar a descrição de suspenso totalmente by wemerson
-                            if (vide.Relacao.nm_tipo_relacao.Equals("SUSPENSÃO TOTAL", StringComparison.CurrentCultureIgnoreCase) || vide.Relacao.nm_tipo_relacao.Equals("SUSPENSÃO", StringComparison.CurrentCultureIgnoreCase))
-                            {
-                                normaAlteradaOv.nm_situacao = "Suspenso";
-                            }
+                            normaAlteradaOv.ch_situacao = situacao.ch_situacao;
+                            normaAlteradaOv.nm_situacao = situacao.nm_situacao;
                         }
                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                         if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
