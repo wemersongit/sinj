@@ -1,17 +1,13 @@
+using neo.BRLightREST;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TCDF.Sinj.OV;
-using util.BRLight;
 using TCDF.Sinj.Log;
+using TCDF.Sinj.OV;
 using TCDF.Sinj.RN;
-using System.Text.RegularExpressions;
-using TCDF.Sinj.Web.ashx.Arquivo;
-using neo.BRLightREST;
-using System.Globalization;
-using Newtonsoft.Json;
-using TCDF.Sinj.Web;
+using util.BRLight;
 
 namespace TCDF.Sinj.Web.ashx.Cadastro
 {

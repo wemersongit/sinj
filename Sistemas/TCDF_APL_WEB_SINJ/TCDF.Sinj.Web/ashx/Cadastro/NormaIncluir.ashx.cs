@@ -1,12 +1,10 @@
+using neo.BRLightREST;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
+using TCDF.Sinj.Log;
 using TCDF.Sinj.OV;
 using TCDF.Sinj.RN;
-using neo.BRLightREST;
 using util.BRLight;
-using TCDF.Sinj.Log;
 
 namespace TCDF.Sinj.Web.ashx.Cadastro
 {

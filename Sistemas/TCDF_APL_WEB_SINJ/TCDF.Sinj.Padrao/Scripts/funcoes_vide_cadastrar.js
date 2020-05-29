@@ -45,6 +45,10 @@ function selecionarAlteracaoCompleta(){
     }
     const dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
     if($('#in_alteracao_completa').is(':checked')){
+        let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
+        if(!normaAlteradora.sem_arquivo){
+            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+        }
         const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
         //se na inclusão de repristinação, revigoração, revogação, cancelamento, etc. o texto já sofre alteração completa por outro vide,
         //é necessário validar a última alteração sofrida e se o texto está, ou não, riscado
@@ -64,7 +68,7 @@ function selecionarAlteracaoCompleta(){
                 const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
                 const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacaoSelecionado.ch_tipo_relacao}" class="adicionado">
-                    <a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
+                    <a href="${linkNormaAlteradora}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                 </p>`);
                 if(ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]').length > 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s')[0].remove();
@@ -79,7 +83,7 @@ function selecionarAlteracaoCompleta(){
             }
             else{
                 $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]').after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacaoSelecionado.ch_tipo_relacao}" class="adicionado">
-                        <a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
+                        <a href="${linkNormaAlteradora}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                     </p>`);
             }
         }
@@ -88,7 +92,7 @@ function selecionarAlteracaoCompleta(){
                 const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
                 const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacaoSelecionado.ch_tipo_relacao}" class="adicionado">
-                        <a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
+                        <a href="${linkNormaAlteradora}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                     </p>`);
                 if(!ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]').length <= 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').remove();
@@ -103,7 +107,7 @@ function selecionarAlteracaoCompleta(){
                 if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]').length <= 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').remove();
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]').after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacaoSelecionado.ch_tipo_relacao}" class="adicionado">
-                            <a href="(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
+                            <a href="${linkNormaAlteradora}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                         </p>
                         <s></s>`);
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
