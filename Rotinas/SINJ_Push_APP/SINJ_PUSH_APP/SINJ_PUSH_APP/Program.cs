@@ -311,14 +311,20 @@ namespace SINJ_PUSH_APP
                                     orgaosEmail = orgaosEmail + " <a> " + norma.origens[0].sg_orgao + "</a>";
                                 }
                             }
+
                             var corpo_ementa_nova = "";
-                            string[] ementa = norma.ds_ementa.Split(new char[] { '\n', '\r' });
-                            foreach (var e in ementa)
+                            if (norma.ds_ementa.Length > 250)
                             {
-                                corpo_ementa_nova = corpo_ementa_nova + "<div style=\"display:block;\">" + e + "</div>";
+
+                                corpo_ementa_nova = "(" + norma.ds_ementa.Substring(0, 250) + "..." + ")";
                             }
+                            else
+                            {
+                                corpo_ementa_nova = "(" + norma.ds_ementa + ")";
+                            }
+
                             corpoEmail = corpoEmail + "<div style='font-size: 14px; font-weight: 500; background-color:#B4E6CBs;'>";
-                            corpoEmail = corpoEmail + "<a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + ">" + norma.nm_tipo_norma + " " + norma.nr_norma + "</a>"+ " de " + norma.dt_assinatura + " " + orgaosEmail + " " + "(" + corpo_ementa_nova + "), publicado no(a) ";
+                            corpoEmail = corpoEmail + "<a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + ">" + norma.nm_tipo_norma + " " + norma.nr_norma + "</a>"+ " de " + norma.dt_assinatura + " " + orgaosEmail + " " + corpo_ementa_nova + ", publicado no(a) ";
 
                             
 
@@ -582,13 +588,22 @@ namespace SINJ_PUSH_APP
                         else
                         {
                             nmTipoRelacao = "Alteração";
+
+
+
                             var corpo_ementa = "";
-                            string[] ementa = resultado_norma.ds_ementa.Split(new char[] { '\n', '\r' });
-                            foreach (var e in ementa)
+                            if (resultado_norma.ds_ementa.Length > 250)
                             {
-                                corpo_ementa = corpo_ementa + "<div style=\"display:block;\">" + e + "</div>";
+                            
+                                corpo_ementa = resultado_norma.ds_ementa.Substring(0, 250) + "...";
                             }
-                            corpo_vide = "<div style=\"display:block; font-size: 12px;\"> " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + resultado_norma.ch_norma + ">" + "Ementa: </a>" + "</div>" + "<span>" + corpo_ementa + "</span>";
+                            else
+                            {
+                                corpo_ementa = resultado_norma.ds_ementa;
+                            }
+                            
+
+                            corpo_vide = "<div style=\"display:inline-block; font-size: 15px;\"> " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + resultado_norma.ch_norma + ">" + "Ementa: </a>" + "</div>" + "&nbsp;" + "<span>"  +  corpo_ementa + "</span>";
                         }
 
                         nmTipoRelacao = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nmTipoRelacao.ToLower());
