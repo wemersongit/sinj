@@ -476,7 +476,6 @@ namespace TCDF.Sinj.RN
             };
 
             var i_revigoracao = 0;
-            // var i_repristinacao = 0;
 
             foreach (var vide in vides_que_afetam_a_norma)
             {
@@ -514,6 +513,7 @@ namespace TCDF.Sinj.RN
 
                 if (relacoesDeAlteracaoCompleta.Contains(relacao.nm_tipo_relacao, StringComparer.InvariantCultureIgnoreCase))
                 {
+
                     if (!EhModificacaoTotal(vide))
                     {
                         importanciaDaVez = 8;
@@ -533,7 +533,7 @@ namespace TCDF.Sinj.RN
                                 var relacao_que_desfaz = relacoes.results.Where<TipoDeRelacaoOV>(tdr => tdr.ch_tipo_relacao == vides_que_afetam_a_norma[i].ch_tipo_relacao).First<TipoDeRelacaoOV>();
                                 if (desfazemAlteracaoCompleta.Contains(relacao_que_desfaz.nm_tipo_relacao, StringComparer.InvariantCultureIgnoreCase))
                                 {
-                                    importanciaDaVez = 8;
+                                    importanciaDaVez = relacao_que_desfaz.nr_importancia;
                                     break;
                                 }
                             }
