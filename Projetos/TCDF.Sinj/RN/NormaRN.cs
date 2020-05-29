@@ -466,7 +466,8 @@ namespace TCDF.Sinj.RN
                 "SUSPENSÃO",
                 "SUSTAÇÃO",
                 "ANULAÇÃO",
-                "CANCELAMENTO"
+                "CANCELAMENTO",
+                "REVOGAÇÃO"
             };
 
             var desfazemAlteracaoCompleta = new List<string> {
