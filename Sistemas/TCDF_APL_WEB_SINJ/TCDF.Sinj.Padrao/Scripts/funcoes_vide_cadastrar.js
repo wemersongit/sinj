@@ -70,13 +70,13 @@ function selecionarAlteracaoCompleta(){
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacaoSelecionado.ch_tipo_relacao}" class="adicionado">
                     <a href="${linkNormaAlteradora}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                 </p>`);
-                if(ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]').length > 0){
-                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s')[0].remove();
+                if(ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length > 0){
+                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').remove();
                     let lastSelector = `p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`;
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.add('adicionado');
                         $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo ${lastSelector}`).after(dispositivosNormaAlterada[i]);
-                        lastSelector = `p[linkname=${dispositivosNormaAlterada[i].getAttribute('linkname')}]`;
+                        lastSelector = `p[linkname=${dispositivosNormaAlterada[i].getAttribute('linkname')}]:last`;
                     }
                     $('#div_cad_dispositivo_alterada [data-toggle="tooltip"]').tooltip(optionsTooltip);
                 }
@@ -94,25 +94,25 @@ function selecionarAlteracaoCompleta(){
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacaoSelecionado.ch_tipo_relacao}" class="adicionado">
                         <a href="${linkNormaAlteradora}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                     </p>`);
-                if(!ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]').length <= 0){
-                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').remove();
+                if(!ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0){
+                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>p[linkname]').remove();
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).after('<s></s>');
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.add('alterado');
-                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s').append(dispositivosNormaAlterada[i]);
+                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').append(dispositivosNormaAlterada[i]);
                     }
                 }
             }
             else{
-                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]').length <= 0){
-                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').remove();
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0){
+                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>p[linkname]').remove();
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]').after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacaoSelecionado.ch_tipo_relacao}" class="adicionado">
                             <a href="${linkNormaAlteradora}" >(${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                         </p>
                         <s></s>`);
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.add('alterado');
-                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s').append(dispositivosNormaAlterada[i]);
+                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').append(dispositivosNormaAlterada[i]);
                     }
                 }
             }
@@ -127,24 +127,24 @@ function selecionarAlteracaoCompleta(){
             if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
                 const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
                 const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
-                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]').length <= 0 && ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao)){
-                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').remove();
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0 && ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao)){
+                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>p[linkname]').remove();
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after('<s></s>');
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.remove('adicionado');
-                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s').append(dispositivosNormaAlterada[i]);
+                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').append(dispositivosNormaAlterada[i]);
                     }
                 }
             }
         }
         else{
             if(dispositivosIdentificacaoAlteracaoCompleta.length <= 0 || !ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao)){
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s')[0].remove();
+                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').remove();
                 let lastSelector = 'h1[epigrafe]';
                 for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                     dispositivosNormaAlterada[i].classList.remove('alterado');
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo ${lastSelector}`).after(dispositivosNormaAlterada[i]);
-                    lastSelector = `p[linkname=${dispositivosNormaAlterada[i].getAttribute('linkname')}]`;
+                    lastSelector = `p[linkname=${dispositivosNormaAlterada[i].getAttribute('linkname')}]:last`;
                 }
                 $('#div_cad_dispositivo_alterada [data-toggle="tooltip"]').tooltip(optionsTooltip);
             }
