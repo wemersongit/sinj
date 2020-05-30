@@ -63,7 +63,7 @@ function selecionarAlteracaoCompleta(){
         //        2.1.1. incluir o link da alteração e incluir o riscado do texto
         //   2.2. se o texto estiver riscado
         //        2.2.1. incluir o link da alteração e não (tentar) incluir o riscado do texto
-        if(ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacaoSelecionado.ch_tipo_relacao)){
+        if(ehRelacaoQueDesfazAlteracao(tipoDeRelacaoSelecionado.ch_tipo_relacao)){
             if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
                 const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
                 const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
@@ -123,7 +123,7 @@ function selecionarAlteracaoCompleta(){
     else{
         $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).remove();
         const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
-        if(ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacaoSelecionado.ch_tipo_relacao)){
+        if(ehRelacaoQueDesfazAlteracao(tipoDeRelacaoSelecionado.ch_tipo_relacao)){
             if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
                 const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
                 const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
@@ -330,7 +330,7 @@ function selecionarNormaAlteradaCadastrar(norma){
 function exibirControlesNormaAlteradaSelecionada(){
     $('#labelNormaForaDoSistema').hide();
     $('#labelLecoSemCitacao').hide();
-    if(ehRelacaoDeAlteracaoCompleta(tipoDeRelacaoSelecionado.ch_tipo_relacao) || ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacaoSelecionado.ch_tipo_relacao)){
+    if(ehRelacaoDeAlteracaoCompleta(tipoDeRelacaoSelecionado.ch_tipo_relacao) || ehRelacaoQueDesfazAlteracao(tipoDeRelacaoSelecionado.ch_tipo_relacao)){
         $('#labelAlteracaoCompleta').show();
     }
     else if(tipoDeRelacaoSelecionado.ch_tipo_relacao == '9'){
@@ -573,8 +573,6 @@ function exibirTextoDoArquivoCadastrar(norma, arquivo) {
                 }
             }
         });
-        //esconde todos os parágrafos alterados, renumerados, etc., menos os revogados
-        $('p[replaced_by]').hide();
         if(norma.sufixo == 'alterada'){
             if(tipoDeRelacaoSelecionado.ch_tipo_relacao != '9'){
                 $.each($('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo p'), function (key_p, value_p) {
@@ -584,11 +582,18 @@ function exibirTextoDoArquivoCadastrar(norma, arquivo) {
                     }
                 });
             }
+            //se for relação que desfaz alteração os dispositivos alterados não serão ocultados
+            if(!ehRelacaoQueDesfazAlteracao(tipoDeRelacaoSelecionado.ch_tipo_relacao)){
+                //esconde todos os parágrafos alterados, renumerados, etc., menos os revogados
+                $('#div_cad_dispositivo_' + norma.sufixo + ' p[replaced_by]').hide();
+            }
         }
         else if (norma.sufixo == 'alteradora') {
             $('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo p[linkname]').mouseup(function () {
                 selecionarTextoNormaAlteradoraCadastrar();
             });
+            //esconde todos os parágrafos alterados, renumerados, etc., menos os revogados
+            $('#div_cad_dispositivo_' + norma.sufixo + ' p[replaced_by]').hide();
         }
         $('#div_cad_dispositivo_' + norma.sufixo + ' div.line_conteudo_arquivo').show();
         $('#div_cad_dispositivo_' + norma.sufixo + ' div.line_enable_replaced').show();
@@ -694,7 +699,7 @@ function clickAlterarDispositivoCadastrar(){
                 dispositivoAlterado.texto = textosAcrescidos[i];
                 normaAlterada.dispositivos.push(Object.assign({}, dispositivoAlterado));
 
-                const $element = $(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+                const $element = $(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
                 $nextElement.after($element);
                 $nextElement = $element;
                 if(IsNotNullOrEmpty(dispositivoAlterado.ds_linkname)){
@@ -708,22 +713,64 @@ function clickAlterarDispositivoCadastrar(){
                 return;
             }
             let $elementoAlterado = $buttonSelected.parent();
-            $buttonSelected.hide();
-            dispositivoAlterado.linkname = $elementoAlterado.attr('linkname');
-            dispositivoAlterado.nm_linkName = getNomeDoLinkName(dispositivoAlterado.linkname);
-            dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(dispositivoAlterado.linkname);
-            dispositivoAlterado.texto = texto;
-            $elementoAlterado.attr('linkname', `${dispositivoAlterado.linkname}_replaced`);
-            $elementoAlterado.addClass('alterado');
-            $elementoAlterado.find(`a[name=${dispositivoAlterado.linkname}]`).attr('name', `${dispositivoAlterado.linkname}_replaced`);
-            $elementoAlterado.attr('replaced_by', normaAlteradora.ch_norma);
-            if(dispositivoAlterado.texto){
-                $elementoAlterado.after(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${dispositivoAlterado.texto}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
-                $elementoAlterado.html(`<s>${$elementoAlterado.html()}</s>`);
+            const linkname = $elementoAlterado.attr('linkname');
+            let htmlAlterado = $elementoAlterado.find('s').html();
+            if(ehRelacaoQueDesfazAlteracao(tipoDeRelacaoSelecionado.ch_tipo_relacao)){
+                if(!IsNotNullOrEmpty(htmlAlterado) || linkname.indexOf('_replaced') < 0){
+                    alert(`A relação ${tipoDeRelacaoSelecionado.nm_tipo_relacao} pode ser aplicada somente a um dispositivo que sofreu alteração.`);
+                    return;
+                }
+                $buttonSelected.hide();
+                $elementoAlterado.find('s').html('').after(htmlAlterado).remove();
+                dispositivoAlterado.linkname = `${linkname}_undone`;
+                dispositivoAlterado.nm_linkName = getNomeDoLinkName(linkname.replace(/_replaced|_undone/g,''));
+                dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(linkname.replace(/_replaced|_undone/g,''));
+                $elementoAlterado.attr('linkname', dispositivoAlterado.linkname);
+                $elementoAlterado.find(`a[name=${linkname}]`).attr('name', dispositivoAlterado.linkname);
+                $elementoAlterado.removeAttr('replaced_by');
+                $elementoAlterado.attr('undone_by', normaAlteradora.ch_norma);
+                $elementoAlterado.addClass('desfeito');
+                $elementoAlterado.html(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>${$elementoAlterado.html()}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>`);
             }
             else{
-                dispositivoAlterado.linkname += '_replaced'
-                $elementoAlterado.html(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><s>${$elementoAlterado.html()}</s>&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a>`);
+                const countReplaceds =  $(`#div_cad_dispositivo_alterada p:regex(linkname, ${linkname}.*_replaced)`).length;
+                if(!IsNotNullOrEmpty(texto)){
+                    $buttonSelected.hide();
+                    dispositivoAlterado.linkname = linkname;
+                    //adiciona os sufixos replaced no dispositivo alterado para evitar duplicidade
+                    for(var i = 0; i < countReplaceds; i++){
+                        dispositivoAlterado.linkname += '_replaced';
+                    }
+                    dispositivoAlterado.linkname += '_replaced';
+                    dispositivoAlterado.nm_linkName = getNomeDoLinkName(linkname.replace(/_replaced|_undone|_add/g,''));
+                    dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(linkname.replace(/_replaced|_undone|_add/g,''));
+                    $elementoAlterado.attr('linkname', dispositivoAlterado.linkname);
+                    $elementoAlterado.find(`a[name=${linkname}]`).attr('name', dispositivoAlterado.linkname);
+                    $elementoAlterado.removeAttr('undone_by');
+                    $elementoAlterado.attr('replaced_by', normaAlteradora.ch_norma);
+                    $elementoAlterado.addClass('alterado');
+                    $elementoAlterado.html(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><s>${$elementoAlterado.html()}</s>&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>`);
+                }
+                else{
+                    $buttonSelected.hide();
+                    let linknameDispAlterado = linkname;
+                    //adiciona os sufixos replaced no dispositivo alterado para evitar duplicidade
+                    for(var i = 0; i < countReplaceds; i++){
+                        linknameDispAlterado += '_replaced';
+                    }
+                    linknameDispAlterado += '_replaced'
+                    dispositivoAlterado.linkname = linkname;
+                    dispositivoAlterado.nm_linkName = getNomeDoLinkName(linkname.replace(/_replaced|_undone|_add/g,''));
+                    dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(linkname.replace(/_replaced|_undone|_add/g,''));
+                    dispositivoAlterado.texto = texto;
+                    $elementoAlterado.attr('linkname', linknameDispAlterado);
+                    $elementoAlterado.find(`a[name=${linkname}]`).attr('name', linknameDispAlterado);
+                    $elementoAlterado.attr('replaced_by', normaAlteradora.ch_norma);
+                    $elementoAlterado.addClass('alterado');
+                    $elementoAlterado.after(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${dispositivoAlterado.texto}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacaoSelecionado.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+                    $elementoAlterado.html(`<s>${$elementoAlterado.html()}</s>`);
+
+                }
             }
             normaAlterada.dispositivos.push(dispositivoAlterado);
             if(IsNotNullOrEmpty(dispositivoAlterado.ds_linkname)){
@@ -818,10 +865,10 @@ function limparDispositivoSelecionado(nm_sufixo) {
 function clickEnableReplaced(check) {
     var enabled = $(check).is(':checked');
     if(enabled){
-        $('p[replaced_by]').show();
+        $('#div_cad_dispositivo_alterada p[replaced_by]').show();
     }
     else{
-        $('p[replaced_by]').hide();
+        $('#div_cad_dispositivo_alterada p[replaced_by]').hide();
     }
 }
 

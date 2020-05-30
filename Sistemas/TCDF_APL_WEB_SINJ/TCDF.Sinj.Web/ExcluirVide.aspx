@@ -122,10 +122,11 @@
                     else if (IsNotNullOrEmpty(data.ch_norma)) {
                         $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
                         var videExcluir = {};
+                        var index = 0;
                         for (var i = 0; i < data.vides.length; i++) {
                             if (data.vides[i].ch_vide == ch_vide) {
                                 videExcluir = data.vides[i];
-
+                                index = i;
                                 if (!IsNotNullOrEmpty(videExcluir.ds_comentario_vide)) {
                                     $('#lineComentario').remove();
                                 }
@@ -149,7 +150,9 @@
                                             });
                                         }
                                     }
-                                    if(videExcluir.in_norma_afetada){
+                                    if (videExcluir.in_norma_afetada) {
+                                        videsDaNormaAlterada = data.vides;
+                                        indexVideAlterado = index;
                                         selecionarNormaAlteradaExcluir({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videExcluir.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videExcluir.alteracao_texto_vide.dispositivos_norma_vide });
                                     }
                                     else{
@@ -219,7 +222,9 @@
                                         });
                                     }
                                 }
-                                if(data.vides[i].in_norma_afetada){
+                                if (data.vides[i].in_norma_afetada) {
+                                    videsDaNormaAlterada = data.vides;
+                                    indexVideAlterado = i;
                                     selecionarNormaAlteradaExcluir({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
                                 }
                                 else{

@@ -2,6 +2,20 @@ let normaAlteradora = {};
 let normaAlterada = {};
 let vide = {};
 let ahTextoIncompativel = false;
+
+jQuery.expr[':'].regex = function (elem, index, match) {
+    var matchParams = match[3].split(','),
+        validLabels = /^(data|css):/,
+        attr = {
+            method: matchParams[0].match(validLabels) ?
+                matchParams[0].split(':')[0] : 'attr',
+            property: matchParams.shift().replace(validLabels, '')
+        },
+        regexFlags = 'ig',
+        regex = new RegExp(matchParams.join('').replace(/^\s+|\s+$/g, ''), regexFlags);
+    return regex.test(jQuery(elem)[attr.method](attr.property));
+}
+
 const dt_controle_alteracao = new Date();
 
 function ehRelacaoDeAlteracaoCompleta(chTipoRelacao){
@@ -9,7 +23,7 @@ function ehRelacaoDeAlteracaoCompleta(chTipoRelacao){
     return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
 }
 
-function ehRelacaoQueDesfazAlteracaoCompleta(chTipoRelacao){
+function ehRelacaoQueDesfazAlteracao(chTipoRelacao){
     const relacoesQueDesfazAlteracaoCompleta = ['18', 'b4fe69f9b8d748b19e41be8a2071dbdd', '8e7abc807cb94cea93eccbb5ce56d92a'];
     return relacoesQueDesfazAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
 }
@@ -209,6 +223,7 @@ function limparFormatacao(){
     $('div.div_conteudo_arquivo a.link-alterador').removeClass('link-alterador');
 
     $('div.div_conteudo_arquivo p.alterado').removeClass('alterado');
+    $('div.div_conteudo_arquivo p.alterado').removeClass('desfeito');
     $('div.div_conteudo_arquivo p.adicionado').removeClass('adicionado');
     
     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').find('button').remove();

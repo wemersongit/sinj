@@ -123,7 +123,9 @@
                                                 });
                                             }
                                         }
-                                        if(videEditar.in_norma_afetada){
+                                        if (videEditar.in_norma_afetada) {
+                                            videsDaNormaAlterada = data.vides;
+                                            indexVideAlterado = i;
                                             selecionarNormaAlteradaEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videEditar.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videEditar.alteracao_texto_vide.dispositivos_norma_vide });
                                         }
                                         else{
@@ -194,7 +196,9 @@
                                             });
                                         }
                                     }
-                                    if(data.vides[i].in_norma_afetada){
+                                    if (data.vides[i].in_norma_afetada) {
+                                        videsDaNormaAlterada = data.vides;
+                                        indexVideAlterado = i;
                                         selecionarNormaAlteradaEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
                                     }
                                     else{
