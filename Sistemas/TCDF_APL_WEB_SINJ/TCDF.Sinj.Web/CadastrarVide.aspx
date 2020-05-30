@@ -3,7 +3,6 @@
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" ></script>
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide_cadastrar.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" ></script>
     <script type="text/javascript" language="javascript">
-
         var id_doc = GetParameterValue('id_doc');
         $(document).ready(function () {
 

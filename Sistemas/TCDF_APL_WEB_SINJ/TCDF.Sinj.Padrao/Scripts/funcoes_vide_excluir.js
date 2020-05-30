@@ -1,4 +1,6 @@
 let tipoDeRelacao;
+let videsDaNormaAlterada = [];
+let indexVideAlterado;
 
 function buscarTipoDeRelacao(ch_tipo_relacao, deferred) {
     var sucesso = function (data) {
@@ -107,7 +109,7 @@ function selecionarArquivosExcluir(){
         deferredAlteradora.resolve();
     }
     if(!normaAlterada.in_norma_fora_sistema && !normaAlterada.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && tipoDeRelacao.ch_tipo_relacao != '9'){
+        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao) && tipoDeRelacao.ch_tipo_relacao != '9'){
             gComplete();
             showMessageNormaIncompativel(normaAlterada);
             return;
@@ -216,21 +218,28 @@ function destacarAlteracaoDoDispositivo(linkname, texto){
             break;
         default:
             if(linkname){
-                if(texto){
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'alteracao').addClass('remover').removeAttr('linkname');
-                    let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
-                    $elementoDesfazer.attr('linkname', linkname);
-                    $elementoDesfazer.find(`a[name=${linkname}_replaced]`).attr('name', `${linkname}`);
-                    $elementoDesfazer.removeAttr('replaced_by');
-                    $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
-
+                if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
+                    let $elementoRefazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
+                    $elementoRefazer.attr('refazer', 'remocao').attr('linkname', linkname.replace(/_undone$/,'')).removeAttr('undone_by').addClass('refazer');
+                    $elementoRefazer.find(`a[name=${linkname}]`).attr('name', linkname.replace(/_undone$/,''));
                 }
                 else{
-                    let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
-                    $elementoDesfazer.attr('linkname', linkname.replace(/_replaced+/,''));
-                    $elementoDesfazer.find(`a[name=${linkname}]`).attr('name', `${linkname.replace(/_replaced+/,'')}`);
-                    $elementoDesfazer.removeAttr('replaced_by');
-                    $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
+                    if(texto){
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'alteracao').addClass('remover').removeAttr('linkname');
+                        let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
+                        $elementoDesfazer.attr('linkname', linkname);
+                        $elementoDesfazer.find(`a[name=${linkname}_replaced]`).attr('name', linkname);
+                        $elementoDesfazer.removeAttr('replaced_by');
+                        $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
+
+                    }
+                    else{
+                        let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
+                        $elementoDesfazer.attr('linkname', linkname.replace(/_replaced+/,''));
+                        $elementoDesfazer.find(`a[name=${linkname}]`).attr('name', `${linkname.replace(/_replaced+/,'')}`);
+                        $elementoDesfazer.removeAttr('replaced_by');
+                        $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
+                    }
                 }
             }
             else{
@@ -268,7 +277,7 @@ function destacarAlteracaoDoDispositivo(linkname, texto){
                         }
                     }
                 }
-                else if(ehRelacaoQueDesfazAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao)){
+                else if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
                     let dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]');
                     if(dispositivosIdentificacaoAlteracaoCompleta.length > 1){
                         let lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 2].getAttribute('ch_norma_alteracao_completa');
@@ -327,15 +336,44 @@ function removerAlteracaoDoDispositivo(){
 
             }
             else{
+                
                 $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=alteracao]').remove();
                 let elementosDesfazer = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[desfazer=alteracao]');
                 let elementosRefazer = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[refazer=alteracao]');
+                let elementosRefazerRemocao = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[refazer=remocao]');
                 if(elementosDesfazer.length > 0){
                     for(let i = 0; i < elementosDesfazer.length; i++){
                         const html = $(elementosDesfazer[i]).find('s').html();
                         $(elementosDesfazer[i]).find('s').remove();
                         $(elementosDesfazer[i]).html(html);
                         $(elementosDesfazer[i]).removeAttr('desfazer').removeClass('desfazer');
+                    }
+                }else if(elementosRefazerRemocao.length > 0){
+                    let videRefazer = null;
+                    for(j = 0; j < indexVideAlterado; j++){
+                        if(ehRelacaoDeAlteracaoCompleta(videsDaNormaAlterada[j].ch_tipo_relacao)){
+                            videRefazer = videsDaNormaAlterada[j];
+                        }
+                    }
+
+                    let childrensAlterado = [];
+                    let htmlAlterado = '';
+                    for(let i = 0; i < elementosRefazerRemocao.length; i++){
+                        childrensAlterado = $(elementosRefazerRemocao[i]).children();
+                        $(elementosRefazerRemocao[i]).find('a:regex(href, _link_sistema_)').remove();
+                        htmlAlterado = $(elementosRefazerRemocao[i]).html().replace(/&nbsp;/g,'');
+                        $(elementosRefazerRemocao[i]).html(`<s>${htmlAlterado}</s>`);
+                        for(var j = 0; j < childrensAlterado.length; j++){
+                            if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf(normaAlteradora.ch_norma) > 0){
+                                continue;
+                            }
+                            else if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf('(_link_sistema_)') >= 0){
+                                $(elementosRefazerRemocao[i]).append('&nbsp;');
+                                $(elementosRefazerRemocao[i]).append(childrensAlterado[j]);
+                            }
+                        }
+                        $(elementosRefazerRemocao[i]).attr('replaced_by', videRefazer.ch_norma_vide);
+                        $(elementosRefazerRemocao[i]).removeAttr('refazer').removeClass('refazer');
                     }
                 }
                 else if(elementosRefazer.length > 0){

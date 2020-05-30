@@ -514,29 +514,25 @@ namespace TCDF.Sinj.RN
 
                 if (relacoesDeAlteracaoCompleta.Contains(relacao.nm_tipo_relacao, StringComparer.InvariantCultureIgnoreCase))
                 {
-
                     if (!EhModificacaoTotal(vide))
                     {
                         importanciaDaVez = 8;
                     }
-                    else
+                    var chegou_na_posicao_atual = false;
+                    for (var i = i_revigoracao; i < vides_que_afetam_a_norma.Count; i++)
                     {
-                        var chegou_na_posicao_atual = false;
-                        for (var i = i_revigoracao; i < vides_que_afetam_a_norma.Count; i++)
+                        if (vide.ch_vide == vides_que_afetam_a_norma[i].ch_vide)
                         {
-                            if (vide.ch_vide == vides_que_afetam_a_norma[i].ch_vide)
+                            chegou_na_posicao_atual = true;
+                            continue;
+                        }
+                        if (chegou_na_posicao_atual)
+                        {
+                            var relacao_que_desfaz = relacoes.results.Where<TipoDeRelacaoOV>(tdr => tdr.ch_tipo_relacao == vides_que_afetam_a_norma[i].ch_tipo_relacao).First<TipoDeRelacaoOV>();
+                            if (desfazemAlteracaoCompleta.Contains(relacao_que_desfaz.nm_tipo_relacao, StringComparer.InvariantCultureIgnoreCase))
                             {
-                                chegou_na_posicao_atual = true;
-                                continue;
-                            }
-                            if (chegou_na_posicao_atual)
-                            {
-                                var relacao_que_desfaz = relacoes.results.Where<TipoDeRelacaoOV>(tdr => tdr.ch_tipo_relacao == vides_que_afetam_a_norma[i].ch_tipo_relacao).First<TipoDeRelacaoOV>();
-                                if (desfazemAlteracaoCompleta.Contains(relacao_que_desfaz.nm_tipo_relacao, StringComparer.InvariantCultureIgnoreCase))
-                                {
-                                    importanciaDaVez = relacao_que_desfaz.nr_importancia;
-                                    break;
-                                }
+                                importanciaDaVez = relacao_que_desfaz.nr_importancia;
+                                break;
                             }
                         }
                     }
