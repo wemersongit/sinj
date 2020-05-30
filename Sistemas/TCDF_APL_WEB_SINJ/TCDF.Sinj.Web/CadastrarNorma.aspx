@@ -46,6 +46,12 @@
                     desabilitarEmail.prop('disabled', false);
                 }
             });
+
+            if (_user.ch_perfil == 'super_administrador') {
+                $('#st_habilita_pesquisa').prop("checked", true);
+                $('#st_habilita_email').prop("checked", true);
+            }
+
         });
 
 
