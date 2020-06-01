@@ -112,7 +112,7 @@
                                             $('textarea[name=ds_dispositivos_alterados]').val(videEditar.alteracao_texto_vide.ds_dispositivos_alterados);
                                         }
                                         if(IsNotNullOrEmpty(videEditar.caput_norma_vide, 'caput')){
-                                            if(!IsNullOrEmpty(data, 'ar_atualizado')){
+                                            if(!IsNotNullOrEmpty(data, 'ar_atualizado')){
                                                 videEditar.alteracao_texto_vide.in_sem_arquivo = true;
                                             }
                                             videEditar.alteracao_texto_vide.dispositivos_norma_vide = [];
@@ -185,7 +185,7 @@
                             for (var i = 0; i < data.vides.length; i++) {
                                 if (data.vides[i].ch_vide == ch_vide) {
                                     if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'caput')){
-                                        if(!IsNullOrEmpty(data, 'ar_atualizado')){
+                                        if(!IsNotNullOrEmpty(data, 'ar_atualizado')){
                                             data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
                                         }
                                         data.vides[i].alteracao_texto_vide.dispositivos_norma_vide = [];

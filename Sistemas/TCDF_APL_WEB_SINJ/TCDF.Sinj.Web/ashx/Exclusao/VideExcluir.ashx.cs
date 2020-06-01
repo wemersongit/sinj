@@ -42,26 +42,31 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
 
                 var normaRn = new NormaRN();
                 var dDt_controle_alteracao = Convert.ToDateTime(_dt_controle_alteracao);
-
-                var normaAlteradoraOv = normaRn.Doc(vide.NormaAlteradora.ChNorma);
-                if (normaAlteradoraOv.alteracoes.Count > 0)
+                if (vide.NormaAlteradora != null && !string.IsNullOrEmpty(vide.NormaAlteradora.ChNorma))
                 {
-                    var dDt_alteracao = Convert.ToDateTime(normaAlteradoraOv.alteracoes.Last<AlteracaoOV>().dt_alteracao);
-                    var usuario = normaAlteradoraOv.alteracoes.Last<AlteracaoOV>().nm_login_usuario_alteracao;
-                    if (dDt_controle_alteracao < dDt_alteracao)
+                    var normaAlteradoraOv = normaRn.Doc(vide.NormaAlteradora.ChNorma);
+                    if (normaAlteradoraOv.alteracoes.Count > 0)
                     {
-                        throw new RiskOfInconsistency("A norma do vide excluído foi modificada pelo usuário <b>" + usuario + "</b> às <b>" + dDt_alteracao + "</b> tornando a sua modificação inconsistente.<br/> É aconselhável atualizar a página e refazer as modificações ou forçar a alteração.<br/>Obs.: Clicar em 'Salvar mesmo assim' vai forçar a alteração e pode sobrescrever as modificações do usuário <b>" + usuario + "</b>.");
+                        var dDt_alteracao = Convert.ToDateTime(normaAlteradoraOv.alteracoes.Last<AlteracaoOV>().dt_alteracao);
+                        var usuario = normaAlteradoraOv.alteracoes.Last<AlteracaoOV>().nm_login_usuario_alteracao;
+                        if (dDt_controle_alteracao < dDt_alteracao)
+                        {
+                            throw new RiskOfInconsistency("A norma do vide excluído foi modificada pelo usuário <b>" + usuario + "</b> às <b>" + dDt_alteracao + "</b> tornando a sua modificação inconsistente.<br/> É aconselhável atualizar a página e refazer as modificações ou forçar a alteração.<br/>Obs.: Clicar em 'Salvar mesmo assim' vai forçar a alteração e pode sobrescrever as modificações do usuário <b>" + usuario + "</b>.");
+                        }
+                    }
+                    normaAlteradoraOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
+                    if (vide.NormaAlteradora.ArquivoNovo != null)
+                    {
+                        normaAlteradoraOv.ar_atualizado = vide.NormaAlteradora.ArquivoNovo;
+                    }
+                    normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
+                    if (!normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
+                    {
+                        throw new Exception("Erro ao excluir Vide na norma alteradora.");
                     }
                 }
-                normaAlteradoraOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
-                if (vide.NormaAlteradora.ArquivoNovo != null)
+                if (vide.NormaAlterada != null && !string.IsNullOrEmpty(vide.NormaAlterada.ChNorma))
                 {
-                    normaAlteradoraOv.ar_atualizado = vide.NormaAlteradora.ArquivoNovo;
-                }
-                normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
-                if (normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
-                {
-
                     if (!vide.NormaAlterada.InNormaForaSistema)
                     {
                         var normaAlteradaOv = normaRn.Doc(vide.NormaAlterada.ChNorma);
@@ -81,11 +86,11 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         }
 
                         //NOTE: Se o usuario nao tiver permissao pra habilitar o email ou habilitar no sinj pesquisa, seta pra false os campos da norma alterada. By Victor
-                        if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
+                        if (!Util.UsuarioTemPermissao(Sinj.oSessaoUsuario, AcoesDoUsuario.nor_eml))
                         {
                             normaRn.PathPut(normaAlteradaOv._metadata.id_doc, "st_habilita_email", "false", "");
                         }
-                        if (!TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
+                        if (!Util.UsuarioTemPermissao(Sinj.oSessaoUsuario, AcoesDoUsuario.nor_hsp))
                         {
                             normaRn.PathPut(normaAlteradaOv._metadata.id_doc, "st_habilita_pesquisa", "false", "");
                         }
@@ -94,10 +99,6 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     {
                         sRetorno = "{\"id_doc_success\":" + id_doc + "}";
                     }
-                }
-                else
-                {
-                    throw new Exception("Erro ao excluir Vide na norma alteradora.");
                 }
                 var log_editar = new LogAlterar<NormaOV>
                 {
@@ -154,17 +155,9 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
 
         public void Validate()
         {
-            if (NormaAlteradora == null || string.IsNullOrEmpty(NormaAlteradora.ChNorma))
+            if ((NormaAlteradora == null || string.IsNullOrEmpty(NormaAlteradora.ChNorma)) && (NormaAlterada == null || string.IsNullOrEmpty(NormaAlterada.ChNorma)))
             {
                 throw new DocValidacaoException("Erro na norma informada.");
-            }
-            if (NormaAlterada == null)
-            {
-                throw new DocValidacaoException("Erro ao informar a norma alterada.");
-            }
-            if (!NormaAlterada.InNormaForaSistema && string.IsNullOrEmpty(NormaAlterada.ChNorma))
-            {
-                throw new DocValidacaoException("Erro ao informar a norma alterada. Por não se tratar de uma norma fora do sistema a chave é obrigatória.");
             }
         }
     }
