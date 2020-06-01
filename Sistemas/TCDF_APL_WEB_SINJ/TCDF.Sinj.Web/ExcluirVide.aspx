@@ -139,7 +139,7 @@
 
                                 $.when(deferredTipoDeRelacao).done(function(){
                                     if(IsNotNullOrEmpty(videExcluir.caput_norma_vide, 'caput')){
-                                        if(!IsNullOrEmpty(data, 'ar_atualizado')){
+                                        if(!IsNotNullOrEmpty(data, 'ar_atualizado')){
                                             videExcluir.alteracao_texto_vide.in_sem_arquivo = true;
                                         }
                                         videExcluir.alteracao_texto_vide.dispositivos_norma_vide = [];
@@ -158,7 +158,7 @@
                                     else{
                                         selecionarNormaAlteradoraExcluir({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videExcluir.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videExcluir.alteracao_texto_vide.dispositivos_norma_vide });
                                     }
-                                    if(!videExcluir.in_norma_fora_sistema){
+                                    if (!videExcluir.in_norma_fora_sistema) {
                                         buscarOutraNorma(videExcluir.ch_norma_vide, videExcluir.ch_vide);
                                     }
                                     else{
@@ -198,6 +198,10 @@
             var sucesso = function (data) {
                 if (IsNotNullOrEmpty(data)) {
                     if (data.error_message != null && data.error_message != "") {
+                        var msg = data.error_message;
+                        if (IsNotNullOrEmpty(data.error_type) && data.error_type == 'NotFound') {
+                            msg = "A norma do vide não foi encontrada. É possível que tenha sido excluída."
+                        }
                         $('#div_notificacao_vide').messagelight({
                             sTitle: "Erro",
                             sContent: data.error_message,
@@ -211,7 +215,7 @@
                         for (var i = 0; i < data.vides.length; i++) {
                             if (data.vides[i].ch_vide == ch_vide) {
                                 if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'caput')){
-                                    if(!IsNullOrEmpty(data, 'ar_atualizado')){
+                                    if(!IsNotNullOrEmpty(data, 'ar_atualizado')){
                                         data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
                                     }
                                     data.vides[i].alteracao_texto_vide.dispositivos_norma_vide = [];

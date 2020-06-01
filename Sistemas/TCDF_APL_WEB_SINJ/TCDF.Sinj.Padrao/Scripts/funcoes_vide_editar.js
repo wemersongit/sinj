@@ -291,7 +291,12 @@ function clickAlterarDispositivoEditar(){
     let dispositivoAlterado = {}
     let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
     if(!normaAlteradora.sem_arquivo){
-        linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+        if(normaAlteradora.dispositivos.length > 0){
+            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+        }
+        else{
+            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}`;
+        }
     }
     const texto = $('#div_tooltip_dispositivo textarea[name=textoNovo]').val();
     let $buttonSelected = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo button.selected');

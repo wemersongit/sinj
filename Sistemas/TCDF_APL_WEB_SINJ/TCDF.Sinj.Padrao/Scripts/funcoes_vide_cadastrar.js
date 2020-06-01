@@ -646,10 +646,14 @@ function selecionarLecoSemCitacao(){
 }
 
 function clickAlterarDispositivoCadastrar(){
-    let linkSemDispositivoNormaAlteradora = linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
+    let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
     if(!normaAlteradora.sem_arquivo){
-        linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
-        linkSemDispositivoNormaAlteradora += `/${normaAlteradora.arquivo.filename}`;
+        if(normaAlteradora.dispositivos.length > 0){
+            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+        }
+        else{
+            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}`;
+        }
     }
     let dispositivoAlterado = {}
     if(tipoDeRelacaoSelecionado.ch_tipo_relacao == '9'){
@@ -678,7 +682,7 @@ function clickAlterarDispositivoCadastrar(){
                 selectorInsertBefore = `#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${$dispositivosLeco.attr('ch_norma_info')}]`;
             }
         }
-        $(selectorInsertBefore).before(`<p ch_norma_info="${normaAlteradora.ch_norma}" class="adicionado"><a href="${linkSemDispositivoNormaAlteradora}">Legislação correlata - ${normaAlteradora.ds_norma}</a></p>`);
+        $(selectorInsertBefore).before(`<p ch_norma_info="${normaAlteradora.ch_norma}" class="adicionado"><a href="${linkNormaAlteradora}">Legislação correlata - ${normaAlteradora.ds_norma}</a></p>`);
     }
     else{
         const texto = $('#div_tooltip_dispositivo textarea[name=textoNovo]').val();
