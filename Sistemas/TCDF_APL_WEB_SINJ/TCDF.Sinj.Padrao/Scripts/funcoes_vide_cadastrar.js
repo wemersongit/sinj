@@ -508,6 +508,8 @@ function selecionarTextoNormaAlteradoraCadastrar() {
             window.getSelection().getRangeAt(0).surroundContents(a);
 
             window.getSelection().removeAllRanges();
+            changeStepper('selecionarDispositivoAlterador');
+            
             if(tipoDeRelacaoSelecionado.ch_tipo_relacao == '9'){
                 clickAlterarDispositivoCadastrar();
                 alert('Legislação correlata criada com sucesso.');
@@ -515,7 +517,6 @@ function selecionarTextoNormaAlteradoraCadastrar() {
             else{
                 alert('O texto \'' + text + '\' foi selecionado.');
             }
-            changeStepper('selecionarDispositivoAlterador');
         }
     }
 }
