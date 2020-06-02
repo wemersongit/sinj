@@ -115,16 +115,11 @@ function selecionarNormaAlteradaForaSistemaEditar(videEditar){
 function selecionarArquivoNormaAlteradoraEditar(){
     let deferredAlteradora = $.Deferred();
     $.when(deferredAlteradora).done(gComplete);
-    if(!normaAlteradora.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && tipoDeRelacao.ch_tipo_relacao != '9'){
-            gComplete();
-            showMessageNormaIncompativel(normaAlteradora);
-            return;
-        }
-        selecionarArquivoDaNormaEditar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+    if(normaAlteradora.sem_arquivo){
+        deferredAlteradora.resolve();
     }
     else{
-        deferredAlteradora.resolve();
+        selecionarArquivoDaNormaEditar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
     }
     $('#div_cad_dispositivo_alterada').show();
     $('#div_cad_dispositivo_alterada .line_conteudo_arquivo').show();
@@ -134,23 +129,13 @@ function selecionarArquivosEditar(){
     let deferredAlteradora = $.Deferred();
     let deferredAlterada = $.Deferred();
     $.when(deferredAlteradora, deferredAlterada).done(gComplete);
-    if(!normaAlteradora.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && tipoDeRelacao.ch_tipo_relacao != '9'){
-            gComplete();
-            showMessageNormaIncompativel(normaAlteradora);
-            return;
-        }
-        selecionarArquivoDaNormaEditar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
-    }
-    else{
+    if(normaAlteradora.sem_arquivo){
         deferredAlteradora.resolve();
     }
+    else{
+        selecionarArquivoDaNormaEditar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+    }
     if(!normaAlterada.in_norma_fora_sistema && !normaAlterada.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao) && tipoDeRelacao.ch_tipo_relacao != '9'){
-            gComplete();
-            showMessageNormaIncompativel(normaAlterada);
-            return;
-        }
         selecionarArquivoDaNormaEditar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
     }
     else{
