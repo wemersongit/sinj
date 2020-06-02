@@ -39,10 +39,13 @@
 
         var sucesso_vide = function (data) {
             console.log(data);
-            var append_eml_pes = (ValidarPermissao(_grupos.nor_eml) ? "<div style='display:block;'> Habilita enviar e-mail:" +
-                "<input id='vide_st_habilita_email' name='vide_st_habilita_email' value='true' type='checkbox' title='Habilita o envio de e- mails.' " + (data.st_habilita_email == "true" || data.st_habilita_email == "True" ? 'checked' : '') + "  /> </div>" : "") +
+            var append_eml_pes = "";
+            if (IsNotNullOrEmpty(data, 'id_doc_vide')) {
+                (ValidarPermissao(_grupos.nor_eml) ? "<div style='display:block;'> Habilita enviar e-mail:" +
+                    "<input id='vide_st_habilita_email' name='vide_st_habilita_email' value='true' type='checkbox' title='Habilita o envio de e- mails.' " + (data.st_habilita_email == "true" || data.st_habilita_email == "True" ? 'checked' : '') + "  /> </div>" : "") +
                 (ValidarPermissao(_grupos.nor_hsp) ? "<div style='display:block'> Habilita no SINJ Pesquisa:" +
-                "<input id='vide_st_habilita_pesquisa' name='vide_st_habilita_pesquisa' value='true' type='checkbox' title='Habilita no SINJ Pesquisa.' " + (data.st_habilita_pesquisa == "true" || data.st_habilita_pesquisa == "True" ? 'checked' : '') + " /> </div>" : "");
+                    "<input id='vide_st_habilita_pesquisa' name='vide_st_habilita_pesquisa' value='true' type='checkbox' title='Habilita no SINJ Pesquisa.' " + (data.st_habilita_pesquisa == "true" || data.st_habilita_pesquisa == "True" ? 'checked' : '') + " /> </div>" : "");
+            }
             gComplete();
             if (IsNotNullOrEmpty(data)) {
                 if (IsNotNullOrEmpty(data, 'id_doc_success')) {
@@ -53,17 +56,21 @@
                         oButtons: [
                             {
                                 text: "Ok", click: function () {
-                                    let hsp = $('#vide_st_habilita_pesquisa').is(':checked');
-                                    let heml = $('#vide_st_habilita_email').is(':checked');
-                                    habilitarEmailPesquisa(data.id_doc_vide, hsp, heml);
+                                    if (IsNotNullOrEmpty(append_eml_pes)) {
+                                        let hsp = $('#vide_st_habilita_pesquisa').is(':checked');
+                                        let heml = $('#vide_st_habilita_email').is(':checked');
+                                        habilitarEmailPesquisa(data.id_doc_vide, hsp, heml);
+                                    }
                                     Redirecionar('?id_doc=' + data.id_doc_success);
                                 }
                             }
                         ],
                         fnClose: function () {
-                            let hsp = $('#vide_st_habilita_pesquisa').is(':checked');
-                            let heml = $('#vide_st_habilita_email').is(':checked');
-                            habilitarEmailPesquisa(normaAlterada.id_doc, hsp, heml);
+                            if (IsNotNullOrEmpty(append_eml_pes)) {
+                                let hsp = $('#vide_st_habilita_pesquisa').is(':checked');
+                                let heml = $('#vide_st_habilita_email').is(':checked');
+                                habilitarEmailPesquisa(normaAlterada.id_doc, hsp, heml);
+                            }
                             Redirecionar('?id_doc=' + data.id_doc_success);
                         }
                     });
@@ -204,7 +211,7 @@
                         }
                         $('#div_notificacao_vide').messagelight({
                             sTitle: "Erro",
-                            sContent: data.error_message,
+                            sContent: msg,
                             sType: "error",
                             sWidth: "",
                             iTime: null

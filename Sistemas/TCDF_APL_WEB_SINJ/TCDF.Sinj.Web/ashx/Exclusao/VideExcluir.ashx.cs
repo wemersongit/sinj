@@ -64,6 +64,7 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     {
                         throw new Exception("Erro ao excluir Vide na norma alteradora.");
                     }
+                    sRetorno = "{\"id_doc_success\":" + id_doc + "}";
                 }
                 if (vide.NormaAlterada != null && !string.IsNullOrEmpty(vide.NormaAlterada.ChNorma))
                 {
@@ -78,12 +79,12 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                         var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
                         normaAlteradaOv.ch_situacao = situacao.ch_situacao;
                         normaAlteradaOv.nm_situacao = situacao.nm_situacao;
-                        sRetorno = "{\"id_doc_success\":" + id_doc + ", \"st_habilita_pesquisa\":\"" + normaAlteradaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaAlteradaOv.st_habilita_email + "\",  \"id_doc_vide\":\"" + normaAlteradaOv._metadata.id_doc + "\"}";
                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                         if (!normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                         {
                             throw new Exception("Erro ao excluir Vide na norma alterada.");
                         }
+                        sRetorno = "{\"id_doc_success\":" + id_doc + ", \"st_habilita_pesquisa\":\"" + normaAlteradaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaAlteradaOv.st_habilita_email + "\",  \"id_doc_vide\":\"" + normaAlteradaOv._metadata.id_doc + "\"}";
 
                         //NOTE: Se o usuario nao tiver permissao pra habilitar o email ou habilitar no sinj pesquisa, seta pra false os campos da norma alterada. By Victor
                         if (!Util.UsuarioTemPermissao(Sinj.oSessaoUsuario, AcoesDoUsuario.nor_eml))
