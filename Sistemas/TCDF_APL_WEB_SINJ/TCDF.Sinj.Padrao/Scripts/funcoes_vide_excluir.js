@@ -80,16 +80,11 @@ function selecionarArquivoNormaAlteradoraExcluir(){
     let deferredAlteradora = $.Deferred();
     $.when(deferredAlteradora).done(gComplete);
 
-    if(!normaAlteradora.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && tipoDeRelacao.ch_tipo_relacao != '9'){
-            gComplete();
-            showMessageNormaIncompativel(normaAlteradora);
-            return;
-        }
-        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+    if(normaAlteradora.sem_arquivo){
+        deferredAlteradora.resolve();
     }
     else{
-        deferredAlteradora.resolve();
+        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
     }
 }
 
@@ -97,16 +92,11 @@ function selecionarArquivosExcluir(){
     let deferredAlteradora = $.Deferred();
     let deferredAlterada = $.Deferred();
     $.when(deferredAlteradora, deferredAlterada).done(gComplete);
-    if(!normaAlteradora.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && tipoDeRelacao.ch_tipo_relacao != '9'){
-            gComplete();
-            showMessageNormaIncompativel(normaAlteradora);
-            return;
-        }
-        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
+    if(normaAlteradora.sem_arquivo){
+        deferredAlteradora.resolve();
     }
     else{
-        deferredAlteradora.resolve();
+        selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
     }
     if(!normaAlterada.in_norma_fora_sistema && !normaAlterada.sem_arquivo){
         if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao) && tipoDeRelacao.ch_tipo_relacao != '9'){
