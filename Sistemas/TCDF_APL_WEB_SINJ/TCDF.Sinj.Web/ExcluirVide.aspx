@@ -144,11 +144,11 @@
 
                                 var deferredTipoDeRelacao = $.Deferred();
 
-                                $.when(deferredTipoDeRelacao).done(function(){
+                                $.when(deferredTipoDeRelacao).done(function () {
+                                    if (!IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
+                                        videExcluir.alteracao_texto_vide.in_sem_arquivo = true;
+                                    }
                                     if(IsNotNullOrEmpty(videExcluir.caput_norma_vide, 'caput')){
-                                        if(!IsNotNullOrEmpty(data, 'ar_atualizado')){
-                                            videExcluir.alteracao_texto_vide.in_sem_arquivo = true;
-                                        }
                                         videExcluir.alteracao_texto_vide.dispositivos_norma_vide = [];
                                         for(var i = 0; i < videExcluir.caput_norma_vide.caput.length; i++){
                                             videExcluir.alteracao_texto_vide.dispositivos_norma_vide.push({
@@ -221,10 +221,10 @@
                     else if (IsNotNullOrEmpty(data.ch_norma)) {
                         for (var i = 0; i < data.vides.length; i++) {
                             if (data.vides[i].ch_vide == ch_vide) {
+                                if (!IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
+                                    data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
+                                }
                                 if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'caput')){
-                                    if(!IsNotNullOrEmpty(data, 'ar_atualizado')){
-                                        data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
-                                    }
                                     data.vides[i].alteracao_texto_vide.dispositivos_norma_vide = [];
                                     for(var i = 0; i < data.vides[i].caput_norma_vide.caput.length; i++){
                                         data.vides[i].alteracao_texto_vide.dispositivos_norma_vide.push({
