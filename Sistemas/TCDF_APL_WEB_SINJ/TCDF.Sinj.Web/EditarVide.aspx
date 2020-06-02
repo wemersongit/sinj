@@ -111,15 +111,22 @@
                                             dsDispositivosAlteradosCopy = videEditar.alteracao_texto_vide.ds_dispositivos_alterados;
                                             $('textarea[name=ds_dispositivos_alterados]').val(videEditar.alteracao_texto_vide.ds_dispositivos_alterados);
                                         }
+                                        if (!IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
+                                            videEditar.alteracao_texto_vide.in_sem_arquivo = true;
+                                            $('#div_notificacao_vide').messagelight({
+                                                sTitle: "Erro",
+                                                sContent: `A norma ${montarDescricaoDaNorma(data)} não possui um arquivo atualizado, ou seja, ou o texto dela não foi alterado pelo vide, ou ela teve o texto excluído.`,
+                                                sType: "error",
+                                                sWidth: "",
+                                                iTime: null
+                                            });
+                                        }
                                         if(IsNotNullOrEmpty(videEditar.caput_norma_vide, 'caput')){
-                                            if(!IsNotNullOrEmpty(data, 'ar_atualizado')){
-                                                videEditar.alteracao_texto_vide.in_sem_arquivo = true;
-                                            }
                                             videEditar.alteracao_texto_vide.dispositivos_norma_vide = [];
-                                            for(var i = 0; i < videEditar.caput_norma_vide.caput.length; i++){
+                                            for(var j = 0; j < videEditar.caput_norma_vide.caput.length; j++){
                                                 videEditar.alteracao_texto_vide.dispositivos_norma_vide.push({
-                                                    linkname: videEditar.caput_norma_vide.caput[i],
-                                                    texto: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_novo['+i+']') ? videEditar.caput_norma_vide.texto_novo[i] : IsNotNullOrEmpty(videEditar.caput_norma_vide.link) ? videEditar.caput_norma_vide.link : '')
+                                                    linkname: videEditar.caput_norma_vide.caput[j],
+                                                    texto: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_novo['+ij+']') ? videEditar.caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(videEditar.caput_norma_vide.link) ? videEditar.caput_norma_vide.link : '')
                                                 });
                                             }
                                         }
@@ -140,8 +147,7 @@
                                     });
                                     
                                     buscarTipoDeRelacao(videEditar.ch_tipo_relacao, deferredTipoDeRelacao);
-
-                                    
+                                    break;
                                 }
                             }
                             if (!IsNotNullOrEmpty(videEditar, 'ch_vide')) {
@@ -184,15 +190,22 @@
                         else if (IsNotNullOrEmpty(data.ch_norma)) {
                             for (var i = 0; i < data.vides.length; i++) {
                                 if (data.vides[i].ch_vide == ch_vide) {
+                                    if (!IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
+                                        data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
+                                        $('#div_notificacao_vide').messagelight({
+                                            sTitle: "Erro",
+                                            sContent: `A norma ${montarDescricaoDaNorma(data)} não possui um arquivo atualizado, ou seja, ou o texto dela não foi alterado pelo vide, ou ela teve o texto excluído.`,
+                                            sType: "error",
+                                            sWidth: "",
+                                            iTime: null
+                                        });
+                                    }
                                     if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'caput')){
-                                        if(!IsNotNullOrEmpty(data, 'ar_atualizado')){
-                                            data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
-                                        }
                                         data.vides[i].alteracao_texto_vide.dispositivos_norma_vide = [];
-                                        for(var i = 0; i < data.vides[i].caput_norma_vide.caput.length; i++){
+                                        for(var j = 0; j < data.vides[i].caput_norma_vide.caput.length; j++){
                                             data.vides[i].alteracao_texto_vide.dispositivos_norma_vide.push({
-                                                linkname: data.vides[i].caput_norma_vide.caput[i],
-                                                texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+i+']') ? data.vides[i].caput_norma_vide.texto_novo[i] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : '')
+                                                linkname: data.vides[i].caput_norma_vide.caput[j],
+                                                texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+j+']') ? data.vides[i].caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : '')
                                             });
                                         }
                                     }
@@ -205,6 +218,7 @@
                                         selecionarNormaAlteradoraEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
                                     }
                                     selecionarArquivosEditar();
+                                    break;
                                 }
                             }
                         }
