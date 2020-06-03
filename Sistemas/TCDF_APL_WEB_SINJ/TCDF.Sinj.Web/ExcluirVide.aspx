@@ -150,10 +150,10 @@
                                     }
                                     if(IsNotNullOrEmpty(videExcluir.caput_norma_vide, 'caput')){
                                         videExcluir.alteracao_texto_vide.dispositivos_norma_vide = [];
-                                        for(var i = 0; i < videExcluir.caput_norma_vide.caput.length; i++){
+                                        for(var j = 0; j < videExcluir.caput_norma_vide.caput.length; j++){
                                             videExcluir.alteracao_texto_vide.dispositivos_norma_vide.push({
-                                                linkname: videExcluir.caput_norma_vide.caput[i],
-                                                texto: (IsNotNullOrEmpty(videExcluir.caput_norma_vide, 'texto_novo['+i+']') ? videExcluir.caput_norma_vide.texto_novo[i] : IsNotNullOrEmpty(videExcluir.caput_norma_vide.link) ? videExcluir.caput_norma_vide.link : '')
+                                                linkname: videExcluir.caput_norma_vide.caput[j],
+                                                texto: (IsNotNullOrEmpty(videExcluir.caput_norma_vide, 'texto_novo['+j+']') ? videExcluir.caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(videExcluir.caput_norma_vide.link) ? videExcluir.caput_norma_vide.link : '')
                                             });
                                         }
                                     }
@@ -226,10 +226,10 @@
                                 }
                                 if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'caput')){
                                     data.vides[i].alteracao_texto_vide.dispositivos_norma_vide = [];
-                                    for(var i = 0; i < data.vides[i].caput_norma_vide.caput.length; i++){
+                                    for(var j = 0; j < data.vides[i].caput_norma_vide.caput.length; j++){
                                         data.vides[i].alteracao_texto_vide.dispositivos_norma_vide.push({
-                                            linkname: data.vides[i].caput_norma_vide.caput[i],
-                                            texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+i+']') ? data.vides[i].caput_norma_vide.texto_novo[i] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : '')
+                                            linkname: data.vides[i].caput_norma_vide.caput[j],
+                                            texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+j+']') ? data.vides[i].caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : '')
                                         });
                                     }
                                 }
