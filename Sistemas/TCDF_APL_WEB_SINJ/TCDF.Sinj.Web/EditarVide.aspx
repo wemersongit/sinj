@@ -126,7 +126,7 @@
                                             for(var j = 0; j < videEditar.caput_norma_vide.caput.length; j++){
                                                 videEditar.alteracao_texto_vide.dispositivos_norma_vide.push({
                                                     linkname: videEditar.caput_norma_vide.caput[j],
-                                                    texto: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_novo['+ij+']') ? videEditar.caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(videEditar.caput_norma_vide.link) ? videEditar.caput_norma_vide.link : '')
+                                                    texto: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_novo['+j+']') ? videEditar.caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(videEditar.caput_norma_vide.link) ? videEditar.caput_norma_vide.link : '')
                                                 });
                                             }
                                         }
