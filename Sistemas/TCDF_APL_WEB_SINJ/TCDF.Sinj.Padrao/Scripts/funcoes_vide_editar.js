@@ -218,7 +218,7 @@ function exibirTextoDoArquivoEditar(norma, arquivo) {
                     }
                 });
                 for(let i = 0; i < norma.dispositivos.length; i++){
-                    habilitarEdicaoDoDispositivo(norma.dispositivos[i].linkname, norma.dispositivos[i].texto);
+                    habilitarEdicaoDoDispositivo(norma.dispositivos[i].linkname, norma.dispositivos[i].texto, norma.dispositivos[i].convertido);
                 }
                 
             }
@@ -235,17 +235,20 @@ function exibirTextoDoArquivoEditar(norma, arquivo) {
     }
 }
 
-function habilitarEdicaoDoDispositivo(linkname, texto){
+function habilitarEdicaoDoDispositivo(linkname, texto, convertido){
     switch(tipoDeRelacao.ch_tipo_relacao){
         case '1':
             if(texto.indexOf('\n') > -1){
                 const textoSplited = texto.split('\n');
                 for(let i = 0; i < textoSplited.length; i++){
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_${i}"]`).addClass('adicionado');
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_${i}"]`).addClass('adicionado').prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}_add_${i}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
                 }
             }
+            else if(convertido === true){
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_0"]`).addClass('adicionado').prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}_add_0')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+            }
             else{
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('adicionado');
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('adicionado').prepend(`<button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
             }
             break;
         case '9':
@@ -287,7 +290,7 @@ function clickAlterarDispositivoEditar(){
     let $buttonSelected = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo button.selected');
     $buttonSelected.tooltip('hide');
     $buttonSelected.removeClass('selected').addClass('select');
-    if(vide.ch_tipo_relacao == '1'){
+    if(tipoDeRelacao.ch_tipo_relacao == '1'){
         if(!texto){
             return;
         }
@@ -382,10 +385,15 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
     let dispositivoDesfeito = {};
     for(let i in normaAlterada.dispositivos){
         removeIndex = i;
-        if(normaAlterada.dispositivos[i].linkname == linkname){
-            switch(vide.ch_tipo_relacao){
+        if(normaAlterada.dispositivos[i].linkname == linkname || (normaAlterada.dispositivos[i].convertido === true && linkname.indexOf(normaAlterada.dispositivos[i].linkname) == 0)){
+            switch(tipoDeRelacao.ch_tipo_relacao){
                 case '1':
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
+                    if(normaAlterada.dispositivos[i].convertido === true && linkname.indexOf('_add') > -1 && normaAlterada.dispositivos[i].linkname.indexOf('_add') <= -1){
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p:regex(linkname,${normaAlterada.dispositivos[i].linkname}_add.*)`).remove();
+                    }
+                    else{
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
+                    }
                     dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
                     break;
                 default:

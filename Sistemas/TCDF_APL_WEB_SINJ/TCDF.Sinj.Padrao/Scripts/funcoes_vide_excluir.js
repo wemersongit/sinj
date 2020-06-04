@@ -158,7 +158,7 @@ function exibirTextoDoArquivoSemAsAltercoesDoVide(norma, arquivo) {
         else{
             if(norma.dispositivos.length > 0){
                 for(let i = 0; i < norma.dispositivos.length; i++){
-                    destacarAlteracaoDoDispositivo(norma.dispositivos[i].linkname, norma.dispositivos[i].texto);
+                    destacarAlteracaoDoDispositivo(norma.dispositivos[i].linkname, norma.dispositivos[i].texto, norma.dispositivos[i].convertido);
                 }
             }
             else{
@@ -190,7 +190,7 @@ function removerLinkAlterador(){
     $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[remover=leco]').remove();
 }
 
-function destacarAlteracaoDoDispositivo(linkname, texto){
+function destacarAlteracaoDoDispositivo(linkname, texto, convertido){
     switch(tipoDeRelacao.ch_tipo_relacao){
         case '1':
             if(texto.indexOf('\n') > -1){
@@ -198,6 +198,9 @@ function destacarAlteracaoDoDispositivo(linkname, texto){
                 for(let i = 0; i < textoSplited.length; i++){
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_${i}"]`).attr('remover', 'acrescimo').addClass('remover');
                 }
+            }
+            else if(convertido === true){
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_0"]`).attr('remover', 'acrescimo').addClass('remover');
             }
             else{
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'acrescimo').addClass('remover');
