@@ -132,6 +132,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 vide_alterador.alteracao_texto_vide.in_sem_arquivo = vide.NormaAlteradora.SemArquivo;
                 vide_alterador.alteracao_texto_vide.ds_dispositivos_alterados = _ds_dispositivos_alterados;
                 vide_alterador.alteracao_texto_vide.dispositivos_norma_vide = vide.NormaAlteradora.Dispositivos;
+
+                vide_alterador.ds_comentario_vide = vide.DsComentarioVide;
+
                 normaAlteradoraOv.vides.Add(vide_alterador);
                 if (!vide_alterador.alteracao_texto_vide.in_sem_arquivo)
                 {
