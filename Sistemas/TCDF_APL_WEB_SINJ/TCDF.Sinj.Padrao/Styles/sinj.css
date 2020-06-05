@@ -337,6 +337,7 @@ p[linkname] button.select{background: url("../Imagens/ico_anchor_p_clear.png") n
 .div_conteudo_arquivo p.alterado{ color: #991000; }
 .div_conteudo_arquivo a.link-alterador{ color: #991000 !important; }
 .div_conteudo_arquivo p.adicionado{ color: #006933; }
+.div_conteudo_arquivo p.leco{ color: #006933; }
 .div_conteudo_arquivo p.desfeito{ color: #006933; }
 #div_vide .remover { background-color: #ffa9a9; }
 #div_vide .desfazer { background-color: #b4f3b4; }

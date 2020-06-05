@@ -218,13 +218,9 @@ function getDescricaoDoElemento(dispositivo)
 }
 
 function limparFormatacao(){
-    $('div.div_conteudo_arquivo a.link-alterador').removeAttr('title');
-    $('div.div_conteudo_arquivo a.link-alterador').removeAttr('id');
-    $('div.div_conteudo_arquivo a.link-alterador').removeClass('link-alterador');
+    $('div.div_conteudo_arquivo a.link-alterador').removeAttr('title').removeAttr('id').removeClass('link-alterador');
 
-    $('div.div_conteudo_arquivo p.alterado').removeClass('alterado');
-    $('div.div_conteudo_arquivo p.alterado').removeClass('desfeito');
-    $('div.div_conteudo_arquivo p.adicionado').removeClass('adicionado');
+    $('div.div_conteudo_arquivo p[linkname]').removeClass('alterado').removeClass('desfeito').removeClass('leco').removeClass('adicionado');
     
     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').find('button').remove();
     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p:hidden').show();
