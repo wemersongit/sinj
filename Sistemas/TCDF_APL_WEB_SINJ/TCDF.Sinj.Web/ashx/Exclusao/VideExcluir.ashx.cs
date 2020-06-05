@@ -54,11 +54,12 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                             throw new RiskOfInconsistency("A norma do vide excluído foi modificada pelo usuário <b>" + usuario + "</b> às <b>" + dDt_alteracao + "</b> tornando a sua modificação inconsistente.<br/> É aconselhável atualizar a página e refazer as modificações ou forçar a alteração.<br/>Obs.: Clicar em 'Salvar mesmo assim' vai forçar a alteração e pode sobrescrever as modificações do usuário <b>" + usuario + "</b>.");
                         }
                     }
-                    normaAlteradoraOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
-                    if (vide.NormaAlteradora.ArquivoNovo != null)
+                    if (!vide.NormaAlteradora.SemArquivo && vide.NormaAlteradora.ArquivoNovo != null && !string.IsNullOrEmpty(vide.NormaAlteradora.ArquivoNovo.id_file))
                     {
+                        normaRn.SalvarTextoAntigoDaNorma(normaAlteradoraOv, normaAlteradoraOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)).FirstOrDefault(), sessao_usuario.nm_login_usuario);
                         normaAlteradoraOv.ar_atualizado = vide.NormaAlteradora.ArquivoNovo;
                     }
+                    normaAlteradoraOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
                     normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                     if (!normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
                     {
@@ -71,11 +72,12 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
                     if (!vide.NormaAlterada.InNormaForaSistema)
                     {
                         var normaAlteradaOv = normaRn.Doc(vide.NormaAlterada.ChNorma);
-                        normaAlteradaOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
-                        if (vide.NormaAlterada.ArquivoNovo != null)
+                        if (!vide.NormaAlterada.SemArquivo && vide.NormaAlterada.ArquivoNovo != null && !string.IsNullOrEmpty(vide.NormaAlterada.ArquivoNovo.id_file))
                         {
+                            normaRn.SalvarTextoAntigoDaNorma(normaAlteradaOv, normaAlteradaOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)).FirstOrDefault(), sessao_usuario.nm_login_usuario);
                             normaAlteradaOv.ar_atualizado = vide.NormaAlterada.ArquivoNovo;
                         }
+                        normaAlteradaOv.vides.RemoveAll(v => v.ch_vide.Equals(vide.ChVide));
                         var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
                         normaAlteradaOv.ch_situacao = situacao.ch_situacao;
                         normaAlteradaOv.nm_situacao = situacao.nm_situacao;
@@ -169,6 +171,8 @@ namespace TCDF.Sinj.Web.ashx.Exclusao
         public string ChNorma { get; set; }
         [JsonProperty("in_norma_fora_do_sistema")]
         public bool InNormaForaSistema { get; set; }
+        [JsonProperty("sem_arquivo")]
+        public bool SemArquivo { get; set; }
         [JsonProperty("arquivo_novo")]
         public ArquivoOV ArquivoNovo { get; set; }
 

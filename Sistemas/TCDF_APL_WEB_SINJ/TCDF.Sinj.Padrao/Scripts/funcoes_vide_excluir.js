@@ -207,7 +207,12 @@ function destacarAlteracaoDoDispositivo(linkname, texto, convertido){
             }
             break;
         case '9':
-            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info="${normaAlteradora.ch_norma}"]`).attr('remover', 'leco').addClass('remover');
+            if(IsNotNullOrEmpty(linkname)){
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'leco-dispositivo').addClass('desfazer');
+            }
+            else{
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info="${normaAlteradora.ch_norma}"]`).attr('remover', 'leco').addClass('remover');
+            }
             break;
         default:
             if(linkname){
@@ -306,6 +311,9 @@ function removerAlteracaoDoDispositivo(){
             break;
         case '9':
             $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco]').remove();
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco-dispositivo] a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco-dispositivo]').removeAttr('remover').removeClass('desfazer');
+
             break;
         default:
             let sDesfazerAlteracaoCompleta = $('s[desfazer=alteracao-completa]');

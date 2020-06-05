@@ -61,6 +61,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     };
                     selectVide.caput_norma_vide = null;
                     selectVide.caput_norma_vide_outra = null;
+                    break;
                 }
                 normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                 if (normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
@@ -85,10 +86,12 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             };
                             selectVide.caput_norma_vide = null;
                             selectVide.caput_norma_vide_outra = null;
-                        }
-                        if (vide.NormaAlterada.ArquivoNovo != null)
-                        {
-                            normaAlteradaOv.ar_atualizado = vide.NormaAlterada.ArquivoNovo;
+                            if (!vide.NormaAlterada.SemArquivo && vide.NormaAlterada.ArquivoNovo != null && !string.IsNullOrEmpty(vide.NormaAlterada.ArquivoNovo.id_file))
+                            {
+                                normaRn.SalvarTextoAntigoDaNorma(normaAlteradaOv, selectVide, sessao_usuario.nm_login_usuario);
+                                normaAlteradaOv.ar_atualizado = vide.NormaAlterada.ArquivoNovo;
+                            }
+                            break;
                         }
                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                         if (!normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))

@@ -136,7 +136,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 vide_alterador.ds_comentario_vide = vide.DsComentarioVide;
 
                 normaAlteradoraOv.vides.Add(vide_alterador);
-                if (!vide_alterador.alteracao_texto_vide.in_sem_arquivo)
+                if (!vide_alterador.alteracao_texto_vide.in_sem_arquivo && vide.NormaAlteradora.ArquivoNovo != null && !string.IsNullOrEmpty(vide.NormaAlteradora.ArquivoNovo.id_file))
                 {
                     normaRn.SalvarTextoAntigoDaNorma(normaAlteradoraOv, vide_alterador, sessao_usuario.nm_login_usuario);
                     normaAlteradoraOv.ar_atualizado = vide.NormaAlteradora.ArquivoNovo;
@@ -182,7 +182,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
 
                         normaAlteradaOv.vides.Add(vide_alterado);
 
-                        if (!vide_alterado.alteracao_texto_vide.in_sem_arquivo)
+                        if (!vide_alterado.alteracao_texto_vide.in_sem_arquivo && vide.NormaAlterada.ArquivoNovo != null && !string.IsNullOrEmpty(vide.NormaAlterada.ArquivoNovo.id_file))
                         {
                             normaRn.SalvarTextoAntigoDaNorma(normaAlteradaOv, vide_alterado, sessao_usuario.nm_login_usuario);
                             normaAlteradaOv.ar_atualizado = vide.NormaAlterada.ArquivoNovo;
