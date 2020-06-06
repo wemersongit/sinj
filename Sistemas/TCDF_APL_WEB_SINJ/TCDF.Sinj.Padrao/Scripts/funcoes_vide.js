@@ -220,7 +220,7 @@ function getDescricaoDoElemento(dispositivo)
 function limparFormatacao(){
     $('div.div_conteudo_arquivo a.link-alterador').removeAttr('title').removeAttr('id').removeClass('link-alterador');
 
-    $('div.div_conteudo_arquivo p[linkname]').removeClass('alterado').removeClass('desfeito').removeClass('leco').removeClass('adicionado');
+    $('div.div_conteudo_arquivo p[linkname]').removeClass('alterado').removeClass('desfeito').removeClass('renumerado').removeClass('leco').removeClass('adicionado');
     
     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').find('button').remove();
     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p:hidden').show();
@@ -251,4 +251,11 @@ function habilitarEmailPesquisa(id_doc, hsp, hemail){
             bAsync: true
         });
     }
+}
+
+function getDispositivoAlterado(linkname){
+    const filtrar = function(disp){
+        return disp.linkname == linkname;
+    }
+    return normaAlterada.dispositivos.filter(filtrar)[0];
 }

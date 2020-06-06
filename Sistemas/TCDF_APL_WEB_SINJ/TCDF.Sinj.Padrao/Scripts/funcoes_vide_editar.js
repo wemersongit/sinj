@@ -259,6 +259,9 @@ function habilitarEdicaoDoDispositivo(linkname, texto, convertido){
         case '9':
             $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('leco').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
             break;
+        case '36':
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('renumerado').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+            break;
         default:
             if(linkname){
                 if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
@@ -331,6 +334,21 @@ function clickAlterarDispositivoEditar(){
             $elementoAlterado.prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
             $elementoAlterado.append(`&nbsp;<a href="${linkNormaAlteradora}">(${tipoDeRelacao.ds_texto_para_alterador} - ${normaAlteradora.ds_norma})</a>`);
             $elementoAlterado.addClass('leco');
+        }
+        if(tipoDeRelacao.ch_tipo_relacao == '36'){
+            $buttonSelected.hide();
+            dispositivoAlterado.linkname = linkname + '_renum';
+            dispositivoAlterado.nm_linkName = getNomeDoLinkName(linkname.replace(/_replaced|_renum|_undone|_add/g,''));
+            dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(linkname.replace(/_replaced|_renum|_undone|_add/g,''));
+            dispositivoAlterado.texto = texto;
+            dispositivoAlterado.texto_antigo = $elementoAlterado.text();
+            const htmlRenumerado = $elementoAlterado.html();
+            $elementoAlterado.html(htmlRenumerado.replace(dispositivoAlterado.texto_antigo, dispositivoAlterado.texto));
+            $elementoAlterado.attr('linkname', dispositivoAlterado.linkname);
+            $elementoAlterado.find('a[name]').first().attr('name', dispositivoAlterado.linkname);
+            $elementoAlterado.addClass('renumerado');
+            $elementoAlterado.prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+            $elementoAlterado.append(`&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>`);
         }
         else if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
             if(!IsNotNullOrEmpty(htmlAlterado) || linkname.indexOf('_replaced') < 0){
@@ -418,6 +436,35 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).find('button.select').show().tooltip(optionsTooltip);
                     dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
                     break;
+                case '36':
+                    let $elementoRenumerado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
+                    if(IsNotNullOrEmpty(normaAlterada.dispositivos[i].texto_antigo)){
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] button[desfazer]`).remove();
+                        linkname = normaAlterada.dispositivos[i].linkname.replace(/_renum+/,'');
+                        $elementoRenumerado.attr('linkname', linkname);
+                        $elementoRenumerado.find('a[name]').first().attr('name', linkname);
+                        $elementoRenumerado.removeClass('renumerado');
+                        $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+                        const htmlRenumerado = $elementoRenumerado.html().replace(/&nbsp;$/,'');
+                        $elementoRenumerado.html(htmlRenumerado.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
+                        $elementoRenumerado.find('button.select').show().tooltip(optionsTooltip);
+                    }
+                    else{
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
+                        $elementoRenumerado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
+                        linkname = linkname.replace(/_replaced$/,'');
+                        const html = $elementoRenumerado.find('s').html();
+                        $elementoRenumerado.find('s').remove();
+                        $elementoRenumerado.html(html);
+                        $elementoRenumerado.attr('linkname', linkname);
+                        $elementoRenumerado.find('a[name]').first().attr('name', linkname);
+                        $elementoRenumerado.removeAttr('replaced_by');
+                        $elementoRenumerado.removeClass('renumerado');
+                        $elementoRenumerado.find('button.select').show().tooltip(optionsTooltip);
+                    }
+                    
+                    dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
+                    break;
                 default:
                     if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
                         let videRefazer = null;
@@ -430,7 +477,7 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
                         const childrensAlterado = $elementoAlterado.children();
                         $elementoAlterado.find('a:regex(href, _link_sistema_)').remove();
                         $elementoAlterado.find('button').remove();
-                        const htmlAlterado = $elementoAlterado.html().replace(/&nbsp;/g,'');
+                        const htmlAlterado = $elementoAlterado.html().replace(/&nbsp;$/g,'');
                         $elementoAlterado.html(`<s>${htmlAlterado}</s>`);
                         
                         for(var j = 1; j < childrensAlterado.length; j++){
@@ -446,6 +493,7 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
                             }
                         }
                         $elementoAlterado.attr('linkname', linkname.replace(/_undone$/,''));
+                        $elementoAlterado.find('a[name]').first().attr('name', linkname.replace(/_undone$/,''));
                         $elementoAlterado.removeAttr('undone_by');
                         $elementoAlterado.attr('replaced_by', videRefazer.ch_norma_vide);
                         $elementoAlterado.removeClass('desfeito');
@@ -464,6 +512,7 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
                         $elementoAlterado.find('s').remove();
                         $elementoAlterado.html(html);
                         $elementoAlterado.attr('linkname', linkname);
+                        $elementoAlterado.find('a[name]').first().attr('name', linkname);
                         $elementoAlterado.removeAttr('replaced_by');
                         $elementoAlterado.removeClass('alterado');
                         $elementoAlterado.find('button.select').show().tooltip(optionsTooltip);
