@@ -127,7 +127,8 @@
                                                 videEditar.alteracao_texto_vide.dispositivos_norma_vide.push({
                                                     linkname: videEditar.caput_norma_vide.caput[j],
                                                     convertido: true,
-                                                    texto: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_novo['+j+']') ? videEditar.caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(videEditar.caput_norma_vide.link) ? videEditar.caput_norma_vide.link : '')
+                                                    texto: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_novo[' + j + ']') ? videEditar.caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(videEditar.caput_norma_vide.link) ? videEditar.caput_norma_vide.link : ''),
+                                                    texto_antigo: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_antigo[' + j + ']') ? videEditar.caput_norma_vide.texto_antigo[j] : '')
                                                 });
                                             }
                                         }
@@ -210,7 +211,8 @@
                                             data.vides[i].alteracao_texto_vide.dispositivos_norma_vide.push({
                                                 linkname: data.vides[i].caput_norma_vide.caput[j],
                                                 convertido: true,
-                                                texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+j+']') ? data.vides[i].caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : '')
+                                                texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+j+']') ? data.vides[i].caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : ''),
+                                                texto_antigo: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_antigo[' + j + ']') ? data.vides[i].caput_norma_vide.texto_antigo[j] : '')
                                             });
                                         }
                                     }

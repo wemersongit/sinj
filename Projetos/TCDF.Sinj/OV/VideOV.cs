@@ -177,6 +177,7 @@ namespace TCDF.Sinj.OV
         public string nm_linkname { get; set; }
         public string ds_linkname { get; set; }
         public string texto { get; set; }
+        public string texto_antigo { get; set; }
     }
 
     public class UtilVides
