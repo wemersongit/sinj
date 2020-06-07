@@ -156,7 +156,7 @@
                                             videExcluir.alteracao_texto_vide.dispositivos_norma_vide.push({
                                                 linkname: videExcluir.caput_norma_vide.caput[j],
                                                 convertido: true,
-                                                texto: (IsNotNullOrEmpty(videExcluir.caput_norma_vide, 'texto_novo['+j+']') ? videExcluir.caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(videExcluir.caput_norma_vide.link) ? videExcluir.caput_norma_vide.link : '')
+                                                texto: (IsNotNullOrEmpty(videExcluir.caput_norma_vide, 'texto_novo[' + j + ']') ? videExcluir.caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(videExcluir.caput_norma_vide.link) ? videExcluir.caput_norma_vide.link : '')
                                             });
                                         }
                                     }
@@ -234,7 +234,7 @@
                                         data.vides[i].alteracao_texto_vide.dispositivos_norma_vide.push({
                                             linkname: data.vides[i].caput_norma_vide.caput[j],
                                             convertido: true,
-                                            texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+j+']') ? data.vides[i].caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : '')
+                                            texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo[' + j + ']') ? data.vides[i].caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : '')
                                         });
                                     }
                                 }

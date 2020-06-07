@@ -18,12 +18,12 @@ jQuery.expr[':'].regex = function (elem, index, match) {
 
 const dt_controle_alteracao = new Date();
 
-function ehRelacaoDeAlteracaoCompleta(chTipoRelacao){
+function isRelacaoDeAlteracaoCompleta(chTipoRelacao){
     const relacoesAlteracaoCompleta = ['4', '7', '21', '25', 'a8ed93396fcc4959b9b8e82808880f2a'];
     return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
 }
 
-function ehRelacaoQueDesfazAlteracao(chTipoRelacao){
+function isRelacaoQueDesfazAlteracao(chTipoRelacao){
     const relacoesQueDesfazAlteracaoCompleta = ['18', 'b4fe69f9b8d748b19e41be8a2071dbdd', '8e7abc807cb94cea93eccbb5ce56d92a'];
     return relacoesQueDesfazAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
 }
@@ -220,7 +220,7 @@ function getDescricaoDoElemento(dispositivo)
 function limparFormatacao(){
     $('div.div_conteudo_arquivo a.link-alterador').removeAttr('title').removeAttr('id').removeClass('link-alterador');
 
-    $('div.div_conteudo_arquivo p[linkname]').removeClass('alterado').removeClass('desfeito').removeClass('renumerado').removeClass('leco').removeClass('adicionado');
+    $('div.div_conteudo_arquivo p[linkname]').removeClass('alterado').removeClass('desfeito').removeClass('renumerado').removeClass('leco').removeClass('info').removeClass('adicionado');
     
     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').find('button').remove();
     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p:hidden').show();
@@ -253,9 +253,93 @@ function habilitarEmailPesquisa(id_doc, hsp, hemail){
     }
 }
 
+function isInfoVide(ch_tipo_relacao){
+    // ratificado
+    // reeditado
+    // regulamentado
+    // prorrogado
+    return /^10$|^11$|^12$|^13$/.test(ch_tipo_relacao);
+}
+
+function isRenumVide(ch_tipo_relacao){
+    return ch_tipo_relacao == '36';
+}
+
+function isLecoVide(ch_tipo_relacao){
+    return ch_tipo_relacao == '9';
+}
+
+function isAcrescimoVide(ch_tipo_relacao){
+    return ch_tipo_relacao == '1';
+}
+
 function getDispositivoAlterado(linkname){
     const filtrar = function(disp){
         return disp.linkname == linkname;
     }
     return normaAlterada.dispositivos.filter(filtrar)[0];
+}
+
+function getLastLecoSelectorNormaAlteradora(){
+    var regex = new RegExp(`${tipoDeRelacao.ds_texto_para_alterador} \- .*?([0-9]+)?(?: de ([0-9]{2}\/[0-9]{2}\/[0-9]{4}))?$`, "i");
+    var $dispositivosLecoAlterador = $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info]');
+    var selectorInsertBeforeAlterador = '#div_cad_dispositivo_alteradora div.div_conteudo_arquivo h1[epigrafe]';
+    if($dispositivosLecoAlterador.length > 0){
+        for(let i = 0; i < $dispositivosLecoAlterador.length; i++){
+            let resultRegex = regex.exec($dispositivosLecoAlterador.text());
+            if(resultRegex[2] && normaAlterada.dt_assinatura){
+                if(convertStringToDateTime(normaAlterada.dt_assinatura) > convertStringToDateTime(resultRegex[2])){
+                    continue;
+                }
+                if(convertStringToDateTime(normaAlterada.dt_assinatura) == convertStringToDateTime(resultRegex[2])){
+                    if(resultRegex[1] && normaAlterada.nr_norma){
+                        if(parseInt(normaAlterada.nr_norma) > parseInt(resultRegex[1])){
+                            continue;
+                        }
+                    }
+                }
+            }
+            selectorInsertBeforeAlterador = `#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info=${$dispositivosLecoAlterador.attr('ch_norma_info')}]`;
+        }
+    }
+    return selectorInsertBeforeAlterador;
+}
+
+function getLastLecoSelectorNormaAlterada(){
+    var regex = new RegExp(`${tipoDeRelacao.ds_texto_para_alterador} \- .*?([0-9]+)?(?: de ([0-9]{2}\/[0-9]{2}\/[0-9]{4}))?$`, "i");
+    var $dispositivosLecoAlterado = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info]');
+    var selectorInsertBeforeAlterado = '#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]';
+    if($dispositivosLecoAlterado.length > 0){
+        for(let i = 0; i < $dispositivosLecoAlterado.length; i++){
+            let resultRegex = regex.exec($dispositivosLecoAlterado.text());
+            if(resultRegex[2] && normaAlteradora.dt_assinatura){
+                if(convertStringToDateTime(normaAlteradora.dt_assinatura) > convertStringToDateTime(resultRegex[2])){
+                    continue;
+                }
+                if(convertStringToDateTime(normaAlteradora.dt_assinatura) == convertStringToDateTime(resultRegex[2])){
+                    if(resultRegex[1] && normaAlteradora.nr_norma){
+                        if(parseInt(normaAlteradora.nr_norma) > parseInt(resultRegex[1])){
+                            continue;
+                        }
+                    }
+                }
+            }
+            selectorInsertBeforeAlterado = `#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${$dispositivosLecoAlterado.attr('ch_norma_info')}]`;
+        }
+    }
+    return selectorInsertBeforeAlterado;
+}
+
+function getLastInfoSelectorNormaAlterada(){
+    var regex = new RegExp(`\(${tipoDeRelacao.ds_texto_para_alterador} pelo\(a\).*\)$`, "i");
+    var dispositivosInfoAlterado = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info]');
+    var selectorInsertAfterAlterado = '#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]';
+    if(dispositivosInfoAlterado.length > 0){
+        for(let i = 0; i < dispositivosInfoAlterado.length; i++){
+            if(regex.test(dispositivosInfoAlterado.text())){
+                selectorInsertAfterAlterado = `#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${$(dispositivosInfoAlterado[i]).attr('ch_norma_info')}]`;
+            }
+        }
+    }
+    return selectorInsertAfterAlterado;
 }

@@ -339,6 +339,7 @@ p[linkname] button.select{background: url("../Imagens/ico_anchor_p_clear.png") n
 .div_conteudo_arquivo p.adicionado{ color: #006933; }
 .div_conteudo_arquivo p.renumerado{ color: #006933; }
 .div_conteudo_arquivo p.leco{ color: #006933; }
+.div_conteudo_arquivo p.info{ color: #006933; }
 .div_conteudo_arquivo p.desfeito{ color: #006933; }
 #div_vide .remover { background-color: #ffa9a9; }
 #div_vide .desfazer { background-color: #b4f3b4; }
