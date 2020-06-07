@@ -67,7 +67,6 @@ function buscarTipoDeRelacao(ch_tipo_relacao, deferred) {
 }
 
 function selecionarNormaAlteradoraEditar(norma){
-
     normaAlteradora = {
         ch_norma: norma.ch_norma,
         nr_norma: norma.nr_norma,
@@ -91,7 +90,7 @@ function selecionarNormaAlteradaEditar(norma){
         sem_arquivo: norma.sem_arquivo,
         arquivo: norma.arquivo,
         dispositivos: norma.dispositivos,
-        in_alteracao_completa: (ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) || ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)) && norma.dispositivos.length == 0
+        in_alteracao_completa: (isRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) || isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)) && norma.dispositivos.length == 0
     };
     $('#label_norma_vide_alterada').text(normaAlterada.ds_norma);
 }
@@ -241,46 +240,47 @@ function exibirTextoDoArquivoEditar(norma, arquivo) {
 }
 
 function habilitarEdicaoDoDispositivo(linkname, texto, convertido){
-    switch(tipoDeRelacao.ch_tipo_relacao){
-        case '1':
-            if(texto.indexOf('\n') > -1){
-                const textoSplited = texto.split('\n');
-                for(let i = 0; i < textoSplited.length; i++){
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_${i}"]`).addClass('adicionado').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}_add_${i}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
-                }
+    if(isAcrescimoVide(tipoDeRelacao.ch_tipo_relacao)){
+        if(texto.indexOf('\n') > -1){
+            const textoSplited = texto.split('\n');
+            for(let i = 0; i < textoSplited.length; i++){
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_${i}"]`).addClass('adicionado').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}_add_${i}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
             }
-            else if(convertido === true){
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_0"]`).addClass('adicionado').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}_add_0')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+        }
+        else if(convertido === true){
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_0"]`).addClass('adicionado').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}_add_0')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+        }
+        else{
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('adicionado').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+        }
+    }
+    else if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
+        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('leco').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+    }
+    else if(isInfoVide(tipoDeRelacao.ch_tipo_relacao)){
+        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('info').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+    }
+    else if(isRenumVide(tipoDeRelacao.ch_tipo_relacao)){
+        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('renumerado').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+    }
+    else{
+        if(linkname){
+            if(isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('desfeito');
             }
             else{
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('adicionado').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
-            }
-            break;
-        case '9':
-            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('leco').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
-            break;
-        case '36':
-            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('renumerado').prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
-            break;
-        default:
-            if(linkname){
-                if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('desfeito');
+                if(texto){
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`).addClass('alterado');
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('adicionado');
                 }
                 else{
-                    if(texto){
-                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`).addClass('alterado');
-                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('adicionado');
-                    }
-                    else{
-                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('alterado');
-                    }
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).addClass('alterado');
                 }
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
-                
-
             }
-            break;
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+            
+
+        }
     }
 }
 
@@ -299,7 +299,7 @@ function clickAlterarDispositivoEditar(){
     let $buttonSelected = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo button.selected');
     $buttonSelected.tooltip('hide');
     $buttonSelected.removeClass('selected').addClass('select');
-    if(tipoDeRelacao.ch_tipo_relacao == '1'){
+    if(isAcrescimoVide(tipoDeRelacao.ch_tipo_relacao)){
         if(!texto){
             return;
         }
@@ -326,7 +326,7 @@ function clickAlterarDispositivoEditar(){
         const linkname = $elementoAlterado.attr('linkname');
         let htmlAlterado = $elementoAlterado.find('s').html();
         
-        if(tipoDeRelacao.ch_tipo_relacao == '9'){
+        if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
             $buttonSelected.hide();
             dispositivoAlterado.linkname = linkname;
             dispositivoAlterado.nm_linkName = getNomeDoLinkName(linkname.replace(/_replaced|_undone/g,''));
@@ -335,7 +335,16 @@ function clickAlterarDispositivoEditar(){
             $elementoAlterado.append(`&nbsp;<a href="${linkNormaAlteradora}">(${tipoDeRelacao.ds_texto_para_alterador} - ${normaAlteradora.ds_norma})</a>`);
             $elementoAlterado.addClass('leco');
         }
-        if(tipoDeRelacao.ch_tipo_relacao == '36'){
+        else if(isInfoVide(tipoDeRelacao.ch_tipo_relacao)){
+            $buttonSelected.hide();
+            dispositivoAlterado.linkname = linkname;
+            dispositivoAlterado.nm_linkName = getNomeDoLinkName(linkname.replace(/_replaced|_undone/g,''));
+            dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(linkname.replace(/_replaced|_undone/g,''));
+            $elementoAlterado.prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
+            $elementoAlterado.append(`&nbsp;<a href="${linkNormaAlteradora}">(${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>`);
+            $elementoAlterado.addClass('info');
+        }
+        else if(isRenumVide(tipoDeRelacao.ch_tipo_relacao)){
             $buttonSelected.hide();
             dispositivoAlterado.linkname = linkname + '_renum';
             dispositivoAlterado.nm_linkName = getNomeDoLinkName(linkname.replace(/_replaced|_renum|_undone|_add/g,''));
@@ -350,7 +359,7 @@ function clickAlterarDispositivoEditar(){
             $elementoAlterado.prepend(`<button desfazer type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button>`);
             $elementoAlterado.append(`&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>`);
         }
-        else if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
+        else if(isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
             if(!IsNotNullOrEmpty(htmlAlterado) || linkname.indexOf('_replaced') < 0){
                 alert(`A relação ${tipoDeRelacao.nm_tipo_relacao} pode ser aplicada somente a um dispositivo que sofreu alteração.`);
                 return;
@@ -417,109 +426,113 @@ function clickAlterarDispositivoEditar(){
 function desfazerAlteracaoDoDispositivoEditar(linkname){
     let removeIndex = -1;
     let dispositivoDesfeito = {};
+    let htmlDesfazer;
     for(let i in normaAlterada.dispositivos){
         removeIndex = i;
+        htmlDesfazer = '';
         if(normaAlterada.dispositivos[i].linkname == linkname || (normaAlterada.dispositivos[i].convertido === true && linkname.indexOf(normaAlterada.dispositivos[i].linkname) == 0)){
-            switch(tipoDeRelacao.ch_tipo_relacao){
-                case '1':
-                    if(normaAlterada.dispositivos[i].convertido === true && linkname.indexOf('_add') > -1 && normaAlterada.dispositivos[i].linkname.indexOf('_add') <= -1){
-                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p:regex(linkname,${normaAlterada.dispositivos[i].linkname}_add.*)`).remove();
-                    }
-                    else{
-                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
-                    }
-                    dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
-                    break;
-                case '9':
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] button[desfazer]`).remove();
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).find('button.select').show().tooltip(optionsTooltip);
-                    dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
-                    break;
-                case '36':
-                    let $elementoRenumerado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
-                    if(IsNotNullOrEmpty(normaAlterada.dispositivos[i].texto_antigo)){
-                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] button[desfazer]`).remove();
-                        linkname = normaAlterada.dispositivos[i].linkname.replace(/_renum+/,'');
-                        $elementoRenumerado.attr('linkname', linkname);
-                        $elementoRenumerado.find('a[name]').first().attr('name', linkname);
-                        $elementoRenumerado.removeClass('renumerado');
-                        $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
-                        const htmlRenumerado = $elementoRenumerado.html().replace(/&nbsp;$/,'');
-                        $elementoRenumerado.html(htmlRenumerado.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
-                        $elementoRenumerado.find('button.select').show().tooltip(optionsTooltip);
-                    }
-                    else{
-                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
-                        $elementoRenumerado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
-                        linkname = linkname.replace(/_replaced$/,'');
-                        const html = $elementoRenumerado.find('s').html();
-                        $elementoRenumerado.find('s').remove();
-                        $elementoRenumerado.html(html);
-                        $elementoRenumerado.attr('linkname', linkname);
-                        $elementoRenumerado.find('a[name]').first().attr('name', linkname);
-                        $elementoRenumerado.removeAttr('replaced_by');
-                        $elementoRenumerado.removeClass('renumerado');
-                        $elementoRenumerado.find('button.select').show().tooltip(optionsTooltip);
-                    }
-                    
-                    dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
-                    break;
-                default:
-                    if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
-                        let videRefazer = null;
-                        for(j = 0; j < indexVideAlterado; j++){
-                            if(ehRelacaoDeAlteracaoCompleta(videsDaNormaAlterada[j].ch_tipo_relacao)){
-                                videRefazer = videsDaNormaAlterada[j];
-                            }
-                        }
-                        let $elementoAlterado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
-                        const childrensAlterado = $elementoAlterado.children();
-                        $elementoAlterado.find('a:regex(href, _link_sistema_)').remove();
-                        $elementoAlterado.find('button').remove();
-                        const htmlAlterado = $elementoAlterado.html().replace(/&nbsp;$/g,'');
-                        $elementoAlterado.html(`<s>${htmlAlterado}</s>`);
-                        
-                        for(var j = 1; j < childrensAlterado.length; j++){
-                            if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf(normaAlteradora.ch_norma) > 0){
-                                continue;
-                            }
-                            if($(childrensAlterado[j]).is('button.select')){
-                                $elementoAlterado.prepend(childrensAlterado[j]);
-                            }
-                            else if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf('(_link_sistema_)') >= 0){
-                                $elementoAlterado.append('&nbsp;');
-                                $elementoAlterado.append(childrensAlterado[j]);
-                            }
-                        }
-                        $elementoAlterado.attr('linkname', linkname.replace(/_undone$/,''));
-                        $elementoAlterado.find('a[name]').first().attr('name', linkname.replace(/_undone$/,''));
-                        $elementoAlterado.removeAttr('undone_by');
-                        $elementoAlterado.attr('replaced_by', videRefazer.ch_norma_vide);
-                        $elementoAlterado.removeClass('desfeito');
-                        $elementoAlterado.find('button.select').show().tooltip(optionsTooltip);
-                        dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
-                    }
-                    else{
-                        if(normaAlterada.dispositivos[i].texto){
-                            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
-                        }
-                        else{
-                            linkname = linkname.replace(/_replaced$/,'');
-                        }
-                        let $elementoAlterado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
-                        const html = $elementoAlterado.find('s').html();
-                        $elementoAlterado.find('s').remove();
-                        $elementoAlterado.html(html);
-                        $elementoAlterado.attr('linkname', linkname);
-                        $elementoAlterado.find('a[name]').first().attr('name', linkname);
-                        $elementoAlterado.removeAttr('replaced_by');
-                        $elementoAlterado.removeClass('alterado');
-                        $elementoAlterado.find('button.select').show().tooltip(optionsTooltip);
-                        dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
-                    }
-                    break;
+            if(isAcrescimoVide(tipoDeRelacao.ch_tipo_relacao)){
+                if(normaAlterada.dispositivos[i].convertido === true && linkname.indexOf('_add') > -1 && normaAlterada.dispositivos[i].linkname.indexOf('_add') <= -1){
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p:regex(linkname,${normaAlterada.dispositivos[i].linkname}_add.*)`).remove();
+                }
+                else{
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
+                }
+                dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
             }
+            else if(isLecoVide(tipoDeRelacao.ch_tipo_relacao) || isInfoVide(tipoDeRelacao.ch_tipo_relacao)){
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] button[desfazer]`).remove();
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).removeClass('leco').removeClass('info');
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+                htmlDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).html().replace(/&nbsp;$/,'');
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).html(htmlDesfazer);
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).find('button.select').show().tooltip(optionsTooltip);
+                dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
+            }
+            else if(isRenumVide(tipoDeRelacao.ch_tipo_relacao)){
+                let $elementoRenumerado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
+                if(IsNotNullOrEmpty(normaAlterada.dispositivos[i].texto_antigo)){
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] button[desfazer]`).remove();
+                    linkname = normaAlterada.dispositivos[i].linkname.replace(/_renum+/,'');
+                    $elementoRenumerado.attr('linkname', linkname);
+                    $elementoRenumerado.find('a[name]').first().attr('name', linkname);
+                    $elementoRenumerado.removeClass('renumerado');
+                    $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+                    htmlDesfazer = $elementoRenumerado.html().replace(/&nbsp;$/,'');
+                    $elementoRenumerado.html(htmlDesfazer.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
+                    $elementoRenumerado.find('button.select').show().tooltip(optionsTooltip);
+                }
+                else{
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
+                    $elementoRenumerado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
+                    linkname = linkname.replace(/_replaced$/,'');
+                    htmlDesfazer = $elementoRenumerado.find('s').html();
+                    $elementoRenumerado.find('s').remove();
+                    $elementoRenumerado.html(htmlDesfazer);
+                    $elementoRenumerado.attr('linkname', linkname);
+                    $elementoRenumerado.find('a[name]').first().attr('name', linkname);
+                    $elementoRenumerado.removeAttr('replaced_by');
+                    $elementoRenumerado.removeClass('renumerado');
+                    $elementoRenumerado.find('button.select').show().tooltip(optionsTooltip);
+                }
+                
+                dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
+            }
+            else{
+                if(isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
+                    let videRefazer = null;
+                    for(j = 0; j < indexVideAlterado; j++){
+                        if(isRelacaoDeAlteracaoCompleta(videsDaNormaAlterada[j].ch_tipo_relacao)){
+                            videRefazer = videsDaNormaAlterada[j];
+                        }
+                    }
+                    let $elementoAlterado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
+                    const childrensAlterado = $elementoAlterado.children();
+                    $elementoAlterado.find('a:regex(href, _link_sistema_)').remove();
+                    $elementoAlterado.find('button').remove();
+                    const htmlAlterado = $elementoAlterado.html().replace(/&nbsp;$/g,'');
+                    $elementoAlterado.html(`<s>${htmlAlterado}</s>`);
+                    
+                    for(var j = 1; j < childrensAlterado.length; j++){
+                        if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf(normaAlteradora.ch_norma) > 0){
+                            continue;
+                        }
+                        if($(childrensAlterado[j]).is('button.select')){
+                            $elementoAlterado.prepend(childrensAlterado[j]);
+                        }
+                        else if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf('(_link_sistema_)') >= 0){
+                            $elementoAlterado.append('&nbsp;');
+                            $elementoAlterado.append(childrensAlterado[j]);
+                        }
+                    }
+                    $elementoAlterado.attr('linkname', linkname.replace(/_undone$/,''));
+                    $elementoAlterado.find('a[name]').first().attr('name', linkname.replace(/_undone$/,''));
+                    $elementoAlterado.removeAttr('undone_by');
+                    $elementoAlterado.attr('replaced_by', videRefazer.ch_norma_vide);
+                    $elementoAlterado.removeClass('desfeito');
+                    $elementoAlterado.find('button.select').show().tooltip(optionsTooltip);
+                    dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
+                }
+                else{
+                    if(normaAlterada.dispositivos[i].texto){
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).remove();
+                    }
+                    else{
+                        linkname = linkname.replace(/_replaced$/,'');
+                    }
+                    let $elementoAlterado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
+                    const html = $elementoAlterado.find('s').html();
+                    $elementoAlterado.find('s').remove();
+                    $elementoAlterado.html(html);
+                    $elementoAlterado.attr('linkname', linkname);
+                    $elementoAlterado.find('a[name]').first().attr('name', linkname);
+                    $elementoAlterado.removeAttr('replaced_by');
+                    $elementoAlterado.removeClass('alterado');
+                    $elementoAlterado.find('button.select').show().tooltip(optionsTooltip);
+                    dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
+                }
+            }
+
             if(IsNotNullOrEmpty(dispositivoDesfeito)){
                 removerDescricaoDispositivosAlterados(dispositivoDesfeito[0].ds_linkname);
             }
@@ -532,7 +545,8 @@ function salvarVideEditar(sucessoVide, ch_vide){
     $('#vide').val(JSON.stringify({
             ch_vide: ch_vide,
             norma_alteradora: normaAlteradora,
-            norma_alterada: normaAlterada
+            norma_alterada: normaAlterada,
+            ds_comentario_vide: $('#ds_comentario_vide').val()
         }));
     return fnSalvar("form_vide_editar", "", sucessoVide);
 }
@@ -545,7 +559,7 @@ function salvarArquivosVideEditar(sucessoVide, ch_vide){
         }
     }
     limparFormatacao();
-    if(!normaAlterada.in_norma_fora_do_sistema && !normaAlterada.sem_arquivo && !normaAlterada.in_alteracao_completa){
+    if(!normaAlterada.in_norma_fora_do_sistema && !normaAlterada.sem_arquivo && !normaAlterada.in_alteracao_completa && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').length > 0){
         let htmlNormaAlterada = "";
         const $conteudoArquivoNormaAlterada = $($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html());
         for(let i = 0; i < $conteudoArquivoNormaAlterada.length; i++){

@@ -99,7 +99,7 @@ function selecionarArquivosExcluir(){
         selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
     }
     if(!normaAlterada.in_norma_fora_sistema && !normaAlterada.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao) && tipoDeRelacao.ch_tipo_relacao != '9'){
+        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !isRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao) && tipoDeRelacao.ch_tipo_relacao != '9'){
             gComplete();
             showMessageNormaIncompativel(normaAlterada);
             return;
@@ -191,93 +191,86 @@ function removerLinkAlterador(){
 }
 
 function destacarAlteracaoDoDispositivo(linkname, texto, convertido){
-    switch(tipoDeRelacao.ch_tipo_relacao){
-        case '1':
-            if(texto.indexOf('\n') > -1){
-                const textoSplited = texto.split('\n');
-                for(let i = 0; i < textoSplited.length; i++){
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_${i}"]`).attr('remover', 'acrescimo').addClass('remover');
-                }
+    if(isAcrescimoVide(tipoDeRelacao.ch_tipo_relacao)){
+        if(texto.indexOf('\n') > -1){
+            const textoSplited = texto.split('\n');
+            for(let i = 0; i < textoSplited.length; i++){
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_${i}"]`).attr('remover', 'acrescimo').addClass('remover');
             }
-            else if(convertido === true){
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_0"]`).attr('remover', 'acrescimo').addClass('remover');
+        }
+        else if(convertido === true){
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_add_0"]`).attr('remover', 'acrescimo').addClass('remover');
+        }
+        else{
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'acrescimo').addClass('remover');
+        }
+    }
+    else if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
+        if(IsNotNullOrEmpty(linkname)){
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'leco-dispositivo').addClass('desfazer');
+        }
+        else{
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info="${normaAlteradora.ch_norma}"]`).attr('remover', 'leco').addClass('remover');
+        }
+    }
+    else if(isInfoVide(tipoDeRelacao.ch_tipo_relacao)){
+        if(IsNotNullOrEmpty(linkname)){
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'info-dispositivo').addClass('desfazer');
+        }
+        else{
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info="${normaAlteradora.ch_norma}"]`).attr('remover', 'info').addClass('remover');
+        }
+    }
+    else if(isRenumVide(tipoDeRelacao.ch_tipo_relacao)){
+        const dispositivoRenumerado = getDispositivoAlterado(linkname);
+        if(IsNotNullOrEmpty(dispositivoRenumerado) && !IsNotNullOrEmpty(dispositivoRenumerado.texto_antigo)){
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'alteracao').addClass('remover').removeAttr('linkname');
+            let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
+            $elementoDesfazer.attr('linkname', linkname);
+            $elementoDesfazer.find('a[name]').first().attr('name', linkname);
+            $elementoDesfazer.removeAttr('replaced_by');
+            $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
+        }
+        else{
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('desfazer', 'renumerado').addClass('desfazer');
+        }
+    }
+    else{
+        if(linkname){
+            if(isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
+                let $elementoRefazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
+                $elementoRefazer.attr('refazer', 'remocao').attr('linkname', linkname.replace(/_undone$/,'')).removeAttr('undone_by').addClass('refazer');
+                $elementoRefazer.find('a[name]').first().attr('name', linkname.replace(/_undone$/,''));
             }
             else{
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'acrescimo').addClass('remover');
-            }
-            break;
-        case '9':
-            if(IsNotNullOrEmpty(linkname)){
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'leco-dispositivo').addClass('desfazer');
-            }
-            else{
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info="${normaAlteradora.ch_norma}"]`).attr('remover', 'leco').addClass('remover');
-            }
-            break;
-        case '36':
-            const dispositivoRenumerado = getDispositivoAlterado(linkname);
-            if(IsNotNullOrEmpty(dispositivoRenumerado) && !IsNotNullOrEmpty(dispositivoRenumerado.texto_antigo)){
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'alteracao').addClass('remover').removeAttr('linkname');
-                let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
-                $elementoDesfazer.attr('linkname', linkname);
-                $elementoDesfazer.find('a[name]').first().attr('name', linkname);
-                $elementoDesfazer.removeAttr('replaced_by');
-                $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
-            }
-            else{
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('desfazer', 'renumerado').addClass('desfazer');
-            }
-            break;
-        default:
-            if(linkname){
-                if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
-                    let $elementoRefazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
-                    $elementoRefazer.attr('refazer', 'remocao').attr('linkname', linkname.replace(/_undone$/,'')).removeAttr('undone_by').addClass('refazer');
-                    $elementoRefazer.find('a[name]').first().attr('name', linkname.replace(/_undone$/,''));
+                if(texto){
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'alteracao').addClass('remover').removeAttr('linkname');
+                    let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
+                    $elementoDesfazer.attr('linkname', linkname);
+                    $elementoDesfazer.find('a[name]').first().attr('name', linkname);
+                    $elementoDesfazer.removeAttr('replaced_by');
+                    $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
+
                 }
                 else{
-                    if(texto){
-                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).attr('remover', 'alteracao').addClass('remover').removeAttr('linkname');
-                        let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}_replaced"]`);
-                        $elementoDesfazer.attr('linkname', linkname);
-                        $elementoDesfazer.find('a[name]').first().attr('name', linkname);
-                        $elementoDesfazer.removeAttr('replaced_by');
-                        $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
-
-                    }
-                    else{
-                        let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
-                        $elementoDesfazer.attr('linkname', linkname.replace(/_replaced+/,''));
-                        $elementoDesfazer.find('a[name]').first().attr('name', `${linkname.replace(/_replaced+/,'')}`);
-                        $elementoDesfazer.removeAttr('replaced_by');
-                        $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
-                    }
+                    let $elementoDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`);
+                    $elementoDesfazer.attr('linkname', linkname.replace(/_replaced+/,''));
+                    $elementoDesfazer.find('a[name]').first().attr('name', `${linkname.replace(/_replaced+/,'')}`);
+                    $elementoDesfazer.removeAttr('replaced_by');
+                    $elementoDesfazer.attr('desfazer', 'alteracao').addClass('desfazer');
                 }
             }
-            else{
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).attr('remover', 'identificador-alteracao-completa').addClass('remover');
-                const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
-                if(ehRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao)){
-                    let dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]');
-                    if(dispositivosIdentificacaoAlteracaoCompleta.length > 1){
-                        const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 2].getAttribute('ch_tipo_relacao');
-                        if(!ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && dispositivosNormaAlterada.length > 0){
-                            // $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s')[0].remove();
-                            // let lastSelector = `p[ch_norma_alteracao_completa=${lastChNorma}]`;
-                            // for(let i = 0; i < dispositivosNormaAlterada.length; i++){
-                            //     $(dispositivosNormaAlterada[i]).attr('desfazer', 'alteracao').addClass('desfazer');
-                            //     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo ${lastSelector}`).after(dispositivosNormaAlterada[i]);
-                            //     lastSelector = `p[linkname=${dispositivosNormaAlterada[i].getAttribute('linkname')}]`;
-                            // }
-                            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s').first().attr('desfazer', 'alteracao-completa');
-                            for(let i = 0; i < dispositivosNormaAlterada.length; i++){
-                                $(dispositivosNormaAlterada[i]).attr('desfazer', 'alteracao-completa').addClass('desfazer');
-                            }
-                        }
-                    }
-                    else{
+        }
+        else{
+            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).attr('remover', 'identificador-alteracao-completa').addClass('remover');
+            const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
+            if(isRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao)){
+                let dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]');
+                if(dispositivosIdentificacaoAlteracaoCompleta.length > 1){
+                    const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 2].getAttribute('ch_tipo_relacao');
+                    if(!isRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && dispositivosNormaAlterada.length > 0){
                         // $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s')[0].remove();
-                        // let lastSelector = 'h1[epigrafe]';
+                        // let lastSelector = `p[ch_norma_alteracao_completa=${lastChNorma}]`;
                         // for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         //     $(dispositivosNormaAlterada[i]).attr('desfazer', 'alteracao').addClass('desfazer');
                         //     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo ${lastSelector}`).after(dispositivosNormaAlterada[i]);
@@ -289,49 +282,118 @@ function destacarAlteracaoDoDispositivo(linkname, texto, convertido){
                         }
                     }
                 }
-                else if(ehRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
-                    let dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]');
-                    if(dispositivosIdentificacaoAlteracaoCompleta.length > 1){
-                        let lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 2].getAttribute('ch_norma_alteracao_completa');
-                        const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 2].getAttribute('ch_tipo_relacao');
-                        if(dispositivosNormaAlterada.length <= 0 && ehRelacaoDeAlteracaoCompleta(lastChTipoRelacao)){
-                            dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
-                            lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
-                            // dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
-                            // $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').remove();
-                            // $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after('<s></s>');
-                            // for(let i = 0; i < dispositivosNormaAlterada.length; i++){
-                            //     $(dispositivosNormaAlterada[i]).attr('refazer', 'alteracao').addClass('refazer');
-                            //     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s').append(dispositivosNormaAlterada[i]);
-                            // }
-                            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after('<div refazer="alteracao-completa"></div>');
-                            for(let i = 0; i < dispositivosNormaAlterada.length; i++){
-                                $(dispositivosNormaAlterada[i]).attr('refazer', 'alteracao-completa').addClass('refazer');
-                                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo div[refazer=alteracao-completa]').append(dispositivosNormaAlterada[i]);
-                            }
-        
-                        }
+                else{
+                    // $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s')[0].remove();
+                    // let lastSelector = 'h1[epigrafe]';
+                    // for(let i = 0; i < dispositivosNormaAlterada.length; i++){
+                    //     $(dispositivosNormaAlterada[i]).attr('desfazer', 'alteracao').addClass('desfazer');
+                    //     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo ${lastSelector}`).after(dispositivosNormaAlterada[i]);
+                    //     lastSelector = `p[linkname=${dispositivosNormaAlterada[i].getAttribute('linkname')}]`;
+                    // }
+                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s').first().attr('desfazer', 'alteracao-completa');
+                    for(let i = 0; i < dispositivosNormaAlterada.length; i++){
+                        $(dispositivosNormaAlterada[i]).attr('desfazer', 'alteracao-completa').addClass('desfazer');
                     }
                 }
             }
-            break;
+            else if(isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
+                let dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s p[linkname]');
+                if(dispositivosIdentificacaoAlteracaoCompleta.length > 1){
+                    let lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 2].getAttribute('ch_norma_alteracao_completa');
+                    const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 2].getAttribute('ch_tipo_relacao');
+                    if(dispositivosNormaAlterada.length <= 0 && isRelacaoDeAlteracaoCompleta(lastChTipoRelacao)){
+                        dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
+                        lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
+                        // dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
+                        // $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').remove();
+                        // $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after('<s></s>');
+                        // for(let i = 0; i < dispositivosNormaAlterada.length; i++){
+                        //     $(dispositivosNormaAlterada[i]).attr('refazer', 'alteracao').addClass('refazer');
+                        //     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s').append(dispositivosNormaAlterada[i]);
+                        // }
+                        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after('<div refazer="alteracao-completa"></div>');
+                        for(let i = 0; i < dispositivosNormaAlterada.length; i++){
+                            $(dispositivosNormaAlterada[i]).attr('refazer', 'alteracao-completa').addClass('refazer');
+                            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo div[refazer=alteracao-completa]').append(dispositivosNormaAlterada[i]);
+                        }
+    
+                    }
+                }
+            }
+        }        
     }
 }
 
 function removerAlteracaoDoDispositivo(){
-    switch(tipoDeRelacao.ch_tipo_relacao){
-        case '1':
-            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=acrescimo]').remove();
-            break;
-        case '9':
-            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco]').remove();
-            $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco-dispositivo] a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
-            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco-dispositivo]').removeAttr('remover').removeClass('desfazer');
-            break;
-        case '36':
+    if(isAcrescimoVide(tipoDeRelacao.ch_tipo_relacao)){
+        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=acrescimo]').remove();
+    }
+    else if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
+        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco]').remove();
+        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco-dispositivo] a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco-dispositivo]').removeAttr('remover').removeClass('desfazer');
+    }
+    else if(isInfoVide(tipoDeRelacao.ch_tipo_relacao)){
+        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=info]').remove();
+        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=info-dispositivo] a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=info-dispositivo]').removeAttr('remover').removeClass('desfazer');
+    }
+    else if(isRenumVide(tipoDeRelacao.ch_tipo_relacao)){
+        let elementosDesfazer = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[desfazer=alteracao]');
+        if(elementosDesfazer.length > 0){
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=alteracao]').remove();
+            for(let i = 0; i < elementosDesfazer.length; i++){
+                html = $(elementosDesfazer[i]).find('s').html();
+                $(elementosDesfazer[i]).find('s').remove();
+                $(elementosDesfazer[i]).html(html);
+                $(elementosDesfazer[i]).removeAttr('desfazer').removeClass('desfazer');
+            }
+        }
+        else{
+            let $elementoRenumerado;
+            let htmlRenumerado = '';
+            let linkname = ''
+            for(let i = 0; i < normaAlterada.dispositivos.length; i++){
+                linkname = normaAlterada.dispositivos[i].linkname;
+                $elementoRenumerado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname=${linkname}]`);
+                linkname = linkname.replace(/_renum+/,'');
+                $elementoRenumerado.attr('linkname', linkname);
+                $elementoRenumerado.find('a[name]').first().attr('name', linkname);
+                $elementoRenumerado.removeAttr('desfazer').removeClass('desfazer');
+                $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+                htmlRenumerado = $elementoRenumerado.html().replace(/&nbsp;$/,'');
+                $elementoRenumerado.html(htmlRenumerado.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
+            }
+        }
+    }
+    else{
+        let sDesfazerAlteracaoCompleta = $('s[desfazer=alteracao-completa]');
+        let divRefazerAlteracaoCompleta = $('div[refazer=alteracao-completa]');
+        if(sDesfazerAlteracaoCompleta.length > 0){
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=identificador-alteracao-completa]').remove();
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s[desfazer=alteracao-completa]').contents().unwrap();
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[desfazer=alteracao-completa]').removeAttr('desfazer').removeClass('desfazer');
+        }
+        else if(divRefazerAlteracaoCompleta.length > 0){
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=identificador-alteracao-completa]').remove();
+            const dispositivos = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo div[refazer=alteracao-completa] p');
+
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo div[refazer=alteracao-completa]').after('<s dispositivos></s>');
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo div[refazer=alteracao-completa]').remove();
+            for(let i = 0; i < dispositivos.length; i++){
+                $(dispositivos[i]).removeAttr('refazer').removeClass('refazer');
+                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s[dispositivos]').append(dispositivos[i]);
+            }
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s[dispositivos]').removeAttr('dispositivos');
+
+        }
+        else{
+            $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=alteracao]').remove();
             let elementosDesfazer = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[desfazer=alteracao]');
+            let elementosRefazer = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[refazer=alteracao]');
+            let elementosRefazerRemocao = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[refazer=remocao]');
+            let html = '';
             if(elementosDesfazer.length > 0){
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=alteracao]').remove();
                 for(let i = 0; i < elementosDesfazer.length; i++){
                     html = $(elementosDesfazer[i]).find('s').html();
                     $(elementosDesfazer[i]).find('s').remove();
@@ -339,107 +401,53 @@ function removerAlteracaoDoDispositivo(){
                     $(elementosDesfazer[i]).removeAttr('desfazer').removeClass('desfazer');
                 }
             }
-            else{
-                let $elementoRenumerado;
-                let htmlRenumerado = '';
-                let linkname = ''
-                for(let i = 0; i < normaAlterada.dispositivos.length; i++){
-                    linkname = normaAlterada.dispositivos[i].linkname;
-                    $elementoRenumerado = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname=${linkname}]`);
-                    linkname = linkname.replace(/_renum+/,'');
-                    $elementoRenumerado.attr('linkname', linkname);
-                    $elementoRenumerado.find('a[name]').first().attr('name', linkname);
-                    $elementoRenumerado.removeAttr('desfazer').removeClass('desfazer');
-                    $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
-                    htmlRenumerado = $elementoRenumerado.html().replace(/&nbsp;$/,'');
-                    $elementoRenumerado.html(htmlRenumerado.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
-                }
-            }
-
-            break;
-        default:
-            let sDesfazerAlteracaoCompleta = $('s[desfazer=alteracao-completa]');
-            let divRefazerAlteracaoCompleta = $('div[refazer=alteracao-completa]');
-            if(sDesfazerAlteracaoCompleta.length > 0){
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=identificador-alteracao-completa]').remove();
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s[desfazer=alteracao-completa]').contents().unwrap();
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[desfazer=alteracao-completa]').removeAttr('desfazer').removeClass('desfazer');
-            }
-            else if(divRefazerAlteracaoCompleta.length > 0){
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=identificador-alteracao-completa]').remove();
-                const dispositivos = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo div[refazer=alteracao-completa] p');
-
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo div[refazer=alteracao-completa]').after('<s dispositivos></s>');
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo div[refazer=alteracao-completa]').remove();
-                for(let i = 0; i < dispositivos.length; i++){
-                    $(dispositivos[i]).removeAttr('refazer').removeClass('refazer');
-                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s[dispositivos]').append(dispositivos[i]);
-                }
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo s[dispositivos]').removeAttr('dispositivos');
-
-            }
-            else{
-                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=alteracao]').remove();
-                let elementosDesfazer = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[desfazer=alteracao]');
-                let elementosRefazer = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[refazer=alteracao]');
-                let elementosRefazerRemocao = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[refazer=remocao]');
-                let html = '';
-                if(elementosDesfazer.length > 0){
-                    for(let i = 0; i < elementosDesfazer.length; i++){
-                        html = $(elementosDesfazer[i]).find('s').html();
-                        $(elementosDesfazer[i]).find('s').remove();
-                        $(elementosDesfazer[i]).html(html);
-                        $(elementosDesfazer[i]).removeAttr('desfazer').removeClass('desfazer');
+            else if(elementosRefazerRemocao.length > 0){
+                let videRefazer = null;
+                for(j = 0; j < indexVideAlterado; j++){
+                    if(isRelacaoDeAlteracaoCompleta(videsDaNormaAlterada[j].ch_tipo_relacao)){
+                        videRefazer = videsDaNormaAlterada[j];
                     }
                 }
-                else if(elementosRefazerRemocao.length > 0){
-                    let videRefazer = null;
-                    for(j = 0; j < indexVideAlterado; j++){
-                        if(ehRelacaoDeAlteracaoCompleta(videsDaNormaAlterada[j].ch_tipo_relacao)){
-                            videRefazer = videsDaNormaAlterada[j];
+
+                let childrensAlterado = [];
+                let htmlAlterado = '';
+                for(let i = 0; i < elementosRefazerRemocao.length; i++){
+                    childrensAlterado = $(elementosRefazerRemocao[i]).children();
+                    $(elementosRefazerRemocao[i]).find('a:regex(href, _link_sistema_)').remove();
+                    htmlAlterado = $(elementosRefazerRemocao[i]).html().replace(/&nbsp;/g,'');
+                    $(elementosRefazerRemocao[i]).html(`<s>${htmlAlterado}</s>`);
+                    for(var j = 0; j < childrensAlterado.length; j++){
+                        if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf(normaAlteradora.ch_norma) > 0){
+                            continue;
+                        }
+                        else if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf('(_link_sistema_)') >= 0){
+                            $(elementosRefazerRemocao[i]).append('&nbsp;');
+                            $(elementosRefazerRemocao[i]).append(childrensAlterado[j]);
                         }
                     }
-
-                    let childrensAlterado = [];
-                    let htmlAlterado = '';
-                    for(let i = 0; i < elementosRefazerRemocao.length; i++){
-                        childrensAlterado = $(elementosRefazerRemocao[i]).children();
-                        $(elementosRefazerRemocao[i]).find('a:regex(href, _link_sistema_)').remove();
-                        htmlAlterado = $(elementosRefazerRemocao[i]).html().replace(/&nbsp;/g,'');
-                        $(elementosRefazerRemocao[i]).html(`<s>${htmlAlterado}</s>`);
-                        for(var j = 0; j < childrensAlterado.length; j++){
-                            if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf(normaAlteradora.ch_norma) > 0){
-                                continue;
-                            }
-                            else if($(childrensAlterado[j]).is('a') && $(childrensAlterado[j]).attr('href')?.indexOf('(_link_sistema_)') >= 0){
-                                $(elementosRefazerRemocao[i]).append('&nbsp;');
-                                $(elementosRefazerRemocao[i]).append(childrensAlterado[j]);
-                            }
-                        }
-                        $(elementosRefazerRemocao[i]).attr('replaced_by', videRefazer.ch_norma_vide);
-                        $(elementosRefazerRemocao[i]).removeAttr('refazer').removeClass('refazer');
-                    }
-                }
-                else if(elementosRefazer.length > 0){
-                    for(let i = 0; i < elementosRefazer.length; i++){
-                        const linksDasAlteracoes = $(elementosRefazer[i]).find('a');
-                        $.each($(elementosRefazer[i]).find('a'), function(item, value){
-                            if($(value).text().indexOf('(') == 0 && $(value).text()[$(value).text().length - 1] == ')'){
-                                $(value).remove();
-                            }
-                        });
-                        const html = $(elementosRefazer[i]).html();
-                        $(elementosRefazer[i]).html('<s>' + html + '</s>');
-                        $.each(linksDasAlteracoes, function(item, value){
-                            if($(value).text().indexOf('(') == 0 && $(value).text()[$(value).text().length - 1] == ')'){
-                                $(elementosRefazer[i]).append(value);
-                            }
-                        });
-                        $(elementosRefazer[i]).removeAttr('refazer').removeClass('refazer');
-                    }
+                    $(elementosRefazerRemocao[i]).attr('replaced_by', videRefazer.ch_norma_vide);
+                    $(elementosRefazerRemocao[i]).removeAttr('refazer').removeClass('refazer');
                 }
             }
-            break;
+            else if(elementosRefazer.length > 0){
+                for(let i = 0; i < elementosRefazer.length; i++){
+                    const linksDasAlteracoes = $(elementosRefazer[i]).find('a');
+                    $.each($(elementosRefazer[i]).find('a'), function(item, value){
+                        if($(value).text().indexOf('(') == 0 && $(value).text()[$(value).text().length - 1] == ')'){
+                            $(value).remove();
+                        }
+                    });
+                    const html = $(elementosRefazer[i]).html();
+                    $(elementosRefazer[i]).html('<s>' + html + '</s>');
+                    $.each(linksDasAlteracoes, function(item, value){
+                        if($(value).text().indexOf('(') == 0 && $(value).text()[$(value).text().length - 1] == ')'){
+                            $(elementosRefazer[i]).append(value);
+                        }
+                    });
+                    $(elementosRefazer[i]).removeAttr('refazer').removeClass('refazer');
+                }
+            }
+        }
     }
 }
 
@@ -459,7 +467,7 @@ function salvarArquivosVideExcluir(sucessoVide, ch_vide){
         salvarVideExcluir(sucessoVide, ch_vide);
     });
     gInicio();
-    if(!normaAlteradora.sem_arquivo && IsNotNullOrEmpty(normaAlteradora, 'arquivo.id_file')){
+    if(!normaAlteradora.sem_arquivo && IsNotNullOrEmpty(normaAlteradora, 'arquivo.id_file') && $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[linkname]').length > 0){
         removerLinkAlterador();
         
         $('#form_arquivo_norma_alteradora textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html()));
@@ -488,7 +496,7 @@ function salvarArquivosVideExcluir(sucessoVide, ch_vide){
     else{
         deferredAlteradora.resolve();
     }
-    if(!normaAlterada.sem_arquivo && IsNotNullOrEmpty(normaAlterada, 'arquivo.id_file')){
+    if(!normaAlterada.sem_arquivo && IsNotNullOrEmpty(normaAlterada, 'arquivo.id_file') && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]').length > 0){
         removerAlteracaoDoDispositivo();
         
         $('#form_arquivo_norma_alterada textarea[name="arquivo"]').val(window.encodeURI($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html()));

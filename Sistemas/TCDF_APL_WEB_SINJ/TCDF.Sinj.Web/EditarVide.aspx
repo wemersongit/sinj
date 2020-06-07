@@ -543,7 +543,7 @@
                                                             Comentário:
                                                         </div>
                                                         <div class="column w-100-pc">
-                                                            <textarea id="ds_comentario_vide" class="w-100-pc" rows="5" cols="50" disabled="disabled"></textarea>
+                                                            <textarea id="ds_comentario_vide" class="w-100-pc" rows="5" cols="50"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>

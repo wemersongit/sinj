@@ -352,7 +352,7 @@
                                                             </div>
                                                             <div class="column w-70-pc">
                                                                 <div class="cell w-100-pc">
-                                                                    <label id="labelLecoSemCitacao" style="display:none;"><input type="checkbox" id="inLecoSemCitacao" value="1" onclick="javascript:selecionarLecoSemCitacao();" />Leco sem citação no texto</label>
+                                                                    <label id="labelSemCitacaoNormaAlteradora" style="display:none;"><input type="checkbox" id="inSemCitacaoNormaAlteradora" value="1" onclick="javascript:selecionarSemCitacaoNormaAlteradora();" />Sem citação no texto</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -401,7 +401,8 @@
                                                             <div class="column w-70-pc">
                                                                 <div class="cell w-100-pc">
                                                                     <label id="labelAlteracaoCompleta" style="display:none;"><input type="checkbox" id="in_alteracao_completa" value="1" onclick="javascript:selecionarAlteracaoCompleta();" />Alterar a norma completa</label>
-                                                                    <label id="labelNormaForaDoSistema"><input type="checkbox" id="in_norma_fora_do_sistema" value="1" onclick="javascript:selecionarNormaForaDoSistemaCadastrar();" />Norma Fora do Sistema</label>
+                                                                    <label id="labelNormaForaDoSistema"><input type="checkbox" id="in_norma_fora_do_sistema" value="1" onclick="javascript: selecionarNormaForaDoSistemaCadastrar();" />Norma Fora do Sistema</label>
+                                                                    <label id="labelSemCitacaoNormaAlterada" style="display:none;"><input type="checkbox" id="inSemCitacaoNormaAlterada" value="1" onclick="javascript: selecionarSemCitacaoNormaAlterada();" />Sem citação no texto</label>
                                                                 </div>
                                                             </div>
                                                         </div>

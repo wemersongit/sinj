@@ -52,6 +52,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 }
                 foreach (var selectVide in normaAlteradoraOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)))
                 {
+                    selectVide.ds_comentario_vide = vide.DsComentarioVide;
                     selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
                     {
                         in_sem_arquivo = vide.NormaAlteradora.SemArquivo,
@@ -77,6 +78,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         });
                         foreach (var selectVide in normaAlteradaOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)))
                         {
+                            selectVide.ds_comentario_vide = vide.DsComentarioVide;
                             selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
                             {
                                 in_sem_arquivo = vide.NormaAlterada.SemArquivo,
@@ -170,6 +172,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
         public NormaVideEdicao NormaAlteradora { get; set; }
         [JsonProperty("norma_alterada")]
         public NormaVideEdicao NormaAlterada { get; set; }
+        [JsonProperty("ds_comentario_vide")]
+        public string DsComentarioVide { get; set; }
 
         public void Validate()
         {
