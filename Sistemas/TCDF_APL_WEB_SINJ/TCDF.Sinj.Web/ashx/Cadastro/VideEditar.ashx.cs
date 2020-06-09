@@ -52,6 +52,8 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 }
                 foreach (var selectVide in normaAlteradoraOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)))
                 {
+                    vide.ValidateDsDispositivosAlterados(selectVide, _ds_dispositivos_alterados);
+
                     selectVide.ds_comentario_vide = vide.DsComentarioVide;
                     selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
                     {
@@ -189,7 +191,16 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 throw new DocValidacaoException("Erro ao informar a norma alterada. Por não se tratar de uma norma fora do sistema a chave é obrigatória.");
             }
-            if (!NormaAlterada.InNormaForaSistema && !NormaAlterada.SemArquivo && !NormaAlterada.InAlteracaoCompleta && (NormaAlterada.Dispositivos == null || !NormaAlterada.Dispositivos.Any()))
+        }
+
+        public void ValidateDsDispositivosAlterados(Vide videAlterado, string dsDispositivosAlterados)
+        {
+            var dsAnterior = "";
+            if (videAlterado.alteracao_texto_vide != null && !string.IsNullOrEmpty(videAlterado.alteracao_texto_vide.ds_dispositivos_alterados))
+            {
+                dsAnterior = videAlterado.alteracao_texto_vide.ds_dispositivos_alterados;
+            }
+            if ((string.IsNullOrEmpty(dsAnterior) && string.IsNullOrEmpty(dsDispositivosAlterados)) || dsAnterior.Equals(dsDispositivosAlterados))
             {
                 throw new DocValidacaoException("Erro ao informar dispositivos alterados. É obrigatório salvar no mínimo um dispositivo alterado.");
             }

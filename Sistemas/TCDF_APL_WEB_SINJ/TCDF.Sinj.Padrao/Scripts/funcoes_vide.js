@@ -18,16 +18,6 @@ jQuery.expr[':'].regex = function (elem, index, match) {
 
 const dt_controle_alteracao = new Date();
 
-function isRelacaoDeAlteracaoCompleta(chTipoRelacao){
-    const relacoesAlteracaoCompleta = ['4', '7', '21', '25', 'a8ed93396fcc4959b9b8e82808880f2a'];
-    return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
-}
-
-function isRelacaoQueDesfazAlteracao(chTipoRelacao){
-    const relacoesQueDesfazAlteracaoCompleta = ['18', 'b4fe69f9b8d748b19e41be8a2071dbdd', '8e7abc807cb94cea93eccbb5ce56d92a'];
-    return relacoesQueDesfazAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
-}
-
 function showMessageNormaIncompativel(norma){
     $('#div_notificacao_vide').messagelight({
         sTitle: "Erro",
@@ -253,24 +243,35 @@ function habilitarEmailPesquisa(id_doc, hsp, hemail){
     }
 }
 
-function isInfoVide(ch_tipo_relacao){
+function isRelacaoDeAlteracaoCompleta(chTipoRelacao){
+    const relacoesAlteracaoCompleta = ['4', '7', '21', '25', 'a8ed93396fcc4959b9b8e82808880f2a'];
+    return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
+}
+
+function isRelacaoQueDesfazAlteracao(chTipoRelacao){
+    const relacoesQueDesfazAlteracaoCompleta = ['18', 'b4fe69f9b8d748b19e41be8a2071dbdd', '8e7abc807cb94cea93eccbb5ce56d92a'];
+    return relacoesQueDesfazAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
+}
+
+function isInfoVide(chTipoRelacao){
     // ratificado
     // reeditado
     // regulamentado
     // prorrogado
-    return /^10$|^11$|^12$|^13$/.test(ch_tipo_relacao);
+    // ressalva
+    return ['10', '11', '12', '13', '16'].indexOf(chTipoRelacao) > -1;
 }
 
-function isRenumVide(ch_tipo_relacao){
-    return ch_tipo_relacao == '36';
+function isRenumVide(chTipoRelacao){
+    return chTipoRelacao == '36';
 }
 
-function isLecoVide(ch_tipo_relacao){
-    return ch_tipo_relacao == '9';
+function isLecoVide(chTipoRelacao){
+    return chTipoRelacao == '9';
 }
 
-function isAcrescimoVide(ch_tipo_relacao){
-    return ch_tipo_relacao == '1';
+function isAcrescimoVide(chTipoRelacao){
+    return chTipoRelacao == '1';
 }
 
 function getDispositivoAlterado(linkname){
