@@ -726,8 +726,8 @@ function clickAlterarDispositivoCadastrar(){
             dispositivoAlterado.nm_linkName = getNomeDoLinkName(linkname.replace(/_replaced|_renum|_undone|_add/g,''));
             dispositivoAlterado.ds_linkname = getDescricaoDoLinkname(linkname.replace(/_replaced|_renum|_undone|_add/g,''));
             dispositivoAlterado.texto = texto;
-            dispositivoAlterado.texto_antigo = $elementoAlterado.text();
-            const htmlRenumerado = $elementoAlterado.html();
+            dispositivoAlterado.texto_antigo = $elementoAlterado.text().replace(/(\s)*$/, '');
+            const htmlRenumerado = $elementoAlterado.html().replace(/(&nbsp;)*$/, '');
             $elementoAlterado.html(htmlRenumerado.replace(dispositivoAlterado.texto_antigo, dispositivoAlterado.texto));
             $elementoAlterado.attr('linkname', dispositivoAlterado.linkname);
             $elementoAlterado.find('a[name]').first().attr('name', dispositivoAlterado.linkname);
@@ -939,8 +939,8 @@ function salvarArquivosVideCadastrar(sucessoVide){
     //Se a norma alterada não tiver aquivo então não tem porque salvar o arquivo da norma alteradora
     if(!normaAlteradora.sem_arquivo){
         let htmlNormaAlteradora = "";
-        if(!$('#inLecoSemCitacao').is(':checked')){
-            const $conteudoArquivoNormaAlteradora = $($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html());
+        const $conteudoArquivoNormaAlteradora = $($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').html());
+        if(!$('#inSemCitacaoNormaAlteradora').is(':checked')){
             for(let i in $conteudoArquivoNormaAlteradora){
                 if($conteudoArquivoNormaAlteradora[i].outerHTML){
                     if($conteudoArquivoNormaAlteradora[i].getAttribute('linkname') == normaAlteradora.dispositivos[0].linkname){

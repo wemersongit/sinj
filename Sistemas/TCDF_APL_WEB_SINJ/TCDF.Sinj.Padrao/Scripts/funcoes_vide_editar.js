@@ -458,7 +458,7 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
                     $elementoRenumerado.find('a[name]').first().attr('name', linkname);
                     $elementoRenumerado.removeClass('renumerado');
                     $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
-                    htmlDesfazer = $elementoRenumerado.html().replace(/&nbsp;$/,'');
+                    htmlDesfazer = $elementoRenumerado.html().replace(/(&nbsp;)*$/, '');
                     $elementoRenumerado.html(htmlDesfazer.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
                     $elementoRenumerado.find('button.select').show().tooltip(optionsTooltip);
                 }

@@ -427,6 +427,7 @@ namespace TCDF.Sinj.OV
                    dsTextoParaAlterador == "reeditado" ||
                    dsTextoParaAlterador == "regulamentado" ||
                    dsTextoParaAlterador == "prorrogado" ||
+                   dsTextoParaAlterador == "ressalva" ||
                    dsTextoParaAlterador == "legislação correlata";
                    // ||
                    //dsTextoParaAlterador == "suspenso(a) liminarmente";
