@@ -423,14 +423,12 @@ namespace TCDF.Sinj.OV
         //Adicionar legislação correlata
         public static bool EhLegislacaoCorrelata(string dsTextoParaAlterador)
         {
-            return dsTextoParaAlterador == "ratificado" ||
-                   dsTextoParaAlterador == "reeditado" ||
-                   dsTextoParaAlterador == "regulamentado" ||
-                   dsTextoParaAlterador == "prorrogado" ||
-                   dsTextoParaAlterador == "ressalva" ||
-                   dsTextoParaAlterador == "legislação correlata";
-                   // ||
-                   //dsTextoParaAlterador == "suspenso(a) liminarmente";
+            return dsTextoParaAlterador.Equals("ratificado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("reeditado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("regulamentado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("prorrogado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("ressalva", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("legislação correlata", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 
