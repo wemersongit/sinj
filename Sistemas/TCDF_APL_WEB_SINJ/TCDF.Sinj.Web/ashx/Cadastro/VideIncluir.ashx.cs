@@ -301,7 +301,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 throw new DocValidacaoException("Erro ao informar a norma alterada. Verifique se está selecionando corretamente a norma afetada pelo vide.");
             }
-            if (!NormaAlterada.SemArquivo && !NormaAlterada.InAlteracaoCompleta && !UtilVides.EhLegislacaoCorrelata(Relacao.ds_texto_para_alterado) && (NormaAlterada.Dispositivos == null || !NormaAlterada.Dispositivos.Any()))
+            if (!NormaAlterada.SemArquivo && !NormaAlterada.InAlteracaoCompleta && !UtilVides.EhLegislacaoCorrelata(Relacao.ds_texto_para_alterador) && (NormaAlterada.Dispositivos == null || !NormaAlterada.Dispositivos.Any()))
             {
                 throw new DocValidacaoException("Erro ao informar o dispositivo alterado.");
             }
