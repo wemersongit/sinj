@@ -427,7 +427,7 @@ namespace TCDF.Sinj.OV
                    dsTextoParaAlterador.Equals("reeditado(a)", StringComparison.InvariantCultureIgnoreCase) ||
                    dsTextoParaAlterador.Equals("regulamentado(a)", StringComparison.InvariantCultureIgnoreCase) ||
                    dsTextoParaAlterador.Equals("prorrogado(a)", StringComparison.InvariantCultureIgnoreCase) ||
-                   dsTextoParaAlterador.Equals("ressalva", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("ressalvado(a)", StringComparison.InvariantCultureIgnoreCase) ||
                    dsTextoParaAlterador.Equals("legislação correlata", StringComparison.InvariantCultureIgnoreCase);
         }
     }
