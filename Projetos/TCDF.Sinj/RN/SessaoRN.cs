@@ -10,8 +10,7 @@ using neo.BRLightREST;
 namespace TCDF.Sinj.RN
 {
     public class SessaoRN
-    {
-        private Session _session;
+    {       
         private string nm_cookie;
         private string nm_cookie_look;
 
@@ -19,7 +18,6 @@ namespace TCDF.Sinj.RN
         {
             nm_cookie = Config.ValorChave("NmCookie");
             nm_cookie_look = Config.ValorChave("NmCookieLook");
-            _session = new Session(nm_cookie, nm_cookie_look);
         }
 
         public string jsonReg(Pesquisa query)
@@ -54,14 +52,15 @@ namespace TCDF.Sinj.RN
         {
             SessaoUsuarioOV sessaoUsuarioOv = new SessaoUsuarioOV();
             FazerParseSessaoUsuarioOV(usuarioOv, sessaoUsuarioOv);
-            _session.Create(manterAtiva);
+            var oSession = new Session();
+            oSession.Create(manterAtiva);
 
-            var success = _session.Post<SessaoUsuarioOV>("usuariologin", sessaoUsuarioOv);
+            var success = oSession.Post<SessaoUsuarioOV>("usuariologin", sessaoUsuarioOv);
             if (success)
             {
-                sessaoUsuarioOv.sessao_id = _session.db_id;
-                sessaoUsuarioOv.sessao_chave = _session.db_chave;
-                success = _session.Put<SessaoUsuarioOV>("usuariologin", sessaoUsuarioOv);
+                sessaoUsuarioOv.sessao_id = oSession.db_id;
+                sessaoUsuarioOv.sessao_chave = oSession.db_chave;
+                success = oSession.Put<SessaoUsuarioOV>("usuariologin", sessaoUsuarioOv);
                 if (success)
                 {
                     return sessaoUsuarioOv;
@@ -72,9 +71,10 @@ namespace TCDF.Sinj.RN
 
         public bool AtualizarSessao(UsuarioOV usuarioOv)
         {
+            var oSession = new Session();
             var sessaoUsuarioOv = LerSessaoUsuarioOv();
             FazerParseSessaoUsuarioOV(usuarioOv, sessaoUsuarioOv);
-            return _session.Put<SessaoUsuarioOV>("usuariologin",sessaoUsuarioOv);
+            return oSession.Put<SessaoUsuarioOV>("usuariologin",sessaoUsuarioOv);
         }
 
         public void FazerParseSessaoUsuarioOV(UsuarioOV usuarioOv, SessaoUsuarioOV sessaoUsuarioOv)
@@ -95,7 +95,7 @@ namespace TCDF.Sinj.RN
 
         public SessionOV LerSessao()
         {
-            return _session.Get<SessionOV>("usuariologin");
+            return new Session().Get<SessionOV>("usuariologin");
         }
 
         public bool VerificarLogin()
@@ -154,7 +154,8 @@ namespace TCDF.Sinj.RN
 
         public void Finalizar()
         {
-            _session.Delete("usuariologin");
+            var oSession = new Session();
+            oSession.Delete("usuariologin");
             Cookies.DeleteCookie(nm_cookie);
             Cookies.DeleteCookie(nm_cookie_look);
         }

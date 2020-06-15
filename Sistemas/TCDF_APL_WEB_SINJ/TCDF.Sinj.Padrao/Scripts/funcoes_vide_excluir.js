@@ -99,7 +99,7 @@ function selecionarArquivosExcluir(){
         selecionarArquivoDaNormaExcluir(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
     }
     if(!normaAlterada.in_norma_fora_sistema && !normaAlterada.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !isRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao) && tipoDeRelacao.ch_tipo_relacao != '9'){
+        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !isRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) && !isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao) && !isLecoVide(tipoDeRelacao.ch_tipo_relacao) && !isInfoVide(tipoDeRelacao.ch_tipo_relacao)){
             gComplete();
             showMessageNormaIncompativel(normaAlterada);
             return;
