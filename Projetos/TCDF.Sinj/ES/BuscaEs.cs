@@ -104,6 +104,10 @@ namespace TCDF.Sinj.ES
             {
                 source = "\"_source\":{"+source+"}";
             }
+            else
+            {
+                source = "\"_source\": false";
+            }
             return source;
         }
 

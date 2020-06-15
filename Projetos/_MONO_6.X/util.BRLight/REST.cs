@@ -13,7 +13,7 @@ namespace util.BRLight
         [ValorString("GET", "1")]
         GET = 1,
         [ValorString("POST", "2")]
-        POST = 2,
+        POST =2,
         [ValorString("PUT", "3")]
         PUT = 3,
         [ValorString("DELETE", "4")]
@@ -26,18 +26,16 @@ namespace util.BRLight
         public string ContentType { get; set; }
         public FileParameter(byte[] file) : this(file, null) { }
         public FileParameter(byte[] file, string filename) : this(file, filename, null) { }
-        public FileParameter(byte[] file, string filename, string contenttype)
-        {
+        public FileParameter(byte[] file, string filename, string contenttype) {
             File = file;
             FileName = filename;
             ContentType = contenttype;
         }
     }
 
-    public class REST : IDisposable
-    {
+    public class REST : IDisposable {
 
-        private readonly Encoding Encoding = Encoding.UTF8;
+        private readonly Encoding Encoding = Encoding.UTF8; 
         private HttpWebRequest request = null;
         private HttpWebResponse response = null;
         private string _userAgent;
@@ -126,16 +124,15 @@ namespace util.BRLight
         public void Dispose()
         {
             StreamToByte = null;
-            //  request = null;
+          //  request = null;
         }
 
         public HttpWebRequest GetForm(string url)
         {
             System.Net.WebRequest.DefaultWebProxy = null;
             ServicePointManager.Expect100Continue = false;
-            request = (HttpWebRequest)WebRequest.Create(url);
-            if (request == null)
-            {
+            request = (HttpWebRequest)WebRequest.Create(url) ;
+            if (request == null) {
                 throw new NullReferenceException("REST: Não foi possivel criar um HttpWebRequest para: " + url);
             }
             // request.ServicePoint.Expect100Continue = false;
@@ -154,8 +151,7 @@ namespace util.BRLight
             System.Net.WebRequest.DefaultWebProxy = null;
             ServicePointManager.Expect100Continue = false;
             request = (HttpWebRequest)WebRequest.Create(url);
-            if (request == null)
-            {
+            if (request == null) {
                 throw new NullReferenceException("REST: Não foi possivel criar um HttpWebRequest para: " + url);
             }
             // request.ServicePoint.Expect100Continue = false;
@@ -172,15 +168,15 @@ namespace util.BRLight
         private HttpWebRequest MultipartFormDataPost(string postUrl, Dictionary<string, object> postParameters, HttpVerb Method)
         {
             string formDataBoundary;
-            if (_bAddCaracterForm)
+            if(_bAddCaracterForm)
             {
-                formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid() + "$");
+                 formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid() + "$");
             }
             else
             {
-                formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid());
+                 formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid());
             }
-
+            
             string contentType = "multipart/form-data; boundary=" + formDataBoundary;
             byte[] formData = GetMultipartFormData(postParameters, formDataBoundary);
             return PostForm(postUrl, contentType, formData, Method);
@@ -198,9 +194,8 @@ namespace util.BRLight
             System.Net.WebRequest.DefaultWebProxy = null;
             ServicePointManager.Expect100Continue = false;
             request = WebRequest.Create(postUrl) as HttpWebRequest;
-
-            if (request == null)
-            {
+  
+            if (request == null) {
                 throw new NullReferenceException("REST: Não foi possivel criar um HttpWebRequest para: " + postUrl);
             }
 
@@ -287,18 +282,18 @@ namespace util.BRLight
             return statusCode;
         }
 
-        public string GetStatusDescription()
-        {
+        public string GetStatusDescription() 
+        {        
             return statusDescription;
         }
 
         public Dictionary<string, string> GetDictHeader()
-        {
+        {                
             return dictHeader;
         }
 
-        public string GetHeaders()
-        {
+        public string GetHeaders() 
+        {         
             return headers;
         }
 
@@ -307,13 +302,17 @@ namespace util.BRLight
         {
             try
             {
-                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                // NOTE: O "SecurityProtocolType" não possui "Tls12" no Mono 6.4.0.
+                // By Questor
+                // ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
                 request.Credentials = CredentialCache.DefaultCredentials;
                 using (HttpWebResponse response1 = (System.Net.HttpWebResponse)request.GetResponse())
                 {
                     response = response1;
                     var m = new MemoryStream();
-
+                    
 
                     headers = "Status code: " + GetStatusCode() + "\r\n";
                     headers += "Status description: " + GetStatusDescription() + "\r\n";
@@ -341,22 +340,26 @@ namespace util.BRLight
                         m.Close();
                     }
                     return StreamToByte;
-                }
+                }         
 
-
+              
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
             return null;
-        }
+        } 
 
         public string GetResponse()
         {
             try
             {
-                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                // NOTE: O "SecurityProtocolType" não possui "Tls12" no Mono 6.4.0.
+                // By Questor
+                // ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
                 request.Credentials = CredentialCache.DefaultCredentials;
                 using (HttpWebResponse response1 = (System.Net.HttpWebResponse)request.GetResponse())
                 {
@@ -367,7 +370,7 @@ namespace util.BRLight
                     response.GetResponseStream().CopyTo(m);
                     StreamToByte = m.ToArray();
 
-
+                    
 
                     headers = "Status code: " + GetStatusCode() + "\r\n";
                     headers += "Status description: " + GetStatusDescription() + "\r\n";
@@ -396,8 +399,7 @@ namespace util.BRLight
 
                     return target;
                 }
-            }
-            catch (Exception ex)
+            }catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
