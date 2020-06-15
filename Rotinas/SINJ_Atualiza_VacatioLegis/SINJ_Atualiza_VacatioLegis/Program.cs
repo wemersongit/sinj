@@ -7,6 +7,8 @@ using util.BRLight;
 using neo.BRLightREST;
 using TCDF.Sinj.RN;
 using TCDF.Sinj.OV;
+using SINJ_Atualiza_VacatioLegis.RN;
+using TCDF.Sinj;
 
 namespace SINJ_Atualiza_VacatioLegis
 {
@@ -17,6 +19,7 @@ namespace SINJ_Atualiza_VacatioLegis
         private StringBuilder _sb_error;
         private StringBuilder _sb_info;
         private DateTime _dtInicio;
+
 
         public Program()
         {
@@ -54,6 +57,8 @@ namespace SINJ_Atualiza_VacatioLegis
             this._sb_info.AppendLine("INÍCIO SINJ_AtualizaVacatioLegis - " + DateTime.Now);
             Pesquisa pesquisa_norma = new Pesquisa();
             NormaRN normaRn = new NormaRN();
+
+            var vacatioLegisNormaRn = new VacatioLegisNormaRN(normaRn, new UtilArquivoHtml());
             pesquisa_norma.literal = string.Format("st_vacatio_legis AND dt_inicio_vigencia::date <= '{0}'", DateTime.Now.ToString("dd/MM/yyyy"));
             pesquisa_norma.limit = null;
             pesquisa_norma.order_by = new Order_By() { asc = new string[] { "dt_assinatura::date" } };
@@ -106,9 +111,12 @@ namespace SINJ_Atualiza_VacatioLegis
                                                 if (videAlterado.ch_vide == videAlterador.ch_vide)
                                                 {
                                                     this._sb_info.AppendLine(DateTime.Now + " ---- Salvar Texto Antigo - Chave Vide => " + videAlterado.ch_vide);
-                                                    normaRn.VerificarDispositivosESalvarOsTextosAntigosDasNormas(normaAlteradora, normaAlterada, videAlterador, videAlterado, "vacatio_legis");
+                                                    vacatioLegisNormaRn.SalvarTextoAntigo(normaAlteradora, videAlterador);
+                                                    vacatioLegisNormaRn.SalvarTextoAntigo(normaAlterada, videAlterado);
+
                                                     this._sb_info.AppendLine(DateTime.Now + " ---- Alterar Textos - Chave Vide => " + videAlterado.ch_vide);
-                                                    normaRn.VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradora, normaAlterada, videAlterador, videAlterado);
+                                                    vacatioLegisNormaRn.AlterarTextoDaNormaAlteradora(normaAlteradora, normaAlterada, videAlterador);
+
                                                 }
                                             }
                                         }
@@ -125,9 +133,8 @@ namespace SINJ_Atualiza_VacatioLegis
                     }
                 }
             }
-
-
         }
+
 
         private void Log()
         {

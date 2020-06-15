@@ -599,6 +599,7 @@ namespace TCDF.Sinj.RN
 
         #region Vide Arquivos Incluir Alteração
 
+        [Obsolete("Após a mudança nos vides com alteração no texto, este método não terá efeitos em normas novas.")]
         public void VerificarDispositivosESalvarOsTextosAntigosDasNormas(NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterador, Vide videAlterado, string nm_login_usuario)
         {
             //Se possuir dispositivo nas duas normas
@@ -780,7 +781,7 @@ namespace TCDF.Sinj.RN
                 {
                     arquivo_norma_vide_alterada = AlterarTextoCompletoDaNormaAlterada(normaAlteradora, id_file_norma_alterada, caputNormaVideAlterador);
                 }
-                else if (UtilVides.EhLegislacaoCorrelata(caputNormaVideAlterador.ds_texto_para_alterador_aux))
+                else if (UtilVides.EhInformacional(caputNormaVideAlterador.ds_texto_para_alterador_aux))
                 {
                     arquivo_norma_vide_alterada = AcrescentarInformacaoNoTextoDaNormaAlterada(normaAlteradora, id_file_norma_alterada, caputNormaVideAlterador);
                 }
@@ -868,7 +869,7 @@ namespace TCDF.Sinj.RN
 
 
 
-                else if (UtilVides.EhLegislacaoCorrelata(aux_ds_texto_alterador))
+                else if (UtilVides.EhInformacional(aux_ds_texto_alterador))
                 {
                     arquivo_norma_vide_alterada = AcrescentarInformacaoNoTextoDaNormaAlterada(normaAlteradora, if_file_norma_alterada, aux_ds_texto_alterador);
                 }
@@ -2084,7 +2085,7 @@ namespace TCDF.Sinj.RN
                 {
                     arquivoNormaVideAlterada = RemoverAlteracaoNoTextoCompletoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoAlteradorDesfazer);
                 }
-                else if (UtilVides.EhLegislacaoCorrelata(auxDsTextoAlteradorDesfazer))
+                else if (UtilVides.EhInformacional(auxDsTextoAlteradorDesfazer))
                 {
                     arquivoNormaVideAlterada = RemoverInformacaoNoTextoDaNormaAlterada(normaAlteradora.ch_norma, idFileNormaAlterada, auxDsTextoAlteradorDesfazer);
                 }
