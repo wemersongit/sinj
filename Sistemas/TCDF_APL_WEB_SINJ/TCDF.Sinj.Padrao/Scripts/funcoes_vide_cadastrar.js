@@ -628,8 +628,13 @@ function selecionarSemCitacaoNormaAlteradora(){
 function selecionarSemCitacaoNormaAlterada(){
     if($('#inSemCitacaoNormaAlterada').is(':checked')){
         if($(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${normaAlteradora.ch_norma}]`).length > 0){
-            alert('A relação já existe no texto.');
             $('#inSemCitacaoNormaAlterada').prop('checked','');
+            alert('A relação já existe no texto.');
+            return;
+        }
+        if(isInfoVide(tipoDeRelacao.ch_tipo_relacao) && !IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo){
+            $('#inSemCitacaoNormaAlterada').prop('checked','');
+            alert('Selecione o dispositivo alterador.');
             return;
         }
         let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
