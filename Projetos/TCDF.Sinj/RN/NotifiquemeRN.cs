@@ -13,7 +13,6 @@ namespace TCDF.Sinj.RN
 {
 	public class NotifiquemeRN
 	{
-		private Session _session;
 		private string nm_cookie;
 		private string nm_cookie_look;
 		private NotifiquemeAD _pushAd;
@@ -23,7 +22,7 @@ namespace TCDF.Sinj.RN
 			_pushAd = new NotifiquemeAD();
 			nm_cookie = Config.ValorChave("NmCookiePush");
 			nm_cookie_look = Config.ValorChave("NmCookiePushLook");
-			_session = new Session(nm_cookie, nm_cookie_look);
+			
 		}
 
 		public NotifiquemeRN(bool start_session)
@@ -31,9 +30,6 @@ namespace TCDF.Sinj.RN
 			_pushAd = new NotifiquemeAD();
 			nm_cookie = Config.ValorChave("NmCookiePush");
 			nm_cookie_look = Config.ValorChave("NmCookiePushLook");
-			if (start_session){
-				_session = new Session(nm_cookie, nm_cookie_look);
-			}
 		}
 
 		public Results<NotifiquemeOV> Consultar(Pesquisa query)
@@ -104,6 +100,7 @@ namespace TCDF.Sinj.RN
 		{
 			var sessaoNotifiquemeOv = new SessaoNotifiquemeOV();
 			FazerParseSessaoUsuarioOV(notifiquemeOv, sessaoNotifiquemeOv);
+			Session _session = new Session(nm_cookie, nm_cookie_look);
 			_session.Create(manterAtiva);
 
 			var success = _session.Post<SessaoNotifiquemeOV>("pushlogin", sessaoNotifiquemeOv);
@@ -122,6 +119,7 @@ namespace TCDF.Sinj.RN
 
 		public bool AtualizarSessao(NotifiquemeOV notifiquemeOv)
 		{
+			Session _session = new Session(nm_cookie, nm_cookie_look);
 			var sessaoNotifiquemeOv = LerSessaoNotifiquemeOv();
 			FazerParseSessaoUsuarioOV(notifiquemeOv, sessaoNotifiquemeOv);
 			return _session.Put<SessaoNotifiquemeOV>("pushlogin", sessaoNotifiquemeOv);
@@ -142,6 +140,7 @@ namespace TCDF.Sinj.RN
 
 		public SessionOV LerSessao()
 		{
+			Session _session = new Session(nm_cookie, nm_cookie_look);
 			return _session.Get<SessionOV>("pushlogin");
 		}
 
@@ -164,6 +163,7 @@ namespace TCDF.Sinj.RN
 
 		public void Finalizar()
 		{
+			Session _session = new Session(nm_cookie, nm_cookie_look);
 			_session.Delete("pushlogin");
 			Cookies.DeleteCookie(nm_cookie);
 			Cookies.DeleteCookie(nm_cookie_look);
