@@ -45,9 +45,9 @@ function selecionarAlteracaoCompleta(){
     }
     const dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
     if($('#in_alteracao_completa').is(':checked')){
-        let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
+        let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
         if(!normaAlteradora.sem_arquivo){
-            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
         }
         const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
         //se na inclusão de repristinação, revigoração, revogação, cancelamento, etc. o texto já sofre alteração completa por outro vide,
@@ -632,13 +632,13 @@ function selecionarSemCitacaoNormaAlterada(){
             $('#inSemCitacaoNormaAlterada').prop('checked','');
             return;
         }
-        let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
+        let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
         if(!normaAlteradora.sem_arquivo){
             if(normaAlteradora.dispositivos.length > 0){
-                linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+                linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
             }
             else{
-                linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}`;
+                linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}`;
             }
         }
         if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
@@ -659,13 +659,13 @@ function selecionarSemCitacaoNormaAlterada(){
 
 
 function clickAlterarDispositivoCadastrar(){
-    let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
+    let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
     if(!normaAlteradora.sem_arquivo){
         if(normaAlteradora.dispositivos.length > 0){
-            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
         }
         else{
-            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}`;
+            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}`;
         }
     }
     let dispositivoAlterado = {}

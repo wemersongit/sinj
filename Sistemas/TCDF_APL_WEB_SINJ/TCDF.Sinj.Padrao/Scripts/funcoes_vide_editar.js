@@ -286,13 +286,13 @@ function habilitarEdicaoDoDispositivo(linkname, texto, convertido){
 
 function clickAlterarDispositivoEditar(){
     let dispositivoAlterado = {}
-    let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
+    let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
     if(!normaAlteradora.sem_arquivo){
         if(normaAlteradora.dispositivos.length > 0){
-            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
         }
         else{
-            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}`;
+            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}`;
         }
     }
     const texto = $('#div_tooltip_dispositivo textarea[name=textoNovo]').val();
@@ -443,7 +443,7 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
             else if(isLecoVide(tipoDeRelacao.ch_tipo_relacao) || isInfoVide(tipoDeRelacao.ch_tipo_relacao)){
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] button[desfazer]`).remove();
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).removeClass('leco').removeClass('info');
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"] a:regex(href, \\(_link_sistema_\\).*${normaAlteradora.ch_norma}.*)`).remove();
                 htmlDesfazer = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).html().replace(/&nbsp;$/,'');
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).html(htmlDesfazer);
                 $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname="${linkname}"]`).find('button.select').show().tooltip(optionsTooltip);
@@ -457,7 +457,7 @@ function desfazerAlteracaoDoDispositivoEditar(linkname){
                     $elementoRenumerado.attr('linkname', linkname);
                     $elementoRenumerado.find('a[name]').first().attr('name', linkname);
                     $elementoRenumerado.removeClass('renumerado');
-                    $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+                    $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\).*${normaAlteradora.ch_norma}.*)`).remove();
                     htmlDesfazer = $elementoRenumerado.html().replace(/(&nbsp;)*$/, '');
                     $elementoRenumerado.html(htmlDesfazer.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
                     $elementoRenumerado.find('button.select').show().tooltip(optionsTooltip);
