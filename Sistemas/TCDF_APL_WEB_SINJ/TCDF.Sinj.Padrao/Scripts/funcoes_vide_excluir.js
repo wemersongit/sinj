@@ -330,12 +330,12 @@ function removerAlteracaoDoDispositivo(){
     }
     else if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
         $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco]').remove();
-        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco-dispositivo] a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco-dispositivo] a:regex(href, \\(_link_sistema_\\).*${normaAlteradora.ch_norma}.*)`).remove();
         $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=leco-dispositivo]').removeAttr('remover').removeClass('desfazer');
     }
     else if(isInfoVide(tipoDeRelacao.ch_tipo_relacao)){
         $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=info]').remove();
-        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=info-dispositivo] a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+        $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=info-dispositivo] a:regex(href, \\(_link_sistema_\\).*${normaAlteradora.ch_norma}.*)`).remove();
         $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[remover=info-dispositivo]').removeAttr('remover').removeClass('desfazer');
     }
     else if(isRenumVide(tipoDeRelacao.ch_tipo_relacao)){
@@ -360,7 +360,7 @@ function removerAlteracaoDoDispositivo(){
                 $elementoRenumerado.attr('linkname', linkname);
                 $elementoRenumerado.find('a[name]').first().attr('name', linkname);
                 $elementoRenumerado.removeAttr('desfazer').removeClass('desfazer');
-                $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\)Norma/${normaAlteradora.ch_norma}.*)`).remove();
+                $elementoRenumerado.find(`a:regex(href, \\(_link_sistema_\\).*${normaAlteradora.ch_norma}.*)`).remove();
                 htmlRenumerado = $elementoRenumerado.html().replace(/&nbsp;$/,'');
                 $elementoRenumerado.html(htmlRenumerado.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
             }

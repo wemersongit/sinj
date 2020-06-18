@@ -132,7 +132,7 @@
                     sUrl: './ashx/Visualizacao/NormaDetalhes.ashx' + window.location.search,
                     sType: "GET",
                     fnSuccess: sucesso,
-                    fnComplete: gComplete,
+                    fnComplete: null,
                     fnBeforeSend: gInicio,
                     fnError: null,
                     bAsync: true
@@ -312,7 +312,7 @@
                                 <div class="column w-100-pc">
                                     <div class="table w-100-pc">
                                         <div class="line">
-                                            <div id="columnRelacao" class="column w-100-pc text-center bold">
+                                            <div id="columnRelacao" class="column w-100-pc text-center hidden selecionar-tipo-de-relacao bold">
                                                 <label>Tipo de Relação:</label>
                                                 <select id="selectTipoDeRelacao" onchange="changeTipoRelacao(this);">
                                                     <option value=""></option>
@@ -373,7 +373,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="columnNormaAlterada" class="column w-50-pc">
+                                            <div id="columnNormaAlterada" class="column hidden selecionar-norma-alterada w-50-pc">
                                                 <div class="cell w-100-pc">
                                                     <div class="table w-99-pc mauto">
                                                         <div class="head">
@@ -638,4 +638,5 @@
         </div>
         <div id="div_tooltip_dispositivo"></div>
     </div>
+    <div id="modal_vide"></div>
 </asp:Content>

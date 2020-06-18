@@ -103,7 +103,12 @@ $(function () {
                 $element.show();
                 $element.html("<div class='ui-state-highlight ui-corner-all " + settings.sType.toLowerCase() + "'" + " style='width:" + settings.sWidth + "'" + "><span class='ui-button-icon-primary ui-icon ui-icon-closethick' style='float:right;' onclick='javascript:fnCloseMessageLight(this)'></span><span class='ui-icon ui-icon-info ui-message'></span>" + settings.sContent + "</div>");
                 if (settings.iTime != null) {
-                    $element.hide("fade", settings.iTime);
+                    setTimeout(
+                        function(){
+                            $element.hide("fade", 3000);
+                        },
+                        settings.iTime
+                    );
                 }
             });
         }

@@ -47,7 +47,7 @@ function selecionarTextoCopiar() {
 
 function clickButtonSelecionarDispositivo(el) {
     if(!IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo){
-        alert('Selecione o dispositivo alterador.');
+        notificarErroVide('Erro','Selecione o dispositivo alterador.');
         return;
     }
     var linkname = $(el).attr('linkname');
@@ -343,4 +343,40 @@ function getLastInfoSelectorNormaAlterada(){
         }
     }
     return selectorInsertAfterAlterado;
+}
+
+function notificarSucessoVide(title, body){
+    $('#modal_vide').modallight({
+        sTitle: title,
+        sContent: body,
+        sType: "success",
+        oButtons: [
+            {
+                text: "Ok", click: function () {
+                    $(this).dialog('destroy');
+                }
+            }
+        ],
+        fnClose: function () {
+            location.reload();
+        }
+    });
+}
+
+function notificarErroVide(title, body){
+    $('#modal_vide').modallight({
+        sTitle: title,
+        sContent: body,
+        sType: "error",
+        oButtons: [
+            {
+                text: "Ok", click: function () {
+                    $(this).dialog('destroy');
+                }
+            }
+        ],
+        fnClose: function () {
+            location.reload();
+        }
+    });
 }
