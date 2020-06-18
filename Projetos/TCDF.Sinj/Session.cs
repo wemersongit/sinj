@@ -103,24 +103,31 @@ namespace neo.BRLightSession
         public bool Post<T>(string key, T value) where T : class
 		{
             var id_session = Cookies.ReadCookie(cookieName);
-            var oSession = new SessionOV
-                               {
-                                   id_session = id_session + "" + key,
-                                   ds_valor = JSON.Serialize<T>(value),
-                                   dt_criacao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"),
-                                   ds_user = Util.GetUser(),
-                                   ds_origem = Util.GetUserIp(),
-                                   ds_tipo_acesso = Util.GetUA()
-                               };
+            if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(id_session))
+            {
+                var oSession = new SessionOV
+                {
+                    id_session = id_session + "" + key,
+                    ds_valor = JSON.Serialize<T>(value),
+                    dt_criacao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"),
+                    ds_user = Util.GetUser(),
+                    ds_origem = Util.GetUserIp(),
+                    ds_tipo_acesso = Util.GetUA()
+                };
 
-            oSession.dt_expiracao = Convert.ToDateTime(oSession.dt_criacao).AddDays(timeout).ToString("dd'/'MM'/'yyyy HH:mm:ss");
+                oSession.dt_expiracao = Convert.ToDateTime(oSession.dt_criacao).AddDays(timeout).ToString("dd'/'MM'/'yyyy HH:mm:ss");
 
-           var id_sessao = new SessionRN().Incluir(oSession);
-           // expoem o id do banco e chave da session
-           db_id = id_sessao;
-           db_chave = id_session + key;
+                var id_sessao = new SessionRN().Incluir(oSession);
+                // expoem o id do banco e chave da session
+                db_id = id_sessao;
+                db_chave = id_session + key;
 
-           return (id_sessao != 0);
+                return (id_sessao != 0);
+            }
+            else
+            {
+                return false;
+            }
 
         }
 
@@ -132,21 +139,30 @@ namespace neo.BRLightSession
         {
             object sValor = null;
 
-            var result = getResult(key, new[] { "*" }); 
-            if (result.result_count == 1) {
-                if (Convert.ToDateTime(result.results[0].dt_expiracao) >= DateTime.Now){
-                    sValor = result.results[0];
-                } else {
+            var result = getResult(key, new[] { "*" });
+            if (result != null)
+            {
+                if (result.result_count == 1)
+                {
+                    if (Convert.ToDateTime(result.results[0].dt_expiracao) >= DateTime.Now)
+                    {
+                        sValor = result.results[0];
+                    }
+                    else
+                    {
+                        deleteResult(ref result);
+                    }
+                    // expoem o id do banco e chave da session
+                    db_id = result.results[0]._metadata.id_doc;
+                    db_chave = result.results[0].id_session;
+                }
+                if (result.result_count > 1)
+                {
                     deleteResult(ref result);
                 }
-                // expoem o id do banco e chave da session
-                db_id = result.results[0]._metadata.id_doc;
-                db_chave = result.results[0].id_session;
+                return (T)sValor;
             }
-            if (result.result_count > 1) {
-                deleteResult(ref result);
-            }
-            return (T)sValor;
+            return null;
         }
 
         public void Delete(string key)
@@ -169,13 +185,20 @@ namespace neo.BRLightSession
         private Results<SessionOV> getResult(string key, string[] sCampos)
         {
             var id_session = Cookies.ReadCookie(cookieName);
-            var oPesquisa = new Pesquisa
-                                {
-                                    literal = "id_session='" + id_session + "" + key + "'",
-                                    select = sCampos
-                                };
-            var pesq = new SessionRN();
-            return pesq.Consultar(oPesquisa);
+            if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(id_session))
+            {
+                var oPesquisa = new Pesquisa
+                {
+                    literal = "id_session='" + id_session + "" + key + "'",
+                    select = sCampos
+                };
+                var pesq = new SessionRN();
+                return pesq.Consultar(oPesquisa);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private static void deleteResult(ref Results<SessionOV> result)  {
