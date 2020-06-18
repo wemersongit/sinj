@@ -40,14 +40,14 @@ function selecionarAlteracaoCompleta(){
     //Se não há dispositivo alterador selecionado dá um alerta e interrompe a função
     if(!IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo){
         $('#in_alteracao_completa').prop('checked', '');
-        alert('Selecione o texto alterador.');
+        notificarErroVide('Erro', 'Selecione o texto alterador.');
         return;
     }
     const dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
     if($('#in_alteracao_completa').is(':checked')){
-        let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
+        let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
         if(!normaAlteradora.sem_arquivo){
-            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
         }
         const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
         //se na inclusão de repristinação, revigoração, revogação, cancelamento, etc. o texto já sofre alteração completa por outro vide,
@@ -118,7 +118,6 @@ function selecionarAlteracaoCompleta(){
             }
         }
         normaAlterada.in_alteracao_completa = true;
-        changeStepper('selecionarDispositivoAlterado');
     }
     else{
         $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).remove();
@@ -150,7 +149,6 @@ function selecionarAlteracaoCompleta(){
             }
         }
         normaAlterada.in_alteracao_completa = false;
-        changeStepper('deselecionarDispositivoAlterado');
     }
 }
 
@@ -159,15 +157,11 @@ function selecionarNormaForaDoSistemaCadastrar() {
         normaAlterada.in_norma_fora_do_sistema = true;
         $('#line_norma_fora_do_sistema').removeClass('hidden');
         $('#line_norma_dentro_do_sistema').addClass('hidden');
-        changeStepper('selecionarDispositivoAlterador');
-        changeStepper('selecionarDispositivoAlterado');
     }
     else {
         normaAlterada.in_norma_fora_do_sistema = false;
         $('#line_norma_fora_do_sistema').addClass('hidden');
         $('#line_norma_dentro_do_sistema').removeClass('hidden');
-        changeStepper('deselecionarDispositivoAlterador');
-        changeStepper('deselecionarDispositivoAlterado');
     }
 }
 
@@ -290,8 +284,8 @@ function selecionarNormaAlteradoraCadastrar(norma){
     };
 
     $('#label_norma_vide_alteradora').text(normaAlteradora.ds_norma);
-    // selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}));
     changeStepper('selecionarNormaAlteradora');
+    $('input[norma=alteradora]').click();
 }
 
 function selecionarNormaAlteradaCadastrar(norma){
@@ -318,8 +312,8 @@ function selecionarNormaAlteradaCadastrar(norma){
         return;
     }
     $('#label_norma_vide_alterada').text(normaAlterada.ds_norma);
-    // selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}));
     changeStepper('selecionarNormaAlterada');
+    $('input[norma=alterada]').click();
 }
 
 function changeSelecionarArquivoDaNorma(el){
@@ -498,19 +492,19 @@ function selecionarTextoNormaAlteradoraCadastrar() {
             return;
         }
         if(IsNotNullOrEmpty(normaAlteradora.dispositivos)){
-            alert('Erro! Já existe um link selecionado.');
+            notificarErroVide('Erro', 'Já existe um link selecionado.');
             return;
         }
         var parentNode = $(window.getSelection().baseNode).parents('p[linkname]');
         //Impede que selecione o link da norma alteradora antes de estar com a norma alterada selecionada.
         if ($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p').length <= 0) {
-            alert('Erro! Selecione também o arquivo da norma alterada.');
+            notificarErroVide('Erro', 'Selecione também o arquivo da norma alterada.');
             return false;
         }
 
         var linkname = parentNode.attr('linkname');
         if ($('p[linkname="' + linkname + '"]').text().length < text.length) {
-            alert('Erro! Não selecione mais de um parágrafo por vez.');
+            notificarErroVide('Erro', 'Não selecione mais de um parágrafo por vez.');
             return false;
         }
         if (IsNotNullOrEmpty(linkname)) {
@@ -530,9 +524,8 @@ function selecionarTextoNormaAlteradoraCadastrar() {
             window.getSelection().getRangeAt(0).surroundContents(a);
 
             window.getSelection().removeAllRanges();
-            changeStepper('selecionarDispositivoAlterador');
             
-            alert('O texto \'' + text + '\' foi selecionado.');
+            notificarSucessoVide('Link criado', text);
         }
     }
 }
@@ -553,7 +546,6 @@ function desfazerLinkAlterador(){
         idLink = '';
     }
     
-    changeStepper('deselecionarDispositivoAlterador');
 }
 
 function exibirTextoDoArquivoCadastrar(norma, arquivo) {
@@ -627,14 +619,13 @@ function exibirTextoDoArquivoCadastrar(norma, arquivo) {
 function selecionarSemCitacaoNormaAlteradora(){
     if($('#inSemCitacaoNormaAlteradora').is(':checked')){
         if($(`#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info=${normaAlterada.ch_norma}]`).length > 0){
-            alert('A relação já existe no texto.');
+            notificarErroVide('Erro', 'A relação já existe no texto.');
             $('#inSemCitacaoNormaAlteradora').prop('checked','');
             return;
         }
         if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
             const selectorInsertBeforeAlterador = getLastLecoSelectorNormaAlteradora();
             $(selectorInsertBeforeAlterador).before(`<p ch_norma_info="${normaAlterada.ch_norma}"><a href="(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}">${tipoDeRelacao.ds_texto_para_alterador} - ${normaAlterada.ds_norma}</a></p>`);
-            changeStepper('selecionarDispositivoAlterador');
         }
     }
     else{
@@ -646,21 +637,21 @@ function selecionarSemCitacaoNormaAlterada(){
     if($('#inSemCitacaoNormaAlterada').is(':checked')){
         if($(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${normaAlteradora.ch_norma}]`).length > 0){
             $('#inSemCitacaoNormaAlterada').prop('checked','');
-            alert('A relação já existe no texto.');
+            notificarErroVide('Erro', 'A relação já existe no texto.');
             return;
         }
         if(isInfoVide(tipoDeRelacao.ch_tipo_relacao) && !IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo){
             $('#inSemCitacaoNormaAlterada').prop('checked','');
-            alert('Selecione o dispositivo alterador.');
+            notificarErroVide('Erro', 'Selecione o dispositivo alterador.');
             return;
         }
-        let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
+        let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
         if(!normaAlteradora.sem_arquivo){
             if(normaAlteradora.dispositivos.length > 0){
-                linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+                linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
             }
             else{
-                linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}`;
+                linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}`;
             }
         }
         if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
@@ -671,7 +662,6 @@ function selecionarSemCitacaoNormaAlterada(){
             const selectorInsertAfterAlterado = getLastInfoSelectorNormaAlterada();
             $(selectorInsertAfterAlterado).after(`<p ch_norma_info="${normaAlteradora.ch_norma}" style="text-align:center;" class="adicionado"><a href="${linkNormaAlteradora}">(${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma}</a></p>`);
         }
-        changeStepper('selecionarDispositivoAlterado');
     }
     else{
         $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${normaAlteradora.ch_norma}]`).remove();
@@ -681,13 +671,13 @@ function selecionarSemCitacaoNormaAlterada(){
 
 
 function clickAlterarDispositivoCadastrar(){
-    let linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}`;
+    let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
     if(!normaAlteradora.sem_arquivo){
         if(normaAlteradora.dispositivos.length > 0){
-            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
+            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
         }
         else{
-            linkNormaAlteradora += `/${normaAlteradora.arquivo.filename}`;
+            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}`;
         }
     }
     let dispositivoAlterado = {}
@@ -719,7 +709,7 @@ function clickAlterarDispositivoCadastrar(){
     }
     else{
         if(IsNotNullOrEmpty(texto) && texto.indexOf('\n') > -1){
-            alert('Esse tipo de relação não permite que a alteração possua mais de um dispositivo por vez.');
+            notificarErroVide('Erro', 'Esse tipo de relação não permite que a alteração possua mais de um dispositivo por vez.');
             return;
         }
         let $elementoAlterado = $buttonSelected.parent();
@@ -760,7 +750,7 @@ function clickAlterarDispositivoCadastrar(){
         else if(isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
             let htmlAlterado = $elementoAlterado.find('s').html();
             if(!IsNotNullOrEmpty(htmlAlterado) || linkname.indexOf('_replaced') < 0){
-                alert(`A relação ${tipoDeRelacao.nm_tipo_relacao} pode ser aplicada somente a um dispositivo que sofreu alteração.`);
+                notificarErroVide('Erro', `A relação ${tipoDeRelacao.nm_tipo_relacao} pode ser aplicada somente a um dispositivo que sofreu alteração.`);
                 return;
             }
             $buttonSelected.hide();
@@ -820,8 +810,6 @@ function clickAlterarDispositivoCadastrar(){
             adicionarDescricaoDispositivosAlterados(dispositivoAlterado.ds_linkname);
         }
     }
-
-    changeStepper('selecionarDispositivoAlterado');
 }
 
 function desfazerAlteracaoDoDispositivoCadastrar(linkname){
@@ -883,9 +871,6 @@ function desfazerAlteracaoDoDispositivoCadastrar(linkname){
             break;
         }
     }
-    if(normaAlterada.dispositivos.length <= 0){
-        changeStepper('deselecionarDispositivoAlterado');
-    }
 }
 
 function changeTipoRelacao(el){
@@ -909,6 +894,7 @@ function changeTipoRelacao(el){
                 $('#div_tooltip_dispositivo h2').text('Informe o texto novo, caso haja.');
                 break;
         }
+        changeStepper('selecionarTipoRelacao');
     }
     if(IsNotNullOrEmpty(normaAlterada, 'dispositivos')){
         resetarDispositivo('alterada');
@@ -942,10 +928,30 @@ function salvarVideCadastrar(sucessoVide){
         ds_comentario_vide: $('#ds_comentario_vide').val()
     }));
 
-    return fnSalvar("form_vide", "", sucessoVide);
+    return fnSalvar("form_vide", "", sucessoVide, {iTimeout: 120000});
+}
+
+function validarVide(){
+    if(!normaAlteradora.sem_arquivo){
+        if(!IsNotNullOrEmpty(normaAlteradora.dispositivos) && !$('#inSemCitacaoNormaAlteradora').is(':checked')){
+            notificarErroVide('Erro', 'Falta informar o dispositivo da norma alteradora.');
+            return false;
+        }
+    }
+    if(!normaAlterada.sem_arquivo){
+        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && (!$('#inSemCitacaoNormaAlterada').is(':checked') || !normaAlterada.in_alteracao_completa)){
+            notificarErroVide('Erro', 'Falta informar o dispositivo da norma alterada.');
+            return false;
+        }
+    }
+    return true;
 }
 
 function salvarArquivosVideCadastrar(sucessoVide){
+    if(!validarVide()){
+        return false;
+    }
+
     const deferredAlteradora = $.Deferred();
     const deferredAlterada = $.Deferred();
     $.when(deferredAlteradora, deferredAlterada).done(function(){
@@ -1045,46 +1051,24 @@ function salvarArquivosVideCadastrar(sucessoVide){
 function changeStepper(action){
     switch(action){
         case 'selecionarNormaAlteradora':
+            $('.selecionar-tipo-de-relacao').removeClass('hidden');
             $('.selecionar-arquivo-norma-alteradora').removeClass('hidden');
+            break;
+        case 'selecionarTipoRelacao':
+            $('.selecionar-norma-alterada').removeClass('hidden');
             break;
         case 'selecionarNormaAlterada':
             $('.selecionar-arquivo-norma-alterada').removeClass('hidden');
             $('.ds-dispositivos-alterados').removeClass('hidden');
-            $('.ds-comentario-vide').addClass('hidden');
-            $('.buttons').addClass('hidden');
+            $('.ds-comentario-vide').removeClass('hidden');
+            $('.buttons').removeClass('hidden');
             break;
         case 'deselecionarTipoRelacao':
+            $('.selecionar-norma-alterada').addClass('hidden');
             $('.selecionar-arquivo-norma-alterada').addClass('hidden');
             $('.ds-dispositivos-alterados').addClass('hidden');
             $('.ds-comentario-vide').addClass('hidden');
             $('.buttons').addClass('hidden');
-            break;
-        case 'deselecionarDispositivoAlterador':
-            if(!IsNotNullOrEmpty($('textarea[name=ds_dispositivos_alterados]').val())){
-                $('.ds-comentario-vide').addClass('hidden');
-                $('.buttons').addClass('hidden');
-            }
-            break;
-        case 'selecionarDispositivoAlterador':
-        case 'deselecionarDispositivoAlterado':
-            if(!IsNotNullOrEmpty($('textarea[name=ds_dispositivos_alterados]').val())){
-                $('.ds-comentario-vide').addClass('hidden');
-                $('.buttons').addClass('hidden');
-            }
-            break;
-        case 'preencheDsDispositivoAlterado':
-            if(!IsNotNullOrEmpty($('textarea[name=ds_dispositivos_alterados]').val())){
-                $('.ds-comentario-vide').addClass('hidden');
-                $('.buttons').addClass('hidden');
-            }
-            else{
-                $('.ds-comentario-vide').removeClass('hidden');
-                $('.buttons').removeClass('hidden');
-            }
-            break;
-        case 'selecionarDispositivoAlterado':
-            $('.ds-comentario-vide').removeClass('hidden');
-            $('.buttons').removeClass('hidden');
             break;
     }
 }
