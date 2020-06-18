@@ -202,12 +202,8 @@ function buscarTiposDeRelacao() {
         sUrl: './ashx/Autocomplete/TipoDeRelacaoAutocomplete.ashx' + (GetParameterValue("in_acao") == "true" ? "?in_relacao_de_acao=true" : ""),
         sType: "GET",
         fnSuccess: sucesso,
-        fnComplete: function(){
-            if(!IsNotNullOrEmpty(id_doc)){
-                gComplete();
-            }
-        },
-        fnBeforeSend: gInicio,
+        fnComplete: null,
+        fnBeforeSend: null,
         fnError: null,
         bAsync: true
     });
@@ -289,12 +285,12 @@ function selecionarNormaAlteradoraCadastrar(norma){
         ds_norma: montarDescricaoDaNorma(norma),
         dt_assinatura: norma.dt_assinatura,
         nm_tipo_norma: norma.nm_tipo_norma,
-        sem_arquivo: false,
+        sem_arquivo: true,
         dispositivos: []
     };
 
     $('#label_norma_vide_alteradora').text(normaAlteradora.ds_norma);
-    selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}));
+    // selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}));
     changeStepper('selecionarNormaAlteradora');
 }
 
@@ -305,7 +301,7 @@ function selecionarNormaAlteradaCadastrar(norma){
         ds_norma: montarDescricaoDaNorma(norma),
         dt_assinatura: norma.dt_assinatura,
         nm_tipo_norma: norma.nm_tipo_norma,
-        sem_arquivo: false,
+        sem_arquivo: true,
         dispositivos: []
     };
     const normasInvertidas = InverterAlteradaAlteradora();
@@ -313,7 +309,6 @@ function selecionarNormaAlteradaCadastrar(norma){
         resetarDispositivo('alteradora');
         resetarDispositivo('alterada');
         selecionarNormaAlteradoraCadastrar(normasInvertidas.normaAlteradoraInvertida);
-        changeStepper('selecionarTipoRelacao');
         selecionarNormaAlteradaCadastrar(normasInvertidas.normaAlteradaInvertida);
         $('#div_notificacao_vide').messagelight({
             sType: "alert",
@@ -323,8 +318,30 @@ function selecionarNormaAlteradaCadastrar(norma){
         return;
     }
     $('#label_norma_vide_alterada').text(normaAlterada.ds_norma);
-    selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}));
+    // selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}));
     changeStepper('selecionarNormaAlterada');
+}
+
+function changeSelecionarArquivoDaNorma(el){
+    if($(el).is(':checked')){
+        if($(el).attr('norma') == 'alteradora'){
+            normaAlteradora.sem_arquivo = false;
+            selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}));
+        }
+        else{
+            normaAlterada.sem_arquivo = false;
+            selecionarArquivoDaNormaCadastrar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}));
+        }
+    }
+    else{
+        if($(el).attr('norma') == 'alteradora'){
+            normaAlteradora.sem_arquivo = true;
+        }
+        else{
+            normaAlterada.sem_arquivo = true;
+        }
+        limparArquivoSelecionado($(el).attr('norma'));
+    }
 }
 
 function exibirControlesNormaAlteradaSelecionada(){
@@ -376,7 +393,7 @@ function InverterAlteradaAlteradora() {
 
 function selecionarArquivoDaNormaCadastrar(norma) {
     $('#div_cad_dispositivo_' + norma.sufixo + ' div.arquivos_norma').html('');
-    limparDispositivoSelecionado(norma.sufixo);
+    limparArquivoSelecionado(norma.sufixo);
 
     var sucesso = function (data) {
         let semArquivo = false;
@@ -416,11 +433,11 @@ function selecionarArquivoDaNormaCadastrar(norma) {
                     oButtons: [{
                             text: "Sim",
                             click: function() {
-                                limparDispositivoSelecionado(norma.sufixo);
+                                limparArquivoSelecionado(norma.sufixo);
                                 if(norma.sufixo == 'alterada'){
                                     normaAlterada.sem_arquivo = true;
                                     normaAlteradora.sem_arquivo = true;
-                                    limparDispositivoSelecionado('alteradora');
+                                    limparArquivoSelecionado('alteradora');
                                     $('#div_cad_dispositivo_alterada').show();
                                     $('#div_cad_dispositivo_alterada div.line_conteudo_arquivo').show();
                                     $('.stepper').hide();
@@ -540,7 +557,7 @@ function desfazerLinkAlterador(){
 }
 
 function exibirTextoDoArquivoCadastrar(norma, arquivo) {
-    limparDispositivoSelecionado(norma.sufixo);
+    limparArquivoSelecionado(norma.sufixo);
     const htmlUnescaped = window.unescape(arquivo.fileencoded);
     if(ahTextoIncompativel){
         return;
@@ -887,20 +904,15 @@ function changeTipoRelacao(el){
                 $('#div_tooltip_dispositivo h2').text('Informe o texto novo, caso haja.');
                 break;
         }
-        if(IsNotNullOrEmpty(normaAlterada)){
-            exibirControlesNormaAlteradaSelecionada();
-        }
-        changeStepper('selecionarTipoRelacao');
     }
-    else{
-        normaAlterada = {};
-        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').html('');
+    if(IsNotNullOrEmpty(normaAlterada, 'dispositivos')){
         resetarDispositivo('alterada');
         changeStepper('deselecionarTipoRelacao');
     }
+    
 }
 
-function limparDispositivoSelecionado(nm_sufixo) {
+function limparArquivoSelecionado(nm_sufixo) {
     $('#div_cad_dispositivo_' + nm_sufixo + ' div.div_conteudo_arquivo').html('');
     $('#div_cad_dispositivo_' + nm_sufixo + ' div.line_conteudo_arquivo').hide();
     $('#div_cad_dispositivo_' + nm_sufixo + ' div.line_enable_replaced').hide();
@@ -1028,59 +1040,46 @@ function salvarArquivosVideCadastrar(sucessoVide){
 function changeStepper(action){
     switch(action){
         case 'selecionarNormaAlteradora':
-        case 'deselecionarTipoRelacao':
-            //exibe o select tipo de relação
-            $('.step2').removeClass('hidden');
-            //oculta o selecionar norma alterada, comentário e botão de salvar
-            $('.step3').addClass('hidden');
-            $('.step4').addClass('hidden');
-            //marca e desmarca os steppers
-            $('li.norma-alteradora').addClass('active');
-            $('li.relacao').removeClass('active');
-            $('li.norma-alterada').removeClass('active');
-            $('li.dispositivo-alterador').removeClass('active');
-            $('li.dispositivo-alterado').removeClass('active');
-            break;
-        case 'selecionarTipoRelacao':
-            //oculta o selecionar norma alterada, comentário e botão de salvar
-            $('.step3').removeClass('hidden');
-            $('.step4').addClass('hidden');
-            //marca e desmarca os steppers
-            $('li.relacao').addClass('active');
-            if(!IsNotNullOrEmpty(normaAlterada)){
-                $('li.norma-alterada').removeClass('active');
-            }
-            $('li.dispositivo-alterador').removeClass('active');
-            $('li.dispositivo-alterado').removeClass('active');
+            $('.selecionar-arquivo-norma-alteradora').removeClass('hidden');
             break;
         case 'selecionarNormaAlterada':
+            $('.selecionar-arquivo-norma-alterada').removeClass('hidden');
+            $('.ds-dispositivos-alterados').removeClass('hidden');
+            $('.ds-comentario-vide').addClass('hidden');
+            $('.buttons').addClass('hidden');
+            break;
+        case 'deselecionarTipoRelacao':
+            $('.selecionar-arquivo-norma-alterada').addClass('hidden');
+            $('.ds-dispositivos-alterados').addClass('hidden');
+            $('.ds-comentario-vide').addClass('hidden');
+            $('.buttons').addClass('hidden');
+            break;
         case 'deselecionarDispositivoAlterador':
-            //oculta comentário e botão de salvar
-            $('.step4').addClass('hidden');
-            //marca e desmarca os steppers
-            $('li.norma-alterada').addClass('active');
-            if(normaAlteradora.sem_arquivo){
-                $('li.dispositivo-alterador').addClass('active');
+            if(!IsNotNullOrEmpty($('textarea[name=ds_dispositivos_alterados]').val())){
+                $('.ds-comentario-vide').addClass('hidden');
+                $('.buttons').addClass('hidden');
             }
-            else{
-                $('li.dispositivo-alterador').removeClass('active');
-            }
-            
-            $('li.dispositivo-alterado').removeClass('active');
             break;
         case 'selecionarDispositivoAlterador':
         case 'deselecionarDispositivoAlterado':
-            //oculta comentário e botão de salvar
-            $('.step4').addClass('hidden');
-            //marca e desmarca os steppers
-            $('li.dispositivo-alterador').addClass('active');
-            $('li.dispositivo-alterado').removeClass('active');
+            if(!IsNotNullOrEmpty($('textarea[name=ds_dispositivos_alterados]').val())){
+                $('.ds-comentario-vide').addClass('hidden');
+                $('.buttons').addClass('hidden');
+            }
+            break;
+        case 'preencheDsDispositivoAlterado':
+            if(!IsNotNullOrEmpty($('textarea[name=ds_dispositivos_alterados]').val())){
+                $('.ds-comentario-vide').addClass('hidden');
+                $('.buttons').addClass('hidden');
+            }
+            else{
+                $('.ds-comentario-vide').removeClass('hidden');
+                $('.buttons').removeClass('hidden');
+            }
             break;
         case 'selecionarDispositivoAlterado':
-            //exibe comentário e botão de salvar
-            $('.step4').removeClass('hidden');
-            //marca e desmarca os steppers
-            $('li.dispositivo-alterado').addClass('active');
+            $('.ds-comentario-vide').removeClass('hidden');
+            $('.buttons').removeClass('hidden');
             break;
     }
 }
