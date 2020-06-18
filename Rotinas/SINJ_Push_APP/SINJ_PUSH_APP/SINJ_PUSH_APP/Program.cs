@@ -760,100 +760,103 @@ namespace SINJ_PUSH_APP
                                     sFilters += "]}";
                                     sQuery = "{\"size\": " + countDiarios + ", \"_source\":{\"exclude\":[\"*.filetext\"]},\"query\": {\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + textoConsultado + "\"}}" + sFilters + "}},\"highlight\":{\"pre_tags\":[\"<span style='background:#FFFF55; font-weight:bold;'>\"],\"post_tags\":[\"</span>\"],\"fields\":{\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150}}}}";
                                     var diarios = new TCDF.Sinj.ES.ESAd().PesquisarDocs<DiarioOV>(sQuery, url_es);
-                                    if (diarios.hits.hits.Count > 0)
+                                    if (diarios.hits != null)
                                     {
-                                        var email = new EmailRN();
-                                        var display_name_remetente = "SINJ Notifica";
-                                        var destinatario = new[] { usuarioPush.email_usuario_push };
-                                        var titulo = (diarios.hits.hits.Count > 1 ? "Foram cadastrados " + diarios.hits.hits.Count + " diários" : "Foi cadastrado um diário") + " no SINJ contendo o texto: " + termo_diario.ds_termo_diario_monitorado + ".";
-                                        var html = true;
-
-
-                                        corpoEmail = "";
-                                        corpoEmail = corpoEmail + "<table width=\"100%\" style=\"border:1px\"> ";
-                                        corpoEmail = corpoEmail + "    <tr>";
-                                        corpoEmail = corpoEmail + "        <td>";
-                                        corpoEmail = corpoEmail + "            <table width = \"800\" style=\"background:#ddffdc;\" align=\"center\" >";
-                                        corpoEmail = corpoEmail + "                <tr>";
-                                        corpoEmail = corpoEmail + "                    <td>";
-                                        corpoEmail = corpoEmail + "                       <table width=\"800px\" align=\"center\">";
-                                        corpoEmail = corpoEmail + "                           <tr>";
-                                        corpoEmail = corpoEmail + "                               <td><a href=\"http://www.sinj.df.gov.br\" target=\"_blank\" title=\"http://www.sinj.df.gov.br\"><img src=" + _linkImagemEmailTopo + "></a></td>";
-                                        corpoEmail = corpoEmail + "                           </tr>";
-                                        corpoEmail = corpoEmail + "                       </table>";
-                                        corpoEmail = corpoEmail + "                   </td>";
-                                        corpoEmail = corpoEmail + "                </tr>";
-                                        corpoEmail = corpoEmail + "                <tr>";
-                                        corpoEmail = corpoEmail + "                    <td>";
-                                        corpoEmail = corpoEmail + "                        <table width=\"800px\" align=\"center\"><br/>";
-                                        corpoEmail = corpoEmail + "                            <HR SIZE=1 WIDTH=801 ALIGN=center>";
-                                        corpoEmail = corpoEmail + "                            <tr>";
-                                        corpoEmail = corpoEmail + "                                <td style=\"background-color: #B4E6CBs; text-align: left;\">";
-                                        corpoEmail = corpoEmail + "                                    <div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
-                                        corpoEmail = corpoEmail + "	                                       " + titulo + "<br/>";
-                                        corpoEmail = corpoEmail + "		                                   As informações sobre " + (diarios.hits.hits.Count > 1 ? "esses diários" : "esse diário") + " estão abaixo:";
-                                        corpoEmail = corpoEmail + "	                                   </div>";
-                                        corpoEmail = corpoEmail + "	                                   <div>";
-                                        corpoEmail = corpoEmail + "		                                   <table cellspacing=\"0\" cellpadding=\"2\" rules=\"all\" border=\"1\" style=\"border-color:#A3A3A3;border-style:Solid;width:100%;border-collapse:collapse;font-size: 11px;\">";
-                                        corpoEmail = corpoEmail + "			                                   <tbody>";
-                                        corpoEmail = corpoEmail + "			                                       <tr class=\"textoCorVide\" align=\"left\" style=\"color:#323232;background-color:#B4E6CB;height:30px;\">";
-                                        corpoEmail = corpoEmail + "				                                       <th scope=\"col\"style=\"width:200px;\">Diário</th>";
-                                        corpoEmail = corpoEmail + "				                                       <th scope=\"col\">Partes do texto encontrado</th>";
-                                        corpoEmail = corpoEmail + "				                                       <th scope=\"col\" style=\"width:120px;\">Link</th>";
-                                        corpoEmail = corpoEmail + "			                                       </tr>";
-                                        foreach (var diario in diarios.hits.hits)
+                                        if (diarios.hits.hits.Count > 0)
                                         {
-                                            corpoEmail = corpoEmail + "			                                   <tr align=\"left\" style=\"background-color:#F0F0F0;height:20px;\">";
-                                            corpoEmail = corpoEmail + "				                                   <td valign=\"top\">" + diario._source.getDescricaoDiario() + "</td>";
-                                            var aTexto = ((JContainer)diario.highlight)["arquivos.arquivo_diario.filetext"];
-                                            corpoEmail = corpoEmail + "				                                   <td valign=\"top\">..." + string.Join("...<br/>...", aTexto) + "...</td>";
-                                            var i = 0;
-                                            corpoEmail = corpoEmail + "				                                   <td valign=\"top\">";
-                                            foreach (var arquivo in diario._source.arquivos)
+                                            var email = new EmailRN();
+                                            var display_name_remetente = "SINJ Notifica";
+                                            var destinatario = new[] { usuarioPush.email_usuario_push };
+                                            var titulo = (diarios.hits.hits.Count > 1 ? "Foram cadastrados " + diarios.hits.hits.Count + " diários" : "Foi cadastrado um diário") + " no SINJ contendo o texto: " + termo_diario.ds_termo_diario_monitorado + ".";
+                                            var html = true;
+
+
+                                            corpoEmail = "";
+                                            corpoEmail = corpoEmail + "<table width=\"100%\" style=\"border:1px\"> ";
+                                            corpoEmail = corpoEmail + "    <tr>";
+                                            corpoEmail = corpoEmail + "        <td>";
+                                            corpoEmail = corpoEmail + "            <table width = \"800\" style=\"background:#ddffdc;\" align=\"center\" >";
+                                            corpoEmail = corpoEmail + "                <tr>";
+                                            corpoEmail = corpoEmail + "                    <td>";
+                                            corpoEmail = corpoEmail + "                       <table width=\"800px\" align=\"center\">";
+                                            corpoEmail = corpoEmail + "                           <tr>";
+                                            corpoEmail = corpoEmail + "                               <td><a href=\"http://www.sinj.df.gov.br\" target=\"_blank\" title=\"http://www.sinj.df.gov.br\"><img src=" + _linkImagemEmailTopo + "></a></td>";
+                                            corpoEmail = corpoEmail + "                           </tr>";
+                                            corpoEmail = corpoEmail + "                       </table>";
+                                            corpoEmail = corpoEmail + "                   </td>";
+                                            corpoEmail = corpoEmail + "                </tr>";
+                                            corpoEmail = corpoEmail + "                <tr>";
+                                            corpoEmail = corpoEmail + "                    <td>";
+                                            corpoEmail = corpoEmail + "                        <table width=\"800px\" align=\"center\"><br/>";
+                                            corpoEmail = corpoEmail + "                            <HR SIZE=1 WIDTH=801 ALIGN=center>";
+                                            corpoEmail = corpoEmail + "                            <tr>";
+                                            corpoEmail = corpoEmail + "                                <td style=\"background-color: #B4E6CBs; text-align: left;\">";
+                                            corpoEmail = corpoEmail + "                                    <div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
+                                            corpoEmail = corpoEmail + "	                                       " + titulo + "<br/>";
+                                            corpoEmail = corpoEmail + "		                                   As informações sobre " + (diarios.hits.hits.Count > 1 ? "esses diários" : "esse diário") + " estão abaixo:";
+                                            corpoEmail = corpoEmail + "	                                   </div>";
+                                            corpoEmail = corpoEmail + "	                                   <div>";
+                                            corpoEmail = corpoEmail + "		                                   <table cellspacing=\"0\" cellpadding=\"2\" rules=\"all\" border=\"1\" style=\"border-color:#A3A3A3;border-style:Solid;width:100%;border-collapse:collapse;font-size: 11px;\">";
+                                            corpoEmail = corpoEmail + "			                                   <tbody>";
+                                            corpoEmail = corpoEmail + "			                                       <tr class=\"textoCorVide\" align=\"left\" style=\"color:#323232;background-color:#B4E6CB;height:30px;\">";
+                                            corpoEmail = corpoEmail + "				                                       <th scope=\"col\"style=\"width:200px;\">Diário</th>";
+                                            corpoEmail = corpoEmail + "				                                       <th scope=\"col\">Partes do texto encontrado</th>";
+                                            corpoEmail = corpoEmail + "				                                       <th scope=\"col\" style=\"width:120px;\">Link</th>";
+                                            corpoEmail = corpoEmail + "			                                       </tr>";
+                                            foreach (var diario in diarios.hits.hits)
                                             {
-                                                corpoEmail = corpoEmail + "<a href=\"" + Config.ValorChave("LinkSINJ", true) + "/Diario/" + diario._source.ch_diario + "/" + arquivo.arquivo_diario.id_file + "/arq/" + i + "/" + arquivo.arquivo_diario.filename + "\">Clique para ver o diário" + (!string.IsNullOrEmpty(arquivo.ds_arquivo) ? arquivo.ds_arquivo : "") + "</a><br/>";
-                                                i++;
+                                                corpoEmail = corpoEmail + "			                                   <tr align=\"left\" style=\"background-color:#F0F0F0;height:20px;\">";
+                                                corpoEmail = corpoEmail + "				                                   <td valign=\"top\">" + diario._source.getDescricaoDiario() + "</td>";
+                                                var aTexto = ((JContainer)diario.highlight)["arquivos.arquivo_diario.filetext"];
+                                                corpoEmail = corpoEmail + "				                                   <td valign=\"top\">..." + string.Join("...<br/>...", aTexto) + "...</td>";
+                                                var i = 0;
+                                                corpoEmail = corpoEmail + "				                                   <td valign=\"top\">";
+                                                foreach (var arquivo in diario._source.arquivos)
+                                                {
+                                                    corpoEmail = corpoEmail + "<a href=\"" + Config.ValorChave("LinkSINJ", true) + "/Diario/" + diario._source.ch_diario + "/" + arquivo.arquivo_diario.id_file + "/arq/" + i + "/" + arquivo.arquivo_diario.filename + "\">Clique para ver o diário" + (!string.IsNullOrEmpty(arquivo.ds_arquivo) ? arquivo.ds_arquivo : "") + "</a><br/>";
+                                                    i++;
+                                                }
+                                                corpoEmail = corpoEmail + "                                                </td>";
+                                                corpoEmail = corpoEmail + "                                            </tr>";
                                             }
-                                            corpoEmail = corpoEmail + "                                                </td>";
-                                            corpoEmail = corpoEmail + "                                            </tr>";
+                                            corpoEmail = corpoEmail + "                                            </tbody>";
+                                            corpoEmail = corpoEmail + "                                        </table>";
+                                            corpoEmail = corpoEmail + "                                    </div><br/><br/>";
+                                            corpoEmail = corpoEmail + "                                    <div style=\"margin-bottom: 3px; font-size: 11px; font-weight: bold; background-color:#B4E6CBs\">";
+                                            corpoEmail = corpoEmail + "	                                       <a href=\"" + Config.ValorChave("LinkSINJ", true) + "/DesativarNormaPush.aspx?email_usuario_push=" + usuarioPush.email_usuario_push + "&" + "ch_termo_diario_monitorado=" + termo_diario.ch_termo_diario_monitorado + "\">Não quero mais receber informações sobre a criação de diários com esse texto.</a>";
+                                            corpoEmail = corpoEmail + "	                                   </div>";
+                                            corpoEmail = corpoEmail + "                                </td>";
+                                            corpoEmail = corpoEmail + "                            </tr>";
+                                            corpoEmail = corpoEmail + "                        </table>";
+                                            corpoEmail = corpoEmail + "                    </td>";
+                                            corpoEmail = corpoEmail + "                </tr>";
+                                            corpoEmail = corpoEmail + "                <tr>";
+                                            corpoEmail = corpoEmail + "                    <td>";
+                                            corpoEmail = corpoEmail + "                        <table width=\"800px\" style=\"background:#ddffdc;\" align=\"center\" > <br/>";
+                                            corpoEmail = corpoEmail + "                            <tr>";
+                                            corpoEmail = corpoEmail + "                                <th>";
+                                            corpoEmail = corpoEmail + "                                    <HR SIZE=1 WIDTH=801 ALIGN=center>";
+                                            corpoEmail = corpoEmail + "                                    <a href=\"http://www.sinj.df.gov.br\">www.sinj.df.gov.br</a>";
+                                            corpoEmail = corpoEmail + "                                </th>";
+                                            corpoEmail = corpoEmail + "                            </tr>";
+                                            corpoEmail = corpoEmail + "                        </table >";
+                                            corpoEmail = corpoEmail + "                    </td>";
+                                            corpoEmail = corpoEmail + "                </tr>";
+                                            corpoEmail = corpoEmail + "            </table>";
+                                            corpoEmail = corpoEmail + "        </td>";
+                                            corpoEmail = corpoEmail + "    </tr>";
+                                            corpoEmail = corpoEmail + "</table>";
+                                            ServicePointManager.ServerCertificateValidationCallback =
+                                            delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                                            { return true; };
+                                            email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpoEmail);
+                                            var logEmail = new LogEmail();
+                                            logEmail.emails = destinatario;
+                                            logEmail.assunto = titulo;
+                                            logEmail.mensagem = corpoEmail;
+                                            TCDF.Sinj.Log.LogOperacao.gravar_operacao("APP.PUS.EMAIL", logEmail, "Aplicação Push", "SINJ_PUSH_APP");
+                                            this._sb_info.AppendLine(DateTime.Now + ": CRIACAO - Email enviado para " + destinatario[0] + " com o titulo " + titulo);
                                         }
-                                        corpoEmail = corpoEmail + "                                            </tbody>";
-                                        corpoEmail = corpoEmail + "                                        </table>";
-                                        corpoEmail = corpoEmail + "                                    </div><br/><br/>";
-                                        corpoEmail = corpoEmail + "                                    <div style=\"margin-bottom: 3px; font-size: 11px; font-weight: bold; background-color:#B4E6CBs\">";
-                                        corpoEmail = corpoEmail + "	                                       <a href=\"" + Config.ValorChave("LinkSINJ", true) + "/DesativarNormaPush.aspx?email_usuario_push=" + usuarioPush.email_usuario_push + "&" + "ch_termo_diario_monitorado=" + termo_diario.ch_termo_diario_monitorado + "\">Não quero mais receber informações sobre a criação de diários com esse texto.</a>";
-                                        corpoEmail = corpoEmail + "	                                   </div>";
-                                        corpoEmail = corpoEmail + "                                </td>";
-                                        corpoEmail = corpoEmail + "                            </tr>";
-                                        corpoEmail = corpoEmail + "                        </table>";
-                                        corpoEmail = corpoEmail + "                    </td>";
-                                        corpoEmail = corpoEmail + "                </tr>";
-                                        corpoEmail = corpoEmail + "                <tr>";
-                                        corpoEmail = corpoEmail + "                    <td>";
-                                        corpoEmail = corpoEmail + "                        <table width=\"800px\" style=\"background:#ddffdc;\" align=\"center\" > <br/>";
-                                        corpoEmail = corpoEmail + "                            <tr>";
-                                        corpoEmail = corpoEmail + "                                <th>";
-                                        corpoEmail = corpoEmail + "                                    <HR SIZE=1 WIDTH=801 ALIGN=center>";
-                                        corpoEmail = corpoEmail + "                                    <a href=\"http://www.sinj.df.gov.br\">www.sinj.df.gov.br</a>";
-                                        corpoEmail = corpoEmail + "                                </th>";
-                                        corpoEmail = corpoEmail + "                            </tr>";
-                                        corpoEmail = corpoEmail + "                        </table >";
-                                        corpoEmail = corpoEmail + "                    </td>";
-                                        corpoEmail = corpoEmail + "                </tr>";
-                                        corpoEmail = corpoEmail + "            </table>";
-                                        corpoEmail = corpoEmail + "        </td>";
-                                        corpoEmail = corpoEmail + "    </tr>";
-                                        corpoEmail = corpoEmail + "</table>";
-                                        ServicePointManager.ServerCertificateValidationCallback =
-                                        delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                                        { return true; };
-                                        email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpoEmail);
-                                        var logEmail = new LogEmail();
-                                        logEmail.emails = destinatario;
-                                        logEmail.assunto = titulo;
-                                        logEmail.mensagem = corpoEmail;
-                                        TCDF.Sinj.Log.LogOperacao.gravar_operacao("APP.PUS.EMAIL", logEmail, "Aplicação Push", "SINJ_PUSH_APP");
-                                        this._sb_info.AppendLine(DateTime.Now + ": CRIACAO - Email enviado para " + destinatario[0] + " com o titulo " + titulo);
                                     }
                                 }
                             }
