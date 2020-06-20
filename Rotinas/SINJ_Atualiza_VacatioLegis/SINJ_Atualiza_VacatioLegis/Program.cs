@@ -55,10 +55,11 @@ namespace SINJ_Atualiza_VacatioLegis
         private void AtualizarVacatioLegis()
         {
             this._sb_info.AppendLine("INÍCIO SINJ_AtualizaVacatioLegis - " + DateTime.Now);
-            Pesquisa pesquisa_norma = new Pesquisa();
-            NormaRN normaRn = new NormaRN();
+            var pesquisa_norma = new Pesquisa();
+            var normaRn = new NormaRN();
+            var tipoRelacaoRn = new TipoDeRelacaoRN();
 
-            var vacatioLegisNormaRn = new VacatioLegisNormaRN(normaRn, new UtilArquivoHtml());
+            var vacatioLegisNormaRn = new VacatioLegisNormaRN(normaRn, tipoRelacaoRn, new UtilArquivoHtml());
             pesquisa_norma.literal = string.Format("st_vacatio_legis AND dt_inicio_vigencia::date <= '{0}'", DateTime.Now.ToString("dd/MM/yyyy"));
             pesquisa_norma.limit = null;
             pesquisa_norma.order_by = new Order_By() { asc = new string[] { "dt_assinatura::date" } };
