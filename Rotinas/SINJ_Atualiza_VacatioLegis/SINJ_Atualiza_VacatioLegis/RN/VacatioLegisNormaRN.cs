@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TCDF.Sinj;
@@ -132,15 +133,15 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                 }
                 else if (UtilVides.EhRenumeracao(videAlterado.ds_texto_relacao))
                 {
-                    RenumerarTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
+                    RenumerarDispositivoNoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
                 }
                 else if (UtilVides.EhAcrescimo(videAlterado.ds_texto_relacao))
                 {
-                    AcrescentarNoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
+                    AcrescentarDispositivoNoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
                 }
                 else
                 {
-
+                    AlterarDispositivoNoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
                 }
                 SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
             }
@@ -249,7 +250,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
         }
 
-        private void RenumerarTextoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
+        private void RenumerarDispositivoNoTextoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
         {
             var tipoRelacao = _tipoDeRelacaoRn.Doc(videAlterado.ch_tipo_relacao);
             var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
@@ -271,7 +272,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
         }
 
-        private void AcrescentarNoTextoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
+        private void AcrescentarDispositivoNoTextoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
         {
             var tipoRelacao = _tipoDeRelacaoRn.Doc(videAlterado.ch_tipo_relacao);
             var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
@@ -285,6 +286,80 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     );
             }
             SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
+        }
+
+        private void AlterarDispositivoNoTextoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
+        {
+            var tipoRelacao = _tipoDeRelacaoRn.Doc(videAlterado.ch_tipo_relacao);
+            var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
+            HtmlNode pNode, aNode;
+            string linkname = "";
+            int countReplaceds;
+            foreach (var dispositivo in videAlterado.alteracao_texto_vide.dispositivos_norma_vide)
+            {
+                if (string.IsNullOrEmpty(dispositivo.texto))
+                {
+                    pNode = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(Regex.Replace(dispositivo.linkname, "(_replaced)*$", ""))).FirstOrDefault();
+                    aNode = pNode.Descendants("a").Where(a => a.GetAttributeValue("name", "").Equals(Regex.Replace(dispositivo.linkname, "(_replaced)*$", ""))).FirstOrDefault();
+
+                    pNode.SetAttributeValue("linkname", dispositivo.linkname);
+                    pNode.SetAttributeValue("replaced_by", normaAlteradora.ch_norma);
+                    aNode.SetAttributeValue("name", dispositivo.linkname);
+                    aNode.SetAttributeValue("id", dispositivo.linkname);
+
+                    if (pNode.SelectSingleNode("s") == null)
+                    {
+                        RiscarTextoDoDispositivo(pNode);
+                    }
+
+                    pNode.AppendChild(HtmlNode.CreateNode("<a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a>"));
+                }
+                else
+                {
+                    linkname = dispositivo.linkname;
+                    pNode = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(linkname)).FirstOrDefault();
+                    aNode = pNode.Descendants("a").Where(a => a.GetAttributeValue("name", "").Equals(linkname)).FirstOrDefault();
+                    countReplaceds = doc.DocumentNode.Descendants("p").Where(p => Regex.Replace(p.GetAttributeValue("linkname", ""), "(_replaced)*$", "").Equals(linkname)).Count();
+                    for (var i = 0; i < countReplaceds; i++)
+                    {
+                        linkname += "_replaced";
+                    }
+                    linkname += "_replaced";
+                    pNode.SetAttributeValue("linkname", linkname);
+                    pNode.SetAttributeValue("replaced_by", normaAlteradora.ch_norma);
+                    aNode.SetAttributeValue("name", linkname);
+                    aNode.SetAttributeValue("id", linkname);
+
+                    RiscarTextoDoDispositivo(pNode);
+
+                    doc.DocumentNode.InsertAfter(
+                        HtmlNode.CreateNode("<p linkname=\"" + dispositivo.linkname + "\">" + dispositivo.texto + " <a href=\"" + dispositivo.linkname + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a></p>"),
+                        pNode
+                    );
+                }
+            }
+
+            SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
+        }
+
+        private void RiscarTextoDoDispositivo(HtmlNode pNode)
+        {
+            var pNodeAux = HtmlNode.CreateNode("<p></p>");
+            foreach (var node in pNode.ChildNodes)
+            {
+                Console.WriteLine(node.NodeType);
+                Console.WriteLine(node.OuterHtml);
+                if (node.NodeType.Equals(HtmlNodeType.Text))
+                {
+                    pNodeAux.AppendChild(HtmlNode.CreateNode("<s>" + node.OuterHtml + "</s>"));
+                }
+                else
+                {
+                    pNodeAux.AppendChild(node);
+                }
+            }
+            pNode.RemoveAllChildren();
+            pNode.AppendChildren(pNodeAux.ChildNodes);
         }
 
         private void SaveFile(string texto, NormaOV norma)

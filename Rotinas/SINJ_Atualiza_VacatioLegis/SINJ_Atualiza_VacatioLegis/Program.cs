@@ -115,8 +115,11 @@ namespace SINJ_Atualiza_VacatioLegis
                                                     vacatioLegisNormaRn.SalvarTextoAntigo(normaAlteradora, videAlterador);
                                                     vacatioLegisNormaRn.SalvarTextoAntigo(normaAlterada, videAlterado);
 
-                                                    this._sb_info.AppendLine(DateTime.Now + " ---- Alterar Textos - Chave Vide => " + videAlterado.ch_vide);
+                                                    this._sb_info.AppendLine(DateTime.Now + " ---- Alterar Texto Norma Alteradora - Chave Vide => " + videAlterado.ch_vide);
                                                     vacatioLegisNormaRn.AlterarTextoDaNormaAlteradora(normaAlteradora, normaAlterada, videAlterador);
+
+                                                    this._sb_info.AppendLine(DateTime.Now + " ---- Alterar Textos Norma Alterada - Chave Vide => " + videAlterado.ch_vide);
+                                                    vacatioLegisNormaRn.AlterarTextoDaNormaAlterada(normaAlteradora, normaAlterada, videAlterador);
 
                                                 }
                                             }
