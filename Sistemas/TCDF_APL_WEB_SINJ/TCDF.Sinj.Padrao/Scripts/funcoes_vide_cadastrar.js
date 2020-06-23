@@ -842,7 +842,7 @@ function desfazerAlteracaoDoDispositivoCadastrar(linkname){
                 $elementoRenumerado.removeClass('renumerado');
                 $elementoRenumerado.find('a[href]').last().remove();
                 htmlDesfazer = $elementoRenumerado.html().replace(/&nbsp;$/,'');
-                $elementoRenumerado.html(htmlRenumerado.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
+                $elementoRenumerado.html(htmlDesfazer.replace(normaAlterada.dispositivos[i].texto, normaAlterada.dispositivos[i].texto_antigo));
                 $elementoRenumerado.find('button.select').show().tooltip(optionsTooltip);
                 dispositivoDesfeito = normaAlterada.dispositivos.splice(removeIndex, 1);
             }
