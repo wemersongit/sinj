@@ -109,7 +109,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     }
                     else
                     {
-
+                        AlterarDispositivoNoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
                     }
                 }
                 else if (UtilVides.DesfazAlteracaoCompleta(videAlterado.ds_texto_relacao))
