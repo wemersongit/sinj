@@ -497,7 +497,7 @@ function selecionarTextoNormaAlteradoraCadastrar() {
         }
         var parentNode = $(window.getSelection().baseNode).parents('p[linkname]');
         //Impede que selecione o link da norma alteradora antes de estar com a norma alterada selecionada.
-        if ($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p').length <= 0) {
+        if ($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p').length <= 0 && !normaAlterada.sem_arquivo) {
             notificarErroVide('Erro', 'Selecione também o arquivo da norma alterada.');
             return false;
         }
@@ -939,7 +939,7 @@ function validarVide(){
         }
     }
     if(!normaAlterada.sem_arquivo){
-        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && (!$('#inSemCitacaoNormaAlterada').is(':checked') || !normaAlterada.in_alteracao_completa)){
+        if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !$('#inSemCitacaoNormaAlterada').is(':checked') && !normaAlterada.in_alteracao_completa){
             notificarErroVide('Erro', 'Falta informar o dispositivo da norma alterada.');
             return false;
         }
