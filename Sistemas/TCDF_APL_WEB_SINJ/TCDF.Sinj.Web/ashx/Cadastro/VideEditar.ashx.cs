@@ -52,7 +52,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 }
                 foreach (var selectVide in normaAlteradoraOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)))
                 {
-                    vide.ValidateDsDispositivosAlterados(selectVide, _ds_dispositivos_alterados);
+                    vide.ValidateDsDispositivosAlterados(selectVide, _ds_dispositivos_alterados, vide.DsComentarioVide);
 
                     selectVide.ds_comentario_vide = vide.DsComentarioVide;
                     selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
@@ -193,16 +193,21 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             }
         }
 
-        public void ValidateDsDispositivosAlterados(Vide videAlterado, string dsDispositivosAlterados)
+        public void ValidateDsDispositivosAlterados(Vide videAlterado, string dsDispositivosAlterados, string dsComentarioVide)
         {
             var dsAnterior = "";
+            var dsComentarioAnterior = "";
             if (videAlterado.alteracao_texto_vide != null && !string.IsNullOrEmpty(videAlterado.alteracao_texto_vide.ds_dispositivos_alterados))
             {
                 dsAnterior = videAlterado.alteracao_texto_vide.ds_dispositivos_alterados;
             }
-            if ((string.IsNullOrEmpty(dsAnterior) && string.IsNullOrEmpty(dsDispositivosAlterados)) || dsAnterior.Equals(dsDispositivosAlterados))
+            if (!string.IsNullOrEmpty(videAlterado.ds_comentario_vide))
             {
-                throw new DocValidacaoException("Erro ao informar dispositivos alterados. É obrigatório salvar no mínimo um dispositivo alterado.");
+                dsComentarioAnterior = videAlterado.ds_comentario_vide;
+            }
+            if ((string.IsNullOrEmpty(dsAnterior) && string.IsNullOrEmpty(dsDispositivosAlterados) && string.IsNullOrEmpty(dsComentarioAnterior) && string.IsNullOrEmpty(dsComentarioVide)) || (dsAnterior.Equals(dsDispositivosAlterados) && dsComentarioAnterior.Equals(dsComentarioVide)))
+            {
+                throw new DocValidacaoException("Não foram localizadas alterações.");
             }
         }
     }
