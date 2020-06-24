@@ -45,10 +45,7 @@ function selecionarAlteracaoCompleta(){
     }
     const dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
     if($('#in_alteracao_completa').is(':checked')){
-        let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
-        if(!normaAlteradora.sem_arquivo){
-            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
-        }
+        let linkNormaAlteradora = montarLinkNorma(normaAlteradora);
         const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
         //se na inclusão de repristinação, revigoração, revogação, cancelamento, etc. o texto já sofre alteração completa por outro vide,
         //é necessário validar a última alteração sofrida e se o texto está, ou não, riscado
@@ -632,7 +629,8 @@ function selecionarSemCitacaoNormaAlteradora(){
         }
         if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
             const selectorInsertBeforeAlterador = getLastLecoSelectorNormaAlteradora();
-            $(selectorInsertBeforeAlterador).before(`<p ch_norma_info="${normaAlterada.ch_norma}"><a href="(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}">${tipoDeRelacao.ds_texto_para_alterador} - ${normaAlterada.ds_norma}</a></p>`);
+            var linkNormaAlterada = montarLinkNorma(normaAlterada);
+            $(selectorInsertBeforeAlterador).before(`<p ch_norma_info="${normaAlterada.ch_norma}"><a href="${linkNormaAlterada}">${tipoDeRelacao.ds_texto_para_alterador} - ${normaAlterada.ds_norma}</a></p>`);
         }
     }
     else{
@@ -652,15 +650,7 @@ function selecionarSemCitacaoNormaAlterada(){
             notificarErroVide('Erro', 'Selecione o dispositivo alterador.');
             return;
         }
-        let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
-        if(!normaAlteradora.sem_arquivo){
-            if(normaAlteradora.dispositivos.length > 0){
-                linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
-            }
-            else{
-                linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}`;
-            }
-        }
+        let linkNormaAlteradora = montarLinkNorma(normaAlteradora);
         if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
             const selectorInsertBeforeAlterado = getLastLecoSelectorNormaAlterada();
             $(selectorInsertBeforeAlterado).before(`<p ch_norma_info="${normaAlteradora.ch_norma}" class="adicionado"><a href="${linkNormaAlteradora}">${tipoDeRelacao.ds_texto_para_alterador} - ${normaAlteradora.ds_norma}</a></p>`);
@@ -678,15 +668,7 @@ function selecionarSemCitacaoNormaAlterada(){
 
 
 function clickAlterarDispositivoCadastrar(){
-    let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
-    if(!normaAlteradora.sem_arquivo){
-        if(normaAlteradora.dispositivos.length > 0){
-            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
-        }
-        else{
-            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}`;
-        }
-    }
+    let linkNormaAlteradora = montarLinkNorma(normaAlteradora);
     let dispositivoAlterado = {}
     const texto = $('#div_tooltip_dispositivo textarea[name=textoNovo]').val();
     let $buttonSelected = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo button.selected');
@@ -975,10 +957,7 @@ function salvarArquivosVideCadastrar(sucessoVide){
                 if($conteudoArquivoNormaAlteradora[i].outerHTML){
                     if($conteudoArquivoNormaAlteradora[i].getAttribute('linkname') == normaAlteradora.dispositivos[0].linkname){
                         const $link = $($conteudoArquivoNormaAlteradora[i]).find('a[href]');
-                        let link = `(_link_sistema_)Norma/${normaAlterada.ch_norma}/${normaAlterada.arquivo.filename}.html`;
-                        if(normaAlterada.dispositivos.length > 0){
-                            link += `#${normaAlterada.dispositivos[0].linkname}`;
-                        }
+                        let link = montarLinkNorma(normaAlterada);
                         for(let a = 0; a < $link.length; a++){
                             if($link[a].innerText == normaAlteradora.dispositivos[0].texto){
                                 $link[a].setAttribute('href', link);

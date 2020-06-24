@@ -286,15 +286,7 @@ function habilitarEdicaoDoDispositivo(linkname, texto, convertido){
 
 function clickAlterarDispositivoEditar(){
     let dispositivoAlterado = {}
-    let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
-    if(!normaAlteradora.sem_arquivo){
-        if(normaAlteradora.dispositivos.length > 0){
-            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
-        }
-        else{
-            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.arquivo.filename}`;
-        }
-    }
+    let linkNormaAlteradora = montarLinkNorma(normaAlteradora);
     const texto = $('#div_tooltip_dispositivo textarea[name=textoNovo]').val();
     let $buttonSelected = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo button.selected');
     $buttonSelected.tooltip('hide');

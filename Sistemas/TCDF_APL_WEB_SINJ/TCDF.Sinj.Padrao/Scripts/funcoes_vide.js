@@ -380,3 +380,16 @@ function notificarErroVide(title, body){
         }
     });
 }
+
+function montarLinkNorma(norma){
+    let linkNorma = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${norma.ch_norma}`;
+    if(!norma.sem_arquivo){
+        if(norma.dispositivos.length > 0){
+            linkNorma = `(_link_sistema_)Norma/${norma.ch_norma}/${norma.arquivo.filename}#${norma.dispositivos[0].linkname}`;
+        }
+        else{
+            linkNorma = `(_link_sistema_)Norma/${norma.ch_norma}/${norma.arquivo.filename}`;
+        }
+    }
+    return linkNorma;
+}
