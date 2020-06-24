@@ -47,6 +47,37 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     var _st_pendencia = context.Request["st_pendencia"];
                     var st_pendencia = false;
 
+<<<<<<< HEAD
+=======
+
+                    var _st_desabilita_email = context.Request["st_desabilita_email"];
+                    var _st_habilita_email = "";
+                    var st_habilita_email = false;
+
+                    if (TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_eml))
+                    {
+                        _st_habilita_email = context.Request["st_habilita_email"];
+                    }
+                    else
+                    {
+                        _st_habilita_email = "false";
+                    }
+
+                    var _st_habilita_pesquisa = "";
+                    var st_habilita_pesquisa = false;
+                    if (TCDF.Sinj.Util.UsuarioTemPermissao(TCDF.Sinj.Web.Sinj.oSessaoUsuario, TCDF.Sinj.AcoesDoUsuario.nor_hsp))
+                    {
+                        _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                    }
+                    else
+                    {
+                        _st_habilita_pesquisa = "false";
+                    }
+
+
+
+
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                     var _interessado = context.Request.Form.GetValues("interessado");
                     var _requerente = context.Request.Form.GetValues("requerente");
                     var _requerido = context.Request.Form.GetValues("requerido");
@@ -220,7 +251,44 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     {
                         normaOv.st_pendencia = st_pendencia;
                     }
+<<<<<<< HEAD
                     if(!string.IsNullOrEmpty(_st_destaque) && bool.TryParse(_st_destaque, out st_destaque))
+=======
+
+                    if (!string.IsNullOrEmpty(_st_habilita_pesquisa) && bool.TryParse(_st_habilita_pesquisa, out st_habilita_pesquisa))
+                    {
+                        normaOv.st_habilita_pesquisa = st_habilita_pesquisa;
+                    }
+                    else
+                    {
+                        normaOv.st_habilita_pesquisa = st_habilita_pesquisa;
+                    }
+
+                    if (!string.IsNullOrEmpty(_st_habilita_email) && bool.TryParse(_st_habilita_email, out st_habilita_email))
+                    {
+                        if (_st_desabilita_email == "true")
+                        {
+                            normaOv.st_habilita_email = null;
+                        }
+                        else
+                        {
+                            normaOv.st_habilita_email = st_habilita_email;
+                        }
+                    }
+                    else
+                    {
+                        if (_st_desabilita_email == "true")
+                        {
+                            normaOv.st_habilita_email = null;
+                        }
+                        else
+                        {
+                            normaOv.st_habilita_email = st_habilita_email;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(_st_destaque) && bool.TryParse(_st_destaque, out st_destaque))
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                     {
                         normaOv.st_destaque = st_destaque;
                     }

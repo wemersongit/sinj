@@ -63,6 +63,11 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaGeral.iDisplayLength = iDisplayLength;
                         pesquisaGeral.sentencaOrdenamento = sentencaOrdenamento;
                         query = diarioBuscaEs.MontarBusca(pesquisaGeral).GetQuery();
+<<<<<<< HEAD
+=======
+                        query = query.Replace("st_habilita_pesquisa:true", "*");
+                        query = query.Replace("(*)and", "");
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         break;
                     case "notifiqueme":
                         SentencaPesquisaNotifiquemeDiarioOV pesquisaNotifiqueme = new SentencaPesquisaNotifiquemeDiarioOV();
@@ -75,6 +80,11 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaNotifiqueme.sentencaOrdenamento = sentencaOrdenamento;
                         var buscaNotifiqueme = new DiarioBuscaEs().MontarBusca(pesquisaNotifiqueme);
                         query = buscaNotifiqueme.GetQuery();
+<<<<<<< HEAD
+=======
+                        query = query.Replace("st_habilita_pesquisa:true", "*");
+                        query = query.Replace("(*)and", "");
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         break;
                     case "diario":
                         SentencaPesquisaDiretaDiarioOV pesquisaDireta = new SentencaPesquisaDiretaDiarioOV();
@@ -91,6 +101,11 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaDireta.iDisplayLength = iDisplayLength;
                         pesquisaDireta.sentencaOrdenamento = sentencaOrdenamento;
                         query = diarioBuscaEs.MontarBusca(pesquisaDireta).GetQuery();
+<<<<<<< HEAD
+=======
+                        query = query.Replace("st_habilita_pesquisa:true", "*");
+                        query = query.Replace("(*)and", "");
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         break;
                 }
 

@@ -85,7 +85,11 @@ namespace SINJ_PUSH_APP
                 NormaRN normaRn = new NormaRN();
                 pesquisa_norma.literal = "st_nova=true";
                 pesquisa_norma.limit = null;
+<<<<<<< HEAD
                 pesquisa_norma.select = new[] { "id_doc", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "ch_tipo_norma", "indexacoes" };
+=======
+                pesquisa_norma.select = new[] { "id_doc", "ch_norma", "nm_tipo_norma", "origens", "nr_norma", "dt_assinatura", "ds_ementa", "ch_tipo_norma", "indexacoes", "vides", "fontes" };
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                 var results_normas = normaRn.Consultar(pesquisa_norma);
                 this._sb_info.AppendLine(DateTime.Now + ": Total de normas ST_NOVA=true => " + results_normas.results.Count);
 
@@ -215,7 +219,12 @@ namespace SINJ_PUSH_APP
                             var email = new EmailRN();
                             var display_name_remetente = "SINJ Notifica";
                             var destinatario = new[] { usuario_push.email_usuario_push };
+<<<<<<< HEAD
                             var titulo = "Informações sobre o ato " + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
+=======
+                            //trecho substituido - var titulo = "Informações sobre o ato " + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
+                            var titulo = "SINJ-DF - " + "Criação " + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + norma.origens[0].sg_orgao : "");
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                             var html = true;
 
                             var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj.jpg";
@@ -245,6 +254,7 @@ namespace SINJ_PUSH_APP
                             corpoEmail = corpoEmail + "		As informações sobre esse ato estão abaixo:";
                             corpoEmail = corpoEmail + "	</div>";
 
+<<<<<<< HEAD
                             corpoEmail = corpoEmail + "	<div>";
                             corpoEmail = corpoEmail + "		Ato:";
                             corpoEmail = corpoEmail + "		<table cellspacing=\"0\" cellpadding=\"2\" rules=\"all\" border=\"1\" style=\"border-color:#A3A3A3;border-style:Solid;width:100%;border-collapse:collapse;font-size: 11px;\">";
@@ -257,6 +267,9 @@ namespace SINJ_PUSH_APP
 
                             corpoEmail = corpoEmail + "				<td valign=\"top\" style=\"width:100px;\">" + norma.nm_tipo_norma + " " + norma.nr_norma + " de " + norma.dt_assinatura;
 
+=======
+                            var orgaosEmail = "";
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                             if (quantidadeDeOrgaos > 0)
                             {
                                 if (quantidadeDeOrgaos > 1)
@@ -265,16 +278,102 @@ namespace SINJ_PUSH_APP
                                     int i = 0;
                                     foreach (var orgao in norma.origens)
                                     {
-                                        if (i == quantidadeDeOrgaos - 1)
-                                            corpoEmail = corpoEmail + " e " + orgao.sg_orgao;
+                                        if (i == quantidadeDeOrgaos)
+                                        {
+                                            orgaosEmail = orgaosEmail + orgao.sg_orgao;
+                                        }
                                         else
-                                            corpoEmail = corpoEmail + orgao.sg_orgao + ", ";
+                                        {
+                                            orgaosEmail = orgaosEmail + orgao.sg_orgao + ", ";
+                                        }
                                         i++;
                                     }
+<<<<<<< HEAD
                                 }
                                 else
                                 {
                                     corpoEmail = corpoEmail + " do órgão: " + norma.origens.First().sg_orgao;
+=======
+                                    //corpoEmail = corpoEmail + " de " + norma.dt_assinatura;
+                                }
+                                else
+                                {
+                                    orgaosEmail = orgaosEmail + " <a> " + norma.origens[0].sg_orgao + "</a>";
+                                }
+                            }
+
+                            var corpo_ementa_nova = "";
+                            if (norma.ds_ementa.Length > 250)
+                            {
+
+                                corpo_ementa_nova = "(" + norma.ds_ementa.Substring(0, 250) + "..." + ")";
+                            }
+                            else
+                            {
+                                corpo_ementa_nova = "(" + norma.ds_ementa + ")";
+                            }
+
+                            corpoEmail = corpoEmail + "<div style='font-size: 14px; font-weight: 500; background-color:#B4E6CBs;'>";
+                            corpoEmail = corpoEmail + "<a href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + norma.ch_norma + ">" + norma.nm_tipo_norma + " " + norma.nr_norma + "</a>"+ " de " + norma.dt_assinatura + " " + orgaosEmail + " " + corpo_ementa_nova + ", publicado no(a) ";
+
+                            
+
+                            if(norma.fontes.Count > 0)
+                            {
+                                if(norma.fontes.Count > 1)
+                                {
+                                    var dtTexto = "";
+                                    var nmTpFonte = "";
+                                    foreach (var fontes in norma.fontes)
+                                    {
+                                        if (dtTexto == "" || dtTexto == null)
+                                        {
+                                            dtTexto = fontes.dt_publicacao;
+                                            nmTpFonte = fontes.nm_tipo_fonte;
+                                        }
+                                        else
+                                        {
+                                            DateTime dtNovaFonte = Convert.ToDateTime(fontes.dt_publicacao);
+                                            DateTime dataSetada = DateTime.Parse(dtTexto);
+                                            if (dtNovaFonte.CompareTo(dataSetada) == 1)
+                                            {
+                                                //dtNovaVide maior que a dataSetada
+                                                nmTpFonte = fontes.dt_publicacao;
+                                                dtTexto = Convert.ToString(dtNovaFonte);
+                                            }
+                                            else
+                                            {
+                                                if (dtNovaFonte.CompareTo(dataSetada) == 0)
+                                                {
+                                                    nmTpFonte = fontes.dt_publicacao;
+                                                    dtTexto = Convert.ToString(dtNovaFonte);
+                                                    //Console.WriteLine("é igual");
+                                                }
+                                                else
+                                                {
+                                                    //dataSetada maior que a dtNovaVide
+                                                }
+                                            }
+                                        }
+                                    }
+                                    corpoEmail = corpoEmail + "<a> " + nmTpFonte + " de " + dtTexto;
+                                }
+                                else
+                                {
+                                    corpoEmail = corpoEmail + "<a> " + norma.fontes[0].nm_tipo_fonte + " de " + norma.fontes[0].dt_publicacao;
+                                }
+                            }
+
+                            corpoEmail = corpoEmail + "</div>";
+
+                            corpoEmail = corpoEmail + "<div>";
+                            if (norma.vides.Count > 0)
+                            {
+                                corpoEmail = corpoEmail + "<p style='font-size: 14px; font-weight: bold; background-color:#B4E6CBs;'>Normas afetadas por esse normativo: </p>";
+                                foreach (var vides in norma.vides)
+                                {
+                                    corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px; font-weight: 500;\"> " + vides.nm_tipo_relacao + " " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" + vides.nm_tipo_norma_vide + " " + vides.nr_norma_vide + "/" + vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) + "</a>" + "</div>";
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                 }
                             }
 
@@ -370,7 +469,155 @@ namespace SINJ_PUSH_APP
                         var email = new EmailRN();
                         var display_name_remetente = "SINJ Notifica";
                         var destinatario = new[] { usuario_push.email_usuario_push };
+<<<<<<< HEAD
                         var titulo = "Informações sobre o ato " + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " do órgão " + resultado_norma.origens[0].sg_orgao : "");
+=======
+
+                        var dtTexto = "";
+                        var nmTipoRelacao = "";
+                        var dt_vide = "";
+                        var corpo_vide = "";
+                        //NOTE: Compara as datas das vides e pega a mais recente para colocar no assunto do email como a relação que foi feita. By Victor
+                        if (resultado_norma.vides.Count > 0)
+                        {
+                            foreach (var vides in resultado_norma.vides)
+                            {
+                                var dispositivo_afetado = "";
+                                var linkName = "";
+
+                                if (vides.alteracao_texto_vide != null && (vides.alteracao_texto_vide.ds_dispositivos_alterados != null && vides.alteracao_texto_vide.ds_dispositivos_alterados != ""))
+                                {
+                                    dispositivo_afetado = vides.alteracao_texto_vide.ds_dispositivos_alterados;
+                                    linkName = vides.alteracao_texto_vide.dispositivos_norma_vide[0].linkname;
+                                }
+                                if (vides.in_norma_afetada)
+                                {
+                                    if (dispositivo_afetado == "")
+                                    {
+                                        if (vides.caput_norma_vide != null && (vides.caput_norma_vide.ds_caput != null && vides.caput_norma_vide.ds_caput != ""))
+                                        {
+                                            dispositivo_afetado = vides.caput_norma_vide.ds_caput;
+                                            linkName = vides.caput_norma_vide.linkname;
+                                        }
+                                        else
+                                        {
+                                            if (!string.IsNullOrEmpty(vides.artigo_norma_vide)) { dispositivo_afetado += " Art. " + vides.artigo_norma_vide; linkName = "art" + vides.artigo_norma_vide; } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.paragrafo_norma_vide)) { dispositivo_afetado += " Par. " + vides.paragrafo_norma_vide.ToLower(); linkName = "par" + vides.paragrafo_norma_vide.ToLower(); } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.inciso_norma_vide)) { dispositivo_afetado += " inc. " + vides.inciso_norma_vide; linkName = "inc" + vides.inciso_norma_vide; } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.alinea_norma_vide)) { dispositivo_afetado += " ali. " + vides.alinea_norma_vide; linkName = "ali" + vides.alinea_norma_vide; } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.item_norma_vide)) { dispositivo_afetado += " item. " + vides.item_norma_vide; linkName = "item" + vides.item_norma_vide; } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.anexo_norma_vide)) { dispositivo_afetado += " Anexo. " + vides.anexo_norma_vide; linkName = "anexo" + vides.anexo_norma_vide; } else { dispositivo_afetado += ""; }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (dispositivo_afetado == "" || dispositivo_afetado == null)
+                                    {
+                                        if (vides.caput_norma_vide_outra != null && (vides.caput_norma_vide_outra.ds_caput != null && vides.caput_norma_vide_outra.ds_caput != ""))
+                                        {
+                                            dispositivo_afetado = vides.caput_norma_vide_outra.ds_caput;
+                                            linkName = vides.caput_norma_vide_outra.linkname;
+                                        }
+                                        else
+                                        {
+                                            if (!string.IsNullOrEmpty(vides.artigo_norma_vide_outra)) { dispositivo_afetado += " Art. " + vides.artigo_norma_vide_outra; linkName = "art" + vides.artigo_norma_vide_outra; } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.paragrafo_norma_vide_outra)) { dispositivo_afetado += " Par. " + vides.paragrafo_norma_vide_outra.ToLower(); linkName = "par" + vides.paragrafo_norma_vide_outra.ToLower(); } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.inciso_norma_vide_outra)) { dispositivo_afetado += " inc. " + vides.inciso_norma_vide_outra; linkName = "inc" + vides.inciso_norma_vide_outra; } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.alinea_norma_vide_outra)) { dispositivo_afetado += " ali. " + vides.alinea_norma_vide_outra; linkName = "ali" + vides.alinea_norma_vide_outra; } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.item_norma_vide_outra)) { dispositivo_afetado += " item. " + vides.item_norma_vide_outra; linkName = "item" + vides.item_norma_vide_outra; } else { dispositivo_afetado += ""; }
+                                            if (!string.IsNullOrEmpty(vides.anexo_norma_vide_outra)) { dispositivo_afetado += " Anexo. " + vides.anexo_norma_vide_outra; linkName = "anexo" + vides.anexo_norma_vide_outra; } else { dispositivo_afetado += ""; }
+                                        }
+                                    }
+                                }
+
+                                if (!linkName.Contains("cap"))
+                                {
+                                    linkName = "capI_" + linkName;
+                                }
+
+                                //corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px;\"> " + (!string.IsNullOrEmpty(vides.nm_tipo_relacao.ToLower()) ? System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(vides.nm_tipo_relacao.ToLower()) : " ") + " " +
+                                //"<a title='Visualizar' target='_blank' href=" + Config.ValorChave("LinkSINJ", true) + "/BaixarArquivoNorma.aspx?id_norma=" + (vides.in_norma_afetada ? resultado_norma.ch_norma : vides.ch_norma_vide) + "#" + linkName + ">" +
+                                //dispositivo_afetado + "</a>" + (vides.in_norma_afetada ? " pelo(a) " : " do(a) ") +
+                                //"<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" +
+                                //(!string.IsNullOrEmpty(vides.nm_tipo_norma_vide) ? vides.nm_tipo_norma_vide : " ") + " " + (!string.IsNullOrEmpty(vides.nr_norma_vide) ? vides.nr_norma_vide : " ") + "/" +
+                                //(!string.IsNullOrEmpty(vides.dt_assinatura_norma_vide) ? vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) : " ") +
+                                //"</a>" + "</div>";
+
+                                var corpo_vide_atual = "<div style=\"display:block; font-size: 12px;\"> " + (!string.IsNullOrEmpty(vides.ds_texto_relacao) ? vides.ds_texto_relacao.ToLower() : vides.nm_tipo_relacao) + ": " +
+                                    "<a title='Visualizar' target='_blank' href=" + Config.ValorChave("LinkSINJ", true) + "/BaixarArquivoNorma.aspx?id_norma=" + (vides.in_norma_afetada ? resultado_norma.ch_norma : vides.ch_norma_vide) + "#" + linkName + ">" +
+                                    dispositivo_afetado + "</a>" + (vides.in_norma_afetada ? " pelo(a) " : " do(a) ") +
+                                    "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" +
+                                    (!string.IsNullOrEmpty(vides.nm_tipo_norma_vide) ? vides.nm_tipo_norma_vide : " ") + " " + (!string.IsNullOrEmpty(vides.nr_norma_vide) ? vides.nr_norma_vide : " ") + "/" +
+                                    (!string.IsNullOrEmpty(vides.dt_assinatura_norma_vide) ? vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) : " ") +
+                                    "</a>" + "</div>";
+
+
+                                if (resultado_norma.vides.Count == 1)
+                                {
+                                    dtTexto = vides.dt_assinatura_norma_vide;
+                                    nmTipoRelacao = (vides.ds_texto_relacao == "" ? vides.nm_tipo_relacao : vides.ds_texto_relacao);
+                                    corpo_vide = corpo_vide_atual;
+                                }
+                                if (dtTexto == "" || dtTexto == null)
+                                {
+                                    dtTexto = vides.dt_assinatura_norma_vide;
+                                    nmTipoRelacao = (vides.ds_texto_relacao == " " ? vides.nm_tipo_relacao : vides.ds_texto_relacao);
+                                    corpo_vide = corpo_vide_atual;
+                                }
+                                else
+                                {
+                                    DateTime dtNovaVide = Convert.ToDateTime(vides.dt_assinatura_norma_vide);
+                                    DateTime dataSetada = DateTime.Parse(dtTexto);
+                                    if (dtNovaVide.CompareTo(dataSetada) == 1)
+                                    {
+                                        //dtNovaVide maior que a dataSetada
+                                        nmTipoRelacao = (vides.ds_texto_relacao == " " ? vides.nm_tipo_relacao : vides.ds_texto_relacao);
+                                        dtTexto = Convert.ToString(dtNovaVide);
+                                        corpo_vide = corpo_vide_atual;
+                                    }
+                                    else
+                                    {
+                                        if (dtNovaVide.CompareTo(dataSetada) == 0)
+                                        {
+                                            nmTipoRelacao = (vides.ds_texto_relacao == " " ? vides.nm_tipo_relacao : vides.ds_texto_relacao);
+                                            dtTexto = Convert.ToString(dtNovaVide);
+                                            corpo_vide = corpo_vide_atual;
+                                            //Console.WriteLine("é igual");
+                                        }
+                                        else
+                                        {
+                                            //dataSetada maior que a dtNovaVide
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            nmTipoRelacao = "Alteração";
+
+
+
+                            var corpo_ementa = "";
+                            if (resultado_norma.ds_ementa.Length > 250)
+                            {
+                            
+                                corpo_ementa = resultado_norma.ds_ementa.Substring(0, 250) + "...";
+                            }
+                            else
+                            {
+                                corpo_ementa = resultado_norma.ds_ementa;
+                            }
+                            
+
+                            corpo_vide = "<div style=\"display:inline-block; font-size: 15px;\"> " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + resultado_norma.ch_norma + ">" + "Ementa: </a>" + "</div>" + "&nbsp;" + "<span>"  +  corpo_ementa + "</span>";
+                        }
+
+                        nmTipoRelacao = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nmTipoRelacao.ToLower());
+
+                        var titulo = "SINJ-DF - O normativo " + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "") + " foi atualizado";
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         var html = true;
 
                         var _linkImagemEmailTopo = "" + Config.ValorChave("LinkSINJPadrao", true) + "/Imagens/topo_sinj.jpg";
@@ -397,10 +644,15 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "<tr>";
                         corpoEmail = corpoEmail + "<td style=\"background-color: #B4E6CBs; text-align: left;\">";
                         corpoEmail = corpoEmail + "	<div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
+<<<<<<< HEAD
                         corpoEmail = corpoEmail + "		Um ato que você escolheu para monitorar sofreu alteração.<br/>";
                         corpoEmail = corpoEmail + "		As informações sobre esse ato estão abaixo:";
+=======
+                        corpoEmail = corpoEmail + "     O normativo " + resultado_norma.nm_tipo_norma + " " + resultado_norma.nr_norma + " de " + resultado_norma.dt_assinatura + " " + (quantidadeDeOrgaos > 0 ? " - " + resultado_norma.origens[0].sg_orgao : "") + " foi atualizado: <br/>";
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         corpoEmail = corpoEmail + "	</div>";
 
+<<<<<<< HEAD
                         corpoEmail = corpoEmail + "	<div>";
                         corpoEmail = corpoEmail + "		Ato:";
                         corpoEmail = corpoEmail + "		<table cellspacing=\"0\" cellpadding=\"2\" rules=\"all\" border=\"1\" style=\"border-color:#A3A3A3;border-style:Solid;width:100%;border-collapse:collapse;font-size: 11px;\">";
@@ -452,6 +704,10 @@ namespace SINJ_PUSH_APP
                         corpoEmail = corpoEmail + "</tr>";
                         corpoEmail = corpoEmail + " </tr>";
                         corpoEmail = corpoEmail + " </table>";
+=======
+                        corpoEmail = corpoEmail + corpo_vide;
+                        corpoEmail = corpoEmail + "</div>";
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         corpoEmail = corpoEmail + "<table width=\"600px\" style=\"background:#ddffdc;\" align=\"center\" > <br/>";
                         corpoEmail = corpoEmail + "<tr>";
                         corpoEmail = corpoEmail + "<td>";
@@ -491,9 +747,9 @@ namespace SINJ_PUSH_APP
             Pesquisa pesquisaPush = new Pesquisa();
             NotifiquemeOV notifiquemeOv = new NotifiquemeOV();
             DiarioOV diarioOv = new DiarioOV();
+            
             try
             {
-                NotifiquemeRN notifiquemeRN = new NotifiquemeRN(false);
                 DiarioRN diarioRn = new DiarioRN();
                 pesquisaDiario.literal = "st_novo AND dt_idx is not null";
                 pesquisaDiario.limit = null;
@@ -526,13 +782,20 @@ namespace SINJ_PUSH_APP
 
                     pesquisaPush.literal = "st_push";
                     pesquisaPush.limit = null;
+                    NotifiquemeRN notifiquemeRN = new NotifiquemeRN(false);
                     var resultsNotifiqueme = notifiquemeRN.Consultar(pesquisaPush);
                     this._sb_info.AppendLine(DateTime.Now + ": Total de usuários => " + resultsNotifiqueme.results.Count);
-
                     foreach (var usuarioPush in resultsNotifiqueme.results)
                     {
+<<<<<<< HEAD
                         if(usuarioPush.termos_diarios_monitorados.Count > 0){
                             foreach(var termo_diario in usuarioPush.termos_diarios_monitorados){
+=======
+                        if (usuarioPush.termos_diarios_monitorados != null && usuarioPush.termos_diarios_monitorados.Count > 0)
+                        {
+                            foreach (var termo_diario in usuarioPush.termos_diarios_monitorados)
+                            {
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                 if (termo_diario.st_termo_diario_monitorado)
                                 {
                                     var textoConsultado = termo_diario.ds_termo_diario_monitorado.Replace("\"", "");
@@ -560,8 +823,9 @@ namespace SINJ_PUSH_APP
                                     sFilters += "]}";
                                     sQuery = "{\"size\": " + countDiarios + ", \"_source\":{\"exclude\":[\"*.filetext\"]},\"query\": {\"filtered\":{\"query\":{\"query_string\":{\"fields\":[\"arquivos.arquivo_diario.filetext\"],\"query\":\"" + textoConsultado + "\"}}" + sFilters + "}},\"highlight\":{\"pre_tags\":[\"<span style='background:#FFFF55; font-weight:bold;'>\"],\"post_tags\":[\"</span>\"],\"fields\":{\"arquivos.arquivo_diario.filetext\":{\"number_of_fragments\":8, \"fragment_size\":150}}}}";
                                     var diarios = new TCDF.Sinj.ES.ESAd().PesquisarDocs<DiarioOV>(sQuery, url_es);
-                                    if (diarios.hits.hits.Count > 0)
+                                    if (diarios.hits != null)
                                     {
+<<<<<<< HEAD
                                         var email = new EmailRN();
                                         var display_name_remetente = "SINJ Notifica";
                                         var destinatario = new[] { usuarioPush.email_usuario_push };
@@ -611,45 +875,103 @@ namespace SINJ_PUSH_APP
                                             foreach(var arquivo in diario._source.arquivos){
                                                 corpoEmail = corpoEmail + "<a href=\"" + Config.ValorChave("LinkSINJ", true) + "/Diario/" + diario._source.ch_diario + "/" + arquivo.arquivo_diario.id_file + "/arq/" + i + "/" + arquivo.arquivo_diario.filename + "\">Clique para ver o diário"+(!string.IsNullOrEmpty(arquivo.ds_arquivo) ? arquivo.ds_arquivo : "")+"</a><br/>";
                                                 i++;
-                                            }
-                                            corpoEmail = corpoEmail + "                                                </td>";
-                                            corpoEmail = corpoEmail + "                                            </tr>";
-                                        }
-                                        corpoEmail = corpoEmail + "                                            </tbody>";
-                                        corpoEmail = corpoEmail + "                                        </table>";
-                                        corpoEmail = corpoEmail + "                                    </div><br/><br/>";
-                                        corpoEmail = corpoEmail + "                                    <div style=\"margin-bottom: 3px; font-size: 11px; font-weight: bold; background-color:#B4E6CBs\">";
-                                        corpoEmail = corpoEmail + "	                                       <a href=\"" + Config.ValorChave("LinkSINJ", true) + "/DesativarNormaPush.aspx?email_usuario_push=" + usuarioPush.email_usuario_push + "&" + "ch_termo_diario_monitorado=" + termo_diario.ch_termo_diario_monitorado + "\">Não quero mais receber informações sobre a criação de diários com esse texto.</a>";
-                                        corpoEmail = corpoEmail + "	                                   </div>";
-                                        corpoEmail = corpoEmail + "                                </td>";
-                                        corpoEmail = corpoEmail + "                            </tr>";
-                                        corpoEmail = corpoEmail + "                        </table>";
-                                        corpoEmail = corpoEmail + "                    </td>";
-                                        corpoEmail = corpoEmail + "                </tr>";
-                                        corpoEmail = corpoEmail + "                <tr>";
-                                        corpoEmail = corpoEmail + "                    <td>";
-                                        corpoEmail = corpoEmail + "                        <table width=\"800px\" style=\"background:#ddffdc;\" align=\"center\" > <br/>";
-                                        corpoEmail = corpoEmail + "                            <tr>";
-                                        corpoEmail = corpoEmail + "                                <th>";
-                                        corpoEmail = corpoEmail + "                                    <HR SIZE=1 WIDTH=801 ALIGN=center>";
-                                        corpoEmail = corpoEmail + "                                    <a href=\"http://www.sinj.df.gov.br\">www.sinj.df.gov.br</a>";
-                                        corpoEmail = corpoEmail + "                                </th>";
-                                        corpoEmail = corpoEmail + "                            </tr>";
-                                        corpoEmail = corpoEmail + "                        </table >";
-                                        corpoEmail = corpoEmail + "                    </td>";
-                                        corpoEmail = corpoEmail + "                </tr>";
-                                        corpoEmail = corpoEmail + "            </table>";
-                                        corpoEmail = corpoEmail + "        </td>";
-                                        corpoEmail = corpoEmail + "    </tr>";
-                                        corpoEmail = corpoEmail + "</table>";
+=======
+                                        if (diarios.hits.hits.Count > 0)
+                                        {
+                                            var email = new EmailRN();
+                                            var display_name_remetente = "SINJ Notifica";
+                                            var destinatario = new[] { usuarioPush.email_usuario_push };
+                                            var titulo = (diarios.hits.hits.Count > 1 ? "Foram cadastrados " + diarios.hits.hits.Count + " diários" : "Foi cadastrado um diário") + " no SINJ contendo o texto: " + termo_diario.ds_termo_diario_monitorado + ".";
+                                            var html = true;
 
-                                        email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpoEmail);
-                                        var logEmail = new LogEmail();
-                                        logEmail.emails = destinatario;
-                                        logEmail.assunto = titulo;
-                                        logEmail.mensagem = corpoEmail;
-                                        TCDF.Sinj.Log.LogOperacao.gravar_operacao("APP.PUS.EMAIL", logEmail, "Aplicação Push", "SINJ_PUSH_APP");
-                                        this._sb_info.AppendLine(DateTime.Now + ": CRIACAO - Email enviado para " + destinatario[0] + " com o titulo " + titulo);
+
+                                            corpoEmail = "";
+                                            corpoEmail = corpoEmail + "<table width=\"100%\" style=\"border:1px\"> ";
+                                            corpoEmail = corpoEmail + "    <tr>";
+                                            corpoEmail = corpoEmail + "        <td>";
+                                            corpoEmail = corpoEmail + "            <table width = \"800\" style=\"background:#ddffdc;\" align=\"center\" >";
+                                            corpoEmail = corpoEmail + "                <tr>";
+                                            corpoEmail = corpoEmail + "                    <td>";
+                                            corpoEmail = corpoEmail + "                       <table width=\"800px\" align=\"center\">";
+                                            corpoEmail = corpoEmail + "                           <tr>";
+                                            corpoEmail = corpoEmail + "                               <td><a href=\"http://www.sinj.df.gov.br\" target=\"_blank\" title=\"http://www.sinj.df.gov.br\"><img src=" + _linkImagemEmailTopo + "></a></td>";
+                                            corpoEmail = corpoEmail + "                           </tr>";
+                                            corpoEmail = corpoEmail + "                       </table>";
+                                            corpoEmail = corpoEmail + "                   </td>";
+                                            corpoEmail = corpoEmail + "                </tr>";
+                                            corpoEmail = corpoEmail + "                <tr>";
+                                            corpoEmail = corpoEmail + "                    <td>";
+                                            corpoEmail = corpoEmail + "                        <table width=\"800px\" align=\"center\"><br/>";
+                                            corpoEmail = corpoEmail + "                            <HR SIZE=1 WIDTH=801 ALIGN=center>";
+                                            corpoEmail = corpoEmail + "                            <tr>";
+                                            corpoEmail = corpoEmail + "                                <td style=\"background-color: #B4E6CBs; text-align: left;\">";
+                                            corpoEmail = corpoEmail + "                                    <div style=\"margin-bottom: 3px; font-size: 12px; font-weight: bold; background-color:#B4E6CBs\">";
+                                            corpoEmail = corpoEmail + "	                                       " + titulo + "<br/>";
+                                            corpoEmail = corpoEmail + "		                                   As informações sobre " + (diarios.hits.hits.Count > 1 ? "esses diários" : "esse diário") + " estão abaixo:";
+                                            corpoEmail = corpoEmail + "	                                   </div>";
+                                            corpoEmail = corpoEmail + "	                                   <div>";
+                                            corpoEmail = corpoEmail + "		                                   <table cellspacing=\"0\" cellpadding=\"2\" rules=\"all\" border=\"1\" style=\"border-color:#A3A3A3;border-style:Solid;width:100%;border-collapse:collapse;font-size: 11px;\">";
+                                            corpoEmail = corpoEmail + "			                                   <tbody>";
+                                            corpoEmail = corpoEmail + "			                                       <tr class=\"textoCorVide\" align=\"left\" style=\"color:#323232;background-color:#B4E6CB;height:30px;\">";
+                                            corpoEmail = corpoEmail + "				                                       <th scope=\"col\"style=\"width:200px;\">Diário</th>";
+                                            corpoEmail = corpoEmail + "				                                       <th scope=\"col\">Partes do texto encontrado</th>";
+                                            corpoEmail = corpoEmail + "				                                       <th scope=\"col\" style=\"width:120px;\">Link</th>";
+                                            corpoEmail = corpoEmail + "			                                       </tr>";
+                                            foreach (var diario in diarios.hits.hits)
+                                            {
+                                                corpoEmail = corpoEmail + "			                                   <tr align=\"left\" style=\"background-color:#F0F0F0;height:20px;\">";
+                                                corpoEmail = corpoEmail + "				                                   <td valign=\"top\">" + diario._source.getDescricaoDiario() + "</td>";
+                                                var aTexto = ((JContainer)diario.highlight)["arquivos.arquivo_diario.filetext"];
+                                                corpoEmail = corpoEmail + "				                                   <td valign=\"top\">..." + string.Join("...<br/>...", aTexto) + "...</td>";
+                                                var i = 0;
+                                                corpoEmail = corpoEmail + "				                                   <td valign=\"top\">";
+                                                foreach (var arquivo in diario._source.arquivos)
+                                                {
+                                                    corpoEmail = corpoEmail + "<a href=\"" + Config.ValorChave("LinkSINJ", true) + "/Diario/" + diario._source.ch_diario + "/" + arquivo.arquivo_diario.id_file + "/arq/" + i + "/" + arquivo.arquivo_diario.filename + "\">Clique para ver o diário" + (!string.IsNullOrEmpty(arquivo.ds_arquivo) ? arquivo.ds_arquivo : "") + "</a><br/>";
+                                                    i++;
+                                                }
+                                                corpoEmail = corpoEmail + "                                                </td>";
+                                                corpoEmail = corpoEmail + "                                            </tr>";
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
+                                            }
+                                            corpoEmail = corpoEmail + "                                            </tbody>";
+                                            corpoEmail = corpoEmail + "                                        </table>";
+                                            corpoEmail = corpoEmail + "                                    </div><br/><br/>";
+                                            corpoEmail = corpoEmail + "                                    <div style=\"margin-bottom: 3px; font-size: 11px; font-weight: bold; background-color:#B4E6CBs\">";
+                                            corpoEmail = corpoEmail + "	                                       <a href=\"" + Config.ValorChave("LinkSINJ", true) + "/DesativarNormaPush.aspx?email_usuario_push=" + usuarioPush.email_usuario_push + "&" + "ch_termo_diario_monitorado=" + termo_diario.ch_termo_diario_monitorado + "\">Não quero mais receber informações sobre a criação de diários com esse texto.</a>";
+                                            corpoEmail = corpoEmail + "	                                   </div>";
+                                            corpoEmail = corpoEmail + "                                </td>";
+                                            corpoEmail = corpoEmail + "                            </tr>";
+                                            corpoEmail = corpoEmail + "                        </table>";
+                                            corpoEmail = corpoEmail + "                    </td>";
+                                            corpoEmail = corpoEmail + "                </tr>";
+                                            corpoEmail = corpoEmail + "                <tr>";
+                                            corpoEmail = corpoEmail + "                    <td>";
+                                            corpoEmail = corpoEmail + "                        <table width=\"800px\" style=\"background:#ddffdc;\" align=\"center\" > <br/>";
+                                            corpoEmail = corpoEmail + "                            <tr>";
+                                            corpoEmail = corpoEmail + "                                <th>";
+                                            corpoEmail = corpoEmail + "                                    <HR SIZE=1 WIDTH=801 ALIGN=center>";
+                                            corpoEmail = corpoEmail + "                                    <a href=\"http://www.sinj.df.gov.br\">www.sinj.df.gov.br</a>";
+                                            corpoEmail = corpoEmail + "                                </th>";
+                                            corpoEmail = corpoEmail + "                            </tr>";
+                                            corpoEmail = corpoEmail + "                        </table >";
+                                            corpoEmail = corpoEmail + "                    </td>";
+                                            corpoEmail = corpoEmail + "                </tr>";
+                                            corpoEmail = corpoEmail + "            </table>";
+                                            corpoEmail = corpoEmail + "        </td>";
+                                            corpoEmail = corpoEmail + "    </tr>";
+                                            corpoEmail = corpoEmail + "</table>";
+                                            ServicePointManager.ServerCertificateValidationCallback =
+                                            delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                                            { return true; };
+                                            email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpoEmail);
+                                            var logEmail = new LogEmail();
+                                            logEmail.emails = destinatario;
+                                            logEmail.assunto = titulo;
+                                            logEmail.mensagem = corpoEmail;
+                                            TCDF.Sinj.Log.LogOperacao.gravar_operacao("APP.PUS.EMAIL", logEmail, "Aplicação Push", "SINJ_PUSH_APP");
+                                            this._sb_info.AppendLine(DateTime.Now + ": CRIACAO - Email enviado para " + destinatario[0] + " com o titulo " + titulo);
+                                        }
                                     }
                                 }
                             }
@@ -687,5 +1009,10 @@ namespace SINJ_PUSH_APP
             _sb_error.Clear();
             _sb_info.Clear();
         }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
     }
 }

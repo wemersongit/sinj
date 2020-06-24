@@ -57,12 +57,8 @@
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="neo.BRLightREST">
-      <HintPath>..\..\Framework\neo.BRLightREST.dll</HintPath>
-    </Reference>
-    <Reference Include="util.BRLight, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Framework\util.BRLight.dll</HintPath>
+    <Reference Include="util.BRLight">
+      <HintPath>..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +84,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\neo.BRLightRest\neo.BRLightREST.csproj">
+      <Project>{7C032FC2-D4AE-403A-94F2-A18A6C856795}</Project>
+      <Name>neo.BRLightREST</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -47,6 +47,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="util.BRLight">
       <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>
@@ -56,6 +57,14 @@
     <Reference Include="TCDF.Sinj">
       <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
     </Reference>
+=======
+    <Reference Include="Ude">
+      <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
+    </Reference>
+    <Reference Include="util.BRLight">
+      <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
+    </Reference>
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
   </ItemGroup>
   <ItemGroup>
     <Content Include="CadastrarNotifiqueme.aspx" />
@@ -508,4 +517,17 @@
   <ItemGroup>
     <Content Include="ashx\Cadastro\FaleConoscoMensagemIncluir.ashx" />
   </ItemGroup>
+<<<<<<< HEAD
 </Project>
+=======
+  <ItemGroup>
+    <Content Include="ashx\Datatable\NormaDatatable.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj">
+      <Project>{3B23C9D4-4624-473E-8976-7CD48EF5559C}</Project>
+      <Name>TCDF.Sinj</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d

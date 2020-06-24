@@ -1,7 +1,10 @@
+using neo.BRLightREST;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+<<<<<<< HEAD
 using TCDF.Sinj.OV;
 using TCDF.Sinj.RN;
 using util.BRLight;
@@ -11,6 +14,12 @@ using System.Text.RegularExpressions;
 using neo.BRLightREST;
 using TCDF.Sinj.Web.ashx.Exclusao;
 using System.Globalization;
+=======
+using TCDF.Sinj.Log;
+using TCDF.Sinj.OV;
+using TCDF.Sinj.RN;
+using util.BRLight;
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 
 namespace TCDF.Sinj.Web.ashx.Cadastro
 {
@@ -82,11 +91,44 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
                 var dDt_controle_alteracao = Convert.ToDateTime(_dt_controle_alteracao);
+<<<<<<< HEAD
                 var normaRn = new NormaRN();
                 if (!string.IsNullOrEmpty(_id_doc) && !string.IsNullOrEmpty(_ch_vide))
+=======
+
+                var normaAlteradoraOv = normaRn.Doc(vide.NormaAlteradora.ChNorma);
+                if (normaAlteradoraOv.alteracoes.Count > 0)
+                {
+                    var dDt_alteracao = Convert.ToDateTime(normaAlteradoraOv.alteracoes.Last<AlteracaoOV>().dt_alteracao);
+                    var usuario = normaAlteradoraOv.alteracoes.Last<AlteracaoOV>().nm_login_usuario_alteracao;
+                    if (dDt_controle_alteracao < dDt_alteracao)
+                    {
+                        throw new RiskOfInconsistency("A norma do vide alterado foi modificada pelo usuário <b>" + usuario + "</b> às <b>" + dDt_alteracao + "</b> tornando a sua modificação inconsistente.<br/> É aconselhável atualizar a página e refazer as modificações ou forçar a alteração.<br/>Obs.: Clicar em 'Salvar mesmo assim' vai forçar a alteração e pode sobrescrever as modificações do usuário <b>" + usuario + "</b>.");
+                    }
+                }
+                foreach (var selectVide in normaAlteradoraOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)))
+                {
+                    vide.ValidateDsDispositivosAlterados(selectVide, _ds_dispositivos_alterados, vide.DsComentarioVide);
+
+                    selectVide.ds_comentario_vide = vide.DsComentarioVide;
+                    selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
+                    {
+                        in_sem_arquivo = vide.NormaAlteradora.SemArquivo,
+                        ds_dispositivos_alterados = _ds_dispositivos_alterados,
+                        dispositivos_norma_vide = vide.NormaAlteradora.Dispositivos,
+                        dispositivos_norma_vide_outra = vide.NormaAlterada != null ? vide.NormaAlterada.Dispositivos : new List<DispositivoVide>()
+                    };
+                    selectVide.caput_norma_vide = null;
+                    selectVide.caput_norma_vide_outra = null;
+                    break;
+                }
+                normaAlteradoraOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
+                if (normaRn.Atualizar(normaAlteradoraOv._metadata.id_doc, normaAlteradoraOv))
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                 {
                     if (!string.IsNullOrEmpty(_ch_tipo_relacao))
                     {
+<<<<<<< HEAD
                         id_doc = ulong.Parse(_id_doc);
                         normaOv = normaRn.Doc(id_doc);
 
@@ -100,6 +142,35 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         relacao = normaRn.ObterRelacao(_ch_tipo_relacao);
                         //}
                         if (relacao != null)
+=======
+                        var normaAlteradaOv = normaRn.Doc(vide.NormaAlterada.ChNorma);
+                        normaAlteradaOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)).Select(v => v.alteracao_texto_vide = new AlteracaoDeTexoVide()
+                        {
+                            dispositivos_norma_vide = vide.NormaAlterada.Dispositivos,
+                            dispositivos_norma_vide_outra = vide.NormaAlteradora.Dispositivos
+                        });
+                        foreach (var selectVide in normaAlteradaOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)))
+                        {
+                            selectVide.ds_comentario_vide = vide.DsComentarioVide;
+                            selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
+                            {
+                                in_sem_arquivo = vide.NormaAlterada.SemArquivo,
+                                ds_dispositivos_alterados = _ds_dispositivos_alterados,
+                                dispositivos_norma_vide = vide.NormaAlterada.Dispositivos,
+                                dispositivos_norma_vide_outra = vide.NormaAlteradora != null ? vide.NormaAlteradora.Dispositivos : new List<DispositivoVide>()
+                            };
+                            selectVide.caput_norma_vide = null;
+                            selectVide.caput_norma_vide_outra = null;
+                            if (!vide.NormaAlterada.SemArquivo && vide.NormaAlterada.ArquivoNovo != null && !string.IsNullOrEmpty(vide.NormaAlterada.ArquivoNovo.id_file))
+                            {
+                                normaRn.SalvarTextoAntigoDaNorma(normaAlteradaOv, selectVide, sessao_usuario.nm_login_usuario);
+                                normaAlteradaOv.ar_atualizado = vide.NormaAlterada.ArquivoNovo;
+                            }
+                            break;
+                        }
+                        normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
+                        if (!normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         {
                             ch_tipo_relacao_pos_verificacao = relacao.ch_tipo_relacao;
                             nm_tipo_relacao_pos_verificacao = relacao.nm_tipo_relacao;
@@ -447,7 +518,27 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 }
                 normaAlteradora.ar_atualizado.id_file = dictionaryFiles["id_file_alterador"];
             }
+<<<<<<< HEAD
             else if(!string.IsNullOrEmpty(normaAlteradora.ar_atualizado.id_file))
+=======
+        }
+    }
+
+    public class VideEdicao
+    {
+        [JsonProperty("ch_vide")]
+        public string ChVide { get; set; }
+        [JsonProperty("norma_alteradora")]
+        public NormaVideEdicao NormaAlteradora { get; set; }
+        [JsonProperty("norma_alterada")]
+        public NormaVideEdicao NormaAlterada { get; set; }
+        [JsonProperty("ds_comentario_vide")]
+        public string DsComentarioVide { get; set; }
+
+        public void Validate()
+        {
+            if (NormaAlteradora == null || string.IsNullOrEmpty(NormaAlteradora.ChNorma))
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
             {
                 if (videAlterador.caput_norma_vide != null && !string.IsNullOrEmpty(videAlterador.caput_norma_vide.id_file))
                 {
@@ -474,7 +565,43 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             normaRn.VerificarDispositivosEAlterarOsTextosDasNormas(normaAlteradora, normaAlterada, videAlterador, videAlterado);
 
         }
+<<<<<<< HEAD
 
+=======
+
+        public void ValidateDsDispositivosAlterados(Vide videAlterado, string dsDispositivosAlterados, string dsComentarioVide)
+        {
+            var dsAnterior = "";
+            var dsComentarioAnterior = "";
+            if (videAlterado.alteracao_texto_vide != null && !string.IsNullOrEmpty(videAlterado.alteracao_texto_vide.ds_dispositivos_alterados))
+            {
+                dsAnterior = videAlterado.alteracao_texto_vide.ds_dispositivos_alterados;
+            }
+            if (!string.IsNullOrEmpty(videAlterado.ds_comentario_vide))
+            {
+                dsComentarioAnterior = videAlterado.ds_comentario_vide;
+            }
+            if ((string.IsNullOrEmpty(dsAnterior) && string.IsNullOrEmpty(dsDispositivosAlterados) && string.IsNullOrEmpty(dsComentarioAnterior) && string.IsNullOrEmpty(dsComentarioVide)) || (dsAnterior.Equals(dsDispositivosAlterados) && dsComentarioAnterior.Equals(dsComentarioVide)))
+            {
+                throw new DocValidacaoException("Não foram localizadas alterações.");
+            }
+        }
+    }
+
+    public class NormaVideEdicao
+    {
+        [JsonProperty("ch_norma")]
+        public string ChNorma { get; set; }
+        [JsonProperty("in_norma_fora_do_sistema")]
+        public bool InNormaForaSistema { get; set; }
+        [JsonProperty("in_alteracao_completa")]
+        public bool InAlteracaoCompleta { get; set; }
+        [JsonProperty("sem_arquivo")]
+        public bool SemArquivo { get; set; }
+        [JsonProperty("arquivo_novo")]
+        public ArquivoOV ArquivoNovo { get; set; }
+        public List<DispositivoVide> Dispositivos { get; set; }
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 
         public bool IsReusable
         {

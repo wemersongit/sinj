@@ -161,7 +161,7 @@ function Excluir(id_doc, id_datatable) {
     }
 }
 
-function fnSalvar(id_form, action, _sucesso) {
+function fnSalvar(id_form, action, _sucesso, options) {
     $('#' + id_form + ' .notify').html('');
     try {
         Validar(id_form);
@@ -271,7 +271,7 @@ function fnSalvar(id_form, action, _sucesso) {
             sFormId: id_form,
             fnBeforeSubmit: beforeSubmit,
             bAsync: true,
-            iTimeout: 60000
+            iTimeout: IsNotNullOrEmpty(options, 'iTimeout') ? options.iTimeout : 60000
         });
     } catch (ex) {
         $('#' + id_form + ' .notify').messagelight({

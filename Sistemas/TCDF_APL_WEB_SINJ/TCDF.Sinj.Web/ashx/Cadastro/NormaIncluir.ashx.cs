@@ -1,12 +1,10 @@
+using neo.BRLightREST;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
+using TCDF.Sinj.Log;
 using TCDF.Sinj.OV;
 using TCDF.Sinj.RN;
-using neo.BRLightREST;
 using util.BRLight;
-using TCDF.Sinj.Log;
 
 namespace TCDF.Sinj.Web.ashx.Cadastro
 {
@@ -56,6 +54,18 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var _st_pendencia = context.Request["st_pendencia"];
                 var st_pendencia = false;
 
+<<<<<<< HEAD
+=======
+                var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                var st_habilita_pesquisa = false;
+
+                var _st_habilita_email = context.Request["st_habilita_email"];
+                var st_habilita_email = false;
+
+                var _st_desabilita_email = context.Request["st_desabilita_email"];
+                var st_desabilita_email = false;
+
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                 var _ds_pendencia = context.Request["ds_pendencia"];
 
                 var _st_destaque = context.Request["st_destaque"];
@@ -150,6 +160,30 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     normaOv.ds_pendencia = _ds_pendencia;
                 }
 
+<<<<<<< HEAD
+=======
+                if (bool.TryParse(_st_habilita_pesquisa, out st_habilita_pesquisa))
+                {
+                    normaOv.st_habilita_pesquisa = st_habilita_pesquisa;
+                }else if (_st_habilita_pesquisa == null)
+                {
+                    normaOv.st_habilita_pesquisa = false;
+                }
+
+                if(_st_desabilita_email == "true")
+                {
+                    normaOv.st_habilita_email = null;
+                }
+                else if(bool.TryParse(_st_habilita_email, out st_habilita_email))
+                {
+                    normaOv.st_habilita_email = st_habilita_email;
+                }else if(_st_habilita_email == null)
+                {
+                    normaOv.st_habilita_email = false;
+                }
+
+
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                 if (bool.TryParse(_st_destaque, out st_destaque))
                 {
                     normaOv.st_destaque = st_destaque;

@@ -252,7 +252,6 @@ namespace TCDF.Sinj.Web
                 oSessaoNotifiqueme = null;
             }
             totalNovos = new FaleConoscoRN().Consultar(new Pesquisa() { select = new string[0], literal = "st_atendimento='Novo'" }).result_count;
-            
         }
         private bool ValidarMenuPorGrupo(string li)
         {

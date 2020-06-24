@@ -140,7 +140,7 @@ namespace TCDF.Sinj.ES
                         }
                         else if (_tipo_campo == "number" || _tipo_campo == "date")
                         {
-                            if (_ch_campo == "dt_assinatura")//foi atualizado o nome do parametro de "ano_assinatura" para "dt_assinatura" para que entrasse na condição by: Wemerson
+                            if (_ch_campo == "ano_assinatura")
                             {
                                 if (_ch_operador == "intervalo")
                                 {
@@ -409,6 +409,48 @@ namespace TCDF.Sinj.ES
                     }
                 );
             }
+<<<<<<< HEAD
+=======
+            if (!string.IsNullOrEmpty(sentencaOv.st_habilita_pesquisa))
+            {
+                buscaDireta.filtersToQueryFiltered.Add(
+                    new FilterQueryFiltered()
+                    {
+                        name = "st_habilita_pesquisa",
+                        value = sentencaOv.st_habilita_pesquisa,
+                        @operator = TypeOperator.equal,
+                        connector = TypeConnector.OR
+                    }
+                );
+            }
+            if (!string.IsNullOrEmpty(sentencaOv.st_habilita_email))
+            {
+                buscaDireta.filtersToQueryFiltered.Add(
+                    new FilterQueryFiltered()
+                    {
+                        name = "st_habilita_email",
+                        value = sentencaOv.st_habilita_email,
+                        @operator = TypeOperator.equal,
+                        connector = TypeConnector.OR
+                    }
+                );
+            }
+
+            if (!string.IsNullOrEmpty(sentencaOv.nm_orgao_cadastrador))
+            {
+                buscaDireta.filtersToQueryFiltered.Add(
+                    new FilterQueryFiltered()
+                    {
+                        name = "nm_orgao_cadastrador",
+                        value = sentencaOv.nm_orgao_cadastrador,
+                        @operator = TypeOperator.equal,
+                        connector = TypeConnector.AND
+                    }
+                );
+            }
+
+
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
             if (!string.IsNullOrEmpty(sentencaOv.ano_assinatura))
             {
                 buscaDireta.filtersToQueryFiltered.Add(
@@ -638,6 +680,11 @@ namespace TCDF.Sinj.ES
             fields.Add(new SearchableField() { name = "nm_ambito" });
             fields.Add(new SearchableField() { name = "ar_atualizado.filetext" });
             fields.Add(new SearchableField() { name = "fontes.ar_fonte.filetext" });
+<<<<<<< HEAD
+=======
+            //fields.Add(new SearchableField() { name = "st_habilita_pesquisa", boost = 3 });
+            //fields.Add(new SearchableField() { name = "st_habilita_email", boost = 3 });
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 
             return fields;
         }

@@ -3,9 +3,12 @@
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
+<<<<<<< HEAD
             $('#button_salvar_vide').click(function () {
                 return fnSalvar("form_editar_vide", "", sucesso_vide);
             });
+=======
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 
             var open_modal = function (data) {
                 $('<div id="modal_notificacao_modal_salvar" />').modallight({
@@ -89,8 +92,10 @@
                         }
                         else if (IsNotNullOrEmpty(data.ch_norma)) {
                             $('#dt_controle_alteracao').val(data.dt_controle_alteracao);
+                            var videEditar = {};
                             for (var i = 0; i < data.vides.length; i++) {
                                 if (data.vides[i].ch_vide == ch_vide) {
+<<<<<<< HEAD
                                     $('#ch_tipo_relacao').val(data.vides[i].ch_tipo_relacao);
                                     $('#nm_tipo_relacao').val(data.vides[i].nm_tipo_relacao);
                                     $('#ds_comentario_vide').val(data.vides[i].ds_comentario_vide);
@@ -261,6 +266,73 @@
                                 }
                             }
 
+=======
+                                    videEditar = data.vides[i];
+                                    $('#button_salvar_vide').click(function () {
+                                        return salvarArquivosVideEditar(sucesso_vide, videEditar.ch_vide);
+                                    });
+                                    var deferredTipoDeRelacao = $.Deferred();
+                                    
+                                    $.when(deferredTipoDeRelacao).done(function(){
+                                        if (IsNotNullOrEmpty(videEditar, 'alteracao_texto_vide.ds_dispositivos_alterados')) {
+                                            dsDispositivosAlteradosCopy = videEditar.alteracao_texto_vide.ds_dispositivos_alterados;
+                                            $('textarea[name=ds_dispositivos_alterados]').val(videEditar.alteracao_texto_vide.ds_dispositivos_alterados);
+                                        }
+                                        if (!IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
+                                            videEditar.alteracao_texto_vide.in_sem_arquivo = true;
+                                            $('#div_notificacao_vide').messagelight({
+                                                sTitle: "Erro",
+                                                sContent: `A norma ${montarDescricaoDaNorma(data)} não possui um arquivo atualizado, ou seja, ou o texto dela não foi alterado pelo vide, ou ela teve o texto excluído.`,
+                                                sType: "error",
+                                                sWidth: "",
+                                                iTime: null
+                                            });
+                                        }
+                                        if(IsNotNullOrEmpty(videEditar.caput_norma_vide, 'caput')){
+                                            videEditar.alteracao_texto_vide.dispositivos_norma_vide = [];
+                                            for(var j = 0; j < videEditar.caput_norma_vide.caput.length; j++){
+                                                videEditar.alteracao_texto_vide.dispositivos_norma_vide.push({
+                                                    linkname: videEditar.caput_norma_vide.caput[j],
+                                                    convertido: true,
+                                                    texto: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_novo[' + j + ']') ? videEditar.caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(videEditar.caput_norma_vide.link) ? videEditar.caput_norma_vide.link : ''),
+                                                    texto_antigo: (IsNotNullOrEmpty(videEditar.caput_norma_vide, 'texto_antigo[' + j + ']') ? videEditar.caput_norma_vide.texto_antigo[j] : '')
+                                                });
+                                            }
+                                        }
+                                        if (videEditar.in_norma_afetada) {
+                                            videsDaNormaAlterada = data.vides;
+                                            indexVideAlterado = i;
+                                            selecionarNormaAlteradaEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videEditar.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videEditar.alteracao_texto_vide.dispositivos_norma_vide });
+                                        }
+                                        else{
+                                            selecionarNormaAlteradoraEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videEditar.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videEditar.alteracao_texto_vide.dispositivos_norma_vide });
+                                        }
+                                        if(!videEditar.in_norma_fora_sistema){
+                                            buscarOutraNorma(videEditar.ch_norma_vide, videEditar.ch_vide);
+                                        }
+                                        else{
+                                            selecionarArquivoNormaAlteradoraEditar();
+                                        }
+                                    });
+                                    
+                                    buscarTipoDeRelacao(videEditar.ch_tipo_relacao, deferredTipoDeRelacao);
+                                    if (IsNotNullOrEmpty(videEditar, 'ds_comentario_vide')) {
+                                        $('#ds_comentario_vide').val(videEditar.ds_comentario_vide);
+                                    }
+                                    break;
+                                }
+                            }
+                            if (!IsNotNullOrEmpty(videEditar, 'ch_vide')) {
+                                $('#div_notificacao_vide').messagelight({
+                                    sTitle: "Erro",
+                                    sContent: "O vide não existe.",
+                                    sType: "error",
+                                    sWidth: "",
+                                    iTime: null
+                                });
+                                gComplete();
+                            }
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         }
                     }
                 };
@@ -277,6 +349,68 @@
             ConstruirControlesDinamicos();
             verificarTipoSelecionado(document.getElementById('nm_tipo_relacao'));
         });
+        function buscarOutraNorma(ch_norma, ch_vide){
+            var sucesso = function (data) {
+                    if (IsNotNullOrEmpty(data)) {
+                        if (data.error_message != null && data.error_message != "") {
+                            $('#div_notificacao_vide').messagelight({
+                                sTitle: "Erro",
+                                sContent: data.error_message,
+                                sType: "error",
+                                sWidth: "",
+                                iTime: null
+                            });
+                            gComplete();
+                        }
+                        else if (IsNotNullOrEmpty(data.ch_norma)) {
+                            for (var i = 0; i < data.vides.length; i++) {
+                                if (data.vides[i].ch_vide == ch_vide) {
+                                    if (!IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
+                                        data.vides[i].alteracao_texto_vide.in_sem_arquivo = true;
+                                        $('#div_notificacao_vide').messagelight({
+                                            sTitle: "Erro",
+                                            sContent: `A norma ${montarDescricaoDaNorma(data)} não possui um arquivo atualizado, ou seja, ou o texto dela não foi alterado pelo vide, ou ela teve o texto excluído.`,
+                                            sType: "error",
+                                            sWidth: "",
+                                            iTime: null
+                                        });
+                                    }
+                                    if(IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'caput')){
+                                        data.vides[i].alteracao_texto_vide.dispositivos_norma_vide = [];
+                                        for(var j = 0; j < data.vides[i].caput_norma_vide.caput.length; j++){
+                                            data.vides[i].alteracao_texto_vide.dispositivos_norma_vide.push({
+                                                linkname: data.vides[i].caput_norma_vide.caput[j],
+                                                convertido: true,
+                                                texto: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_novo['+j+']') ? data.vides[i].caput_norma_vide.texto_novo[j] : IsNotNullOrEmpty(data.vides[i].caput_norma_vide.link) ? data.vides[i].caput_norma_vide.link : ''),
+                                                texto_antigo: (IsNotNullOrEmpty(data.vides[i].caput_norma_vide, 'texto_antigo[' + j + ']') ? data.vides[i].caput_norma_vide.texto_antigo[j] : '')
+                                            });
+                                        }
+                                    }
+                                    if (data.vides[i].in_norma_afetada) {
+                                        videsDaNormaAlterada = data.vides;
+                                        indexVideAlterado = i;
+                                        selecionarNormaAlteradaEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
+                                    }
+                                    else{
+                                        selecionarNormaAlteradoraEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: data.vides[i].alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: data.vides[i].alteracao_texto_vide.dispositivos_norma_vide });
+                                    }
+                                    selecionarArquivosEditar();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                };
+                $.ajaxlight({
+                    sUrl: './ashx/Visualizacao/NormaDetalhes.ashx?id_norma=' + ch_norma,
+                    sType: "GET",
+                    fnSuccess: sucesso,
+                    fnComplete: null,
+                    fnBeforeSend: null,
+                    fnError: null,
+                    bAsync: true
+                });
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
@@ -658,7 +792,11 @@
                                                             Comentário:
                                                         </div>
                                                         <div class="column w-100-pc">
+<<<<<<< HEAD
                                                             <textarea id="ds_comentario_vide" name="ds_comentario_vide" class="w-100-pc" rows="5" cols="50"></textarea>
+=======
+                                                            <textarea id="ds_comentario_vide" class="w-100-pc" rows="5" cols="50"></textarea>
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                                         </div>
                                                     </div>
                                                 </div>

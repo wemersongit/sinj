@@ -183,7 +183,38 @@ var _columns_norma_es = [
 	        }
 	        return html;
 	    }
+<<<<<<< HEAD
 	}
+=======
+	},	
+
+	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "320px","sTitle":"<h2>Habilitar</h2>" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false&st_habilita_email=false") > 0,
+		"mRender": function (data, type, full) {
+			var htmlToAppend = ""
+			if(ValidarPermissao(_grupos.nor_eml) && full._source.st_habilita_email == false){
+				htmlToAppend = htmlToAppend + `<div class="div-light-button" style="float:right; display: flex;"><a onclick="CriarModalEnviarEmail( ${full._source._metadata.id_doc}, ${full._source.st_habilita_pesquisa} )"><img src="${_urlPadrao}/Imagens/ico_email_p.png">Enviar e-mail</a></div>
+				<div class="div-light-button" style="float:right; display: flex;"><a onclick="CriarModalDesabilitarEmail( ${full._source._metadata.id_doc}, ${full._source.st_habilita_pesquisa} )"><img src="${_urlPadrao}/Imagens/ico_stop_email_p.png">Desabilitar e-mail</a></div>`;	
+			}
+			if(ValidarPermissao(_grupos.nor_hsp) && !full._source.st_habilita_pesquisa){
+				htmlToAppend = htmlToAppend + `<div class="div-light-button" style="float:right;"><a onclick="CriarModalHabilitarPesquisa( ${full._source._metadata.id_doc}, ${full._source.st_habilita_email} )"><img src="${_urlPadrao}/Imagens/ico_doc_m.png">Habilitar no SINJ pesquisa</a></div>`;
+			}
+			return htmlToAppend;
+		}
+		
+	},
+	{ "indice": 2, "isControl": true, "standard_view": true, "sWidth": "120px","sTitle":"" , "sClass": "grid-cell ws center", "mData": "full", "bSortable": false, "visible": window.location.href.indexOf("st_habilita_pesquisa=false&st_habilita_email=false") == -1,
+		"mRender": function (data, type, full) {
+			var htmlToAppend = "";
+			if(full._source.st_habilita_pesquisa == false || full._source.st_habilita_email == false){
+				htmlToAppend = "<label style='color:red'>Norma pendente</label>"
+			}
+			return htmlToAppend;
+		}
+		
+	},
+
+
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 ];
 var _columns_norma_favoritos = $.extend(true, [], _columns_norma_es);
 _columns_norma_favoritos[0] = { "indice": 0, "isControl": true, "standard_view": true, "sTitle": ' ', "sWidth": "30px", "sClass": "grid-cell ws", "mData": "", "bSortable": false,
@@ -1464,9 +1495,9 @@ var _columns_norma_associada_vocabulario = [
 	    }
 	},
 	{ "indice": 2, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "60px", "sClass": "grid-cell ws all", "mData": "", "bSortable": false,
-	    "mRender": function (data, type, full) {
-	        var detalhes = "<a href='./ResultadoDePesquisa.aspx?" + window.unescape(full._source.consulta).replaceAll('#','%23') + "' title='Pesquisar'><img valign='absmiddle' alt='pesquisar' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a>";
-	        var editar = "<a href='./Pesquisas.aspx?" + window.unescape(full._source.consulta).replaceAll('#', '%23') + "' title='Editar'><img valign='absmiddle' alt='editar' src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' /></a>";
+	    "mRender": function (data, type, full) {	
+			var detalhes = "<a href='./ResultadoDePesquisa.aspx?" + (decodeURI(full._source.consulta).replaceAll('#', '%23')) + "' title='Pesquisar'><img valign='absmiddle' alt='pesquisar' src='" + _urlPadrao + "/Imagens/ico_loupe_p.png' /></a>";
+			var editar = "<a href='./Pesquisas.aspx?" + (decodeURI(full._source.consulta).replaceAll('#', '%23')) + "' title='Editar'><img valign='absmiddle' alt='editar' src='" + _urlPadrao + "/Imagens/ico_pencil_p.png' /></a>";
 	        return detalhes + "&nbsp;" + editar;
 	    }
 	}

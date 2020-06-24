@@ -150,6 +150,31 @@ namespace TCDF.Sinj.OV
         //}
     }
 
+<<<<<<< HEAD
+=======
+    public class AlteracaoDeTexoVide
+    {
+        public AlteracaoDeTexoVide()
+        {
+            dispositivos_norma_vide = new List<DispositivoVide>();
+            dispositivos_norma_vide_outra = new List<DispositivoVide>();
+        }
+        public bool in_sem_arquivo { get; set; }
+        public string ds_dispositivos_alterados { get; set; }
+        public List<DispositivoVide> dispositivos_norma_vide { get; set; }
+        public List<DispositivoVide> dispositivos_norma_vide_outra { get; set; }
+    }
+
+    public class DispositivoVide
+    {
+        public string linkname { get; set; }
+        public string nm_linkname { get; set; }
+        public string ds_linkname { get; set; }
+        public string texto { get; set; }
+        public string texto_antigo { get; set; }
+    }
+
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
     public class UtilVides
     {
         public static string EscapeCharsInToPattern(string text)
@@ -393,13 +418,12 @@ namespace TCDF.Sinj.OV
         //Adicionar legislação correlata
         public static bool EhLegislacaoCorrelata(string dsTextoParaAlterador)
         {
-            return dsTextoParaAlterador == "ratificado" ||
-                   dsTextoParaAlterador == "reeditado" ||
-                   dsTextoParaAlterador == "regulamentado" ||
-                   dsTextoParaAlterador == "prorrogado" ||
-                   dsTextoParaAlterador == "legislação correlata";
-                   // ||
-                   //dsTextoParaAlterador == "suspenso(a) liminarmente";
+            return dsTextoParaAlterador.Equals("ratificado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("reeditado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("regulamentado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("prorrogado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("ressalvado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                   dsTextoParaAlterador.Equals("legislação correlata", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 

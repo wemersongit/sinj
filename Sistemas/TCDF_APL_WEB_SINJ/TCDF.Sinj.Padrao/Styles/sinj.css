@@ -321,6 +321,32 @@ tbody td a:link {color: #333;}
 /*Vides*/
 div.caputedit {position:relative; border-top: 1px solid #bbb; margin-top: 5px;}
 div.caputedit button.del {position:absolute; top: 0px; right: 0px;}
+<<<<<<< HEAD
+=======
+p[linkname] button.selected{background: url("../Imagens/ico_anchor_p.png") no-repeat; border: none; padding: 9px;}
+p[linkname] button.select{background: url("../Imagens/ico_anchor_p_clear.png") no-repeat; border: none; padding: 9px;}
+
+#div_tooltip_dispositivo{
+    position:absolute;
+    z-index:1001;
+    width: 45%;
+}
+.div_conteudo_arquivo { max-height: 700px; overflow-y: scroll; }
+.div_conteudo_arquivo p { margin-bottom: 10px; font-size: 13px; }
+.div_conteudo_arquivo p.alterado{ color: #991000; }
+.div_conteudo_arquivo a.link-alterador{ color: #991000 !important; }
+.div_conteudo_arquivo p.adicionado{ color: #006933; }
+.div_conteudo_arquivo p.renumerado{ color: #006933; }
+.div_conteudo_arquivo p.leco{ color: #006933; }
+.div_conteudo_arquivo p.info{ color: #006933; }
+.div_conteudo_arquivo p.desfeito{ color: #006933; }
+#div_vide .remover { background-color: #ffa9a9; }
+#div_vide .desfazer { background-color: #b4f3b4; }
+#div_vide .refazer { background-color: #f1e1bf; }
+.legenda-excluir-vide { width: fit-content;}
+img.limit-width{width:100% !important;}
+
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 
 /*Vocabulario*/
 .div-alfabeto {width:100%; clear:both;}
@@ -408,14 +434,14 @@ div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td.mensagens{ background: #FFF; border:none;}
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user{ }
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.ds_msg{padding: 0px 15px 0px 0px; border-radius: 4px; position:relative; width: 300px; float:right;}
-div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.ds_msg>div.msg{background-color: #DDD;padding: 15px;width: 90%; text-align: left;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.ds_msg>div.msg{background-color: #DDD;padding: 15px;width: 90%; text-align: left; white-space: pre-wrap !important}
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.ds_msg>div.tooltip-arrow{right:0; position: absolute; border-color: transparent; border-style: solid; top:20px; margin-top:-5px; border-width: 5px 5px 5px; border-left: 10px solid #DDD;}
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.dt_inclusao{width: 150px; float:right;}
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_user>div.dt_inclusao>div.dt{background: #DDD; -moz-border-radius:20px; -webkit-border-radius:20px; border-radius:20px; text-align: center; padding: 10px; width: 80%; margin: auto; position: relative;}
 
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj{ }
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.ds_msg{padding: 0px 0px 0px 15px; border-radius: 4px; position:relative; width: 300px; float:left;}
-div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.ds_msg>div.msg{background-color: #DDD;padding: 15px;width: 90%; text-align: left;}
+div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.ds_msg>div.msg{background-color: #DDD;padding: 15px;width: 90%; text-align: left; white-space: pre-wrap !important}
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.ds_msg>div.tooltip-arrow{left:0; position: absolute; border-color: transparent; border-style: solid; top:20px; margin-top:-5px; border-width: 5px 5px 5px; border-right: 10px solid #DDD;}
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.dt_inclusao{width: 150px; float:left;}
 div.fale_conosco_atendimento div.line div.column div.cell table.dataTable>tbody>tr>td>div.msg_sinj>div.dt_inclusao>div.dt{background: #DDD; -moz-border-radius:20px; -webkit-border-radius:20px; border-radius:20px; text-align: center; padding: 10px; width: 80%; margin: auto; position: relative;}
@@ -592,3 +618,11 @@ table.dataTable tbody tr.even td.highlighted, table.dataTable tr.odd td.highligh
 } 
 
 
+#ds_ementa, #ds_observacao{
+    /* white-space: pre-line !important; */
+    white-space: pre-wrap !important;
+}
+
+#form_email #mensagem{
+    white-space: pre-wrap !important;
+}

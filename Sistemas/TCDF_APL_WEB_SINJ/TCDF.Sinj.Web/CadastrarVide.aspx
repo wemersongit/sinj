@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 <script type="text/javascript" language="javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_vide.js?<%= TCDF.Sinj.Util.MostrarVersao() %>" ></script>
     <script type="text/javascript" language="javascript">
+<<<<<<< HEAD
         function getSelectedText() {
             if (window.getSelection) {
                 return window.getSelection().toString();
@@ -11,6 +12,9 @@
             return '';
         }
 
+=======
+        var id_doc = GetParameterValue('id_doc');
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
         $(document).ready(function () {
             $('#button_salvar_vide').click(function () {
                 return fnSalvar("form_vide", "", sucesso_vide);
@@ -234,6 +238,7 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         <div id="div_cad_caput_alteradora" style="display:none;">
             <div class="div_caputs_selecionados"></div>
             <div class="table w-100-pc">
@@ -316,6 +321,8 @@
                 </div>
             </div>
         </div>
+=======
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
         <div id="div_cad_vide">
             <form id="form_vide" name="formCadastroVide" action="#" method="post">
                 <input type="hidden" id="dt_controle_alteracao" name="dt_controle_alteracao" value="" />
@@ -327,7 +334,19 @@
                                 <div class="column w-100-pc">
                                     <div class="table w-100-pc">
                                         <div class="line">
+<<<<<<< HEAD
                                             <div class="column w-35-pc">
+=======
+                                            <div id="columnRelacao" class="column w-100-pc text-center hidden selecionar-tipo-de-relacao bold">
+                                                <label>Tipo de Relação:</label>
+                                                <select id="selectTipoDeRelacao" onchange="changeTipoRelacao(this);">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div id="lineNormas" class="line">
+                                            <div class="column w-50-pc">
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                                 <div class="cell w-100-pc">
                                                     <fieldset class="w-90-pc">
                                                         <legend>Norma Alteradora</legend>
@@ -347,6 +366,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+<<<<<<< HEAD
                                                             <div class="line line_caput_norma_alteradora" style="display:none;">
                                                                 <div class="column w-30-pc">
                                                                     <div class="cell w-100-pc">
@@ -358,6 +378,11 @@
                                                                         <input type="hidden" id="caput_norma_vide_alteradora" name="caput_norma_vide_alteradora" value="" />
                                                                         <label id="label_caput_norma_alteradora"></label><a id="a_selecionar_caput_norma_alteradora" href="javascript:void(0);" onclick="javascript:abrirSelecionarCaput('alteradora');" title="Selecionar o caput da norma alteradora"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_edit_dir.png" alt="adicionar" width="16px" height="16px" /></a>
                                                                     </div>
+=======
+                                                            <div class="column w-70-pc">
+                                                                <div class="cell w-100-pc">
+                                                                    <label id="labelSemCitacaoNormaAlteradora" style="display:none;"><input type="checkbox" id="inSemCitacaoNormaAlteradora" value="1" onclick="javascript:selecionarSemCitacaoNormaAlteradora();" />Sem citação no texto</label>
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                                                 </div>
                                                             </div>
                                                             <div class="line line_vigor_caput" style="display:none;">
@@ -385,12 +410,20 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+<<<<<<< HEAD
                                                     </fieldset>
                                                 </div>
                                             </div>
                                             <div class="column w-30-pc">
                                                 <div class="cell w-100-pc">
                                                     <div class="table mauto w-90-pc">
+=======
+                                                        <div class="line hidden selecionar-arquivo-norma-alteradora">
+                                                            <div class="column">
+                                                                <label>Selecionar arquivo <input type="checkbox" value="1" onchange="changeSelecionarArquivoDaNorma(this)" norma="alteradora"/></label>
+                                                            </div>
+                                                        </div>
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                                         <div class="line">
                                                             <div class="column w-20-pc">
                                                                 <div class="cell fr">
@@ -412,7 +445,11 @@
                                                     </div>
                                                 </div>
                                             </div>
+<<<<<<< HEAD
                                             <div class="column w-35-pc">
+=======
+                                            <div id="columnNormaAlterada" class="column hidden selecionar-norma-alterada w-50-pc">
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                                 <div class="cell w-100-pc">
                                                     <fieldset class="w-90-pc">
                                                         <legend>Norma Alterada</legend>
@@ -424,6 +461,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+<<<<<<< HEAD
                                                             <div id="line_norma_dentro_do_sistema" class="line">
                                                                 <div class="column w-30-pc">
                                                                     <div class="cell w-100-pc">
@@ -447,6 +485,25 @@
                                                                                 <div class="cell w-100-pc">
                                                                                     Tipo:
                                                                                 </div>
+=======
+                                                            <div class="column w-70-pc">
+                                                                <div class="cell w-100-pc">
+                                                                    <label id="labelAlteracaoCompleta" style="display:none;"><input type="checkbox" id="in_alteracao_completa" value="1" onclick="javascript:selecionarAlteracaoCompleta();" />Alterar a norma completa</label>
+                                                                    <label id="labelNormaForaDoSistema"><input type="checkbox" id="in_norma_fora_do_sistema" value="1" onclick="javascript: selecionarNormaForaDoSistemaCadastrar();" />Norma Fora do Sistema</label>
+                                                                    <label id="labelSemCitacaoNormaAlterada" style="display:none;"><input type="checkbox" id="inSemCitacaoNormaAlterada" value="1" onclick="javascript: selecionarSemCitacaoNormaAlterada();" />Sem citação no texto</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="line_norma_fora_do_sistema" class="line hidden">
+                                                            <button type="button" class="clean button-close" title="Fechar" onclick="fecharNormaForaDoSistemaCadastrar()"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="fechar" width="12px" height="12px" /></button>
+                                                            <div class="column w-100-pc">
+                                                                <div class="table w-100-pc">
+                                                                    <div class="line">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell w-100-pc">
+                                                                                Tipo:
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                                                             </div>
                                                                             <div class="column w-70-pc">
                                                                                 <div id="div_autocomplete_tipo_norma_vide_fora_de_sistema" class="cell w-100-pc">
@@ -555,6 +612,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+<<<<<<< HEAD
                                                             <div class="line">
                                                                 <div class="column w-30-pc">
                                                                     <div class="cell w-100-pc">
@@ -601,6 +659,39 @@
                                                                     <div class="cell w-100-pc">
                                                                         <input type="hidden" id="caput_norma_vide_alterada" name="caput_norma_vide_alterada" value="" />
                                                                         <label id="label_caput_norma_alterada"></label><a id="a_selecionar_caput_norma_alterada" href="javascript:void(0);" onclick="javascript:abrirSelecionarCaput('alterada');" title="Selecionar o caput da norma alterada"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_edit_dir.png" alt="adicionar" width="16px" height="16px" /></a>
+=======
+                                                        </div>
+                                                        <div class="line hidden selecionar-arquivo-norma-alterada">
+                                                            <div class="column">
+                                                                <label>Selecionar arquivo <input type="checkbox" value="1" onchange="changeSelecionarArquivoDaNorma(this)" norma="alterada"/></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="line">
+                                                            <div id="div_cad_dispositivo_alterada" style="display:none;">
+                                                                <div class="table w-100-pc">
+                                                                    <hr />
+                                                                    <div class="line line_enable_replaced" style="display:none;">
+                                                                        <div class="column w-30-pc">
+                                                                            <div class="cell fr">
+                                                                                <label>Exibir dispositivos alterados:</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="column w-70-pc">
+                                                                            <input type="checkbox" onclick="clickEnableReplaced(this)" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="line line_conteudo_arquivo" style="display:none;">
+                                                                        <div class="column w-100-pc">
+                                                                            <div class="table w-100-pc">
+                                                                                <div class="line">
+                                                                                    <div class="column w-100-pc">
+                                                                                        <div class="div_conteudo_arquivo w-100-pc mauto">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -621,11 +712,25 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+<<<<<<< HEAD
                                                     </fieldset>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="line">
+=======
+                                                        <div class="line hidden ds-dispositivos-alterados">
+                                                            <div class="column w-100-pc">
+                                                                <label>Dispositivos alterados: </label><br />
+                                                                <textarea name="ds_dispositivos_alterados" rows="10" cols="50" onblur="changeStepper('preencheDsDispositivoAlterado')"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="lineComentario" class="line ds-comentario-vide hidden">
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                                             <div class="column w-100-pc">
                                                 <div class="table w-80-pc mauto">
                                                     <div class="line">
@@ -644,7 +749,11 @@
                             </div>
                         </div>
                     </fieldset>
+<<<<<<< HEAD
                     <div style="width:210px; margin:auto;" class="buttons loaded">
+=======
+                    <div id="divButtons" style="width:210px; margin:auto;" class="buttons loaded hidden">
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         <button id="button_salvar_vide">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" alt="salvar" />Salvar
                         </button>
@@ -657,4 +766,5 @@
             </form>
         </div>
     </div>
+    <div id="modal_vide"></div>
 </asp:Content>

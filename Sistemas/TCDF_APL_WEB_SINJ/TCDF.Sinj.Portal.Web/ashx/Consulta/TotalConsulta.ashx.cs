@@ -134,6 +134,8 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                     pesquisaDireta.isCount = true;
                     var buscaDireta = new DiarioBuscaEs().MontarBusca(pesquisaDireta);
                     query = buscaDireta.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
                 case "notifiqueme":
                     SentencaPesquisaNotifiquemeDiarioOV pesquisaNotifiqueme = new SentencaPesquisaNotifiquemeDiarioOV();
@@ -144,6 +146,8 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                     pesquisaNotifiqueme.isCount = true;
                     var buscaNotifiqueme = new DiarioBuscaEs().MontarBusca(pesquisaNotifiqueme);
                     query = buscaNotifiqueme.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
                 case "texto_diario":
                     SentencaPesquisaTextoDiarioOV pesquisaTexto = new SentencaPesquisaTextoDiarioOV();
@@ -157,6 +161,8 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                     pesquisaTexto.isCount = true;
                     var buscaTexto = new DiarioBuscaEs().MontarBusca(pesquisaTexto);
                     query = buscaTexto.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
                     break;
                 default:
                     SentencaPesquisaGeralOV pesquisaGeral = new SentencaPesquisaGeralOV();
@@ -164,6 +170,11 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new DiarioBuscaEs().MontarBusca(pesquisaGeral);
                     query = buscaGeral.GetQuery();
+<<<<<<< HEAD
+=======
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                     break;
             }
 

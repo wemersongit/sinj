@@ -14,6 +14,42 @@
             <% if(isAdmin && !string.IsNullOrEmpty(situacoes)){ %>
                 fnAutocompleteSituacao(<%= situacoes%>);
             <%} %>
+<<<<<<< HEAD
+=======
+
+            if (ValidarPermissao(_grupos.nor_hsp)) {
+                $('#habilitarPesquisaNorna').show();
+            } else {
+                $('#habilitarPesquisaNorna').hide();
+            }
+            if (ValidarPermissao(_grupos.nor_eml)) {
+                $('#habilitarNotificacao').show();
+            } else {
+                $('#habilitarNotificacao').hide();
+            }
+
+            $('#st_desabilita_email').on('change', function () {
+                let desabilitarEmail = $('#st_desabilita_email');
+                let habilitaEmail = $('#st_habilita_email');
+                if (desabilitarEmail.is(':checked')) {
+                    habilitaEmail.prop('checked', false)
+                    habilitaEmail.prop('disabled', true);
+                } else {
+                    habilitaEmail.prop('disabled', false);
+                }
+            });
+
+            $('#st_habilita_email').on('change', function () {
+                let desabilitarEmail = $('#st_desabilita_email');
+                let habilitaEmail = $('#st_habilita_email');
+                if (habilitaEmail.is(':checked')) {
+                    desabilitarEmail.prop('checked', false)
+                    desabilitarEmail.prop('disabled', true);
+                } else {
+                    desabilitarEmail.prop('disabled', false);
+                }
+            });
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
         });
     </script>
     <style type="text/css">
@@ -1241,6 +1277,39 @@
                             </div>
                         </fieldset>
                     </div>
+                    <fieldset>
+                        <div class="line">
+                            <div class="w-90-pc mauto">
+                                <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                <div class="column" id="habilitarPesquisaNorna">
+                                    <label style="font-size:large">Habilitar no Sinj Pesquisa:</label>      
+                                    <input id="st_habilita_pesquisa" name="st_habilita_pesquisa" value="true" type="checkbox" title="Habilita a visualizacao no Sinj pesquisa."/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="w-90-pc mauto ">
+                                <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                <div class="column" id="habilitarNotificacao">
+                                    <div>
+                                        <label style="font-size:large">Habilita enviar e-mail:</label>
+                                        <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <div class="w-90-pc mauto ">
+                                <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                <div class="column" id="desabilitarNotificacao">
+                                    <div>
+                                        <label style="font-size:large">Desabilitar enviar e-mail:</label>
+                                        <input id="st_desabilita_email" name="st_desabilita_email" value="true" type="checkbox" title="Desabilitar o envio de e-mails."/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
                     <div style="width:210px; margin:auto; display:none;" class="loaded buttons">
                         <button id="button_salvar_norma">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" />Salvar

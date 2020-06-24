@@ -30,8 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Reference Include="neo.BRLightSession">
       <HintPath>..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
+=======
+    <Reference Include="neo.BRLightREST">
+      <HintPath>..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -61,6 +66,7 @@
     <Compile Include="AD\AmbitoAD.cs" />
     <Compile Include="AD\ArquivoVersionadoNormaAD.cs" />
     <Compile Include="AD\FaleConoscoAD.cs" />
+    <Compile Include="AD\SessionAD.cs" />
     <Compile Include="AD\SINJ_ArquivoAD.cs" />
     <Compile Include="AD\AutoriaAD.cs" />
     <Compile Include="AD\CestaAD.cs" />
@@ -142,6 +148,7 @@
     <Compile Include="OV\RequeridoOV.cs" />
     <Compile Include="OV\SessaoNotifiquemeOV.cs" />
     <Compile Include="OV\SessaoUsuarioOV.cs" />
+    <Compile Include="OV\SessionOV.cs" />
     <Compile Include="OV\SINJ_ArquivoOV.cs" />
     <Compile Include="OV\SituacaoOV.cs" />
     <Compile Include="OV\TipoDeDecisaoEnum.cs" />
@@ -159,6 +166,7 @@
     <Compile Include="RN\AmbitoRN.cs" />
     <Compile Include="RN\ArquivoVersionadoNormaRN.cs" />
     <Compile Include="RN\FaleConoscoRN.cs" />
+    <Compile Include="RN\SessionRN.cs" />
     <Compile Include="RN\SINJ_ArquivoRN.cs" />
     <Compile Include="RN\AutoriaRN.cs" />
     <Compile Include="RN\CestaRN.cs" />
@@ -183,6 +191,7 @@
     <Compile Include="RN\TipoDePublicacaoRN.cs" />
     <Compile Include="RN\TipoDeRelacaoRN.cs" />
     <Compile Include="RN\UsuarioRN.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="UtilArquivoHtml.cs" />
     <Compile Include="RN\VocabularioRN.cs" />
     <Compile Include="RN\DiarioRN.cs" />

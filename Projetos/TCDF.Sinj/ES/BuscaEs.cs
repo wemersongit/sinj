@@ -104,6 +104,10 @@ namespace TCDF.Sinj.ES
             {
                 source = "\"_source\":{"+source+"}";
             }
+            else
+            {
+                source = "\"_source\": false";
+            }
             return source;
         }
 
@@ -366,11 +370,12 @@ namespace TCDF.Sinj.ES
             
             if (!string.IsNullOrEmpty(searchValue))
             {
-                sQuery = searchValue;
+                sQuery += searchValue;
+                sQuery = sQuery + "AND(st_habilita_pesquisa:true)";
             }
             else
             {
-                sQuery = "*";
+                sQuery = "st_habilita_pesquisa:true";
             }
             if (!string.IsNullOrEmpty(searchFilter))
             {

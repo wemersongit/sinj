@@ -7,6 +7,9 @@ using TCDF.Sinj.OV;
 using util.BRLight;
 using neo.BRLightREST;
 using TCDF.Sinj.Log;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.Net;
 
 namespace TCDF.Sinj.Web.ashx.Push
 {
@@ -40,6 +43,9 @@ namespace TCDF.Sinj.Web.ashx.Push
                         var corpo = "Foi solicitada uma recriação de senha para sua conta do Notifique-me SINJ.<br/>"+
                             "Para prosseguir clique no link:<br/><a href='" + Util.GetUriAndPath() + "/RecriarSenhaNotifiqueme.aspx?recriar=" + notifiquemeOv._metadata.id_doc + "A" + token + "' target='_blank' title='Recriar Senha Notifique-me'>Recriar Senha</a><br/>"+
                             "Caso desconheça essa solicitação, basta ignorar este e-mail.";
+                        ServicePointManager.ServerCertificateValidationCallback =
+                        delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                        { return true; };
                         email.EnviaEmail(display_name_remetente, destinatario, titulo, html, corpo);
                         sRetorno = "{\"id_doc_success\": "+notifiquemeOv._metadata.id_doc+" }";
                     }

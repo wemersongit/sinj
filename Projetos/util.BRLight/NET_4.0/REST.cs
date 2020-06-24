@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace util.BRLight
@@ -11,7 +13,7 @@ namespace util.BRLight
         [ValorString("GET", "1")]
         GET = 1,
         [ValorString("POST", "2")]
-        POST =2,
+        POST = 2,
         [ValorString("PUT", "3")]
         PUT = 3,
         [ValorString("DELETE", "4")]
@@ -24,19 +26,25 @@ namespace util.BRLight
         public string ContentType { get; set; }
         public FileParameter(byte[] file) : this(file, null) { }
         public FileParameter(byte[] file, string filename) : this(file, filename, null) { }
-        public FileParameter(byte[] file, string filename, string contenttype) {
+        public FileParameter(byte[] file, string filename, string contenttype)
+        {
             File = file;
             FileName = filename;
             ContentType = contenttype;
         }
     }
 
-    public class REST : IDisposable {
+    public class REST : IDisposable
+    {
 
-        private readonly Encoding Encoding = Encoding.UTF8; 
-        private HttpWebResponse response = null;
+        private readonly Encoding Encoding = Encoding.UTF8;
         private HttpWebRequest request = null;
+        private HttpWebResponse response = null;
         private string _userAgent;
+        private string statusCode;
+        private string headers;
+        private string statusDescription;
+        private Dictionary<string, string> dictHeader;
 
         private bool _bAddCaracterForm { get; set; }
 
@@ -61,12 +69,12 @@ namespace util.BRLight
             switch (caseMethod)
             {
                 case "GET":
-                    response = GetForm(url);
+                    request = GetForm(url);
                     break;
                 case "PUT":
                 case "DELETE":
                 case "POST":
-                    response = MultipartFormDataPost(url, postParameters, Method);
+                    request = MultipartFormDataPost(url, postParameters, Method);
                     break;
                 default:
                     throw new Exception("REST: invalid Method Type");
@@ -80,12 +88,12 @@ namespace util.BRLight
             switch (caseMethod)
             {
                 case "GET":
-                    response = GetForm(url);
+                    request = GetForm(url);
                     break;
                 case "PUT":
                 case "DELETE":
                 case "POST":
-                    response = MultipartFormDataPost(url, postParameters, Method);
+                    request = MultipartFormDataPost(url, postParameters, Method);
                     break;
                 default:
                     throw new Exception("REST: invalid Method Type");
@@ -98,12 +106,12 @@ namespace util.BRLight
             switch (caseMethod)
             {
                 case "GET":
-                    response = GetForm(url);
+                    request = GetForm(url);
                     break;
                 case "PUT":
                 case "DELETE":
                 case "POST":
-                    response = JsonDataPost(url, postJsonParameters, Method);
+                    request = JsonDataPost(url, postJsonParameters, Method);
                     break;
                 default:
                     throw new Exception("REST: invalid Method Type");
@@ -118,16 +126,16 @@ namespace util.BRLight
         public void Dispose()
         {
             StreamToByte = null;
-            response = null;
-            request = null;
+            //  request = null;
         }
 
-        public HttpWebResponse GetForm(string url)
+        public HttpWebRequest GetForm(string url)
         {
             System.Net.WebRequest.DefaultWebProxy = null;
             ServicePointManager.Expect100Continue = false;
-            request = (HttpWebRequest)WebRequest.Create(url) ;
-            if (request == null) {
+            request = (HttpWebRequest)WebRequest.Create(url);
+            if (request == null)
+            {
                 throw new NullReferenceException("REST: Não foi possivel criar um HttpWebRequest para: " + url);
             }
             // request.ServicePoint.Expect100Continue = false;
@@ -138,15 +146,16 @@ namespace util.BRLight
 
             if (RequestTimeOut > 0) request.Timeout = RequestTimeOut;
 
-            return GetResponseNoException(request);
+            return request;
         }
 
-        public HttpWebResponse GetJson(string url)
+        public HttpWebRequest GetJson(string url)
         {
             System.Net.WebRequest.DefaultWebProxy = null;
             ServicePointManager.Expect100Continue = false;
             request = (HttpWebRequest)WebRequest.Create(url);
-            if (request == null) {
+            if (request == null)
+            {
                 throw new NullReferenceException("REST: Não foi possivel criar um HttpWebRequest para: " + url);
             }
             // request.ServicePoint.Expect100Continue = false;
@@ -157,52 +166,41 @@ namespace util.BRLight
 
             if (RequestTimeOut > 0) request.Timeout = RequestTimeOut;
 
-            return GetResponseNoException(request);
+            return request;
         }
 
-        private static HttpWebResponse GetResponseNoException(WebRequest WebRequest)
-        {
-            try {
-                  return (HttpWebResponse)WebRequest.GetResponse() ;
-            } catch (WebException ex) {
-                var resp = (HttpWebResponse)ex.Response;
-                if (resp == null)
-                    throw new Exception("REST: GetResponseNoException: ", ex);
-                return resp;
-            }
-        }
-
-        private HttpWebResponse MultipartFormDataPost(string postUrl, Dictionary<string, object> postParameters, HttpVerb Method)
+        private HttpWebRequest MultipartFormDataPost(string postUrl, Dictionary<string, object> postParameters, HttpVerb Method)
         {
             string formDataBoundary;
-            if(_bAddCaracterForm)
+            if (_bAddCaracterForm)
             {
-                 formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid() + "$");
+                formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid() + "$");
             }
             else
             {
-                 formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid());
+                formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid());
             }
-            
+
             string contentType = "multipart/form-data; boundary=" + formDataBoundary;
             byte[] formData = GetMultipartFormData(postParameters, formDataBoundary);
             return PostForm(postUrl, contentType, formData, Method);
         }
 
-        private HttpWebResponse JsonDataPost(string postUrl, string postJsonParameters, HttpVerb Method)
+        private HttpWebRequest JsonDataPost(string postUrl, string postJsonParameters, HttpVerb Method)
         {
             byte[] formData = Encoding.UTF8.GetBytes(postJsonParameters);
             string contentType = "application/json;";
             return PostForm(postUrl, contentType, formData, Method);
         }
 
-        private HttpWebResponse PostForm(string postUrl, string contentType, byte[] formData, HttpVerb Method)
+        private HttpWebRequest PostForm(string postUrl, string contentType, byte[] formData, HttpVerb Method)
         {
             System.Net.WebRequest.DefaultWebProxy = null;
             ServicePointManager.Expect100Continue = false;
             request = WebRequest.Create(postUrl) as HttpWebRequest;
-  
-            if (request == null) {
+
+            if (request == null)
+            {
                 throw new NullReferenceException("REST: Não foi possivel criar um HttpWebRequest para: " + postUrl);
             }
 
@@ -228,7 +226,7 @@ namespace util.BRLight
                 requestStream.Close();
             }
 
-            return GetResponseNoException(request);
+            return request;
         }
 
         private byte[] GetMultipartFormData(Dictionary<string, object> postParameters, string boundary)
@@ -286,62 +284,125 @@ namespace util.BRLight
 
         public string GetStatusCode()
         {
-            return response.StatusCode.ToString();
+            return statusCode;
         }
 
-        public string GetStatusDescription() {
-            return response.StatusDescription;
+        public string GetStatusDescription()
+        {
+            return statusDescription;
         }
 
         public Dictionary<string, string> GetDictHeader()
         {
-            var result = new Dictionary<string, string>();
-            foreach (string key in response.Headers.Keys) {
-                result.Add(key, response.Headers[key]);
-            }
-            return result;
+            return dictHeader;
         }
 
-        public string GetHeaders() {
-            var result = "Status code: " + GetStatusCode() + "\r\n";
-            result += "Status description: " + GetStatusDescription() + "\r\n";
-            foreach (string key in response.Headers.Keys) {
-                result += string.Format("{0}: {1} \r\n", key, response.Headers[key]);
-            }
-            return result;
+        public string GetHeaders()
+        {
+            return headers;
         }
 
 
         public byte[] GetResponseStream()
         {
-            var m = new MemoryStream();
-            try {
-                response.GetResponseStream().CopyTo(m);
-                StreamToByte = m.ToArray();
-            } finally {
-                m.Close();
-            }
+            try
+            {
+                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                request.Credentials = CredentialCache.DefaultCredentials;
+                using (HttpWebResponse response1 = (System.Net.HttpWebResponse)request.GetResponse())
+                {
+                    response = response1;
+                    var m = new MemoryStream();
 
-            return StreamToByte;
-        } 
+
+                    headers = "Status code: " + GetStatusCode() + "\r\n";
+                    headers += "Status description: " + GetStatusDescription() + "\r\n";
+                    foreach (string key in response.Headers.Keys)
+                    {
+                        headers += string.Format("{0}: {1} \r\n", key, response.Headers[key]);
+                    }
+
+                    dictHeader = new Dictionary<string, string>();
+                    foreach (string key in response.Headers.Keys)
+                    {
+                        dictHeader.Add(key, response.Headers[key]);
+                    }
+
+                    statusCode = response.StatusCode.ToString();
+
+                    statusDescription = response.StatusDescription;
+                    try
+                    {
+                        response.GetResponseStream().CopyTo(m);
+                        StreamToByte = m.ToArray();
+                    }
+                    finally
+                    {
+                        m.Close();
+                    }
+                    return StreamToByte;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
+        }
 
         public string GetResponse()
         {
-            string target;
+            try
+            {
+                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                request.Credentials = CredentialCache.DefaultCredentials;
+                using (HttpWebResponse response1 = (System.Net.HttpWebResponse)request.GetResponse())
+                {
+                    response = response1;
+                    string target;
 
-                var m = new MemoryStream();
-                response.GetResponseStream().CopyTo(m);
-                StreamToByte = m.ToArray();
+                    var m = new MemoryStream();
+                    response.GetResponseStream().CopyTo(m);
+                    StreamToByte = m.ToArray();
 
-                try {
-                    target = Encoding.GetString(StreamToByte);
-                } finally {
-                    m.Close();
+
+
+                    headers = "Status code: " + GetStatusCode() + "\r\n";
+                    headers += "Status description: " + GetStatusDescription() + "\r\n";
+                    foreach (string key in response.Headers.Keys)
+                    {
+                        headers += string.Format("{0}: {1} \r\n", key, response.Headers[key]);
+                    }
+
+                    dictHeader = new Dictionary<string, string>();
+                    foreach (string key in response.Headers.Keys)
+                    {
+                        dictHeader.Add(key, response.Headers[key]);
+                    }
+
+                    statusCode = response.StatusCode.ToString();
+
+                    statusDescription = response.StatusDescription;
+                    try
+                    {
+                        target = Encoding.GetString(StreamToByte);
+                    }
+                    finally
+                    {
+                        m.Close();
+                    }
+
+                    return target;
                 }
-
-            return target;
-        } 
-
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
+        }
     }
 
 }

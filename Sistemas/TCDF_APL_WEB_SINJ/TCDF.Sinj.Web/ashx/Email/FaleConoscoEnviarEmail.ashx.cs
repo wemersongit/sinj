@@ -41,7 +41,17 @@ namespace TCDF.Sinj.Web.ashx.Email
                 var link = util.BRLight.Util.GetVariavel("URLSinjPortal", true) + "/?ch_chamado_fale_conosco=" + faleConosco.ch_chamado + "&ds_email_fale_conosco=" + faleConosco.ds_email + "&nm_user_fale_conosco=" + faleConosco.nm_user + "&ds_assunto_fale_conosco=" + faleConosco.ds_assunto;
 
                 var sHtml = "<br/><br/>Para responder essa mensagem, <a target='_blank' href='" + link + "'>clique aqui</a>";
+<<<<<<< HEAD
 
+=======
+                var message = faleConosco.mensagens;
+                var corpo_msg = "";
+                string[] msgSplit = mensagem.ds_msg_resposta.Split(new char[] { '\n', '\r' });
+                foreach (var e in msgSplit)
+                {
+                    corpo_msg = corpo_msg + "<div style=\"display:block;\">" + e + "</div>";
+                }
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                 if (faleConosco.mensagens.Count > 0)
                 {
                     sHtml += "<br/><br/><h3>Mensagens anteriores</h3>";
@@ -50,7 +60,13 @@ namespace TCDF.Sinj.Web.ashx.Email
                         if (!string.IsNullOrEmpty(msg.nm_login_usuario_resposta))
                         {
                             sHtml += "<br/>Em <b>" + msg.dt_resposta + "</b>, <b>" + msg.nm_usuario_resposta + "</b> escreveu:";
-                            sHtml += "<br/>" + msg.ds_msg_resposta;
+                            var corpo_msg_historico = "";
+                            string[] msgSplitHistorico = msg.ds_msg_resposta.Split(new char[] { '\n', '\r' });
+                            foreach (var e in msgSplitHistorico)
+                            {
+                                corpo_msg_historico = corpo_msg_historico + "<div style=\"display:block;\">" + e + "</div>";
+                            }
+                            sHtml += "<br/>" + corpo_msg_historico;
                             sHtml += "<br/>";
                         }
                         else
@@ -63,7 +79,7 @@ namespace TCDF.Sinj.Web.ashx.Email
                 }
 
 
-                sRetorno = new EnviarEmail().EnviarEmails(emails, mensagem.ds_assunto_resposta, true, mensagem.ds_msg_resposta + sHtml);
+                sRetorno = new EnviarEmail().EnviarEmails(emails, mensagem.ds_assunto_resposta, true, corpo_msg + sHtml);
 
                 mensagem.dt_resposta = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
                 mensagem.nm_login_usuario_resposta = sessao_usuario.nm_login_usuario;

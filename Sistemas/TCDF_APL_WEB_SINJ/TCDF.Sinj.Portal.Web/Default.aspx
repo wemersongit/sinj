@@ -389,4 +389,10 @@
 			</div>
         </div>
     </div>
+    <div style="margin-top:2%">
+        <label id="covid" style="font-size:16px; margin-left:10%">COVID-19 </label><label>Para acesso às normas que tratam do tema, <a href="http://bit.ly/sinj-covid19" target="_blank">CLIQUE AQUI</a></label>
+        <br />
+        <br />
+        <label style="font-size:16px; margin-left:10%">O SINJ-DF está passando por atualizações, o que pode deixá-lo momentaneamente instável. </label>
+    </div>
 </asp:Content>

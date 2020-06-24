@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Sinj.master.cs" Inherits="TCDF.Sinj.Portal.Web.Sinj" %>
+=======
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Sinj.master.cs" Inherits="TCDF.Sinj.Portal.Web.Sinj" %>
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 <!DOCTYPE html>
 <html>
 <head runat="server">
@@ -42,7 +46,11 @@
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/dataTables.responsive.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/stacktable.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.dataTablesLight.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+<<<<<<< HEAD
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/columns_datatables.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+=======
+    <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/columns_datatables_pesquisa.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
+>>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/platform.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/tooltip.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/funcoes_fale_conosco.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>

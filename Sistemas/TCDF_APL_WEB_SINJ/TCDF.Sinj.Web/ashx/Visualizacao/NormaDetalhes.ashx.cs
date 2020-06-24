@@ -81,9 +81,17 @@ namespace TCDF.Sinj.Web.ashx.Visualizacao
             }
             catch (Exception ex)
             {
-                if (ex is PermissionException || ex is DocNotFoundException || ex is SessionExpiredException)
+                if (ex is PermissionException)
                 {
-                    sRetorno = "{\"error_message\": \"" + ex.Message + "\", \"ch_doc_error\":\"" + _ch_norma + "\", \"id_doc_error\":\"" + _id_doc + "\"}";
+                    sRetorno = "{\"error_type\": \"Unauthorized\", \"error_message\": \"" + ex.Message + "\", \"ch_doc_error\":\"" + _ch_norma + "\", \"id_doc_error\":\"" + _id_doc + "\"}";
+                }
+                else if (ex is DocNotFoundException)
+                {
+                    sRetorno = "{\"error_type\": \"NotFound\", \"error_message\": \"" + ex.Message + "\", \"ch_doc_error\":\"" + _ch_norma + "\", \"id_doc_error\":\"" + _id_doc + "\"}";
+                }
+                else if (ex is SessionExpiredException)
+                {
+                    sRetorno = "{\"error_type\": \"SessionExpired\", \"error_message\": \"" + ex.Message + "\", \"ch_doc_error\":\"" + _ch_norma + "\", \"id_doc_error\":\"" + _id_doc + "\"}";
                 }
                 else
                 {
