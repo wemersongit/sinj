@@ -168,7 +168,7 @@
                                     else{
                                         selecionarNormaAlteradoraExcluir({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videExcluir.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videExcluir.alteracao_texto_vide.dispositivos_norma_vide });
                                     }
-                                    if (!videExcluir.in_norma_fora_sistema) {
+                                    if (!videExcluir.in_norma_fora_sistema && IsNotNullOrEmpty(videExcluir.ch_norma_vide)) {
                                         buscarOutraNorma(videExcluir.ch_norma_vide, videExcluir.ch_vide);
                                     }
                                     else{

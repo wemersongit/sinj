@@ -264,8 +264,14 @@ function selecionarNormaVide(ch_norma, nr_norma, dt_assinatura, nm_tipo_norma) {
             selecionarNormaAlteradoraCadastrar({ch_norma: ch_norma, nr_norma: nr_norma, dt_assinatura: dt_assinatura, nm_tipo_norma: nm_tipo_norma});
         }
         else {
-            resetarDispositivo('alterada');
-            selecionarNormaAlteradaCadastrar({ch_norma: ch_norma, nr_norma: nr_norma, dt_assinatura: dt_assinatura, nm_tipo_norma: nm_tipo_norma});
+            if(ch_norma == normaAlteradora.ch_norma){
+                notificarErroVide('Erro', 'Redundância nas normas selecionadas.');
+                return;
+            }
+            else{
+                resetarDispositivo('alterada');
+                selecionarNormaAlteradaCadastrar({ch_norma: ch_norma, nr_norma: nr_norma, dt_assinatura: dt_assinatura, nm_tipo_norma: nm_tipo_norma});
+            }
         }
         ahTextoIncompativel = false;
         $('#modal_norma').dialog('close');
@@ -557,6 +563,7 @@ function exibirTextoDoArquivoCadastrar(norma, arquivo) {
     if($(htmlUnescaped).closest('h1[epigrafe]').length <= 0){
         showMessageNormaIncompativel(norma);
         ahTextoIncompativel = true;
+        $(`input[norma=${norma.sufixo}]`).click();
         return;
     }
     $('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo').html(htmlUnescaped);
