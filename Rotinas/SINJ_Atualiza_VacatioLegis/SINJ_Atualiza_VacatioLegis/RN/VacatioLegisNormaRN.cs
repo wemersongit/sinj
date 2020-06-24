@@ -120,7 +120,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     }
                     else
                     {
-
+                        DesfazerAlteracaoNoDispositivoDoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
                     }
                 }
                 else if (UtilVides.EhInformacional(videAlterado.ds_texto_relacao))
@@ -293,17 +293,19 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             var tipoRelacao = _tipoDeRelacaoRn.Doc(videAlterado.ch_tipo_relacao);
             var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
             HtmlNode pNode, aNode;
-            string linkname = "";
+            string linkname;
             int countReplaceds;
             foreach (var dispositivo in videAlterado.alteracao_texto_vide.dispositivos_norma_vide)
             {
                 if (string.IsNullOrEmpty(dispositivo.texto))
                 {
-                    pNode = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(Regex.Replace(dispositivo.linkname, "(_replaced)*$", ""))).FirstOrDefault();
-                    aNode = pNode.Descendants("a").Where(a => a.GetAttributeValue("name", "").Equals(Regex.Replace(dispositivo.linkname, "(_replaced)*$", ""))).FirstOrDefault();
+                    linkname = Regex.Replace(dispositivo.linkname, "(_replaced)*$", "");
+                    pNode = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(linkname)).FirstOrDefault();
+                    aNode = pNode.Descendants("a").Where(a => a.GetAttributeValue("name", "").Equals(linkname)).FirstOrDefault();
 
                     pNode.SetAttributeValue("linkname", dispositivo.linkname);
                     pNode.SetAttributeValue("replaced_by", normaAlteradora.ch_norma);
+                    pNode.Attributes.Remove("undone_by");
                     aNode.SetAttributeValue("name", dispositivo.linkname);
                     aNode.SetAttributeValue("id", dispositivo.linkname);
 
@@ -312,7 +314,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                         RiscarTextoDoDispositivo(pNode);
                     }
 
-                    pNode.AppendChild(HtmlNode.CreateNode("<a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a>"));
+                    pNode.AppendChild(HtmlNode.CreateNode("&nbsp;<a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a>"));
                 }
                 else
                 {
@@ -342,16 +344,59 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
         }
 
+        private void DesfazerAlteracaoNoDispositivoDoTextoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
+        {
+            var tipoRelacao = _tipoDeRelacaoRn.Doc(videAlterado.ch_tipo_relacao);
+            var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
+            HtmlNode pNode, aNode;
+            string linkname;
+            foreach (var dispositivo in videAlterado.alteracao_texto_vide.dispositivos_norma_vide)
+            {
+                linkname = Regex.Replace(dispositivo.linkname, "(_undone)*$", "");
+                pNode = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(linkname)).FirstOrDefault();
+                aNode = pNode.Descendants("a").Where(a => a.GetAttributeValue("name", "").Equals(linkname)).FirstOrDefault();
+
+                pNode.SetAttributeValue("linkname", dispositivo.linkname);
+                pNode.SetAttributeValue("undone_by", normaAlteradora.ch_norma);
+                pNode.Attributes.Remove("replaced_by");
+                aNode.SetAttributeValue("name", dispositivo.linkname);
+                aNode.SetAttributeValue("id", dispositivo.linkname);
+
+                DesfazerTextoRiscadoDoDispositivo(pNode);
+
+                pNode.AppendChild(HtmlNode.CreateNode("&nbsp;<a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a>"));
+
+            }
+
+            SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
+        }
+
         private void RiscarTextoDoDispositivo(HtmlNode pNode)
         {
             var pNodeAux = HtmlNode.CreateNode("<p></p>");
             foreach (var node in pNode.ChildNodes)
             {
-                Console.WriteLine(node.NodeType);
-                Console.WriteLine(node.OuterHtml);
                 if (node.NodeType.Equals(HtmlNodeType.Text))
                 {
                     pNodeAux.AppendChild(HtmlNode.CreateNode("<s>" + node.OuterHtml + "</s>"));
+                }
+                else
+                {
+                    pNodeAux.AppendChild(node);
+                }
+            }
+            pNode.RemoveAllChildren();
+            pNode.AppendChildren(pNodeAux.ChildNodes);
+        }
+
+        private void DesfazerTextoRiscadoDoDispositivo(HtmlNode pNode)
+        {
+            var pNodeAux = HtmlNode.CreateNode("<p></p>");
+            foreach (var node in pNode.ChildNodes)
+            {
+                if (node.Name.Equals("s"))
+                {
+                    pNodeAux.AppendChild(HtmlNode.CreateNode(node.InnerHtml));
                 }
                 else
                 {
