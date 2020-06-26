@@ -149,6 +149,7 @@ function showMessageNormaIncompativel(norma){
         iTime: null
 >>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
     });
+    $(`input[norma=${norma.sufixo}]`).click();
 }
 
 function SelecionarNormaVide(ch_norma, ds_norma, dt_assinatura, nm_tipo_norma, st_acao) {
@@ -827,6 +828,9 @@ function getLastLecoSelectorNormaAlteradora(){
     if($dispositivosLecoAlterador.length > 0){
         for(let i = 0; i < $dispositivosLecoAlterador.length; i++){
             let resultRegex = regex.exec($dispositivosLecoAlterador.text());
+            if(!IsNotNullOrEmpty(resultRegex)){
+                continue;
+            }
             if(resultRegex[2] && normaAlterada.dt_assinatura){
                 if(convertStringToDateTime(normaAlterada.dt_assinatura) > convertStringToDateTime(resultRegex[2])){
                     continue;
