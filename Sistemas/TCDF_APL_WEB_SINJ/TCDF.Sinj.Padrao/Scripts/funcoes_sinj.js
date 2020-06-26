@@ -3854,9 +3854,14 @@ function ehNum(termo) {
 function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
     var niveis = [];
     var ultimo_nivel = 0;
-
-    $.each($('#' + id_div + ' p'), function (key_p, value_p) {
+    let paragrafos = $('#' + id_div + ' p');
+    let value_p = {};
+    for(var i = 0; i < paragrafos.length; i++){
         try {
+            value_p = paragrafos[i];
+            if(value_p.hasAttribute('ch_norma_info') || value_p.hasAttribute('ch_norma_alteracao_completa')){
+                continue;
+            }
             var linkname = $(value_p).attr('linkname');
             var nota = $(value_p).attr('nota');
             var noindex = $(value_p).attr('noindex');
@@ -3948,7 +3953,7 @@ function inserirMarcacoesNosParagrafos(id_div, bEditorLinks) {
         catch (ex) {
             console.log(ex);
         }
-    });
+    }
 }
 
 //Gera um linkname e um caput para ser usado na ancora com base no conteúdo

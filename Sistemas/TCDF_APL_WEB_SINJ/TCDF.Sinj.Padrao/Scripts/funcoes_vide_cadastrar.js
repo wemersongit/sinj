@@ -270,7 +270,6 @@ function selecionarNormaVide(ch_norma, nr_norma, dt_assinatura, nm_tipo_norma) {
                 selecionarNormaAlteradaCadastrar({ch_norma: ch_norma, nr_norma: nr_norma, dt_assinatura: dt_assinatura, nm_tipo_norma: nm_tipo_norma});
             }
         }
-        ahTextoIncompativel = false;
         $('#modal_norma').dialog('close');
     }
 }
@@ -405,12 +404,12 @@ function selecionarArquivoDaNormaCadastrar(norma) {
             });
             return false;
         }
-        if (IsNotNullOrEmpty(data, 'ar_atualizado.id_file')) {
+        if (IsNotNullOrEmpty(data, 'ar_atualizado.id_file') && data.ar_atualizado.mimetype == 'text/html') {
             norma.arquivo = data.ar_atualizado;
             exibirControlesNormaAlteradaSelecionada();
         }
         else if (IsNotNullOrEmpty(data, 'fontes')) {
-            if (IsNotNullOrEmpty(data.fontes[data.fontes.length - 1].ar_fonte, 'id_file')) {
+            if (IsNotNullOrEmpty(data.fontes[data.fontes.length - 1].ar_fonte, 'id_file') && data.fontes[data.fontes.length - 1].ar_fonte.mimetype == 'text/html') {
                 norma.arquivo = data.fontes[data.fontes.length - 1].ar_fonte;
                 exibirControlesNormaAlteradaSelecionada();
             }
@@ -423,38 +422,40 @@ function selecionarArquivoDaNormaCadastrar(norma) {
         }
         if(semArquivo){
             gComplete();
-                $('<div id="modal_notificacao_vide" />').modallight({
-                    sTitle: "Atenção",
-                    sContent: "Não foi encontrado arquivo nas fontes de publicação e republicação da norma selecionada.<br/> Deseja incluir o vide mesmo assim?",
-                    sType: "error",
-                    oButtons: [{
-                            text: "Sim",
-                            click: function() {
-                                limparArquivoSelecionado(norma.sufixo);
-                                if(norma.sufixo == 'alterada'){
-                                    normaAlterada.sem_arquivo = true;
-                                    normaAlteradora.sem_arquivo = true;
-                                    limparArquivoSelecionado('alteradora');
-                                    $('#div_cad_dispositivo_alterada').show();
-                                    $('#div_cad_dispositivo_alterada div.line_conteudo_arquivo').show();
-                                    $('.stepper').hide();
-                                    $('.step4').removeClass('hidden');
-                                }
-                                else{
-                                    normaAlteradora.sem_arquivo = true;
-                                }
-                                $(this).dialog('close');
+            $(`input[norma=${norma.sufixo}]`).click();
+            $('<div id="modal_notificacao_vide" />').modallight({
+                sTitle: "Atenção",
+                sContent: "Não foi encontrado arquivo nas fontes de publicação e republicação da norma selecionada.<br/> Deseja incluir o vide mesmo assim?",
+                sType: "error",
+                oButtons: [{
+                        text: "Sim",
+                        click: function() {
+
+                            limparArquivoSelecionado(norma.sufixo);
+                            if(norma.sufixo == 'alterada'){
+                                normaAlterada.sem_arquivo = true;
+                                normaAlteradora.sem_arquivo = true;
+                                limparArquivoSelecionado('alteradora');
+                                $('#div_cad_dispositivo_alterada').show();
+                                $('#div_cad_dispositivo_alterada div.line_conteudo_arquivo').show();
+                                $('.stepper').hide();
+                                $('.step4').removeClass('hidden');
                             }
-                        },{
-                            text: "Não",
-                            click: function() {
-                                resetarDispositivo(norma.sufixo);
-                                $(this).dialog('close');
+                            else{
+                                normaAlteradora.sem_arquivo = true;
                             }
+                            $(this).dialog('close');
                         }
-                    ]
-                });
-                return;
+                    },{
+                        text: "Não",
+                        click: function() {
+                            resetarDispositivo(norma.sufixo);
+                            $(this).dialog('close');
+                        }
+                    }
+                ]
+            });
+            return;
         }
         $('.stepper').show();
         if(norma.sufixo == 'alteradora'){
@@ -554,13 +555,8 @@ function desfazerLinkAlterador(){
 function exibirTextoDoArquivoCadastrar(norma, arquivo) {
     limparArquivoSelecionado(norma.sufixo);
     const htmlUnescaped = window.unescape(arquivo.fileencoded);
-    if(ahTextoIncompativel){
-        return;
-    }
     if($(htmlUnescaped).closest('h1[epigrafe]').length <= 0){
         showMessageNormaIncompativel(norma);
-        ahTextoIncompativel = true;
-        $(`input[norma=${norma.sufixo}]`).click();
         return;
     }
     $('#div_cad_dispositivo_' + norma.sufixo + ' div.div_conteudo_arquivo').html(htmlUnescaped);

@@ -26,6 +26,7 @@ function showMessageNormaIncompativel(norma){
         sWidth: "",
         iTime: null
     });
+    $(`input[norma=${norma.sufixo}]`).click();
 }
 
 function selecionarTextoCopiar() {
@@ -288,6 +289,9 @@ function getLastLecoSelectorNormaAlteradora(){
     if($dispositivosLecoAlterador.length > 0){
         for(let i = 0; i < $dispositivosLecoAlterador.length; i++){
             let resultRegex = regex.exec($dispositivosLecoAlterador.text());
+            if(!IsNotNullOrEmpty(resultRegex)){
+                continue;
+            }
             if(resultRegex[2] && normaAlterada.dt_assinatura){
                 if(convertStringToDateTime(normaAlterada.dt_assinatura) > convertStringToDateTime(resultRegex[2])){
                     continue;
