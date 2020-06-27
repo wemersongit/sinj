@@ -47,7 +47,7 @@ function selecionarTextoCopiar() {
 }
 
 function clickButtonSelecionarDispositivo(el) {
-    if(!IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo){
+    if(!IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo && !isLecoVide(tipoDeRelacao.ch_tipo_relacao) && !$('#inSemCitacaoNormaAlteradora').is(':checked')){
         notificarErroVide('Erro','Selecione o dispositivo alterador.');
         return;
     }
