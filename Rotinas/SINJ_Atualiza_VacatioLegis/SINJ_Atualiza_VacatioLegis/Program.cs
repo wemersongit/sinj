@@ -60,7 +60,8 @@ namespace SINJ_Atualiza_VacatioLegis
             var tipoRelacaoRn = new TipoDeRelacaoRN();
 
             var vacatioLegisNormaRn = new VacatioLegisNormaRN(normaRn, tipoRelacaoRn, new UtilArquivoHtml());
-            pesquisa_norma.literal = string.Format("st_vacatio_legis AND dt_inicio_vigencia::date <= '{0}'", DateTime.Now.ToString("dd/MM/yyyy"));
+
+            pesquisa_norma.literal = string.Format("st_vacatio_legis AND dt_inicio_vigencia::date='{0}'", DateTime.Now.ToString("dd/MM/yyyy"));
             pesquisa_norma.limit = null;
             pesquisa_norma.order_by = new Order_By() { asc = new string[] { "dt_assinatura::date" } };
             var resultNormas = normaRn.Consultar(pesquisa_norma);
@@ -119,7 +120,7 @@ namespace SINJ_Atualiza_VacatioLegis
                                                     vacatioLegisNormaRn.AlterarTextoDaNormaAlteradora(normaAlteradora, normaAlterada, videAlterador);
 
                                                     this._sb_info.AppendLine(DateTime.Now + " ---- Alterar Textos Norma Alterada - Chave Vide => " + videAlterado.ch_vide);
-                                                    vacatioLegisNormaRn.AlterarTextoDaNormaAlterada(normaAlteradora, normaAlterada, videAlterador);
+                                                    vacatioLegisNormaRn.AlterarTextoDaNormaAlterada(normaAlteradora, normaAlterada, videAlterado);
 
                                                 }
                                             }

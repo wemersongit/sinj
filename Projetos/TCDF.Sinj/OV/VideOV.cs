@@ -383,6 +383,25 @@ namespace TCDF.Sinj.OV
         }
 
         /// <summary>
+        /// Verifica, com base na descrição da relação de vide, se o vide implica em alteração no texto completo da norma
+        /// </summary>
+        /// <param name="dsTextoParaAlterador"></param>
+        /// <returns></returns>
+        public static bool EhAlteracaoCompleta(string dsTextoParaAlterador)
+        {
+            return dsTextoParaAlterador.Equals("revogado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("anulado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("extinto(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("declarado inconstitucional", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("declarado(a) inconstitucional", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("julgado(a) procedente", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("cancelado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("suspenso(a) liminarmente", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("suspenso(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        /// <summary>
         /// Verifica se é relação que desfaz alteração completa
         /// </summary>
         /// <param name="dsTextoParaAlterador"></param>
@@ -433,8 +452,7 @@ namespace TCDF.Sinj.OV
                 dsTextoParaAlterador.Equals("reeditado(a)", StringComparison.InvariantCultureIgnoreCase) ||
                 dsTextoParaAlterador.Equals("regulamentado(a)", StringComparison.InvariantCultureIgnoreCase) ||
                 dsTextoParaAlterador.Equals("prorrogado(a)", StringComparison.InvariantCultureIgnoreCase) ||
-                dsTextoParaAlterador.Equals("ressalvado(a)", StringComparison.InvariantCultureIgnoreCase) ||
-                dsTextoParaAlterador.Equals("legislação correlata", StringComparison.InvariantCultureIgnoreCase);
+                dsTextoParaAlterador.Equals("ressalvado(a)", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 

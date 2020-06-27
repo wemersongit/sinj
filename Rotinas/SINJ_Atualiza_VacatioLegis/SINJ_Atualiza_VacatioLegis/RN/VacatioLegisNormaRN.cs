@@ -72,7 +72,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     var node = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(dispositivoAlterador.linkname)).FirstOrDefault();
                     if (!string.IsNullOrEmpty(node.InnerHtml))
                     {
-                        node.InnerHtml = node.InnerHtml.Replace(dispositivoAlterador.texto, "<a href=\"" + linkNormaAlterada + ">" + dispositivoAlterador.texto + "</a>");
+                        node.InnerHtml = node.InnerHtml.Replace(dispositivoAlterador.texto, "<a href=\"" + linkNormaAlterada + "\">" + dispositivoAlterador.texto + "</a>");
                     }
                     SaveFile(doc.DocumentNode.InnerHtml, normaAlteradora);
                 }
@@ -96,12 +96,12 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             if (videAlterado.alteracao_texto_vide != null)
             {
                 var doc = new HtmlDocument();
-                var idFile = normaAlteradora.getIdFileArquivoVigente();
+                var idFile = normaAlterada.getIdFileArquivoVigente();
                 var texto = _utilArquivoHtml.GetHtmlFile(idFile, "sinj_norma", null);
                 //converte o texto em HtmlDocument
                 doc.LoadHtml(texto);
 
-                if (UtilVides.EhAlteracaoCompleta(normaAlterada.nm_situacao, videAlterado.ds_texto_relacao))
+                if (UtilVides.EhAlteracaoCompleta(videAlterado.ds_texto_relacao))
                 {
                     if (videAlterado.alteracao_texto_vide == null || videAlterado.alteracao_texto_vide.dispositivos_norma_vide == null || !videAlterado.alteracao_texto_vide.dispositivos_norma_vide.Any())
                     {
@@ -125,11 +125,26 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                 }
                 else if (UtilVides.EhInformacional(videAlterado.ds_texto_relacao))
                 {
-                    AcrescentarInformacaoNoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
+                    if (videAlterado.alteracao_texto_vide == null || videAlterado.alteracao_texto_vide.dispositivos_norma_vide == null || !videAlterado.alteracao_texto_vide.dispositivos_norma_vide.Any())
+                    {
+                        AcrescentarInformacaoNoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
+                    }
+                    else
+                    {
+                        AcrescentarInformacaoNoDispositivoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
+                    }
                 }
                 else if (UtilVides.EhLegislacaoCorrelata(videAlterado.ds_texto_relacao))
                 {
-                    AcrescentarLecoNoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
+                    if (videAlterado.alteracao_texto_vide == null || videAlterado.alteracao_texto_vide.dispositivos_norma_vide == null || !videAlterado.alteracao_texto_vide.dispositivos_norma_vide.Any())
+                    {
+                        AcrescentarLecoNoTextoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
+                    }
+                    else
+                    {
+                        AcrescentarLecoNoDispositivoDaNormaAlterada(doc, normaAlteradora, normaAlterada, videAlterado);
+                    }
+                    
                 }
                 else if (UtilVides.EhRenumeracao(videAlterado.ds_texto_relacao))
                 {
@@ -150,7 +165,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
         private void AlterarTextoCompletoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
         {
             var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
-            var newNode = HtmlNode.CreateNode("<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\" ch_tipo_relacao=\"" + videAlterado.ch_tipo_relacao + "\" ><a href=\"" + linkNormaAlteradora + "\" >" + videAlterado.ds_texto_relacao + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + "</a></p>");
+            var newNode = HtmlNode.CreateNode("<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\" ch_tipo_relacao=\"" + videAlterado.ch_tipo_relacao + "\" ><a href=\"" + linkNormaAlteradora + "\" >(" + videAlterado.ds_texto_relacao + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a></p>");
             var chNodesNormaAlteracaoCompleta = doc.DocumentNode.Descendants("p").Where(p => !string.IsNullOrEmpty(p.GetAttributeValue("ch_norma_alteracao_completa", "")));
             var pNodes = doc.DocumentNode.Descendants("p").Where(p => !string.IsNullOrEmpty(p.GetAttributeValue("linkname", ""))).ToList();
             HtmlNode insertAfterNode;
@@ -186,9 +201,8 @@ namespace SINJ_Atualiza_VacatioLegis.RN
 
         private void DesfazerAlteracaoNoTextoCompletoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
         {
-
             var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
-            var newNode = HtmlNode.CreateNode("<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\" ch_tipo_relacao=\"" + videAlterado.ch_tipo_relacao + "\" ><a href=\"" + linkNormaAlteradora + "\" >" + videAlterado.ds_texto_relacao + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + "</a></p>");
+            var newNode = HtmlNode.CreateNode("<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\" ch_tipo_relacao=\"" + videAlterado.ch_tipo_relacao + "\" ><a href=\"" + linkNormaAlteradora + "\" >(" + videAlterado.ds_texto_relacao + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a></p>");
             var chNodesNormaAlteracaoCompleta = doc.DocumentNode.Descendants("p").Where(p => !string.IsNullOrEmpty(p.GetAttributeValue("ch_norma_alteracao_completa", "")));
             var sNode = doc.DocumentNode.SelectSingleNode("s");
                 //.Descendants("p").Where(p => !string.IsNullOrEmpty(p.GetAttributeValue("linkname", ""))).ToList();
@@ -217,13 +231,15 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     );
                 }
             }
+
             SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
         }
 
         private void AcrescentarInformacaoNoTextoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
         {
+            var tipoRelacao = _tipoDeRelacaoRn.Doc(videAlterado.ch_tipo_relacao);
             var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
-            var newNode = HtmlNode.CreateNode("<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + linkNormaAlteradora + "\" >" + videAlterado.ds_texto_relacao + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + "</a></p>");
+            var newNode = HtmlNode.CreateNode("<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\"><a href=\"" + linkNormaAlteradora + "\" >(" + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a></p>");
 
             HtmlNode insertAfterNode = doc.DocumentNode.Descendants("h1").Where(h1 => !string.IsNullOrEmpty(h1.GetAttributeValue("epigrafe", ""))).FirstOrDefault();
 
@@ -235,10 +251,30 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
         }
 
+        private void AcrescentarInformacaoNoDispositivoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
+        {
+            var tipoRelacao = _tipoDeRelacaoRn.Doc(videAlterado.ch_tipo_relacao);
+            var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
+
+            HtmlNode node;
+            foreach (var dispositivo in videAlterado.alteracao_texto_vide.dispositivos_norma_vide)
+            {
+                node = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(dispositivo.linkname)).FirstOrDefault();
+                if (node != null)
+                {
+                    node.AppendChild(HtmlNode.CreateNode("&nbsp;"));
+                    node.AppendChild(HtmlNode.CreateNode("<a href=\"" + linkNormaAlteradora + "\">(" + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a>"));
+                }
+            }
+
+            SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
+        }
+
         private void AcrescentarLecoNoTextoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
         {
+            var tipoRelacao = _tipoDeRelacaoRn.Doc(videAlterado.ch_tipo_relacao);
             var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
-            var newNode = HtmlNode.CreateNode("<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\" ><a href=\"" + linkNormaAlteradora + "\" >" + videAlterado.ds_texto_relacao + " - " + normaAlteradora.getDescricaoDaNorma() + "</a></p>");
+            var newNode = HtmlNode.CreateNode("<p ch_norma_info=\"" + normaAlteradora.ch_norma + "\" ><a href=\"" + linkNormaAlteradora + "\" >" + tipoRelacao.ds_texto_para_alterador + " - " + normaAlteradora.getDescricaoDaNorma() + "</a></p>");
 
             HtmlNode insertAfterNode = doc.DocumentNode.Descendants("h1").Where(h1 => !string.IsNullOrEmpty(h1.GetAttributeValue("epigrafe", ""))).FirstOrDefault();
 
@@ -246,6 +282,25 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                 newNode,
                 insertAfterNode
             );
+
+            SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
+        }
+
+        private void AcrescentarLecoNoDispositivoDaNormaAlterada(HtmlDocument doc, NormaOV normaAlteradora, NormaOV normaAlterada, Vide videAlterado)
+        {
+            var tipoRelacao = _tipoDeRelacaoRn.Doc(videAlterado.ch_tipo_relacao);
+            var linkNormaAlteradora = CriarLinkDaNorma(normaAlteradora, videAlterado);
+
+            HtmlNode node;
+            foreach (var dispositivo in videAlterado.alteracao_texto_vide.dispositivos_norma_vide)
+            {
+                node = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(dispositivo.linkname)).FirstOrDefault();
+                if (node != null)
+                {
+                    node.AppendChild(HtmlNode.CreateNode("&nbsp;"));
+                    node.AppendChild(HtmlNode.CreateNode("<a href=\"" + linkNormaAlteradora + "\">(" + tipoRelacao.ds_texto_para_alterador + " - " + normaAlteradora.getDescricaoDaNorma() + ")</a>"));
+                }
+            }
 
             SaveFile(doc.DocumentNode.InnerHtml, normaAlterada);
         }
@@ -265,6 +320,8 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     node.InnerHtml = node.InnerHtml.Replace(dispositivo.texto_antigo, dispositivo.texto);
                     node.SetAttributeValue("name", dispositivo.linkname);
                     node.Descendants("a").Where(a => a.GetAttributeValue("name", "").Equals(linkname)).FirstOrDefault().SetAttributeValue("name", dispositivo.linkname);
+
+                    node.AppendChild(HtmlNode.CreateNode("&nbsp;"));
                     node.AppendChild(HtmlNode.CreateNode("<a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a>"));
                 }
             }
@@ -281,7 +338,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             foreach (var dispositivo in videAlterado.alteracao_texto_vide.dispositivos_norma_vide)
             {
                 node = doc.DocumentNode.InsertAfter(
-                        HtmlNode.CreateNode("<p linkname=\"" + linkNormaAlteradora + "\">" + dispositivo.texto + " <a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a></p>"),
+                        HtmlNode.CreateNode("<p style=\"text-align:justify\" linkname=\"" + linkNormaAlteradora + "\">" + dispositivo.texto + " <a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a></p>"),
                         node
                     );
             }
@@ -314,7 +371,8 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                         RiscarTextoDoDispositivo(pNode);
                     }
 
-                    pNode.AppendChild(HtmlNode.CreateNode("&nbsp;<a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a>"));
+                    pNode.AppendChild(HtmlNode.CreateNode("&nbsp;"));
+                    pNode.AppendChild(HtmlNode.CreateNode("<a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a>"));
                 }
                 else
                 {
@@ -335,7 +393,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     RiscarTextoDoDispositivo(pNode);
 
                     doc.DocumentNode.InsertAfter(
-                        HtmlNode.CreateNode("<p linkname=\"" + dispositivo.linkname + "\">" + dispositivo.texto + " <a href=\"" + dispositivo.linkname + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a></p>"),
+                        HtmlNode.CreateNode("<p style=\"text-align:justify\" linkname=\"" + dispositivo.linkname + "\">" + dispositivo.texto + " <a href=\"" + linkNormaAlteradora + "\">(" + (!string.IsNullOrEmpty(dispositivo.nm_linkname) ? dispositivo.nm_linkname + " " : "") + tipoRelacao.ds_texto_para_alterador + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a></p>"),
                         pNode
                     );
                 }
@@ -424,7 +482,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             //se a norma alterada possui arquivo o link deve ser o do arquivo
             if (!string.IsNullOrEmpty(fileNameNormaAlteradora))
             {
-                link += "/" + fileNameNormaAlteradora;
+                link = "(_link_sistema_)Norma/"+norma.ch_norma+"/" + fileNameNormaAlteradora;
                 //se o vide possuir dispositivo o link deve receber a ancora do primeiro
                 if (vide.alteracao_texto_vide.dispositivos_norma_vide_outra.Any())
                 {
