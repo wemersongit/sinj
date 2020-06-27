@@ -1424,7 +1424,7 @@ var _columns_norma_vide = [
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": "Situação", "sWidth": "", "sClass": "center ws nm_situacao", "mData": "nm_situacao" },
 	{ "indice": 4, "isControl": false, "standard_view": true, "sTitle": " ", "sWidth": "", "sClass": "center ws all", "bSortable": false,
 		"mRender": function (data, type, full) {
-			return "<a href='javascript:void(0);' onclick='javascript:selecionarNormaVide(\"" + full.ch_norma + "\",\"" + full.nr_norma + "\", \"" + full.dt_assinatura +  "\", \"" + full.nm_tipo_norma + "\" ," + full.st_acao + ");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='" + _urlPadrao + "/Imagens/ico_ok_p.png' /></a>";
+			return `<a href='javascript:void(0);' onclick='javascript:selecionarNormaVide("${full.ch_norma}", "${full.nr_norma}", "${full.dt_assinatura}", "${full.nm_tipo_norma}", "${full.st_acao}", "${full.st_vacatio_legis}", "${full.dt_inicio_vigencia}");' title='Selecionar'><img valign='absmiddle' alt='Selecionar' src='${_urlPadrao}/Imagens/ico_ok_p.png' /></a>`;
 		}
 	}
 ];

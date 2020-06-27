@@ -251,14 +251,14 @@ function pesquisarNorma() {
     return false;
 }
 
-function selecionarNormaVide(ch_norma, nr_norma, dt_assinatura, nm_tipo_norma) {
+function selecionarNormaVide(ch_norma, nr_norma, dt_assinatura, nm_tipo_norma, st_vacatio_legis, dt_inicio_vigencia) {
     if (IsNotNullOrEmpty(ch_norma)) {
         if (flagModalNorma == 'alteradora') {
             tipoDeRelacao = {};
             $('#selectTipoDeRelacao').val('');
             resetarDispositivo('alteradora');
             resetarDispositivo('alterada');
-            selecionarNormaAlteradoraCadastrar({ch_norma: ch_norma, nr_norma: nr_norma, dt_assinatura: dt_assinatura, nm_tipo_norma: nm_tipo_norma});
+            selecionarNormaAlteradoraCadastrar({ch_norma: ch_norma, nr_norma: nr_norma, dt_assinatura: dt_assinatura, nm_tipo_norma: nm_tipo_norma, st_vacatio_legis: st_vacatio_legis, dt_inicio_vigencia: dt_inicio_vigencia});
         }
         else {
             if(ch_norma == normaAlteradora.ch_norma){
@@ -281,6 +281,8 @@ function selecionarNormaAlteradoraCadastrar(norma){
         ds_norma: montarDescricaoDaNorma(norma),
         dt_assinatura: norma.dt_assinatura,
         nm_tipo_norma: norma.nm_tipo_norma,
+        st_vacatio_legis: norma.st_vacatio_legis,
+        dt_inicio_vigencia: norma.dt_inicio_vigencia,
         sem_arquivo: true,
         dispositivos: []
     };
@@ -940,9 +942,19 @@ function salvarArquivosVideCadastrar(sucessoVide){
     const deferredAlteradora = $.Deferred();
     const deferredAlterada = $.Deferred();
     $.when(deferredAlteradora, deferredAlterada).done(function(){
-        salvarVideCadastrar(sucessoVide)
+        salvarVideCadastrar(sucessoVide);
     });
     gInicio();
+    //Em caso de vacatio legis os arquivos serão editados quando a norma alteradora entrar em vigência
+    if(IsNotNullOrEmpty(normaAlteradora, 'st_vacatio_legis') && IsNotNullOrEmpty(normaAlteradora, 'dt_inicio_vigencia')){
+        let dateNow = new Date();
+        dateNow.setHours(0,0,0);
+        if(convertStringToDateTime(normaAlteradora.dt_inicio_vigencia) > dateNow){
+            deferredAlteradora.resolve();
+            deferredAlterada.resolve();
+            return false;
+        }
+    }
     limparFormatacao();
     //Se a norma alterada não tiver aquivo então não tem porque salvar o arquivo da norma alteradora
     if(!normaAlteradora.sem_arquivo){
