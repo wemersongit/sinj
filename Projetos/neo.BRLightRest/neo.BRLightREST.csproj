@@ -34,7 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="util.BRLight">
-      <HintPath>..\..\..\..\Data\DEV_HOST\_SINJ\sinj\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
+      <HintPath>..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

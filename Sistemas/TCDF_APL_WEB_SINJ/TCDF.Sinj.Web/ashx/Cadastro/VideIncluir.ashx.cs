@@ -198,7 +198,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                         if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))
                         {
                             sRetorno = "{\"id_doc_success\":" + id_doc + ", \"st_habilita_pesquisa\":\"" + normaAlteradaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaAlteradaOv.st_habilita_email + "\", \"id_doc_vide\":\"" + normaAlteradaOv._metadata.id_doc + "\", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
-
                         }
                         else
                         {
@@ -208,7 +207,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     else
                     {
                         sRetorno = "{\"id_doc_success\":" + id_doc + ", \"st_habilita_pesquisa\":\"" + normaAlteradaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaAlteradaOv.st_habilita_email + "\", \"id_doc_vide\":\"" + normaAlteradaOv._metadata.id_doc + "\", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
-
                     }
                 }
                 else
@@ -300,10 +298,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             if (NormaAlterada == null || (!NormaAlterada.InNormaForaSistema && string.IsNullOrEmpty(NormaAlterada.ChNorma)))
             {
                 throw new DocValidacaoException("Erro ao informar a norma alterada. Verifique se está selecionando corretamente a norma afetada pelo vide.");
-            }
-            if (!NormaAlterada.SemArquivo && !NormaAlterada.InAlteracaoCompleta && !UtilVides.EhLegislacaoCorrelata(Relacao.ds_texto_para_alterador) && (NormaAlterada.Dispositivos == null || !NormaAlterada.Dispositivos.Any()))
-            {
-                throw new DocValidacaoException("Erro ao informar o dispositivo alterado.");
             }
         }
     }

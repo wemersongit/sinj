@@ -300,21 +300,6 @@
                 </div>
             </form>
         </div>
-        <div class="stepper">
-            <div class="row">
-                <div class="col-xs-12 col-md-8 offset-md-2 block border">
-                    <div class="wrapper-progressBar">
-                        <ul class="progressBar">
-                            <li class="norma-alteradora">Selecionar norma alteradora</li>
-                            <li class="relacao">Selecionar tipo de relação</li>
-                            <li class="norma-alterada">Selecionar norma alterada</li>
-                            <li class="dispositivo-alterador">Selecionar dispositivo alterador</li>
-                            <li class="dispositivo-alterado">Selecionar dispositivos alterados</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div id="div_cad_vide">
             <form id="form_vide" name="formCadastroVide" action="#" method="post">
                 <input type="hidden" id="dt_controle_alteracao" name="dt_controle_alteracao" value="<%= DateTime.Now.ToString("dd'/'MM'/'yyyy HH':'mm':'ss") %>" />
@@ -327,15 +312,14 @@
                                 <div class="column w-100-pc">
                                     <div class="table w-100-pc">
                                         <div class="line">
-                                            <div id="columnRelacao" class="column w-100-pc text-center step step2 hidden bold">
+                                            <div id="columnRelacao" class="column w-100-pc text-center hidden selecionar-tipo-de-relacao bold">
                                                 <label>Tipo de Relação:</label>
                                                 <select id="selectTipoDeRelacao" onchange="changeTipoRelacao(this);">
                                                     <option value=""></option>
-                                                    <option value="Alteração">Alteração</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div id="lineNormas" class="line step step1">
+                                        <div id="lineNormas" class="line">
                                             <div class="column w-50-pc">
                                                 <div class="cell w-100-pc">
                                                     <div class="table w-99-pc mauto">
@@ -368,6 +352,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="line hidden selecionar-arquivo-norma-alteradora">
+                                                            <div class="column">
+                                                                <label>Selecionar arquivo <input type="checkbox" value="1" onchange="changeSelecionarArquivoDaNorma(this)" norma="alteradora"/></label>
+                                                            </div>
+                                                        </div>
                                                         <div class="line">
                                                             <div id="div_cad_dispositivo_alteradora" style="display:none;">
                                                                 <div class="table w-100-pc">
@@ -384,7 +373,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="columnNormaAlterada" class="column w-50-pc step step3 hidden">
+                                            <div id="columnNormaAlterada" class="column hidden selecionar-norma-alterada w-50-pc">
                                                 <div class="cell w-100-pc">
                                                     <div class="table w-99-pc mauto">
                                                         <div class="head">
@@ -406,6 +395,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                         <div id="line_norma_fora_do_sistema" class="line hidden">
                                                             <button type="button" class="clean button-close" title="Fechar" onclick="fecharNormaForaDoSistemaCadastrar()"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="fechar" width="12px" height="12px" /></button>
                                                             <div class="column w-100-pc">
@@ -559,7 +549,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
+                                                        <div class="line hidden selecionar-arquivo-norma-alterada">
+                                                            <div class="column">
+                                                                <label>Selecionar arquivo <input type="checkbox" value="1" onchange="changeSelecionarArquivoDaNorma(this)" norma="alterada"/></label>
+                                                            </div>
+                                                        </div>
                                                         <div class="line">
                                                             <div id="div_cad_dispositivo_alterada" style="display:none;">
                                                                 <div class="table w-100-pc">
@@ -583,23 +577,23 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="line">
-                                                                                    <div class="column w-100-pc">
-                                                                                        <label>Dispositivos alterados: </label><br />
-                                                                                        <textarea name="ds_dispositivos_alterados" rows="10" cols="50"></textarea>
-                                                                                    </div>
-                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="line hidden ds-dispositivos-alterados">
+                                                            <div class="column w-100-pc">
+                                                                <label>Dispositivos alterados: </label><br />
+                                                                <textarea name="ds_dispositivos_alterados" rows="10" cols="50" onblur="changeStepper('preencheDsDispositivoAlterado')"></textarea>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="lineComentario" class="line comentario step step4 hidden">
+                                        <div id="lineComentario" class="line ds-comentario-vide hidden">
                                             <div class="column w-100-pc">
                                                 <div class="table w-80-pc mauto">
                                                     <div class="line">
@@ -618,7 +612,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <div id="divButtons" style="width:210px; margin:auto;" class="buttons loaded step step4 hidden">
+                    <div id="divButtons" style="width:210px; margin:auto;" class="buttons loaded hidden">
                         <button id="button_salvar_vide">
                             <img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_disk_p.png" alt="salvar" />Salvar
                         </button>
@@ -644,4 +638,5 @@
         </div>
         <div id="div_tooltip_dispositivo"></div>
     </div>
+    <div id="modal_vide"></div>
 </asp:Content>

@@ -26,6 +26,7 @@ function showMessageNormaIncompativel(norma){
         sWidth: "",
         iTime: null
     });
+    $(`input[norma=${norma.sufixo}]`).click();
 }
 
 function selecionarTextoCopiar() {
@@ -47,7 +48,7 @@ function selecionarTextoCopiar() {
 
 function clickButtonSelecionarDispositivo(el) {
     if(!IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo){
-        alert('Selecione o dispositivo alterador.');
+        notificarErroVide('Erro','Selecione o dispositivo alterador.');
         return;
     }
     var linkname = $(el).attr('linkname');
@@ -288,6 +289,9 @@ function getLastLecoSelectorNormaAlteradora(){
     if($dispositivosLecoAlterador.length > 0){
         for(let i = 0; i < $dispositivosLecoAlterador.length; i++){
             let resultRegex = regex.exec($dispositivosLecoAlterador.text());
+            if(!IsNotNullOrEmpty(resultRegex)){
+                continue;
+            }
             if(resultRegex[2] && normaAlterada.dt_assinatura){
                 if(convertStringToDateTime(normaAlterada.dt_assinatura) > convertStringToDateTime(resultRegex[2])){
                     continue;
@@ -343,4 +347,53 @@ function getLastInfoSelectorNormaAlterada(){
         }
     }
     return selectorInsertAfterAlterado;
+}
+
+function notificarSucessoVide(title, body){
+    $('#modal_vide').modallight({
+        sTitle: title,
+        sContent: body,
+        sType: "success",
+        oButtons: [
+            {
+                text: "Ok", click: function () {
+                    $(this).dialog('destroy');
+                }
+            }
+        ],
+        fnClose: function () {
+            location.reload();
+        }
+    });
+}
+
+function notificarErroVide(title, body){
+    $('#modal_vide').modallight({
+        sTitle: title,
+        sContent: body,
+        sType: "error",
+        oButtons: [
+            {
+                text: "Ok", click: function () {
+                    $(this).dialog('destroy');
+                }
+            }
+        ],
+        fnClose: function () {
+            location.reload();
+        }
+    });
+}
+
+function montarLinkNorma(norma){
+    let linkNorma = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${norma.ch_norma}`;
+    if(!norma.sem_arquivo){
+        if(norma.dispositivos.length > 0){
+            linkNorma = `(_link_sistema_)Norma/${norma.ch_norma}/${norma.arquivo.filename}#${norma.dispositivos[0].linkname}`;
+        }
+        else{
+            linkNorma = `(_link_sistema_)Norma/${norma.ch_norma}/${norma.arquivo.filename}`;
+        }
+    }
+    return linkNorma;
 }

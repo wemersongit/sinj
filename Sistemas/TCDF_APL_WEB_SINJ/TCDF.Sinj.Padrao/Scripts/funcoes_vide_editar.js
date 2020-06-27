@@ -185,7 +185,7 @@ function exibirTextoDoArquivoEditar(norma, arquivo) {
                 if(norma.dispositivos[0].linkname && norma.dispositivos[0].texto){
                     $.each($('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[linkname='+norma.dispositivos[0].linkname+'] a'), function (item, value){
                         if(value.innerText == norma.dispositivos[0].texto){
-                            $(value).attr('href','javascript:alert("Não é possível editar o link alterador.")');
+                            $(value).attr('href','javascript:notificarErroVide("Erro", "Não é possível editar o link alterador.")');
                             $(value).addClass('link-alterador');
                         }
                     });
@@ -286,15 +286,7 @@ function habilitarEdicaoDoDispositivo(linkname, texto, convertido){
 
 function clickAlterarDispositivoEditar(){
     let dispositivoAlterado = {}
-    let linkNormaAlteradora = `(_link_sistema_)DetalhesDeNorma.aspx?id_norma=${normaAlteradora.ch_norma}`;
-    if(!normaAlteradora.sem_arquivo){
-        if(normaAlteradora.dispositivos.length > 0){
-            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}#${normaAlteradora.dispositivos[0].linkname}`;
-        }
-        else{
-            linkNormaAlteradora = `(_link_sistema_)Norma/${normaAlteradora.ch_norma}/${normaAlteradora.arquivo.filename}`;
-        }
-    }
+    let linkNormaAlteradora = montarLinkNorma(normaAlteradora);
     const texto = $('#div_tooltip_dispositivo textarea[name=textoNovo]').val();
     let $buttonSelected = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo button.selected');
     $buttonSelected.tooltip('hide');
@@ -319,7 +311,7 @@ function clickAlterarDispositivoEditar(){
     }
     else{
         if(IsNotNullOrEmpty(texto) && texto.indexOf('\n') > -1){
-            alert('Esse tipo de relação não permite que a alteração possua mais de um dispositivo por vez.');
+            notificarErroVide('Erro', 'Esse tipo de relação não permite que a alteração possua mais de um dispositivo por vez.');
             return;
         }
         let $elementoAlterado = $buttonSelected.parent();
@@ -361,7 +353,7 @@ function clickAlterarDispositivoEditar(){
         }
         else if(isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
             if(!IsNotNullOrEmpty(htmlAlterado) || linkname.indexOf('_replaced') < 0){
-                alert(`A relação ${tipoDeRelacao.nm_tipo_relacao} pode ser aplicada somente a um dispositivo que sofreu alteração.`);
+                notificarErroVide('Erro', `A relação ${tipoDeRelacao.nm_tipo_relacao} pode ser aplicada somente a um dispositivo que sofreu alteração.`);
                 return;
             }
             $buttonSelected.hide();
@@ -554,7 +546,7 @@ function salvarVideEditar(sucessoVide, ch_vide){
 function salvarArquivosVideEditar(sucessoVide, ch_vide){
     if(IsNotNullOrEmpty(normaAlterada, 'arquivo.id_file') && dsDispositivosAlteradosCopy == $('textarea[name=ds_dispositivos_alterados]').val()){
         if(!IsNotNullOrEmpty(normaAlterada.dispositivos) || normaAlterada.dispositivos.length <= 0){
-            alert('Não há dispositivos alterados. Se a intenção é removê-los use a função excluir.');
+            notificarErroVide('Erro', 'Não há dispositivos alterados. Se a intenção é removê-los use a função excluir.');
             return false;
         }
     }
