@@ -47,9 +47,6 @@
     <Reference Include="neo.BRLightREST">
       <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
-    <Reference Include="neo.BRLightSession">
-      <HintPath>..\..\..\Frameworks\neo.BRLightSession\neo.BRLightSession.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
