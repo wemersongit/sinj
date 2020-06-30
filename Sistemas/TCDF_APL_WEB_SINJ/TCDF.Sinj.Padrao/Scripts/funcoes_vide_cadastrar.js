@@ -46,7 +46,10 @@ function selecionarAlteracaoCompleta(){
     const dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
     if($('#in_alteracao_completa').is(':checked')){
         let linkNormaAlteradora = montarLinkNorma(normaAlteradora);
-        const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
+        const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]').nextAll('p[ch_norma_alteracao_completa]');
+        const dispositivosIdentificacaoInfo = $("#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]").nextAll('p[ch_norma_info]');
+        const dispositivosAposEpigrafe = $("#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]").nextAll('p');
+        let lastDisp;
         //se na inclusão de repristinação, revigoração, revogação, cancelamento, etc. o texto já sofre alteração completa por outro vide,
         //é necessário validar a última alteração sofrida e se o texto está, ou não, riscado
         //para cada situação haverá um comportamento:
@@ -62,12 +65,18 @@ function selecionarAlteracaoCompleta(){
         //        2.2.1. incluir o link da alteração e não (tentar) incluir o riscado do texto
         if(isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
             if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
-                const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
-                const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
+                for(var i = 0; i < dispositivosAposEpigrafe.length; i++){
+                    if(dispositivosAposEpigrafe[i].hasAttribute('ch_norma_info') || dispositivosAposEpigrafe[i].hasAttribute('ch_norma_alteracao_completa')){
+                        lastDispChNorma = dispositivosAposEpigrafe[i];
+                    }
+                    else{
+                        break;
+                    }
+                }
+                $(lastDispChNorma).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
                     <a href="${linkNormaAlteradora}" >(${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                 </p>`);
-                if(isRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length > 0){
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length > 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').remove();
                     let lastSelector = `p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]:last`;
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
@@ -85,13 +94,20 @@ function selecionarAlteracaoCompleta(){
             }
         }
         else{
-            if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
-                const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
-                const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
+            if(dispositivosIdentificacaoAlteracaoCompleta.length > 0 || dispositivosIdentificacaoInfo.length > 0){
+                for(var i = 0; i < dispositivosAposEpigrafe.length; i++){
+                    if(dispositivosAposEpigrafe[i].hasAttribute('ch_norma_info') || dispositivosAposEpigrafe[i].hasAttribute('ch_norma_alteracao_completa')){
+                        lastDispChNorma = dispositivosAposEpigrafe[i];
+                    }
+                    else{
+                        break;
+                    }
+                }
+                $(lastDispChNorma).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
                         <a href="${linkNormaAlteradora}" >(${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                     </p>`);
-                if(!isRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0){
+
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>p[linkname]').remove();
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).after('<s></s>');
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
