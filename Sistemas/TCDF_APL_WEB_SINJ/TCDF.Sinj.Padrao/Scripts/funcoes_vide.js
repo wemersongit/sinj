@@ -245,7 +245,7 @@ function habilitarEmailPesquisa(id_doc, hsp, hemail){
 }
 
 function isRelacaoDeAlteracaoCompleta(chTipoRelacao){
-    const relacoesAlteracaoCompleta = ['4', '7', '21', '25', 'a8ed93396fcc4959b9b8e82808880f2a'];
+    const relacoesAlteracaoCompleta = ['4', '7', '21', '25', 'a8ed93396fcc4959b9b8e82808880f2a', '9a9cc35863a445438a06389420c1833e'];
     return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
 }
 
