@@ -41,9 +41,6 @@ namespace TCDF.Sinj.Web.ashx.Email
                 var link = util.BRLight.Util.GetVariavel("URLSinjPortal", true) + "/?ch_chamado_fale_conosco=" + faleConosco.ch_chamado + "&ds_email_fale_conosco=" + faleConosco.ds_email + "&nm_user_fale_conosco=" + faleConosco.nm_user + "&ds_assunto_fale_conosco=" + faleConosco.ds_assunto;
 
                 var sHtml = "<br/><br/>Para responder essa mensagem, <a target='_blank' href='" + link + "'>clique aqui</a>";
-<<<<<<< HEAD
-
-=======
                 var message = faleConosco.mensagens;
                 var corpo_msg = "";
                 string[] msgSplit = mensagem.ds_msg_resposta.Split(new char[] { '\n', '\r' });
@@ -51,7 +48,6 @@ namespace TCDF.Sinj.Web.ashx.Email
                 {
                     corpo_msg = corpo_msg + "<div style=\"display:block;\">" + e + "</div>";
                 }
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                 if (faleConosco.mensagens.Count > 0)
                 {
                     sHtml += "<br/><br/><h3>Mensagens anteriores</h3>";

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<%@ Master Language="C#" Inherits="TCDF.Sinj.Web.Sinj" %>
-=======
 ﻿<%@ Master Language="C#" Inherits="TCDF.Sinj.Web.Sinj" %>
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,10 +41,7 @@
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/stacktable.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/jquery.dataTablesLight.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/columns_datatables.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script>
-<<<<<<< HEAD
-=======
     <!-- <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/columns_datatables_pesquisa.js?<%= TCDF.Sinj.Util.MostrarVersao() %>"></script> -->
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/platform.js"></script>
     <script type="text/javascript" src="<%= TCDF.Sinj.Util._urlPadrao %>/Scripts/tooltip.js"></script>
 
@@ -74,14 +67,10 @@
             }
         }
         $(document).ready(function () {
-<<<<<<< HEAD
-            setInterval(incrementTime, 100000);
-=======
             if (_user.orgao_cadastrador.nm_orgao_cadastrador != null && _user.orgao_cadastrador.nm_orgao_cadastrador != "") {
                 $("#li_pendenteDePesquisa a").attr('href', './ResultadoDePesquisa?tipo_pesquisa=norma&all=&st_habilita_pesquisa=false&st_habilita_email=false&nm_orgao_cadastrador=' + _user.orgao_cadastrador.nm_orgao_cadastrador)
             }
                 setInterval(incrementTime, 100000);
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
             if (IsNotNullOrEmpty(_user, 'nm_usuario')) {
                 $('#litNmUsuario').text(_user.nm_usuario);
                 $('#menuLogin').hide();
@@ -100,11 +89,8 @@
                     }
                 }
             }
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
             if (history.length <= 0) {
                 $('#div_voltar').hide();
             }
@@ -149,8 +135,6 @@
 
 
             $('[data-toggle="tooltip"]').tooltip({ container: "#div_tooltip", trigger: "hover" });
-<<<<<<< HEAD
-=======
 
 
             if (ValidarPermissao(_grupos.nor_eml)) {
@@ -159,7 +143,6 @@
                 $('#hne_norma').hide();
             }
 
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
         });
         function incrementTime() {
             dateTimeServer.setSeconds(dateTimeServer.getSeconds() + 1);
@@ -183,21 +166,13 @@
                 <div class="right-top">
                     <span id="span_versao"></span>
                 </div>
-<<<<<<< HEAD
-                <div class="logo" style="display: block">
-=======
                 <div class="logo">
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                     <a href="./" title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="sinj" /></a>
                 </div>
                 <div class="top-bottom">
                     <div class="top-bottom-left">
-<<<<<<< HEAD
-                        
-=======
                         <div id="div_user_notifiqueme" style="right: 0px !important; bottom:0px !important; left: 10px; top: 6px;">
                         </div>
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                     </div>
                     <div class="top-bottom-center">
                         <div class="top-search">
@@ -290,16 +265,9 @@
                                 <li id="li_historico"><a title="Histórico de Pesquisas"   class="lnkmenu" id="aHistorico"     href="./HistoricoDePesquisa">Histórico</a></li>
                                 <li id="li_notifiqueme"><a title="Receba e-mails sobre normas e diários oficiais"             class="lnkmenu" id="aNotifiqueme"   href="./Notifiqueme">Notifique-me</a></li>
                                 <li id="li_favoritos"><a title="Meus Favoritos"                  class="lnkmenu" id="aFavoritos"   href="./Favoritos">Meus Favoritos</a></li>
-<<<<<<< HEAD
-                                <li id="li_contatos"><a title="Contatos"             class="lnkmenu" id="aContatos"       href="./Contatos">Contatos</a></li>
-                            </ul>
-                            <div id="div_user_notifiqueme" >
-                            </div>
-=======
                                 <li id="li_pendenteDePesquisa"><a title="Normas Pendentes" class="lnkmenu" id="aPendenteDePesquisa" >Normas Pendentes</a></li>
                                 <li id="li_contatos"><a title="Contatos"             class="lnkmenu" id="aContatos"       href="./Contatos">Contatos</a></li>
                             </ul>
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         </div>
                     </form>
                 </div>
@@ -320,8 +288,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-=======
     <div id="modal_habilitar_pesquisa" class="modal" style="display:none;">
         <form id="habilita_pesquisa" name="habilita_pesquisa" action="#" method="post">
             <div class="table w-100-pc">
@@ -401,7 +367,6 @@
             </div>
         </form>
     </div>
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
     <div id="show_top" class="ancora" >
         <a href="#" title="topo"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/show_top.png" alt="topo" /></a>
     </div>
@@ -472,7 +437,3 @@
         
     </body>
 </html>
-<<<<<<< HEAD
-
-=======
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d

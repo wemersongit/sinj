@@ -1,40 +1,41 @@
-<<<<<<< HEAD
-
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-=======
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCDF.Sinj.Web", "TCDF.Sinj.Web\TCDF.Sinj.Web.csproj", "{8979BDCF-CC5A-4EA5-87A4-F6273E382989}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCDF.Sinj", "..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj", "{3B23C9D4-4624-473E-8976-7CD48EF5559C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.BRLightREST", "..\..\Projetos\neo.BRLightRest\neo.BRLightREST.csproj", "{7C032FC2-D4AE-403A-94F2-A18A6C856795}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Debug|x86.Build.0 = Debug|Any CPU
 		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Release|x86.ActiveCfg = Release|Any CPU
+		{8979BDCF-CC5A-4EA5-87A4-F6273E382989}.Release|x86.Build.0 = Release|Any CPU
 		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Debug|x86.Build.0 = Debug|Any CPU
 		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C032FC2-D4AE-403A-94F2-A18A6C856795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C032FC2-D4AE-403A-94F2-A18A6C856795}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C032FC2-D4AE-403A-94F2-A18A6C856795}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C032FC2-D4AE-403A-94F2-A18A6C856795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|x86.ActiveCfg = Release|Any CPU
+		{3B23C9D4-4624-473E-8976-7CD48EF5559C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CAD9A692-83AE-4E93-9E26-781F2F58E2B3}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = TCDF.Sinj.Web\TCDF.Sinj.Web.csproj

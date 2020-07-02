@@ -64,9 +64,6 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaGeral.iDisplayLength = iDisplayLength;
                         pesquisaGeral.sentencaOrdenamento = sentencaOrdenamento;
                         query = utilNormaBuscaEs.MontarBusca(pesquisaGeral).GetQuery();
-<<<<<<< HEAD
-                        break;
-=======
                         query = query.Replace("st_habilita_pesquisa:true", "*");
                         query = query.Replace("(*)and", "");
                         break;
@@ -85,11 +82,10 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         query = query.Replace("(*)and", "");
                         break;
 
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                     case "norma":
                         SentencaPesquisaDiretaNormaOV pesquisaDireta = new SentencaPesquisaDiretaNormaOV();
                         pesquisaDireta.all = context.Request["all"];
-                        pesquisaDireta.all = pesquisaDireta.all.Replace(".", "");//Código inserido para retirar o ponto da pesquisa
+                        pesquisaDireta.all = pesquisaDireta.all.Replace(".", "");
                         pesquisaDireta.filtros = context.Request.Params.GetValues("filtro");
                         pesquisaDireta.ch_tipo_norma = context.Request["ch_tipo_norma"];
                         pesquisaDireta.nr_norma = context.Request["nr_norma"];
@@ -100,6 +96,8 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaDireta.ch_orgao = context.Request["ch_orgao"];
                         pesquisaDireta.ch_hierarquia = context.Request["ch_hierarquia"];
                         pesquisaDireta.origem_por = context.Request["origem_por"];
+                        pesquisaDireta.st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                        pesquisaDireta.st_habilita_email = context.Request["st_habilita_email"];
                         pesquisaDireta.iDisplayStart = iDisplayStart;
                         pesquisaDireta.iDisplayLength = iDisplayLength;
                         pesquisaDireta.sentencaOrdenamento = sentencaOrdenamento;
@@ -107,11 +105,8 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaDireta.nm_orgao_cadastrador = context.Request["nm_orgao_cadastrador"];
 
                         query = utilNormaBuscaEs.MontarBusca(pesquisaDireta).GetQuery();
-<<<<<<< HEAD
-=======
                         query = query.Replace("st_habilita_pesquisa:true", "*");
                         query = query.Replace("(*)and", "");
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         break;
                     case "avancada":
                         SentencaPesquisaAvancadaNormaOV pesquisaAvancada = new SentencaPesquisaAvancadaNormaOV();
@@ -122,11 +117,8 @@ namespace TCDF.Sinj.Web.ashx.Datatable
                         pesquisaAvancada.iDisplayLength = iDisplayLength;
                         pesquisaAvancada.sentencaOrdenamento = sentencaOrdenamento;
                         query = utilNormaBuscaEs.MontarBusca(pesquisaAvancada).GetQuery();
-<<<<<<< HEAD
-=======
                         query = query.Replace("st_habilita_pesquisa:true", "*");
                         query = query.Replace("(*)and", "");
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                         break;
                 }
 

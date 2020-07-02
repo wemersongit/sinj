@@ -4,6 +4,8 @@ using System.Text;
 using System.Linq;
 using neo.BRLightREST;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace TCDF.Sinj.OV
 {
@@ -14,6 +16,10 @@ namespace TCDF.Sinj.OV
     /// </summary>
     public class Vide
     {
+        public Vide()
+        {
+            alteracao_texto_vide = new AlteracaoDeTexoVide();
+        }
         public string ch_vide { get; set; }
         public string ds_comentario_vide { get; set; }
         /// <summary>
@@ -58,6 +64,8 @@ namespace TCDF.Sinj.OV
         public string item_norma_vide_outra { get; set; }
         public Caput caput_norma_vide_outra { get; set; }
         public string anexo_norma_vide_outra { get; set; }
+
+        public AlteracaoDeTexoVide alteracao_texto_vide { get; set; }
 
         public bool possuiDispositivoInformadoManualmente()
         {
@@ -150,8 +158,6 @@ namespace TCDF.Sinj.OV
         //}
     }
 
-<<<<<<< HEAD
-=======
     public class AlteracaoDeTexoVide
     {
         public AlteracaoDeTexoVide()
@@ -174,7 +180,6 @@ namespace TCDF.Sinj.OV
         public string texto_antigo { get; set; }
     }
 
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
     public class UtilVides
     {
         public static string EscapeCharsInToPattern(string text)

@@ -101,6 +101,10 @@ namespace TCDF.Sinj.Portal.Web
             routes.MapPageRoute("Notifiqueme", "Notifiqueme", "~/Notifiqueme.aspx");
             routes.MapPageRoute("Favoritos", "Favoritos", "~/Favoritos.aspx");
 
+            
+
+            routes.MapPageRoute("ResultadoDePesquisaPublicacao", "ResultadoDePesquisaPublicacao", "~/ResultadoDePesquisaPublicacao.aspx");
+
             routes.MapPageRoute("ResultadoDePesquisa", "ResultadoDePesquisa", "~/ResultadoDePesquisa.aspx");
 
             routes.MapPageRoute("Download", "Download/{*keywords}", "~/Download.aspx", false, new RouteValueDictionary(), new RouteValueDictionary { { "keywords", ".*" } });

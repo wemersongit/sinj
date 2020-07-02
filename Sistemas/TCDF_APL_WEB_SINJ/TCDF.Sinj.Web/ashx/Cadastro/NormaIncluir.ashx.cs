@@ -14,7 +14,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
     public class NormaIncluir : IHttpHandler
     {
 
-        public void ProcessRequest(HttpContext context)
+        void IHttpHandler.ProcessRequest(HttpContext context)
         {
             var sRetorno = "";
             NormaOV normaOv = null;
@@ -54,8 +54,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var _st_pendencia = context.Request["st_pendencia"];
                 var st_pendencia = false;
 
-<<<<<<< HEAD
-=======
                 var _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
                 var st_habilita_pesquisa = false;
 
@@ -65,7 +63,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var _st_desabilita_email = context.Request["st_desabilita_email"];
                 var st_desabilita_email = false;
 
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                 var _ds_pendencia = context.Request["ds_pendencia"];
 
                 var _st_destaque = context.Request["st_destaque"];
@@ -109,6 +106,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var _json_arquivo_texto_acao = context.Request["json_arquivo_texto_acao"];
                 var _ds_efeito_decisao = context.Request["ds_efeito_decisao"];
                 var _url_referencia = context.Request["url_referencia"];
+
+                var _url_projeto_lei = context.Request["url_projeto_lei"];
+                var _nr_projeto_lei = context.Request["nr_projeto_lei"];
 
                 var _st_situacao_forcada = context.Request["st_situacao_forcada"];
                 var _ch_situacao = context.Request["ch_situacao"];
@@ -160,8 +160,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     normaOv.ds_pendencia = _ds_pendencia;
                 }
 
-<<<<<<< HEAD
-=======
                 if (bool.TryParse(_st_habilita_pesquisa, out st_habilita_pesquisa))
                 {
                     normaOv.st_habilita_pesquisa = st_habilita_pesquisa;
@@ -183,7 +181,6 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 }
 
 
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                 if (bool.TryParse(_st_destaque, out st_destaque))
                 {
                     normaOv.st_destaque = st_destaque;
@@ -284,9 +281,11 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 }
                 normaOv.ds_efeito_decisao = _ds_efeito_decisao;
                 normaOv.url_referencia = _url_referencia;
+                normaOv.url_projeto_lei = _url_projeto_lei;
+                normaOv.nr_projeto_lei = _nr_projeto_lei;
                 normaOv.id_orgao_cadastrador = sessao_usuario.orgao_cadastrador.id_orgao_cadastrador;
                 normaOv.nm_orgao_cadastrador = sessao_usuario.orgao_cadastrador.nm_orgao_cadastrador;
-                
+
 
                 normaOv.nm_login_usuario_cadastro = sessao_usuario.nm_login_usuario;
                 normaOv.dt_cadastro = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
@@ -301,7 +300,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 var id_doc = new NormaRN().Incluir(normaOv);
                 if (id_doc > 0)
                 {
-                    sRetorno = "{\"id_doc_success\":" + id_doc + ",\"norma_st_acao\":"+normaOv.st_acao.ToString().ToLower()+", \"ch_norma\":\""+ normaOv.ch_norma +"\"}";
+                    sRetorno = "{\"id_doc_success\":" + id_doc + ",\"norma_st_acao\":" + normaOv.st_acao.ToString().ToLower() + ", \"ch_norma\":\"" + normaOv.ch_norma + "\"}";
                 }
                 else
                 {

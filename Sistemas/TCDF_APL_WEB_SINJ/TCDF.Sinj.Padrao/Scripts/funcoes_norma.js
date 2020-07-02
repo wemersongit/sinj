@@ -1,5 +1,3 @@
-
-
 function Notificar(ch_norma) {
     var sucesso = function (data) {
         if (IsNotNullOrEmpty(data, 'error_message')) {
@@ -485,8 +483,6 @@ function prosseguirSemDiario(){
     $('#modal_fonte .diario').show();
 }
 
-<<<<<<< HEAD
-=======
 // função que habilita a norma no SINJ pesquisa e a opção de enviar email.
 function CriarModalHabilitarPesquisa(id_doc, eml) {
     // NOTE: atribui um evento ao checkbox de desabilitar o email no modal, se selecionar o check ele desabilita o check de habilitar email.
@@ -838,7 +834,6 @@ function CriarModalDesabilitarEmail(id_doc){
     });
 }
 
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
 function CriarModalOrigem() {
     $('#modal_origem .dados_orgao').hide();
     $("#modal_origem").modallight({
@@ -1515,6 +1510,7 @@ function SelecionarTipoDeNorma() {
     $('#div_dados_de_acoes').hide();
     $('#line_interessados').hide();
     $('#line_autorias').hide();
+	$('.projetoDeLei').hide();
     $('#line_apelido').hide();
     if ($('#ch_tipo_norma').val() != "" && IsNotNullOrEmpty(_user, 'orgao_cadastrador.nm_orgao_cadastrador')) {
         $('.buttons').show();
@@ -1549,7 +1545,7 @@ function SelecionarTipoDeNorma() {
         if ($('#EhLei').val() === "true") {
 
             $('#line_autorias').show();
-            
+            $('.projetoDeLei').show();
         }
         if ($('#EhDecreto').val() === "true") {
             
@@ -1634,8 +1630,6 @@ function PreencherNormaEdicao() {
                     $('#ds_ementa').val(data.ds_ementa);
                     $('#ds_observacao').val(data.ds_observacao);
                     $('#st_destaque').prop("checked", data.st_destaque);
-<<<<<<< HEAD
-=======
                     $('#st_habilita_pesquisa').prop("checked", data.st_habilita_pesquisa);                    
                     if(data.st_habilita_email == null){
                         $('#st_habilita_email').prop('disabled', true);
@@ -1643,7 +1637,6 @@ function PreencherNormaEdicao() {
                     }else{
                         $('#st_habilita_email').prop("checked", data.st_habilita_email);
                     }
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                     $('#st_pendencia').prop("checked", data.st_pendencia);
                     $('#ds_pendencia').val(data.ds_pendencia);
                     MarcarPendente();
@@ -1727,6 +1720,12 @@ function PreencherNormaEdicao() {
                     }
                     if (IsNotNullOrEmpty(data.url_referencia)) {
                         $('input[name="url_referencia"]').val(data.url_referencia);
+                    }
+                    if (IsNotNullOrEmpty(data.url_projeto_lei)) {
+                        $('input[name="url_projeto_lei"]').val(data.url_projeto_lei);
+                    }
+                    if (IsNotNullOrEmpty(data.nr_projeto_lei)) {
+                        $('input[name="nr_projeto_lei"]').val(data.nr_projeto_lei);
                     }
                     if (IsNotNullOrEmpty(data.ds_procedencia)) {
                         $('input[name="ds_procedencia"]').val(data.ds_procedencia);

@@ -6,11 +6,8 @@ namespace TCDF.Sinj.OV
 {
     public class NormaOV : metadata
     {
-<<<<<<< HEAD
-=======
         public bool? st_habilita_pesquisa;
         public bool? st_habilita_email;
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
         public NormaOV()
         {
             nm_pessoa_fisica_e_juridica = new List<string>();
@@ -50,10 +47,15 @@ namespace TCDF.Sinj.OV
         public string ds_acao { get; set; }
         public string ds_efeito_decisao { get; set; }
         public string url_referencia { get; set; }
+        public string url_projeto_lei{ get; set; }
+        public string nr_projeto_lei { get; set; }
         public int id_orgao_cadastrador { get; set; }
         public string nm_orgao_cadastrador { get; set; }
         public List<string> ch_para_nao_duplicacao { get; set; }
         public bool st_pendencia { get; set; }
+        //public bool st_habilita_pesquisa { get; set; }
+
+
         public string ds_pendencia { get; set; }
         public bool st_destaque { get; set; }
         public string ds_observacao { get; set; }

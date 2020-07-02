@@ -105,7 +105,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                     pesquisaGeral.all = context.Request["all"];
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new NormaBuscaEs().MontarBusca(pesquisaGeral);
-                    query = buscaGeral.GetQuery();
+                    query = buscaGeral.GetQuery();                    
                     break;
             }
 
@@ -170,12 +170,10 @@ namespace TCDF.Sinj.Portal.Web.ashx.Consulta
                     pesquisaGeral.isCount = true;
                     var buscaGeral = new DiarioBuscaEs().MontarBusca(pesquisaGeral);
                     query = buscaGeral.GetQuery();
-<<<<<<< HEAD
-=======
                     query = query.Replace("st_habilita_pesquisa:true", "*");
                     query = query.Replace("(*)and", "");
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
                     break;
+
             }
 
             return new DiarioAD().ConsultarEs(query).hits.total;

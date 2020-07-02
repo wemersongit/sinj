@@ -13,8 +13,6 @@
             <% if(isAdmin && !string.IsNullOrEmpty(situacoes)){ %>
                 fnAutocompleteSituacao(<%= situacoes%>);
             <%} %>
-<<<<<<< HEAD
-=======
 
             if (ValidarPermissao(_grupos.nor_hsp)) {
                 $('#habilitarPesquisaNorna').show();
@@ -54,14 +52,16 @@
                 $('#st_habilita_email').prop("checked", true);
             }
 
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
         });
-        
+
+
     </script>
     <style type="text/css">
         #sg_hierarquia_nm_vigencia{z-index:10005;}
         #div_modal_importar_arquivo table thead th.nm_arquivo {width:250px;}
         #ds_ementa, #ds_observacao{text-align:justify;}
+       
+
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
@@ -722,6 +722,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+<%--                                <!-- NOTE: o permissionamento esta sendo feito no ready da pagina, via js -->
+                                <div class="line" id="habilitarNotificacao">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Habilita enviar e-mail:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="st_habilita_email" name="st_habilita_email" value="true" type="checkbox" title="Habilita o envio de e-mails."/>
+                                        </div>
+                                    </div>
+                                </div>--%>
+
+                                
                                 <div class="line">
                                     <div class="column w-100-pc">
                                         <div class="cell w-100-pc">
@@ -778,6 +794,7 @@
                             <div id="div_notificacao_norma_duplicadade" class="w-80-pc mauto" style="display:none;"></div>
                         </fieldset>
                     </div>
+
                     <div id="div_dados_gerais" class="pos_cad">
                         <fieldset>
                             <legend>Dados Gerais</legend>
@@ -839,6 +856,36 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Adicionando  projetoDeLei-->
+                                <div class="line projetoDeLei">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Número e Ano da Proposição de Origem:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="nr_projeto_lei" name="nr_projeto_lei" type="text" value="" class="w-50-pc"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="line projetoDeLei">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Url da Proposição de Origem:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="url_projeto_lei" name="url_projeto_lei" type="text" value="" class="w-80-pc"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="line">
                                     <div class="column w-20-pc">
                                         <div class="cell fr">

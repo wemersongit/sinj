@@ -14,8 +14,6 @@
             <% if(isAdmin && !string.IsNullOrEmpty(situacoes)){ %>
                 fnAutocompleteSituacao(<%= situacoes%>);
             <%} %>
-<<<<<<< HEAD
-=======
 
             if (ValidarPermissao(_grupos.nor_hsp)) {
                 $('#habilitarPesquisaNorna').show();
@@ -49,8 +47,9 @@
                     desabilitarEmail.prop('disabled', false);
                 }
             });
->>>>>>> 85c8dc87f60e85d36be23e1c882ef5e721335e4d
         });
+
+        
     </script>
     <style type="text/css">
         #sg_hierarquia_nm_vigencia{z-index:10005;}
@@ -716,6 +715,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+                               
+                                
                                 <div class="line">
                                     <div class="column w-100-pc">
                                         <div class="cell w-100-pc">
@@ -823,6 +825,33 @@
                                     <div class="column w-70-pc">
                                         <div class="cell w-100-pc">
                                             <textarea id="ds_ementa" name="ds_ementa" obrigatorio="sim" label="Ementa" cols="100" rows="10" style="width:80%; max-width:100%;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Adicionando  projetoDeLei-->
+                                <div class="line projetoDeLei">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Número e Ano da Proposição de Origem:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="nr_projeto_lei" name="nr_projeto_lei" type="text" value="" class="w-50-pc"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="line projetoDeLei">
+                                    <div class="column w-20-pc">
+                                        <div class="cell fr">
+                                            <label>Url da Proposição de Origem:</label>
+                                        </div>
+                                    </div>
+                                    <div class="column w-70-pc">
+                                        <div class="cell w-80-pc">
+                                            <input id="url_projeto_lei" name="url_projeto_lei" type="text" value="" class="w-80-pc"/>
                                         </div>
                                     </div>
                                 </div>

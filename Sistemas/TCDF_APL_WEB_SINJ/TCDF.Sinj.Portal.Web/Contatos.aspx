@@ -23,11 +23,11 @@
                     <div class="line">
                         <div class="column w-30-pc">
                             <div class="cell fl">
-                                <label>SEPLAG:</label>
+                                <label>SEEC:</label>
                             </div>
                         </div>
                         <div class="column w-100-pc" style="padding-bottom: 5px;">
-                            sinj@seplag.df.gov.br <br />
+                            sinj@economia.df.gov.br <br />
                             (61) 3313-8172
                         </div>
                     </div>

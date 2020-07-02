@@ -46,7 +46,10 @@ function selecionarAlteracaoCompleta(){
     const dispositivosNormaAlterada = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[linkname]');
     if($('#in_alteracao_completa').is(':checked')){
         let linkNormaAlteradora = montarLinkNorma(normaAlteradora);
-        const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa]');
+        const dispositivosIdentificacaoAlteracaoCompleta = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]').nextAll('p[ch_norma_alteracao_completa]');
+        const dispositivosIdentificacaoInfo = $("#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]").nextAll('p[ch_norma_info]');
+        const dispositivosAposEpigrafe = $("#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]").nextAll('p');
+        let lastDisp;
         //se na inclusão de repristinação, revigoração, revogação, cancelamento, etc. o texto já sofre alteração completa por outro vide,
         //é necessário validar a última alteração sofrida e se o texto está, ou não, riscado
         //para cada situação haverá um comportamento:
@@ -62,14 +65,20 @@ function selecionarAlteracaoCompleta(){
         //        2.2.1. incluir o link da alteração e não (tentar) incluir o riscado do texto
         if(isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
             if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
-                const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
-                const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
+                for(var i = 0; i < dispositivosAposEpigrafe.length; i++){
+                    if(dispositivosAposEpigrafe[i].hasAttribute('ch_norma_info') || dispositivosAposEpigrafe[i].hasAttribute('ch_norma_alteracao_completa')){
+                        lastDispChNorma = dispositivosAposEpigrafe[i];
+                    }
+                    else{
+                        break;
+                    }
+                }
+                $(lastDispChNorma).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
                     <a href="${linkNormaAlteradora}" >(${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                 </p>`);
-                if(isRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length > 0){
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length > 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').remove();
-                    let lastSelector = `p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`;
+                    let lastSelector = `p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]:last`;
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.add('adicionado');
                         $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo ${lastSelector}`).after(dispositivosNormaAlterada[i]);
@@ -85,13 +94,20 @@ function selecionarAlteracaoCompleta(){
             }
         }
         else{
-            if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
-                const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
-                const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
-                $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
+            if(dispositivosIdentificacaoAlteracaoCompleta.length > 0 || dispositivosIdentificacaoInfo.length > 0){
+                for(var i = 0; i < dispositivosAposEpigrafe.length; i++){
+                    if(dispositivosAposEpigrafe[i].hasAttribute('ch_norma_info') || dispositivosAposEpigrafe[i].hasAttribute('ch_norma_alteracao_completa')){
+                        lastDispChNorma = dispositivosAposEpigrafe[i];
+                    }
+                    else{
+                        break;
+                    }
+                }
+                $(lastDispChNorma).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
                         <a href="${linkNormaAlteradora}" >(${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                     </p>`);
-                if(!isRelacaoDeAlteracaoCompleta(lastChTipoRelacao) && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0){
+
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>p[linkname]').remove();
                     $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).after('<s></s>');
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
@@ -251,14 +267,14 @@ function pesquisarNorma() {
     return false;
 }
 
-function selecionarNormaVide(ch_norma, nr_norma, dt_assinatura, nm_tipo_norma) {
+function selecionarNormaVide(ch_norma, nr_norma, dt_assinatura, nm_tipo_norma, st_vacatio_legis, dt_inicio_vigencia) {
     if (IsNotNullOrEmpty(ch_norma)) {
         if (flagModalNorma == 'alteradora') {
             tipoDeRelacao = {};
             $('#selectTipoDeRelacao').val('');
             resetarDispositivo('alteradora');
             resetarDispositivo('alterada');
-            selecionarNormaAlteradoraCadastrar({ch_norma: ch_norma, nr_norma: nr_norma, dt_assinatura: dt_assinatura, nm_tipo_norma: nm_tipo_norma});
+            selecionarNormaAlteradoraCadastrar({ch_norma: ch_norma, nr_norma: nr_norma, dt_assinatura: dt_assinatura, nm_tipo_norma: nm_tipo_norma, st_vacatio_legis: st_vacatio_legis, dt_inicio_vigencia: dt_inicio_vigencia});
         }
         else {
             if(ch_norma == normaAlteradora.ch_norma){
@@ -281,6 +297,8 @@ function selecionarNormaAlteradoraCadastrar(norma){
         ds_norma: montarDescricaoDaNorma(norma),
         dt_assinatura: norma.dt_assinatura,
         nm_tipo_norma: norma.nm_tipo_norma,
+        st_vacatio_legis: norma.st_vacatio_legis,
+        dt_inicio_vigencia: norma.dt_inicio_vigencia,
         sem_arquivo: true,
         dispositivos: []
     };
@@ -684,7 +702,7 @@ function clickAlterarDispositivoCadastrar(){
             dispositivoAlterado.texto = textosAcrescidos[i];
             normaAlterada.dispositivos.push(Object.assign({}, dispositivoAlterado));
 
-            const $element = $(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+            const $element = $(`<p style="text-align:justify" linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
             $nextElement.after($element);
             $nextElement = $element;
             if(IsNotNullOrEmpty(dispositivoAlterado.ds_linkname)){
@@ -785,7 +803,7 @@ function clickAlterarDispositivoCadastrar(){
                 $elementoAlterado.find(`a[name]`).first().attr('name', linknameDispAlterado);
                 $elementoAlterado.attr('replaced_by', normaAlteradora.ch_norma);
                 $elementoAlterado.addClass('alterado');
-                $elementoAlterado.after(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${dispositivoAlterado.texto}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+                $elementoAlterado.after(`<p style="text-align:justify" linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoCadastrar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${dispositivoAlterado.texto}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
                 $elementoAlterado.html(`<s>${$elementoAlterado.html()}</s>`);
 
             }
@@ -940,9 +958,19 @@ function salvarArquivosVideCadastrar(sucessoVide){
     const deferredAlteradora = $.Deferred();
     const deferredAlterada = $.Deferred();
     $.when(deferredAlteradora, deferredAlterada).done(function(){
-        salvarVideCadastrar(sucessoVide)
+        salvarVideCadastrar(sucessoVide);
     });
     gInicio();
+    //Em caso de vacatio legis os arquivos serão editados quando a norma alteradora entrar em vigência
+    if(IsNotNullOrEmpty(normaAlteradora, 'st_vacatio_legis') && IsNotNullOrEmpty(normaAlteradora, 'dt_inicio_vigencia')){
+        let dateNow = new Date();
+        dateNow.setHours(0,0,0);
+        if(convertStringToDateTime(normaAlteradora.dt_inicio_vigencia) > dateNow){
+            deferredAlteradora.resolve();
+            deferredAlterada.resolve();
+            return false;
+        }
+    }
     limparFormatacao();
     //Se a norma alterada não tiver aquivo então não tem porque salvar o arquivo da norma alteradora
     if(!normaAlteradora.sem_arquivo){
