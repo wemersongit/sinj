@@ -73,6 +73,8 @@ function selecionarNormaAlteradoraEditar(norma){
         ds_norma: montarDescricaoDaNorma(norma),
         dt_assinatura: norma.dt_assinatura,
         nm_tipo_norma: norma.nm_tipo_norma,
+        st_vacatio_legis: norma.st_vacatio_legis,
+        dt_inicio_vigencia: norma.dt_inicio_vigencia,
         sem_arquivo: norma.sem_arquivo,
         arquivo: norma.arquivo,
         dispositivos: norma.dispositivos
@@ -547,6 +549,14 @@ function salvarArquivosVideEditar(sucessoVide, ch_vide){
     if(IsNotNullOrEmpty(normaAlterada, 'arquivo.id_file') && dsDispositivosAlteradosCopy == $('textarea[name=ds_dispositivos_alterados]').val()){
         if(!IsNotNullOrEmpty(normaAlterada.dispositivos) || normaAlterada.dispositivos.length <= 0){
             notificarErroVide('Erro', 'Não há dispositivos alterados. Se a intenção é removê-los use a função excluir.');
+            return false;
+        }
+    }
+    if(IsNotNullOrEmpty(normaAlteradora, 'st_vacatio_legis') && IsNotNullOrEmpty(normaAlteradora, 'dt_inicio_vigencia')){
+        let dateNow = new Date();
+        dateNow.setHours(0,0,0);
+        if(convertStringToDateTime(normaAlteradora.dt_inicio_vigencia) > dateNow){
+            salvarVideEditar(sucessoVide, ch_vide);
             return false;
         }
     }

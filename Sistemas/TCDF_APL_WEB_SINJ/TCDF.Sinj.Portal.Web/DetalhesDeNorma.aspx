@@ -218,6 +218,24 @@
                         </div>
                         <div class="line_bottom"></div>
                     </div>
+
+                    <div class="line" id="line_link_lei">
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc">
+                                <div class="w-90-pc mauto">
+                                    <label>Proposição de Origem:</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column w-100-pc">
+                            <div class="cell w-100-pc">
+                                <div id="div_link_lei" class="w-90-pc mauto" style="margin-top:-20px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line_bottom"></div>
+                     </div>
+
                     <div id="line_observacao" class="line">
                         <div class="column w-100-pc">
                             <div class="cell w-100-pc">

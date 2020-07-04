@@ -47,7 +47,7 @@ function selecionarTextoCopiar() {
 }
 
 function clickButtonSelecionarDispositivo(el) {
-    if(!IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo){
+    if(!IsNotNullOrEmpty(normaAlteradora, 'dispositivos') && !normaAlteradora.sem_arquivo && !isLecoVide(tipoDeRelacao.ch_tipo_relacao) && !$('#inSemCitacaoNormaAlteradora').is(':checked')){
         notificarErroVide('Erro','Selecione o dispositivo alterador.');
         return;
     }
@@ -245,7 +245,7 @@ function habilitarEmailPesquisa(id_doc, hsp, hemail){
 }
 
 function isRelacaoDeAlteracaoCompleta(chTipoRelacao){
-    const relacoesAlteracaoCompleta = ['4', '7', '21', '25', 'a8ed93396fcc4959b9b8e82808880f2a'];
+    const relacoesAlteracaoCompleta = ['4', '7', '21', '25', 'a8ed93396fcc4959b9b8e82808880f2a', '9a9cc35863a445438a06389420c1833e', 'a4dff3c010b94af3976555da9538d3e6'];
     return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
 }
 
@@ -283,12 +283,15 @@ function getDispositivoAlterado(linkname){
 }
 
 function getLastLecoSelectorNormaAlteradora(){
-    var regex = new RegExp(`${tipoDeRelacao.ds_texto_para_alterador} \- .*?([0-9]+)?(?: de ([0-9]{2}\/[0-9]{2}\/[0-9]{4}))?$`, "i");
-    var $dispositivosLecoAlterador = $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info]');
+    var regex = new RegExp('.*?([0-9]+)?(?: de ([0-9]{2}\/[0-9]{2}\/[0-9]{4}))?$', "i");
+    var dispositivos = $('#div_cad_dispositivo_alteradora div.div_conteudo_arquivo').children();
     var selectorInsertBeforeAlterador = '#div_cad_dispositivo_alteradora div.div_conteudo_arquivo h1[epigrafe]';
-    if($dispositivosLecoAlterador.length > 0){
-        for(let i = 0; i < $dispositivosLecoAlterador.length; i++){
-            let resultRegex = regex.exec($dispositivosLecoAlterador.text());
+    if(dispositivos.length > 0){
+        for(let i = 0; i < dispositivos.length; i++){
+            if(!dispositivos[i].hasAttribute('ch_norma_info')){
+                break;
+            }
+            let resultRegex = regex.exec(dispositivos[i].innerText);
             if(!IsNotNullOrEmpty(resultRegex)){
                 continue;
             }
@@ -304,19 +307,25 @@ function getLastLecoSelectorNormaAlteradora(){
                     }
                 }
             }
-            selectorInsertBeforeAlterador = `#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info=${$dispositivosLecoAlterador.attr('ch_norma_info')}]`;
+            selectorInsertBeforeAlterador = `#div_cad_dispositivo_alteradora div.div_conteudo_arquivo p[ch_norma_info=${dispositivos[i].getAttribute('ch_norma_info')}]`;
         }
     }
     return selectorInsertBeforeAlterador;
 }
 
 function getLastLecoSelectorNormaAlterada(){
-    var regex = new RegExp(`${tipoDeRelacao.ds_texto_para_alterador} \- .*?([0-9]+)?(?: de ([0-9]{2}\/[0-9]{2}\/[0-9]{4}))?$`, "i");
-    var $dispositivosLecoAlterado = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info]');
+    var regex = new RegExp('.*?([0-9]+)?(?: de ([0-9]{2}\/[0-9]{2}\/[0-9]{4}))?$', "i");
+    var dispositivos = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo').children();
     var selectorInsertBeforeAlterado = '#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]';
-    if($dispositivosLecoAlterado.length > 0){
-        for(let i = 0; i < $dispositivosLecoAlterado.length; i++){
-            let resultRegex = regex.exec($dispositivosLecoAlterado.text());
+    if(dispositivos.length > 0){
+        for(let i = 0; i < dispositivos.length; i++){
+            if(!dispositivos[i].hasAttribute('ch_norma_info')){
+                break;
+            }
+            let resultRegex = regex.exec(dispositivos[i].innerText);
+            if(!IsNotNullOrEmpty(resultRegex)){
+                continue;
+            }
             if(resultRegex[2] && normaAlteradora.dt_assinatura){
                 if(convertStringToDateTime(normaAlteradora.dt_assinatura) > convertStringToDateTime(resultRegex[2])){
                     continue;
@@ -329,20 +338,25 @@ function getLastLecoSelectorNormaAlterada(){
                     }
                 }
             }
-            selectorInsertBeforeAlterado = `#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${$dispositivosLecoAlterado.attr('ch_norma_info')}]`;
+            selectorInsertBeforeAlterado = `#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${dispositivos[i].getAttribute('ch_norma_info')}]`;
         }
     }
     return selectorInsertBeforeAlterado;
 }
 
 function getLastInfoSelectorNormaAlterada(){
-    var regex = new RegExp(`\(${tipoDeRelacao.ds_texto_para_alterador} pelo\(a\).*\)$`, "i");
-    var dispositivosInfoAlterado = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info]');
     var selectorInsertAfterAlterado = '#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]';
-    if(dispositivosInfoAlterado.length > 0){
-        for(let i = 0; i < dispositivosInfoAlterado.length; i++){
-            if(regex.test(dispositivosInfoAlterado.text())){
-                selectorInsertAfterAlterado = `#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${$(dispositivosInfoAlterado[i]).attr('ch_norma_info')}]`;
+    var dispositivosAposEpigrafe = $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]').nextAll('p');
+    if(dispositivosAposEpigrafe.length > 0){
+        for(let i = 0; i < dispositivosAposEpigrafe.length; i++){
+            if(dispositivosAposEpigrafe[i].hasAttribute('ch_norma_info')){
+                selectorInsertAfterAlterado = `#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_info=${$(dispositivosAposEpigrafe[i]).attr('ch_norma_info')}]`;
+            }
+            else if(dispositivosAposEpigrafe[i].hasAttribute('ch_norma_alteracao_completa')){
+                selectorInsertAfterAlterado = `#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${$(dispositivosAposEpigrafe[i]).attr('ch_norma_alteracao_completa')}]`;
+            }
+            else{
+                break;
             }
         }
     }

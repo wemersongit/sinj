@@ -124,7 +124,7 @@
                             gComplete();
                         }
                         else if (IsNotNullOrEmpty(data.ch_norma)) {
-                            selecionarNormaAlteradoraCadastrar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma });
+                            selecionarNormaAlteradoraCadastrar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, st_vacatio_legis: data.st_vacatio_legis, dt_inicio_vigencia: data.dt_inicio_vigencia});
                         }
                     }
                 };
