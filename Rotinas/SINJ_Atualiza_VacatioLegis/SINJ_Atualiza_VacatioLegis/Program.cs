@@ -61,7 +61,7 @@ namespace SINJ_Atualiza_VacatioLegis
 
             var vacatioLegisNormaRn = new VacatioLegisNormaRN(normaRn, tipoRelacaoRn, new UtilArquivoHtml());
 
-            pesquisa_norma.literal = string.Format("st_vacatio_legis AND dt_inicio_vigencia::date='{0}'", DateTime.Now.ToString("dd/MM/yyyy"));
+            pesquisa_norma.literal = string.Format("st_vacatio_legis AND dt_inicio_vigencia::date<='{0}'", DateTime.Now.ToString("dd/MM/yyyy"));
             pesquisa_norma.limit = null;
             pesquisa_norma.order_by = new Order_By() { asc = new string[] { "dt_assinatura::date" } };
             var resultNormas = normaRn.Consultar(pesquisa_norma);
@@ -135,6 +135,16 @@ namespace SINJ_Atualiza_VacatioLegis
                                 this._sb_error.AppendLine(DateTime.Now + ": " + mensagem);
                             }
                         }
+                    }
+                    try
+                    {
+                        normaRn.PathPut(normaAlteradora._metadata.id_doc, "st_vacatio_legis", "false", null);
+                    }
+                    catch(Exception ex)
+                    {
+                        var mensagem = util.BRLight.Excecao.LerTodasMensagensDaExcecao(ex, false);
+                        Console.WriteLine("Exception: " + mensagem);
+                        this._sb_error.AppendLine(DateTime.Now + ": " + mensagem);
                     }
                 }
             }
