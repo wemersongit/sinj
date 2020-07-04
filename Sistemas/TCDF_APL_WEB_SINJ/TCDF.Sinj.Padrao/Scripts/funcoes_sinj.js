@@ -4142,6 +4142,7 @@ function configureCkeditor(){
         }
     });
     CKEDITOR.addCss(
+        'div.strike {text-decoration: line-through}\r\n'+
         'p[noindex=noindex] {color: #777}\r\n'+
         'p[nota=nota] {font-size:12px; border: 1px solid #777; padding: 5px;}\r\n'+
         'body, p, h1{font-family:Tahoma;font-size:14px;}\r\n'
@@ -4152,7 +4153,7 @@ function loadCkeditor(id_textarea){
     var editor = CKEDITOR.replace(id_textarea, {
         disallowedContent: 'br',
         shiftEnterMode: CKEDITOR.ENTER_P,
-        extraAllowedContent: 'p[linkname,replaced_by,ch_norma_alteracao_completa,ch_norma_info,replaced_by_disabled,nota,noindex]{*};h[epigrafe];a(linkname,link_vide);',
+        extraAllowedContent: 'p[linkname,replaced_by,undone_by,ch_norma_alteracao_completa,ch_norma_info,ch_tipo_relacao,replaced_by_disabled,nota,noindex]{*};h[epigrafe];a(linkname,link_vide);',
         filebrowserImageBrowseUrl: './Imagens.aspx'
     });
     editor.addCommand("noIndexCommand", { // create named command
