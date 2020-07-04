@@ -206,7 +206,7 @@ function buscarTiposDeRelacao() {
         }
     };
     $.ajaxlight({
-        sUrl: './ashx/Autocomplete/TipoDeRelacaoAutocomplete.ashx' + (GetParameterValue("in_acao") == "true" ? "?in_relacao_de_acao=true" : ""),
+        sUrl: './ashx/Autocomplete/TipoDeRelacaoAutocomplete.ashx' + (GetParameterValue("in_acao") == "true" ? "?in_relacao_de_acao=true" : "?in_relacao_de_acao=false"),
         sType: "GET",
         fnSuccess: sucesso,
         fnComplete: null,
