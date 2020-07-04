@@ -368,50 +368,47 @@ namespace TCDF.Sinj.OV
         /// <param name="nmSituacaoAlterada"></param>
         /// <param name="dsTextoParaAlterador"></param>
         /// <returns></returns>
-
-        /// Para hanchura completa
         public static bool EhAlteracaoCompleta(string nmSituacaoAlterada, string dsTextoParaAlterador)
         {
-            //int a = 1;
+            return (nmSituacaoAlterada.Equals("revogado", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("revogado(a)", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("anulado", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("anulado(a)", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("extinta", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("extinto(a)", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("inconstitucional", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("declarado inconstitucional", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("inconstitucional", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("declarado(a) inconstitucional", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("inconstitucional", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("julgado(a) procedente", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("cancelado(a)", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("cancelado(a)", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("suspenso", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("suspenso(a) liminarmente", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("suspenso", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("suspenso(a)", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase));
+        }
 
-            //return (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
-                   //(nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
-                   //(nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
-                   //(nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
-                   //(nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado(a) inconstitucional") ||
-                   //(nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
-                   //(nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
-                   //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso(a) liminarmente") ||
-                   //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente") ||
-                   //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso") ||
-                   //(nmSituacaoAlterada == "sustado" && dsTextoParaAlterador == "sustado");
-            //bool maria = (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
-            //        (nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
-            //        (nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
-            //        (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
-            //        (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado(a) inconstitucional") ||
-            //        (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
-            //        (nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
-            //        (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso(a) liminarmente") ||
-            //        (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente") ||
-            //        (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso") ||
-            //        (nmSituacaoAlterada == "sustado" && dsTextoParaAlterador == "sustado");
-            //return maria;
-             return (nmSituacaoAlterada == "revogado" && dsTextoParaAlterador == "revogado") ||
-                    (dsTextoParaAlterador == "suspenso") || // Nota: linha alterada 
-                    (nmSituacaoAlterada == "anulado" && dsTextoParaAlterador == "anulado") ||
-                    (nmSituacaoAlterada == "extinta" && dsTextoParaAlterador == "extinta") ||
-                    (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado inconstitucional") ||
-                    (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "declarado(a) inconstitucional") ||
-                    (nmSituacaoAlterada == "inconstitucional" && dsTextoParaAlterador == "julgada procedente") ||
-                    (nmSituacaoAlterada == "cancelada" && dsTextoParaAlterador == "cancelada") ||
-                    (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso(a) liminarmente") ||
-                    //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso totalmente") ||
-                    //(nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso") ||
-                    (nmSituacaoAlterada == "suspenso" && dsTextoParaAlterador == "suspenso(a) totalmente") || //Nota: Paramentros adicionados para 'suspenso totalmente'
-                    (nmSituacaoAlterada == "sustado" && dsTextoParaAlterador == "sustado");
-                     
+        /// <summary>
+        /// Verifica, com base na descrição da relação de vide, se o vide implica em alteração no texto completo da norma
+        /// </summary>
+        /// <param name="dsTextoParaAlterador"></param>
+        /// <returns></returns>
+        public static bool EhAlteracaoCompleta(string dsTextoParaAlterador)
+        {
+            return dsTextoParaAlterador.Equals("revogado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("anulado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("extinto(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("declarado inconstitucional", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("declarado(a) inconstitucional", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("julgado(a) procedente", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("cancelado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("suspenso(a) liminarmente", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("suspenso(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase);
+        }
 
+        /// <summary>
+        /// Verifica se é relação que desfaz alteração completa
+        /// </summary>
+        /// <param name="dsTextoParaAlterador"></param>
+        /// <returns></returns>
+        public static bool DesfazAlteracaoCompleta(string dsTextoParaAlterador)
+        {
+            return dsTextoParaAlterador.Equals("revigorado(a)", StringComparison.InvariantCultureIgnoreCase) || dsTextoParaAlterador.Equals("repristinado(a)", StringComparison.InvariantCultureIgnoreCase) || dsTextoParaAlterador.Equals("restaurado(a)", StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
@@ -419,16 +416,43 @@ namespace TCDF.Sinj.OV
         /// </summary>
         /// <param name="dsTextoParaAlterador"></param>
         /// <returns></returns>
-
-        //Adicionar legislação correlata
         public static bool EhLegislacaoCorrelata(string dsTextoParaAlterador)
         {
+            return dsTextoParaAlterador.Equals("legislação correlata", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// Verifica, com base na situação e na descrição relação de vide, se o vide implica somente em linkar as duas normas, não necessariamente precisa ser legislação correlata
+        /// </summary>
+        /// <param name="dsTextoParaAlterador"></param>
+        /// <returns></returns>
+        public static bool EhRenumeracao(string dsTextoParaAlterador)
+        {
+            return dsTextoParaAlterador.Equals("renumerado(a)", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// Verifica, com base na situação e na descrição relação de vide, se o vide implica somente em linkar as duas normas, não necessariamente precisa ser legislação correlata
+        /// </summary>
+        /// <param name="dsTextoParaAlterador"></param>
+        /// <returns></returns>
+        public static bool EhAcrescimo(string dsTextoParaAlterador)
+        {
+            return dsTextoParaAlterador.Equals("acrescido(a)", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// Verifica se a relação é informacional
+        /// </summary>
+        /// <param name="dsTextoParaAlterador"></param>
+        /// <returns></returns>
+        public static bool EhInformacional(string dsTextoParaAlterador)
+        {
             return dsTextoParaAlterador.Equals("ratificado(a)", StringComparison.InvariantCultureIgnoreCase) ||
-                   dsTextoParaAlterador.Equals("reeditado(a)", StringComparison.InvariantCultureIgnoreCase) ||
-                   dsTextoParaAlterador.Equals("regulamentado(a)", StringComparison.InvariantCultureIgnoreCase) ||
-                   dsTextoParaAlterador.Equals("prorrogado(a)", StringComparison.InvariantCultureIgnoreCase) ||
-                   dsTextoParaAlterador.Equals("ressalvado(a)", StringComparison.InvariantCultureIgnoreCase) ||
-                   dsTextoParaAlterador.Equals("legislação correlata", StringComparison.InvariantCultureIgnoreCase);
+                dsTextoParaAlterador.Equals("reeditado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("regulamentado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("prorrogado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("ressalvado(a)", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 
