@@ -70,7 +70,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     dispositivoAlterador = videAlterador.alteracao_texto_vide.dispositivos_norma_vide.FirstOrDefault();
 
                     var node = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(dispositivoAlterador.linkname)).FirstOrDefault();
-                    if (!string.IsNullOrEmpty(node.InnerHtml))
+                    if (!string.IsNullOrEmpty(node.InnerHtml) && node.Descendants("a").Where(a => a.InnerText.Equals(dispositivoAlterador.texto)).Count() <= 0)
                     {
                         node.InnerHtml = node.InnerHtml.Replace(dispositivoAlterador.texto, "<a href=\"" + linkNormaAlterada + "\">" + dispositivoAlterador.texto + "</a>");
                     }
@@ -181,10 +181,10 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                 newNode,
                 insertAfterNode
             );
-
-            if(!pNodes.FirstOrDefault().ParentNode.Name.Equals("s", StringComparison.InvariantCultureIgnoreCase))
+            var parentNode = pNodes.FirstOrDefault().ParentNode;
+            if (!parentNode.Name.Equals("s", StringComparison.InvariantCultureIgnoreCase) && !parentNode.Name.Equals("div", StringComparison.InvariantCultureIgnoreCase) && !parentNode.GetAttributeValue("class","").Equals("strike"))
             {
-                var sNode = HtmlNode.CreateNode("<s></s>");
+                var sNode = HtmlNode.CreateNode("<div class=\"strike\"></div>");
                 doc.DocumentNode.InsertAfter(
                     sNode,
                     newNode
@@ -205,7 +205,8 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             var newNode = HtmlNode.CreateNode("<p ch_norma_alteracao_completa=\"" + normaAlteradora.ch_norma + "\" style=\"text-align:center;\" ch_tipo_relacao=\"" + videAlterado.ch_tipo_relacao + "\" ><a href=\"" + linkNormaAlteradora + "\" >(" + videAlterado.ds_texto_relacao + " pelo(a) " + normaAlteradora.getDescricaoDaNorma() + ")</a></p>");
             var chNodesNormaAlteracaoCompleta = doc.DocumentNode.Descendants("p").Where(p => !string.IsNullOrEmpty(p.GetAttributeValue("ch_norma_alteracao_completa", "")));
             var sNode = doc.DocumentNode.SelectSingleNode("s");
-                //.Descendants("p").Where(p => !string.IsNullOrEmpty(p.GetAttributeValue("linkname", ""))).ToList();
+            var strikeNode = doc.DocumentNode.SelectSingleNode("div");
+            //.Descendants("p").Where(p => !string.IsNullOrEmpty(p.GetAttributeValue("linkname", ""))).ToList();
             HtmlNode insertAfterNode;
             if (chNodesNormaAlteracaoCompleta.Any())
             {
@@ -224,6 +225,16 @@ namespace SINJ_Atualiza_VacatioLegis.RN
             {
                 sNode.Remove();
                 foreach (var pNode in sNode.ChildNodes)
+                {
+                    doc.DocumentNode.InsertAfter(
+                        pNode,
+                        newNode
+                    );
+                }
+            }else if (strikeNode != null)
+            {
+                strikeNode.Remove();
+                foreach (var pNode in strikeNode.ChildNodes)
                 {
                     doc.DocumentNode.InsertAfter(
                         pNode,
