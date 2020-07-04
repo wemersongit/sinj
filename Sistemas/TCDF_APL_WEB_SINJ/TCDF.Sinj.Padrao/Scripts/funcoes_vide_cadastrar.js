@@ -76,8 +76,9 @@ function selecionarAlteracaoCompleta(){
                 $(lastDispChNorma).after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
                     <a href="${linkNormaAlteradora}" >(${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                 </p>`);
-                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length > 0){
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length > 0 || $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike>p[linkname]').length > 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').remove();
+                    $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike').remove();
                     let lastSelector = `p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]:last`;
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.add('adicionado');
@@ -107,25 +108,25 @@ function selecionarAlteracaoCompleta(){
                         <a href="${linkNormaAlteradora}" >(${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                     </p>`);
 
-                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0){
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0 && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike>p[linkname]').length <= 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>p[linkname]').remove();
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).after('<s></s>');
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).after('<div class="strike"></div>');
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.add('alterado');
-                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').append(dispositivosNormaAlterada[i]);
+                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike').append(dispositivosNormaAlterada[i]);
                     }
                 }
             }
             else{
-                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0){
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0 && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike>p[linkname]').length <= 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>p[linkname]').remove();
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo h1[epigrafe]').after(`<p ch_norma_alteracao_completa="${normaAlteradora.ch_norma}" style="text-align:center;" ch_tipo_relacao="${tipoDeRelacao.ch_tipo_relacao}" class="adicionado">
                             <a href="${linkNormaAlteradora}" >(${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a>
                         </p>
-                        <s></s>`);
+                        <div class="strike"></div>`);
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.add('alterado');
-                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').append(dispositivosNormaAlterada[i]);
+                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike').append(dispositivosNormaAlterada[i]);
                     }
                 }
             }
@@ -139,12 +140,12 @@ function selecionarAlteracaoCompleta(){
             if(dispositivosIdentificacaoAlteracaoCompleta.length > 0){
                 const lastChNorma = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_norma_alteracao_completa');
                 const lastChTipoRelacao = dispositivosIdentificacaoAlteracaoCompleta[dispositivosIdentificacaoAlteracaoCompleta.length - 1].getAttribute('ch_tipo_relacao');
-                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0 && isRelacaoDeAlteracaoCompleta(lastChTipoRelacao)){
+                if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0 && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike>p[linkname]').length <= 0 && isRelacaoDeAlteracaoCompleta(lastChTipoRelacao)){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>p[linkname]').remove();
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after('<s></s>');
+                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${lastChNorma}]`).after('<div class="strike"></div>');
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.remove('adicionado');
-                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').append(dispositivosNormaAlterada[i]);
+                        $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike').append(dispositivosNormaAlterada[i]);
                     }
                 }
             }
@@ -152,6 +153,7 @@ function selecionarAlteracaoCompleta(){
         else{
             if(dispositivosIdentificacaoAlteracaoCompleta.length <= 0 || !isRelacaoDeAlteracaoCompleta(lastChTipoRelacao)){
                 $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s').remove();
+                $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike').remove();
                 let lastSelector = 'h1[epigrafe]';
                 for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                     dispositivosNormaAlterada[i].classList.remove('alterado');
