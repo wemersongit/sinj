@@ -172,11 +172,13 @@ function selecionarNormaForaDoSistemaCadastrar() {
         normaAlterada.in_norma_fora_do_sistema = true;
         $('#line_norma_fora_do_sistema').removeClass('hidden');
         $('#line_norma_dentro_do_sistema').addClass('hidden');
+        changeStepper('selecionarNormaForaSistema');
     }
     else {
         normaAlterada.in_norma_fora_do_sistema = false;
         $('#line_norma_fora_do_sistema').addClass('hidden');
         $('#line_norma_dentro_do_sistema').removeClass('hidden');
+        changeStepper('deselecionarNormaForaSistema');
     }
 }
 
@@ -361,7 +363,6 @@ function changeSelecionarArquivoDaNorma(el){
 }
 
 function exibirControlesNormaAlteradaSelecionada(){
-    $('#labelNormaForaDoSistema').hide();
     $('#labelSemCitacaoNormaAlteradora').hide();
     $('#labelSemCitacaoNormaAlterada').hide();
     if(isRelacaoDeAlteracaoCompleta(tipoDeRelacao.ch_tipo_relacao) || isRelacaoQueDesfazAlteracao(tipoDeRelacao.ch_tipo_relacao)){
@@ -373,6 +374,9 @@ function exibirControlesNormaAlteradaSelecionada(){
     }
     else if(isInfoVide(tipoDeRelacao.ch_tipo_relacao)){
         $('#labelSemCitacaoNormaAlterada').show();
+    }
+    if(IsNotNullOrEmpty(normaAlterada, 'ch_norma')){
+        $('#labelNormaForaDoSistema').hide();
     }
 }
 
@@ -943,7 +947,7 @@ function validarVide(){
             return false;
         }
     }
-    if(!normaAlterada.sem_arquivo){
+    if(!normaAlterada.sem_arquivo && !normaAlterada.in_norma_fora_do_sistema){
         if(!IsNotNullOrEmpty(normaAlterada.dispositivos) && !$('#inSemCitacaoNormaAlterada').is(':checked') && !normaAlterada.in_alteracao_completa){
             notificarErroVide('Erro', 'Falta informar o dispositivo da norma alterada.');
             return false;
@@ -1074,6 +1078,14 @@ function changeStepper(action){
             $('.ds-dispositivos-alterados').removeClass('hidden');
             $('.ds-comentario-vide').removeClass('hidden');
             $('.buttons').removeClass('hidden');
+            break;
+        case 'selecionarNormaForaSistema':
+            $('.ds-comentario-vide').removeClass('hidden');
+            $('.buttons').removeClass('hidden');
+            break;
+        case 'deselecionarNormaForaSistema':
+            $('.ds-comentario-vide').addClass('hidden');
+            $('.buttons').addClass('hidden');
             break;
         case 'deselecionarTipoRelacao':
             $('.selecionar-norma-alterada').addClass('hidden');
