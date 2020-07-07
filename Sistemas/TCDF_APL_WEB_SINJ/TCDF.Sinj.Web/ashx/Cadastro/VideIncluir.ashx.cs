@@ -206,7 +206,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     }
                     else
                     {
-                        sRetorno = "{\"id_doc_success\":" + id_doc + ", \"st_habilita_pesquisa\":\"" + normaAlteradaOv.st_habilita_pesquisa + "\", \"st_habilita_email\":\"" + normaAlteradaOv.st_habilita_email + "\", \"id_doc_vide\":\"" + normaAlteradaOv._metadata.id_doc + "\", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
+                        sRetorno = "{\"id_doc_success\":" + id_doc + ", \"ch_norma\":\"" + normaAlteradoraOv.ch_norma + "\", \"dt_controle_alteracao\":\"" + DateTime.Now.AddSeconds(1).ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\"}";
                     }
                 }
                 else
