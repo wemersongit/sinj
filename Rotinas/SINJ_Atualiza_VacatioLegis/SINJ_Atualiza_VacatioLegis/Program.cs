@@ -97,32 +97,42 @@ namespace SINJ_Atualiza_VacatioLegis
                                 var situacao = normaRn.ObterSituacao(normaAlterada.vides);
                                 this._sb_info.AppendLine(DateTime.Now + " --- Situação Anterior => " + normaAlterada.nm_situacao);
                                 this._sb_info.AppendLine(DateTime.Now + " --- Situação Após Vide => " + situacao.nm_situacao);
-                                    
-                                if (normaAlterada.ch_situacao != situacao.ch_situacao)
+
+                                normaAlterada.ch_situacao = situacao.ch_situacao;
+                                normaAlterada.nm_situacao = situacao.nm_situacao;
+
+                                if (normaAlterada.vides != null && normaAlterada.vides.Count > 0)
                                 {
-                                    normaAlterada.ch_situacao = situacao.ch_situacao;
-                                    normaAlterada.nm_situacao = situacao.nm_situacao;
-                                    normaAlterada.alteracoes.Add(new AlteracaoOV { dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"), nm_login_usuario_alteracao = "vacatio_legis" });
-                                    if (normaRn.Atualizar(normaAlterada._metadata.id_doc, normaAlterada))
+                                    foreach (var videAlterado in normaAlterada.vides)
                                     {
-                                        this._sb_info.AppendLine(DateTime.Now + " --- Norma Alterada com SUCESSO");
-                                        if (normaAlterada.vides != null && normaAlterada.vides.Count > 0)
+                                        if (videAlterado.ch_vide == videAlterador.ch_vide)
                                         {
-                                            foreach (var videAlterado in normaAlterada.vides)
+                                            this._sb_info.AppendLine(DateTime.Now + " ---- Salvar Texto Antigo - Chave Vide => " + videAlterado.ch_vide);
+                                            vacatioLegisNormaRn.SalvarTextoAntigo(normaAlteradora, videAlterador);
+                                            vacatioLegisNormaRn.SalvarTextoAntigo(normaAlterada, videAlterado);
+
+                                            this._sb_info.AppendLine(DateTime.Now + " ---- Alterar Texto Norma Alteradora - Chave Vide => " + videAlterado.ch_vide);
+                                            vacatioLegisNormaRn.AlterarTextoDaNormaAlteradora(normaAlteradora, normaAlterada, videAlterador);
+                                            normaAlteradora.alteracoes.Add(new AlteracaoOV { dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"), nm_login_usuario_alteracao = "vacatio_legis" });
+                                            if (normaRn.Atualizar(normaAlteradora._metadata.id_doc, normaAlteradora))
                                             {
-                                                if (videAlterado.ch_vide == videAlterador.ch_vide)
-                                                {
-                                                    this._sb_info.AppendLine(DateTime.Now + " ---- Salvar Texto Antigo - Chave Vide => " + videAlterado.ch_vide);
-                                                    vacatioLegisNormaRn.SalvarTextoAntigo(normaAlteradora, videAlterador);
-                                                    vacatioLegisNormaRn.SalvarTextoAntigo(normaAlterada, videAlterado);
+                                                this._sb_info.AppendLine(DateTime.Now + " --- NORMA ALTERADORA - Atualizada com SUCESSO");
+                                            }
+                                            else
+                                            {
+                                                this._sb_info.AppendLine(DateTime.Now + " --- NORMA ALTERADORA - Não foi atualizada.");
+                                            }
 
-                                                    this._sb_info.AppendLine(DateTime.Now + " ---- Alterar Texto Norma Alteradora - Chave Vide => " + videAlterado.ch_vide);
-                                                    vacatioLegisNormaRn.AlterarTextoDaNormaAlteradora(normaAlteradora, normaAlterada, videAlterador);
-
-                                                    this._sb_info.AppendLine(DateTime.Now + " ---- Alterar Textos Norma Alterada - Chave Vide => " + videAlterado.ch_vide);
-                                                    vacatioLegisNormaRn.AlterarTextoDaNormaAlterada(normaAlteradora, normaAlterada, videAlterado);
-
-                                                }
+                                            this._sb_info.AppendLine(DateTime.Now + " ---- Alterar Textos Norma Alterada - Chave Vide => " + videAlterado.ch_vide);
+                                            vacatioLegisNormaRn.AlterarTextoDaNormaAlterada(normaAlteradora, normaAlterada, videAlterado);
+                                            normaAlterada.alteracoes.Add(new AlteracaoOV { dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss"), nm_login_usuario_alteracao = "vacatio_legis" });
+                                            if(normaRn.Atualizar(normaAlterada._metadata.id_doc, normaAlterada))
+                                            {
+                                                this._sb_info.AppendLine(DateTime.Now + " --- NORMA ALTERADA - Atualizada com SUCESSO");
+                                            }
+                                            else
+                                            {
+                                                this._sb_info.AppendLine(DateTime.Now + " --- NORMA ALTERADA - Não foi atualizada.");
                                             }
                                         }
                                     }
