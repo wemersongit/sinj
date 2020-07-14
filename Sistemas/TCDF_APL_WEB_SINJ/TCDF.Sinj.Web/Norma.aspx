@@ -205,7 +205,7 @@
         .control{width:100%; float:left;}
         .print{float:right;}
         .compilado{float:left;}
-        div.stike { text-decoration: line-through; }
+        div.strike { text-decoration: line-through; }
         body, p, h1{font-family:Tahoma;font-size:14px;}
         p[nota=nota] {font-size:12px; border: 1px solid #777; padding: 5px;}
     </style>

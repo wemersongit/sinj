@@ -140,11 +140,13 @@
                                         else{
                                             selecionarNormaAlteradoraEditar({ ch_norma: data.ch_norma, nr_norma: data.nr_norma, dt_assinatura: data.dt_assinatura, nm_tipo_norma: data.nm_tipo_norma, sem_arquivo: videEditar.alteracao_texto_vide.in_sem_arquivo, arquivo: data.ar_atualizado, dispositivos: videEditar.alteracao_texto_vide.dispositivos_norma_vide });
                                         }
-                                        if(!videEditar.in_norma_fora_sistema){
+                                        if (IsNotNullOrEmpty(videEditar, 'ch_norma_vide')){
                                             buscarOutraNorma(videEditar.ch_norma_vide, videEditar.ch_vide);
-                                        }
-                                        else{
                                             selecionarArquivoNormaAlteradoraEditar();
+                                        }
+                                        else {
+                                            selecionarNormaAlteradaForaSistemaEditar(videEditar);
+                                            gComplete();
                                         }
                                     });
                                     
@@ -355,7 +357,6 @@
                                                             </div>
                                                         </div>
                                                         <div id="line_norma_fora_do_sistema" class="line hidden">
-                                                            <button type="button" class="clean button-close" title="Fechar" onclick="fecharNormaForaDoSistema()"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/ico_fechar.png" alt="fechar" width="12px" height="12px" /></button>
                                                             <div class="column w-100-pc">
                                                                 <div class="table w-100-pc">
                                                                     <div class="line">
@@ -366,7 +367,8 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div id="div_autocomplete_tipo_norma_vide_fora_de_sistema" class="cell w-100-pc">
-                                                                                <input type="text" id="nm_tipo_norma_vide_fora_do_sistema" value="" class="w-80-pc" disabled="disabled" />
+                                                                                <input type="hidden" id="ch_tipo_norma_vide_fora_do_sistema" name="ch_tipo_norma_vide_fora_do_sistema" value="" />
+                                                                                <input type="text" id="nm_tipo_norma_vide_fora_do_sistema" name="nm_tipo_norma_vide_fora_do_sistema" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_norma_vide_fora_do_sistema"></a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -378,7 +380,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="nr_norma_vide_fora_do_sistema" value="" disabled="disabled" />
+                                                                                <input type="text" id="nr_norma_vide_fora_do_sistema" name="nr_norma_vide_fora_do_sistema" value="" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -390,7 +392,8 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div id="div_autocomplete_tipo_fonte_vide_fora_do_sistema" class="cell w-100-pc">
-                                                                                <input type="text" id="nm_tipo_fonte_vide_fora_do_sistema" value="" class="w-80-pc" disabled="disabled" />
+                                                                                <input type="hidden" id="ch_tipo_fonte_vide_fora_do_sistema" name="ch_tipo_fonte_vide_fora_do_sistema" value="" />
+                                                                                <input type="text" id="nm_tipo_fonte_vide_fora_do_sistema" name="nm_tipo_fonte_vide_fora_do_sistema" value="" class="w-80-pc" /><a title="Listar" id="a_tipo_fonte_vide_fora_do_sistema"></a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -402,7 +405,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="dt_publicacao_norma_vide_fora_do_sistema" value="" class="date" disabled="disabled" />
+                                                                                <input type="text" id="dt_publicacao_norma_vide_fora_do_sistema" name="dt_publicacao_norma_vide_fora_do_sistema" value="" class="date" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -414,7 +417,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="nr_pagina_publicacao_norma_vide_fora_do_sistema" value="" disabled="disabled" />
+                                                                                <input type="text" id="nr_pagina_publicacao_norma_vide_fora_do_sistema" name="nr_pagina_publicacao_norma_vide_fora_do_sistema" value="" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -426,7 +429,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="nr_coluna_publicacao_norma_vide_fora_do_sistema" value="" disabled="disabled" />
+                                                                                <input type="text" id="nr_coluna_publicacao_norma_vide_fora_do_sistema" name="nr_coluna_publicacao_norma_vide_fora_do_sistema" value="" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -438,7 +441,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="artigo_norma_vide_alterada" value="" disabled="disabled" />
+                                                                                <input type="text" id="artigo_norma_vide_alterada" name="artigo_norma_vide_alterada" value="" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -450,7 +453,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="paragrafo_norma_vide_alterada" value="" disabled="disabled" />
+                                                                                <input type="text" id="paragrafo_norma_vide_alterada" name="paragrafo_norma_vide_alterada" value="" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -462,7 +465,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="inciso_norma_vide_alterada" value="" disabled="disabled" />
+                                                                                <input type="text" id="inciso_norma_vide_alterada" name="inciso_norma_vide_alterada" value="" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -474,7 +477,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="alinea_norma_vide_alterada" value="" disabled="disabled" />
+                                                                                <input type="text" id="alinea_norma_vide_alterada" name="alinea_norma_vide_alterada" value="" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -486,7 +489,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="item_norma_vide_alterada" value="" disabled="disabled" />
+                                                                                <input type="text" id="item_norma_vide_alterada" name="item_norma_vide_alterada" value="" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -498,7 +501,7 @@
                                                                         </div>
                                                                         <div class="column w-70-pc">
                                                                             <div class="cell w-100-pc">
-                                                                                <input type="text" id="anexo_norma_vide_alterada" value="" disabled="disabled" />
+                                                                                <input type="text" id="anexo_norma_vide_alterada" name="anexo_norma_vide_alterada" value="" />
                                                                             </div>
                                                                         </div>
                                                                     </div>

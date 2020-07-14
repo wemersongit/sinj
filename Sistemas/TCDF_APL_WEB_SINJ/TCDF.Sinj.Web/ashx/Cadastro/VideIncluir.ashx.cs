@@ -33,6 +33,13 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             var _nr_pagina_publicacao_norma_vide_fora_do_sistema = context.Request["nr_pagina_publicacao_norma_vide_fora_do_sistema"];
             var _nr_coluna_publicacao_norma_vide_fora_do_sistema = context.Request["nr_coluna_publicacao_norma_vide_fora_do_sistema"];
 
+            var _artigo_norma_vide_alterada = context.Request["artigo_norma_vide_alterada"];
+            var _paragrafo_norma_vide_alterada = context.Request["paragrafo_norma_vide_alterada"];
+            var _inciso_norma_vide_alterada  = context.Request["inciso_norma_vide_alterada"];
+            var _alinea_norma_vide_alterada  = context.Request["alinea_norma_vide_alterada"];
+            var _item_norma_vide_alterada = context.Request["item_norma_vide_alterada"];
+            var _anexo_norma_vide_alterada = context.Request["anexo_norma_vide_alterada"];
+
             NormaOV normaAlteradoraOv = null;
             NormaOV normaAlteradaOv = null;
             ulong id_doc = 0;
@@ -88,6 +95,14 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     vide_alterador.dt_publicacao_fonte_norma_vide = _dt_publicacao_norma_vide_fora_do_sistema;
                     vide_alterador.pagina_publicacao_norma_vide = _nr_pagina_publicacao_norma_vide_fora_do_sistema;
                     vide_alterador.coluna_publicacao_norma_vide = _nr_coluna_publicacao_norma_vide_fora_do_sistema;
+
+                    vide_alterador.artigo_norma_vide_outra = _artigo_norma_vide_alterada;
+                    vide_alterador.paragrafo_norma_vide_outra = _paragrafo_norma_vide_alterada;
+                    vide_alterador.inciso_norma_vide_outra = _inciso_norma_vide_alterada;
+                    vide_alterador.alinea_norma_vide_outra = _alinea_norma_vide_alterada;
+                    vide_alterador.item_norma_vide_outra = _item_norma_vide_alterada;
+                    vide_alterador.anexo_norma_vide_outra = _anexo_norma_vide_alterada;
+
                 }
                 else if (vide.NormaAlterada != null && !string.IsNullOrEmpty(vide.NormaAlterada.ChNorma))
                 {
