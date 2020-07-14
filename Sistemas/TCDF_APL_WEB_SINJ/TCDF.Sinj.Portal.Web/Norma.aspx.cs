@@ -83,7 +83,7 @@ namespace TCDF.Sinj.Portal.Web
                                 placeHolderHeader.Controls.Add(html_meta_keywords);
                                 placeHolderHeader.Controls.Add(html_meta_description);
                                 var msg = Util.FileBytesInUTF8String(file);
-                                if (msg.IndexOf("<h1 epigrafe") > -1 || msg.IndexOf("<p linkname") > -1)
+                                if (Regex.IsMatch(msg, "<h1.*epigrafe.*>"))
                                 {
                                     msg = msg.Replace("(_link_sistema_)", ResolveUrl("~"));
                                     msg = Regex.Replace(msg, "<html>.*<body>|</body></html>", String.Empty);
