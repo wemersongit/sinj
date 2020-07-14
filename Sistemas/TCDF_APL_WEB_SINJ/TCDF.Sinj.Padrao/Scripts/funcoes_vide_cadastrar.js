@@ -173,6 +173,9 @@ function selecionarNormaForaDoSistemaCadastrar() {
         $('#line_norma_fora_do_sistema').removeClass('hidden');
         $('#line_norma_dentro_do_sistema').addClass('hidden');
         changeStepper('selecionarNormaForaSistema');
+        if($('div.selecionar-arquivo-norma-alteradora input').is(':checked')){
+            $('div.selecionar-arquivo-norma-alteradora input').click()
+        }
     }
     else {
         normaAlterada.in_norma_fora_do_sistema = false;
@@ -210,7 +213,7 @@ function buscarTiposDeRelacao() {
         }
     };
     $.ajaxlight({
-        sUrl: './ashx/Autocomplete/TipoDeRelacaoAutocomplete.ashx' + (GetParameterValue("in_acao") == "true" ? "?in_relacao_de_acao=true" : "?in_relacao_de_acao=false"),
+        sUrl: './ashx/Autocomplete/TipoDeRelacaoAutocomplete.ashx' + (GetParameterValue("in_acao") == "true" ? "?in_relacao_de_acao=true" : ""),
         sType: "GET",
         fnSuccess: sucesso,
         fnComplete: null,

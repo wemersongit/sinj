@@ -67,6 +67,7 @@ function buscarTipoDeRelacao(ch_tipo_relacao, deferred) {
 }
 
 function selecionarNormaAlteradoraEditar(norma){
+
     normaAlteradora = {
         ch_norma: norma.ch_norma,
         nr_norma: norma.nr_norma,
@@ -99,8 +100,36 @@ function selecionarNormaAlteradaEditar(norma){
 
 function selecionarNormaAlteradaForaSistemaEditar(videEditar){
     normaAlterada = {
-        in_norma_fora_sistema: true
+        in_norma_fora_do_sistema: true
     }
+    $('#div_autocomplete_tipo_norma_vide_fora_de_sistema').autocompletelight({
+        sKeyDataName: "ch_tipo_norma",
+        sValueDataName: "nm_tipo_norma",
+        sInputHiddenName: "ch_tipo_norma_vide_fora_do_sistema",
+        sInputName: "nm_tipo_norma_vide_fora_do_sistema",
+        sAjaxUrl: "./ashx/Autocomplete/TipoDeNormaAutocomplete.ashx",
+        bLinkAll: true,
+        sLinkName: "a_tipo_norma_vide_fora_do_sistema"
+    });
+    $('#div_autocomplete_tipo_norma_modal').autocompletelight({
+        sKeyDataName: "ch_tipo_norma",
+        sValueDataName: "nm_tipo_norma",
+        sInputHiddenName: "ch_tipo_norma_modal",
+        sInputName: "nm_tipo_norma_modal",
+        sAjaxUrl: "./ashx/Autocomplete/TipoDeNormaAutocomplete.ashx",
+        bLinkAll: true,
+        sLinkName: "a_tipo_norma_modal"
+    });
+    $('#div_autocomplete_tipo_fonte_vide_fora_do_sistema').autocompletelight({
+        sKeyDataName: "ch_tipo_fonte",
+        sValueDataName: "nm_tipo_fonte",
+        sInputHiddenName: "ch_tipo_fonte_vide_fora_do_sistema",
+        sInputName: "nm_tipo_fonte_vide_fora_do_sistema",
+        sAjaxUrl: "./ashx/Autocomplete/TipoDeFonteAutocomplete.ashx",
+        bLinkAll: true,
+        sLinkName: "a_tipo_fonte_vide_fora_do_sistema"
+    });
+    
     $('#line_norma_fora_do_sistema').removeClass('hidden');
     $('#line_norma_dentro_do_sistema').addClass('hidden');
     $('#ch_tipo_norma_vide_fora_do_sistema').val(videEditar.ch_tipo_norma_vide);
@@ -111,6 +140,14 @@ function selecionarNormaAlteradaForaSistemaEditar(videEditar){
     $('#dt_publicacao_norma_vide_fora_do_sistema').val(videEditar.dt_publicacao_fonte_norma_vide);
     $('#nr_pagina_publicacao_norma_vide_fora_do_sistema').val(videEditar.pagina_publicacao_norma_vide);
     $('#nr_coluna_publicacao_norma_vide_fora_do_sistema').val(videEditar.coluna_publicacao_norma_vide);
+
+    $('#artigo_norma_vide_alterada').val(videEditar.artigo_norma_vide_outra);
+    $('#paragrafo_norma_vide_alterada').val(videEditar.paragrafo_norma_vide_outra);
+    $('#inciso_norma_vide_alterada').val(videEditar.inciso_norma_vide_outra);
+    $('#alinea_norma_vide_alterada').val(videEditar.alinea_norma_vide_outra);
+    $('#item_norma_vide_alterada').val(videEditar.item_norma_vide_outra);
+    $('#anexo_norma_vide_alterada').val(videEditar.anexo_norma_vide_outra);
+
 }
 
 function selecionarArquivoNormaAlteradoraEditar(){
@@ -136,7 +173,7 @@ function selecionarArquivosEditar(){
     else{
         selecionarArquivoDaNormaEditar(Object.assign({}, normaAlteradora, {sufixo: 'alteradora'}), deferredAlteradora);
     }
-    if(!normaAlterada.in_norma_fora_sistema && !normaAlterada.sem_arquivo){
+    if(!normaAlterada.in_norma_fora_do_sistema && !normaAlterada.sem_arquivo){
         selecionarArquivoDaNormaEditar(Object.assign({}, normaAlterada, {sufixo: 'alterada'}), deferredAlterada);
     }
     else{
@@ -319,7 +356,7 @@ function clickAlterarDispositivoEditar(){
         let $elementoAlterado = $buttonSelected.parent();
         const linkname = $elementoAlterado.attr('linkname');
         let htmlAlterado = $elementoAlterado.find('s').html();
-        
+
         if(isLecoVide(tipoDeRelacao.ch_tipo_relacao)){
             $buttonSelected.hide();
             dispositivoAlterado.linkname = linkname;
