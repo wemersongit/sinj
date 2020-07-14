@@ -343,7 +343,7 @@ function clickAlterarDispositivoEditar(){
             dispositivoAlterado.texto = textosAcrescidos[i];
             normaAlterada.dispositivos.push(Object.assign({}, dispositivoAlterado));
 
-            const $element = $(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador}(a) pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
+            const $element = $(`<p linkname="${dispositivoAlterado.linkname}" class="adicionado"><button type="button" class="clean" onclick="desfazerAlteracaoDoDispositivoEditar('${dispositivoAlterado.linkname}')"><img src="${_urlPadrao}/Imagens/ico_undo_p.png" width="14px" height="14px" /></button><a name="${dispositivoAlterado.linkname}"></a>${textosAcrescidos[i]}&nbsp;<a href="${linkNormaAlteradora}">(${dispositivoAlterado.nm_linkName ? dispositivoAlterado.nm_linkName + ' ' : ''}${tipoDeRelacao.ds_texto_para_alterador} pelo(a) ${normaAlteradora.ds_norma})</a></p>`);
             $nextElement.after($element);
             $nextElement = $element;
         }
