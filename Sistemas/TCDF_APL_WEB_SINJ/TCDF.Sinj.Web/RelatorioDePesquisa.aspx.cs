@@ -269,7 +269,7 @@ namespace TCDF.Sinj.Web
         private string GetLinha(NormaOV norma, bool bCadastro, string link_app)
         {
             StringBuilder sb = new StringBuilder();
-
+            var orgaoRN = new OrgaoRN();
             var vides = "";
             var ds_dispositivo = "";
             var ds_norma = "";

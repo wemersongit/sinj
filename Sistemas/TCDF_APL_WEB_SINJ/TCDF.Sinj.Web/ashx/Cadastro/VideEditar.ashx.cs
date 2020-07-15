@@ -28,6 +28,22 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             var _dt_controle_alteracao = context.Request["dt_controle_alteracao"];
             var _ds_dispositivos_alterados = context.Request["ds_dispositivos_alterados"];
 
+            var _ch_tipo_norma_vide_fora_do_sistema = context.Request["ch_tipo_norma_vide_fora_do_sistema"];
+            var _nm_tipo_norma_vide_fora_do_sistema = context.Request["nm_tipo_norma_vide_fora_do_sistema"];
+            var _nr_norma_vide_fora_do_sistema = context.Request["nr_norma_vide_fora_do_sistema"];
+            var _ch_tipo_fonte_vide_fora_do_sistema = context.Request["ch_tipo_fonte_vide_fora_do_sistema"];
+            var _nm_tipo_fonte_vide_fora_do_sistema = context.Request["nm_tipo_fonte_vide_fora_do_sistema"];
+            var _dt_publicacao_norma_vide_fora_do_sistema = context.Request["dt_publicacao_norma_vide_fora_do_sistema"];
+            var _nr_pagina_publicacao_norma_vide_fora_do_sistema = context.Request["nr_pagina_publicacao_norma_vide_fora_do_sistema"];
+            var _nr_coluna_publicacao_norma_vide_fora_do_sistema = context.Request["nr_coluna_publicacao_norma_vide_fora_do_sistema"];
+
+            var _artigo_norma_vide_alterada = context.Request["artigo_norma_vide_alterada"];
+            var _paragrafo_norma_vide_alterada = context.Request["paragrafo_norma_vide_alterada"];
+            var _inciso_norma_vide_alterada = context.Request["inciso_norma_vide_alterada"];
+            var _alinea_norma_vide_alterada = context.Request["alinea_norma_vide_alterada"];
+            var _item_norma_vide_alterada = context.Request["item_norma_vide_alterada"];
+            var _anexo_norma_vide_alterada = context.Request["anexo_norma_vide_alterada"];
+
             var action = AcoesDoUsuario.nor_edt;
             SessaoUsuarioOV sessao_usuario = null;
             var dt_alteracao = DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss");
@@ -52,16 +68,36 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                 }
                 foreach (var selectVide in normaAlteradoraOv.vides.Where(v => v.ch_vide.Equals(vide.ChVide)))
                 {
-                    vide.ValidateDsDispositivosAlterados(selectVide, _ds_dispositivos_alterados, vide.DsComentarioVide);
-
-                    selectVide.ds_comentario_vide = vide.DsComentarioVide;
-                    selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
+                    if (vide.NormaAlterada.InNormaForaSistema)
                     {
-                        in_sem_arquivo = vide.NormaAlteradora.SemArquivo,
-                        ds_dispositivos_alterados = _ds_dispositivos_alterados,
-                        dispositivos_norma_vide = vide.NormaAlteradora.Dispositivos,
-                        dispositivos_norma_vide_outra = vide.NormaAlterada != null ? vide.NormaAlterada.Dispositivos : new List<DispositivoVide>()
-                    };
+                        selectVide.ch_tipo_norma_vide = _ch_tipo_norma_vide_fora_do_sistema;
+                        selectVide.nm_tipo_norma_vide = _nm_tipo_norma_vide_fora_do_sistema;
+                        selectVide.ch_tipo_fonte_norma_vide = _ch_tipo_fonte_vide_fora_do_sistema;
+                        selectVide.nm_tipo_fonte_norma_vide = _nm_tipo_fonte_vide_fora_do_sistema;
+                        selectVide.nr_norma_vide = _nr_norma_vide_fora_do_sistema;
+                        selectVide.dt_publicacao_fonte_norma_vide = _dt_publicacao_norma_vide_fora_do_sistema;
+                        selectVide.pagina_publicacao_norma_vide = _nr_pagina_publicacao_norma_vide_fora_do_sistema;
+                        selectVide.coluna_publicacao_norma_vide = _nr_coluna_publicacao_norma_vide_fora_do_sistema;
+
+                        selectVide.artigo_norma_vide_outra = _artigo_norma_vide_alterada;
+                        selectVide.paragrafo_norma_vide_outra = _paragrafo_norma_vide_alterada;
+                        selectVide.inciso_norma_vide_outra = _inciso_norma_vide_alterada;
+                        selectVide.alinea_norma_vide_outra = _alinea_norma_vide_alterada;
+                        selectVide.item_norma_vide_outra = _item_norma_vide_alterada;
+                        selectVide.anexo_norma_vide_outra = _anexo_norma_vide_alterada;
+                    }
+                    else
+                    {
+                        vide.ValidateDsDispositivosAlterados(selectVide, _ds_dispositivos_alterados, vide.DsComentarioVide);
+                        selectVide.ds_comentario_vide = vide.DsComentarioVide;
+                        selectVide.alteracao_texto_vide = new AlteracaoDeTexoVide()
+                        {
+                            in_sem_arquivo = vide.NormaAlteradora.SemArquivo,
+                            ds_dispositivos_alterados = _ds_dispositivos_alterados,
+                            dispositivos_norma_vide = vide.NormaAlteradora.Dispositivos,
+                            dispositivos_norma_vide_outra = vide.NormaAlterada != null ? vide.NormaAlterada.Dispositivos : new List<DispositivoVide>()
+                        };
+                    }
                     selectVide.caput_norma_vide = null;
                     selectVide.caput_norma_vide_outra = null;
                     break;
