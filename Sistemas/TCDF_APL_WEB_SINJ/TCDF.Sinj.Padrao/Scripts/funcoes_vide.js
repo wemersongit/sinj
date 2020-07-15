@@ -371,13 +371,10 @@ function notificarSucessoVide(title, body){
         oButtons: [
             {
                 text: "Ok", click: function () {
-                    $(this).dialog('destroy');
+                    $(this).dialog('close');
                 }
             }
-        ],
-        fnClose: function () {
-            location.reload();
-        }
+        ]
     });
 }
 
@@ -389,13 +386,10 @@ function notificarErroVide(title, body){
         oButtons: [
             {
                 text: "Ok", click: function () {
-                    $(this).dialog('destroy');
+                    $(this).dialog('close');
                 }
             }
-        ],
-        fnClose: function () {
-            location.reload();
-        }
+        ]
     });
 }
 
