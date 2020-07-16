@@ -376,8 +376,15 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     pNode.SetAttributeValue("linkname", dispositivo.linkname);
                     pNode.SetAttributeValue("replaced_by", normaAlteradora.ch_norma);
                     pNode.Attributes.Remove("undone_by");
-                    aNode.SetAttributeValue("name", dispositivo.linkname);
-                    aNode.SetAttributeValue("id", dispositivo.linkname);
+                    if (aNode == null)
+                    {
+                        pNode.PrependChild(HtmlNode.CreateNode("<a id=\"" + dispositivo.linkname + "\" name=\"" + dispositivo.linkname + "\"></a>"));
+                    }
+                    else
+                    {
+                        aNode.SetAttributeValue("name", dispositivo.linkname);
+                        aNode.SetAttributeValue("id", dispositivo.linkname);
+                    }
 
                     if (pNode.SelectSingleNode("s") == null)
                     {
@@ -392,6 +399,7 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     linkname = dispositivo.linkname;
                     pNode = doc.DocumentNode.Descendants("p").Where(p => p.GetAttributeValue("linkname", "").Equals(linkname)).FirstOrDefault();
                     aNode = pNode.Descendants("a").Where(a => a.GetAttributeValue("name", "").Equals(linkname)).FirstOrDefault();
+
                     countReplaceds = doc.DocumentNode.Descendants("p").Where(p => Regex.Replace(p.GetAttributeValue("linkname", ""), "(_replaced)*$", "").Equals(linkname)).Count();
                     for (var i = 0; i < countReplaceds; i++)
                     {
@@ -400,9 +408,15 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                     linkname += "_replaced";
                     pNode.SetAttributeValue("linkname", linkname);
                     pNode.SetAttributeValue("replaced_by", normaAlteradora.ch_norma);
-                    aNode.SetAttributeValue("name", linkname);
-                    aNode.SetAttributeValue("id", linkname);
-
+                    if (aNode == null)
+                    {
+                        pNode.PrependChild(HtmlNode.CreateNode("<a id=\"" + linkname + "\" name=\"" + linkname + "\"></a>"));
+                    }
+                    else
+                    {
+                        aNode.SetAttributeValue("name", linkname);
+                        aNode.SetAttributeValue("id", linkname);
+                    }
                     RiscarTextoDoDispositivo(pNode);
 
                     doc.DocumentNode.InsertAfter(
@@ -430,8 +444,15 @@ namespace SINJ_Atualiza_VacatioLegis.RN
                 pNode.SetAttributeValue("linkname", dispositivo.linkname);
                 pNode.SetAttributeValue("undone_by", normaAlteradora.ch_norma);
                 pNode.Attributes.Remove("replaced_by");
-                aNode.SetAttributeValue("name", dispositivo.linkname);
-                aNode.SetAttributeValue("id", dispositivo.linkname);
+                if (aNode == null)
+                {
+                    pNode.PrependChild(HtmlNode.CreateNode("<a id=\"" + dispositivo.linkname + "\" name=\"" + dispositivo.linkname + "\"></a>"));
+                }
+                else
+                {
+                    aNode.SetAttributeValue("name", dispositivo.linkname);
+                    aNode.SetAttributeValue("id", dispositivo.linkname);
+                }
 
                 DesfazerTextoRiscadoDoDispositivo(pNode);
 
