@@ -9,7 +9,6 @@ E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.Core
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csproj.CopyComplete
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.dll
 E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.pdb
-E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Release\TCDF.Sinj.csprojAssemblyReference.cache
 E:\Data\tmp\20200630_master\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.dll
 E:\Data\tmp\20200630_master\sinj\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.pdb
 E:\Data\tmp\20200630_master\sinj\Projetos\TCDF.Sinj\bin\Release\neo.BRLightREST.dll

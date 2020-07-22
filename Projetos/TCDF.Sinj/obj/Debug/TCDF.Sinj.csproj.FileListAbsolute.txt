@@ -21,3 +21,4 @@ E:\Data\tmp\20200630_master\sinj\Projetos\TCDF.Sinj\obj\Debug\TCDF.Sinj.csproj.C
 E:\Data\tmp\20200630_master\sinj\Projetos\TCDF.Sinj\obj\Debug\TCDF.Sinj.csproj.CopyComplete
 E:\Data\tmp\20200630_master\sinj\Projetos\TCDF.Sinj\obj\Debug\TCDF.Sinj.dll
 E:\Data\tmp\20200630_master\sinj\Projetos\TCDF.Sinj\obj\Debug\TCDF.Sinj.pdb
+E:\Data\DEV_HOST\_SINJ\sinj\Projetos\TCDF.Sinj\obj\Debug\TCDF.Sinj.csprojAssemblyReference.cache
