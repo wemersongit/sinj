@@ -63,6 +63,210 @@ namespace TCDF.Sinj.ES
             }
         }
 
+        // NOTE: Este método "SentencaOrdenamentoOV " é uma cópia dos métodos 
+        // "MontarOrdenamento" dos arquivos "ResultadoDePesquisaNormaDatatable.ashx.cs" 
+        // e "ResultadoDePesquisaDiarioDatatable.ashx.css". Ele é necessário para 
+        // o funcionamento dos métodos "ResPesqNormProcessRequest" e "ResPesqDiarProcessRequest". 
+        // Melhor seria se estas lógicas estivesse em um só lugar. By Questor
+        private SentencaOrdenamentoOV MontarOrdenamento(HttpContext context)
+        {
+            var sentencaOrdenamentoOv = new SentencaOrdenamentoOV();
+            var _sSortCol = context.Request["iSortCol_0"];
+            var iSortCol = 0;
+
+            if (!string.IsNullOrEmpty(_sSortCol))
+            {
+                int.TryParse(_sSortCol, out iSortCol);
+                sentencaOrdenamentoOv.sSortDir = context.Request["sSortDir_0"];
+                sentencaOrdenamentoOv.sColOrder = context.Request["mDataProp_" + iSortCol];
+            }
+
+            return sentencaOrdenamentoOv;
+        }
+
+        // NOTE: Este método "ResPesqNormProcessRequest" é uma cópia parcial do 
+        // método "ProcessRequest" do arquivo "ResultadoDePesquisaNormaDatatable.ashx.cs". 
+        // Melhor seria se estas lógicas estivesse em um só lugar. By Questor
+        private string ResPesqNormProcessRequest(HttpContext context)
+        {
+            var _iDisplayLength = context.Request["iDisplayLength"];
+            ulong iDisplayLength = 0;
+            var _iDisplayStart = context.Request["iDisplayStart"];
+            ulong iDisplayStart = 0;
+            string _tipo_pesquisa = context.Request["tipo_pesquisa"];
+
+            if (!string.IsNullOrEmpty(_iDisplayStart))
+            {
+                iDisplayStart = ulong.Parse(_iDisplayStart);
+            }
+            if (!string.IsNullOrEmpty(_iDisplayLength))
+            {
+                iDisplayLength = ulong.Parse(_iDisplayLength);
+            }
+
+            var sentencaOrdenamento = MontarOrdenamento(context);
+
+            var utilNormaBuscaEs = new NormaBuscaEs();
+            var query = "";
+            switch (_tipo_pesquisa)
+            {
+                case "geral":
+                    SentencaPesquisaGeralOV pesquisaGeral = new SentencaPesquisaGeralOV();
+                    pesquisaGeral.all = context.Request["all"];
+                    pesquisaGeral.all = pesquisaGeral.all.Replace(".", "");//Código inserido para retirar o ponto da pesquisa
+                    pesquisaGeral.filtros = context.Request.Params.GetValues("filtro");
+                    pesquisaGeral.iDisplayStart = iDisplayStart;
+                    pesquisaGeral.iDisplayLength = iDisplayLength;
+                    pesquisaGeral.sentencaOrdenamento = sentencaOrdenamento;
+                    query = utilNormaBuscaEs.MontarBusca(pesquisaGeral).GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
+                    break;
+
+                //Nota: Mostra normas PendenteDePublicacao
+                case "pendenteDePublicacao":
+                    SentencaPesquisaPendenteDePublicacaoOV pesquisaPendenteDePublicacao = new SentencaPesquisaPendenteDePublicacaoOV();
+                    pesquisaPendenteDePublicacao.all = context.Request["all"];
+                    pesquisaPendenteDePublicacao.all = pesquisaPendenteDePublicacao.all.Replace(".", "");
+                    pesquisaPendenteDePublicacao.filtros = context.Request.Params.GetValues("filtro");
+                    pesquisaPendenteDePublicacao.iDisplayStart = iDisplayStart;
+                    pesquisaPendenteDePublicacao.iDisplayLength = iDisplayLength;
+                    pesquisaPendenteDePublicacao.sentencaOrdenamento = sentencaOrdenamento;
+                    query = utilNormaBuscaEs.MontarBusca(pesquisaPendenteDePublicacao).GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
+                    break;
+
+                case "norma":
+                    SentencaPesquisaDiretaNormaOV pesquisaDireta = new SentencaPesquisaDiretaNormaOV();
+                    pesquisaDireta.all = context.Request["all"];
+                    pesquisaDireta.all = pesquisaDireta.all.Replace(".", "");
+                    pesquisaDireta.filtros = context.Request.Params.GetValues("filtro");
+                    pesquisaDireta.ch_tipo_norma = context.Request["ch_tipo_norma"];
+                    pesquisaDireta.nr_norma = context.Request["nr_norma"];
+                    pesquisaDireta.norma_sem_numero = context.Request["norma_sem_numero"];
+                    pesquisaDireta.ano_assinatura = context.Request["ano_assinatura"];
+                    pesquisaDireta.dt_assinatura = context.Request["dt_assinatura"];
+                    pesquisaDireta.ch_termos = context.Request.Params.GetValues("ch_termo");
+                    pesquisaDireta.ch_orgao = context.Request["ch_orgao"];
+                    pesquisaDireta.ch_hierarquia = context.Request["ch_hierarquia"];
+                    pesquisaDireta.origem_por = context.Request["origem_por"];
+                    pesquisaDireta.st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
+                    pesquisaDireta.st_habilita_email = context.Request["st_habilita_email"];
+                    pesquisaDireta.iDisplayStart = iDisplayStart;
+                    pesquisaDireta.iDisplayLength = iDisplayLength;
+                    pesquisaDireta.sentencaOrdenamento = sentencaOrdenamento;
+
+                    pesquisaDireta.nm_orgao_cadastrador = context.Request["nm_orgao_cadastrador"];
+
+                    query = utilNormaBuscaEs.MontarBusca(pesquisaDireta).GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
+                    break;
+                case "avancada":
+                    SentencaPesquisaAvancadaNormaOV pesquisaAvancada = new SentencaPesquisaAvancadaNormaOV();
+                    pesquisaAvancada.ch_tipo_norma = context.Request.Params.GetValues("ch_tipo_norma");
+                    pesquisaAvancada.argumentos = context.Request.Params.GetValues("argumento");
+                    pesquisaAvancada.filtros = context.Request.Params.GetValues("filtro");
+                    pesquisaAvancada.iDisplayStart = iDisplayStart;
+                    pesquisaAvancada.iDisplayLength = iDisplayLength;
+                    pesquisaAvancada.sentencaOrdenamento = sentencaOrdenamento;
+                    query = utilNormaBuscaEs.MontarBusca(pesquisaAvancada).GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
+                    break;
+            }
+            return query;
+        }
+
+        // NOTE: Este método "ResPesqDiarProcessRequest" é uma cópia parcial do 
+        // método "ProcessRequest" do arquivo "ResultadoDePesquisaDiarioDatatable.ashx.css". 
+        // Melhor seria se estas lógicas estivesse em um só lugar. By Questor
+        private string ResPesqDiarProcessRequest(HttpContext context)
+        {
+            var _iDisplayLength = context.Request["iDisplayLength"];
+            ulong iDisplayLength = 0;
+            var _iDisplayStart = context.Request["iDisplayStart"];
+            ulong iDisplayStart = 0;
+            string _tipo_pesquisa = context.Request["tipo_pesquisa"];
+            if (!string.IsNullOrEmpty(_iDisplayStart))
+            {
+                iDisplayStart = ulong.Parse(_iDisplayStart);
+            }
+            if (!string.IsNullOrEmpty(_iDisplayLength))
+            {
+                iDisplayLength = ulong.Parse(_iDisplayLength);
+            }
+            var sentencaOrdenamento = MontarOrdenamento(context);
+            var diarioBuscaEs = new DiarioBuscaEs();
+            var query = "";
+            switch (_tipo_pesquisa)
+            {
+                case "geral":
+                    SentencaPesquisaGeralOV pesquisaGeral = new SentencaPesquisaGeralOV();
+                    pesquisaGeral.all = context.Request["all"];
+                    pesquisaGeral.filtros = context.Request.Params.GetValues("filtro");
+                    pesquisaGeral.iDisplayStart = iDisplayStart;
+                    pesquisaGeral.iDisplayLength = iDisplayLength;
+                    pesquisaGeral.sentencaOrdenamento = sentencaOrdenamento;
+                    query = diarioBuscaEs.MontarBusca(pesquisaGeral).GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
+                    break;
+                case "notifiqueme":
+                    SentencaPesquisaNotifiquemeDiarioOV pesquisaNotifiqueme = new SentencaPesquisaNotifiquemeDiarioOV();
+                    Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
+                    pesquisaNotifiqueme.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
+                    pesquisaNotifiqueme.filetext = context.Request["filetext"];
+                    pesquisaNotifiqueme.in_exata = context.Request["in_exata"];
+                    pesquisaNotifiqueme.iDisplayStart = iDisplayStart;
+                    pesquisaNotifiqueme.iDisplayLength = iDisplayLength;
+                    pesquisaNotifiqueme.sentencaOrdenamento = sentencaOrdenamento;
+                    var buscaNotifiqueme = new DiarioBuscaEs().MontarBusca(pesquisaNotifiqueme);
+                    query = buscaNotifiqueme.GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
+                    break;
+                case "diario":
+                    SentencaPesquisaDiretaDiarioOV pesquisaDireta = new SentencaPesquisaDiretaDiarioOV();
+                    pesquisaDireta.filtros = context.Request.Params.GetValues("filtro");
+                    Util.rejeitarInject(context.Request["ch_tipo_fonte"]);
+                    pesquisaDireta.ch_tipo_fonte = context.Request["ch_tipo_fonte"];
+                    pesquisaDireta.ch_tipo_edicao = context.Request["ch_tipo_edicao"];
+                    pesquisaDireta.nr_diario = context.Request["nr_diario"];
+                    pesquisaDireta.secao_diario = context.Request.Form.GetValues("secao_diario");
+                    pesquisaDireta.filetext = context.Request["filetext"];
+                    pesquisaDireta.op_dt_assinatura = context.Request["op_dt_assinatura"];
+                    pesquisaDireta.dt_assinatura = context.Request.Form.GetValues("dt_assinatura");
+                    pesquisaDireta.iDisplayStart = iDisplayStart;
+                    pesquisaDireta.iDisplayLength = iDisplayLength;
+                    pesquisaDireta.sentencaOrdenamento = sentencaOrdenamento;
+                    query = diarioBuscaEs.MontarBusca(pesquisaDireta).GetQuery();
+                    query = query.Replace("st_habilita_pesquisa:true", "*");
+                    query = query.Replace("(*)and", "");
+                    break;
+            }
+            return query;
+        }
+
+        // NOTE: Como o C# é uma bosta e o método "String.Replace()" não aceita 
+        // parametrização para substituir apenas a última ocorrência de uma "string", 
+        // então criamos o método "ReplaceLastOccurrence" para realizar esta tarefa. 
+        // Se esta aplicação possuir uma "classe de utilidades", é melhor mover 
+        // esse método para lá. By Questor
+        // [Refs.: https://docs.microsoft.com/en-us/dotnet/api/system.string.replace?view=netcore-3.1 , 
+        // https://stackoverflow.com/a/14826068/3223785 ]
+        public static string ReplaceLastOccurrence(string Source, string Find, string Replace)
+        {
+            int place = Source.LastIndexOf(Find);
+
+            if (place == -1)
+                return Source;
+
+            string result = Source.Remove(place, Find.Length).Insert(place, Replace);
+            return result;
+        }
+
         public List<Resultados<T>> RelatorioDocs<T>(HttpContext context, SessaoUsuarioOV sessao_usuario_ov, string _bbusca)
         {
             var resultados = new List<Resultados<T>>();
@@ -71,11 +275,60 @@ namespace TCDF.Sinj.ES
             try
             {
 
-                ulong limit_max = 1000;
+                // TODO: Esta implementação está bem "tosca". Entretanto, foi a 
+                // forma que encontramos para que as "queries" submetidas ao "ES" 
+                // fossem geradas de forma IGUAL para as buscas e para os relatórios. 
+                // Originalmente as queries para os relatórios estavam sendo geradas 
+                // pelo método "MontarConsulta" e por essa razão eram diferentes. 
+                // A solução que encontramos para resolver isso em um tempo curto 
+                // e sem mudar um quantidade grande de código foi copiar parcialmente 
+                // os métodos "ProcessRequest" dos aquivos "ResultadoDePesquisaNormaDatatable.ashx.cs"
+                // e "ResultadoDePesquisaDiarioDatatable.ashx.cs" criando os métodos 
+                // "ResPesqNormProcessRequest" (normas) e "ResPesqDiarProcessRequest" 
+                // (diários) respectivamente. Ao nosso ver a forma correta de resolver 
+                // esse problema é unificar as lógicas em um só lugar. By Questor
+                switch (_bbusca)
+                {
+                    case "sinj_norma":
+                        query = ResPesqNormProcessRequest(context);
+                        break;
+                    case "sinj_diario":
+                        query = ResPesqDiarProcessRequest(context);
+                        break;
+                }
+
+
+                if (_bbusca == "sinj_norma" || _bbusca == "sinj_diario") {
+
+                    // TODO: Esta implementação está bem "tosca". Entretanto, foi a 
+                    // forma que encontramos para usar o mesmo método "MontarBusca" 
+                    // das normas e dos diários de forma rápida, sem comprometê-los 
+                    // e sem enfrentar suas complexidades. O atributo retornado pelo
+                    // método "MontarPartialFields" é necessário para que os relatórios
+                    // sejam gerados. Ao nosso ver a forma correta de resolver esse 
+                    // problema é unificar as lógicas citadas em um só lugar. By Questor
+                    query = ReplaceLastOccurrence(query,
+                        "}",
+                        MontarPartialFields(context, _bbusca) + "}");
+
+                }
+                else
+                {
+                    query = MontarConsulta(context, sessao_usuario_ov, _bbusca);
+                }
+
+                ulong limit_max = 250;
                 url_es = MontarUrl(context, _bbusca).Split('?')[0];
-                query = MontarConsulta(context, sessao_usuario_ov, _bbusca);
+
+                // IMPORTANT: Não recomendamos valores acima de 250 enquanto essa 
+                // funcionalidade ("gerar relatório de busca") estiver disponível 
+                // para o "SINJ portal". De maneira geral não é recomendável valores 
+                // acima de 500, principalmente se o relório for para "sinj_diario", 
+                // pois pode haver instabilidade do sistema. By Questor
                 var slimit = Config.ValorChave("LimiteRelatorio");
-                if(slimit != "-1"){
+
+                if (slimit != "-1")
+                {
                     ulong.TryParse(slimit, out limit_max);
                 }
                 ulong from = 0;
@@ -498,7 +751,8 @@ namespace TCDF.Sinj.ES
                             }
                             else if (_tipo_campo == "number" || _tipo_campo == "date")
                             {
-                                if(_bbusca == "sinj_norma"){
+                                if (_bbusca == "sinj_norma")
+                                {
                                     if (_ch_campo == "ano_assinatura")
                                     {
                                         var ch_operador_aux = _ch_operador;
@@ -613,7 +867,7 @@ namespace TCDF.Sinj.ES
                     query_textual = "*";
                 }
                 var query_filtro = MontarQueryFiltros(context);//O que esse cara pega do context???
-                query = "{\"query\":{\"query_string\":{\"fields\":[" + fields + "],\"query\":\"" + query_textual 
+                query = "{\"query\":{\"query_string\":{\"fields\":[" + fields + "],\"query\":\"" + query_textual
                 + (!string.IsNullOrEmpty(query_filtro) ? " AND (" + query_filtro + ")" : "") + "\", \"default_operator\":\"AND\"}}";
 
                 if (fields_highlight != "" && _exibir_total != "1")
@@ -865,13 +1119,15 @@ namespace TCDF.Sinj.ES
         }
 
         public string MontarQueryFiltros(HttpContext context)
-	    {
-		    string filtrar = context.Request["filtrar"];//ver aqui
+        {
+            string filtrar = context.Request["filtrar"];//ver aqui
             string query = "";
-            if(filtrar == "norma"){
+            if (filtrar == "norma")
+            {
                 string _ch_tipo_norma = context.Request["ch_tipo_norma"];
-                if(!string.IsNullOrEmpty(_ch_tipo_norma)){
-                    query += "ch_tipo_norma:("+_ch_tipo_norma+")";
+                if (!string.IsNullOrEmpty(_ch_tipo_norma))
+                {
+                    query += "ch_tipo_norma:(" + _ch_tipo_norma + ")";
                 }
                 string _st_habilita_pesquisa = context.Request["st_habilita_pesquisa"];
                 if (!string.IsNullOrEmpty(_st_habilita_pesquisa))
@@ -884,7 +1140,8 @@ namespace TCDF.Sinj.ES
                     query += "st_habilita_email:(" + _st_habilita_email + ")";
                 }
                 string _ch_orgao = context.Request["ch_orgao"];
-                if(!string.IsNullOrEmpty(_ch_orgao)){
+                if (!string.IsNullOrEmpty(_ch_orgao))
+                {
                     query += (!string.IsNullOrEmpty(query) ? " AND " : "") + "ch_orgao:(" + _ch_orgao + ")";
                 }
                 string _ch_situacao = context.Request["ch_situacao"];
@@ -948,7 +1205,7 @@ namespace TCDF.Sinj.ES
                     }
                 }
             }
-		    return query;
-	    }
+            return query;
+        }
     }
 }

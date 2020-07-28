@@ -384,6 +384,11 @@ function RelatorioPDF() {
         }
     }
     else if (nm == "cesta") {
+        if (typeof $.cookie("sinj_basket") === "undefined") {
+        // NOTE: Quando não há itens para o relatório. By Questor
+
+            return;
+        }
         var aba_cesta = $("#div_cesta").tabs("option", "active");
         var nm_aba_cesta = $("#div_cesta").tabs("instance").tabs[aba_cesta].getAttribute('nm');
         if (nm_aba_cesta == "cesta_norma") {
