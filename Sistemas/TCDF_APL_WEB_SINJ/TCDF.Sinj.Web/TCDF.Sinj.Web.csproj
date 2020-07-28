@@ -59,9 +59,6 @@
     <Reference Include="neo.BRLightREST">
       <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
-    <Reference Include="util.BRLight">
-      <HintPath>..\..\..\Frameworks\util.BRLight\NET_4.0\util.BRLight.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BaixarArquivoDiario.aspx" />
@@ -1903,6 +1900,10 @@
     <ProjectReference Include="..\..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj">
       <Project>{3B23C9D4-4624-473E-8976-7CD48EF5559C}</Project>
       <Name>TCDF.Sinj</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Projetos\_MONO_6.X\util.BRLight\util.BRLight.csproj">
+      <Project>{6DB8C522-312C-4335-906B-B7CF06C31C3D}</Project>
+      <Name>util.BRLight</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
