@@ -295,7 +295,10 @@ namespace TCDF.Sinj.RN
                     switch (decisoes_ordenadas_por_data.Last<Decisao>().in_decisao)
                     {
                         case TipoDeDecisaoEnum.LiminarDeferida:
-                            situacaoOv = situacaoRn.Doc("aguardandojulgamentolnardeferida");
+                            situacaoOv = situacaoRn.Doc("Prejudicada");
+                            break;
+                        case TipoDeDecisaoEnum.Prejudicada:
+                            situacaoOv = situacaoRn.Doc("prejudicada");
                             break;
                         case TipoDeDecisaoEnum.LiminarIndeferida:
                             situacaoOv = situacaoRn.Doc("aguardandojulgamentolnarindeferida");

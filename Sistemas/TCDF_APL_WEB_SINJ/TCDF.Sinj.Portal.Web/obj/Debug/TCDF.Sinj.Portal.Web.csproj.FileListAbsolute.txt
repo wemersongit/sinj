@@ -28,3 +28,5 @@ E:/Data/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/obj/
 /home/eduardolac/Data1/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/obj/Debug/TCDF.Sinj.Portal.Web.csproj.CopyComplete
 /home/eduardolac/Data1/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/obj/Debug/TCDF.Sinj.Portal.Web.dll
 /home/eduardolac/Data1/DEV_HOST/_SINJ/sinj/Sistemas/TCDF_APL_WEB_SINJ/TCDF.Sinj.Portal.Web/obj/Debug/TCDF.Sinj.Portal.Web.pdb
+E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\obj\Debug\TCDF.Sinj.Portal.Web.csprojAssemblyReference.cache
+E:\Data\DEV_HOST\_SINJ\sinj\Sistemas\TCDF_APL_WEB_SINJ\TCDF.Sinj.Portal.Web\obj\Debug\TCDF.Sinj.Portal.Web.csproj.CoreCompileInputs.cache
