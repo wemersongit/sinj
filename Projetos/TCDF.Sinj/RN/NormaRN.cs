@@ -297,6 +297,9 @@ namespace TCDF.Sinj.RN
                         case TipoDeDecisaoEnum.LiminarDeferida:
                             situacaoOv = situacaoRn.Doc("aguardandojulgamentolnardeferida");
                             break;
+                        case TipoDeDecisaoEnum.Prejudicada:
+                            situacaoOv = situacaoRn.Doc("prejudicada");
+                            break;
                         case TipoDeDecisaoEnum.LiminarIndeferida:
                             situacaoOv = situacaoRn.Doc("aguardandojulgamentolnarindeferida");
                             break;
