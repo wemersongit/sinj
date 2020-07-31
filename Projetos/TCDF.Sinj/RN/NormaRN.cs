@@ -566,22 +566,27 @@ namespace TCDF.Sinj.RN
         {
             //Se todos os campos estiverem vazios deve retornar TRUE pois trata-se de uma modificação total.
             return string.IsNullOrEmpty(vide.alinea_norma_vide) && 
-                    string.IsNullOrEmpty(vide.anexo_norma_vide) && 
-                    string.IsNullOrEmpty(vide.artigo_norma_vide) && 
-                    string.IsNullOrEmpty(vide.paragrafo_norma_vide) && 
-                    string.IsNullOrEmpty(vide.inciso_norma_vide) && 
-                    string.IsNullOrEmpty(vide.item_norma_vide) && 
-                    (
-                        vide.caput_norma_vide == null || 
-                        vide.caput_norma_vide.caput == null || 
-                        vide.caput_norma_vide.caput.Length <= 0
-                    )
-                    &&
-                    (
-                        vide.alteracao_texto_vide == null ||
-                        vide.alteracao_texto_vide.dispositivos_norma_vide == null ||
-                        vide.alteracao_texto_vide.dispositivos_norma_vide.Count <= 0
-                    );
+                string.IsNullOrEmpty(vide.anexo_norma_vide) && 
+                string.IsNullOrEmpty(vide.artigo_norma_vide) && 
+                string.IsNullOrEmpty(vide.paragrafo_norma_vide) && 
+                string.IsNullOrEmpty(vide.inciso_norma_vide) && 
+                string.IsNullOrEmpty(vide.item_norma_vide) && 
+                (
+                    vide.caput_norma_vide == null || 
+                    vide.caput_norma_vide.caput == null || 
+                    vide.caput_norma_vide.caput.Length <= 0
+                )
+                &&
+                (
+                    vide.alteracao_texto_vide == null ||
+                    vide.alteracao_texto_vide.dispositivos_norma_vide == null ||
+                    vide.alteracao_texto_vide.dispositivos_norma_vide.Count <= 0
+                )
+                &&
+                (
+                    vide.alteracao_texto_vide == null ||
+                    string.IsNullOrEmpty(vide.alteracao_texto_vide.ds_dispositivos_alterados)
+                );
         }
 
         public bool RemoverVides(NormaOV normaOv)
