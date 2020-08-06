@@ -163,8 +163,15 @@
                 <div class="right-top">
                     <span id="span_versao"></span>
                 </div>
-                <div class="logo" style="display: block">
+                <div class="logo" style="display: inline-block;">
                     <a href="./" title="Página Inicial"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/logo_sinj.png" alt="sinj" /></a>
+                </div>
+                <div class="orgao" style="display: inline-block; top:0px; right: 300px; position: absolute;">
+                    <span style="font-weight:bold; vertical-align:bottom;">Cooperação técnica:</span>
+                    <a href="https://www.cl.df.gov.br/" target="_blank" title="Câmara Legislativa do Distrito Federal"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/cldf.jpg" alt="sinj" height="65" width="auto" style="margin: 0 20px 0 20px"/></a>
+                    <a href="http://www.pg.df.gov.br/" target="_blank" title="Procuradoria-Geral do Distrito Federal"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/pgdf.jpg" alt="sinj" height="65" width="auto" style="margin: 0 20px 0 20px"/></a>
+                    <a href="https://www.site.fazenda.df.gov.br/" target="_blank" title="Secretaria de Economia do Distrito Federal"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/sedf.jpg" alt="sinj" height="65" width="auto" style="margin: 0 20px 0 20px"/></a>
+                    <a href="https://www.tc.df.gov.br/" target="_blank" title="TCDF"><img src="<%= TCDF.Sinj.Util._urlPadrao %>/Imagens/tcdf.jpg" alt="sinj" height="65" width="auto" style="margin: 0 20px 0 20px"/></a>
                 </div>
                 <div class="top-bottom">                    
                     <div class="top-bottom-left">
