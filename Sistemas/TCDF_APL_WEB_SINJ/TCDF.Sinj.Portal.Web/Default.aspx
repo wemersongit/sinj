@@ -5,7 +5,7 @@
 //        $(window).bind("pageshow", function () {
 //            $('#form_pesquisa_norma')[0].reset();
 //            $('#form_pesquisa_diario')[0].reset();
-//        })
+//        }) 
         $(document).ready(function () {
             montarPaginaDePesquisa();
 
