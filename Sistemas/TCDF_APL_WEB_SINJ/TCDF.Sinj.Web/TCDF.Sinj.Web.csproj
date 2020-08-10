@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="neo.BRLightREST, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -53,11 +57,12 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Frameworks\TCDF.Sinj\TCDF.Sinj.dll</HintPath>
+    </Reference>
     <Reference Include="Ude">
       <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
-    </Reference>
-    <Reference Include="neo.BRLightREST">
-      <HintPath>..\..\..\Frameworks\neo.BRLightREST\neo.BRLightREST.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -1897,10 +1902,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj">
-      <Project>{3B23C9D4-4624-473E-8976-7CD48EF5559C}</Project>
-      <Name>TCDF.Sinj</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Projetos\_MONO_6.X\util.BRLight\util.BRLight.csproj">
       <Project>{6DB8C522-312C-4335-906B-B7CF06C31C3D}</Project>
       <Name>util.BRLight</Name>

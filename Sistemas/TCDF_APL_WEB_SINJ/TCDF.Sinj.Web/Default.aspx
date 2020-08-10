@@ -146,13 +146,13 @@
                                             <div class="column w-80-pc">
                                                 <div class="cell w-100-pc">
                                                     <select name="origem_por" >
-                                                        <option value="toda_a_hierarquia_em_qualquer_epoca"></option>
+                                                        <option value="toda_a_hierarquia_em_qualquer_epoca1"></option>
                                                         <option value="somente_o_orgao_selecionado">Somente o orgão selecionado</option>
                                                         <option value="hierarquia_superior">Hierarquia Superior</option>
                                                         <option value="hierarquia_inferior">Hierarquia Inferior</option>
                                                         <option value="toda_a_hierarquia">Toda a Hierarquia</option>
                                                         <option value="em_qualquer_epoca">Em qualquer Época</option>
-                                                        <option value="toda_a_hierarquia_em_qualquer_epoca">Toda a hierarquia em qualquer Época</option>
+                                                        <option value="toda_a_hierarquia_em_qualquer_epoca1">Toda a hierarquia em qualquer Época</option>
                                                     </select>
                                                 </div>
                                             </div>
