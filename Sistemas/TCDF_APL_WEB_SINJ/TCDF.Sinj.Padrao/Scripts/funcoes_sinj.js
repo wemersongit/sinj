@@ -4224,7 +4224,7 @@ function SalvarConsultaNoHistorico(counts, search) {
         }
         var sucesso = function (data) {
             if (IsNotNullOrEmpty(data, "pesquisa.ds_historico")) {
-                $('#span_ds_historico').text("Pesquisa atual: " + data.pesquisa.ds_historico);
+                $('#span_ds_historico').text("Pesquisa atual: " + data.pesquisa.ds_historico.replace('epoca1','epoca'));
             }
         }
         $.ajaxlight({
