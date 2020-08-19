@@ -382,7 +382,7 @@ namespace SINJ_PUSH_APP
                                 corpoEmail = corpoEmail + "<p style='font-size: 14px; font-weight: bold; background-color:#B4E6CBs;'>Normas afetadas por esse normativo: </p>";
                                 foreach (var vides in norma.vides)
                                 {
-                                    corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px; font-weight: 500;\"> " + vides.nm_tipo_relacao + " " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" + vides.nm_tipo_norma_vide + " " + vides.nr_norma_vide + "/" + vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) + "</a>" + "</div>";
+                                    corpoEmail = corpoEmail + "<div style=\"display:block; font-size: 12px; font-weight: 500;\"> " + vides.ds_texto_relacao + " " + "<a style=\"color: blue;\" href=" + Config.ValorChave("LinkSINJ", true) + "/DetalhesDeNorma.aspx?id_norma=" + vides.ch_norma_vide + ">" + vides.nm_tipo_norma_vide + " " + vides.nr_norma_vide + "/" + vides.dt_assinatura_norma_vide.Substring(vides.dt_assinatura_norma_vide.Length - 4) + "</a>" + "</div>";
                                 }
                             }
                             corpoEmail = corpoEmail + "</div>";
