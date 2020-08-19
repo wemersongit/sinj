@@ -57,10 +57,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\Frameworks\Newtonsoft.Json\Newtonsoft.Json.4.0.8\Net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="TCDF.Sinj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projetos\TCDF.Sinj\bin\Release\TCDF.Sinj.dll</HintPath>
-    </Reference>
     <Reference Include="Ude">
       <HintPath>..\..\..\Frameworks\UDE.CSharp\Ude.dll</HintPath>
     </Reference>
@@ -1902,6 +1898,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Projetos\TCDF.Sinj\TCDF.Sinj.csproj">
+      <Project>{3b23c9d4-4624-473e-8976-7cd48ef5559c}</Project>
+      <Name>TCDF.Sinj</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Projetos\_MONO_6.X\util.BRLight\util.BRLight.csproj">
       <Project>{6DB8C522-312C-4335-906B-B7CF06C31C3D}</Project>
       <Name>util.BRLight</Name>
