@@ -172,7 +172,7 @@
                 </div>
                 <div class="line">
                     <div class="column w-100-pc">
-                        <textarea id="textarea_arquivo_editor" name="arquivo" rows="10" cols="10" style="display:none"></textarea>
+                        <textarea id="textarea_arquivo_editor" name="arquivo" obrigatorio="sim" label=" de texto" rows="10" cols="10" style="display:none"></textarea>
                     </div>
                 </div>
                 <div class="line">
