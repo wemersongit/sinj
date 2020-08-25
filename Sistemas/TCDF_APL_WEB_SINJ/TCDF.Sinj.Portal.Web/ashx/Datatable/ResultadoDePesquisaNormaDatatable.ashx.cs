@@ -90,7 +90,7 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
                         pesquisaAvancada.iDisplayLength = iDisplayLength;
                         pesquisaAvancada.sentencaOrdenamento = sentencaOrdenamento;
                         query = utilNormaBuscaEs.MontarBusca(pesquisaAvancada).GetQuery();
-                        break; 
+                        break;
                 }
 
                 Result<NormaOV> result_norma = new NormaAD().ConsultarEs(query);

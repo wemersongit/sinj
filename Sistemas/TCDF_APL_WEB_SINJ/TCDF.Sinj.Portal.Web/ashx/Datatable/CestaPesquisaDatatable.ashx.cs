@@ -22,8 +22,20 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
             var sAction = "";
             var json_resultado = "";
             var _iDisplayLength = context.Request["iDisplayLength"];
+            ulong iDisplayLength = 0;
             var _iDisplayStart = context.Request["iDisplayStart"];
+            ulong iDisplayStart = 0;
             var _sEcho = context.Request.Params["sEcho"];
+
+            if (!string.IsNullOrEmpty(_iDisplayStart))
+            {
+                iDisplayStart = ulong.Parse(_iDisplayStart);
+            }
+
+            if (!string.IsNullOrEmpty(_iDisplayLength))
+            {
+                iDisplayLength = ulong.Parse(_iDisplayLength);
+            }
 
             try
             {
@@ -34,7 +46,9 @@ namespace TCDF.Sinj.Portal.Web.ashx.Datatable
                 SentencaPesquisaCestaOV sentencaOv = new SentencaPesquisaCestaOV();
                 sentencaOv.@base = _base;
                 sentencaOv.cesta = context.Request["cesta"];
-                sentencaOv.sentencaOrdenamento = MontarOrdenamento(context);
+                sentencaOv.iDisplayLength = iDisplayLength;
+                sentencaOv.iDisplayStart = iDisplayStart;
+                //sentencaOv.sentencaOrdenamento = MontarOrdenamento(context);
 
                 if (_base == "sinj_norma")
                 {
