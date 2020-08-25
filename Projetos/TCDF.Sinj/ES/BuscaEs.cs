@@ -102,7 +102,7 @@ namespace TCDF.Sinj.ES
             }
             if (source != "")
             {
-                source = "\"_source\":{"+source+"}";
+                source = "\"_source\":{" + source + "}";
             }
             else
             {
@@ -116,15 +116,17 @@ namespace TCDF.Sinj.ES
             var sAgg = "";
             if (aggregation != null && aggregation.Count > 0)
             {
-                foreach(var agg in aggregation){
-                    switch(agg.type){
+                foreach (var agg in aggregation)
+                {
+                    switch (agg.type)
+                    {
                         case TypeAggregation.date_histogram:
                             sAgg += (sAgg != "" ? ", " : "") + string.Format("\"{0}\": {{\"date_histogram\": {{\"field\":\"{1}\", \"interval\": \"{2}\", \"format\": \"{3}\"", agg.name, agg.field, agg.interval, agg.format);
                             break;
                         default:
                             sAgg += (sAgg != "" ? ", " : "") + string.Format("\"{0}\": {{\"terms\": {{\"field\":\"{1}\", \"size\":{2}", agg.name, agg.field, agg.size);
                             break;
-                        
+
                     }
                     switch (agg.ordenamento.ordem)
                     {
@@ -217,13 +219,13 @@ namespace TCDF.Sinj.ES
                                 {
                                     sFilter = string.Format("{{\"query\":{{\"query_string\":{{\"query\":\"{0}\", \"default_operator\":\"AND\", \"fields\":[{1}]}}}}}}", (filter.@operator.Equals(TypeOperator.equal) ? "\\\"" + filter.value + "\\\"" + (filter.proximity > 0 ? "~" + filter.proximity : "") : filter.value), GetSearchableFields());
                                 }
-                                else if(filter.names != null && filter.names.Count > 0)
+                                else if (filter.names != null && filter.names.Count > 0)
                                 {
                                     foreach (var name in filter.names)
                                     {
                                         sFilter += (sFilter != "" ? " OR " : "") + name + ":(" + (filter.@operator.Equals(TypeOperator.equal) ? "\\\"" + filter.value + "\\\"" + (filter.proximity > 0 ? "~" + filter.proximity : "") : filter.value) + ")";
                                     }
-                                    sFilter = string.Format("{{\"query\":{{\"query_string\":{{\"query\":\"{0}\", \"default_operator\":\"AND\"}}}}}}", sFilter);
+                                    sFilter = string.Format("{{\"query\":{{\"query_string\":{{\"query\":\"st_habilita_pesquisa:true AND ({0})\", \"default_operator\":\"AND\"}}}}}}", sFilter);
                                 }
                                 else
                                 {
@@ -235,7 +237,8 @@ namespace TCDF.Sinj.ES
                                 break;
                         }
                     }
-                    else if(filter.type.Equals(TypeFilter.missing)){
+                    else if (filter.type.Equals(TypeFilter.missing))
+                    {
                         sFilter = string.Format("{{\"missing\":{{\"field\":\"{0}\"}}}}", filter.name);
                     }
                     else if (filter.filtersToQueryFiltered != null && filter.filtersToQueryFiltered.Count() > 0)
@@ -279,10 +282,14 @@ namespace TCDF.Sinj.ES
         {
             //Condição inserida para que possa receber os parametros de data no formato dd/mm/aaaa
             var sFilter = "";
-            if (filter.@operator.Equals(TypeOperator.equal) && filter.value.Length == 10) { 
+            if (filter.@operator.Equals(TypeOperator.equal) && filter.value.Length == 10)
+            {
                 sFilter = string.Format("{{\"term\":{{\"{0}\":\"{1}\"}}}}", filter.name, filter.value);
-            } else { 
-                switch (filter.@operator){
+            }
+            else
+            {
+                switch (filter.@operator)
+                {
                     case TypeOperator.equal:
                         sFilter = string.Format("{{\"term\":{{\"01/01/{0}\":\"31/12/{1}\"}}}}", filter.name, filter.value);
                         break;
@@ -307,7 +314,8 @@ namespace TCDF.Sinj.ES
             return sFilter;
         }
 
-        private string GetYearFilter(FilterQueryFiltered filter) {
+        private string GetYearFilter(FilterQueryFiltered filter)
+        {
             //Console.WriteLine("Equals: " + (filter.@operator.Equals(TypeOperator.equal) && filter.value.Length == 10));
             //Console.WriteLine("TypeOperator: " + filter.@operator.Equals(TypeOperator.equal));
             //Console.WriteLine("Length: " + filter.@operator.Equals(filter.value.Length == 10));
@@ -347,7 +355,7 @@ namespace TCDF.Sinj.ES
 
             return sFilter;
         }
-        
+
     }
 
     //Pendente de publicacao
@@ -405,9 +413,9 @@ namespace TCDF.Sinj.ES
             var sFromAndSize = GetFromAndSize();
 
             var fields = GetSearchableFields();
-            
-            
-            
+
+
+
             if (!string.IsNullOrEmpty(searchValue))
             {
                 sQuery += searchValue;
@@ -431,7 +439,7 @@ namespace TCDF.Sinj.ES
 
     public class BuscaDiretaEs : BuscaEs
     {
-        
+
         public string GetQuery()
         {
             var sQuery = "";
@@ -441,7 +449,7 @@ namespace TCDF.Sinj.ES
             var sAgg = GetAggregation();
             var sHighlight = GetHighlight();
             var sFromAndSize = GetFromAndSize();
-            
+
 
             var sFilter = GetFiltersToQueryFilteredRecursive(filtersToQueryFiltered);
 
@@ -451,10 +459,11 @@ namespace TCDF.Sinj.ES
             {
                 sQueryString = searchValue;
             }
-            if(!string.IsNullOrEmpty(searchFilter)){
+            if (!string.IsNullOrEmpty(searchFilter))
+            {
                 sQueryString = (sQueryString != "" ? "(" + sQueryString + ") AND (" + searchFilter + ")" : searchFilter);
             }
-            
+
             if (!string.IsNullOrEmpty(sQueryString))
             {
                 sQueryFiltered = string.Format("\"query\":{{\"query_string\":{{\"query\":\"{0}\", \"default_operator\":\"AND\", \"fields\":[{1}]}}}}", sQueryString, GetSearchableFields());
@@ -515,7 +524,8 @@ namespace TCDF.Sinj.ES
         public Ordem ordem { get; set; }
     }
 
-    public class SearchableField {
+    public class SearchableField
+    {
         public string name { get; set; }
         public int boost { get; set; }
     }
@@ -533,7 +543,8 @@ namespace TCDF.Sinj.ES
         public List<FieldHighlight> fields { get; set; }
     }
 
-    public class FieldHighlight {
+    public class FieldHighlight
+    {
         public FieldHighlight()
         {
             fragments = 20;
@@ -547,7 +558,8 @@ namespace TCDF.Sinj.ES
         public string query { get; set; }
     }
 
-    public class FilterQueryString {
+    public class FilterQueryString
+    {
         public string name { get; set; }
         public bool isYear { get; set; }
         public string value { get; set; }
@@ -597,13 +609,15 @@ namespace TCDF.Sinj.ES
         term
     }
 
-    public enum TypeConnector{
+    public enum TypeConnector
+    {
         AND,
         OR,
         NOT
     }
 
-    public enum TypeAggregation {
+    public enum TypeAggregation
+    {
         terms,
         date_histogram
     }
