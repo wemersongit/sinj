@@ -47,8 +47,8 @@
                         }
                     }
                 });
-                regex = new RegExp(/inconstitucional.*?pelo\(a\)/);
-                $('p[replaced_by]:contains("inconstitucional")').each(function (k, p) {
+                regex = new RegExp(/Inconstitucional.*?pelo\(a\)/);
+                $('p[replaced_by]:contains("Inconstitucional")').each(function (k, p) {
                     if (regex.test($(p).text())) {
                         var aLinkVide = $('a.link_vide', $(p));
                         if (aLinkVide.length > 0) {
