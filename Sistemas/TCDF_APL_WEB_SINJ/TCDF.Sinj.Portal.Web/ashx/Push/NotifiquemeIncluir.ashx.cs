@@ -72,6 +72,10 @@ namespace TCDF.Sinj.Portal.Web.ashx.Push
                     }
 
                 }
+                else if (id_doc <= 0)
+                {
+                    throw new DocDuplicateKeyException("Registro já existente na base de dados!!!");
+                }
                 else
                 {
                     throw new Exception("Erro ao criar conta do Notifique-me.");

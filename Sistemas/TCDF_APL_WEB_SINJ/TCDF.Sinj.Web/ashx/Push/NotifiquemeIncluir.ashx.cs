@@ -57,6 +57,9 @@ namespace TCDF.Sinj.Web.ashx.Push
                             sRetorno = "{\"id_doc_success\":" + id_doc + "}";
                         }
 
+                    }else if (id_doc <= 0)
+                    {
+                        throw new DocDuplicateKeyException("Registro já existente na base de dados!!!");
                     }
                     else
                     {
