@@ -1718,7 +1718,7 @@ var _columns_imagens = [
                     var size = (full.ar_arquivo.filesize / 1024).toFixed(0) + ' KB';
                     url = "Download/sinj_arquivo/" + full.ar_arquivo.id_file + "/" + full.ar_arquivo.filename;
                     var ico = '<img src="./Download/sinj_arquivo/' + full.ar_arquivo.id_file + '/' + full.ar_arquivo.filename + '" alt="' + full.ar_arquivo.filename + '" style="max-width:50px;max-height:30px;" />';
-                    html = '<div class="div_arq" chave="' + full.ch_arquivo + '"><a target="_blank" href="javascript:void(0);" onclick="javascript:selectImage(\''+url+'\');" title="Selecionar Imagem" >' + ico + ' ' + full.ar_arquivo.filename + ' <img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="ok" /></a></div>';
+                    html = '<div class="div_arq" chave="' + full.ch_arquivo + '"><a href="javascript:void(0);" onclick="javascript:selectImage(\''+url+'\');" title="Selecionar Imagem" >' + ico + ' ' + full.ar_arquivo.filename + ' <img height="16" src="' + _urlPadrao + '/Imagens/ico_check_p.png" alt="ok" /></a></div>';
                 }
             }
             return html;
