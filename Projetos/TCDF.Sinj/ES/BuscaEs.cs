@@ -197,11 +197,14 @@ namespace TCDF.Sinj.ES
             var sAndFilter = "";
             var sOrFilter = "";
             var sNotFilter = "";
+            var cont = 0;
+
             if (filtersToQueryFiltered != null && filtersToQueryFiltered.Count > 0)
             {
                 foreach (var filter in filtersToQueryFiltered)
                 {
                     sFilter = "";
+                    cont++;
                     if (!string.IsNullOrEmpty(filter.value))
                     {
                         switch (filter.type)
@@ -229,7 +232,16 @@ namespace TCDF.Sinj.ES
                                 }
                                 else
                                 {
-                                    sFilter = string.Format("{{\"query\":{{\"query_string\":{{\"query\":\"{0}:({1})\", \"default_operator\":\"AND\"}}}}}}", filter.name, (filter.@operator.Equals(TypeOperator.equal) ? "\\\"" + filter.value + "\\\"" + (filter.proximity > 0 ? "~" + filter.proximity : "") : filter.value));
+
+                                    if (cont > 1 && filter.connector.Equals(TypeConnector.NOT))
+                                    {
+                                        sFilter = string.Format("{{\"query\":{{\"query_string\":{{\"query\":\"!{0}:({1})\", \"default_operator\":\"AND\"}}}}}}", filter.name, (filter.@operator.Equals(TypeOperator.equal) ? "\\\"" + filter.value + "\\\"" + (filter.proximity > 0 ? "~" + filter.proximity : "") : filter.value));
+                                    }
+                                    else
+                                    {
+                                        sFilter = string.Format("{{\"query\":{{\"query_string\":{{\"query\":\"{0}:({1})\", \"default_operator\":\"AND\"}}}}}}", filter.name, (filter.@operator.Equals(TypeOperator.equal) ? "\\\"" + filter.value + "\\\"" + (filter.proximity > 0 ? "~" + filter.proximity : "") : filter.value));
+                                    }
+
                                 }
                                 break;
                             case TypeFilter.term:
@@ -273,7 +285,7 @@ namespace TCDF.Sinj.ES
             }
             if (sNotFilter != "")
             {
-                sFilter += (sFilter != "" ? ", " : "") + string.Format("{{\"not\":{{\"filter\":{{\"and\":[{0}]}}}}}}", sNotFilter);
+                sFilter += (sFilter != "" ? ", " : "") + string.Format("{{\"and\":[{0}]}}", sNotFilter);
             }
             return sFilter;
         }
