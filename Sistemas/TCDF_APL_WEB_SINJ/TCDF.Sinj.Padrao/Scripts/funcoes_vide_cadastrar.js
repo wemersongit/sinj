@@ -110,7 +110,16 @@ function selecionarAlteracaoCompleta(){
 
                 if($('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>s>p[linkname]').length <= 0 && $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike>p[linkname]').length <= 0){
                     $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>p[linkname]').remove();
-                    $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).after('<div class="strike"></div>');
+                    
+					if($(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).length > 1){
+						var ultimaPosicao = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).length;
+						var posicaoNormaAlteracaoCompleta = $(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`);
+						var normaAlteracaoCompleta = posicaoNormaAlteracaoCompleta[ultimaPosicao -1];
+						$(normaAlteracaoCompleta).after('<div class="strike"></div>');
+					}else{
+						$(`#div_cad_dispositivo_alterada div.div_conteudo_arquivo p[ch_norma_alteracao_completa=${normaAlteradora.ch_norma}]`).after('<div class="strike"></div>');
+					}
+					
                     for(let i = 0; i < dispositivosNormaAlterada.length; i++){
                         dispositivosNormaAlterada[i].classList.add('alterado');
                         $('#div_cad_dispositivo_alterada div.div_conteudo_arquivo>div.strike').append(dispositivosNormaAlterada[i]);
