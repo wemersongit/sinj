@@ -351,13 +351,27 @@ namespace TCDF.Sinj.ES
                         sFilter = string.Format("{{\"range\":{{\"{0}\":{{\"lt\":\"{1}\"}}}}}}", filter.name, filter.value);
                         break;
                     case TypeOperator.lte:
-                        sFilter = string.Format("{{\"range\":{{\"{0}\":{{\"lte\":\"{1}\"}}}}}}", filter.name, filter.value);
+                        if (filter.value.Length == 4)
+                        {
+                            sFilter = string.Format("{{\"range\":{{\"{0}\":{{\"lte\":\"31/12/{1}\"}}}}}}", filter.name, filter.value);
+                        }
+                        else
+                        {
+                            sFilter = string.Format("{{\"range\":{{\"{0}\":{{\"lte\":\"{1}\"}}}}}}", filter.name, filter.value);
+                        }
                         break;
                     case TypeOperator.gt:
                         sFilter = string.Format("{{\"range\":{{\"{0}\":{{\"gt\":\"{1}\"}}}}}}", filter.name, filter.value);
                         break;
                     case TypeOperator.gte:
-                        sFilter = string.Format("{{\"range\":{{\"{0}\":{{\"gte\":\"{1}\"}}}}}}", filter.name, filter.value);
+                        if (filter.value.Length == 4)
+                        {
+                            sFilter = string.Format("{{\"range\":{{\"{0}\":{{\"gte\":\"01/01/{1}\"}}}}}}", filter.name, filter.value);
+                        }
+                        else
+                        {
+                            sFilter = string.Format("{{\"range\":{{\"{0}\":{{\"gte\":\"{1}\"}}}}}}", filter.name, filter.value);
+                        }
                         break;
                     case TypeOperator.not:
                         sFilter = string.Format("{{\"not\":{{\"range\":{{\"{0}\":{{\"gte\":\"{1}\",\"lte\":\"{1}\"}}}}}}}}", filter.name, filter.value);
