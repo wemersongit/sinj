@@ -296,6 +296,40 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     normaOv.ch_situacao = _ch_situacao;
                     normaOv.nm_situacao = _nm_situacao;
                 }
+		
+		Pesquisa pesquisa = new Pesquisa();
+                pesquisa.literal = "nr_norma = '" + _nr_norma + "' and nm_tipo_norma= '" + _nm_tipo_norma + "'";
+                var resultado = new NormaRN().Consultar(pesquisa);
+                if (resultado.result_count > 0)
+                {
+
+                    foreach (var norma in resultado.results)
+                    {
+                        ///Comentário pra ver o git
+
+                        if (normaOv.origens.Count == norma.origens.Count)
+                        {
+                            var valores_iguais = 0;
+                            foreach (var origem in normaOv.origens)
+                            {
+                                if (norma.origens.Find(n => n.ch_orgao == origem.ch_orgao) != null)
+                                {
+                                    valores_iguais++;
+                                }
+                            }
+                            if (valores_iguais == normaOv.origens.Count)
+                            {
+                                throw new Exception("Norma já existente");
+
+                            }
+
+                        }
+
+
+                    }
+
+
+                }
 
                 var id_doc = new NormaRN().Incluir(normaOv);
                 if (id_doc > 0)
