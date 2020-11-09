@@ -297,7 +297,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     normaOv.nm_situacao = _nm_situacao;
                 }
 		
-		Pesquisa pesquisa = new Pesquisa();
+		/*Pesquisa pesquisa = new Pesquisa();
                 pesquisa.literal = "nr_norma = '" + _nr_norma + "' and nm_tipo_norma= '" + _nm_tipo_norma + "'";
                 var resultado = new NormaRN().Consultar(pesquisa);
                 if (resultado.result_count > 0)
@@ -329,7 +329,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                     }
 
 
-                }
+                }*/
 
                 var id_doc = new NormaRN().Incluir(normaOv);
                 if (id_doc > 0)
