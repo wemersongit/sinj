@@ -245,7 +245,7 @@ function habilitarEmailPesquisa(id_doc, hsp, hemail){
 }
 
 function isRelacaoDeAlteracaoCompleta(chTipoRelacao){
-    const relacoesAlteracaoCompleta = ['4', '7', '21', '25', 'a8ed93396fcc4959b9b8e82808880f2a', '9a9cc35863a445438a06389420c1833e', 'a4dff3c010b94af3976555da9538d3e6'];
+    const relacoesAlteracaoCompleta = ['4', '7', '21', '25', 'a8ed93396fcc4959b9b8e82808880f2a', '9a9cc35863a445438a06389420c1833e', 'a4dff3c010b94af3976555da9538d3e6', '215f37b93c1d4f05a357927db3c6885a'];
     return relacoesAlteracaoCompleta.indexOf(chTipoRelacao) > -1;
 }
 
