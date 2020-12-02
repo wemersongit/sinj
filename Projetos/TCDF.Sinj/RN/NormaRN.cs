@@ -471,7 +471,8 @@ namespace TCDF.Sinj.RN
                 "ANULAÇÃO",
                 "CANCELAMENTO",
                 "REVOGAÇÃO",
-                "SUSPENSÃO LIMINAR"
+                "SUSPENSÃO LIMINAR",
+                "TORNADO SEM EFEITO"
             };
 
             var desfazemAlteracaoCompleta = new List<string> {
