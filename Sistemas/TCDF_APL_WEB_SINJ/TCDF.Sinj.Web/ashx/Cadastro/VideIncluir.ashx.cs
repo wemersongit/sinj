@@ -209,9 +209,9 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             normaAlteradaOv.ch_situacao = situacao.ch_situacao;
                             normaAlteradaOv.nm_situacao = situacao.nm_situacao;
                             if (vide.Relacao.ds_tipo_relacao.Equals("Tornar sem efeito"))
-                            {
-                                normaAlteradaOv.nm_situacao = vide.Relacao.ds_tipo_relacao;
-                            }
+                             {
+                                 normaAlteradaOv.nm_situacao = vide.Relacao.ds_texto_para_alterado;
+                             }
                         }
                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
                         if (normaRn.Atualizar(normaAlteradaOv._metadata.id_doc, normaAlteradaOv))

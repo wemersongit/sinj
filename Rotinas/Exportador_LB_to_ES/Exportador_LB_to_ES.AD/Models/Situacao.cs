@@ -15,6 +15,9 @@ namespace Exportador_LB_to_ES.AD.Models
         [Description("Anulado")]
         Anulado = 4,
 
+        [Description("Tornado Sem Efeito")]
+        TornadoSemEfeito = 5,
+
         [Description("Inconstitucional")]
         Inconstitucional = 6,
 

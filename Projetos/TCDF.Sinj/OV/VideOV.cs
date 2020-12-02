@@ -379,7 +379,8 @@ namespace TCDF.Sinj.OV
                 (nmSituacaoAlterada.Equals("cancelado(a)", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("cancelado(a)", StringComparison.InvariantCultureIgnoreCase)) ||
                 (nmSituacaoAlterada.Equals("suspenso", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("suspenso(a) liminarmente", StringComparison.InvariantCultureIgnoreCase)) ||
                 (nmSituacaoAlterada.Equals("suspenso", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("suspenso(a)", StringComparison.InvariantCultureIgnoreCase)) ||
-                (nmSituacaoAlterada.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase));
+                (nmSituacaoAlterada.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase)) ||
+                (nmSituacaoAlterada.Equals("tornado sem efeito", StringComparison.InvariantCultureIgnoreCase) && dsTextoParaAlterador.Equals("tornado sem efeito", StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -398,7 +399,8 @@ namespace TCDF.Sinj.OV
                 dsTextoParaAlterador.Equals("cancelado(a)", StringComparison.InvariantCultureIgnoreCase) ||
                 dsTextoParaAlterador.Equals("suspenso(a) liminarmente", StringComparison.InvariantCultureIgnoreCase) ||
                 dsTextoParaAlterador.Equals("suspenso(a)", StringComparison.InvariantCultureIgnoreCase) ||
-                dsTextoParaAlterador.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase);
+                dsTextoParaAlterador.Equals("sustado(a)", StringComparison.InvariantCultureIgnoreCase) ||
+                dsTextoParaAlterador.Equals("tornado sem efeito", StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>

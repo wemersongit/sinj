@@ -1971,6 +1971,7 @@ namespace TCDF.Sinj.RN
                     (auxDsTextoParaAlteradorAnterior == "revigorado" || auxDsTextoParaAlteradorAnterior == "repristinado") &&
                     (auxNmSituacaoAlteradaAtual == "revogado" ||
                      auxNmSituacaoAlteradaAtual == "anulado" ||
+                     auxNmSituacaoAlteradaAtual == "tornado sem efeito" ||
                      auxNmSituacaoAlteradaAtual == "extinta" ||
                      // auxNmSituacaoAlteradaAtual == "inconstitucional" ||
                      auxNmSituacaoAlteradaAtual == "inconstitucional" ||
@@ -1989,6 +1990,7 @@ namespace TCDF.Sinj.RN
                 }
                 else if (auxNmSituacaoAlteradaAtual != auxNmSituacaoAnterior && ((auxNmSituacaoAnterior == "revogado" && auxDsTextoParaAlteradorAnterior == "revogado") ||
                     (auxNmSituacaoAnterior == "anulado" && auxDsTextoParaAlteradorAnterior == "anulado") ||
+                    (auxNmSituacaoAnterior == "tornado sem efeito" && auxDsTextoParaAlteradorAnterior == "tornado sem efeito") ||
                     (auxNmSituacaoAnterior == "extinta" && auxDsTextoParaAlteradorAnterior == "extinta") ||
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "declarado inconstitucional") ||
                     (auxNmSituacaoAnterior == "inconstitucional" && auxDsTextoParaAlteradorAnterior == "declarado(a) inconstitucional") ||
@@ -2075,6 +2077,7 @@ namespace TCDF.Sinj.RN
                     (auxDsTextoAlteradorDesfazer == "revigorado" || auxDsTextoAlteradorDesfazer == "repristinado") &&
                     (auxNmSituacaoAtual == "revogado" ||
                      auxNmSituacaoAtual == "anulado" ||
+                     auxNmSituacaoAtual == "tornado sem efeito" ||
                      auxNmSituacaoAtual == "extinta" ||
                      auxNmSituacaoAtual == "inconstitucional" ||
                      // auxNmSituacaoAtual == "inconstitucional" ||
