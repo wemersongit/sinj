@@ -210,7 +210,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             normaAlteradaOv.nm_situacao = situacao.nm_situacao;
                             if (vide.Relacao.ds_tipo_relacao.Equals("Tornar sem efeito"))
                              {
-                                 normaAlteradaOv.nm_situacao = vide.Relacao.ds_texto_para_alterado;
+                                 normaAlteradaOv.nm_situacao = vide.Relacao.ds_texto_para_alterador;
                              }
                         }
                         normaAlteradaOv.alteracoes.Add(new AlteracaoOV { dt_alteracao = dt_alteracao, nm_login_usuario_alteracao = sessao_usuario.nm_login_usuario });
