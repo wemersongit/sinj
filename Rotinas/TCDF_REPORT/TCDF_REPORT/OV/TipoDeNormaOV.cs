@@ -11,49 +11,49 @@ namespace TCDF_REPORT.OV
         public OrgaoCadastrador OrgaoCadastrador { get; set; }
 
         /// <summary>
-        /// É verdadeiro para os tipos de norma que aparece o campo ”Autoria” pra ser preenchido e pesquisado
+        /// ï¿½ verdadeiro para os tipos de norma que aparece o campo ï¿½Autoriaï¿½ pra ser preenchido e pesquisado
         /// </summary>
         public bool Grupo1 { get; set; }
 
         /// <summary>
-        /// É verdadeiros para os tipos de norma que são especificas para ações impetradas no PGDF que 
-        ///  podem interferir na vigência de outras normas. Para estes tipos de 
-        ///  normas deve estar disponível campos adicionais específicos e alteradas 
+        /// ï¿½ verdadeiros para os tipos de norma que sï¿½o especificas para aï¿½ï¿½es impetradas no PGDF que 
+        ///  podem interferir na vigï¿½ncia de outras normas. Para estes tipos de 
+        ///  normas deve estar disponï¿½vel campos adicionais especï¿½ficos e alteradas 
         ///  algumas regras de negocio para os campos comuns.
         /// </summary>
         public bool Grupo2 { get; set; }
 
         /// <summary>
-        /// Trata exclusivamente do tipo DODF, pois esta parte do acervo não é uma 
+        /// Trata exclusivamente do tipo DODF, pois esta parte do acervo nï¿½o ï¿½ uma 
         ///  norma e tem por objetivo apenas disponibilizar o DO do DF para pesquisa.
-        /// O DODF não é ato, nem norma e nem ação.
+        /// O DODF nï¿½o ï¿½ ato, nem norma e nem aï¿½ï¿½o.
         /// </summary>
         public bool Grupo3 { get; set; }
 
         /// <summary>
-        /// É verdadeiros para os tipos de norma que aparece o campo “Autoria” e “Interessado” pra ser 
-        ///  preenchido e pesquisado (exceto as ações da PGDF).
+        /// ï¿½ verdadeiros para os tipos de norma que aparece o campo ï¿½Autoriaï¿½ e ï¿½Interessadoï¿½ pra ser 
+        ///  preenchido e pesquisado (exceto as aï¿½ï¿½es da PGDF).
         /// </summary>
         public bool Grupo4 { get; set; }
 
         /// <summary>
         /// Indica os tipos de normas que podem ser cadastras no VIDES sem a 
-        ///  necessidade da norma vinculada já estar cadastra no sistema.
+        ///  necessidade da norma vinculada jï¿½ estar cadastra no sistema.
         /// </summary>
         public bool Grupo5 { get; set; }
 
         public bool Conjunta { get; set; }
 
         /// <summary>
-        /// Indica quais as normas são questionáveis por ações. Observe que durante o 
-        ///  cadastro de uma ação pelo PGDF, ao ser preenchido no VIDE qual a norma esta 
-        ///  sendo questionada, somente estes tipos estarão disponíveis.
+        /// Indica quais as normas sï¿½o questionï¿½veis por aï¿½ï¿½es. Observe que durante o 
+        ///  cadastro de uma aï¿½ï¿½o pelo PGDF, ao ser preenchido no VIDE qual a norma esta 
+        ///  sendo questionada, somente estes tipos estarï¿½o disponï¿½veis.
         /// </summary>
         public bool Questionaveis { get; set; }
 
         /// <summary>
-        /// Indica se esse tipo de norma deve usar uma enumeração a partir do orgao
-        /// Valor utilizado apenas para criação do numero para a chave para não-duplicação.
+        /// Indica se esse tipo de norma deve usar uma enumeraï¿½ï¿½o a partir do orgao
+        /// Valor utilizado apenas para criaï¿½ï¿½o do numero para a chave para nï¿½o-duplicaï¿½ï¿½o.
         /// </summary>
         public bool ControleDeNumeracaoPorOrgao { get; set; }
 
@@ -64,7 +64,7 @@ namespace TCDF_REPORT.OV
                 //TODO Rever isso
                 return
                     string.Equals(Nome, "Decreto Legislativo", StringComparison.CurrentCultureIgnoreCase) ||
-                    string.Equals(Nome, "Emenda a lei Orgânica", StringComparison.CurrentCultureIgnoreCase) ||
+                    string.Equals(Nome, "Emenda a lei Orgï¿½nica", StringComparison.CurrentCultureIgnoreCase) ||
                     string.Equals(Nome, "Lei", StringComparison.CurrentCultureIgnoreCase) ||
                     string.Equals(Nome, "Lei Complementar", StringComparison.CurrentCultureIgnoreCase);
             }
@@ -84,7 +84,7 @@ namespace TCDF_REPORT.OV
             get
             {
                 //TODO Rever isso
-                return string.Equals(Nome, "Resolução", StringComparison.InvariantCultureIgnoreCase);
+                return string.Equals(Nome, "Resoluï¿½ï¿½o", StringComparison.InvariantCultureIgnoreCase);
             }
         }
 

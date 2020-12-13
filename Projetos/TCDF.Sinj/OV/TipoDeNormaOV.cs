@@ -100,7 +100,9 @@ namespace TCDF.Sinj.OV
 					nm_tipo_norma.ToLower () == "decreto legislativo" ||
 					nm_tipo_norma.ToLower () == "emenda a lei orgânica" ||
 					nm_tipo_norma.ToLower () == "lei complementar" ||
-					nm_tipo_norma.ToLower () == "lei";
+                    nm_tipo_norma.ToLower() == "resolução" ||
+                    nm_tipo_norma.ToLower() == "emenda à lei orgânica" ||
+                    nm_tipo_norma.ToLower () == "lei";
             }
         }
 
