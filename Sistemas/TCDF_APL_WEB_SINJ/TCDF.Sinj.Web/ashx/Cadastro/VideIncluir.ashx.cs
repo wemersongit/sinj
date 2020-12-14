@@ -208,7 +208,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
                             var situacao = normaRn.ObterSituacao(normaAlteradaOv.vides);
                             normaAlteradaOv.ch_situacao = situacao.ch_situacao;
                             normaAlteradaOv.nm_situacao = situacao.nm_situacao;
-                            if (vide.Relacao.ds_tipo_relacao.Equals("Tornar sem efeito"))
+                            if (vide.Relacao.ds_tipo_relacao.Equals("Tornar sem efeito") && vide.NormaAlterada.InAlteracaoCompleta == true)
                              {
                                  normaAlteradaOv.nm_situacao = vide.Relacao.ds_texto_para_alterador;
                              }
