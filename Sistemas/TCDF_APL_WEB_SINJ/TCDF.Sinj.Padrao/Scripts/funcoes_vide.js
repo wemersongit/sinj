@@ -139,7 +139,10 @@ function getDescricaoDoLinkname(linkname) {
     }
     const lastItem = linknameSplited[linknameSplited.length - 1];
     
-    if(/art[0-9]|par[0-9]|inc[MDCLXVI]|ali[a-z]/.test(lastItem) && $(`#div_cad_dispositivo_alterada p[linkname^=${linkname}_]`).length > 0){
+    // if(/art[0-9]|par[0-9]|inc[MDCLXVI]|ali[a-z]/.test(lastItem) && $(`#div_cad_dispositivo_alterada p[linkname^=${linkname}_]`).length > 0){
+    //     descricao += ', caput'
+    // }
+    if(/art[0-9]/.test(lastItem) && $(`#div_cad_dispositivo_alterada p[linkname^=${linkname}_]`).length > 0){
         descricao += ', caput'
     }
     return descricao;
