@@ -24,7 +24,7 @@ namespace TCDF.Sinj.Web.ashx.Cadastro
             {
                 sessao_usuario = Util.ValidarSessao();
                 Util.ValidarUsuario(sessao_usuario, action);
-                var _ch_tipo_norma = context.Request["ch_tipo_norma"];
+                var _ch_tipo_norma = context.Request["ch_tipo_normas"];
                 var _nm_tipo_norma = context.Request["nm_tipo_norma"];
 
                 var _st_acao = context.Request["in_g2"];
